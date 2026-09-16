@@ -1,0 +1,24 @@
+# syntax=docker/dockerfile:1.7
+FROM golang@sha256:e8c859f5632dcfde7b32d2012b4351728f6437930887c2f6a91ea242459e5514 AS build
+WORKDIR /src
+
+COPY go.mod go.sum ./
+RUN --mount=type=cache,target=/go/pkg/mod go mod download
+
+COPY . .
+ARG TARGETOS=linux
+ARG TARGETARCH
+RUN --mount=type=cache,target=/go/pkg/mod \
+    --mount=type=cache,target=/root/.cache/go-build \
+    WORDWEAVE_BUILD_FLAGS="$(go run ./cmd/build-provenance)" && \
+    CGO_ENABLED=0 GOOS=${TARGETOS} GOARCH=${TARGETARCH} \
+    go build -ldflags="-s -w ${WORDWEAVE_BUILD_FLAGS}" -o /out/wordweave ./cmd/wordweave && \
+    CGO_ENABLED=0 GOOS=${TARGETOS} GOARCH=${TARGETARCH} \
+    go build -ldflags="-s -w ${WORDWEAVE_BUILD_FLAGS}" -o /out/wordweave-admin ./cmd/wordweave-admin
+
+FROM gcr.io/distroless/static-debian12:nonroot@sha256:afa5c872c891853ca7fcf1f12c3edb23f7eeef36189728842dd51042ff57f7ab
+COPY --from=build /out/wordweave /usr/local/bin/wordweave
+COPY --from=build /out/wordweave-admin /usr/local/bin/wordweave-admin
+EXPOSE 8080
+USER nonroot:nonroot
+ENTRYPOINT ["/usr/local/bin/wordweave"]

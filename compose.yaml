@@ -1,0 +1,132 @@
+name: ${COMPOSE_PROJECT_NAME:-wordweave}
+
+x-backend-environment: &backend-environment
+  PUBLIC_ORIGIN: ${PUBLIC_ORIGIN:-http://localhost:3000}
+  HTTP_ADDR: ${HTTP_ADDR:-:8080}
+  METRICS_ADDR: ${METRICS_ADDR:-:9090}
+  APP_DATABASE_URL: ${APP_DATABASE_URL-}
+  AI_DATABASE_URL: ${AI_DATABASE_URL-}
+  SESSION_PEPPER: ${SESSION_PEPPER-}
+  CAPABILITY_PEPPER: ${CAPABILITY_PEPPER-}
+  CSRF_HMAC_KEY: ${CSRF_HMAC_KEY-}
+  CURSOR_HMAC_KEY: ${CURSOR_HMAC_KEY-}
+  OPENROUTER_MASTER_KEYS: ${OPENROUTER_MASTER_KEYS-}
+  OPENROUTER_CURRENT_KEY_VERSION: ${OPENROUTER_CURRENT_KEY_VERSION-}
+  OPENROUTER_BASE_URL: ${OPENROUTER_BASE_URL:-https://openrouter.ai/api/v1}
+  COOKIE_SECURE: ${COOKIE_SECURE:-false}
+  LOG_LEVEL: ${LOG_LEVEL:-info}
+  APP_DB_MAX_CONNS: ${APP_DB_MAX_CONNS:-4}
+  AI_DB_MAX_CONNS: ${AI_DB_MAX_CONNS:-4}
+  TRUSTED_PROXY_CIDRS: ${TRUSTED_PROXY_CIDRS:-172.30.0.0/24}
+
+services:
+  postgres:
+    image: postgres@sha256:1c59e2c3c818eaa0f0628f695b36e7c9e362d6b219b36a54a32df645cbd7e1af
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-wordweave}
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD-}
+    expose:
+      - "5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-postgres} -d ${POSTGRES_DB:-wordweave}"]
+      interval: 2s
+      timeout: 2s
+      retries: 30
+    volumes:
+      - wordweave-pg:/var/lib/postgresql
+    networks:
+      - data
+
+  migrate:
+    build:
+      context: ./backend
+    entrypoint: ["/usr/local/bin/wordweave-admin", "migrate"]
+    environment: *backend-environment
+    depends_on:
+      postgres:
+        condition: service_healthy
+    restart: "no"
+    networks:
+      - data
+
+  backend:
+    build:
+      context: ./backend
+    environment: *backend-environment
+    expose:
+      - "8080"
+      - "9090"
+    healthcheck:
+      test: ["CMD", "/usr/local/bin/wordweave-admin", "verify"]
+      interval: 10s
+      timeout: 8s
+      retries: 12
+      start_period: 5s
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
+    read_only: true
+    tmpfs:
+      - /tmp
+    restart: unless-stopped
+    networks:
+      - edge
+      - data
+
+  frontend:
+    build:
+      context: ./frontend
+    environment:
+      NUXT_BACKEND_INTERNAL_ORIGIN: ${BACKEND_INTERNAL_ORIGIN:-http://backend:8080}
+    expose:
+      - "3000"
+    depends_on:
+      backend:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://127.0.0.1:3000/').then(r=>{if(!r.ok)process.exit(1)}).catch(()=>process.exit(1))"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+      start_period: 10s
+    restart: unless-stopped
+    networks:
+      - edge
+
+  nginx:
+    build:
+      context: ./nginx
+    environment:
+      NGINX_LISTEN_PORT: "8080"
+      BACKEND_HOST: backend
+      BACKEND_PORT: "8080"
+      FRONTEND_HOST: frontend
+      FRONTEND_PORT: "3000"
+    ports:
+      - "${WORDWEAVE_PORT:-3000}:8080"
+    depends_on:
+      backend:
+        condition: service_healthy
+      frontend:
+        condition: service_healthy
+    read_only: true
+    tmpfs:
+      - /etc/nginx/conf.d
+      - /var/cache/nginx
+      - /var/run
+      - /tmp
+    restart: unless-stopped
+    networks:
+      - edge
+
+volumes:
+  wordweave-pg:
+
+networks:
+  edge:
+    ipam:
+      config:
+        - subnet: 172.30.0.0/24
+  data:
+    internal: true

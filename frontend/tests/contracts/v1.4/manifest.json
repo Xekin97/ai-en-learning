@@ -1,0 +1,77 @@
+{
+  "contract_version": "v1.4",
+  "source": ".planning/milestones/M001/technical/api/index.md#12-api-103",
+  "approval": "TRANSITION-M001-062",
+  "fixtures": [
+    {
+      "file": "user-limited.json",
+      "api": "API-103",
+      "method": "GET",
+      "path": "/api/v1/admin/users/{user_id}",
+      "status": 200,
+      "content_type": "application/json; charset=utf-8",
+      "schema": "AdminUserEnvelope",
+      "sha256": "85563f1d9ce1671e24e8c02bc3805e4d4867c7c37cdf969b704fb90e949d9326"
+    },
+    {
+      "file": "user-zero.json",
+      "api": "API-103",
+      "method": "GET",
+      "path": "/api/v1/admin/users/{user_id}",
+      "status": 200,
+      "content_type": "application/json; charset=utf-8",
+      "schema": "AdminUserEnvelope",
+      "sha256": "94018a8d690f340cdab8d8b70ba5b766f62a8aa0c163f0d16a61f980c76edf6b"
+    },
+    {
+      "file": "user-unlimited.json",
+      "api": "API-103",
+      "method": "GET",
+      "path": "/api/v1/admin/users/{user_id}",
+      "status": 200,
+      "content_type": "application/json; charset=utf-8",
+      "schema": "AdminUserEnvelope",
+      "sha256": "104b47974f391ead75ee43a262bc5b404d931daef47852356db7f84f559c9ab6"
+    },
+    {
+      "file": "user-admin.json",
+      "api": "API-103",
+      "method": "GET",
+      "path": "/api/v1/admin/users/{user_id}",
+      "status": 200,
+      "content_type": "application/json; charset=utf-8",
+      "schema": "AdminUserEnvelope",
+      "sha256": "a0cde5a5bb116453be060b6b56ea0710d864f5ccd8eb235f206b3dfe3d42cb29"
+    },
+    {
+      "file": "group-limited.json",
+      "api": "API-103",
+      "method": "PUT",
+      "path": "/api/v1/admin/users/{user_id}/group",
+      "status": 200,
+      "content_type": "application/json; charset=utf-8",
+      "schema": "UserGroupChangeEnvelope",
+      "sha256": "0aa1c6b5a6c6b350bf95e5f26f2679e362be928d9620858a538cfe3cecf9148b"
+    },
+    {
+      "file": "group-zero.json",
+      "api": "API-103",
+      "method": "PUT",
+      "path": "/api/v1/admin/users/{user_id}/group",
+      "status": 200,
+      "content_type": "application/json; charset=utf-8",
+      "schema": "UserGroupChangeEnvelope",
+      "sha256": "fa421c99039775748218204651520983d8da195049df089a3454ef83d4e0c99b"
+    },
+    {
+      "file": "group-unlimited.json",
+      "api": "API-103",
+      "method": "PUT",
+      "path": "/api/v1/admin/users/{user_id}/group",
+      "status": 200,
+      "content_type": "application/json; charset=utf-8",
+      "schema": "UserGroupChangeEnvelope",
+      "sha256": "a67d08d7868961bbfc1731da80c01b1a2075ca1970c0f1568bd6d93a482661f3"
+    }
+  ]
+}
