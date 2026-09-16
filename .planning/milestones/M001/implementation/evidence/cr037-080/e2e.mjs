@@ -1,0 +1,4 @@
+import{spawnSync}from'node:child_process';import{writeFileSync}from'node:fs';import{resolve,join}from'node:path';import{dir}from'./lib.mjs';
+const root=resolve(dir,'../../../../../..'),suffix=process.argv[2]==='final'?'-final':'',start=Date.now(),r=spawnSync('pnpm',['--dir','frontend','exec','playwright','test','--workers=1','--reporter=line,json'],{cwd:root,encoding:'utf8',maxBuffer:32*1024*1024,env:{...process.env,PLAYWRIGHT_JSON_OUTPUT_FILE:join(dir,'e2e-full'+suffix+'.json')}});
+writeFileSync(join(dir,'e2e-full'+suffix+'.log'),(r.stdout||'')+(r.stderr||''),{flag:'wx'});writeFileSync(join(dir,'e2e-command'+suffix+'.json'),JSON.stringify({command:'pnpm --dir frontend exec playwright test --workers=1 --reporter=line,json',status:r.status,seconds:(Date.now()-start)/1000},null,2),{flag:'wx'});console.log(JSON.stringify({status:r.status,seconds:(Date.now()-start)/1000}));process.exitCode=r.status||0;
+

@@ -1,0 +1,29 @@
+{
+  "recorded_at": "2026-09-07T03:57:11Z",
+  "agent": "qa-quinn",
+  "method": "Direct view_image inspection of screenshots captured from localhost:6001 after UAT086 deployment",
+  "reviewed": [
+    {
+      "file": "smoke-recheck-en-US-review-auth-390.png",
+      "result": "PASS",
+      "observation": "English Review return intent is the first card element above the registration title; text and compact mobile layout are clear with no clipping."
+    },
+    {
+      "file": "smoke-recheck-zh-CN-library-auth-390.png",
+      "result": "PASS",
+      "observation": "Chinese Library return intent is the first card element above the registration title; localized controls fit the mobile viewport."
+    },
+    {
+      "file": "smoke-recheck-password-error-en-US-390.png",
+      "result": "PASS",
+      "observation": "The safe wrong-current-password error is crisp inside the active dialog; fields, helpers, notice, and footer actions remain distinct and fit without overlap."
+    },
+    {
+      "file": "smoke-recheck-password-dialog-zh-CN-390.png",
+      "result": "PASS",
+      "observation": "Chinese Change password title, field labels, helpers, session notice, and actions render cleanly in the deployed candidate."
+    }
+  ],
+  "locale_method_limit": "The Chinese account-dialog presentation check intercepted only the locale-persistence PUT after the client changed language, so the existing account preference remained unchanged. This validates deployed localized presentation, not backend locale persistence; that behavior is outside this non-mutating smoke and has separate QA coverage.",
+  "scope_limit": "These captures support the bounded UAT086 smoke and are not a full-site visual or real-device Safari certification."
+}

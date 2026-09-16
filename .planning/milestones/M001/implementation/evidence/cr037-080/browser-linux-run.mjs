@@ -1,0 +1,6 @@
+import{spawnSync}from'node:child_process';import{writeFileSync}from'node:fs';import{join}from'node:path';import{dir}from'./lib.mjs';
+const args=["run","--rm","--name","ww-dev-080-browser","--label","wordweave.dev=080","--network","ww-dev-080-edge","--shm-size=1g","--mount","type=bind,source=/Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/frontend/node_modules,target=/work/frontend/node_modules,readonly","--mount","type=bind,source=/Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/.planning/milestones/M001/implementation/evidence/cr037-080,target=/work/.planning/milestones/M001/implementation/evidence/cr037-080","mcr.microsoft.com/playwright@sha256:941cc91e5022880ac1d14ae90b476b624deb6399dbbc28d612d5d5bd7928fcbd","node","/work/.planning/milestones/M001/implementation/evidence/cr037-080/browser-linux-proxy.mjs"],start=Date.now(),r=spawnSync('docker',args,{encoding:'utf8',maxBuffer:8*1024*1024});
+writeFileSync(join(dir,'browser-linux-webkit.log'),(r.stdout||'')+(r.stderr||''),{flag:'wx'});
+writeFileSync(join(dir,'browser-linux-command.json'),JSON.stringify({command:'docker',args,status:r.status,seconds:(Date.now()-start)/1000},null,2),{flag:'wx'});
+console.log(JSON.stringify({status:r.status,seconds:(Date.now()-start)/1000,stdout:r.stdout,stderr:r.stderr}));process.exitCode=r.status||0;
+

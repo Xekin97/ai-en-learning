@@ -1,0 +1,7 @@
+import{writeFileSync}from'node:fs';import{join}from'node:path';import{chromium,dir,origin,design,ready,login,api,expect}from'./lib.mjs';
+const b=await chromium.launch(),c=await b.newContext({viewport:{width:720,height:1000}}),p=await c.newPage(),d=await c.newPage();let release;const hold=new Promise(r=>release=r);
+try{const token=await login(c,'dev073_admin','en-US');await api(c,'PUT','/api/v1/me/ui-locale',token,{ui_locale:'en-US'});await p.goto(origin+'/admin/users');await ready(p);await p.route('**/api/v1/admin/users?**',async r=>{await hold;await r.abort().catch(()=>{});});await p.getByRole('search').locator('input').fill('lin');await p.getByRole('search').locator('button').click();await expect(p.locator('.user-skeleton')).toHaveCount(3);await d.goto(design+'/prototype/?page=PAGE-103&role=admin&state=loading&locale=en-US');await d.addStyleTag({content:'.prototype-tools{display:none!important}'});
+for(const[page,name]of[[p,'actual'],[d,'design']]){await page.evaluate(()=>document.fonts.ready.then(()=>null));await page.screenshot({path:join(dir,'screenshots','final-loading-720-'+name+'.png'),fullPage:true});}
+const r=await api(c,'GET','/api/v1/admin/users?username=lin',token);writeFileSync(join(dir,'visual-api-order.json'),JSON.stringify({names:r.body.data.items.map(x=>x.username),engine:b.version(),actualImage:'screenshots/final-loading-720-actual.png',designImage:'screenshots/final-loading-720-design.png'},null,2),{flag:'wx'});
+}finally{release();await p.unrouteAll({behavior:'wait'});await b.close();}
+

@@ -1,0 +1,30 @@
+// Targeted closure correction: preserve the pre-existing exited migration container.
+import {readFileSync,readdirSync,existsSync,statSync} from 'node:fs';
+import {join,dirname,resolve} from 'node:path';
+import {dir,root,origin,names,target,frontend,docker,hash,sha,output,same,inspect,safe,data,privateData,protectedHashes,assertAuthority} from './helpers.mjs';
+assertAuthority();if(existsSync(join(dir,'delivery-validation.json')))throw Error('Final receipt already exists');
+const first=JSON.parse(readFileSync(join(dir,'closure.json'))),pre=JSON.parse(readFileSync(join(dir,'preflight.json'))),baseline=JSON.parse(readFileSync(join(dir,'baseline.json'))),old=JSON.parse(readFileSync(join(dir,'manifest.json'))),saved=JSON.parse(readFileSync(join(pre.backup.directory,'data-private.json')));
+if(first.status!=='FAIL'||Object.entries(first.checks).filter(([,v])=>!v).map(([k])=>k).join()!=='uatHasOnlyExpectedFourContainers')throw Error('Unexpected first-closure findings; do not mechanically override');
+const checks={},after=data(),containers=inspect();
+checks.originalEvidenceFilesUnmodified=Object.entries(old.files).every(([f,h])=>hash(join(dir,f))===h);
+checks.protectedFilesUnchanged=same(protectedHashes(),baseline.hashes);
+checks.publicBusinessDataUnchanged=same(after,saved.data);checks.privatePasswordCredentialAndSessionDigestsUnchanged=same(privateData(),saved.secrets);
+checks.originalDataCountsAndNoActiveGeneration=after.counts.active_runs===0&&same(after.counts,pre.dataBefore.counts);
+checks.currentCandidatesHealthy=containers[0].Image===frontend&&containers[1].Image===target&&containers.every(c=>c.State.Health?.Status==='healthy');
+checks.frontendNginxDatabaseIdentitiesPreserved=[0,2,3].every(i=>same(safe(containers[i]),pre.before[i]));
+const all=docker(['ps','-a','--filter','label=com.docker.compose.project=wordweave_uat','--format','{{.Names}}']).split('\n').sort(),running=docker(['ps','--filter','label=com.docker.compose.project=wordweave_uat','--format','{{.Names}}']).split('\n').sort();
+checks.exactlyExpectedFourRunningServices=same(running,[...names].sort());
+checks.onlyAdditionalContainerIsHistoricalMigration=same(all,[...names,'wordweave_uat-migrate-1'].sort());
+const originalMigration=JSON.parse(readFileSync(join(dir,'historical-migration-observation.json'))),migration=JSON.parse(docker(['inspect','wordweave_uat-migrate-1']))[0];
+checks.historicalMigrationUntouched=migration.Id===originalMigration.id&&migration.Created===originalMigration.created&&migration.State.Status==='exited'&&migration.State.ExitCode===0&&migration.State.StartedAt===originalMigration.started&&migration.State.FinishedAt===originalMigration.finished&&Date.parse(migration.State.FinishedAt)<Date.parse(baseline.date);
+checks.privateBackupPermissions=(statSync(pre.backup.directory).mode&0o777)===0o700&&pre.backup.files.every(f=>(statSync(join(pre.backup.directory,f.name)).mode&0o777)===0o600);
+const index=JSON.parse(readFileSync(join(dir,'index-baseline.json'))),docs=[...Object.keys(index.files),...['report','handoff','coverage'].map(n=>'.planning/milestones/M001/verification/uat-099-'+n+'.md')],missing=[];
+checks.historicalIndexBodiesPreserved=Object.entries(index.files).every(([p,h])=>{const s=readFileSync(join(root,p),'utf8'),i=s.indexOf('<!-- QA098 CURRENT BEGIN -->');return i>=0&&sha(s.slice(i))===h;});
+for(const p of docs){const s=readFileSync(join(root,p),'utf8'),part=p.includes('/uat-099-')?s:s.slice(0,s.indexOf('<!-- QA098 CURRENT BEGIN -->'));for(const m of part.matchAll(/\]\(([^)]+)\)/g)){const link=m[1].split('#')[0];if(!link||/^[a-z]+:/i.test(link))continue;const dest=resolve(dirname(join(root,p)),link);if(!existsSync(dest)&&![join(dir,'delivery-validation.json'),join(dir,'delivery-manifest.json')].includes(dest))missing.push({source:p,target:link});}}
+checks.currentReportLinksResolve=missing.length===0;
+checks.noProviderKeysInNewEvidence=readdirSync(dir).filter(f=>/\.(mjs|json|yaml)$/.test(f)).every(f=>!/(sk-or-v1-[a-f0-9]{16,})/.test(readFileSync(join(dir,f),'utf8')));
+const health={};for(const path of ['/health/live','/health/ready','/'])health[path]=(await fetch(origin+path,{signal:AbortSignal.timeout(10000)})).status;checks.proxyRoutesHealthy=Object.values(health).every(s=>s===200);
+const result={date:new Date().toISOString(),agent:'qa-quinn',status:Object.values(checks).every(Boolean)?'PASS':'FAIL',checks,firstClosureRetained:'closure.json',firstManifestRetained:'manifest.json',methodCorrection:'Check the four running application services and preserve the additional migration container that already exited on 2026-09-04; never delete it to satisfy a test assumption.',protectedFiles:Object.keys(baseline.hashes).length,effectivePrimarySmoke:first.effectivePrimarySmoke,dataBefore:pre.dataBefore,dataAfter:after,uat:containers.map(safe),historicalMigration:originalMigration,missingLinks:missing,health,realModelCalls:0,realModelProbes:0,realV3Quality:'not_verified',workflowChanged:false,legacyCompatibilityAdded:false,privateBackupRetained:true,releaseApproved:false};
+output('delivery-validation.json',result);
+const files=readdirSync(dir).filter(f=>f!=='delivery-manifest.json'&&statSync(join(dir,f)).isFile()).sort();output('delivery-manifest.json',{date:new Date().toISOString(),algorithm:'sha256',files:Object.fromEntries(files.map(f=>[f,hash(join(dir,f))])),documents:Object.fromEntries(docs.map(p=>[p,hash(join(root,p))]))});
+console.log(JSON.stringify({status:result.status,checks,protectedFiles:result.protectedFiles,evidenceFiles:files.length,realModelCalls:0},null,2));if(result.status!=='PASS')process.exitCode=1;

@@ -1,0 +1,93 @@
+=== RUN   TestCR039BrowserDisconnectRefundsWithoutDraft
+2026/09/08 02:07:18 INFO http_request request_id=req_F99IgwZ2gW_10H8vHIWScg method=GET route=/api/v1/bootstrap status=200 duration_ms=2
+2026/09/08 02:07:20 INFO http_request request_id=req_vYaGdVnwYqFS7gflbMoajA method=POST route=/api/v1/auth/register status=201 duration_ms=2233
+2026/09/08 02:07:20 INFO http_request request_id=req_rGWbu8lHGdbD5YWpvaVMBg method=POST route=/api/v1/generations/stream status=200 duration_ms=90
+--- PASS: TestCR039BrowserDisconnectRefundsWithoutDraft (7.75s)
+=== RUN   TestCR039OneExplicitCompatibilityProbeNoStartupCalls
+--- PASS: TestCR039OneExplicitCompatibilityProbeNoStartupCalls (0.97s)
+=== RUN   TestCR039InputVocabularyMappingPersistenceAndTerminalCAS
+=== RUN   TestCR039InputVocabularyMappingPersistenceAndTerminalCAS/validation_failed
+=== RUN   TestCR039InputVocabularyMappingPersistenceAndTerminalCAS/stream_failed
+=== RUN   TestCR039InputVocabularyMappingPersistenceAndTerminalCAS/user_cancelled
+--- PASS: TestCR039InputVocabularyMappingPersistenceAndTerminalCAS (0.72s)
+    --- PASS: TestCR039InputVocabularyMappingPersistenceAndTerminalCAS/validation_failed (0.01s)
+    --- PASS: TestCR039InputVocabularyMappingPersistenceAndTerminalCAS/stream_failed (0.01s)
+    --- PASS: TestCR039InputVocabularyMappingPersistenceAndTerminalCAS/user_cancelled (0.00s)
+=== RUN   TestCR039InvalidFinalMappingHTTPDoesNotPublishDraft
+2026/09/08 02:07:23 INFO http_request request_id=req_uDah_j7g4XmckJDCzRPghg method=GET route=/api/v1/bootstrap status=200 duration_ms=0
+2026/09/08 02:07:24 INFO http_request request_id=req_COd9WXX2tWoG2nMJQAop8g method=POST route=/api/v1/auth/register status=201 duration_ms=1182
+2026/09/08 02:07:24 WARN ai_candidate_validation_failed run_id=01a07ec5-245e-79e3-abf8-071434829196 model_id=01a07ec5-1fb6-7f23-b956-5dfb923118e7 prompt_version=m001-v3 validator_version=m001-v3-wn31-r1 category=content_invalid reason=mapping_relation_rejected target_index=0
+2026/09/08 02:07:24 INFO http_request request_id=req_D6KsPa-AsJjFxBpan13rqA method=POST route=/api/v1/generations/stream status=200 duration_ms=10
+2026/09/08 02:07:24 INFO http_request request_id=req_GDUXxq8tYaZyVGl-J8-wvg method=POST route=/api/v1/generations/{run_id}/save status=404 duration_ms=1
+--- PASS: TestCR039InvalidFinalMappingHTTPDoesNotPublishDraft (1.68s)
+=== RUN   TestDraftLifecycleWithoutRegistry
+=== RUN   TestDraftLifecycleWithoutRegistry/save_retry_concurrent_and_delete
+=== RUN   TestDraftLifecycleWithoutRegistry/discard_and_save_cannot_resurrect
+=== RUN   TestDraftLifecycleWithoutRegistry/save_versus_discard_serialized
+=== RUN   TestDraftLifecycleWithoutRegistry/expired_pending_and_terminal_tokens
+=== RUN   TestDraftLifecycleWithoutRegistry/active_never_saves
+=== RUN   TestDraftLifecycleWithoutRegistry/provider_failed_never_saves
+=== RUN   TestDraftLifecycleWithoutRegistry/server_failed_never_saves
+=== RUN   TestDraftLifecycleWithoutRegistry/stream_failed_never_saves
+=== RUN   TestDraftLifecycleWithoutRegistry/validation_failed_never_saves
+=== RUN   TestDraftLifecycleWithoutRegistry/user_cancelled_never_saves
+=== RUN   TestDraftLifecycleWithoutRegistry/visitor_claim_after_restart_and_expired_draft
+=== RUN   TestDraftLifecycleWithoutRegistry/cleanup_skips_locked_run_and_later_removes_expired_draft
+--- PASS: TestDraftLifecycleWithoutRegistry (0.89s)
+    --- PASS: TestDraftLifecycleWithoutRegistry/save_retry_concurrent_and_delete (0.04s)
+    --- PASS: TestDraftLifecycleWithoutRegistry/discard_and_save_cannot_resurrect (0.01s)
+    --- PASS: TestDraftLifecycleWithoutRegistry/save_versus_discard_serialized (0.04s)
+    --- PASS: TestDraftLifecycleWithoutRegistry/expired_pending_and_terminal_tokens (0.01s)
+    --- PASS: TestDraftLifecycleWithoutRegistry/active_never_saves (0.00s)
+    --- PASS: TestDraftLifecycleWithoutRegistry/provider_failed_never_saves (0.00s)
+    --- PASS: TestDraftLifecycleWithoutRegistry/server_failed_never_saves (0.00s)
+    --- PASS: TestDraftLifecycleWithoutRegistry/stream_failed_never_saves (0.00s)
+    --- PASS: TestDraftLifecycleWithoutRegistry/validation_failed_never_saves (0.00s)
+    --- PASS: TestDraftLifecycleWithoutRegistry/user_cancelled_never_saves (0.00s)
+    --- PASS: TestDraftLifecycleWithoutRegistry/visitor_claim_after_restart_and_expired_draft (0.03s)
+    --- PASS: TestDraftLifecycleWithoutRegistry/cleanup_skips_locked_run_and_later_removes_expired_draft (0.32s)
+=== RUN   TestDraftProcessHelper
+    draft_process_integration_test.go:26: subprocess helper
+--- SKIP: TestDraftProcessHelper (0.00s)
+=== RUN   TestDraftHTTPAcrossProcessRestart
+    draft_process_integration_test.go:163: same-version process restart: validated draft unchanged; save 201; second restart retry 200; wrong token 404; one batch and unchanged accounting
+--- PASS: TestDraftHTTPAcrossProcessRestart (13.78s)
+=== RUN   TestM001EndToEnd
+2026/09/08 02:07:40 INFO http_request request_id=req_31v-yebNuwJhF3d2lTHZlw method=GET route=/api/v1/bootstrap status=200 duration_ms=1
+2026/09/08 02:07:41 INFO http_request request_id=req_mc-57LAATsM3jk3n-Ois5A method=POST route=/api/v1/auth/login status=200 duration_ms=953
+2026/09/08 02:07:41 INFO http_request request_id=req_7WSmgSgylTFtKjimqyOz5Q method=PUT route=/api/v1/admin/openrouter-credential status=200 duration_ms=4
+2026/09/08 02:07:41 INFO http_request request_id=req_E6aAop-MMuMuV-SNFIGOLw method=POST route=/api/v1/admin/models status=201 duration_ms=2
+2026/09/08 02:07:41 INFO http_request request_id=req_nADhkM5-zOH2IUmo-mZblg method=POST route=/api/v1/admin/models/{model_id}/enable status=200 duration_ms=5
+2026/09/08 02:07:41 INFO http_request request_id=req_xNL_7jHTSQJRLnx5eWcMFw method=PUT route=/api/v1/admin/groups/{group_code} status=200 duration_ms=5
+2026/09/08 02:07:41 INFO http_request request_id=req__1MZbMH3TDjKk0ongHJcoA method=PUT route=/api/v1/admin/groups/{group_code} status=200 duration_ms=2
+2026/09/08 02:07:41 INFO http_request request_id=req_JZcjFKFCjXTTNo0fk7BjiA method=GET route=/api/v1/bootstrap status=200 duration_ms=0
+2026/09/08 02:07:41 INFO http_request request_id=req_m60_1QGcyU8hYXeQS5PoYw method=POST route=/api/v1/generations/stream status=200 duration_ms=10
+2026/09/08 02:07:41 INFO http_request request_id=req_qdAIQ1wcmt8KeA4Jx3NOlQ method=POST route=/api/v1/generations/{run_id}/visitor-claim status=200 duration_ms=3
+2026/09/08 02:07:41 INFO http_request request_id=req_rX28fmdLMIPVIsSgupxIcQ method=POST route=/api/v1/generations/stream status=429 duration_ms=2
+2026/09/08 02:07:42 INFO http_request request_id=req_qHJfUXmh5wTkeO896LD22w method=POST route=/api/v1/auth/register status=201 duration_ms=858
+2026/09/08 02:07:42 INFO http_request request_id=req_5ZMII0kfTRQ9oG79fb44nw method=POST route=/api/v1/visitor-claims/consume status=200 duration_ms=10
+2026/09/08 02:07:42 INFO http_request request_id=req_m1dBbpP5E6EmiNvae3lTnA method=POST route=/api/v1/visitor-claims/consume status=200 duration_ms=1
+2026/09/08 02:07:42 INFO http_request request_id=req_wCuVOToj9ZtyMFzsieQfPQ method=GET route=/api/v1/bootstrap status=200 duration_ms=0
+2026/09/08 02:07:42 INFO http_request request_id=req_KHLEuqxSAIxs9qpcABFxWw method=POST route=/api/v1/auth/register status=201 duration_ms=914
+2026/09/08 02:07:43 INFO http_request request_id=req_gXU6DJ6mN-ix3dhuTtAKRw method=GET route=/api/v1/generation-options status=200 duration_ms=2
+2026/09/08 02:07:43 INFO http_request request_id=req_6bnH6DyRe-HfKbYkLvp1mA method=POST route=/api/v1/generations/stream status=200 duration_ms=6
+2026/09/08 02:07:43 INFO http_request request_id=req_IRRGY-NVQGGuoEiVQSNvQw method=POST route=/api/v1/generations/{run_id}/save status=201 duration_ms=6
+2026/09/08 02:07:43 INFO http_request request_id=req_d8wsndaOwULcsKMxFKok9Q method=GET route=/api/v1/me/batches status=200 duration_ms=2
+2026/09/08 02:07:43 INFO http_request request_id=req_MRqtFB9rck5gaKDc7QAmXA method=GET route=/api/v1/me/batches/{batch_id} status=200 duration_ms=3
+2026/09/08 02:07:43 INFO http_request request_id=req_xYOyz2k_pKw2CfHXvuaEjw method=POST route=/api/v1/me/review-sessions status=201 duration_ms=6
+2026/09/08 02:07:43 INFO http_request request_id=req_cR-bt1PTntNyqhbUXSVRWw method=POST route=/api/v1/me/review-sessions/{session_id}/attempts status=201 duration_ms=3
+2026/09/08 02:07:43 INFO http_request request_id=req_U7H9kLKkQYnpu0uPWVSV7Q method=POST route=/api/v1/me/review-attempts/{attempt_id}/actions status=200 duration_ms=0
+2026/09/08 02:07:43 INFO http_request request_id=req_EXmGEr0JIab21PBMpoNp8w method=POST route=/api/v1/me/review-attempts/{attempt_id}/actions status=400 duration_ms=0
+2026/09/08 02:07:43 INFO http_request request_id=req_FwejstBqHlBkTVdlvuhh3w method=POST route=/api/v1/me/review-attempts/{attempt_id}/actions status=200 duration_ms=0
+2026/09/08 02:07:43 INFO http_request request_id=req_0aCicfgtxKARfLK_0Oz9GA method=POST route=/api/v1/me/review-attempts/{attempt_id}/actions status=200 duration_ms=4
+2026/09/08 02:07:43 INFO http_request request_id=req_It2d00xqFyz3LXN7WLOi6g method=GET route=/api/v1/admin/users status=200 duration_ms=1
+2026/09/08 02:07:43 INFO http_request request_id=req_uV1-xvD3-O_n518tLKRLuw method=GET route=/api/v1/admin/users/{user_id}/batches status=200 duration_ms=1
+2026/09/08 02:07:43 INFO http_request request_id=req_LCsU6AqcTpBrgIBDJ-iejw method=DELETE route=/api/v1/me/batches/{batch_id} status=204 duration_ms=2
+2026/09/08 02:07:43 INFO http_request request_id=req_o-kKTBKCzUkqBA8rf_CMKQ method=GET route=/api/v1/me/batches/{batch_id} status=404 duration_ms=0
+2026/09/08 02:07:43 INFO http_request request_id=req_x8lV8xuFr9Aw6Qxy-8gE6w method=POST route=/api/v1/generations/{run_id}/cancel status=200 duration_ms=1
+2026/09/08 02:07:43 INFO http_request request_id=req_9xxvZnY3SMWCSWInAppGbQ method=POST route=/api/v1/generations/stream status=200 duration_ms=6
+2026/09/08 02:07:43 INFO http_request request_id=req_OO2G5JyJfUeu_FTqRc2KfA method=POST route=/api/v1/generations/{run_id}/cancel status=200 duration_ms=1
+2026/09/08 02:07:43 INFO http_request request_id=req_Zg6xxRI38tO5In5j7LJNKw method=PUT route=/api/v1/me/ui-locale status=403 duration_ms=0
+--- PASS: TestM001EndToEnd (4.13s)
+PASS
+ok  	wordweave/internal/httpapi	31.007s

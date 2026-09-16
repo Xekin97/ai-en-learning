@@ -1,0 +1,50 @@
+{
+  "date": "2026-09-08T07:05:11.330Z",
+  "counts": {
+    "PASS": 6,
+    "FAIL": 0,
+    "ERROR": 0
+  },
+  "checks": [
+    {
+      "id": "Vocabulary response completed before content assertion",
+      "status": "PASS",
+      "actual": 200,
+      "expected": 200
+    },
+    {
+      "id": "Live vocabulary dropdown rendered",
+      "status": "PASS",
+      "actual": true,
+      "expected": true
+    },
+    {
+      "id": "Dropdown does not enter layout flow",
+      "status": "PASS",
+      "actual": "absolute",
+      "expected": "absolute"
+    },
+    {
+      "id": "No mutation attempts",
+      "status": "PASS",
+      "actual": [],
+      "expected": []
+    },
+    {
+      "id": "Scoped data unchanged",
+      "status": "PASS",
+      "actual": true,
+      "expected": true
+    },
+    {
+      "id": "Password credentials and sessions unchanged",
+      "status": "PASS",
+      "actual": true,
+      "expected": true
+    }
+  ],
+  "supersedesOnly": "smoke-results.json / Live vocabulary dropdown rendered",
+  "methodCorrection": "Await the exact successful search response and the rendered option, not just the loading listbox container. create.vue displays listbox during loading; original post-assertion screenshot already contains both results.",
+  "productionCodeChanged": false,
+  "realModelCalls": 0
+}

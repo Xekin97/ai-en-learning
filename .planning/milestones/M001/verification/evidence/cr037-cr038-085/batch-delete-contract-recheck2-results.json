@@ -1,0 +1,77 @@
+{
+  "date": "2026-09-07T03:36:51.558Z",
+  "agent": "qa-quinn",
+  "counts": {
+    "PASS": 9,
+    "FAIL": 0,
+    "ERROR": 0
+  },
+  "checks": [
+    {
+      "id": "login with retained synthetic account",
+      "status": "PASS",
+      "actual": 200,
+      "expected": 200
+    },
+    {
+      "id": "retained batch fixture exists",
+      "status": "PASS",
+      "actual": true,
+      "expected": true
+    },
+    {
+      "id": "retained review-session fixture exists",
+      "status": "PASS",
+      "actual": true,
+      "expected": true
+    },
+    {
+      "id": "batch deletion status",
+      "status": "PASS",
+      "actual": 204,
+      "expected": 204
+    },
+    {
+      "id": "batch deletion body bytes",
+      "status": "PASS",
+      "actual": 0,
+      "expected": 0
+    },
+    {
+      "id": "batch deletion content-type absent",
+      "status": "PASS",
+      "actual": null,
+      "expected": null
+    },
+    {
+      "id": "batch deletion cache-control",
+      "status": "PASS",
+      "actual": "no-store",
+      "expected": "no-store"
+    },
+    {
+      "id": "batch deletion cascades review session",
+      "status": "PASS",
+      "actual": 0,
+      "expected": 0
+    },
+    {
+      "id": "deleted batch cannot be read",
+      "status": "PASS",
+      "actual": 404,
+      "expected": 404
+    }
+  ],
+  "origin": "http://127.0.0.1:6101",
+  "topology": "fixed candidate backend through real QA085 Nginx",
+  "correction": "application/json request Content-Type required by global write contract",
+  "safeResponses": [
+    {
+      "id": "consumer batch deletion corrected contract request",
+      "status": 204,
+      "bodyBytes": 0,
+      "contentType": null,
+      "cacheControl": "no-store"
+    }
+  ]
+}

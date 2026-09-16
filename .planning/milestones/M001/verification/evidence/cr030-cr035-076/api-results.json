@@ -1,0 +1,567 @@
+{
+  "date": "2026-09-06T08:27:14.575Z",
+  "agent": "qa-quinn",
+  "counts": {
+    "PASS": 58,
+    "FAIL": 0,
+    "ERROR": 0
+  },
+  "checks": [
+    {
+      "id": "guest permission 01a075d1-2f47-7d28-b8b7-19249c68cc81",
+      "status": "PASS",
+      "actual": 401,
+      "expected": 401
+    },
+    {
+      "id": "guest permission bad-id",
+      "status": "PASS",
+      "actual": 401,
+      "expected": 401
+    },
+    {
+      "id": "guest permission 00000000-0000-0000-0000-000000000001",
+      "status": "PASS",
+      "actual": 401,
+      "expected": 401
+    },
+    {
+      "id": "learner permission 01a075d1-2f47-7d28-b8b7-19249c68cc81",
+      "status": "PASS",
+      "actual": 403,
+      "expected": 403
+    },
+    {
+      "id": "learner permission bad-id",
+      "status": "PASS",
+      "actual": 403,
+      "expected": 403
+    },
+    {
+      "id": "learner permission 00000000-0000-0000-0000-000000000001",
+      "status": "PASS",
+      "actual": 403,
+      "expected": 403
+    },
+    {
+      "id": "admin unknown",
+      "status": "PASS",
+      "actual": 404,
+      "expected": 404
+    },
+    {
+      "id": "no model or credential HTTP",
+      "status": "PASS",
+      "actual": 200,
+      "expected": 200
+    },
+    {
+      "id": "no model or credential quota",
+      "status": "PASS",
+      "actual": {
+        "kind": "limited",
+        "remaining": 5
+      },
+      "expected": {
+        "kind": "limited",
+        "remaining": 5
+      }
+    },
+    {
+      "id": "no model or credential no-store",
+      "status": "PASS",
+      "actual": "no-store",
+      "expected": "no-store"
+    },
+    {
+      "id": "exact detail keys",
+      "status": "PASS",
+      "actual": [
+        "created_at",
+        "generation_quota",
+        "id",
+        "learning_batch_count",
+        "plan_code",
+        "role",
+        "status",
+        "ui_locale",
+        "username"
+      ],
+      "expected": [
+        "created_at",
+        "generation_quota",
+        "id",
+        "learning_batch_count",
+        "plan_code",
+        "role",
+        "status",
+        "ui_locale",
+        "username"
+      ]
+    },
+    {
+      "id": "admin quota null",
+      "status": "PASS",
+      "actual": null,
+      "expected": null
+    },
+    {
+      "id": "GET no reset",
+      "status": "PASS",
+      "actual": "2026-09-04 08:23:59.028251+00",
+      "expected": "2026-09-04 08:23:59.028251+00"
+    },
+    {
+      "id": "charged cancel + valid; expired/refund/other excluded HTTP",
+      "status": "PASS",
+      "actual": 200,
+      "expected": 200
+    },
+    {
+      "id": "charged cancel + valid; expired/refund/other excluded quota",
+      "status": "PASS",
+      "actual": {
+        "kind": "limited",
+        "remaining": 3
+      },
+      "expected": {
+        "kind": "limited",
+        "remaining": 3
+      }
+    },
+    {
+      "id": "charged cancel + valid; expired/refund/other excluded no-store",
+      "status": "PASS",
+      "actual": "no-store",
+      "expected": "no-store"
+    },
+    {
+      "id": "active reservation HTTP",
+      "status": "PASS",
+      "actual": 200,
+      "expected": 200
+    },
+    {
+      "id": "active reservation quota",
+      "status": "PASS",
+      "actual": {
+        "kind": "limited",
+        "remaining": 2
+      },
+      "expected": {
+        "kind": "limited",
+        "remaining": 2
+      }
+    },
+    {
+      "id": "active reservation no-store",
+      "status": "PASS",
+      "actual": "no-store",
+      "expected": "no-store"
+    },
+    {
+      "id": "refund observed HTTP",
+      "status": "PASS",
+      "actual": 200,
+      "expected": 200
+    },
+    {
+      "id": "refund observed quota",
+      "status": "PASS",
+      "actual": {
+        "kind": "limited",
+        "remaining": 3
+      },
+      "expected": {
+        "kind": "limited",
+        "remaining": 3
+      }
+    },
+    {
+      "id": "refund observed no-store",
+      "status": "PASS",
+      "actual": "no-store",
+      "expected": "no-store"
+    },
+    {
+      "id": "lowered policy clamps HTTP",
+      "status": "PASS",
+      "actual": 200,
+      "expected": 200
+    },
+    {
+      "id": "lowered policy clamps quota",
+      "status": "PASS",
+      "actual": {
+        "kind": "limited",
+        "remaining": 0
+      },
+      "expected": {
+        "kind": "limited",
+        "remaining": 0
+      }
+    },
+    {
+      "id": "lowered policy clamps no-store",
+      "status": "PASS",
+      "actual": "no-store",
+      "expected": "no-store"
+    },
+    {
+      "id": "PUT plus status",
+      "status": "PASS",
+      "actual": 200,
+      "expected": 200
+    },
+    {
+      "id": "PUT plus full atomic projection",
+      "status": "PASS",
+      "actual": {
+        "plan": "plus",
+        "quota": {
+          "kind": "limited",
+          "remaining": 0
+        },
+        "reset": true,
+        "count": 1
+      },
+      "expected": {
+        "plan": "plus",
+        "quota": {
+          "kind": "limited",
+          "remaining": 0
+        },
+        "reset": true,
+        "count": 1
+      }
+    },
+    {
+      "id": "GET after plus HTTP",
+      "status": "PASS",
+      "actual": 200,
+      "expected": 200
+    },
+    {
+      "id": "GET after plus quota",
+      "status": "PASS",
+      "actual": {
+        "kind": "limited",
+        "remaining": 0
+      },
+      "expected": {
+        "kind": "limited",
+        "remaining": 0
+      }
+    },
+    {
+      "id": "GET after plus no-store",
+      "status": "PASS",
+      "actual": "no-store",
+      "expected": "no-store"
+    },
+    {
+      "id": "PUT pro status",
+      "status": "PASS",
+      "actual": 200,
+      "expected": 200
+    },
+    {
+      "id": "PUT pro full atomic projection",
+      "status": "PASS",
+      "actual": {
+        "plan": "pro",
+        "quota": {
+          "kind": "unlimited",
+          "remaining": null
+        },
+        "reset": true,
+        "count": 1
+      },
+      "expected": {
+        "plan": "pro",
+        "quota": {
+          "kind": "unlimited",
+          "remaining": null
+        },
+        "reset": true,
+        "count": 1
+      }
+    },
+    {
+      "id": "GET after pro HTTP",
+      "status": "PASS",
+      "actual": 200,
+      "expected": 200
+    },
+    {
+      "id": "GET after pro quota",
+      "status": "PASS",
+      "actual": {
+        "kind": "unlimited",
+        "remaining": null
+      },
+      "expected": {
+        "kind": "unlimited",
+        "remaining": null
+      }
+    },
+    {
+      "id": "GET after pro no-store",
+      "status": "PASS",
+      "actual": "no-store",
+      "expected": "no-store"
+    },
+    {
+      "id": "PUT basic status",
+      "status": "PASS",
+      "actual": 200,
+      "expected": 200
+    },
+    {
+      "id": "PUT basic full atomic projection",
+      "status": "PASS",
+      "actual": {
+        "plan": "basic",
+        "quota": {
+          "kind": "limited",
+          "remaining": 5
+        },
+        "reset": true,
+        "count": 1
+      },
+      "expected": {
+        "plan": "basic",
+        "quota": {
+          "kind": "limited",
+          "remaining": 5
+        },
+        "reset": true,
+        "count": 1
+      }
+    },
+    {
+      "id": "GET after basic HTTP",
+      "status": "PASS",
+      "actual": 200,
+      "expected": 200
+    },
+    {
+      "id": "GET after basic quota",
+      "status": "PASS",
+      "actual": {
+        "kind": "limited",
+        "remaining": 5
+      },
+      "expected": {
+        "kind": "limited",
+        "remaining": 5
+      }
+    },
+    {
+      "id": "GET after basic no-store",
+      "status": "PASS",
+      "actual": "no-store",
+      "expected": "no-store"
+    },
+    {
+      "id": "malformed extra quota write",
+      "status": "PASS",
+      "actual": 400,
+      "expected": 400
+    },
+    {
+      "id": "cannot change admin",
+      "status": "PASS",
+      "actual": 404,
+      "expected": 404
+    },
+    {
+      "id": "unconfirmed rejected",
+      "status": "PASS",
+      "actual": 422,
+      "expected": 422
+    },
+    {
+      "id": "rejected no reset",
+      "status": "PASS",
+      "actual": "2026-09-06 08:27:14.260018+00",
+      "expected": "2026-09-06 08:27:14.260018+00"
+    },
+    {
+      "id": "real owner batch",
+      "status": "PASS",
+      "actual": 200,
+      "expected": 200
+    },
+    {
+      "id": "wrong user batch",
+      "status": "PASS",
+      "actual": 404,
+      "expected": 404
+    },
+    {
+      "id": "admin batch is read only PATCH",
+      "status": "PASS",
+      "actual": 405,
+      "expected": 405
+    },
+    {
+      "id": "admin batch is read only DELETE",
+      "status": "PASS",
+      "actual": 405,
+      "expected": 405
+    },
+    {
+      "id": "admin batch is read only POST",
+      "status": "PASS",
+      "actual": 405,
+      "expected": 405
+    },
+    {
+      "id": "search summary no quota 0",
+      "status": "PASS",
+      "actual": false,
+      "expected": false
+    },
+    {
+      "id": "search summary no quota 1",
+      "status": "PASS",
+      "actual": false,
+      "expected": false
+    },
+    {
+      "id": "search summary no quota 2",
+      "status": "PASS",
+      "actual": false,
+      "expected": false
+    },
+    {
+      "id": "search 3 pages",
+      "status": "PASS",
+      "actual": 3,
+      "expected": 3
+    },
+    {
+      "id": "search no missing duplicate",
+      "status": "PASS",
+      "actual": 45,
+      "expected": 45
+    },
+    {
+      "id": "search backend sorted",
+      "status": "PASS",
+      "actual": [
+        "qa076_search_01",
+        "qa076_search_02",
+        "qa076_search_03",
+        "qa076_search_04",
+        "qa076_search_05",
+        "qa076_search_06",
+        "qa076_search_07",
+        "qa076_search_08",
+        "qa076_search_09",
+        "qa076_search_10",
+        "qa076_search_11",
+        "qa076_search_12",
+        "qa076_search_13",
+        "qa076_search_14",
+        "qa076_search_15",
+        "qa076_search_16",
+        "qa076_search_17",
+        "qa076_search_18",
+        "qa076_search_19",
+        "qa076_search_20",
+        "qa076_search_21",
+        "qa076_search_22",
+        "qa076_search_23",
+        "qa076_search_24",
+        "qa076_search_25",
+        "qa076_search_26",
+        "qa076_search_27",
+        "qa076_search_28",
+        "qa076_search_29",
+        "qa076_search_30",
+        "qa076_search_31",
+        "qa076_search_32",
+        "qa076_search_33",
+        "qa076_search_34",
+        "qa076_search_35",
+        "qa076_search_36",
+        "qa076_search_37",
+        "qa076_search_38",
+        "qa076_search_39",
+        "qa076_search_40",
+        "qa076_search_41",
+        "qa076_search_42",
+        "qa076_search_43",
+        "qa076_search_44",
+        "qa076_search_45"
+      ],
+      "expected": [
+        "qa076_search_01",
+        "qa076_search_02",
+        "qa076_search_03",
+        "qa076_search_04",
+        "qa076_search_05",
+        "qa076_search_06",
+        "qa076_search_07",
+        "qa076_search_08",
+        "qa076_search_09",
+        "qa076_search_10",
+        "qa076_search_11",
+        "qa076_search_12",
+        "qa076_search_13",
+        "qa076_search_14",
+        "qa076_search_15",
+        "qa076_search_16",
+        "qa076_search_17",
+        "qa076_search_18",
+        "qa076_search_19",
+        "qa076_search_20",
+        "qa076_search_21",
+        "qa076_search_22",
+        "qa076_search_23",
+        "qa076_search_24",
+        "qa076_search_25",
+        "qa076_search_26",
+        "qa076_search_27",
+        "qa076_search_28",
+        "qa076_search_29",
+        "qa076_search_30",
+        "qa076_search_31",
+        "qa076_search_32",
+        "qa076_search_33",
+        "qa076_search_34",
+        "qa076_search_35",
+        "qa076_search_36",
+        "qa076_search_37",
+        "qa076_search_38",
+        "qa076_search_39",
+        "qa076_search_40",
+        "qa076_search_41",
+        "qa076_search_42",
+        "qa076_search_43",
+        "qa076_search_44",
+        "qa076_search_45"
+      ]
+    },
+    {
+      "id": "cursor wrong scope",
+      "status": "PASS",
+      "actual": 422,
+      "expected": 422
+    },
+    {
+      "id": "detail local p95 under 1s",
+      "status": "PASS",
+      "actual": true,
+      "expected": true
+    },
+    {
+      "id": "no real credential",
+      "status": "PASS",
+      "actual": "0",
+      "expected": "0"
+    }
+  ]
+}

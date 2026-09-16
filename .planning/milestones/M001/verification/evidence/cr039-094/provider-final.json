@@ -1,0 +1,4098 @@
+{
+  "catalogs": 2,
+  "calls": [
+    {
+      "ordinal": 1,
+      "fixture": "probe-v3",
+      "stream": true,
+      "schema": {
+        "name": "wordweave_learning_batch",
+        "schema": {
+          "additionalProperties": false,
+          "properties": {
+            "passage": {
+              "maxLength": 2000000,
+              "minLength": 1,
+              "type": "string"
+            },
+            "tags": {
+              "items": {
+                "maxLength": 100,
+                "minLength": 1,
+                "type": "string"
+              },
+              "maxItems": 3,
+              "minItems": 1,
+              "type": "array"
+            },
+            "targets": {
+              "items": {
+                "additionalProperties": false,
+                "properties": {
+                  "contextual_meaning": {
+                    "maxLength": 500,
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "hint_forms": {
+                    "items": {
+                      "maxLength": 500,
+                      "minLength": 1,
+                      "type": "string"
+                    },
+                    "maxItems": 128,
+                    "minItems": 1,
+                    "type": "array"
+                  },
+                  "hint_phrase": {
+                    "maxLength": 500,
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "passage_forms": {
+                    "items": {
+                      "maxLength": 500,
+                      "minLength": 1,
+                      "type": "string"
+                    },
+                    "maxItems": 128,
+                    "minItems": 1,
+                    "type": "array"
+                  },
+                  "source_entry": {
+                    "maxLength": 128,
+                    "minLength": 1,
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "source_entry",
+                  "contextual_meaning",
+                  "hint_phrase",
+                  "passage_forms",
+                  "hint_forms"
+                ],
+                "type": "object"
+              },
+              "maxItems": 2,
+              "minItems": 2,
+              "type": "array"
+            }
+          },
+          "required": [
+            "passage",
+            "tags",
+            "targets"
+          ],
+          "type": "object"
+        },
+        "strict": true
+      },
+      "provider": {
+        "data_collection": "deny",
+        "require_parameters": true
+      },
+      "model": "qa/synthetic",
+      "closed": true
+    },
+    {
+      "ordinal": 2,
+      "fixture": "C39-03-08-11",
+      "stream": true,
+      "schema": {
+        "name": "wordweave_learning_batch",
+        "schema": {
+          "additionalProperties": false,
+          "properties": {
+            "passage": {
+              "maxLength": 2000000,
+              "minLength": 1,
+              "type": "string"
+            },
+            "tags": {
+              "items": {
+                "maxLength": 100,
+                "minLength": 1,
+                "type": "string"
+              },
+              "maxItems": 3,
+              "minItems": 1,
+              "type": "array"
+            },
+            "targets": {
+              "items": {
+                "additionalProperties": false,
+                "properties": {
+                  "contextual_meaning": {
+                    "maxLength": 500,
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "hint_forms": {
+                    "items": {
+                      "maxLength": 500,
+                      "minLength": 1,
+                      "type": "string"
+                    },
+                    "maxItems": 128,
+                    "minItems": 1,
+                    "type": "array"
+                  },
+                  "hint_phrase": {
+                    "maxLength": 500,
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "passage_forms": {
+                    "items": {
+                      "maxLength": 500,
+                      "minLength": 1,
+                      "type": "string"
+                    },
+                    "maxItems": 128,
+                    "minItems": 1,
+                    "type": "array"
+                  },
+                  "source_entry": {
+                    "maxLength": 128,
+                    "minLength": 1,
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "source_entry",
+                  "contextual_meaning",
+                  "hint_phrase",
+                  "passage_forms",
+                  "hint_forms"
+                ],
+                "type": "object"
+              },
+              "maxItems": 1,
+              "minItems": 1,
+              "type": "array"
+            }
+          },
+          "required": [
+            "passage",
+            "tags",
+            "targets"
+          ],
+          "type": "object"
+        },
+        "strict": true
+      },
+      "provider": {
+        "data_collection": "deny",
+        "require_parameters": true
+      },
+      "model": "qa/synthetic",
+      "closed": true
+    },
+    {
+      "ordinal": 3,
+      "fixture": "C39-18/AQ090-S2-reconstructed",
+      "stream": true,
+      "schema": {
+        "name": "wordweave_learning_batch",
+        "schema": {
+          "additionalProperties": false,
+          "properties": {
+            "passage": {
+              "maxLength": 2000000,
+              "minLength": 1,
+              "type": "string"
+            },
+            "tags": {
+              "items": {
+                "maxLength": 100,
+                "minLength": 1,
+                "type": "string"
+              },
+              "maxItems": 3,
+              "minItems": 1,
+              "type": "array"
+            },
+            "targets": {
+              "items": {
+                "additionalProperties": false,
+                "properties": {
+                  "contextual_meaning": {
+                    "maxLength": 500,
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "hint_forms": {
+                    "items": {
+                      "maxLength": 500,
+                      "minLength": 1,
+                      "type": "string"
+                    },
+                    "maxItems": 128,
+                    "minItems": 1,
+                    "type": "array"
+                  },
+                  "hint_phrase": {
+                    "maxLength": 500,
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "passage_forms": {
+                    "items": {
+                      "maxLength": 500,
+                      "minLength": 1,
+                      "type": "string"
+                    },
+                    "maxItems": 128,
+                    "minItems": 1,
+                    "type": "array"
+                  },
+                  "source_entry": {
+                    "maxLength": 128,
+                    "minLength": 1,
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "source_entry",
+                  "contextual_meaning",
+                  "hint_phrase",
+                  "passage_forms",
+                  "hint_forms"
+                ],
+                "type": "object"
+              },
+              "maxItems": 5,
+              "minItems": 5,
+              "type": "array"
+            }
+          },
+          "required": [
+            "passage",
+            "tags",
+            "targets"
+          ],
+          "type": "object"
+        },
+        "strict": true
+      },
+      "provider": {
+        "data_collection": "deny",
+        "require_parameters": true
+      },
+      "model": "qa/synthetic",
+      "closed": true
+    },
+    {
+      "ordinal": 4,
+      "fixture": "C39-10-18/ten-interleaved",
+      "stream": true,
+      "schema": {
+        "name": "wordweave_learning_batch",
+        "schema": {
+          "additionalProperties": false,
+          "properties": {
+            "passage": {
+              "maxLength": 2000000,
+              "minLength": 1,
+              "type": "string"
+            },
+            "tags": {
+              "items": {
+                "maxLength": 100,
+                "minLength": 1,
+                "type": "string"
+              },
+              "maxItems": 3,
+              "minItems": 1,
+              "type": "array"
+            },
+            "targets": {
+              "items": {
+                "additionalProperties": false,
+                "properties": {
+                  "contextual_meaning": {
+                    "maxLength": 500,
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "hint_forms": {
+                    "items": {
+                      "maxLength": 500,
+                      "minLength": 1,
+                      "type": "string"
+                    },
+                    "maxItems": 128,
+                    "minItems": 1,
+                    "type": "array"
+                  },
+                  "hint_phrase": {
+                    "maxLength": 500,
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "passage_forms": {
+                    "items": {
+                      "maxLength": 500,
+                      "minLength": 1,
+                      "type": "string"
+                    },
+                    "maxItems": 128,
+                    "minItems": 1,
+                    "type": "array"
+                  },
+                  "source_entry": {
+                    "maxLength": 128,
+                    "minLength": 1,
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "source_entry",
+                  "contextual_meaning",
+                  "hint_phrase",
+                  "passage_forms",
+                  "hint_forms"
+                ],
+                "type": "object"
+              },
+              "maxItems": 10,
+              "minItems": 10,
+              "type": "array"
+            }
+          },
+          "required": [
+            "passage",
+            "tags",
+            "targets"
+          ],
+          "type": "object"
+        },
+        "strict": true
+      },
+      "provider": {
+        "data_collection": "deny",
+        "require_parameters": true
+      },
+      "model": "qa/synthetic",
+      "closed": true
+    },
+    {
+      "ordinal": 5,
+      "fixture": "C39-04/learn",
+      "stream": true,
+      "schema": {
+        "name": "wordweave_learning_batch",
+        "schema": {
+          "additionalProperties": false,
+          "properties": {
+            "passage": {
+              "maxLength": 2000000,
+              "minLength": 1,
+              "type": "string"
+            },
+            "tags": {
+              "items": {
+                "maxLength": 100,
+                "minLength": 1,
+                "type": "string"
+              },
+              "maxItems": 3,
+              "minItems": 1,
+              "type": "array"
+            },
+            "targets": {
+              "items": {
+                "additionalProperties": false,
+                "properties": {
+                  "contextual_meaning": {
+                    "maxLength": 500,
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "hint_forms": {
+                    "items": {
+                      "maxLength": 500,
+                      "minLength": 1,
+                      "type": "string"
+                    },
+                    "maxItems": 128,
+                    "minItems": 1,
+                    "type": "array"
+                  },
+                  "hint_phrase": {
+                    "maxLength": 500,
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "passage_forms": {
+                    "items": {
+                      "maxLength": 500,
+                      "minLength": 1,
+                      "type": "string"
+                    },
+                    "maxItems": 128,
+                    "minItems": 1,
+                    "type": "array"
+                  },
+                  "source_entry": {
+                    "maxLength": 128,
+                    "minLength": 1,
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "source_entry",
+                  "contextual_meaning",
+                  "hint_phrase",
+                  "passage_forms",
+                  "hint_forms"
+                ],
+                "type": "object"
+              },
+              "maxItems": 1,
+              "minItems": 1,
+              "type": "array"
+            }
+          },
+          "required": [
+            "passage",
+            "tags",
+            "targets"
+          ],
+          "type": "object"
+        },
+        "strict": true
+      },
+      "provider": {
+        "data_collection": "deny",
+        "require_parameters": true
+      },
+      "model": "qa/synthetic",
+      "closed": true
+    },
+    {
+      "ordinal": 6,
+      "fixture": "C39-04/agree",
+      "stream": true,
+      "schema": {
+        "name": "wordweave_learning_batch",
+        "schema": {
+          "additionalProperties": false,
+          "properties": {
+            "passage": {
+              "maxLength": 2000000,
+              "minLength": 1,
+              "type": "string"
+            },
+            "tags": {
+              "items": {
+                "maxLength": 100,
+                "minLength": 1,
+                "type": "string"
+              },
+              "maxItems": 3,
+              "minItems": 1,
+              "type": "array"
+            },
+            "targets": {
+              "items": {
+                "additionalProperties": false,
+                "properties": {
+                  "contextual_meaning": {
+                    "maxLength": 500,
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "hint_forms": {
+                    "items": {
+                      "maxLength": 500,
+                      "minLength": 1,
+                      "type": "string"
+                    },
+                    "maxItems": 128,
+                    "minItems": 1,
+                    "type": "array"
+                  },
+                  "hint_phrase": {
+                    "maxLength": 500,
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "passage_forms": {
+                    "items": {
+                      "maxLength": 500,
+                      "minLength": 1,
+                      "type": "string"
+                    },
+                    "maxItems": 128,
+                    "minItems": 1,
+                    "type": "array"
+                  },
+                  "source_entry": {
+                    "maxLength": 128,
+                    "minLength": 1,
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "source_entry",
+                  "contextual_meaning",
+                  "hint_phrase",
+                  "passage_forms",
+                  "hint_forms"
+                ],
+                "type": "object"
+              },
+              "maxItems": 1,
+              "minItems": 1,
+              "type": "array"
+            }
+          },
+          "required": [
+            "passage",
+            "tags",
+            "targets"
+          ],
+          "type": "object"
+        },
+        "strict": true
+      },
+      "provider": {
+        "data_collection": "deny",
+        "require_parameters": true
+      },
+      "model": "qa/synthetic",
+      "closed": true
+    },
+    {
+      "ordinal": 7,
+      "fixture": "C39-04/die",
+      "stream": true,
+      "schema": {
+        "name": "wordweave_learning_batch",
+        "schema": {
+          "additionalProperties": false,
+          "properties": {
+            "passage": {
+              "maxLength": 2000000,
+              "minLength": 1,
+              "type": "string"
+            },
+            "tags": {
+              "items": {
+                "maxLength": 100,
+                "minLength": 1,
+                "type": "string"
+              },
+              "maxItems": 3,
+              "minItems": 1,
+              "type": "array"
+            },
+            "targets": {
+              "items": {
+                "additionalProperties": false,
+                "properties": {
+                  "contextual_meaning": {
+                    "maxLength": 500,
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "hint_forms": {
+                    "items": {
+                      "maxLength": 500,
+                      "minLength": 1,
+                      "type": "string"
+                    },
+                    "maxItems": 128,
+                    "minItems": 1,
+                    "type": "array"
+                  },
+                  "hint_phrase": {
+                    "maxLength": 500,
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "passage_forms": {
+                    "items": {
+                      "maxLength": 500,
+                      "minLength": 1,
+                      "type": "string"
+                    },
+                    "maxItems": 128,
+                    "minItems": 1,
+                    "type": "array"
+                  },
+                  "source_entry": {
+                    "maxLength": 128,
+                    "minLength": 1,
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "source_entry",
+                  "contextual_meaning",
+                  "hint_phrase",
+                  "passage_forms",
+                  "hint_forms"
+                ],
+                "type": "object"
+              },
+              "maxItems": 1,
+              "minItems": 1,
+              "type": "array"
+            }
+          },
+          "required": [
+            "passage",
+            "tags",
+            "targets"
+          ],
+          "type": "object"
+        },
+        "strict": true
+      },
+      "provider": {
+        "data_collection": "deny",
+        "require_parameters": true
+      },
+      "model": "qa/synthetic",
+      "closed": true
+    },
+    {
+      "ordinal": 8,
+      "fixture": "C39-04/prefer",
+      "stream": true,
+      "schema": {
+        "name": "wordweave_learning_batch",
+        "schema": {
+          "additionalProperties": false,
+          "properties": {
+            "passage": {
+              "maxLength": 2000000,
+              "minLength": 1,
+              "type": "string"
+            },
+            "tags": {
+              "items": {
+                "maxLength": 100,
+                "minLength": 1,
+                "type": "string"
+              },
+              "maxItems": 3,
+              "minItems": 1,
+              "type": "array"
+            },
+            "targets": {
+              "items": {
+                "additionalProperties": false,
+                "properties": {
+                  "contextual_meaning": {
+                    "maxLength": 500,
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "hint_forms": {
+                    "items": {
+                      "maxLength": 500,
+                      "minLength": 1,
+                      "type": "string"
+                    },
+                    "maxItems": 128,
+                    "minItems": 1,
+                    "type": "array"
+                  },
+                  "hint_phrase": {
+                    "maxLength": 500,
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "passage_forms": {
+                    "items": {
+                      "maxLength": 500,
+                      "minLength": 1,
+                      "type": "string"
+                    },
+                    "maxItems": 128,
+                    "minItems": 1,
+                    "type": "array"
+                  },
+                  "source_entry": {
+                    "maxLength": 128,
+                    "minLength": 1,
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "source_entry",
+                  "contextual_meaning",
+                  "hint_phrase",
+                  "passage_forms",
+                  "hint_forms"
+                ],
+                "type": "object"
+              },
+              "maxItems": 1,
+              "minItems": 1,
+              "type": "array"
+            }
+          },
+          "required": [
+            "passage",
+            "tags",
+            "targets"
+          ],
+          "type": "object"
+        },
+        "strict": true
+      },
+      "provider": {
+        "data_collection": "deny",
+        "require_parameters": true
+      },
+      "model": "qa/synthetic",
+      "closed": true
+    },
+    {
+      "ordinal": 9,
+      "fixture": "C39-04/coup d'etat",
+      "stream": true,
+      "schema": {
+        "name": "wordweave_learning_batch",
+        "schema": {
+          "additionalProperties": false,
+          "properties": {
+            "passage": {
+              "maxLength": 2000000,
+              "minLength": 1,
+              "type": "string"
+            },
+            "tags": {
+              "items": {
+                "maxLength": 100,
+                "minLength": 1,
+                "type": "string"
+              },
+              "maxItems": 3,
+              "minItems": 1,
+              "type": "array"
+            },
+            "targets": {
+              "items": {
+                "additionalProperties": false,
+                "properties": {
+                  "contextual_meaning": {
+                    "maxLength": 500,
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "hint_forms": {
+                    "items": {
+                      "maxLength": 500,
+                      "minLength": 1,
+                      "type": "string"
+                    },
+                    "maxItems": 128,
+                    "minItems": 1,
+                    "type": "array"
+                  },
+                  "hint_phrase": {
+                    "maxLength": 500,
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "passage_forms": {
+                    "items": {
+                      "maxLength": 500,
+                      "minLength": 1,
+                      "type": "string"
+                    },
+                    "maxItems": 128,
+                    "minItems": 1,
+                    "type": "array"
+                  },
+                  "source_entry": {
+                    "maxLength": 128,
+                    "minLength": 1,
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "source_entry",
+                  "contextual_meaning",
+                  "hint_phrase",
+                  "passage_forms",
+                  "hint_forms"
+                ],
+                "type": "object"
+              },
+              "maxItems": 1,
+              "minItems": 1,
+              "type": "array"
+            }
+          },
+          "required": [
+            "passage",
+            "tags",
+            "targets"
+          ],
+          "type": "object"
+        },
+        "strict": true
+      },
+      "provider": {
+        "data_collection": "deny",
+        "require_parameters": true
+      },
+      "model": "qa/synthetic",
+      "closed": true
+    },
+    {
+      "ordinal": 10,
+      "fixture": "C39-05/banana",
+      "stream": true,
+      "schema": {
+        "name": "wordweave_learning_batch",
+        "schema": {
+          "additionalProperties": false,
+          "properties": {
+            "passage": {
+              "maxLength": 2000000,
+              "minLength": 1,
+              "type": "string"
+            },
+            "tags": {
+              "items": {
+                "maxLength": 100,
+                "minLength": 1,
+                "type": "string"
+              },
+              "maxItems": 3,
+              "minItems": 1,
+              "type": "array"
+            },
+            "targets": {
+              "items": {
+                "additionalProperties": false,
+                "properties": {
+                  "contextual_meaning": {
+                    "maxLength": 500,
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "hint_forms": {
+                    "items": {
+                      "maxLength": 500,
+                      "minLength": 1,
+                      "type": "string"
+                    },
+                    "maxItems": 128,
+                    "minItems": 1,
+                    "type": "array"
+                  },
+                  "hint_phrase": {
+                    "maxLength": 500,
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "passage_forms": {
+                    "items": {
+                      "maxLength": 500,
+                      "minLength": 1,
+                      "type": "string"
+                    },
+                    "maxItems": 128,
+                    "minItems": 1,
+                    "type": "array"
+                  },
+                  "source_entry": {
+                    "maxLength": 128,
+                    "minLength": 1,
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "source_entry",
+                  "contextual_meaning",
+                  "hint_phrase",
+                  "passage_forms",
+                  "hint_forms"
+                ],
+                "type": "object"
+              },
+              "maxItems": 1,
+              "minItems": 1,
+              "type": "array"
+            }
+          },
+          "required": [
+            "passage",
+            "tags",
+            "targets"
+          ],
+          "type": "object"
+        },
+        "strict": true
+      },
+      "provider": {
+        "data_collection": "deny",
+        "require_parameters": true
+      },
+      "model": "qa/synthetic",
+      "closed": true
+    },
+    {
+      "ordinal": 11,
+      "fixture": "C39-05/study",
+      "stream": true,
+      "schema": {
+        "name": "wordweave_learning_batch",
+        "schema": {
+          "additionalProperties": false,
+          "properties": {
+            "passage": {
+              "maxLength": 2000000,
+              "minLength": 1,
+              "type": "string"
+            },
+            "tags": {
+              "items": {
+                "maxLength": 100,
+                "minLength": 1,
+                "type": "string"
+              },
+              "maxItems": 3,
+              "minItems": 1,
+              "type": "array"
+            },
+            "targets": {
+              "items": {
+                "additionalProperties": false,
+                "properties": {
+                  "contextual_meaning": {
+                    "maxLength": 500,
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "hint_forms": {
+                    "items": {
+                      "maxLength": 500,
+                      "minLength": 1,
+                      "type": "string"
+                    },
+                    "maxItems": 128,
+                    "minItems": 1,
+                    "type": "array"
+                  },
+                  "hint_phrase": {
+                    "maxLength": 500,
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "passage_forms": {
+                    "items": {
+                      "maxLength": 500,
+                      "minLength": 1,
+                      "type": "string"
+                    },
+                    "maxItems": 128,
+                    "minItems": 1,
+                    "type": "array"
+                  },
+                  "source_entry": {
+                    "maxLength": 128,
+                    "minLength": 1,
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "source_entry",
+                  "contextual_meaning",
+                  "hint_phrase",
+                  "passage_forms",
+                  "hint_forms"
+                ],
+                "type": "object"
+              },
+              "maxItems": 1,
+              "minItems": 1,
+              "type": "array"
+            }
+          },
+          "required": [
+            "passage",
+            "tags",
+            "targets"
+          ],
+          "type": "object"
+        },
+        "strict": true
+      },
+      "provider": {
+        "data_collection": "deny",
+        "require_parameters": true
+      },
+      "model": "qa/synthetic",
+      "closed": true
+    },
+    {
+      "ordinal": 12,
+      "fixture": "C39-05/vulnerabled",
+      "stream": true,
+      "schema": {
+        "name": "wordweave_learning_batch",
+        "schema": {
+          "additionalProperties": false,
+          "properties": {
+            "passage": {
+              "maxLength": 2000000,
+              "minLength": 1,
+              "type": "string"
+            },
+            "tags": {
+              "items": {
+                "maxLength": 100,
+                "minLength": 1,
+                "type": "string"
+              },
+              "maxItems": 3,
+              "minItems": 1,
+              "type": "array"
+            },
+            "targets": {
+              "items": {
+                "additionalProperties": false,
+                "properties": {
+                  "contextual_meaning": {
+                    "maxLength": 500,
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "hint_forms": {
+                    "items": {
+                      "maxLength": 500,
+                      "minLength": 1,
+                      "type": "string"
+                    },
+                    "maxItems": 128,
+                    "minItems": 1,
+                    "type": "array"
+                  },
+                  "hint_phrase": {
+                    "maxLength": 500,
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "passage_forms": {
+                    "items": {
+                      "maxLength": 500,
+                      "minLength": 1,
+                      "type": "string"
+                    },
+                    "maxItems": 128,
+                    "minItems": 1,
+                    "type": "array"
+                  },
+                  "source_entry": {
+                    "maxLength": 128,
+                    "minLength": 1,
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "source_entry",
+                  "contextual_meaning",
+                  "hint_phrase",
+                  "passage_forms",
+                  "hint_forms"
+                ],
+                "type": "object"
+              },
+              "maxItems": 1,
+              "minItems": 1,
+              "type": "array"
+            }
+          },
+          "required": [
+            "passage",
+            "tags",
+            "targets"
+          ],
+          "type": "object"
+        },
+        "strict": true
+      },
+      "provider": {
+        "data_collection": "deny",
+        "require_parameters": true
+      },
+      "model": "qa/synthetic",
+      "closed": true
+    },
+    {
+      "ordinal": 13,
+      "fixture": "C39-05/readed",
+      "stream": true,
+      "schema": {
+        "name": "wordweave_learning_batch",
+        "schema": {
+          "additionalProperties": false,
+          "properties": {
+            "passage": {
+              "maxLength": 2000000,
+              "minLength": 1,
+              "type": "string"
+            },
+            "tags": {
+              "items": {
+                "maxLength": 100,
+                "minLength": 1,
+                "type": "string"
+              },
+              "maxItems": 3,
+              "minItems": 1,
+              "type": "array"
+            },
+            "targets": {
+              "items": {
+                "additionalProperties": false,
+                "properties": {
+                  "contextual_meaning": {
+                    "maxLength": 500,
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "hint_forms": {
+                    "items": {
+                      "maxLength": 500,
+                      "minLength": 1,
+                      "type": "string"
+                    },
+                    "maxItems": 128,
+                    "minItems": 1,
+                    "type": "array"
+                  },
+                  "hint_phrase": {
+                    "maxLength": 500,
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "passage_forms": {
+                    "items": {
+                      "maxLength": 500,
+                      "minLength": 1,
+                      "type": "string"
+                    },
+                    "maxItems": 128,
+                    "minItems": 1,
+                    "type": "array"
+                  },
+                  "source_entry": {
+                    "maxLength": 128,
+                    "minLength": 1,
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "source_entry",
+                  "contextual_meaning",
+                  "hint_phrase",
+                  "passage_forms",
+                  "hint_forms"
+                ],
+                "type": "object"
+              },
+              "maxItems": 1,
+              "minItems": 1,
+              "type": "array"
+            }
+          },
+          "required": [
+            "passage",
+            "tags",
+            "targets"
+          ],
+          "type": "object"
+        },
+        "strict": true
+      },
+      "provider": {
+        "data_collection": "deny",
+        "require_parameters": true
+      },
+      "model": "qa/synthetic",
+      "closed": true
+    },
+    {
+      "ordinal": 14,
+      "fixture": "C39-05/childs",
+      "stream": true,
+      "schema": {
+        "name": "wordweave_learning_batch",
+        "schema": {
+          "additionalProperties": false,
+          "properties": {
+            "passage": {
+              "maxLength": 2000000,
+              "minLength": 1,
+              "type": "string"
+            },
+            "tags": {
+              "items": {
+                "maxLength": 100,
+                "minLength": 1,
+                "type": "string"
+              },
+              "maxItems": 3,
+              "minItems": 1,
+              "type": "array"
+            },
+            "targets": {
+              "items": {
+                "additionalProperties": false,
+                "properties": {
+                  "contextual_meaning": {
+                    "maxLength": 500,
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "hint_forms": {
+                    "items": {
+                      "maxLength": 500,
+                      "minLength": 1,
+                      "type": "string"
+                    },
+                    "maxItems": 128,
+                    "minItems": 1,
+                    "type": "array"
+                  },
+                  "hint_phrase": {
+                    "maxLength": 500,
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "passage_forms": {
+                    "items": {
+                      "maxLength": 500,
+                      "minLength": 1,
+                      "type": "string"
+                    },
+                    "maxItems": 128,
+                    "minItems": 1,
+                    "type": "array"
+                  },
+                  "source_entry": {
+                    "maxLength": 128,
+                    "minLength": 1,
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "source_entry",
+                  "contextual_meaning",
+                  "hint_phrase",
+                  "passage_forms",
+                  "hint_forms"
+                ],
+                "type": "object"
+              },
+              "maxItems": 1,
+              "minItems": 1,
+              "type": "array"
+            }
+          },
+          "required": [
+            "passage",
+            "tags",
+            "targets"
+          ],
+          "type": "object"
+        },
+        "strict": true
+      },
+      "provider": {
+        "data_collection": "deny",
+        "require_parameters": true
+      },
+      "model": "qa/synthetic",
+      "closed": true
+    },
+    {
+      "ordinal": 15,
+      "fixture": "C39-05/agreeed",
+      "stream": true,
+      "schema": {
+        "name": "wordweave_learning_batch",
+        "schema": {
+          "additionalProperties": false,
+          "properties": {
+            "passage": {
+              "maxLength": 2000000,
+              "minLength": 1,
+              "type": "string"
+            },
+            "tags": {
+              "items": {
+                "maxLength": 100,
+                "minLength": 1,
+                "type": "string"
+              },
+              "maxItems": 3,
+              "minItems": 1,
+              "type": "array"
+            },
+            "targets": {
+              "items": {
+                "additionalProperties": false,
+                "properties": {
+                  "contextual_meaning": {
+                    "maxLength": 500,
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "hint_forms": {
+                    "items": {
+                      "maxLength": 500,
+                      "minLength": 1,
+                      "type": "string"
+                    },
+                    "maxItems": 128,
+                    "minItems": 1,
+                    "type": "array"
+                  },
+                  "hint_phrase": {
+                    "maxLength": 500,
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "passage_forms": {
+                    "items": {
+                      "maxLength": 500,
+                      "minLength": 1,
+                      "type": "string"
+                    },
+                    "maxItems": 128,
+                    "minItems": 1,
+                    "type": "array"
+                  },
+                  "source_entry": {
+                    "maxLength": 128,
+                    "minLength": 1,
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "source_entry",
+                  "contextual_meaning",
+                  "hint_phrase",
+                  "passage_forms",
+                  "hint_forms"
+                ],
+                "type": "object"
+              },
+              "maxItems": 1,
+              "minItems": 1,
+              "type": "array"
+            }
+          },
+          "required": [
+            "passage",
+            "tags",
+            "targets"
+          ],
+          "type": "object"
+        },
+        "strict": true
+      },
+      "provider": {
+        "data_collection": "deny",
+        "require_parameters": true
+      },
+      "model": "qa/synthetic",
+      "closed": true
+    },
+    {
+      "ordinal": 16,
+      "fixture": "C39-05/prefered",
+      "stream": true,
+      "schema": {
+        "name": "wordweave_learning_batch",
+        "schema": {
+          "additionalProperties": false,
+          "properties": {
+            "passage": {
+              "maxLength": 2000000,
+              "minLength": 1,
+              "type": "string"
+            },
+            "tags": {
+              "items": {
+                "maxLength": 100,
+                "minLength": 1,
+                "type": "string"
+              },
+              "maxItems": 3,
+              "minItems": 1,
+              "type": "array"
+            },
+            "targets": {
+              "items": {
+                "additionalProperties": false,
+                "properties": {
+                  "contextual_meaning": {
+                    "maxLength": 500,
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "hint_forms": {
+                    "items": {
+                      "maxLength": 500,
+                      "minLength": 1,
+                      "type": "string"
+                    },
+                    "maxItems": 128,
+                    "minItems": 1,
+                    "type": "array"
+                  },
+                  "hint_phrase": {
+                    "maxLength": 500,
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "passage_forms": {
+                    "items": {
+                      "maxLength": 500,
+                      "minLength": 1,
+                      "type": "string"
+                    },
+                    "maxItems": 128,
+                    "minItems": 1,
+                    "type": "array"
+                  },
+                  "source_entry": {
+                    "maxLength": 128,
+                    "minLength": 1,
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "source_entry",
+                  "contextual_meaning",
+                  "hint_phrase",
+                  "passage_forms",
+                  "hint_forms"
+                ],
+                "type": "object"
+              },
+              "maxItems": 1,
+              "minItems": 1,
+              "type": "array"
+            }
+          },
+          "required": [
+            "passage",
+            "tags",
+            "targets"
+          ],
+          "type": "object"
+        },
+        "strict": true
+      },
+      "provider": {
+        "data_collection": "deny",
+        "require_parameters": true
+      },
+      "model": "qa/synthetic",
+      "closed": true
+    },
+    {
+      "ordinal": 17,
+      "fixture": "C39-05/vulnerableness",
+      "stream": true,
+      "schema": {
+        "name": "wordweave_learning_batch",
+        "schema": {
+          "additionalProperties": false,
+          "properties": {
+            "passage": {
+              "maxLength": 2000000,
+              "minLength": 1,
+              "type": "string"
+            },
+            "tags": {
+              "items": {
+                "maxLength": 100,
+                "minLength": 1,
+                "type": "string"
+              },
+              "maxItems": 3,
+              "minItems": 1,
+              "type": "array"
+            },
+            "targets": {
+              "items": {
+                "additionalProperties": false,
+                "properties": {
+                  "contextual_meaning": {
+                    "maxLength": 500,
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "hint_forms": {
+                    "items": {
+                      "maxLength": 500,
+                      "minLength": 1,
+                      "type": "string"
+                    },
+                    "maxItems": 128,
+                    "minItems": 1,
+                    "type": "array"
+                  },
+                  "hint_phrase": {
+                    "maxLength": 500,
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "passage_forms": {
+                    "items": {
+                      "maxLength": 500,
+                      "minLength": 1,
+                      "type": "string"
+                    },
+                    "maxItems": 128,
+                    "minItems": 1,
+                    "type": "array"
+                  },
+                  "source_entry": {
+                    "maxLength": 128,
+                    "minLength": 1,
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "source_entry",
+                  "contextual_meaning",
+                  "hint_phrase",
+                  "passage_forms",
+                  "hint_forms"
+                ],
+                "type": "object"
+              },
+              "maxItems": 1,
+              "minItems": 1,
+              "type": "array"
+            }
+          },
+          "required": [
+            "passage",
+            "tags",
+            "targets"
+          ],
+          "type": "object"
+        },
+        "strict": true
+      },
+      "provider": {
+        "data_collection": "deny",
+        "require_parameters": true
+      },
+      "model": "qa/synthetic",
+      "closed": true
+    },
+    {
+      "ordinal": 18,
+      "fixture": "C39-07/missing",
+      "stream": true,
+      "schema": {
+        "name": "wordweave_learning_batch",
+        "schema": {
+          "additionalProperties": false,
+          "properties": {
+            "passage": {
+              "maxLength": 2000000,
+              "minLength": 1,
+              "type": "string"
+            },
+            "tags": {
+              "items": {
+                "maxLength": 100,
+                "minLength": 1,
+                "type": "string"
+              },
+              "maxItems": 3,
+              "minItems": 1,
+              "type": "array"
+            },
+            "targets": {
+              "items": {
+                "additionalProperties": false,
+                "properties": {
+                  "contextual_meaning": {
+                    "maxLength": 500,
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "hint_forms": {
+                    "items": {
+                      "maxLength": 500,
+                      "minLength": 1,
+                      "type": "string"
+                    },
+                    "maxItems": 128,
+                    "minItems": 1,
+                    "type": "array"
+                  },
+                  "hint_phrase": {
+                    "maxLength": 500,
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "passage_forms": {
+                    "items": {
+                      "maxLength": 500,
+                      "minLength": 1,
+                      "type": "string"
+                    },
+                    "maxItems": 128,
+                    "minItems": 1,
+                    "type": "array"
+                  },
+                  "source_entry": {
+                    "maxLength": 128,
+                    "minLength": 1,
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "source_entry",
+                  "contextual_meaning",
+                  "hint_phrase",
+                  "passage_forms",
+                  "hint_forms"
+                ],
+                "type": "object"
+              },
+              "maxItems": 1,
+              "minItems": 1,
+              "type": "array"
+            }
+          },
+          "required": [
+            "passage",
+            "tags",
+            "targets"
+          ],
+          "type": "object"
+        },
+        "strict": true
+      },
+      "provider": {
+        "data_collection": "deny",
+        "require_parameters": true
+      },
+      "model": "qa/synthetic",
+      "closed": true
+    },
+    {
+      "ordinal": 19,
+      "fixture": "C39-07/empty",
+      "stream": true,
+      "schema": {
+        "name": "wordweave_learning_batch",
+        "schema": {
+          "additionalProperties": false,
+          "properties": {
+            "passage": {
+              "maxLength": 2000000,
+              "minLength": 1,
+              "type": "string"
+            },
+            "tags": {
+              "items": {
+                "maxLength": 100,
+                "minLength": 1,
+                "type": "string"
+              },
+              "maxItems": 3,
+              "minItems": 1,
+              "type": "array"
+            },
+            "targets": {
+              "items": {
+                "additionalProperties": false,
+                "properties": {
+                  "contextual_meaning": {
+                    "maxLength": 500,
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "hint_forms": {
+                    "items": {
+                      "maxLength": 500,
+                      "minLength": 1,
+                      "type": "string"
+                    },
+                    "maxItems": 128,
+                    "minItems": 1,
+                    "type": "array"
+                  },
+                  "hint_phrase": {
+                    "maxLength": 500,
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "passage_forms": {
+                    "items": {
+                      "maxLength": 500,
+                      "minLength": 1,
+                      "type": "string"
+                    },
+                    "maxItems": 128,
+                    "minItems": 1,
+                    "type": "array"
+                  },
+                  "source_entry": {
+                    "maxLength": 128,
+                    "minLength": 1,
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "source_entry",
+                  "contextual_meaning",
+                  "hint_phrase",
+                  "passage_forms",
+                  "hint_forms"
+                ],
+                "type": "object"
+              },
+              "maxItems": 1,
+              "minItems": 1,
+              "type": "array"
+            }
+          },
+          "required": [
+            "passage",
+            "tags",
+            "targets"
+          ],
+          "type": "object"
+        },
+        "strict": true
+      },
+      "provider": {
+        "data_collection": "deny",
+        "require_parameters": true
+      },
+      "model": "qa/synthetic",
+      "closed": true
+    },
+    {
+      "ordinal": 20,
+      "fixture": "C39-07/null",
+      "stream": true,
+      "schema": {
+        "name": "wordweave_learning_batch",
+        "schema": {
+          "additionalProperties": false,
+          "properties": {
+            "passage": {
+              "maxLength": 2000000,
+              "minLength": 1,
+              "type": "string"
+            },
+            "tags": {
+              "items": {
+                "maxLength": 100,
+                "minLength": 1,
+                "type": "string"
+              },
+              "maxItems": 3,
+              "minItems": 1,
+              "type": "array"
+            },
+            "targets": {
+              "items": {
+                "additionalProperties": false,
+                "properties": {
+                  "contextual_meaning": {
+                    "maxLength": 500,
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "hint_forms": {
+                    "items": {
+                      "maxLength": 500,
+                      "minLength": 1,
+                      "type": "string"
+                    },
+                    "maxItems": 128,
+                    "minItems": 1,
+                    "type": "array"
+                  },
+                  "hint_phrase": {
+                    "maxLength": 500,
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "passage_forms": {
+                    "items": {
+                      "maxLength": 500,
+                      "minLength": 1,
+                      "type": "string"
+                    },
+                    "maxItems": 128,
+                    "minItems": 1,
+                    "type": "array"
+                  },
+                  "source_entry": {
+                    "maxLength": 128,
+                    "minLength": 1,
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "source_entry",
+                  "contextual_meaning",
+                  "hint_phrase",
+                  "passage_forms",
+                  "hint_forms"
+                ],
+                "type": "object"
+              },
+              "maxItems": 1,
+              "minItems": 1,
+              "type": "array"
+            }
+          },
+          "required": [
+            "passage",
+            "tags",
+            "targets"
+          ],
+          "type": "object"
+        },
+        "strict": true
+      },
+      "provider": {
+        "data_collection": "deny",
+        "require_parameters": true
+      },
+      "model": "qa/synthetic",
+      "closed": true
+    },
+    {
+      "ordinal": 21,
+      "fixture": "C39-07/number",
+      "stream": true,
+      "schema": {
+        "name": "wordweave_learning_batch",
+        "schema": {
+          "additionalProperties": false,
+          "properties": {
+            "passage": {
+              "maxLength": 2000000,
+              "minLength": 1,
+              "type": "string"
+            },
+            "tags": {
+              "items": {
+                "maxLength": 100,
+                "minLength": 1,
+                "type": "string"
+              },
+              "maxItems": 3,
+              "minItems": 1,
+              "type": "array"
+            },
+            "targets": {
+              "items": {
+                "additionalProperties": false,
+                "properties": {
+                  "contextual_meaning": {
+                    "maxLength": 500,
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "hint_forms": {
+                    "items": {
+                      "maxLength": 500,
+                      "minLength": 1,
+                      "type": "string"
+                    },
+                    "maxItems": 128,
+                    "minItems": 1,
+                    "type": "array"
+                  },
+                  "hint_phrase": {
+                    "maxLength": 500,
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "passage_forms": {
+                    "items": {
+                      "maxLength": 500,
+                      "minLength": 1,
+                      "type": "string"
+                    },
+                    "maxItems": 128,
+                    "minItems": 1,
+                    "type": "array"
+                  },
+                  "source_entry": {
+                    "maxLength": 128,
+                    "minLength": 1,
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "source_entry",
+                  "contextual_meaning",
+                  "hint_phrase",
+                  "passage_forms",
+                  "hint_forms"
+                ],
+                "type": "object"
+              },
+              "maxItems": 1,
+              "minItems": 1,
+              "type": "array"
+            }
+          },
+          "required": [
+            "passage",
+            "tags",
+            "targets"
+          ],
+          "type": "object"
+        },
+        "strict": true
+      },
+      "provider": {
+        "data_collection": "deny",
+        "require_parameters": true
+      },
+      "model": "qa/synthetic",
+      "closed": true
+    },
+    {
+      "ordinal": 22,
+      "fixture": "C39-07/null-item",
+      "stream": true,
+      "schema": {
+        "name": "wordweave_learning_batch",
+        "schema": {
+          "additionalProperties": false,
+          "properties": {
+            "passage": {
+              "maxLength": 2000000,
+              "minLength": 1,
+              "type": "string"
+            },
+            "tags": {
+              "items": {
+                "maxLength": 100,
+                "minLength": 1,
+                "type": "string"
+              },
+              "maxItems": 3,
+              "minItems": 1,
+              "type": "array"
+            },
+            "targets": {
+              "items": {
+                "additionalProperties": false,
+                "properties": {
+                  "contextual_meaning": {
+                    "maxLength": 500,
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "hint_forms": {
+                    "items": {
+                      "maxLength": 500,
+                      "minLength": 1,
+                      "type": "string"
+                    },
+                    "maxItems": 128,
+                    "minItems": 1,
+                    "type": "array"
+                  },
+                  "hint_phrase": {
+                    "maxLength": 500,
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "passage_forms": {
+                    "items": {
+                      "maxLength": 500,
+                      "minLength": 1,
+                      "type": "string"
+                    },
+                    "maxItems": 128,
+                    "minItems": 1,
+                    "type": "array"
+                  },
+                  "source_entry": {
+                    "maxLength": 128,
+                    "minLength": 1,
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "source_entry",
+                  "contextual_meaning",
+                  "hint_phrase",
+                  "passage_forms",
+                  "hint_forms"
+                ],
+                "type": "object"
+              },
+              "maxItems": 1,
+              "minItems": 1,
+              "type": "array"
+            }
+          },
+          "required": [
+            "passage",
+            "tags",
+            "targets"
+          ],
+          "type": "object"
+        },
+        "strict": true
+      },
+      "provider": {
+        "data_collection": "deny",
+        "require_parameters": true
+      },
+      "model": "qa/synthetic",
+      "closed": true
+    },
+    {
+      "ordinal": 23,
+      "fixture": "C39-07/unknown",
+      "stream": true,
+      "schema": {
+        "name": "wordweave_learning_batch",
+        "schema": {
+          "additionalProperties": false,
+          "properties": {
+            "passage": {
+              "maxLength": 2000000,
+              "minLength": 1,
+              "type": "string"
+            },
+            "tags": {
+              "items": {
+                "maxLength": 100,
+                "minLength": 1,
+                "type": "string"
+              },
+              "maxItems": 3,
+              "minItems": 1,
+              "type": "array"
+            },
+            "targets": {
+              "items": {
+                "additionalProperties": false,
+                "properties": {
+                  "contextual_meaning": {
+                    "maxLength": 500,
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "hint_forms": {
+                    "items": {
+                      "maxLength": 500,
+                      "minLength": 1,
+                      "type": "string"
+                    },
+                    "maxItems": 128,
+                    "minItems": 1,
+                    "type": "array"
+                  },
+                  "hint_phrase": {
+                    "maxLength": 500,
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "passage_forms": {
+                    "items": {
+                      "maxLength": 500,
+                      "minLength": 1,
+                      "type": "string"
+                    },
+                    "maxItems": 128,
+                    "minItems": 1,
+                    "type": "array"
+                  },
+                  "source_entry": {
+                    "maxLength": 128,
+                    "minLength": 1,
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "source_entry",
+                  "contextual_meaning",
+                  "hint_phrase",
+                  "passage_forms",
+                  "hint_forms"
+                ],
+                "type": "object"
+              },
+              "maxItems": 1,
+              "minItems": 1,
+              "type": "array"
+            }
+          },
+          "required": [
+            "passage",
+            "tags",
+            "targets"
+          ],
+          "type": "object"
+        },
+        "strict": true
+      },
+      "provider": {
+        "data_collection": "deny",
+        "require_parameters": true
+      },
+      "model": "qa/synthetic",
+      "closed": true
+    },
+    {
+      "ordinal": 24,
+      "fixture": "C39-07/case-key",
+      "stream": true,
+      "schema": {
+        "name": "wordweave_learning_batch",
+        "schema": {
+          "additionalProperties": false,
+          "properties": {
+            "passage": {
+              "maxLength": 2000000,
+              "minLength": 1,
+              "type": "string"
+            },
+            "tags": {
+              "items": {
+                "maxLength": 100,
+                "minLength": 1,
+                "type": "string"
+              },
+              "maxItems": 3,
+              "minItems": 1,
+              "type": "array"
+            },
+            "targets": {
+              "items": {
+                "additionalProperties": false,
+                "properties": {
+                  "contextual_meaning": {
+                    "maxLength": 500,
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "hint_forms": {
+                    "items": {
+                      "maxLength": 500,
+                      "minLength": 1,
+                      "type": "string"
+                    },
+                    "maxItems": 128,
+                    "minItems": 1,
+                    "type": "array"
+                  },
+                  "hint_phrase": {
+                    "maxLength": 500,
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "passage_forms": {
+                    "items": {
+                      "maxLength": 500,
+                      "minLength": 1,
+                      "type": "string"
+                    },
+                    "maxItems": 128,
+                    "minItems": 1,
+                    "type": "array"
+                  },
+                  "source_entry": {
+                    "maxLength": 128,
+                    "minLength": 1,
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "source_entry",
+                  "contextual_meaning",
+                  "hint_phrase",
+                  "passage_forms",
+                  "hint_forms"
+                ],
+                "type": "object"
+              },
+              "maxItems": 1,
+              "minItems": 1,
+              "type": "array"
+            }
+          },
+          "required": [
+            "passage",
+            "tags",
+            "targets"
+          ],
+          "type": "object"
+        },
+        "strict": true
+      },
+      "provider": {
+        "data_collection": "deny",
+        "require_parameters": true
+      },
+      "model": "qa/synthetic",
+      "closed": true
+    },
+    {
+      "ordinal": 25,
+      "fixture": "C39-07/over-limit",
+      "stream": true,
+      "schema": {
+        "name": "wordweave_learning_batch",
+        "schema": {
+          "additionalProperties": false,
+          "properties": {
+            "passage": {
+              "maxLength": 2000000,
+              "minLength": 1,
+              "type": "string"
+            },
+            "tags": {
+              "items": {
+                "maxLength": 100,
+                "minLength": 1,
+                "type": "string"
+              },
+              "maxItems": 3,
+              "minItems": 1,
+              "type": "array"
+            },
+            "targets": {
+              "items": {
+                "additionalProperties": false,
+                "properties": {
+                  "contextual_meaning": {
+                    "maxLength": 500,
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "hint_forms": {
+                    "items": {
+                      "maxLength": 500,
+                      "minLength": 1,
+                      "type": "string"
+                    },
+                    "maxItems": 128,
+                    "minItems": 1,
+                    "type": "array"
+                  },
+                  "hint_phrase": {
+                    "maxLength": 500,
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "passage_forms": {
+                    "items": {
+                      "maxLength": 500,
+                      "minLength": 1,
+                      "type": "string"
+                    },
+                    "maxItems": 128,
+                    "minItems": 1,
+                    "type": "array"
+                  },
+                  "source_entry": {
+                    "maxLength": 128,
+                    "minLength": 1,
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "source_entry",
+                  "contextual_meaning",
+                  "hint_phrase",
+                  "passage_forms",
+                  "hint_forms"
+                ],
+                "type": "object"
+              },
+              "maxItems": 1,
+              "minItems": 1,
+              "type": "array"
+            }
+          },
+          "required": [
+            "passage",
+            "tags",
+            "targets"
+          ],
+          "type": "object"
+        },
+        "strict": true
+      },
+      "provider": {
+        "data_collection": "deny",
+        "require_parameters": true
+      },
+      "model": "qa/synthetic",
+      "closed": true
+    },
+    {
+      "ordinal": 26,
+      "fixture": "C39-07/duplicate-key",
+      "stream": true,
+      "schema": {
+        "name": "wordweave_learning_batch",
+        "schema": {
+          "additionalProperties": false,
+          "properties": {
+            "passage": {
+              "maxLength": 2000000,
+              "minLength": 1,
+              "type": "string"
+            },
+            "tags": {
+              "items": {
+                "maxLength": 100,
+                "minLength": 1,
+                "type": "string"
+              },
+              "maxItems": 3,
+              "minItems": 1,
+              "type": "array"
+            },
+            "targets": {
+              "items": {
+                "additionalProperties": false,
+                "properties": {
+                  "contextual_meaning": {
+                    "maxLength": 500,
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "hint_forms": {
+                    "items": {
+                      "maxLength": 500,
+                      "minLength": 1,
+                      "type": "string"
+                    },
+                    "maxItems": 128,
+                    "minItems": 1,
+                    "type": "array"
+                  },
+                  "hint_phrase": {
+                    "maxLength": 500,
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "passage_forms": {
+                    "items": {
+                      "maxLength": 500,
+                      "minLength": 1,
+                      "type": "string"
+                    },
+                    "maxItems": 128,
+                    "minItems": 1,
+                    "type": "array"
+                  },
+                  "source_entry": {
+                    "maxLength": 128,
+                    "minLength": 1,
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "source_entry",
+                  "contextual_meaning",
+                  "hint_phrase",
+                  "passage_forms",
+                  "hint_forms"
+                ],
+                "type": "object"
+              },
+              "maxItems": 1,
+              "minItems": 1,
+              "type": "array"
+            }
+          },
+          "required": [
+            "passage",
+            "tags",
+            "targets"
+          ],
+          "type": "object"
+        },
+        "strict": true
+      },
+      "provider": {
+        "data_collection": "deny",
+        "require_parameters": true
+      },
+      "model": "qa/synthetic",
+      "closed": true
+    },
+    {
+      "ordinal": 27,
+      "fixture": "C39-07/trailing",
+      "stream": true,
+      "schema": {
+        "name": "wordweave_learning_batch",
+        "schema": {
+          "additionalProperties": false,
+          "properties": {
+            "passage": {
+              "maxLength": 2000000,
+              "minLength": 1,
+              "type": "string"
+            },
+            "tags": {
+              "items": {
+                "maxLength": 100,
+                "minLength": 1,
+                "type": "string"
+              },
+              "maxItems": 3,
+              "minItems": 1,
+              "type": "array"
+            },
+            "targets": {
+              "items": {
+                "additionalProperties": false,
+                "properties": {
+                  "contextual_meaning": {
+                    "maxLength": 500,
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "hint_forms": {
+                    "items": {
+                      "maxLength": 500,
+                      "minLength": 1,
+                      "type": "string"
+                    },
+                    "maxItems": 128,
+                    "minItems": 1,
+                    "type": "array"
+                  },
+                  "hint_phrase": {
+                    "maxLength": 500,
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "passage_forms": {
+                    "items": {
+                      "maxLength": 500,
+                      "minLength": 1,
+                      "type": "string"
+                    },
+                    "maxItems": 128,
+                    "minItems": 1,
+                    "type": "array"
+                  },
+                  "source_entry": {
+                    "maxLength": 128,
+                    "minLength": 1,
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "source_entry",
+                  "contextual_meaning",
+                  "hint_phrase",
+                  "passage_forms",
+                  "hint_forms"
+                ],
+                "type": "object"
+              },
+              "maxItems": 1,
+              "minItems": 1,
+              "type": "array"
+            }
+          },
+          "required": [
+            "passage",
+            "tags",
+            "targets"
+          ],
+          "type": "object"
+        },
+        "strict": true
+      },
+      "provider": {
+        "data_collection": "deny",
+        "require_parameters": true
+      },
+      "model": "qa/synthetic",
+      "closed": true
+    },
+    {
+      "ordinal": 28,
+      "fixture": "C39-08/case-dedup",
+      "stream": true,
+      "schema": {
+        "name": "wordweave_learning_batch",
+        "schema": {
+          "additionalProperties": false,
+          "properties": {
+            "passage": {
+              "maxLength": 2000000,
+              "minLength": 1,
+              "type": "string"
+            },
+            "tags": {
+              "items": {
+                "maxLength": 100,
+                "minLength": 1,
+                "type": "string"
+              },
+              "maxItems": 3,
+              "minItems": 1,
+              "type": "array"
+            },
+            "targets": {
+              "items": {
+                "additionalProperties": false,
+                "properties": {
+                  "contextual_meaning": {
+                    "maxLength": 500,
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "hint_forms": {
+                    "items": {
+                      "maxLength": 500,
+                      "minLength": 1,
+                      "type": "string"
+                    },
+                    "maxItems": 128,
+                    "minItems": 1,
+                    "type": "array"
+                  },
+                  "hint_phrase": {
+                    "maxLength": 500,
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "passage_forms": {
+                    "items": {
+                      "maxLength": 500,
+                      "minLength": 1,
+                      "type": "string"
+                    },
+                    "maxItems": 128,
+                    "minItems": 1,
+                    "type": "array"
+                  },
+                  "source_entry": {
+                    "maxLength": 128,
+                    "minLength": 1,
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "source_entry",
+                  "contextual_meaning",
+                  "hint_phrase",
+                  "passage_forms",
+                  "hint_forms"
+                ],
+                "type": "object"
+              },
+              "maxItems": 1,
+              "minItems": 1,
+              "type": "array"
+            }
+          },
+          "required": [
+            "passage",
+            "tags",
+            "targets"
+          ],
+          "type": "object"
+        },
+        "strict": true
+      },
+      "provider": {
+        "data_collection": "deny",
+        "require_parameters": true
+      },
+      "model": "qa/synthetic",
+      "closed": true
+    },
+    {
+      "ordinal": 29,
+      "fixture": "C39-09/absent-other-form",
+      "stream": true,
+      "schema": {
+        "name": "wordweave_learning_batch",
+        "schema": {
+          "additionalProperties": false,
+          "properties": {
+            "passage": {
+              "maxLength": 2000000,
+              "minLength": 1,
+              "type": "string"
+            },
+            "tags": {
+              "items": {
+                "maxLength": 100,
+                "minLength": 1,
+                "type": "string"
+              },
+              "maxItems": 3,
+              "minItems": 1,
+              "type": "array"
+            },
+            "targets": {
+              "items": {
+                "additionalProperties": false,
+                "properties": {
+                  "contextual_meaning": {
+                    "maxLength": 500,
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "hint_forms": {
+                    "items": {
+                      "maxLength": 500,
+                      "minLength": 1,
+                      "type": "string"
+                    },
+                    "maxItems": 128,
+                    "minItems": 1,
+                    "type": "array"
+                  },
+                  "hint_phrase": {
+                    "maxLength": 500,
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "passage_forms": {
+                    "items": {
+                      "maxLength": 500,
+                      "minLength": 1,
+                      "type": "string"
+                    },
+                    "maxItems": 128,
+                    "minItems": 1,
+                    "type": "array"
+                  },
+                  "source_entry": {
+                    "maxLength": 128,
+                    "minLength": 1,
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "source_entry",
+                  "contextual_meaning",
+                  "hint_phrase",
+                  "passage_forms",
+                  "hint_forms"
+                ],
+                "type": "object"
+              },
+              "maxItems": 1,
+              "minItems": 1,
+              "type": "array"
+            }
+          },
+          "required": [
+            "passage",
+            "tags",
+            "targets"
+          ],
+          "type": "object"
+        },
+        "strict": true
+      },
+      "provider": {
+        "data_collection": "deny",
+        "require_parameters": true
+      },
+      "model": "qa/synthetic",
+      "closed": true
+    },
+    {
+      "ordinal": 30,
+      "fixture": "C39-09/one-bad-among-good",
+      "stream": true,
+      "schema": {
+        "name": "wordweave_learning_batch",
+        "schema": {
+          "additionalProperties": false,
+          "properties": {
+            "passage": {
+              "maxLength": 2000000,
+              "minLength": 1,
+              "type": "string"
+            },
+            "tags": {
+              "items": {
+                "maxLength": 100,
+                "minLength": 1,
+                "type": "string"
+              },
+              "maxItems": 3,
+              "minItems": 1,
+              "type": "array"
+            },
+            "targets": {
+              "items": {
+                "additionalProperties": false,
+                "properties": {
+                  "contextual_meaning": {
+                    "maxLength": 500,
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "hint_forms": {
+                    "items": {
+                      "maxLength": 500,
+                      "minLength": 1,
+                      "type": "string"
+                    },
+                    "maxItems": 128,
+                    "minItems": 1,
+                    "type": "array"
+                  },
+                  "hint_phrase": {
+                    "maxLength": 500,
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "passage_forms": {
+                    "items": {
+                      "maxLength": 500,
+                      "minLength": 1,
+                      "type": "string"
+                    },
+                    "maxItems": 128,
+                    "minItems": 1,
+                    "type": "array"
+                  },
+                  "source_entry": {
+                    "maxLength": 128,
+                    "minLength": 1,
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "source_entry",
+                  "contextual_meaning",
+                  "hint_phrase",
+                  "passage_forms",
+                  "hint_forms"
+                ],
+                "type": "object"
+              },
+              "maxItems": 1,
+              "minItems": 1,
+              "type": "array"
+            }
+          },
+          "required": [
+            "passage",
+            "tags",
+            "targets"
+          ],
+          "type": "object"
+        },
+        "strict": true
+      },
+      "provider": {
+        "data_collection": "deny",
+        "require_parameters": true
+      },
+      "model": "qa/synthetic",
+      "closed": true
+    },
+    {
+      "ordinal": 31,
+      "fixture": "C39-10/shared-spans",
+      "stream": true,
+      "schema": {
+        "name": "wordweave_learning_batch",
+        "schema": {
+          "additionalProperties": false,
+          "properties": {
+            "passage": {
+              "maxLength": 2000000,
+              "minLength": 1,
+              "type": "string"
+            },
+            "tags": {
+              "items": {
+                "maxLength": 100,
+                "minLength": 1,
+                "type": "string"
+              },
+              "maxItems": 3,
+              "minItems": 1,
+              "type": "array"
+            },
+            "targets": {
+              "items": {
+                "additionalProperties": false,
+                "properties": {
+                  "contextual_meaning": {
+                    "maxLength": 500,
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "hint_forms": {
+                    "items": {
+                      "maxLength": 500,
+                      "minLength": 1,
+                      "type": "string"
+                    },
+                    "maxItems": 128,
+                    "minItems": 1,
+                    "type": "array"
+                  },
+                  "hint_phrase": {
+                    "maxLength": 500,
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "passage_forms": {
+                    "items": {
+                      "maxLength": 500,
+                      "minLength": 1,
+                      "type": "string"
+                    },
+                    "maxItems": 128,
+                    "minItems": 1,
+                    "type": "array"
+                  },
+                  "source_entry": {
+                    "maxLength": 128,
+                    "minLength": 1,
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "source_entry",
+                  "contextual_meaning",
+                  "hint_phrase",
+                  "passage_forms",
+                  "hint_forms"
+                ],
+                "type": "object"
+              },
+              "maxItems": 2,
+              "minItems": 2,
+              "type": "array"
+            }
+          },
+          "required": [
+            "passage",
+            "tags",
+            "targets"
+          ],
+          "type": "object"
+        },
+        "strict": true
+      },
+      "provider": {
+        "data_collection": "deny",
+        "require_parameters": true
+      },
+      "model": "qa/synthetic",
+      "closed": true
+    },
+    {
+      "ordinal": 32,
+      "fixture": "C39-10/resource-order",
+      "stream": true,
+      "schema": {
+        "name": "wordweave_learning_batch",
+        "schema": {
+          "additionalProperties": false,
+          "properties": {
+            "passage": {
+              "maxLength": 2000000,
+              "minLength": 1,
+              "type": "string"
+            },
+            "tags": {
+              "items": {
+                "maxLength": 100,
+                "minLength": 1,
+                "type": "string"
+              },
+              "maxItems": 3,
+              "minItems": 1,
+              "type": "array"
+            },
+            "targets": {
+              "items": {
+                "additionalProperties": false,
+                "properties": {
+                  "contextual_meaning": {
+                    "maxLength": 500,
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "hint_forms": {
+                    "items": {
+                      "maxLength": 500,
+                      "minLength": 1,
+                      "type": "string"
+                    },
+                    "maxItems": 128,
+                    "minItems": 1,
+                    "type": "array"
+                  },
+                  "hint_phrase": {
+                    "maxLength": 500,
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "passage_forms": {
+                    "items": {
+                      "maxLength": 500,
+                      "minLength": 1,
+                      "type": "string"
+                    },
+                    "maxItems": 128,
+                    "minItems": 1,
+                    "type": "array"
+                  },
+                  "source_entry": {
+                    "maxLength": 128,
+                    "minLength": 1,
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "source_entry",
+                  "contextual_meaning",
+                  "hint_phrase",
+                  "passage_forms",
+                  "hint_forms"
+                ],
+                "type": "object"
+              },
+              "maxItems": 10,
+              "minItems": 10,
+              "type": "array"
+            }
+          },
+          "required": [
+            "passage",
+            "tags",
+            "targets"
+          ],
+          "type": "object"
+        },
+        "strict": true
+      },
+      "provider": {
+        "data_collection": "deny",
+        "require_parameters": true
+      },
+      "model": "qa/synthetic",
+      "closed": true
+    },
+    {
+      "ordinal": 33,
+      "fixture": "C39-18/large-xlong",
+      "stream": true,
+      "schema": {
+        "name": "wordweave_learning_batch",
+        "schema": {
+          "additionalProperties": false,
+          "properties": {
+            "passage": {
+              "maxLength": 2000000,
+              "minLength": 1,
+              "type": "string"
+            },
+            "tags": {
+              "items": {
+                "maxLength": 100,
+                "minLength": 1,
+                "type": "string"
+              },
+              "maxItems": 3,
+              "minItems": 1,
+              "type": "array"
+            },
+            "targets": {
+              "items": {
+                "additionalProperties": false,
+                "properties": {
+                  "contextual_meaning": {
+                    "maxLength": 500,
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "hint_forms": {
+                    "items": {
+                      "maxLength": 500,
+                      "minLength": 1,
+                      "type": "string"
+                    },
+                    "maxItems": 128,
+                    "minItems": 1,
+                    "type": "array"
+                  },
+                  "hint_phrase": {
+                    "maxLength": 500,
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "passage_forms": {
+                    "items": {
+                      "maxLength": 500,
+                      "minLength": 1,
+                      "type": "string"
+                    },
+                    "maxItems": 128,
+                    "minItems": 1,
+                    "type": "array"
+                  },
+                  "source_entry": {
+                    "maxLength": 128,
+                    "minLength": 1,
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "source_entry",
+                  "contextual_meaning",
+                  "hint_phrase",
+                  "passage_forms",
+                  "hint_forms"
+                ],
+                "type": "object"
+              },
+              "maxItems": 1,
+              "minItems": 1,
+              "type": "array"
+            }
+          },
+          "required": [
+            "passage",
+            "tags",
+            "targets"
+          ],
+          "type": "object"
+        },
+        "strict": true
+      },
+      "provider": {
+        "data_collection": "deny",
+        "require_parameters": true
+      },
+      "model": "qa/synthetic",
+      "closed": true
+    },
+    {
+      "ordinal": 34,
+      "fixture": "C39-14/visitor",
+      "stream": true,
+      "schema": {
+        "name": "wordweave_learning_batch",
+        "schema": {
+          "additionalProperties": false,
+          "properties": {
+            "passage": {
+              "maxLength": 2000000,
+              "minLength": 1,
+              "type": "string"
+            },
+            "tags": {
+              "items": {
+                "maxLength": 100,
+                "minLength": 1,
+                "type": "string"
+              },
+              "maxItems": 3,
+              "minItems": 1,
+              "type": "array"
+            },
+            "targets": {
+              "items": {
+                "additionalProperties": false,
+                "properties": {
+                  "contextual_meaning": {
+                    "maxLength": 500,
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "hint_forms": {
+                    "items": {
+                      "maxLength": 500,
+                      "minLength": 1,
+                      "type": "string"
+                    },
+                    "maxItems": 128,
+                    "minItems": 1,
+                    "type": "array"
+                  },
+                  "hint_phrase": {
+                    "maxLength": 500,
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "passage_forms": {
+                    "items": {
+                      "maxLength": 500,
+                      "minLength": 1,
+                      "type": "string"
+                    },
+                    "maxItems": 128,
+                    "minItems": 1,
+                    "type": "array"
+                  },
+                  "source_entry": {
+                    "maxLength": 128,
+                    "minLength": 1,
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "source_entry",
+                  "contextual_meaning",
+                  "hint_phrase",
+                  "passage_forms",
+                  "hint_forms"
+                ],
+                "type": "object"
+              },
+              "maxItems": 1,
+              "minItems": 1,
+              "type": "array"
+            }
+          },
+          "required": [
+            "passage",
+            "tags",
+            "targets"
+          ],
+          "type": "object"
+        },
+        "strict": true
+      },
+      "provider": {
+        "data_collection": "deny",
+        "require_parameters": true
+      },
+      "model": "qa/synthetic",
+      "closed": true
+    },
+    {
+      "ordinal": 35,
+      "fixture": "C39-15/v2-draft",
+      "stream": true,
+      "schema": {
+        "name": "wordweave_learning_batch",
+        "schema": {
+          "additionalProperties": false,
+          "properties": {
+            "passage": {
+              "maxLength": 2000000,
+              "minLength": 1,
+              "type": "string"
+            },
+            "tags": {
+              "items": {
+                "maxLength": 100,
+                "minLength": 1,
+                "type": "string"
+              },
+              "maxItems": 3,
+              "minItems": 1,
+              "type": "array"
+            },
+            "targets": {
+              "items": {
+                "additionalProperties": false,
+                "properties": {
+                  "contextual_meaning": {
+                    "maxLength": 500,
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "hint_phrase": {
+                    "maxLength": 500,
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "source_entry": {
+                    "maxLength": 128,
+                    "minLength": 1,
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "source_entry",
+                  "contextual_meaning",
+                  "hint_phrase"
+                ],
+                "type": "object"
+              },
+              "maxItems": 1,
+              "minItems": 1,
+              "type": "array"
+            }
+          },
+          "required": [
+            "passage",
+            "tags",
+            "targets"
+          ],
+          "type": "object"
+        },
+        "strict": true
+      },
+      "provider": {
+        "data_collection": "deny",
+        "require_parameters": true
+      },
+      "model": "qa/synthetic",
+      "closed": true
+    },
+    {
+      "ordinal": 36,
+      "fixture": "C39-10/resource-order-corrected",
+      "stream": true,
+      "schema": {
+        "name": "wordweave_learning_batch",
+        "schema": {
+          "additionalProperties": false,
+          "properties": {
+            "passage": {
+              "maxLength": 2000000,
+              "minLength": 1,
+              "type": "string"
+            },
+            "tags": {
+              "items": {
+                "maxLength": 100,
+                "minLength": 1,
+                "type": "string"
+              },
+              "maxItems": 3,
+              "minItems": 1,
+              "type": "array"
+            },
+            "targets": {
+              "items": {
+                "additionalProperties": false,
+                "properties": {
+                  "contextual_meaning": {
+                    "maxLength": 500,
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "hint_forms": {
+                    "items": {
+                      "maxLength": 500,
+                      "minLength": 1,
+                      "type": "string"
+                    },
+                    "maxItems": 128,
+                    "minItems": 1,
+                    "type": "array"
+                  },
+                  "hint_phrase": {
+                    "maxLength": 500,
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "passage_forms": {
+                    "items": {
+                      "maxLength": 500,
+                      "minLength": 1,
+                      "type": "string"
+                    },
+                    "maxItems": 128,
+                    "minItems": 1,
+                    "type": "array"
+                  },
+                  "source_entry": {
+                    "maxLength": 128,
+                    "minLength": 1,
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "source_entry",
+                  "contextual_meaning",
+                  "hint_phrase",
+                  "passage_forms",
+                  "hint_forms"
+                ],
+                "type": "object"
+              },
+              "maxItems": 10,
+              "minItems": 10,
+              "type": "array"
+            }
+          },
+          "required": [
+            "passage",
+            "tags",
+            "targets"
+          ],
+          "type": "object"
+        },
+        "strict": true
+      },
+      "provider": {
+        "data_collection": "deny",
+        "require_parameters": true
+      },
+      "model": "qa/synthetic",
+      "closed": true
+    },
+    {
+      "ordinal": 37,
+      "fixture": "C39-18/large-xlong-corrected",
+      "stream": true,
+      "schema": {
+        "name": "wordweave_learning_batch",
+        "schema": {
+          "additionalProperties": false,
+          "properties": {
+            "passage": {
+              "maxLength": 2000000,
+              "minLength": 1,
+              "type": "string"
+            },
+            "tags": {
+              "items": {
+                "maxLength": 100,
+                "minLength": 1,
+                "type": "string"
+              },
+              "maxItems": 3,
+              "minItems": 1,
+              "type": "array"
+            },
+            "targets": {
+              "items": {
+                "additionalProperties": false,
+                "properties": {
+                  "contextual_meaning": {
+                    "maxLength": 500,
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "hint_forms": {
+                    "items": {
+                      "maxLength": 500,
+                      "minLength": 1,
+                      "type": "string"
+                    },
+                    "maxItems": 128,
+                    "minItems": 1,
+                    "type": "array"
+                  },
+                  "hint_phrase": {
+                    "maxLength": 500,
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "passage_forms": {
+                    "items": {
+                      "maxLength": 500,
+                      "minLength": 1,
+                      "type": "string"
+                    },
+                    "maxItems": 128,
+                    "minItems": 1,
+                    "type": "array"
+                  },
+                  "source_entry": {
+                    "maxLength": 128,
+                    "minLength": 1,
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "source_entry",
+                  "contextual_meaning",
+                  "hint_phrase",
+                  "passage_forms",
+                  "hint_forms"
+                ],
+                "type": "object"
+              },
+              "maxItems": 1,
+              "minItems": 1,
+              "type": "array"
+            }
+          },
+          "required": [
+            "passage",
+            "tags",
+            "targets"
+          ],
+          "type": "object"
+        },
+        "strict": true
+      },
+      "provider": {
+        "data_collection": "deny",
+        "require_parameters": true
+      },
+      "model": "qa/synthetic",
+      "closed": true
+    },
+    {
+      "ordinal": 38,
+      "fixture": "C39-15/v2-new-control",
+      "stream": true,
+      "schema": {
+        "name": "wordweave_learning_batch",
+        "schema": {
+          "additionalProperties": false,
+          "properties": {
+            "passage": {
+              "maxLength": 2000000,
+              "minLength": 1,
+              "type": "string"
+            },
+            "tags": {
+              "items": {
+                "maxLength": 100,
+                "minLength": 1,
+                "type": "string"
+              },
+              "maxItems": 3,
+              "minItems": 1,
+              "type": "array"
+            },
+            "targets": {
+              "items": {
+                "additionalProperties": false,
+                "properties": {
+                  "contextual_meaning": {
+                    "maxLength": 500,
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "hint_phrase": {
+                    "maxLength": 500,
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "source_entry": {
+                    "maxLength": 128,
+                    "minLength": 1,
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "source_entry",
+                  "contextual_meaning",
+                  "hint_phrase"
+                ],
+                "type": "object"
+              },
+              "maxItems": 1,
+              "minItems": 1,
+              "type": "array"
+            }
+          },
+          "required": [
+            "passage",
+            "tags",
+            "targets"
+          ],
+          "type": "object"
+        },
+        "strict": true
+      },
+      "provider": {
+        "data_collection": "deny",
+        "require_parameters": true
+      },
+      "model": "qa/synthetic",
+      "closed": true
+    },
+    {
+      "ordinal": 39,
+      "fixture": "C39-15/v3-new-control",
+      "stream": true,
+      "schema": {
+        "name": "wordweave_learning_batch",
+        "schema": {
+          "additionalProperties": false,
+          "properties": {
+            "passage": {
+              "maxLength": 2000000,
+              "minLength": 1,
+              "type": "string"
+            },
+            "tags": {
+              "items": {
+                "maxLength": 100,
+                "minLength": 1,
+                "type": "string"
+              },
+              "maxItems": 3,
+              "minItems": 1,
+              "type": "array"
+            },
+            "targets": {
+              "items": {
+                "additionalProperties": false,
+                "properties": {
+                  "contextual_meaning": {
+                    "maxLength": 500,
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "hint_forms": {
+                    "items": {
+                      "maxLength": 500,
+                      "minLength": 1,
+                      "type": "string"
+                    },
+                    "maxItems": 128,
+                    "minItems": 1,
+                    "type": "array"
+                  },
+                  "hint_phrase": {
+                    "maxLength": 500,
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "passage_forms": {
+                    "items": {
+                      "maxLength": 500,
+                      "minLength": 1,
+                      "type": "string"
+                    },
+                    "maxItems": 128,
+                    "minItems": 1,
+                    "type": "array"
+                  },
+                  "source_entry": {
+                    "maxLength": 128,
+                    "minLength": 1,
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "source_entry",
+                  "contextual_meaning",
+                  "hint_phrase",
+                  "passage_forms",
+                  "hint_forms"
+                ],
+                "type": "object"
+              },
+              "maxItems": 1,
+              "minItems": 1,
+              "type": "array"
+            }
+          },
+          "required": [
+            "passage",
+            "tags",
+            "targets"
+          ],
+          "type": "object"
+        },
+        "strict": true
+      },
+      "provider": {
+        "data_collection": "deny",
+        "require_parameters": true
+      },
+      "model": "qa/synthetic",
+      "closed": true
+    },
+    {
+      "ordinal": 40,
+      "fixture": "C39-13/cancel",
+      "stream": true,
+      "schema": {
+        "name": "wordweave_learning_batch",
+        "schema": {
+          "additionalProperties": false,
+          "properties": {
+            "passage": {
+              "maxLength": 2000000,
+              "minLength": 1,
+              "type": "string"
+            },
+            "tags": {
+              "items": {
+                "maxLength": 100,
+                "minLength": 1,
+                "type": "string"
+              },
+              "maxItems": 3,
+              "minItems": 1,
+              "type": "array"
+            },
+            "targets": {
+              "items": {
+                "additionalProperties": false,
+                "properties": {
+                  "contextual_meaning": {
+                    "maxLength": 500,
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "hint_forms": {
+                    "items": {
+                      "maxLength": 500,
+                      "minLength": 1,
+                      "type": "string"
+                    },
+                    "maxItems": 128,
+                    "minItems": 1,
+                    "type": "array"
+                  },
+                  "hint_phrase": {
+                    "maxLength": 500,
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "passage_forms": {
+                    "items": {
+                      "maxLength": 500,
+                      "minLength": 1,
+                      "type": "string"
+                    },
+                    "maxItems": 128,
+                    "minItems": 1,
+                    "type": "array"
+                  },
+                  "source_entry": {
+                    "maxLength": 128,
+                    "minLength": 1,
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "source_entry",
+                  "contextual_meaning",
+                  "hint_phrase",
+                  "passage_forms",
+                  "hint_forms"
+                ],
+                "type": "object"
+              },
+              "maxItems": 1,
+              "minItems": 1,
+              "type": "array"
+            }
+          },
+          "required": [
+            "passage",
+            "tags",
+            "targets"
+          ],
+          "type": "object"
+        },
+        "strict": true
+      },
+      "provider": {
+        "data_collection": "deny",
+        "require_parameters": true
+      },
+      "model": "qa/synthetic",
+      "closed": true
+    },
+    {
+      "ordinal": 41,
+      "fixture": "C39-13/disconnect",
+      "stream": true,
+      "schema": {
+        "name": "wordweave_learning_batch",
+        "schema": {
+          "additionalProperties": false,
+          "properties": {
+            "passage": {
+              "maxLength": 2000000,
+              "minLength": 1,
+              "type": "string"
+            },
+            "tags": {
+              "items": {
+                "maxLength": 100,
+                "minLength": 1,
+                "type": "string"
+              },
+              "maxItems": 3,
+              "minItems": 1,
+              "type": "array"
+            },
+            "targets": {
+              "items": {
+                "additionalProperties": false,
+                "properties": {
+                  "contextual_meaning": {
+                    "maxLength": 500,
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "hint_forms": {
+                    "items": {
+                      "maxLength": 500,
+                      "minLength": 1,
+                      "type": "string"
+                    },
+                    "maxItems": 128,
+                    "minItems": 1,
+                    "type": "array"
+                  },
+                  "hint_phrase": {
+                    "maxLength": 500,
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "passage_forms": {
+                    "items": {
+                      "maxLength": 500,
+                      "minLength": 1,
+                      "type": "string"
+                    },
+                    "maxItems": 128,
+                    "minItems": 1,
+                    "type": "array"
+                  },
+                  "source_entry": {
+                    "maxLength": 128,
+                    "minLength": 1,
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "source_entry",
+                  "contextual_meaning",
+                  "hint_phrase",
+                  "passage_forms",
+                  "hint_forms"
+                ],
+                "type": "object"
+              },
+              "maxItems": 1,
+              "minItems": 1,
+              "type": "array"
+            }
+          },
+          "required": [
+            "passage",
+            "tags",
+            "targets"
+          ],
+          "type": "object"
+        },
+        "strict": true
+      },
+      "provider": {
+        "data_collection": "deny",
+        "require_parameters": true
+      },
+      "model": "qa/synthetic",
+      "closed": true
+    },
+    {
+      "ordinal": 42,
+      "fixture": "browser-v3",
+      "stream": true,
+      "schema": {
+        "name": "wordweave_learning_batch",
+        "schema": {
+          "additionalProperties": false,
+          "properties": {
+            "passage": {
+              "maxLength": 2000000,
+              "minLength": 1,
+              "type": "string"
+            },
+            "tags": {
+              "items": {
+                "maxLength": 100,
+                "minLength": 1,
+                "type": "string"
+              },
+              "maxItems": 3,
+              "minItems": 1,
+              "type": "array"
+            },
+            "targets": {
+              "items": {
+                "additionalProperties": false,
+                "properties": {
+                  "contextual_meaning": {
+                    "maxLength": 500,
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "hint_forms": {
+                    "items": {
+                      "maxLength": 500,
+                      "minLength": 1,
+                      "type": "string"
+                    },
+                    "maxItems": 128,
+                    "minItems": 1,
+                    "type": "array"
+                  },
+                  "hint_phrase": {
+                    "maxLength": 500,
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "passage_forms": {
+                    "items": {
+                      "maxLength": 500,
+                      "minLength": 1,
+                      "type": "string"
+                    },
+                    "maxItems": 128,
+                    "minItems": 1,
+                    "type": "array"
+                  },
+                  "source_entry": {
+                    "maxLength": 128,
+                    "minLength": 1,
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "source_entry",
+                  "contextual_meaning",
+                  "hint_phrase",
+                  "passage_forms",
+                  "hint_forms"
+                ],
+                "type": "object"
+              },
+              "maxItems": 2,
+              "minItems": 2,
+              "type": "array"
+            }
+          },
+          "required": [
+            "passage",
+            "tags",
+            "targets"
+          ],
+          "type": "object"
+        },
+        "strict": true
+      },
+      "provider": {
+        "data_collection": "deny",
+        "require_parameters": true
+      },
+      "model": "qa/synthetic",
+      "closed": true
+    },
+    {
+      "ordinal": 43,
+      "fixture": "browser-v3",
+      "stream": true,
+      "schema": {
+        "name": "wordweave_learning_batch",
+        "schema": {
+          "additionalProperties": false,
+          "properties": {
+            "passage": {
+              "maxLength": 2000000,
+              "minLength": 1,
+              "type": "string"
+            },
+            "tags": {
+              "items": {
+                "maxLength": 100,
+                "minLength": 1,
+                "type": "string"
+              },
+              "maxItems": 3,
+              "minItems": 1,
+              "type": "array"
+            },
+            "targets": {
+              "items": {
+                "additionalProperties": false,
+                "properties": {
+                  "contextual_meaning": {
+                    "maxLength": 500,
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "hint_forms": {
+                    "items": {
+                      "maxLength": 500,
+                      "minLength": 1,
+                      "type": "string"
+                    },
+                    "maxItems": 128,
+                    "minItems": 1,
+                    "type": "array"
+                  },
+                  "hint_phrase": {
+                    "maxLength": 500,
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "passage_forms": {
+                    "items": {
+                      "maxLength": 500,
+                      "minLength": 1,
+                      "type": "string"
+                    },
+                    "maxItems": 128,
+                    "minItems": 1,
+                    "type": "array"
+                  },
+                  "source_entry": {
+                    "maxLength": 128,
+                    "minLength": 1,
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "source_entry",
+                  "contextual_meaning",
+                  "hint_phrase",
+                  "passage_forms",
+                  "hint_forms"
+                ],
+                "type": "object"
+              },
+              "maxItems": 2,
+              "minItems": 2,
+              "type": "array"
+            }
+          },
+          "required": [
+            "passage",
+            "tags",
+            "targets"
+          ],
+          "type": "object"
+        },
+        "strict": true
+      },
+      "provider": {
+        "data_collection": "deny",
+        "require_parameters": true
+      },
+      "model": "qa/synthetic",
+      "closed": true
+    },
+    {
+      "ordinal": 44,
+      "fixture": "C39-15/same-v3-restart-control",
+      "stream": true,
+      "schema": {
+        "name": "wordweave_learning_batch",
+        "schema": {
+          "additionalProperties": false,
+          "properties": {
+            "passage": {
+              "maxLength": 2000000,
+              "minLength": 1,
+              "type": "string"
+            },
+            "tags": {
+              "items": {
+                "maxLength": 100,
+                "minLength": 1,
+                "type": "string"
+              },
+              "maxItems": 3,
+              "minItems": 1,
+              "type": "array"
+            },
+            "targets": {
+              "items": {
+                "additionalProperties": false,
+                "properties": {
+                  "contextual_meaning": {
+                    "maxLength": 500,
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "hint_forms": {
+                    "items": {
+                      "maxLength": 500,
+                      "minLength": 1,
+                      "type": "string"
+                    },
+                    "maxItems": 128,
+                    "minItems": 1,
+                    "type": "array"
+                  },
+                  "hint_phrase": {
+                    "maxLength": 500,
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "passage_forms": {
+                    "items": {
+                      "maxLength": 500,
+                      "minLength": 1,
+                      "type": "string"
+                    },
+                    "maxItems": 128,
+                    "minItems": 1,
+                    "type": "array"
+                  },
+                  "source_entry": {
+                    "maxLength": 128,
+                    "minLength": 1,
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "source_entry",
+                  "contextual_meaning",
+                  "hint_phrase",
+                  "passage_forms",
+                  "hint_forms"
+                ],
+                "type": "object"
+              },
+              "maxItems": 1,
+              "minItems": 1,
+              "type": "array"
+            }
+          },
+          "required": [
+            "passage",
+            "tags",
+            "targets"
+          ],
+          "type": "object"
+        },
+        "strict": true
+      },
+      "provider": {
+        "data_collection": "deny",
+        "require_parameters": true
+      },
+      "model": "qa/synthetic",
+      "closed": true
+    }
+  ],
+  "queued": 0
+}

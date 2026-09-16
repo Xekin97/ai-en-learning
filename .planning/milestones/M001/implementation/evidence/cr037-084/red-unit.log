@@ -1,0 +1,15 @@
+Command: corepack pnpm test -- tests/unit/account-password-error.test.ts
+Runtime: host Node v22.23.2 / pnpm 10.33.0 (RED capture only; final checks use locked Node 24 image)
+Exit: 1
+
+Vitest ran the existing suite plus the new file. Result:
+- 22 test files: 1 failed, 21 passed
+- 199 tests: 3 failed, 196 passed
+
+Expected CR037-03 failures:
+1. password failure replaced the unrelated page failure;
+2. passwordFailure was undefined instead of cleared at retry start;
+3. clearPasswordFailure did not exist.
+
+The failing assertions were in frontend/tests/unit/account-password-error.test.ts at the
+page-failure separation, retry-start cleanup, and cancellation cleanup checks.

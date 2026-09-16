@@ -1,0 +1,33 @@
+{
+  "recorded_at": "2026-09-07T03:43:10Z",
+  "agent": "qa-quinn",
+  "method": "direct view_image inspection of preserved full-page screenshots; not inferred from file existence",
+  "reviewed": [
+    {
+      "file": "chromium-darwin-en-US-390-password-error.png",
+      "result": "PASS",
+      "observation": "The safe error is crisp inside the active dialog above all password fields; the underlying page is dimmed, fields and blue session notice remain readable, and the footer controls fit without clipping."
+    },
+    {
+      "file": "chromium-darwin-zh-CN-390-password-error.png",
+      "result": "PASS",
+      "observation": "The localized safe error is crisp inside the active dialog; all three fields, helper text, session notice, and both footer controls fit the 390px viewport without overlap or clipping."
+    },
+    {
+      "file": "chromium-darwin-zh-CN-1440-password-error.png",
+      "result": "PASS",
+      "observation": "Desktop dialog is centered and the page-behind area remains visually subordinate; error, fields, notice, and actions are distinct and readable."
+    },
+    {
+      "files": ["qa085-linux-desktop-model-dialog-actual.png", "qa085-linux-desktop-model-dialog-design.png"],
+      "result": "PASS",
+      "observation": "Actual and approved prototype dialog internal vertical rhythm, field ordering, notice, footer, and bounding geometry match on the same Linux Chromium platform; underlying fixture rows differ and are outside the dialog comparison."
+    },
+    {
+      "files": ["qa085-linux-mobile-model-dialog-actual.png", "qa085-linux-mobile-model-dialog-design.png"],
+      "result": "PASS",
+      "observation": "Mobile dialog internal geometry and responsive composition match the approved prototype on the same platform; the measured final rounded gap is 25px for both, not the historical fixed 23px oracle."
+    }
+  ],
+  "limitations": "Visual inspection is evidence for these captured states only; it is not a full-site pixel audit or real-device Safari certification."
+}

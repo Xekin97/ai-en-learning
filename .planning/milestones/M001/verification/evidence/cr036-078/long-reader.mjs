@@ -1,0 +1,13 @@
+import{readFileSync}from'node:fs';import{join}from'node:path';import{chromium,webkit,expect,dir,origin,ready,login,api,recorder}from'./lib.mjs';
+const f=JSON.parse(readFileSync(join(dir,'long-fixtures.json'))),username='abcdefghijklmnopqrstuvwxyz123456',id=f.users[username],out=recorder('long-reader');
+for(const[type,engine]of[[chromium,'chromium'],[webkit,'webkit']]){
+ const b=await type.launch();try{const c=await b.newContext();c.setDefaultTimeout(8000);const token=await login(c,'qa078_focus_admin');
+ for(const locale of['en-US','zh-CN']){await api(c,'PUT','/api/v1/me/ui-locale',token,{ui_locale:locale});const p=await c.newPage();
+ for(const width of[320,390,900,1440]){const key=engine+' '+locale+' '+width;await p.setViewportSize({width,height:844});await p.goto(origin+'/admin/users?q='+username);await ready(p);await p.locator('.admin-user-result .button').click();await expect(p.locator('.user-detail-name')).toHaveText(username);
+ for(let i=0;i<2;i++){const button=p.locator('.model-row button').nth(i);await button.scrollIntoViewIfNeeded();await button.focus();const y=await p.evaluate(()=>scrollY);await button.click();await expect(p.locator('.reading-passage')).toBeVisible();
+ out.record(key+' '+i+' correct user',await p.locator('.reader-context > span').innerText(),username);out.record(key+' '+i+' correct complete batch',await p.locator('.reading-passage').textContent(),f.batches[i].passage);out.record(key+' '+i+' modal and text contained',await p.locator('dialog').evaluate(n=>{const r=n.getBoundingClientRect();return r.x>=0&&r.right<=innerWidth&&r.top>=0&&r.bottom<=innerHeight&&n.scrollWidth<=n.clientWidth&&[...n.querySelectorAll('.reader-context,.reader-passage')].every(n=>n.scrollWidth<=n.clientWidth)}),true);
+ out.record(key+' '+i+' no content-write controls',await p.locator('dialog input,dialog select,dialog textarea').count(),0);if(i===1)await p.locator('.reader-body').evaluate(n=>n.scrollTop=n.scrollHeight);await expect(p.locator('.dialog-footer button')).toBeInViewport();
+ if(i===0)await p.keyboard.press('Escape');else await p.locator('.dialog-footer button').click();await expect(p.locator('dialog')).toHaveCount(0);await expect(button).toBeFocused();out.record(key+' '+i+' scroll restored',Math.abs(await p.evaluate(()=>scrollY)-y)<=2,true);
+ }await expect(p.getByRole('search').locator('input')).toHaveValue(username);await p.locator('.admin-user-detail-toolbar a').click();await expect(p.locator('.admin-user-result .button')).toBeFocused();}
+ await p.close();}await c.close();}catch(e){out.error(engine+' long reader',e);}finally{await b.close();}
+}out.save();

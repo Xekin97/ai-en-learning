@@ -1,0 +1,120 @@
+{
+  "date": "2026-09-07T06:31:14.796Z",
+  "agent": "qa-quinn",
+  "model": "deepseek/deepseek-v4-flash-0731",
+  "account": {
+    "username": "uat_ai_quality_088",
+    "passwordRecorded": false,
+    "dedicatedContentOnly": true
+  },
+  "inferenceBudget": {
+    "cap": 5,
+    "initialCancelledProbe": 1,
+    "recoveryProbe": 1,
+    "qualityRequests": 1,
+    "totalAttempts": 3,
+    "automaticRetries": 0
+  },
+  "plannedSamples": 3,
+  "attemptedSamples": 1,
+  "validatedSamples": 0,
+  "savedSamples": 0,
+  "stoppedEarly": true,
+  "controlledStopReason": "content_validation_failed",
+  "samples": [
+    {
+      "plan": {
+        "id": "AQ088-S1",
+        "meaning_language": "zh",
+        "scenario": "discussion",
+        "length": "medium",
+        "entries": [
+          "alleviate",
+          "undermine",
+          "facilitate",
+          "deteriorate",
+          "perceive"
+        ],
+        "purpose": "用户指定五词；中文情境释义、讨论场景、中篇"
+      },
+      "started_at": "2026-09-07T06:30:41.464Z",
+      "completed_at": "2026-09-07T06:31:13.533Z",
+      "http_status": 200,
+      "content_type": "text/event-stream; charset=utf-8",
+      "terminal": "generation.failed",
+      "run_id": "01a07a8f-d43a-7e43-9901-1f083783f771",
+      "failure": {
+        "code": "content_validation_failed",
+        "quota_refunded": true,
+        "retryable": true
+      },
+      "partial_passage": "In our discussion about workplace wellbeing, several people argued that flexible hours would alleviate much of the stress that employees feel. Others warned that without clear boundaries, such arrangements could undermine team cohesion and create resentment. I suggested that regular check-ins might facilitate better communication, helping managers notice problems before they escalate. Unfortunately, after a few weeks of experimenting, morale began to deteriorate because people felt uncertain about expectations. One colleague noted that we often perceive flexibility as a benefit, but it can become a burden if workloads remain unrealistic. Overall, we agreed that any policy must be introduced carefully, with ongoing feedback, so that it reduces pressure rather than adding to it.",
+      "saved": false
+    }
+  ],
+  "databaseTerminals": [
+    {
+      "provider_model_id_snapshot": "deepseek/deepseek-v4-flash-0731",
+      "meaning_language": "zh",
+      "scenario": "discussion",
+      "length_code": "medium",
+      "minimum_words_snapshot": 100,
+      "max_entries_snapshot": 5,
+      "call_status": "validation_failed",
+      "disposition": "pending",
+      "quota_charged": false,
+      "counts_toward_cumulative": false,
+      "failure_code": "content_validation_failed",
+      "started_at": "2026-09-07T06:30:41.466914+00:00",
+      "completed_at": "2026-09-07T06:31:13.527006+00:00"
+    }
+  ],
+  "dataPreservation": {
+    "existingDataDigestsUnchanged": {
+      "accounts": true,
+      "sessions": true,
+      "batches": true,
+      "targets": true,
+      "hintOccurrences": true,
+      "passageOccurrences": true,
+      "runs": true,
+      "models": true,
+      "groups": true,
+      "groupModels": true,
+      "groupLengths": true,
+      "credentials": true,
+      "migrations": true
+    },
+    "allExistingDataDigestsUnchanged": true,
+    "beforeCounts": {
+      "accounts": 589,
+      "sessions": 598,
+      "batches": 17,
+      "runs": 79,
+      "active_runs": 0,
+      "quality_accounts": 0,
+      "quality_sessions": 0,
+      "quality_batches": 0,
+      "quality_runs": 0
+    },
+    "afterCounts": {
+      "accounts": 590,
+      "sessions": 598,
+      "batches": 17,
+      "runs": 80,
+      "active_runs": 0,
+      "quality_accounts": 1,
+      "quality_sessions": 0,
+      "quality_batches": 0,
+      "quality_runs": 1
+    },
+    "activeRunsAfter": 0,
+    "onlyDedicatedAccountAndItsRunsAndBatchesAdded": true
+  },
+  "providerUsage": "unknown",
+  "providerCost": "unknown",
+  "secretsEmitted": false,
+  "cookiesCsrfGenerationTokensEmitted": false,
+  "actualModel": "not_observed",
+  "usage": "not_observed"
+}

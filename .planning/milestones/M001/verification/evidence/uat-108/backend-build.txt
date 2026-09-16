@@ -1,0 +1,63 @@
+#0 building with "desktop-linux" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 1.04kB done
+#1 DONE 0.0s
+
+#2 resolve image config for docker-image://docker.io/docker/dockerfile:1.7
+#2 DONE 1.6s
+
+#3 docker-image://docker.io/docker/dockerfile:1.7@sha256:a57df69d0ea827fb7266491f2813635de6f17269be881f696fbfdf2d83dda33e
+#3 CACHED
+
+#4 [internal] load metadata for docker.io/library/golang@sha256:e8c859f5632dcfde7b32d2012b4351728f6437930887c2f6a91ea242459e5514
+#4 DONE 0.0s
+
+#5 [internal] load metadata for gcr.io/distroless/static-debian12:nonroot@sha256:afa5c872c891853ca7fcf1f12c3edb23f7eeef36189728842dd51042ff57f7ab
+#5 DONE 0.7s
+
+#6 [internal] load .dockerignore
+#6 transferring context: 114B done
+#6 DONE 0.0s
+
+#7 [build 1/6] FROM docker.io/library/golang@sha256:e8c859f5632dcfde7b32d2012b4351728f6437930887c2f6a91ea242459e5514
+#7 DONE 0.0s
+
+#8 [stage-1 1/3] FROM gcr.io/distroless/static-debian12:nonroot@sha256:afa5c872c891853ca7fcf1f12c3edb23f7eeef36189728842dd51042ff57f7ab
+#8 DONE 0.0s
+
+#9 [internal] load build context
+#9 transferring context: 354.15kB 0.0s done
+#9 DONE 0.0s
+
+#10 [build 2/6] WORKDIR /src
+#10 CACHED
+
+#11 [build 3/6] COPY go.mod go.sum ./
+#11 CACHED
+
+#12 [build 4/6] RUN --mount=type=cache,target=/go/pkg/mod go mod download
+#12 CACHED
+
+#13 [build 5/6] COPY . .
+#13 DONE 0.1s
+
+#14 [build 6/6] RUN --mount=type=cache,target=/go/pkg/mod     --mount=type=cache,target=/root/.cache/go-build     CGO_ENABLED=0 GOOS=linux GOARCH=arm64     go build -trimpath -ldflags='-s -w' -o /out/wordweave ./cmd/wordweave &&     CGO_ENABLED=0 GOOS=linux GOARCH=arm64     go build -trimpath -ldflags='-s -w' -o /out/wordweave-admin ./cmd/wordweave-admin
+#14 DONE 3.1s
+
+#8 [stage-1 1/3] FROM gcr.io/distroless/static-debian12:nonroot@sha256:afa5c872c891853ca7fcf1f12c3edb23f7eeef36189728842dd51042ff57f7ab
+#8 CACHED
+
+#15 [stage-1 2/3] COPY --from=build /out/wordweave /usr/local/bin/wordweave
+#15 DONE 0.0s
+
+#16 [stage-1 3/3] COPY --from=build /out/wordweave-admin /usr/local/bin/wordweave-admin
+#16 DONE 0.0s
+
+#17 exporting to image
+#17 exporting layers 0.0s done
+#17 writing image sha256:7cb89a2d4628cc568790cf4a556133cc76270f97d3e246aeb3e95374541b936d done
+#17 naming to docker.io/library/wordweave-backend:uat108 done
+#17 DONE 0.1s
+
+View build details: docker-desktop://dashboard/build/desktop-linux/desktop-linux/j4dmyizjj1h2t3c1k5uy60hc6

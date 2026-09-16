@@ -1,0 +1,14 @@
+{
+  "recorded_at": "2026-09-07T03:43:10Z",
+  "agent": "qa-quinn",
+  "deviations": [
+    {
+      "id": "QA085-METHOD-IMAGE-TAG",
+      "classification": "qa_process_deviation",
+      "summary": "A Linux geometry command referenced an unavailable Playwright tag instead of the already pinned local image ID. Docker began resolving/pulling layers; the command was interrupted immediately before completion, and no tagged image or test result was produced.",
+      "containment": "All effective Linux runs used the pre-existing fixed local image ID sha256:caa6083aa787e4cfcaa661c73dd6244e4fa38d754dab0cc3b472156b277b0394. No candidate image was built, replaced, or pulled for use.",
+      "product_impact": "none",
+      "evidence_policy": "reported rather than omitted"
+    }
+  ]
+}

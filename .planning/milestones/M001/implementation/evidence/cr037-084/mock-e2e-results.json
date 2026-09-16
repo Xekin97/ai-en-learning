@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "fixed_candidate": "sha256:fd251e7439aad8e058656e2751ed84f40715fec570a872da53542688a6dd6904",
+  "topology": "fixed production frontend + Nginx same-origin + contract mock backend",
+  "runs": [
+    {
+      "environment": "Linux arm64, Playwright 1.62.1 image sha256:941cc91e5022880ac1d14ae90b476b624deb6399dbbc28d612d5d5bd7928fcbd, Node 24.18.1",
+      "exit": 1,
+      "passed": 120,
+      "failed": 2,
+      "cr037_tests": "12/12 pass",
+      "failure": "Existing admin model-dialog spacing expected 23px; observed 24px desktop and 25px mobile.",
+      "raw_artifacts": "linux-mock-test-results",
+      "same_platform_design_comparison": "linux-geometry-comparison.json"
+    },
+    {
+      "environment": "macOS host Chromium, Playwright 1.62.1; application remains the same immutable Node 24 production candidate",
+      "exit": 0,
+      "passed": 122,
+      "failed": 0,
+      "cr037_tests": "12/12 pass"
+    }
+  ],
+  "assertions_changed": false,
+  "product_styles_changed_for_linux_observation": false
+}

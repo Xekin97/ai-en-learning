@@ -1,0 +1,145 @@
+{
+  "date": "2026-09-07T03:42:14.409Z",
+  "agent": "qa-quinn",
+  "checks": {
+    "databaseWasTmpfs": true,
+    "uatUnchangedBeforeCleanup": true,
+    "uatUnchangedAfterCleanup": true,
+    "protectedFilesUnchanged": true,
+    "qaPort6101Released": true,
+    "design6010StillHealthy": true,
+    "fixedCandidateImagesPreserved": true,
+    "abortedUnavailableTagNotInstalled": true
+  },
+  "preCleanup": {
+    "databaseTmpfs": {
+      "/var/lib/postgresql": ""
+    },
+    "syntheticCounts": {
+      "accounts": "19",
+      "batches": "0",
+      "credentials": "1",
+      "models": "1",
+      "reviews": "0",
+      "runs": "2",
+      "sessions": "34"
+    },
+    "uat": [
+      {
+        "name": "/wordweave_uat-frontend-1",
+        "id": "7f83e902076f5544a5ec2bc76d3775d552b1ba57d5da06530ef5b0698ef40767",
+        "image": "sha256:8fe04108b523cce73820017069ba0509e7bee03589b0fdc9218a4397770274c0",
+        "created": "2026-09-06T09:02:21.699287589Z",
+        "started": "2026-09-06T09:02:27.5862768Z",
+        "running": true
+      },
+      {
+        "name": "/wordweave_uat-backend-1",
+        "id": "a6719cbffbfb222894123ddb77c0dbd5c07b90d114efcb670d256f1c50947cde",
+        "image": "sha256:e8c4ee91a7c3265cda8c496ccc8fb485328d95b6c1662eaf2502011ce5d005a5",
+        "created": "2026-09-06T09:02:21.307242131Z",
+        "started": "2026-09-06T09:02:21.852434256Z",
+        "running": true
+      },
+      {
+        "name": "/wordweave_uat-nginx-1",
+        "id": "b789bde4e7825b849640cbf63d35b50ae41c1b77cb6b7ece73b3e26e27eabcb1",
+        "image": "sha256:5f0efd7fead5e8a290f07e5c025e9204052efb646758e1c6883de0e23a6e085c",
+        "created": "2026-09-04T09:36:37.259905255Z",
+        "started": "2026-09-04T09:36:43.099505383Z",
+        "running": true
+      },
+      {
+        "name": "/wordweave_uat-postgres-1",
+        "id": "37a6d2fa58c578b1c6b4dbe10028b5ddf0c696fe44fc849a129293a85bbaf839",
+        "image": "sha256:b85269e8c6aa961524542eb4dcca44c4aa1deba2cf507e9e28d5ba8f971aeab9",
+        "created": "2026-09-03T02:24:02.646638386Z",
+        "started": "2026-09-03T02:24:03.164602928Z",
+        "running": true
+      }
+    ]
+  },
+  "uatAfter": [
+    {
+      "name": "/wordweave_uat-frontend-1",
+      "id": "7f83e902076f5544a5ec2bc76d3775d552b1ba57d5da06530ef5b0698ef40767",
+      "image": "sha256:8fe04108b523cce73820017069ba0509e7bee03589b0fdc9218a4397770274c0",
+      "created": "2026-09-06T09:02:21.699287589Z",
+      "started": "2026-09-06T09:02:27.5862768Z",
+      "running": true
+    },
+    {
+      "name": "/wordweave_uat-backend-1",
+      "id": "a6719cbffbfb222894123ddb77c0dbd5c07b90d114efcb670d256f1c50947cde",
+      "image": "sha256:e8c4ee91a7c3265cda8c496ccc8fb485328d95b6c1662eaf2502011ce5d005a5",
+      "created": "2026-09-06T09:02:21.307242131Z",
+      "started": "2026-09-06T09:02:21.852434256Z",
+      "running": true
+    },
+    {
+      "name": "/wordweave_uat-nginx-1",
+      "id": "b789bde4e7825b849640cbf63d35b50ae41c1b77cb6b7ece73b3e26e27eabcb1",
+      "image": "sha256:5f0efd7fead5e8a290f07e5c025e9204052efb646758e1c6883de0e23a6e085c",
+      "created": "2026-09-04T09:36:37.259905255Z",
+      "started": "2026-09-04T09:36:43.099505383Z",
+      "running": true
+    },
+    {
+      "name": "/wordweave_uat-postgres-1",
+      "id": "37a6d2fa58c578b1c6b4dbe10028b5ddf0c696fe44fc849a129293a85bbaf839",
+      "image": "sha256:b85269e8c6aa961524542eb4dcca44c4aa1deba2cf507e9e28d5ba8f971aeab9",
+      "created": "2026-09-03T02:24:02.646638386Z",
+      "started": "2026-09-03T02:24:03.164602928Z",
+      "running": true
+    }
+  ],
+  "protectedAfter": {
+    ".planning/workflow/state.yaml": "52585a2c5cf5767f4dbc8f19f65efcf41e9920e8f5294ec07add10b83c44178b",
+    ".planning/agt/agents.yaml": "86470e63858e367c98d8edcc60f245aa46e669381d52c3f3d32f159b4c5ffc9b",
+    ".planning/agt/project.yaml": "fc4a5fa256e74a6cdb58d466d6a3d92fb07ea1840788246a8e9b287d29575154",
+    ".planning/agt/model-routing-v1.lock.json": "4ea5e6a62b10e952e9d68eaf58a89094e785cbd16686e5d861cc3b6804798c54",
+    ".planning/milestones/M001/reviews/cr037-cr038-continuous-to-uat-approval.md": "c05c6593eb449c023896b9dfe988f8c8ee149313703cf331ae329e3219e7df83",
+    ".planning/milestones/M001/reviews/cr037-cr038-independent-verification-approval.md": "4ff59efc59f27e5ae95653724b05827f67082ad9cb95e17c889ad0dbf4efd7a0",
+    ".planning/milestones/M001/implementation/backend-cr038-083-validation.md": "94daac3218f20439c3323032000c0b69db2d24b451b79960397e06eef4d6fb6d",
+    ".planning/milestones/M001/implementation/frontend-cr037-084-validation.md": "9550f0e3784698ac2303231e2e29735f22f424317739e6edf8bcf66b73bb2e6a",
+    ".planning/milestones/M001/implementation/evidence/cr038-083/candidate.json": "9b081998d9a9a58d40ebd7a4cc70e14fafe9b19337155a1fe37381d9afabd745",
+    ".planning/milestones/M001/implementation/evidence/cr037-084/candidate.json": "d2f50469dd045a9715f57d38764a088c7323775499c48ccf5ed5334080ab826e",
+    ".planning/milestones/M001/technical/api/index.md": "0dc24018000195f07e70b4c28526a14916fd33f104efcd4405a97cb58ecf19f9",
+    ".planning/milestones/M001/technical/frontend.md": "f3a32eced1425442290a25d28b4dc23bb3083221706ed2bf4f5dae092f6b5b9d",
+    ".planning/milestones/M001/design/prototype/app.js": "52a0a0849e78d343dac91055590f2eaf71a1a357a2a63c0882662babb3fd26ed",
+    ".planning/milestones/M001/design/prototype/i18n.js": "ea29e49f464639413cacd9faeaefc759e4be7c2233a5b8019d971c5fcc478259",
+    ".planning/milestones/M001/design/theme.css": "d7ad94ef6732d1f10697d2e64c5e4fa59a5f6b2df8b06831bb06a984c96d2903",
+    ".planning/milestones/M001/design/cr031-cr032-interaction-contract.md": "8b22c907be73b2af67c251cf077b171b5c479bbf952de2b755ed23dbb5a1247d",
+    ".planning/milestones/M001/product/abilities.md": "2045fbf01d3d1488ff057e9e7779cba80c8a2e843bd3a4e1de0f6e4aefbbfdb4",
+    ".planning/milestones/M001/product/pages/index.md": "969e30307b01eae64de5fac9da50d8612972b2521fe8d0cec00f572136a04b34",
+    "backend/internal/httpapi/response.go": "7b3e69b6d2080f2a5086a3f02082c9484028df50ed0c49fac692525a274ed0b2",
+    "backend/internal/httpapi/response_test.go": "aa6cc5b757f22ae0bc55d13b579edf6169bb2358c89d0cea0f268b92e2ec7ce1",
+    "backend/internal/httpapi/response_no_content_integration_test.go": "497b33fda185eea8d265994d16e2236afa192841cb3915c75706452244123b44",
+    "frontend/app/pages/account.vue": "baa32328bcd00f7309f70fa8bc834581046c11e000bbba1fc46fc719b6633583",
+    "frontend/app/runtime/stores/account.ts": "6e913bffd238eb24708857f8f1840788f6d38f854a9f1cac54f126555ed6a6c3",
+    "frontend/tests/unit/account-password-error.test.ts": "1ed6595371aa16dd04499122234f90ec171665590a5049b0599e9ecf5ea24822",
+    "frontend/tests/e2e/cr037-auth-account.spec.ts": "f561c81cf2bbd4a9478009841d447ee3dde7052687b7b3807c1c5ce108468c94"
+  },
+  "candidateImagesPresent": {
+    "frontend": true,
+    "backend": true,
+    "postgres": true,
+    "playwright": true,
+    "nginx": true
+  },
+  "unavailableTagInstalled": false,
+  "removed": {
+    "containers": [
+      "ww-qa-085-nginx",
+      "ww-qa-085-frontend",
+      "ww-qa-085-backend",
+      "ww-qa-085-provider",
+      "ww-qa-085-db"
+    ],
+    "networks": [
+      "ww-qa-085-edge",
+      "ww-qa-085"
+    ],
+    "recovery": "tmpfs synthetic database is not recoverable; evidence and setup scripts are retained"
+  }
+}

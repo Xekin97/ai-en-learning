@@ -1,0 +1,17 @@
+import{execFileSync,spawnSync}from'node:child_process';import{readFileSync,writeFileSync}from'node:fs';import{join,resolve}from'node:path';import{createHash}from'node:crypto';import{dir,sql}from'./lib.mjs';
+const docker=args=>execFileSync('docker',args,{encoding:'utf8'}).trim(),baseline=JSON.parse(readFileSync(join(dir,'baseline.json'))),root=resolve(dir,'../../../../../..');
+const modified=Object.entries(baseline.hashes).filter(([p,h])=>createHash('sha256').update(readFileSync(join(root,p))).digest('hex')!==h).map(([p])=>p);
+if(modified.some(p=>p!=='frontend/app/assets/css/application.css'))throw Error('Unexpected pre-report modifications: '+modified.join(','));
+for(const name of['layout-after','flows','plans-edge']){const r=JSON.parse(readFileSync(join(dir,name+'-results.json')));if(r.counts.FAIL||r.counts.ERROR)throw Error('Failed developer checks '+name);}
+const e2e=JSON.parse(readFileSync(join(dir,'e2e-full.json')));if(e2e.stats.unexpected||e2e.stats.skipped||e2e.stats.flaky)throw Error('Non-passing E2E');
+const data=JSON.parse(sql("SELECT json_build_object('accounts',(SELECT count(*) FROM wordweave.accounts),'batches',(SELECT count(*) FROM wordweave.learning_batches),'review_sessions',(SELECT count(*) FROM wordweave.review_sessions),'generation_runs',(SELECT count(*) FROM wordweave.generation_runs),'credentials',(SELECT count(*) FROM wordweave.openrouter_credentials),'models',(SELECT count(*) FROM wordweave.ai_models),'enabled_models',(SELECT count(*) FROM wordweave.ai_models WHERE enabled))"));
+const containers=['ww-dev-075-nginx','ww-dev-075-frontend','ww-dev-075-backend','ww-dev-075-db'],networks=['ww-dev-075','ww-dev-075-edge'];
+for(const name of containers){const x=JSON.parse(docker(['inspect',name]))[0];if(x.Config.Labels['wordweave.dev']!=='075')throw Error('Unowned container '+name);}
+for(const name of networks){const x=JSON.parse(docker(['network','inspect',name]))[0];if(x.Labels['wordweave.dev']!=='075')throw Error('Unowned network '+name);}
+writeFileSync(join(dir,'pre-cleanup-data.json'),JSON.stringify(data,null,2),{flag:'wx'});
+for(const name of containers){docker(['stop',name]);docker(['rm',name]);}for(const name of networks)docker(['network','rm',name]);
+const uat=JSON.parse(docker(['inspect','wordweave_uat-frontend-1','wordweave_uat-backend-1','wordweave_uat-nginx-1','wordweave_uat-postgres-1'])).map(x=>({name:x.Name,id:x.Id,image:x.Image,started:x.State.StartedAt}));
+const prototypeListener=execFileSync('lsof',['-nP','-iTCP:6010','-sTCP:LISTEN'],{encoding:'utf8'}).trim();
+const temporaryPorts=Object.fromEntries([3300,38080,6101].map(port=>[port,spawnSync('lsof',['-nP','-iTCP:'+port,'-sTCP:LISTEN'],{encoding:'utf8'}).status===1]));
+const result={date:new Date().toISOString(),baselineFiles:Object.keys(baseline.hashes).length,modifiedBeforeReport:modified,e2eStats:e2e.stats,uatUnchanged:JSON.stringify(uat)===JSON.stringify(baseline.uat),prototypeListener,temporaryPortsFree:temporaryPorts,removedContainers:containers,removedNetworks:networks,data,dataRecovery:'Only owned synthetic tmpfs data removed; exact DB cannot be recovered. setup, seed and seed-layout-insert reconstruct equivalent fixtures. No real users, credentials or AI calls.'};
+writeFileSync(join(dir,'cleanup.json'),JSON.stringify(result,null,2),{flag:'wx'});console.log(JSON.stringify(result));if(!result.uatUnchanged||Object.values(temporaryPorts).some(v=>!v))process.exitCode=1;

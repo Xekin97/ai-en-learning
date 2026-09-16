@@ -1,0 +1,48 @@
+{
+  "milestone": "M001",
+  "date": "2026-09-02",
+  "environment": {
+    "entry": "http://127.0.0.1:3313",
+    "compose_project": "wordweave_verify_crfix",
+    "components": ["nginx", "nuxt", "go-backend", "postgresql", "openrouter-protocol-mock"],
+    "browser": "Playwright Chromium",
+    "provider_credential": "deterministic test credential only"
+  },
+  "baseline": {
+    "script": "live-e2e.mjs",
+    "passed": 20,
+    "failed": 0,
+    "notes": "Includes the 3 meaning languages x 4 scenarios x 4 lengths matrix (48/48), live SSE, persistence, review, authorization, i18n, responsive and critical accessibility smoke checks."
+  },
+  "revision": {
+    "script": "revision-e2e.mjs",
+    "passed": 16,
+    "failed": 0,
+    "passed_checks": [
+      "CR-008 explicit terminal pagination metadata",
+      "homepage three-task entry and protected intent",
+      "CR-011 fresh generation workspace explicit configuration",
+      "validated unsaved generation navigation protection",
+      "library participation checkbox focus and direct review",
+      "multi-batch range review completion",
+      "self-service password session effects",
+      "administrator group/password confirmation effects",
+      "no-model, no-length and zero-quota projections",
+      "batch deletion cascade and cumulative count preservation",
+      "account deletion cascade",
+      "CR-012 explicit unchecked account deletion confirmation",
+      "cross-browser account locale merge",
+      "active cancellation versus passive disconnect settlement",
+      "provider/protocol/content failure refunds",
+      "13-route Axe scan and 320/720/900/1280 responsive fit"
+    ],
+    "failed_checks": []
+  },
+  "targeted": {
+    "script": "cr011-cr012-targeted.mjs",
+    "results": "cr011-cr012-targeted-results.json",
+    "passed": 6,
+    "failed": 0,
+    "notes": "Independently verifies fresh visitor/learner defaults, progressive four-choice gating, locale retention, new-task reset, native checkbox keyboard behavior, exact confirmed:true request provenance, failed deletion safety reset, successful cascade, Axe and responsive boundaries."
+  }
+}

@@ -1,0 +1,73 @@
+{
+  "schema_version": 1,
+  "task": "ai-quality-088",
+  "active_agent": "qa-quinn",
+  "host_task": "/root/qa_quinn",
+  "requested_model": "gpt-5.6-sol",
+  "requested_effort": "high",
+  "risk": "high",
+  "execution": "native_codex_subtask_followup",
+  "dispatch_accepted": true,
+  "status": "completed",
+  "result": "configuration_pass_quality_limited_mixed",
+  "original_report": ".planning/milestones/M001/verification/ai-quality-088-report.md",
+  "original_samples": ".planning/milestones/M001/verification/ai-quality-088-samples.md",
+  "received_by": "TRANSITION-M001-089",
+  "provider_inference_attempts": 5,
+  "quality_samples_attempted": 3,
+  "quality_samples_validated_saved": 2,
+  "quality_samples_validation_failed": 1,
+  "automatic_retries": 0,
+  "provider_usage": "unknown",
+  "provider_cost": "unknown",
+  "functional_uat_user_accepted": true,
+  "real_ai_user_accepted": false,
+  "release_approved": false,
+  "actual_model": "not_observed",
+  "usage": "not_observed",
+  "task_packet": ".planning/agt/tasks/ai-quality-088.json",
+  "authorization": ".planning/milestones/M001/reviews/uat-086-acceptance-ai-quality-authorization.md",
+  "preflight": {
+    "mode": "dry-run",
+    "issues": [],
+    "model_catalog_changed": false,
+    "prompt_hash": "91baaa4402f96b4d8d2d03d261d50fdbb4cc1deac14f672113d3c7c09d34ca4c"
+  },
+  "packet_correction_preflight": {
+    "recorded_at": "2026-09-07T06:21:32Z",
+    "correction": "Use the official authenticated GET /api/v1/key endpoint for read-only key validity checking.",
+    "mode": "dry-run",
+    "issues": [],
+    "model_catalog_changed": false,
+    "prompt_hash": "2a4adeb71af0b0a3ef1219442a155336b4e354c84478395a6c51bafd92536996"
+  },
+  "key_source": "user_prior_test_key_via_no_echo_stdin",
+  "qa_timeout_recovery_preflight": {
+    "recorded_at": "2026-09-07T06:27:28Z",
+    "user_context": "Real generation may take 1-2 minutes; extend QA client wait only.",
+    "mode": "dry-run",
+    "issues": [],
+    "prompt_hash": "7288931af4c959bad43daecf49047475beb0efce7144b985b1d8cd3d623adc63",
+    "qa_timeout_ms": 300000,
+    "total_inference_cap_unchanged": 5,
+    "recovery_probe_cap": 1,
+    "article_sample_cap_after_recovery": 3
+  },
+  "key_in_packet": false,
+  "user_sample_preflight": {
+    "recorded_at": "2026-09-07T06:29:08Z",
+    "mode": "dry-run",
+    "issues": [],
+    "prompt_hash": "1004efd69c473a1b1e3ee41f94c7d67d6f3ea7f7a453c228f869316fb74e915c",
+    "user_supplied_sets": 2,
+    "extra_requests_authorized": 0
+  },
+  "maximum_initial_provider_inference_requests": 5,
+  "independent_sample_continuation_preflight": {
+    "mode": "dry-run",
+    "issues": [],
+    "prompt_hash": "ae640a009242fcd33441934ac87e87d927c8f5256c3ceb3aacf339692593ea55",
+    "scope": "Preserve failed S1 without retry; execute the remaining distinct planned samples within the existing five-attempt cap."
+  },
+  "full_regression_requested": false
+}

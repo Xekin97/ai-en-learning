@@ -1,0 +1,320 @@
+{
+  "revision": "TEN-ENTRY-EXAMPLE-R8-20260911",
+  "date": "2026-09-11",
+  "authorization": {
+    "request": "从 example 看，我发现一些问题，你的 example 没有覆盖到所有可能出现的情况，如在 hint 这里，你每个示例都没有变形的示例；其次是示例中的输入词不够，至少也要 10 个输入为主，你可以用 codex 这个强模型去生成示例，然后荐举最合适覆盖面最广最清晰的例子作为 system example",
+    "scope": "System example and related offline tests only",
+    "real_model_calls": 0,
+    "deployment_performed": false,
+    "subagents_spawned": 0,
+    "author": "current Codex assistant; no separate model invocation or model-switch claim",
+    "prior_paid_budget_remaining": 0
+  },
+  "code_prompt_version": "m001-v5-r8",
+  "runtime_prompt_version": "m001-v5-r7",
+  "validator_version": "m001-v5-wn31-r1",
+  "source": {
+    "url": "https://developers.openai.com/api/docs/guides/prompt-engineering",
+    "principle": "Few-shot examples should include diverse inputs and desired outputs; no guarantee of improvements in the application's models."
+  },
+  "selection": {
+    "entries": [
+      "child",
+      "box",
+      "carry",
+      "plan",
+      "write",
+      "teach",
+      "learn",
+      "good",
+      "young",
+      "safe"
+    ],
+    "candidates": [
+      {
+        "id": "school_garden",
+        "compared_passage": "Younger(young) children(child) carried(carry) boxes(box) into the school garden. Maya had written(write) a simple illustrated guide and taught(teach) them about safe(safe) handling. While planning(plan) the layout, the children(child) learned(learn) to share tools patiently.\n\nThey chose a better(good) spot for the new seedlings, watered them carefully, and promised to return. By Friday, the garden had become the best(good) place to meet after class.",
+        "compared_clean_words": 61,
+        "production_validation": "passed",
+        "selected": false
+      },
+      {
+        "id": "library_corner",
+        "compared_passage": "The younger(young) children(child) were planning(plan) a reading corner when they found boxes(box) blocking the library door. Maya carried(carry) them aside and taught(teach) everyone about safe(safe) handling. Following instructions she had written(write), they learned(learn) to arrange the shelves.\n\nThe best(good) ideas came from quiet readers. By evening, every child(child) had somewhere comfortable to sit, and the library felt welcoming to everyone again.",
+        "compared_clean_words": 61,
+        "production_validation": "passed",
+        "selected": true
+      },
+      {
+        "id": "community_fair",
+        "compared_passage": "Children(child) carried(carry) boxes(box) toward the village hall, where a younger(young) volunteer had written(write) the schedule. While planning(plan) the fair, they learned(learn) about safe(safe) handling from a cook who taught(teach) evening classes.\n\nThe best(good) stall sold warm bread, but a sudden shower sent everyone indoors. They shared the remaining food, laughed about the weather, and agreed that helping neighbors mattered more than winning prizes.",
+        "compared_clean_words": 63,
+        "production_validation": "passed",
+        "selected": false
+      }
+    ],
+    "selected": "library_corner",
+    "rationale": "One clear event with obstacle/action/outcome; child/children repeated in passage, repeated and mixed hint forms; input order differs from prose order.",
+    "final_polish": "Removed initial 'The' and capitalized Younger, from 61 to 60 clean words; revalidated all final variants.",
+    "hints": [
+      "children(child) helping children(child)",
+      "boxes(box) beside a box(box)",
+      "supplies carried(carry) by hand",
+      "planning(plan) a school event",
+      "a clearly written(write) guide",
+      "teachers(teach) sharing ideas",
+      "a child who learns(learn) quickly",
+      "a better(good) choice",
+      "the youngest(young) volunteer",
+      "a safe(safe) place to read"
+    ],
+    "hints_with_changed_forms": 9,
+    "hints_with_unchanged_positive_example": 1,
+    "example_file": "example-zh-short.json",
+    "example_file_source": "promptExampleInput/Output('zh',50) exported by a temporary Go test, then test removed",
+    "vocabulary_entries_verified": true,
+    "complete_morphology_coverage_claimed": false
+  },
+  "variants": [
+    {
+      "language": "zh",
+      "minimum_words": 50,
+      "clean_words": 60,
+      "paragraphs": 2,
+      "strict_decode": "passed",
+      "production_validation": "passed",
+      "byte_by_byte_clean_stream": "passed",
+      "ten_entry_coverage": "passed"
+    },
+    {
+      "language": "zh",
+      "minimum_words": 100,
+      "clean_words": 120,
+      "paragraphs": 3,
+      "strict_decode": "passed",
+      "production_validation": "passed",
+      "byte_by_byte_clean_stream": "passed",
+      "ten_entry_coverage": "passed"
+    },
+    {
+      "language": "zh",
+      "minimum_words": 200,
+      "clean_words": 240,
+      "paragraphs": 4,
+      "strict_decode": "passed",
+      "production_validation": "passed",
+      "byte_by_byte_clean_stream": "passed",
+      "ten_entry_coverage": "passed"
+    },
+    {
+      "language": "zh",
+      "minimum_words": 400,
+      "clean_words": 480,
+      "paragraphs": 6,
+      "strict_decode": "passed",
+      "production_validation": "passed",
+      "byte_by_byte_clean_stream": "passed",
+      "ten_entry_coverage": "passed"
+    },
+    {
+      "language": "en",
+      "minimum_words": 50,
+      "clean_words": 60,
+      "paragraphs": 2,
+      "strict_decode": "passed",
+      "production_validation": "passed",
+      "byte_by_byte_clean_stream": "passed",
+      "ten_entry_coverage": "passed"
+    },
+    {
+      "language": "en",
+      "minimum_words": 100,
+      "clean_words": 120,
+      "paragraphs": 3,
+      "strict_decode": "passed",
+      "production_validation": "passed",
+      "byte_by_byte_clean_stream": "passed",
+      "ten_entry_coverage": "passed"
+    },
+    {
+      "language": "en",
+      "minimum_words": 200,
+      "clean_words": 240,
+      "paragraphs": 4,
+      "strict_decode": "passed",
+      "production_validation": "passed",
+      "byte_by_byte_clean_stream": "passed",
+      "ten_entry_coverage": "passed"
+    },
+    {
+      "language": "en",
+      "minimum_words": 400,
+      "clean_words": 480,
+      "paragraphs": 6,
+      "strict_decode": "passed",
+      "production_validation": "passed",
+      "byte_by_byte_clean_stream": "passed",
+      "ten_entry_coverage": "passed"
+    },
+    {
+      "language": "ja",
+      "minimum_words": 50,
+      "clean_words": 60,
+      "paragraphs": 2,
+      "strict_decode": "passed",
+      "production_validation": "passed",
+      "byte_by_byte_clean_stream": "passed",
+      "ten_entry_coverage": "passed"
+    },
+    {
+      "language": "ja",
+      "minimum_words": 100,
+      "clean_words": 120,
+      "paragraphs": 3,
+      "strict_decode": "passed",
+      "production_validation": "passed",
+      "byte_by_byte_clean_stream": "passed",
+      "ten_entry_coverage": "passed"
+    },
+    {
+      "language": "ja",
+      "minimum_words": 200,
+      "clean_words": 240,
+      "paragraphs": 4,
+      "strict_decode": "passed",
+      "production_validation": "passed",
+      "byte_by_byte_clean_stream": "passed",
+      "ten_entry_coverage": "passed"
+    },
+    {
+      "language": "ja",
+      "minimum_words": 400,
+      "clean_words": 480,
+      "paragraphs": 6,
+      "strict_decode": "passed",
+      "production_validation": "passed",
+      "byte_by_byte_clean_stream": "passed",
+      "ten_entry_coverage": "passed"
+    }
+  ],
+  "initial_candidate_failure": {
+    "reason": "mapping_relation_rejected",
+    "field": "passage",
+    "target_index": 9,
+    "form": "safety(safe)",
+    "affected_candidates": [
+      "school_garden",
+      "library_corner",
+      "community_fair"
+    ],
+    "outcome": "Retained failure evidence. Did not change validator. Revised synthetic examples to supported teachers(teach) derivation and safe(safe) unchanged positive example.",
+    "test_output": "=== RUN   TestR8CodexCandidateReview\n=== RUN   TestR8CodexCandidateReview/school_garden\n    candidate_review_test.go:20: invalid example: mapping_relation_rejected {Stage:validation Reason:mapping_relation_rejected Field:passage Target:9 Actual:-1 Limit:-1}\n=== RUN   TestR8CodexCandidateReview/library_corner\n    candidate_review_test.go:20: invalid example: mapping_relation_rejected {Stage:validation Reason:mapping_relation_rejected Field:passage Target:9 Actual:-1 Limit:-1}\n=== RUN   TestR8CodexCandidateReview/community_fair\n    candidate_review_test.go:20: invalid example: mapping_relation_rejected {Stage:validation Reason:mapping_relation_rejected Field:passage Target:9 Actual:-1 Limit:-1}\n--- FAIL: TestR8CodexCandidateReview (0.31s)\n    --- FAIL: TestR8CodexCandidateReview/school_garden (0.31s)\n    --- FAIL: TestR8CodexCandidateReview/library_corner (0.00s)\n    --- FAIL: TestR8CodexCandidateReview/community_fair (0.00s)\nFAIL\nFAIL\twordweave/internal/ai\t0.663s\nFAIL\n"
+  },
+  "bounded_relation_check": {
+    "output": "=== RUN   TestR8CandidateRelationOptions\n    candidate_review_test.go:13: safe -> safety: rejected ()\n    candidate_review_test.go:13: safe -> safely: rejected ()\n    candidate_review_test.go:13: safe -> safer: unknown ()\n    candidate_review_test.go:13: teach -> teacher: known (derivation)\n    candidate_review_test.go:13: teach -> teachers: known (derivation)\n    candidate_review_test.go:13: learn -> learner: known (derivation)\n    candidate_review_test.go:13: plan -> planner: known (derivation)\n    candidate_review_test.go:13: write -> writer: known (derivation)\n    candidate_review_test.go:13: carry -> carrying: known (inflection)\n--- PASS: TestR8CandidateRelationOptions (0.27s)\nPASS\nok  \twordweave/internal/ai\t0.603s\n",
+    "known_gap": "safe -> safety/safely rejected; safe -> safer unknown in current lexicon. These can be valid English relationships; current recognition coverage is limited. OPEN, not fixed."
+  },
+  "candidate_comparison_output": "=== RUN   TestR8CodexCandidateReview\n=== RUN   TestR8CodexCandidateReview/school_garden\n    candidate_review_test.go:30: child: passage=[{Surface:children Start:8 End:16} {Surface:children Start:167 End:175}] hint=\"children helping children\" blanks=2\n    candidate_review_test.go:30: box: passage=[{Surface:boxes Start:25 End:30}] hint=\"boxes beside a box\" blanks=2\n    candidate_review_test.go:30: carry: passage=[{Surface:carried Start:17 End:24}] hint=\"supplies carried by hand\" blanks=1\n    candidate_review_test.go:30: plan: passage=[{Surface:planning Start:142 End:150}] hint=\"planning a school event\" blanks=1\n    candidate_review_test.go:30: write: passage=[{Surface:written Start:64 End:71}] hint=\"a clearly written guide\" blanks=1\n    candidate_review_test.go:30: teach: passage=[{Surface:taught Start:103 End:109}] hint=\"teachers sharing ideas\" blanks=1\n    candidate_review_test.go:30: learn: passage=[{Surface:learned Start:176 End:183}] hint=\"a child who learns quickly\" blanks=1\n    candidate_review_test.go:30: good: passage=[{Surface:better Start:224 End:230} {Surface:best Start:344 End:348}] hint=\"a better choice\" blanks=1\n    candidate_review_test.go:30: young: passage=[{Surface:Younger Start:0 End:7}] hint=\"the youngest volunteer\" blanks=1\n    candidate_review_test.go:30: safe: passage=[{Surface:safe Start:121 End:125}] hint=\"a safe place to read\" blanks=1\n    candidate_review_test.go:31: school_garden: 61 words, production validator passed\n=== RUN   TestR8CodexCandidateReview/library_corner\n    candidate_review_test.go:30: child: passage=[{Surface:children Start:12 End:20} {Surface:child Start:302 End:307}] hint=\"children helping children\" blanks=2\n    candidate_review_test.go:30: box: passage=[{Surface:boxes Start:68 End:73}] hint=\"boxes beside a box\" blanks=2\n    candidate_review_test.go:30: carry: passage=[{Surface:carried Start:106 End:113}] hint=\"supplies carried by hand\" blanks=1\n    candidate_review_test.go:30: plan: passage=[{Surface:planning Start:26 End:34}] hint=\"planning a school event\" blanks=1\n    candidate_review_test.go:30: write: passage=[{Surface:written Start:197 End:204}] hint=\"a clearly written guide\" blanks=1\n    candidate_review_test.go:30: teach: passage=[{Surface:taught Start:129 End:135}] hint=\"teachers sharing ideas\" blanks=1\n    candidate_review_test.go:30: learn: passage=[{Surface:learned Start:211 End:218}] hint=\"a child who learns quickly\" blanks=1\n    candidate_review_test.go:30: good: passage=[{Surface:best Start:248 End:252}] hint=\"a better choice\" blanks=1\n    candidate_review_test.go:30: young: passage=[{Surface:younger Start:4 End:11}] hint=\"the youngest volunteer\" blanks=1\n    candidate_review_test.go:30: safe: passage=[{Surface:safe Start:151 End:155}] hint=\"a safe place to read\" blanks=1\n    candidate_review_test.go:31: library_corner: 61 words, production validator passed\n=== RUN   TestR8CodexCandidateReview/community_fair\n    candidate_review_test.go:30: child: passage=[{Surface:Children Start:0 End:8}] hint=\"children helping children\" blanks=2\n    candidate_review_test.go:30: box: passage=[{Surface:boxes Start:17 End:22}] hint=\"boxes beside a box\" blanks=2\n    candidate_review_test.go:30: carry: passage=[{Surface:carried Start:9 End:16}] hint=\"supplies carried by hand\" blanks=1\n    candidate_review_test.go:30: plan: passage=[{Surface:planning Start:106 End:114}] hint=\"planning a school event\" blanks=1\n    candidate_review_test.go:30: write: passage=[{Surface:written Start:78 End:85}] hint=\"a clearly written guide\" blanks=1\n    candidate_review_test.go:30: teach: passage=[{Surface:taught Start:174 End:180}] hint=\"teachers sharing ideas\" blanks=1\n    candidate_review_test.go:30: learn: passage=[{Surface:learned Start:130 End:137}] hint=\"a child who learns quickly\" blanks=1\n    candidate_review_test.go:30: good: passage=[{Surface:best Start:203 End:207}] hint=\"a better choice\" blanks=1\n    candidate_review_test.go:30: young: passage=[{Surface:younger Start:56 End:63}] hint=\"the youngest volunteer\" blanks=1\n    candidate_review_test.go:30: safe: passage=[{Surface:safe Start:144 End:148}] hint=\"a safe place to read\" blanks=1\n    candidate_review_test.go:31: community_fair: 63 words, production validator passed\n--- PASS: TestR8CodexCandidateReview (0.26s)\n    --- PASS: TestR8CodexCandidateReview/school_garden (0.26s)\n    --- PASS: TestR8CodexCandidateReview/library_corner (0.00s)\n    --- PASS: TestR8CodexCandidateReview/community_fair (0.00s)\nPASS\nok  \twordweave/internal/ai\t0.592s\n",
+  "tests": [
+    {
+      "name": "focused",
+      "command": "GOTOOLCHAIN=go1.26.0 go test ./internal/ai -run 'Test(TenEntry|Completion|PromptExample|KeyedSchema|Prose|CR040EntryMeaning|SystemPrompt)' -v",
+      "exit_code": 0,
+      "output": "=== RUN   TestCompletionExamplesMatchRequestedLength\n=== RUN   TestCompletionExamplesMatchRequestedLength/zh/50\n    completion_prompt_test.go:62: 60 clean words; 2 paragraphs; full-word inflection; one complete example\n=== RUN   TestCompletionExamplesMatchRequestedLength/zh/100\n    completion_prompt_test.go:62: 120 clean words; 3 paragraphs; full-word inflection; one complete example\n=== RUN   TestCompletionExamplesMatchRequestedLength/zh/200\n    completion_prompt_test.go:62: 240 clean words; 4 paragraphs; full-word inflection; one complete example\n=== RUN   TestCompletionExamplesMatchRequestedLength/zh/400\n    completion_prompt_test.go:62: 480 clean words; 6 paragraphs; full-word inflection; one complete example\n=== RUN   TestCompletionExamplesMatchRequestedLength/en/50\n    completion_prompt_test.go:62: 60 clean words; 2 paragraphs; full-word inflection; one complete example\n=== RUN   TestCompletionExamplesMatchRequestedLength/en/100\n    completion_prompt_test.go:62: 120 clean words; 3 paragraphs; full-word inflection; one complete example\n=== RUN   TestCompletionExamplesMatchRequestedLength/en/200\n    completion_prompt_test.go:62: 240 clean words; 4 paragraphs; full-word inflection; one complete example\n=== RUN   TestCompletionExamplesMatchRequestedLength/en/400\n    completion_prompt_test.go:62: 480 clean words; 6 paragraphs; full-word inflection; one complete example\n=== RUN   TestCompletionExamplesMatchRequestedLength/ja/50\n    completion_prompt_test.go:62: 60 clean words; 2 paragraphs; full-word inflection; one complete example\n=== RUN   TestCompletionExamplesMatchRequestedLength/ja/100\n    completion_prompt_test.go:62: 120 clean words; 3 paragraphs; full-word inflection; one complete example\n=== RUN   TestCompletionExamplesMatchRequestedLength/ja/200\n    completion_prompt_test.go:62: 240 clean words; 4 paragraphs; full-word inflection; one complete example\n=== RUN   TestCompletionExamplesMatchRequestedLength/ja/400\n    completion_prompt_test.go:62: 480 clean words; 6 paragraphs; full-word inflection; one complete example\n--- PASS: TestCompletionExamplesMatchRequestedLength (0.53s)\n    --- PASS: TestCompletionExamplesMatchRequestedLength/zh/50 (0.01s)\n    --- PASS: TestCompletionExamplesMatchRequestedLength/zh/100 (0.01s)\n    --- PASS: TestCompletionExamplesMatchRequestedLength/zh/200 (0.02s)\n    --- PASS: TestCompletionExamplesMatchRequestedLength/zh/400 (0.05s)\n    --- PASS: TestCompletionExamplesMatchRequestedLength/en/50 (0.01s)\n    --- PASS: TestCompletionExamplesMatchRequestedLength/en/100 (0.01s)\n    --- PASS: TestCompletionExamplesMatchRequestedLength/en/200 (0.02s)\n    --- PASS: TestCompletionExamplesMatchRequestedLength/en/400 (0.06s)\n    --- PASS: TestCompletionExamplesMatchRequestedLength/ja/50 (0.01s)\n    --- PASS: TestCompletionExamplesMatchRequestedLength/ja/100 (0.01s)\n    --- PASS: TestCompletionExamplesMatchRequestedLength/ja/200 (0.02s)\n    --- PASS: TestCompletionExamplesMatchRequestedLength/ja/400 (0.05s)\n=== RUN   TestCompletionPromptKeepsWholeWordAndCoverageRules\n--- PASS: TestCompletionPromptKeepsWholeWordAndCoverageRules (0.00s)\n=== RUN   TestCompletionPromptKnownFailuresRemainRejected\n=== RUN   TestCompletionPromptKnownFailuresRemainRejected/label_inside_inflection\n=== RUN   TestCompletionPromptKnownFailuresRemainRejected/label_inside_inflection/passage\n=== RUN   TestCompletionPromptKnownFailuresRemainRejected/label_inside_inflection/hint\n=== RUN   TestCompletionPromptKnownFailuresRemainRejected/short_67_of_100\n=== RUN   TestCompletionPromptKnownFailuresRemainRejected/short_78_of_400\n=== RUN   TestCompletionPromptKnownFailuresRemainRejected/short_74_of_200\n--- PASS: TestCompletionPromptKnownFailuresRemainRejected (0.00s)\n    --- PASS: TestCompletionPromptKnownFailuresRemainRejected/label_inside_inflection (0.00s)\n        --- PASS: TestCompletionPromptKnownFailuresRemainRejected/label_inside_inflection/passage (0.00s)\n        --- PASS: TestCompletionPromptKnownFailuresRemainRejected/label_inside_inflection/hint (0.00s)\n    --- PASS: TestCompletionPromptKnownFailuresRemainRejected/short_67_of_100 (0.00s)\n    --- PASS: TestCompletionPromptKnownFailuresRemainRejected/short_78_of_400 (0.00s)\n    --- PASS: TestCompletionPromptKnownFailuresRemainRejected/short_74_of_200 (0.00s)\n=== RUN   TestCR040EntryMeaningPromptAcrossConfigurations\n--- PASS: TestCR040EntryMeaningPromptAcrossConfigurations (0.00s)\n=== RUN   TestTenEntryExampleShowsInflectionsAndDerivation\n--- PASS: TestTenEntryExampleShowsInflectionsAndDerivation (0.00s)\n=== RUN   TestTenEntryHintScopeRejectsOtherTargetLabel\n--- PASS: TestTenEntryHintScopeRejectsOtherTargetLabel (0.00s)\n=== RUN   TestKeyedSchemaAndExamplesMatchEveryLanguage\n=== RUN   TestKeyedSchemaAndExamplesMatchEveryLanguage/zh\n=== RUN   TestKeyedSchemaAndExamplesMatchEveryLanguage/en\n=== RUN   TestKeyedSchemaAndExamplesMatchEveryLanguage/ja\n--- PASS: TestKeyedSchemaAndExamplesMatchEveryLanguage (0.02s)\n    --- PASS: TestKeyedSchemaAndExamplesMatchEveryLanguage/zh (0.00s)\n    --- PASS: TestKeyedSchemaAndExamplesMatchEveryLanguage/en (0.01s)\n    --- PASS: TestKeyedSchemaAndExamplesMatchEveryLanguage/ja (0.01s)\n=== RUN   TestSystemPromptPreservesLearningContractAndStableRules\n=== PAUSE TestSystemPromptPreservesLearningContractAndStableRules\n=== RUN   TestPromptExamplePassesProductionValidationAndStreaming\n=== PAUSE TestPromptExamplePassesProductionValidationAndStreaming\n=== RUN   TestProsePromptGuidanceAcrossConfigurations\n--- PASS: TestProsePromptGuidanceAcrossConfigurations (0.01s)\n=== RUN   TestProseExampleShowsParagraphsAndVerbCollocation\n    prose_prompt_test.go:77: zh: 60 clean words, 2 paragraphs, verb collocation and ordered public targets\n    prose_prompt_test.go:77: en: 60 clean words, 2 paragraphs, verb collocation and ordered public targets\n    prose_prompt_test.go:77: ja: 60 clean words, 2 paragraphs, verb collocation and ordered public targets\n--- PASS: TestProseExampleShowsParagraphsAndVerbCollocation (0.00s)\n=== RUN   TestProsePromptKnownFailuresRemainRejected\n=== RUN   TestProsePromptKnownFailuresRemainRejected/joined_title_and_body\n=== RUN   TestProsePromptKnownFailuresRemainRejected/unfinished_long_passage_has_multiple_failures\n--- PASS: TestProsePromptKnownFailuresRemainRejected (0.00s)\n    --- PASS: TestProsePromptKnownFailuresRemainRejected/joined_title_and_body (0.00s)\n    --- PASS: TestProsePromptKnownFailuresRemainRejected/unfinished_long_passage_has_multiple_failures (0.00s)\n=== CONT  TestSystemPromptPreservesLearningContractAndStableRules\n=== CONT  TestPromptExamplePassesProductionValidationAndStreaming\n--- PASS: TestSystemPromptPreservesLearningContractAndStableRules (0.00s)\n=== NAME  TestPromptExamplePassesProductionValidationAndStreaming\n    openrouter_test.go:167: complete example: 60 clean words, 10 ordered targets, repeated and derived forms validated\n--- PASS: TestPromptExamplePassesProductionValidationAndStreaming (0.07s)\nPASS\nok  \twordweave/internal/ai\t1.048s\n"
+    },
+    {
+      "name": "race",
+      "command": "GOTOOLCHAIN=go1.26.0 go test -race ./internal/ai ./internal/httpapi",
+      "exit_code": 0,
+      "output": "ok  \twordweave/internal/ai\t21.015s\nok  \twordweave/internal/httpapi\t1.546s\n"
+    },
+    {
+      "name": "diagnostics",
+      "command": "GOTOOLCHAIN=go1.26.0 go test -tags=uatdiagnostics ./internal/ai ./internal/httpapi ./cmd/wordweave ./cmd/wordweave-admin",
+      "exit_code": 0,
+      "output": "ok  \twordweave/internal/ai\t3.941s\nok  \twordweave/internal/httpapi\t0.563s\n?   \twordweave/cmd/wordweave\t[no test files]\nok  \twordweave/cmd/wordweave-admin\t0.831s\n"
+    },
+    {
+      "name": "vet",
+      "command": "GOTOOLCHAIN=go1.26.0 go vet ./internal/ai ./internal/httpapi",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "name": "build",
+      "command": "GOTOOLCHAIN=go1.26.0 go build -o /tmp/wordweave-r8-build.oCCGKQ/ ./cmd/wordweave ./cmd/wordweave-admin",
+      "exit_code": 0,
+      "output": ""
+    }
+  ],
+  "scope_verification": {
+    "unchanged_prefix_to_examples": true,
+    "unchanged_suffix_from_schema": true,
+    "contract_only_version": true,
+    "source_hashes": {
+      "backend/internal/ai/openrouter.go": "325056ecea0603616b1caea9ccdedbc318e632300815368f7694e3ddc9dbdc67",
+      "backend/internal/ai/contract.go": "3fe50e60b5e8aab0b29d55600a29eda7aa534b54961a26ca9be30603fcad882e",
+      "backend/internal/ai/openrouter_test.go": "9675fa6e5fb3e7c3bd52cec1e5f8a38dea894f04ce94805276341bb89e91878c",
+      "backend/internal/ai/keyed_targets_test.go": "e78998782c4c929a2afe998c1eed2909219315dce1419ca8e861d0249aff3514",
+      "backend/internal/ai/prose_prompt_test.go": "83c294500549a2ca8f7254e72eb705e2fd69f3e536d126fde0d8bb38a99d5e6c",
+      "backend/internal/ai/completion_prompt_test.go": "84bc7831c00e05cbd53c0fb57ef1ed4c21892375a3c134892845802395c14393",
+      "backend/internal/ai/annotations_test.go": "899e38d4f97af9b0aef5768fdff1c475d7212b8b3bbeab7dd1b2596f80159744",
+      "backend/internal/ai/cr040_test.go": "6a838b9c6b90539a34b1745ac8f689a6fb69e1a63d6c03b4ab4dd53d806a6345",
+      "backend/internal/ai/example_coverage_test.go": "838e6701ba60df4809340a11475b5e1b648a4265c2b20e02c10d880a4f4e7afd"
+    },
+    "temporary_candidate_test_removed": true
+  },
+  "runtime_read_only_check": {
+    "image": "sha256:faa3874184c56407c8f3ce6c9ef7a61744cc0186d4535bf90fcc4fc19db70094",
+    "state": "running",
+    "health": "healthy",
+    "restart_count": 0,
+    "private_uat_raw_exported": false,
+    "containers_restarted": false
+  },
+  "baseline": {
+    "version": "m001-v5-r7",
+    "valid": 14,
+    "total": 20,
+    "minimax": "8/10",
+    "glm": "6/10",
+    "source": "../completion-prompt-20-20260911/results.json",
+    "r8_live_effect": "unmeasured",
+    "r8_success_claimed": false
+  },
+  "not_changed": [
+    "fixed system instructions",
+    "user prompt parameter structure",
+    "schema",
+    "provider inference controls",
+    "validator behavior",
+    "frontend and public contract",
+    "actual group input-word limits",
+    "timeouts/buffers",
+    "database/model configuration"
+  ],
+  "open_items": [
+    "CR-039",
+    "CR-040",
+    "CR-041",
+    "CR-042",
+    "90% success target",
+    "r7 case 8 unannotated sustainable occurrence",
+    "r7 case 20 incoherent chronology",
+    "safe-family relation recognition gap",
+    "independent QA/UAT",
+    "architecture keyed-target old examples synchronization"
+  ],
+  "documentation": {
+    "mode": "update existing report and handoff in place",
+    "frozen_previous": "pre-change.json",
+    "candidate_temporary_test_removed": true,
+    "existing_history_modified": false
+  },
+  "verification_limits": [
+    "Offline examples are synthetic, not live generations.",
+    "Production validation success does not guarantee all legitimate morphology is recognized.",
+    "No independent language expert review or live performance claim.",
+    "Model-specific cache hit/cost savings not measured."
+  ]
+}

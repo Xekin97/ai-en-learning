@@ -1,0 +1,598 @@
+{
+  "date": "2026-09-08T02:45:15.912Z",
+  "counts": {
+    "PASS": 19,
+    "FAIL": 0,
+    "ERROR": 0
+  },
+  "checks": [
+    {
+      "id": "L12/ordered-control/single-call",
+      "status": "PASS",
+      "actual": {
+        "before": 23,
+        "after": 24
+      }
+    },
+    {
+      "id": "L12/ordered-control/valid",
+      "status": "PASS",
+      "actual": {
+        "terminal": "generation.validated",
+        "http": 200
+      }
+    },
+    {
+      "id": "L12/ordered-control/stream-exact",
+      "status": "PASS",
+      "actual": {
+        "equal": true
+      }
+    },
+    {
+      "id": "L12/ordered-control-no-500",
+      "status": "PASS",
+      "actual": {
+        "statuses": [
+          201,
+          204
+        ],
+        "state": {
+          "disposition": "saved",
+          "drafts": 0,
+          "batches": 1
+        }
+      }
+    },
+    {
+      "id": "L12/claim-discard-0/single-call",
+      "status": "PASS",
+      "actual": {
+        "before": 24,
+        "after": 25
+      }
+    },
+    {
+      "id": "L12/claim-discard-0/valid",
+      "status": "PASS",
+      "actual": {
+        "terminal": "generation.validated",
+        "http": 200
+      }
+    },
+    {
+      "id": "L12/claim-discard-0/stream-exact",
+      "status": "PASS",
+      "actual": {
+        "equal": true
+      }
+    },
+    {
+      "id": "L12/claim-discard-no-server-error-0",
+      "status": "PASS",
+      "actual": {
+        "id": "claim-discard-0",
+        "run_id": "01a07ee7-bdcc-7f1e-8a7e-b8cba1553cb5",
+        "waiting": [
+          {
+            "pid": 582,
+            "wait": "transactionid",
+            "query": "SELECT call_status,disposition,completed_at\n\t\tFROM wordweave.generation_runs WHERE id=$1\n\t\tAND (($2='account' AND account_id=$3) OR ($2='visitor' AND visitor_id=$3))\n\t\tFO"
+          },
+          {
+            "pid": 633,
+            "wait": "relation",
+            "query": "\n\t\tINSERT INTO wordweave.learning_batches(\n\t\t\towner_id,generation_run_id,group_code_snapshot,model_display_name_snapshot,\n\t\t\tprovider_model_id_snapshot,meaning_language,s"
+          }
+        ],
+        "responses": [
+          {
+            "status": 200,
+            "body": {
+              "data": {
+                "batch_id": "01a07ee7-c0f0-7b82-9132-75621249ed7e",
+                "claimed": true
+              },
+              "meta": {
+                "request_id": "req_PfPxWr_ZGQBHcXmi6bKQ8A"
+              }
+            }
+          },
+          {
+            "status": 204,
+            "body": ""
+          }
+        ],
+        "state": {
+          "disposition": "saved",
+          "drafts": 0,
+          "batches": 1
+        }
+      }
+    },
+    {
+      "id": "L12/claim-discard-atomic-0",
+      "status": "PASS",
+      "actual": {
+        "disposition": "saved",
+        "drafts": 0,
+        "batches": 1
+      }
+    },
+    {
+      "id": "L12/claim-discard-1/single-call",
+      "status": "PASS",
+      "actual": {
+        "before": 25,
+        "after": 26
+      }
+    },
+    {
+      "id": "L12/claim-discard-1/valid",
+      "status": "PASS",
+      "actual": {
+        "terminal": "generation.validated",
+        "http": 200
+      }
+    },
+    {
+      "id": "L12/claim-discard-1/stream-exact",
+      "status": "PASS",
+      "actual": {
+        "equal": true
+      }
+    },
+    {
+      "id": "L12/claim-discard-no-server-error-1",
+      "status": "PASS",
+      "actual": {
+        "id": "claim-discard-1",
+        "run_id": "01a07ee7-c14f-7c91-8ce8-216d58af9b21",
+        "waiting": [
+          {
+            "pid": 582,
+            "wait": "relation",
+            "query": "\n\t\tINSERT INTO wordweave.learning_batches(\n\t\t\towner_id,generation_run_id,group_code_snapshot,model_display_name_snapshot,\n\t\t\tprovider_model_id_snapshot,meaning_language,s"
+          },
+          {
+            "pid": 633,
+            "wait": "transactionid",
+            "query": "SELECT call_status,disposition,completed_at\n\t\tFROM wordweave.generation_runs WHERE id=$1\n\t\tAND (($2='account' AND account_id=$3) OR ($2='visitor' AND visitor_id=$3))\n\t\tFO"
+          }
+        ],
+        "responses": [
+          {
+            "status": 200,
+            "body": {
+              "data": {
+                "batch_id": "01a07ee7-c473-7516-9008-b0951d31f353",
+                "claimed": true
+              },
+              "meta": {
+                "request_id": "req_Eu0ms_-ifeAOyjvTdK1GbQ"
+              }
+            }
+          },
+          {
+            "status": 204,
+            "body": ""
+          }
+        ],
+        "state": {
+          "disposition": "saved",
+          "drafts": 0,
+          "batches": 1
+        }
+      }
+    },
+    {
+      "id": "L12/claim-discard-atomic-1",
+      "status": "PASS",
+      "actual": {
+        "disposition": "saved",
+        "drafts": 0,
+        "batches": 1
+      }
+    },
+    {
+      "id": "L13/cleanup-lock/single-call",
+      "status": "PASS",
+      "actual": {
+        "before": 26,
+        "after": 27
+      }
+    },
+    {
+      "id": "L13/cleanup-lock/valid",
+      "status": "PASS",
+      "actual": {
+        "terminal": "generation.validated",
+        "http": 200
+      }
+    },
+    {
+      "id": "L13/cleanup-lock/stream-exact",
+      "status": "PASS",
+      "actual": {
+        "equal": true
+      }
+    },
+    {
+      "id": "L13/cleanup-skips-locked-run",
+      "status": "PASS",
+      "actual": {
+        "disposition": "pending",
+        "drafts": 1,
+        "batches": 0
+      }
+    },
+    {
+      "id": "L13/cleanup-removes-expired",
+      "status": "PASS",
+      "actual": {
+        "disposition": "abandoned",
+        "drafts": 0,
+        "batches": 0
+      }
+    }
+  ],
+  "traces": [
+    {
+      "id": "L12/ordered-control",
+      "http": 200,
+      "terminal": "generation.validated",
+      "result": {
+        "passage": "vulnerability. The local team discussed a practical plan for the community. Everyone had time to listen carefully, ask questions, and share useful ideas. A clear record helped residents follow the discussion and compare possible approaches. The meeting ended calmly, with an agreement to gather more information before making a final decision about the project.",
+        "tags": [
+          "Community"
+        ],
+        "targets": [
+          {
+            "entry": "vulnerable",
+            "contextual_meaning": "Easily harmed or affected by danger",
+            "hint_phrase": "vulnerability during a discussion",
+            "hint_blanks": [
+              {
+                "start": 0,
+                "end": 13
+              }
+            ],
+            "occurrences": [
+              {
+                "surface": "vulnerability",
+                "start": 0,
+                "end": 13
+              }
+            ]
+          }
+        ]
+      },
+      "failure": {
+        "run_id": "01a07ee7-ba35-7ca4-8cc9-02f08e320405",
+        "result": {
+          "passage": "vulnerability. The local team discussed a practical plan for the community. Everyone had time to listen carefully, ask questions, and share useful ideas. A clear record helped residents follow the discussion and compare possible approaches. The meeting ended calmly, with an agreement to gather more information before making a final decision about the project.",
+          "tags": [
+            "Community"
+          ],
+          "targets": [
+            {
+              "entry": "vulnerable",
+              "contextual_meaning": "Easily harmed or affected by danger",
+              "hint_phrase": "vulnerability during a discussion",
+              "hint_blanks": [
+                {
+                  "start": 0,
+                  "end": 13
+                }
+              ],
+              "occurrences": [
+                {
+                  "surface": "vulnerability",
+                  "start": 0,
+                  "end": 13
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "started": {
+        "run_id": "01a07ee7-ba35-7ca4-8cc9-02f08e320405"
+      },
+      "elapsed_ms": 185,
+      "deltas": "vulnerability. The local team discussed a practical plan for the community. Everyone had time to listen carefully, ask questions, and share useful ideas. A clear record helped residents follow the discussion and compare possible approaches. The meeting ended calmly, with an agreement to gather more information before making a final decision about the project."
+    },
+    {
+      "id": "L12/claim-discard-0",
+      "http": 200,
+      "terminal": "generation.validated",
+      "result": {
+        "passage": "vulnerability. The local team discussed a practical plan for the community. Everyone had time to listen carefully, ask questions, and share useful ideas. A clear record helped residents follow the discussion and compare possible approaches. The meeting ended calmly, with an agreement to gather more information before making a final decision about the project.",
+        "tags": [
+          "Community"
+        ],
+        "targets": [
+          {
+            "entry": "vulnerable",
+            "contextual_meaning": "Easily harmed or affected by danger",
+            "hint_phrase": "vulnerability during a discussion",
+            "hint_blanks": [
+              {
+                "start": 0,
+                "end": 13
+              }
+            ],
+            "occurrences": [
+              {
+                "surface": "vulnerability",
+                "start": 0,
+                "end": 13
+              }
+            ]
+          }
+        ]
+      },
+      "failure": {
+        "run_id": "01a07ee7-bdcc-7f1e-8a7e-b8cba1553cb5",
+        "result": {
+          "passage": "vulnerability. The local team discussed a practical plan for the community. Everyone had time to listen carefully, ask questions, and share useful ideas. A clear record helped residents follow the discussion and compare possible approaches. The meeting ended calmly, with an agreement to gather more information before making a final decision about the project.",
+          "tags": [
+            "Community"
+          ],
+          "targets": [
+            {
+              "entry": "vulnerable",
+              "contextual_meaning": "Easily harmed or affected by danger",
+              "hint_phrase": "vulnerability during a discussion",
+              "hint_blanks": [
+                {
+                  "start": 0,
+                  "end": 13
+                }
+              ],
+              "occurrences": [
+                {
+                  "surface": "vulnerability",
+                  "start": 0,
+                  "end": 13
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "started": {
+        "run_id": "01a07ee7-bdcc-7f1e-8a7e-b8cba1553cb5"
+      },
+      "elapsed_ms": 188,
+      "deltas": "vulnerability. The local team discussed a practical plan for the community. Everyone had time to listen carefully, ask questions, and share useful ideas. A clear record helped residents follow the discussion and compare possible approaches. The meeting ended calmly, with an agreement to gather more information before making a final decision about the project."
+    },
+    {
+      "id": "L12/claim-discard-1",
+      "http": 200,
+      "terminal": "generation.validated",
+      "result": {
+        "passage": "vulnerability. The local team discussed a practical plan for the community. Everyone had time to listen carefully, ask questions, and share useful ideas. A clear record helped residents follow the discussion and compare possible approaches. The meeting ended calmly, with an agreement to gather more information before making a final decision about the project.",
+        "tags": [
+          "Community"
+        ],
+        "targets": [
+          {
+            "entry": "vulnerable",
+            "contextual_meaning": "Easily harmed or affected by danger",
+            "hint_phrase": "vulnerability during a discussion",
+            "hint_blanks": [
+              {
+                "start": 0,
+                "end": 13
+              }
+            ],
+            "occurrences": [
+              {
+                "surface": "vulnerability",
+                "start": 0,
+                "end": 13
+              }
+            ]
+          }
+        ]
+      },
+      "failure": {
+        "run_id": "01a07ee7-c14f-7c91-8ce8-216d58af9b21",
+        "result": {
+          "passage": "vulnerability. The local team discussed a practical plan for the community. Everyone had time to listen carefully, ask questions, and share useful ideas. A clear record helped residents follow the discussion and compare possible approaches. The meeting ended calmly, with an agreement to gather more information before making a final decision about the project.",
+          "tags": [
+            "Community"
+          ],
+          "targets": [
+            {
+              "entry": "vulnerable",
+              "contextual_meaning": "Easily harmed or affected by danger",
+              "hint_phrase": "vulnerability during a discussion",
+              "hint_blanks": [
+                {
+                  "start": 0,
+                  "end": 13
+                }
+              ],
+              "occurrences": [
+                {
+                  "surface": "vulnerability",
+                  "start": 0,
+                  "end": 13
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "started": {
+        "run_id": "01a07ee7-c14f-7c91-8ce8-216d58af9b21"
+      },
+      "elapsed_ms": 185,
+      "deltas": "vulnerability. The local team discussed a practical plan for the community. Everyone had time to listen carefully, ask questions, and share useful ideas. A clear record helped residents follow the discussion and compare possible approaches. The meeting ended calmly, with an agreement to gather more information before making a final decision about the project."
+    },
+    {
+      "id": "L13/cleanup-lock",
+      "http": 200,
+      "terminal": "generation.validated",
+      "result": {
+        "passage": "vulnerability. The local team discussed a practical plan for the community. Everyone had time to listen carefully, ask questions, and share useful ideas. A clear record helped residents follow the discussion and compare possible approaches. The meeting ended calmly, with an agreement to gather more information before making a final decision about the project.",
+        "tags": [
+          "Community"
+        ],
+        "targets": [
+          {
+            "entry": "vulnerable",
+            "contextual_meaning": "Easily harmed or affected by danger",
+            "hint_phrase": "vulnerability during a discussion",
+            "hint_blanks": [
+              {
+                "start": 0,
+                "end": 13
+              }
+            ],
+            "occurrences": [
+              {
+                "surface": "vulnerability",
+                "start": 0,
+                "end": 13
+              }
+            ]
+          }
+        ]
+      },
+      "failure": {
+        "run_id": "01a07ee7-c4ce-7a25-89cf-d4ec071db08a",
+        "result": {
+          "passage": "vulnerability. The local team discussed a practical plan for the community. Everyone had time to listen carefully, ask questions, and share useful ideas. A clear record helped residents follow the discussion and compare possible approaches. The meeting ended calmly, with an agreement to gather more information before making a final decision about the project.",
+          "tags": [
+            "Community"
+          ],
+          "targets": [
+            {
+              "entry": "vulnerable",
+              "contextual_meaning": "Easily harmed or affected by danger",
+              "hint_phrase": "vulnerability during a discussion",
+              "hint_blanks": [
+                {
+                  "start": 0,
+                  "end": 13
+                }
+              ],
+              "occurrences": [
+                {
+                  "surface": "vulnerability",
+                  "start": 0,
+                  "end": 13
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "started": {
+        "run_id": "01a07ee7-c4ce-7a25-89cf-d4ec071db08a"
+      },
+      "elapsed_ms": 184,
+      "deltas": "vulnerability. The local team discussed a practical plan for the community. Everyone had time to listen carefully, ask questions, and share useful ideas. A clear record helped residents follow the discussion and compare possible approaches. The meeting ended calmly, with an agreement to gather more information before making a final decision about the project."
+    }
+  ],
+  "observations": [
+    {
+      "id": "ordered-control",
+      "waiting": [
+        {
+          "pid": 582,
+          "wait": "relation",
+          "query": "\n\t\tINSERT INTO wordweave.learning_batches(\n\t\t\towner_id,generation_run_id,group_code_snapshot,model_display_name_snapshot,\n\t\t\tprovider_model_id_snapshot,meaning_language,s"
+        },
+        {
+          "pid": 633,
+          "wait": "transactionid",
+          "query": "SELECT call_status,disposition,completed_at\n\t\tFROM wordweave.generation_runs WHERE id=$1\n\t\tAND (($2='account' AND account_id=$3) OR ($2='visitor' AND visitor_id=$3))\n\t\tFO"
+        }
+      ]
+    },
+    {
+      "id": "claim-discard-0",
+      "run_id": "01a07ee7-bdcc-7f1e-8a7e-b8cba1553cb5",
+      "waiting": [
+        {
+          "pid": 582,
+          "wait": "transactionid",
+          "query": "SELECT call_status,disposition,completed_at\n\t\tFROM wordweave.generation_runs WHERE id=$1\n\t\tAND (($2='account' AND account_id=$3) OR ($2='visitor' AND visitor_id=$3))\n\t\tFO"
+        },
+        {
+          "pid": 633,
+          "wait": "relation",
+          "query": "\n\t\tINSERT INTO wordweave.learning_batches(\n\t\t\towner_id,generation_run_id,group_code_snapshot,model_display_name_snapshot,\n\t\t\tprovider_model_id_snapshot,meaning_language,s"
+        }
+      ],
+      "responses": [
+        {
+          "status": 200,
+          "body": {
+            "data": {
+              "batch_id": "01a07ee7-c0f0-7b82-9132-75621249ed7e",
+              "claimed": true
+            },
+            "meta": {
+              "request_id": "req_PfPxWr_ZGQBHcXmi6bKQ8A"
+            }
+          }
+        },
+        {
+          "status": 204,
+          "body": ""
+        }
+      ],
+      "state": {
+        "disposition": "saved",
+        "drafts": 0,
+        "batches": 1
+      }
+    },
+    {
+      "id": "claim-discard-1",
+      "run_id": "01a07ee7-c14f-7c91-8ce8-216d58af9b21",
+      "waiting": [
+        {
+          "pid": 582,
+          "wait": "relation",
+          "query": "\n\t\tINSERT INTO wordweave.learning_batches(\n\t\t\towner_id,generation_run_id,group_code_snapshot,model_display_name_snapshot,\n\t\t\tprovider_model_id_snapshot,meaning_language,s"
+        },
+        {
+          "pid": 633,
+          "wait": "transactionid",
+          "query": "SELECT call_status,disposition,completed_at\n\t\tFROM wordweave.generation_runs WHERE id=$1\n\t\tAND (($2='account' AND account_id=$3) OR ($2='visitor' AND visitor_id=$3))\n\t\tFO"
+        }
+      ],
+      "responses": [
+        {
+          "status": 200,
+          "body": {
+            "data": {
+              "batch_id": "01a07ee7-c473-7516-9008-b0951d31f353",
+              "claimed": true
+            },
+            "meta": {
+              "request_id": "req_Eu0ms_-ifeAOyjvTdK1GbQ"
+            }
+          }
+        },
+        {
+          "status": 204,
+          "body": ""
+        }
+      ],
+      "state": {
+        "disposition": "saved",
+        "drafts": 0,
+        "batches": 1
+      }
+    }
+  ],
+  "real_model_calls": 0,
+  "barrier_scope": "Temporary transaction lock in disposable QA database only; no schema or source changes"
+}

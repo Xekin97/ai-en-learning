@@ -1,0 +1,416 @@
+{
+  "revision": "AI-BOUNDARIES-125",
+  "date": "2026-09-10",
+  "role": "backend-ethan",
+  "status": "scoped_developer_pass_not_full_matrix_or_QA",
+  "paid_model_calls": 0,
+  "uat_database_operations": 0,
+  "deployed": false,
+  "subagents": false,
+  "source_hashes": [
+    {
+      "path": "backend/internal/ai/openrouter.go",
+      "sha256": "a4723b2daa88d06a7ed1fecf9fa44b13c22bd932d94b864953098cdd9768f878",
+      "bytes": 26212
+    },
+    {
+      "path": "backend/internal/ai/transport_boundaries_test.go",
+      "sha256": "46d42f88949c33e0c10a3003fdd90eacf0b6d105f2bfe2f101b7210ba024460f",
+      "bytes": 5349
+    },
+    {
+      "path": "backend/internal/ai/schema_boundaries_test.go",
+      "sha256": "3286b4dbf241afc0182242d5358f2baa50adb806b0a36c1abed7ce8dad227cc4",
+      "bytes": 4063
+    },
+    {
+      "path": "backend/internal/httpapi/stream_boundaries_integration_test.go",
+      "sha256": "db444031e1f86372405a0d9225fda5f5b84c2d8148ed93bf485bff7e602ae5ad",
+      "bytes": 13969
+    },
+    {
+      "path": "backend/internal/ai/diagnostic.go",
+      "sha256": "2b6701bffce196ea9e73813239353f46b9ae88d0ae7f895dbbf5aa2c9d5010dd",
+      "bytes": 2945
+    },
+    {
+      "path": "backend/internal/httpapi/generation_handlers.go",
+      "sha256": "c4545f8183c6d639113805ddadad95d70e4dc178a0ef69cf6aca644a4592d944",
+      "bytes": 12748
+    }
+  ],
+  "runs": [
+    {
+      "id": "transport-red",
+      "command": "docker run --rm --pull never --network none --mount type=bind,src=/Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/backend,dst=/src --mount type=volume,src=wordweave-go-mod-cache,dst=/go/pkg/mod --mount type=volume,src=wordweave-go-build,dst=/root/.cache/go-build -w /src -e GOTOOLCHAIN=local -e GOPROXY=off sha256:587c6fae871c9d14eb79352bd3df80670ffb2c297997085aefc39797f3e8af37 go test ./internal/ai -run '^TestBoundary' -count=1 -v",
+      "results": [
+        {
+          "chunk_id": "f4f842",
+          "wall_time_seconds": 1.001378916,
+          "session_id": 69778,
+          "original_token_count": 0,
+          "output": ""
+        },
+        {
+          "chunk_id": "5106e6",
+          "wall_time_seconds": 0.000002833,
+          "exit_code": 1,
+          "original_token_count": 534,
+          "output": "=== RUN   TestBoundaryKnownStatusDoesNotWaitForBody\n=== RUN   TestBoundaryKnownStatusDoesNotWaitForBody/OK\n    transport_boundaries_test.go:42: known HTTP status blocked on an unused response body\n=== RUN   TestBoundaryKnownStatusDoesNotWaitForBody/Unauthorized\n    transport_boundaries_test.go:42: known HTTP status blocked on an unused response body\n=== RUN   TestBoundaryKnownStatusDoesNotWaitForBody/Too_Many_Requests\n    transport_boundaries_test.go:42: known HTTP status blocked on an unused response body\n=== RUN   TestBoundaryKnownStatusDoesNotWaitForBody/Service_Unavailable\n    transport_boundaries_test.go:42: known HTTP status blocked on an unused response body\n--- FAIL: TestBoundaryKnownStatusDoesNotWaitForBody (1.23s)\n    --- FAIL: TestBoundaryKnownStatusDoesNotWaitForBody/OK (0.31s)\n    --- FAIL: TestBoundaryKnownStatusDoesNotWaitForBody/Unauthorized (0.30s)\n    --- FAIL: TestBoundaryKnownStatusDoesNotWaitForBody/Too_Many_Requests (0.30s)\n    --- FAIL: TestBoundaryKnownStatusDoesNotWaitForBody/Service_Unavailable (0.30s)\n=== RUN   TestBoundaryReceiveCancellationUnblocksSilentBody\n    transport_boundaries_test.go:70: Receive did not interrupt a silent body on cancellation\n--- FAIL: TestBoundaryReceiveCancellationUnblocksSilentBody (0.30s)\n=== RUN   TestBoundaryExtractorHonorsCancelledMalformedInput\n--- PASS: TestBoundaryExtractorHonorsCancelledMalformedInput (0.01s)\n=== RUN   TestBoundaryTransportHeaderTimeoutIsNotTotalTimeout\n--- PASS: TestBoundaryTransportHeaderTimeoutIsNotTotalTimeout (0.03s)\n=== RUN   TestBoundaryResourceLimits\n=== RUN   TestBoundaryResourceLimits/line\n    transport_boundaries_test.go:113: resource classification: {Stage:provider_receive Reason:sse_read_failed Field: Target:-1 Actual:-1 Limit:-1} / protocol_error: sse_read_failed\n=== RUN   TestBoundaryResourceLimits/event\n=== RUN   TestBoundaryResourceLimits/candidate\n--- FAIL: TestBoundaryResourceLimits (0.28s)\n    --- FAIL: TestBoundaryResourceLimits/line (0.02s)\n    --- PASS: TestBoundaryResourceLimits/event (0.02s)\n    --- PASS: TestBoundaryResourceLimits/candidate (0.09s)\nFAIL\nFAIL\twordweave/internal/ai\t1.858s\nFAIL\n"
+        }
+      ]
+    },
+    {
+      "id": "boundary-race-before-encoding-case",
+      "command": "docker run --rm --pull never --network none --mount type=bind,src=/Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/backend,dst=/src --mount type=volume,src=wordweave-go-mod-cache,dst=/go/pkg/mod --mount type=volume,src=wordweave-go-build,dst=/root/.cache/go-build -w /src -e GOTOOLCHAIN=local -e GOPROXY=off sha256:587c6fae871c9d14eb79352bd3df80670ffb2c297997085aefc39797f3e8af37 go test -race ./internal/ai -count=1",
+      "results": [
+        {
+          "chunk_id": "65f82b",
+          "wall_time_seconds": 1.001638708,
+          "session_id": 36510,
+          "original_token_count": 0,
+          "output": ""
+        },
+        {
+          "chunk_id": "7aed7d",
+          "wall_time_seconds": 5.002202416,
+          "session_id": 36510,
+          "original_token_count": 0,
+          "output": ""
+        },
+        {
+          "chunk_id": "b29f2d",
+          "wall_time_seconds": 0.000001292,
+          "exit_code": 0,
+          "original_token_count": 9,
+          "output": "ok  \twordweave/internal/ai\t18.770s\n"
+        }
+      ]
+    },
+    {
+      "id": "http-initial-fixture-failure",
+      "command": "docker run --rm --pull never --network container:wordweave-boundaries-125-pg --mount type=bind,src=/Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/backend,dst=/src --mount type=volume,src=wordweave-go-mod-cache,dst=/go/pkg/mod --mount type=volume,src=wordweave-go-build,dst=/root/.cache/go-build -e 'TEST_DATABASE_URL=postgres://postgres@127.0.0.1:5432/postgres?sslmode=disable' -e WORDWEAVE_SLOW_STREAM_TESTS=1 -w /src -e GOTOOLCHAIN=local -e GOPROXY=off sha256:587c6fae871c9d14eb79352bd3df80670ffb2c297997085aefc39797f3e8af37 go test -tags=integration -race ./internal/httpapi -run '^TestBoundary' -parallel=2 -count=1 -timeout=4m -v",
+      "results": [
+        {
+          "chunk_id": "612e79",
+          "wall_time_seconds": 1.001769625,
+          "session_id": 33402,
+          "original_token_count": 0,
+          "output": ""
+        },
+        {
+          "chunk_id": "7e382c",
+          "wall_time_seconds": 5.001648208,
+          "session_id": 33402,
+          "original_token_count": 629,
+          "output": "=== RUN   TestBoundaryOpenErrorSilentBodyHTTP\n=== RUN   TestBoundaryOpenErrorSilentBodyHTTP/Unauthorized\n2026/09/10 09:20:02 INFO http_request request_id=req_ud_UHvSStArFegfRcXrYtw method=GET route=/api/v1/bootstrap status=200 duration_ms=1\n2026/09/10 09:20:03 INFO http_request request_id=req_qJNjBacZaqU7WdoE4e34CQ method=POST route=/api/v1/auth/register status=201 duration_ms=1257\n2026/09/10 09:20:03 WARN ai_generation_failure request_id=req_TKEZy7FuYH1a0xBioWj_3Q run_id=01a08a9d-f880-76f9-9710-092dc9c10ace model_id=01a08a9d-f380-7531-8483-01403de64ec8 prompt_version=m001-v5 validator_version=m001-v5-wn31-r1 phase=provider_open stage=provider_open reason=authentication field=\"\" target_index=-1 provider_retryable=false\n2026/09/10 09:20:03 INFO ai_generation_settlement run_id=01a08a9d-f880-76f9-9710-092dc9c10ace stage=settlement outcome=failed quota_refunded=true failure_code=authentication\n2026/09/10 09:20:03 INFO ai_generation_request_finished request_id=req_TKEZy7FuYH1a0xBioWj_3Q run_id=01a08a9d-f880-76f9-9710-092dc9c10ace model_id=01a08a9d-f380-7531-8483-01403de64ec8 elapsed_ms=15\n2026/09/10 09:20:03 INFO http_request request_id=req_TKEZy7FuYH1a0xBioWj_3Q method=POST route=/api/v1/generations/stream status=503 duration_ms=17\n=== RUN   TestBoundaryOpenErrorSilentBodyHTTP/Too_Many_Requests\n2026/09/10 09:20:04 INFO http_request request_id=req_ovZvbUXzoqQBBH-J9dePKQ method=GET route=/api/v1/bootstrap status=200 duration_ms=0\n2026/09/10 09:20:05 INFO http_request request_id=req_yurYUbcl9yx0hgAzitCOYw method=POST route=/api/v1/auth/register status=201 duration_ms=1028\n2026/09/10 09:20:05 WARN ai_generation_failure request_id=req_XOdVKPD9hWiXdn6Qsg_LZw run_id=01a08a9d-feba-7e52-b97b-396d5ba4fead model_id=01a08a9d-faab-7cee-808d-bdd5808ae12a prompt_version=m001-v5 validator_version=m001-v5-wn31-r1 phase=provider_open stage=provider_open reason=rate_limited field=\"\" target_index=-1 provider_retryable=true\n2026/09/10 09:20:05 INFO ai_generation_settlement run_id=01a08a9d-feba-7e52-b97b-396d5ba4fead stage=settlement outcome=failed quota_refunded=true failure_code=rate_limited\n2026/09/10 09:20:05 INFO ai_generation_request_finished request_id=req_XOdVKPD9hWiXdn6Qsg_LZw run_id=01a08a9d-feba-7e52-b97b-396d5ba4fead model_id=01a08a9d-faab-7cee-808d-bdd5808ae12a elapsed_ms=8\n2026/09/10 09:20:05 INFO http_request request_id=req_XOdVKPD9hWiXdn6Qsg_LZw method=POST route=/api/v1/generations/stream status=503 duration_ms=9\n=== RUN   TestBoundaryOpenErrorSilentBodyHTTP/Service_Unavailable\n"
+        },
+        {
+          "chunk_id": "b160c7",
+          "wall_time_seconds": 5.001270792,
+          "session_id": 33402,
+          "original_token_count": 1207,
+          "output": "2026/09/10 09:20:05 INFO http_request request_id=req_JwpTEG-OPjsXoJ6Xh9QqBA method=GET route=/api/v1/bootstrap status=200 duration_ms=0\n2026/09/10 09:20:06 INFO http_request request_id=req_QtAWhApzXRRM2vzza-SOfA method=POST route=/api/v1/auth/register status=201 duration_ms=1146\n2026/09/10 09:20:07 WARN ai_generation_failure request_id=req_YBbUv6jKKm1Qy7yAJ5MenA run_id=01a08a9e-055f-7e70-9d28-d268eb19d684 model_id=01a08a9e-00d7-7551-b934-849079cb1039 prompt_version=m001-v5 validator_version=m001-v5-wn31-r1 phase=provider_open stage=provider_open reason=provider_unavailable field=\"\" target_index=-1 provider_retryable=true\n2026/09/10 09:20:07 INFO ai_generation_settlement run_id=01a08a9e-055f-7e70-9d28-d268eb19d684 stage=settlement outcome=failed quota_refunded=true failure_code=provider_unavailable\n2026/09/10 09:20:07 INFO ai_generation_request_finished request_id=req_YBbUv6jKKm1Qy7yAJ5MenA run_id=01a08a9e-055f-7e70-9d28-d268eb19d684 model_id=01a08a9e-00d7-7551-b934-849079cb1039 elapsed_ms=8\n2026/09/10 09:20:07 INFO http_request request_id=req_YBbUv6jKKm1Qy7yAJ5MenA method=POST route=/api/v1/generations/stream status=503 duration_ms=12\n--- PASS: TestBoundaryOpenErrorSilentBodyHTTP (9.26s)\n    --- PASS: TestBoundaryOpenErrorSilentBodyHTTP/Unauthorized (5.98s)\n    --- PASS: TestBoundaryOpenErrorSilentBodyHTTP/Too_Many_Requests (1.58s)\n    --- PASS: TestBoundaryOpenErrorSilentBodyHTTP/Service_Unavailable (1.70s)\n=== RUN   TestBoundarySilentStreamLifecycleHTTP\n=== RUN   TestBoundarySilentStreamLifecycleHTTP/cancel\n2026/09/10 09:20:07 INFO http_request request_id=req_AvzXn3Lfp-u89apSpeepSw method=GET route=/api/v1/bootstrap status=200 duration_ms=0\n2026/09/10 09:20:08 INFO http_request request_id=req_n9rQCKQvQ3g5z7xcIsfCEQ method=POST route=/api/v1/auth/register status=201 duration_ms=852\n2026/09/10 09:20:08 INFO http_request request_id=req_XPETy2WGPKjnK4FXHYaI_w method=POST route=/api/v1/generations/{run_id}/cancel status=200 duration_ms=1\n2026/09/10 09:20:08 WARN ai_generation_failure request_id=req_zBFUeZyk9-VO4GJQAKHOlQ run_id=01a08a9e-0a5c-7949-bced-ba36f148cc25 model_id=01a08a9e-06ff-720d-88e5-2ba57aab7b85 prompt_version=m001-v5 validator_version=m001-v5-wn31-r1 phase=provider_receive stage=provider_receive reason=context_cancelled field=\"\" target_index=-1\n2026/09/10 09:20:08 INFO ai_generation_settlement run_id=01a08a9e-0a5c-7949-bced-ba36f148cc25 stage=settlement outcome=cancelled quota_refunded=false failure_code=provider_unavailable\n2026/09/10 09:20:08 INFO ai_generation_request_finished request_id=req_zBFUeZyk9-VO4GJQAKHOlQ run_id=01a08a9e-0a5c-7949-bced-ba36f148cc25 model_id=01a08a9e-06ff-720d-88e5-2ba57aab7b85 elapsed_ms=9\n2026/09/10 09:20:08 INFO http_request request_id=req_zBFUeZyk9-VO4GJQAKHOlQ method=POST route=/api/v1/generations/stream status=200 duration_ms=10\n    stream_boundaries_integration_test.go:185: settlement remained user_cancelled; want cancelled\n=== RUN   TestBoundarySilentStreamLifecycleHTTP/disconnect\n2026/09/10 09:20:11 INFO http_request request_id=req_K526BehZbuYpW5MR0Cr-4w method=GET route=/api/v1/bootstrap status=200 duration_ms=0\n2026/09/10 09:20:12 INFO http_request request_id=req_1M9R91Kev6RVVce2xcgubg method=POST route=/api/v1/auth/register status=201 duration_ms=850\n2026/09/10 09:20:12 INFO ai_generation_settlement run_id=01a08a9e-1b17-7724-8fae-bec84aef5673 stage=settlement outcome=failed quota_refunded=true failure_code=browser_disconnected\n2026/09/10 09:20:12 INFO ai_generation_request_finished request_id=req_be-cABd1r2iPtnF9y34UDQ run_id=01a08a9e-1b17-7724-8fae-bec84aef5673 model_id=01a08a9e-17b9-79d7-8111-5818d00b2e21 elapsed_ms=7\n2026/09/10 09:20:12 INFO http_request request_id=req_be-cABd1r2iPtnF9y34UDQ method=POST route=/api/v1/generations/stream status=200 duration_ms=8\n--- FAIL: TestBoundarySilentStreamLifecycleHTTP (5.56s)\n    --- FAIL: TestBoundarySilentStreamLifecycleHTTP/cancel (4.28s)\n    --- PASS: TestBoundarySilentStreamLifecycleHTTP/disconnect (1.28s)\n=== RUN   TestBoundarySlowStreamHTTP\n=== RUN   TestBoundarySlowStreamHTTP/1m0s\n=== PAUSE TestBoundarySlowStreamHTTP/1m0s\n=== RUN   TestBoundarySlowStreamHTTP/2m0s\n=== PAUSE TestBoundarySlowStreamHTTP/2m0s\n=== CONT  TestBoundarySlowStreamHTTP/1m0s\n=== CONT  TestBoundarySlowStreamHTTP/2m0s\n2026/09/10 09:20:13 INFO http_request request_id=req_O7whr8qzw53s6sv6llJZyw method=GET route=/api/v1/bootstrap status=200 duration_ms=1\n2026/09/10 09:20:13 INFO http_request request_id=req_vEu7U6TJROrN01rRa1XKcA method=GET route=/api/v1/bootstrap status=200 duration_ms=1\n2026/09/10 09:20:14 INFO http_request request_id=req_9FToBRxp60AkS8XqlcFn3g method=POST route=/api/v1/auth/register status=201 duration_ms=976\n2026/09/10 09:20:14 INFO http_request request_id=req_nLsUITn8cVm8hxKiOJt6nQ method=POST route=/api/v1/auth/register status=201 duration_ms=1000\n"
+        },
+        {
+          "chunk_id": "1de7f2",
+          "wall_time_seconds": 5.003906667,
+          "session_id": 33402,
+          "original_token_count": 0,
+          "output": ""
+        },
+        {
+          "chunk_id": "ed2dc7",
+          "wall_time_seconds": 5.001128,
+          "session_id": 33402,
+          "original_token_count": 137,
+          "output": "2026/09/10 09:21:14 INFO ai_generation_request_finished request_id=req_DWx5C2sWMv6foHx44yRK5A run_id=01a08a9e-20bb-760a-bfd1-3b4d7e40e8a2 model_id=01a08a9e-1cc7-7131-a859-8b1dd9a74fb9 elapsed_ms=60029\n2026/09/10 09:21:14 INFO http_request request_id=req_DWx5C2sWMv6foHx44yRK5A method=POST route=/api/v1/generations/stream status=200 duration_ms=60030\n=== NAME  TestBoundarySlowStreamHTTP/1m0s\n    stream_boundaries_integration_test.go:293: elapsed=1m0.031796568s first_delta=8.619541ms heartbeat_count=4 terminal=validated stream_equals_final=true\n"
+        },
+        {
+          "chunk_id": "dbba68",
+          "wall_time_seconds": 5.001586834,
+          "session_id": 33402,
+          "original_token_count": 0,
+          "output": ""
+        },
+        {
+          "chunk_id": "f1e45c",
+          "wall_time_seconds": 5.00116725,
+          "session_id": 33402,
+          "original_token_count": 0,
+          "output": ""
+        },
+        {
+          "chunk_id": "8dc0c9",
+          "wall_time_seconds": 0.000001583,
+          "exit_code": 1,
+          "original_token_count": 190,
+          "output": "2026/09/10 09:22:14 INFO ai_generation_request_finished request_id=req_FGCBgfJ4MRftFw738NWDLQ run_id=01a08a9e-20b6-7dd6-b38b-5d41601dea84 model_id=01a08a9e-1cd9-7fe3-b93b-7ecce644073f elapsed_ms=120063\n2026/09/10 09:22:14 INFO http_request request_id=req_FGCBgfJ4MRftFw738NWDLQ method=POST route=/api/v1/generations/stream status=200 duration_ms=120065\n=== NAME  TestBoundarySlowStreamHTTP/2m0s\n    stream_boundaries_integration_test.go:293: elapsed=2m0.066422053s first_delta=9.177708ms heartbeat_count=8 terminal=validated stream_equals_final=true\n--- PASS: TestBoundarySlowStreamHTTP (0.00s)\n    --- PASS: TestBoundarySlowStreamHTTP/1m0s (61.50s)\n    --- PASS: TestBoundarySlowStreamHTTP/2m0s (121.52s)\nFAIL\nFAIL\twordweave/internal/httpapi\t136.392s\nFAIL\n"
+        }
+      ]
+    },
+    {
+      "id": "preflight-and-cancellation-corrected",
+      "command": "docker run --rm --pull never --network container:wordweave-boundaries-125-pg --mount type=bind,src=/Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/backend,dst=/src --mount type=volume,src=wordweave-go-mod-cache,dst=/go/pkg/mod --mount type=volume,src=wordweave-go-build,dst=/root/.cache/go-build -e 'TEST_DATABASE_URL=postgres://postgres@127.0.0.1:5432/postgres?sslmode=disable' -e WORDWEAVE_SLOW_STREAM_TESTS=1 -w /src -e GOTOOLCHAIN=local -e GOPROXY=off sha256:587c6fae871c9d14eb79352bd3df80670ffb2c297997085aefc39797f3e8af37 go test -tags=integration -race ./internal/httpapi -run '^TestBoundary(OpenError|SilentStream|Preflight)' -count=1 -timeout=2m -v",
+      "results": [
+        {
+          "chunk_id": "221561",
+          "wall_time_seconds": 1.00151225,
+          "session_id": 80977,
+          "original_token_count": 0,
+          "output": ""
+        },
+        {
+          "chunk_id": "c8f857",
+          "wall_time_seconds": 0.000001334,
+          "exit_code": 0,
+          "original_token_count": 5185,
+          "output": "=== RUN   TestBoundaryOpenErrorSilentBodyHTTP\n=== RUN   TestBoundaryOpenErrorSilentBodyHTTP/Unauthorized\n2026/09/10 09:23:05 INFO http_request request_id=req_pMETWq54VE3d2_PGSkZASg method=GET route=/api/v1/bootstrap status=200 duration_ms=1\n2026/09/10 09:23:05 INFO http_request request_id=req_fNxyfSGjFVueR2MPyOOeSA method=POST route=/api/v1/auth/register status=201 duration_ms=931\n2026/09/10 09:23:05 WARN ai_generation_failure request_id=req_IR-yAOChUe_9QcKQizaGnQ run_id=01a08aa0-c07b-753e-8258-208b0d4a90da model_id=01a08aa0-bccc-71f2-bd54-f816cbfa95e4 prompt_version=m001-v5 validator_version=m001-v5-wn31-r1 phase=provider_open stage=provider_open reason=authentication field=\"\" target_index=-1 provider_retryable=false\n2026/09/10 09:23:05 INFO ai_generation_settlement run_id=01a08aa0-c07b-753e-8258-208b0d4a90da stage=settlement outcome=failed quota_refunded=true failure_code=authentication\n2026/09/10 09:23:05 INFO ai_generation_request_finished request_id=req_IR-yAOChUe_9QcKQizaGnQ run_id=01a08aa0-c07b-753e-8258-208b0d4a90da model_id=01a08aa0-bccc-71f2-bd54-f816cbfa95e4 elapsed_ms=5\n2026/09/10 09:23:05 INFO http_request request_id=req_IR-yAOChUe_9QcKQizaGnQ method=POST route=/api/v1/generations/stream status=503 duration_ms=6\n=== RUN   TestBoundaryOpenErrorSilentBodyHTTP/Too_Many_Requests\n2026/09/10 09:23:06 INFO http_request request_id=req_E3VbhFAkNdzsdLoc8v4VPw method=GET route=/api/v1/bootstrap status=200 duration_ms=0\n2026/09/10 09:23:07 INFO http_request request_id=req_Gf2P8pfrcbiVhFhgJ64g0Q method=POST route=/api/v1/auth/register status=201 duration_ms=886\n2026/09/10 09:23:07 WARN ai_generation_failure request_id=req_vEFDh6X72odjZItXnC9shw run_id=01a08aa0-c5d4-714d-bed8-843e8a6f3271 model_id=01a08aa0-c255-725a-93ba-98fe6425d4dd prompt_version=m001-v5 validator_version=m001-v5-wn31-r1 phase=provider_open stage=provider_open reason=rate_limited field=\"\" target_index=-1 provider_retryable=true\n2026/09/10 09:23:07 INFO ai_generation_settlement run_id=01a08aa0-c5d4-714d-bed8-843e8a6f3271 stage=settlement outcome=failed quota_refunded=true failure_code=rate_limited\n2026/09/10 09:23:07 INFO ai_generation_request_finished request_id=req_vEFDh6X72odjZItXnC9shw run_id=01a08aa0-c5d4-714d-bed8-843e8a6f3271 model_id=01a08aa0-c255-725a-93ba-98fe6425d4dd elapsed_ms=6\n2026/09/10 09:23:07 INFO http_request request_id=req_vEFDh6X72odjZItXnC9shw method=POST route=/api/v1/generations/stream status=503 duration_ms=7\n=== RUN   TestBoundaryOpenErrorSilentBodyHTTP/Service_Unavailable\n2026/09/10 09:23:07 INFO http_request request_id=req_0k0t6P6Q4zvLJs2R5SO7_A method=GET route=/api/v1/bootstrap status=200 duration_ms=0\n2026/09/10 09:23:08 INFO http_request request_id=req_txeZPWkQmnoWSoj4FkWWGw method=POST route=/api/v1/auth/register status=201 duration_ms=954\n2026/09/10 09:23:08 WARN ai_generation_failure request_id=req_pD6jZ9OL8X_GJQczMZqhWA run_id=01a08aa0-cb2b-7d93-b2de-54bd5064ace2 model_id=01a08aa0-c768-705b-922a-2c9e9241305f prompt_version=m001-v5 validator_version=m001-v5-wn31-r1 phase=provider_open stage=provider_open reason=provider_unavailable field=\"\" target_index=-1 provider_retryable=true\n2026/09/10 09:23:08 INFO ai_generation_settlement run_id=01a08aa0-cb2b-7d93-b2de-54bd5064ace2 stage=settlement outcome=failed quota_refunded=true failure_code=provider_unavailable\n2026/09/10 09:23:08 INFO ai_generation_request_finished request_id=req_pD6jZ9OL8X_GJQczMZqhWA run_id=01a08aa0-cb2b-7d93-b2de-54bd5064ace2 model_id=01a08aa0-c768-705b-922a-2c9e9241305f elapsed_ms=7\n2026/09/10 09:23:08 INFO http_request request_id=req_pD6jZ9OL8X_GJQczMZqhWA method=POST route=/api/v1/generations/stream status=503 duration_ms=9\n--- PASS: TestBoundaryOpenErrorSilentBodyHTTP (7.95s)\n    --- PASS: TestBoundaryOpenErrorSilentBodyHTTP/Unauthorized (5.22s)\n    --- PASS: TestBoundaryOpenErrorSilentBodyHTTP/Too_Many_Requests (1.37s)\n    --- PASS: TestBoundaryOpenErrorSilentBodyHTTP/Service_Unavailable (1.37s)\n=== RUN   TestBoundarySilentStreamLifecycleHTTP\n=== RUN   TestBoundarySilentStreamLifecycleHTTP/cancel\n2026/09/10 09:23:09 INFO http_request request_id=req_-lg09iBwlV4ahotm_yvW7Q method=GET route=/api/v1/bootstrap status=200 duration_ms=0\n2026/09/10 09:23:09 INFO http_request request_id=req_cvBnGqVCylO9Cnd-txvd7Q method=POST route=/api/v1/auth/register status=201 duration_ms=814\n2026/09/10 09:23:09 INFO http_request request_id=req_Mx_FoC7W-LWZhxLzsPptqg method=POST route=/api/v1/generations/{run_id}/cancel status=200 duration_ms=1\n2026/09/10 09:23:09 WARN ai_generation_failure request_id=req_MkGgQ4j1m9UtOqErgNivfw run_id=01a08aa0-cff5-7d22-a36e-5446fd28232b model_id=01a08aa0-ccbf-7b6c-9284-0a8f00fcbc93 prompt_version=m001-v5 validator_version=m001-v5-wn31-r1 phase=provider_receive stage=provider_receive reason=context_cancelled field=\"\" target_index=-1\n2026/09/10 09:23:09 INFO ai_generation_settlement run_id=01a08aa0-cff5-7d22-a36e-5446fd28232b stage=settlement outcome=cancelled quota_refunded=false failure_code=provider_unavailable\n2026/09/10 09:23:09 INFO ai_generation_request_finished request_id=req_MkGgQ4j1m9UtOqErgNivfw run_id=01a08aa0-cff5-7d22-a36e-5446fd28232b model_id=01a08aa0-ccbf-7b6c-9284-0a8f00fcbc93 elapsed_ms=8\n2026/09/10 09:23:09 INFO http_request request_id=req_MkGgQ4j1m9UtOqErgNivfw method=POST route=/api/v1/generations/stream status=200 duration_ms=9\n=== RUN   TestBoundarySilentStreamLifecycleHTTP/disconnect\n2026/09/10 09:23:10 INFO http_request request_id=req_kiuFYIWYLm_8YP3IhF9hSg method=GET route=/api/v1/bootstrap status=200 duration_ms=0\n2026/09/10 09:23:11 INFO http_request request_id=req_qxPbXo0WZ0K8YQAunPANHA method=POST route=/api/v1/auth/register status=201 duration_ms=915\n2026/09/10 09:23:11 INFO ai_generation_settlement run_id=01a08aa0-d535-7d9e-9191-e07d0fab34e9 stage=settlement outcome=failed quota_refunded=true failure_code=browser_disconnected\n2026/09/10 09:23:11 INFO ai_generation_request_finished request_id=req_GADFEAyRie9tDeA-_IRoVA run_id=01a08aa0-d535-7d9e-9191-e07d0fab34e9 model_id=01a08aa0-d199-771a-8d56-498438a5a8fc elapsed_ms=5\n2026/09/10 09:23:11 INFO http_request request_id=req_GADFEAyRie9tDeA-_IRoVA method=POST route=/api/v1/generations/stream status=200 duration_ms=7\n--- PASS: TestBoundarySilentStreamLifecycleHTTP (2.57s)\n    --- PASS: TestBoundarySilentStreamLifecycleHTTP/cancel (1.23s)\n    --- PASS: TestBoundarySilentStreamLifecycleHTTP/disconnect (1.34s)\n=== RUN   TestBoundaryPreflightFieldsHTTP\n2026/09/10 09:23:11 INFO http_request request_id=req_8tDcwcBPOEQvm9LYWsViZw method=GET route=/api/v1/bootstrap status=200 duration_ms=0\n2026/09/10 09:23:12 INFO http_request request_id=req_dLsec8KqyqW7U9IUBVSjdw method=POST route=/api/v1/auth/register status=201 duration_ms=812\n=== RUN   TestBoundaryPreflightFieldsHTTP/missing_model_id\n2026/09/10 09:23:12 WARN ai_generation_failure request_id=req_eEYOO5_2Ps85orjHus1Mtw run_id=\"\" model_id=\"\" prompt_version=\"\" validator_version=m001-v5-wn31-r1 phase=preflight stage=preflight reason=input_invalid field=\"\" target_index=-1\n2026/09/10 09:23:12 INFO http_request request_id=req_eEYOO5_2Ps85orjHus1Mtw method=POST route=/api/v1/generations/stream status=422 duration_ms=1\n=== RUN   TestBoundaryPreflightFieldsHTTP/missing_meaning_language\n2026/09/10 09:23:12 WARN ai_generation_failure request_id=req_OXkzl_tQPdM9jDWHjuaBfw run_id=\"\" model_id=\"\" prompt_version=\"\" validator_version=m001-v5-wn31-r1 phase=preflight stage=preflight reason=input_invalid field=\"\" target_index=-1\n2026/09/10 09:23:12 INFO http_request request_id=req_OXkzl_tQPdM9jDWHjuaBfw method=POST route=/api/v1/generations/stream status=422 duration_ms=0\n=== RUN   TestBoundaryPreflightFieldsHTTP/missing_scenario\n2026/09/10 09:23:12 WARN ai_generation_failure request_id=req_XOuo7P6zCWTMjKuqZkiDGg run_id=\"\" model_id=\"\" prompt_version=\"\" validator_version=m001-v5-wn31-r1 phase=preflight stage=preflight reason=input_invalid field=\"\" target_index=-1\n2026/09/10 09:23:12 INFO http_request request_id=req_XOuo7P6zCWTMjKuqZkiDGg method=POST route=/api/v1/generations/stream status=422 duration_ms=0\n=== RUN   TestBoundaryPreflightFieldsHTTP/missing_length\n2026/09/10 09:23:12 WARN ai_generation_failure request_id=req_Y9m0Jbo7QTTT8FpV43f3AQ run_id=\"\" model_id=\"\" prompt_version=\"\" validator_version=m001-v5-wn31-r1 phase=preflight stage=preflight reason=input_invalid field=\"\" target_index=-1\n2026/09/10 09:23:12 INFO http_request request_id=req_Y9m0Jbo7QTTT8FpV43f3AQ method=POST route=/api/v1/generations/stream status=422 duration_ms=0\n=== RUN   TestBoundaryPreflightFieldsHTTP/missing_entries\n2026/09/10 09:23:12 WARN ai_generation_failure request_id=req_I_GT7v7vdKuEewD6FJPjqQ run_id=\"\" model_id=\"\" prompt_version=\"\" validator_version=m001-v5-wn31-r1 phase=preflight stage=preflight reason=input_invalid field=\"\" target_index=-1\n2026/09/10 09:23:12 INFO http_request request_id=req_I_GT7v7vdKuEewD6FJPjqQ method=POST route=/api/v1/generations/stream status=422 duration_ms=0\n=== RUN   TestBoundaryPreflightFieldsHTTP/model_uuid\n2026/09/10 09:23:12 WARN ai_generation_failure request_id=req_jMxq6Q48zDB4b6JONEBF_g run_id=\"\" model_id=\"\" prompt_version=\"\" validator_version=m001-v5-wn31-r1 phase=preflight stage=preflight reason=input_invalid field=\"\" target_index=-1\n2026/09/10 09:23:12 INFO http_request request_id=req_jMxq6Q48zDB4b6JONEBF_g method=POST route=/api/v1/generations/stream status=422 duration_ms=0\n=== RUN   TestBoundaryPreflightFieldsHTTP/unassigned_model\n2026/09/10 09:23:12 WARN ai_generation_failure request_id=req_gN5-79qdwgkLKSFp9Y6eMg run_id=\"\" model_id=\"\" prompt_version=\"\" validator_version=m001-v5-wn31-r1 phase=preflight stage=preflight reason=input_invalid field=\"\" target_index=-1\n2026/09/10 09:23:12 INFO http_request request_id=req_gN5-79qdwgkLKSFp9Y6eMg method=POST route=/api/v1/generations/stream status=422 duration_ms=2\n=== RUN   TestBoundaryPreflightFieldsHTTP/language\n2026/09/10 09:23:12 WARN ai_generation_failure request_id=req_m47yd36LyBg29xSPv7cCLA run_id=\"\" model_id=\"\" prompt_version=\"\" validator_version=m001-v5-wn31-r1 phase=preflight stage=preflight reason=input_invalid field=\"\" target_index=-1\n2026/09/10 09:23:12 INFO http_request request_id=req_m47yd36LyBg29xSPv7cCLA method=POST route=/api/v1/generations/stream status=422 duration_ms=0\n=== RUN   TestBoundaryPreflightFieldsHTTP/scenario\n2026/09/10 09:23:12 WARN ai_generation_failure request_id=req_XU-pNa_eEOfAWKCnNS546w run_id=\"\" model_id=\"\" prompt_version=\"\" validator_version=m001-v5-wn31-r1 phase=preflight stage=preflight reason=input_invalid field=\"\" target_index=-1\n2026/09/10 09:23:12 INFO http_request request_id=req_XU-pNa_eEOfAWKCnNS546w method=POST route=/api/v1/generations/stream status=422 duration_ms=0\n=== RUN   TestBoundaryPreflightFieldsHTTP/length\n2026/09/10 09:23:12 WARN ai_generation_failure request_id=req_nqbYIGaJH061qX4Z4zk5Fw run_id=\"\" model_id=\"\" prompt_version=\"\" validator_version=m001-v5-wn31-r1 phase=preflight stage=preflight reason=input_invalid field=\"\" target_index=-1\n2026/09/10 09:23:12 INFO http_request request_id=req_nqbYIGaJH061qX4Z4zk5Fw method=POST route=/api/v1/generations/stream status=422 duration_ms=0\n=== RUN   TestBoundaryPreflightFieldsHTTP/empty_entries\n2026/09/10 09:23:12 WARN ai_generation_failure request_id=req_8GmiBVLz7NNyxlPCJA455g run_id=\"\" model_id=\"\" prompt_version=\"\" validator_version=m001-v5-wn31-r1 phase=preflight stage=preflight reason=input_invalid field=\"\" target_index=-1\n2026/09/10 09:23:12 INFO http_request request_id=req_8GmiBVLz7NNyxlPCJA455g method=POST route=/api/v1/generations/stream status=422 duration_ms=0\n=== RUN   TestBoundaryPreflightFieldsHTTP/null_entries\n2026/09/10 09:23:12 WARN ai_generation_failure request_id=req_6X2k6RfQEVFFnBxrBGTCgA run_id=\"\" model_id=\"\" prompt_version=\"\" validator_version=m001-v5-wn31-r1 phase=preflight stage=preflight reason=input_invalid field=\"\" target_index=-1\n2026/09/10 09:23:12 INFO http_request request_id=req_6X2k6RfQEVFFnBxrBGTCgA method=POST route=/api/v1/generations/stream status=422 duration_ms=0\n=== RUN   TestBoundaryPreflightFieldsHTTP/duplicate\n2026/09/10 09:23:12 WARN ai_generation_failure request_id=req_2D7p9ufuHuGfkomYCeqeMQ run_id=\"\" model_id=\"\" prompt_version=\"\" validator_version=m001-v5-wn31-r1 phase=preflight stage=preflight reason=input_invalid field=\"\" target_index=-1\n2026/09/10 09:23:12 INFO http_request request_id=req_2D7p9ufuHuGfkomYCeqeMQ method=POST route=/api/v1/generations/stream status=422 duration_ms=0\n=== RUN   TestBoundaryPreflightFieldsHTTP/empty_entry\n2026/09/10 09:23:12 WARN ai_generation_failure request_id=req_W85lHAl0eol4QjzFt8FbLw run_id=\"\" model_id=\"\" prompt_version=\"\" validator_version=m001-v5-wn31-r1 phase=preflight stage=preflight reason=input_invalid field=\"\" target_index=-1\n2026/09/10 09:23:12 INFO http_request request_id=req_W85lHAl0eol4QjzFt8FbLw method=POST route=/api/v1/generations/stream status=422 duration_ms=2\n=== RUN   TestBoundaryPreflightFieldsHTTP/outside_vocabulary\n2026/09/10 09:23:12 WARN ai_generation_failure request_id=req_hHsriaDdgPdbYLubStsyZg run_id=\"\" model_id=\"\" prompt_version=\"\" validator_version=m001-v5-wn31-r1 phase=preflight stage=preflight reason=input_invalid field=\"\" target_index=-1\n2026/09/10 09:23:12 INFO http_request request_id=req_hHsriaDdgPdbYLubStsyZg method=POST route=/api/v1/generations/stream status=422 duration_ms=1\n=== RUN   TestBoundaryPreflightFieldsHTTP/case_variant\n2026/09/10 09:23:12 WARN ai_generation_failure request_id=req_0ggh60Sdnsv6Eg1DP2fPkg run_id=\"\" model_id=\"\" prompt_version=\"\" validator_version=m001-v5-wn31-r1 phase=preflight stage=preflight reason=input_invalid field=\"\" target_index=-1\n2026/09/10 09:23:12 INFO http_request request_id=req_0ggh60Sdnsv6Eg1DP2fPkg method=POST route=/api/v1/generations/stream status=422 duration_ms=1\n=== RUN   TestBoundaryPreflightFieldsHTTP/whitespace\n2026/09/10 09:23:12 WARN ai_generation_failure request_id=req_MI2bkc399FMPExO0zgk-vA run_id=\"\" model_id=\"\" prompt_version=\"\" validator_version=m001-v5-wn31-r1 phase=preflight stage=preflight reason=input_invalid field=\"\" target_index=-1\n2026/09/10 09:23:12 INFO http_request request_id=req_MI2bkc399FMPExO0zgk-vA method=POST route=/api/v1/generations/stream status=422 duration_ms=1\n=== RUN   TestBoundaryPreflightFieldsHTTP/too_many\n2026/09/10 09:23:12 WARN ai_generation_failure request_id=req_VZqBLRNZpIfUoepQaUtcgw run_id=\"\" model_id=\"\" prompt_version=\"\" validator_version=m001-v5-wn31-r1 phase=preflight stage=preflight reason=input_invalid field=\"\" target_index=-1\n2026/09/10 09:23:12 INFO http_request request_id=req_VZqBLRNZpIfUoepQaUtcgw method=POST route=/api/v1/generations/stream status=422 duration_ms=1\n=== RUN   TestBoundaryPreflightFieldsHTTP/prompt\n2026/09/10 09:23:12 WARN ai_generation_failure request_id=req_25C6lRq3aAJXzWoE2KNFyQ phase=preflight reason=request_body_invalid\n2026/09/10 09:23:12 INFO http_request request_id=req_25C6lRq3aAJXzWoE2KNFyQ method=POST route=/api/v1/generations/stream status=400 duration_ms=0\n=== RUN   TestBoundaryPreflightFieldsHTTP/wrong_type\n2026/09/10 09:23:12 WARN ai_generation_failure request_id=req_LU4-Sp388DBjDnuv2f-vDQ phase=preflight reason=request_body_invalid\n2026/09/10 09:23:12 INFO http_request request_id=req_LU4-Sp388DBjDnuv2f-vDQ method=POST route=/api/v1/generations/stream status=400 duration_ms=0\n--- PASS: TestBoundaryPreflightFieldsHTTP (1.24s)\n    --- PASS: TestBoundaryPreflightFieldsHTTP/missing_model_id (0.00s)\n    --- PASS: TestBoundaryPreflightFieldsHTTP/missing_meaning_language (0.00s)\n    --- PASS: TestBoundaryPreflightFieldsHTTP/missing_scenario (0.00s)\n    --- PASS: TestBoundaryPreflightFieldsHTTP/missing_length (0.00s)\n    --- PASS: TestBoundaryPreflightFieldsHTTP/missing_entries (0.00s)\n    --- PASS: TestBoundaryPreflightFieldsHTTP/model_uuid (0.00s)\n    --- PASS: TestBoundaryPreflightFieldsHTTP/unassigned_model (0.00s)\n    --- PASS: TestBoundaryPreflightFieldsHTTP/language (0.00s)\n    --- PASS: TestBoundaryPreflightFieldsHTTP/scenario (0.00s)\n    --- PASS: TestBoundaryPreflightFieldsHTTP/length (0.00s)\n    --- PASS: TestBoundaryPreflightFieldsHTTP/empty_entries (0.00s)\n    --- PASS: TestBoundaryPreflightFieldsHTTP/null_entries (0.00s)\n    --- PASS: TestBoundaryPreflightFieldsHTTP/duplicate (0.00s)\n    --- PASS: TestBoundaryPreflightFieldsHTTP/empty_entry (0.00s)\n    --- PASS: TestBoundaryPreflightFieldsHTTP/outside_vocabulary (0.00s)\n    --- PASS: TestBoundaryPreflightFieldsHTTP/case_variant (0.00s)\n    --- PASS: TestBoundaryPreflightFieldsHTTP/whitespace (0.00s)\n    --- PASS: TestBoundaryPreflightFieldsHTTP/too_many (0.00s)\n    --- PASS: TestBoundaryPreflightFieldsHTTP/prompt (0.00s)\n    --- PASS: TestBoundaryPreflightFieldsHTTP/wrong_type (0.00s)\n=== RUN   TestBoundaryPreflightPolicyHTTP\n=== RUN   TestBoundaryPreflightPolicyHTTP/disabled_model\n2026/09/10 09:23:13 INFO http_request request_id=req_g0ozzYWKwWfi2c5NeQvHKw method=GET route=/api/v1/bootstrap status=200 duration_ms=1\n2026/09/10 09:23:13 INFO http_request request_id=req_1Kg9DEGgn0731yJuPfgVlA method=POST route=/api/v1/auth/register status=201 duration_ms=857\n2026/09/10 09:23:13 WARN ai_generation_failure request_id=req_hM3aGVHe-2TdmpIhaw93wQ run_id=\"\" model_id=\"\" prompt_version=\"\" validator_version=m001-v5-wn31-r1 phase=preflight stage=preflight reason=input_invalid field=\"\" target_index=-1\n2026/09/10 09:23:13 INFO http_request request_id=req_hM3aGVHe-2TdmpIhaw93wQ method=POST route=/api/v1/generations/stream status=422 duration_ms=3\n=== RUN   TestBoundaryPreflightPolicyHTTP/unassigned_model\n2026/09/10 09:23:14 INFO http_request request_id=req_rRBsdbmy82LZkolF7w1o2g method=GET route=/api/v1/bootstrap status=200 duration_ms=0\n2026/09/10 09:23:15 INFO http_request request_id=req_KiPkn3w1esb87A4Bugscvw method=POST route=/api/v1/auth/register status=201 duration_ms=908\n2026/09/10 09:23:15 WARN ai_generation_failure request_id=req_8HWwh1zn0pkph3QAofOvEw run_id=\"\" model_id=\"\" prompt_version=\"\" validator_version=m001-v5-wn31-r1 phase=preflight stage=preflight reason=input_invalid field=\"\" target_index=-1\n2026/09/10 09:23:15 INFO http_request request_id=req_8HWwh1zn0pkph3QAofOvEw method=POST route=/api/v1/generations/stream status=422 duration_ms=2\n=== RUN   TestBoundaryPreflightPolicyHTTP/forbidden_length\n2026/09/10 09:23:15 INFO http_request request_id=req_zVwAmLIlRIdhsg-TYSmZ9w method=GET route=/api/v1/bootstrap status=200 duration_ms=0\n2026/09/10 09:23:16 INFO http_request request_id=req_ERi3LF7svxH6WjxZbV_Xpw method=POST route=/api/v1/auth/register status=201 duration_ms=842\n2026/09/10 09:23:16 WARN ai_generation_failure request_id=req_3pGNZThNRApwcQbndiqEeA run_id=\"\" model_id=\"\" prompt_version=\"\" validator_version=m001-v5-wn31-r1 phase=preflight stage=preflight reason=input_invalid field=\"\" target_index=-1\n2026/09/10 09:23:16 INFO http_request request_id=req_3pGNZThNRApwcQbndiqEeA method=POST route=/api/v1/generations/stream status=422 duration_ms=3\n=== RUN   TestBoundaryPreflightPolicyHTTP/zero_quota\n2026/09/10 09:23:16 INFO http_request request_id=req_SeDfWPNbWFShrZgpj5hO1A method=GET route=/api/v1/bootstrap status=200 duration_ms=0\n2026/09/10 09:23:17 INFO http_request request_id=req_SVCyWvx8r8pPYL4aCVRfNg method=POST route=/api/v1/auth/register status=201 duration_ms=812\n2026/09/10 09:23:17 WARN ai_generation_failure request_id=req_mJnGfpnRs0V3VG5cSEn7Tw run_id=\"\" model_id=\"\" prompt_version=\"\" validator_version=m001-v5-wn31-r1 phase=preflight stage=preflight reason=generation_unavailable field=\"\" target_index=-1\n2026/09/10 09:23:17 INFO http_request request_id=req_mJnGfpnRs0V3VG5cSEn7Tw method=POST route=/api/v1/generations/stream status=503 duration_ms=4\n=== RUN   TestBoundaryPreflightPolicyHTTP/no_credential\n2026/09/10 09:23:18 INFO http_request request_id=req_Mo87WWVg_dTSLEvcSZt5tw method=GET route=/api/v1/bootstrap status=200 duration_ms=0\n2026/09/10 09:23:19 INFO http_request request_id=req_LN7YludqJevLnirDcIlK-w method=POST route=/api/v1/auth/register status=201 duration_ms=915\n2026/09/10 09:23:19 WARN ai_generation_failure request_id=req_jdNfKNsa4nXOfq4kN1SLpQ run_id=\"\" model_id=\"\" prompt_version=\"\" validator_version=m001-v5-wn31-r1 phase=preflight stage=preflight reason=generation_unavailable field=\"\" target_index=-1\n2026/09/10 09:23:19 INFO http_request request_id=req_jdNfKNsa4nXOfq4kN1SLpQ method=POST route=/api/v1/generations/stream status=503 duration_ms=1\n--- PASS: TestBoundaryPreflightPolicyHTTP (6.57s)\n    --- PASS: TestBoundaryPreflightPolicyHTTP/disabled_model (1.38s)\n    --- PASS: TestBoundaryPreflightPolicyHTTP/unassigned_model (1.31s)\n    --- PASS: TestBoundaryPreflightPolicyHTTP/forbidden_length (1.25s)\n    --- PASS: TestBoundaryPreflightPolicyHTTP/zero_quota (1.30s)\n    --- PASS: TestBoundaryPreflightPolicyHTTP/no_credential (1.33s)\nPASS\nok  \twordweave/internal/httpapi\t19.392s\n"
+        }
+      ]
+    },
+    {
+      "id": "encoding-red",
+      "command": "docker run --rm --pull never --network none --mount type=bind,src=/Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/backend,dst=/src --mount type=volume,src=wordweave-go-mod-cache,dst=/go/pkg/mod --mount type=volume,src=wordweave-go-build,dst=/root/.cache/go-build -w /src -e GOTOOLCHAIN=local -e GOPROXY=off sha256:587c6fae871c9d14eb79352bd3df80670ffb2c297997085aefc39797f3e8af37 go test ./internal/ai -run '^TestBoundarySSEInvalidUTF8' -count=1 -v",
+      "results": [
+        {
+          "chunk_id": "bb5b00",
+          "wall_time_seconds": 1.002436917,
+          "session_id": 46875,
+          "original_token_count": 0,
+          "output": ""
+        },
+        {
+          "chunk_id": "7a449f",
+          "wall_time_seconds": 0.000002125,
+          "exit_code": 1,
+          "original_token_count": 86,
+          "output": "=== RUN   TestBoundarySSEInvalidUTF8RejectedBeforeReplacement\n    schema_boundaries_test.go:113: invalid wire encoding was silently replaced: {Stage:unknown Reason:unknown_internal Field: Target:-1 Actual:-1 Limit:-1}; emitted=46\n--- FAIL: TestBoundarySSEInvalidUTF8RejectedBeforeReplacement (0.00s)\nFAIL\nFAIL\twordweave/internal/ai\t0.004s\nFAIL\n"
+        }
+      ]
+    },
+    {
+      "id": "final-http-61",
+      "command": "docker run --rm --pull never --network container:wordweave-boundaries-125-pg --mount type=bind,src=/Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/backend,dst=/src --mount type=volume,src=wordweave-go-mod-cache,dst=/go/pkg/mod --mount type=volume,src=wordweave-go-build,dst=/root/.cache/go-build -e 'TEST_DATABASE_URL=postgres://postgres@127.0.0.1:5432/postgres?sslmode=disable' -e WORDWEAVE_SLOW_STREAM_TESTS=1 -w /src -e GOTOOLCHAIN=local -e GOPROXY=off sha256:587c6fae871c9d14eb79352bd3df80670ffb2c297997085aefc39797f3e8af37 go test -tags=integration -race ./internal/httpapi -run '^Test(Boundary|P0GenerationHTTPMatrix)' -parallel=2 -count=1 -timeout=5m -v",
+      "results": [
+        {
+          "chunk_id": "cac2e5",
+          "wall_time_seconds": 1.001710667,
+          "session_id": 83011,
+          "original_token_count": 0,
+          "output": ""
+        },
+        {
+          "chunk_id": "f734ef",
+          "wall_time_seconds": 5.00594975,
+          "session_id": 83011,
+          "original_token_count": 437,
+          "output": "=== RUN   TestP0GenerationHTTPMatrix\n=== RUN   TestP0GenerationHTTPMatrix/valid\n2026/09/10 09:23:54 INFO http_request request_id=req_R6W3_W1cBFIBMAuI0ANDBw method=GET route=/api/v1/bootstrap status=200 duration_ms=2\n2026/09/10 09:23:55 INFO http_request request_id=req_2JtWybZKf9S1wre84FAsog method=POST route=/api/v1/auth/register status=201 duration_ms=1560\n=== RUN   TestP0GenerationHTTPMatrix/open_401\n=== RUN   TestP0GenerationHTTPMatrix/open_403\n=== RUN   TestP0GenerationHTTPMatrix/open_404\n=== RUN   TestP0GenerationHTTPMatrix/open_429\n=== RUN   TestP0GenerationHTTPMatrix/open_500\n=== RUN   TestP0GenerationHTTPMatrix/not_sse\n=== RUN   TestP0GenerationHTTPMatrix/stream_429\n=== RUN   TestP0GenerationHTTPMatrix/bad_event\n=== RUN   TestP0GenerationHTTPMatrix/truncated\n=== RUN   TestP0GenerationHTTPMatrix/short\n=== RUN   TestP0GenerationHTTPMatrix/passage_space\n=== RUN   TestP0GenerationHTTPMatrix/passage_language\n=== RUN   TestP0GenerationHTTPMatrix/tags_count\n=== RUN   TestP0GenerationHTTPMatrix/tag_language\n=== RUN   TestP0GenerationHTTPMatrix/tag_duplicate\n=== RUN   TestP0GenerationHTTPMatrix/target_count\n=== RUN   TestP0GenerationHTTPMatrix/target_source\n=== RUN   TestP0GenerationHTTPMatrix/meaning\n=== RUN   TestP0GenerationHTTPMatrix/meaning_repeat\n=== RUN   TestP0GenerationHTTPMatrix/hint_language\n=== RUN   TestP0GenerationHTTPMatrix/source_unknown\n=== RUN   TestP0GenerationHTTPMatrix/passage_missing\n=== RUN   TestP0GenerationHTTPMatrix/hint_missing\n=== RUN   TestP0GenerationHTTPMatrix/hint_wrong_source\n=== RUN   TestP0GenerationHTTPMatrix/hint_syntax\n=== RUN   TestP0GenerationHTTPMatrix/surface_boundary\n=== RUN   TestP0GenerationHTTPMatrix/relation_unknown\n=== RUN   TestP0GenerationHTTPMatrix/relation_rejected\n"
+        },
+        {
+          "chunk_id": "d6c51d",
+          "wall_time_seconds": 5.001224583,
+          "session_id": 83011,
+          "original_token_count": 1560,
+          "output": "--- PASS: TestP0GenerationHTTPMatrix (48.46s)\n    --- PASS: TestP0GenerationHTTPMatrix/valid (6.11s)\n    --- PASS: TestP0GenerationHTTPMatrix/open_401 (1.88s)\n    --- PASS: TestP0GenerationHTTPMatrix/open_403 (1.69s)\n    --- PASS: TestP0GenerationHTTPMatrix/open_404 (1.53s)\n    --- PASS: TestP0GenerationHTTPMatrix/open_429 (1.50s)\n    --- PASS: TestP0GenerationHTTPMatrix/open_500 (1.41s)\n    --- PASS: TestP0GenerationHTTPMatrix/not_sse (1.50s)\n    --- PASS: TestP0GenerationHTTPMatrix/stream_429 (1.45s)\n    --- PASS: TestP0GenerationHTTPMatrix/bad_event (1.60s)\n    --- PASS: TestP0GenerationHTTPMatrix/truncated (1.88s)\n    --- PASS: TestP0GenerationHTTPMatrix/short (1.61s)\n    --- PASS: TestP0GenerationHTTPMatrix/passage_space (1.84s)\n    --- PASS: TestP0GenerationHTTPMatrix/passage_language (1.42s)\n    --- PASS: TestP0GenerationHTTPMatrix/tags_count (1.82s)\n    --- PASS: TestP0GenerationHTTPMatrix/tag_language (2.33s)\n    --- PASS: TestP0GenerationHTTPMatrix/tag_duplicate (1.57s)\n    --- PASS: TestP0GenerationHTTPMatrix/target_count (1.45s)\n    --- PASS: TestP0GenerationHTTPMatrix/target_source (1.32s)\n    --- PASS: TestP0GenerationHTTPMatrix/meaning (1.44s)\n    --- PASS: TestP0GenerationHTTPMatrix/meaning_repeat (1.34s)\n    --- PASS: TestP0GenerationHTTPMatrix/hint_language (1.25s)\n    --- PASS: TestP0GenerationHTTPMatrix/source_unknown (1.34s)\n    --- PASS: TestP0GenerationHTTPMatrix/passage_missing (1.29s)\n    --- PASS: TestP0GenerationHTTPMatrix/hint_missing (1.25s)\n    --- PASS: TestP0GenerationHTTPMatrix/hint_wrong_source (1.34s)\n    --- PASS: TestP0GenerationHTTPMatrix/hint_syntax (1.37s)\n    --- PASS: TestP0GenerationHTTPMatrix/surface_boundary (1.25s)\n    --- PASS: TestP0GenerationHTTPMatrix/relation_unknown (1.34s)\n    --- PASS: TestP0GenerationHTTPMatrix/relation_rejected (1.33s)\n=== RUN   TestBoundaryOpenErrorSilentBodyHTTP\n=== RUN   TestBoundaryOpenErrorSilentBodyHTTP/Unauthorized\n=== RUN   TestBoundaryOpenErrorSilentBodyHTTP/Too_Many_Requests\n=== RUN   TestBoundaryOpenErrorSilentBodyHTTP/Service_Unavailable\n--- PASS: TestBoundaryOpenErrorSilentBodyHTTP (3.92s)\n    --- PASS: TestBoundaryOpenErrorSilentBodyHTTP/Unauthorized (1.40s)\n    --- PASS: TestBoundaryOpenErrorSilentBodyHTTP/Too_Many_Requests (1.27s)\n    --- PASS: TestBoundaryOpenErrorSilentBodyHTTP/Service_Unavailable (1.24s)\n=== RUN   TestBoundarySilentStreamLifecycleHTTP\n=== RUN   TestBoundarySilentStreamLifecycleHTTP/cancel\n=== RUN   TestBoundarySilentStreamLifecycleHTTP/disconnect\n--- PASS: TestBoundarySilentStreamLifecycleHTTP (2.80s)\n    --- PASS: TestBoundarySilentStreamLifecycleHTTP/cancel (1.35s)\n    --- PASS: TestBoundarySilentStreamLifecycleHTTP/disconnect (1.45s)\n=== RUN   TestBoundaryPreflightFieldsHTTP\n=== RUN   TestBoundaryPreflightFieldsHTTP/missing_model_id\n=== RUN   TestBoundaryPreflightFieldsHTTP/missing_meaning_language\n=== RUN   TestBoundaryPreflightFieldsHTTP/missing_scenario\n=== RUN   TestBoundaryPreflightFieldsHTTP/missing_length\n=== RUN   TestBoundaryPreflightFieldsHTTP/missing_entries\n=== RUN   TestBoundaryPreflightFieldsHTTP/model_uuid\n=== RUN   TestBoundaryPreflightFieldsHTTP/unassigned_model\n=== RUN   TestBoundaryPreflightFieldsHTTP/language\n=== RUN   TestBoundaryPreflightFieldsHTTP/scenario\n=== RUN   TestBoundaryPreflightFieldsHTTP/length\n=== RUN   TestBoundaryPreflightFieldsHTTP/empty_entries\n=== RUN   TestBoundaryPreflightFieldsHTTP/null_entries\n=== RUN   TestBoundaryPreflightFieldsHTTP/duplicate\n=== RUN   TestBoundaryPreflightFieldsHTTP/empty_entry\n=== RUN   TestBoundaryPreflightFieldsHTTP/outside_vocabulary\n=== RUN   TestBoundaryPreflightFieldsHTTP/case_variant\n=== RUN   TestBoundaryPreflightFieldsHTTP/whitespace\n=== RUN   TestBoundaryPreflightFieldsHTTP/too_many\n=== RUN   TestBoundaryPreflightFieldsHTTP/prompt\n=== RUN   TestBoundaryPreflightFieldsHTTP/wrong_type\n--- PASS: TestBoundaryPreflightFieldsHTTP (1.45s)\n    --- PASS: TestBoundaryPreflightFieldsHTTP/missing_model_id (0.00s)\n    --- PASS: TestBoundaryPreflightFieldsHTTP/missing_meaning_language (0.00s)\n    --- PASS: TestBoundaryPreflightFieldsHTTP/missing_scenario (0.00s)\n    --- PASS: TestBoundaryPreflightFieldsHTTP/missing_length (0.00s)\n    --- PASS: TestBoundaryPreflightFieldsHTTP/missing_entries (0.00s)\n    --- PASS: TestBoundaryPreflightFieldsHTTP/model_uuid (0.00s)\n    --- PASS: TestBoundaryPreflightFieldsHTTP/unassigned_model (0.00s)\n    --- PASS: TestBoundaryPreflightFieldsHTTP/language (0.00s)\n    --- PASS: TestBoundaryPreflightFieldsHTTP/scenario (0.00s)\n    --- PASS: TestBoundaryPreflightFieldsHTTP/length (0.00s)\n    --- PASS: TestBoundaryPreflightFieldsHTTP/empty_entries (0.00s)\n    --- PASS: TestBoundaryPreflightFieldsHTTP/null_entries (0.00s)\n    --- PASS: TestBoundaryPreflightFieldsHTTP/duplicate (0.00s)\n    --- PASS: TestBoundaryPreflightFieldsHTTP/empty_entry (0.00s)\n    --- PASS: TestBoundaryPreflightFieldsHTTP/outside_vocabulary (0.00s)\n    --- PASS: TestBoundaryPreflightFieldsHTTP/case_variant (0.00s)\n    --- PASS: TestBoundaryPreflightFieldsHTTP/whitespace (0.00s)\n    --- PASS: TestBoundaryPreflightFieldsHTTP/too_many (0.00s)\n    --- PASS: TestBoundaryPreflightFieldsHTTP/prompt (0.00s)\n    --- PASS: TestBoundaryPreflightFieldsHTTP/wrong_type (0.00s)\n=== RUN   TestBoundaryPreflightPolicyHTTP\n=== RUN   TestBoundaryPreflightPolicyHTTP/disabled_model\n=== RUN   TestBoundaryPreflightPolicyHTTP/unassigned_model\n=== RUN   TestBoundaryPreflightPolicyHTTP/forbidden_length\n=== RUN   TestBoundaryPreflightPolicyHTTP/zero_quota\n=== RUN   TestBoundaryPreflightPolicyHTTP/no_credential\n--- PASS: TestBoundaryPreflightPolicyHTTP (8.66s)\n    --- PASS: TestBoundaryPreflightPolicyHTTP/disabled_model (1.94s)\n    --- PASS: TestBoundaryPreflightPolicyHTTP/unassigned_model (2.27s)\n    --- PASS: TestBoundaryPreflightPolicyHTTP/forbidden_length (1.59s)\n    --- PASS: TestBoundaryPreflightPolicyHTTP/zero_quota (1.41s)\n    --- PASS: TestBoundaryPreflightPolicyHTTP/no_credential (1.46s)\n=== RUN   TestBoundarySlowStreamHTTP\n=== RUN   TestBoundarySlowStreamHTTP/1m0s\n=== PAUSE TestBoundarySlowStreamHTTP/1m0s\n=== RUN   TestBoundarySlowStreamHTTP/2m0s\n=== PAUSE TestBoundarySlowStreamHTTP/2m0s\n=== CONT  TestBoundarySlowStreamHTTP/2m0s\n=== CONT  TestBoundarySlowStreamHTTP/1m0s\n"
+        },
+        {
+          "chunk_id": "cbddc4",
+          "wall_time_seconds": 5.001843083,
+          "session_id": 83011,
+          "original_token_count": 39,
+          "output": "    stream_boundaries_integration_test.go:391: elapsed=1m0.051236569s first_delta=7.157375ms heartbeat_count=4 terminal=validated stream_equals_final=true\n"
+        },
+        {
+          "chunk_id": "a0a2b8",
+          "wall_time_seconds": 0.000001375,
+          "exit_code": 0,
+          "original_token_count": 100,
+          "output": "=== NAME  TestBoundarySlowStreamHTTP/2m0s\n    stream_boundaries_integration_test.go:391: elapsed=2m0.035519388s first_delta=6.758041ms heartbeat_count=8 terminal=validated stream_equals_final=true\n--- PASS: TestBoundarySlowStreamHTTP (0.00s)\n    --- PASS: TestBoundarySlowStreamHTTP/1m0s (61.55s)\n    --- PASS: TestBoundarySlowStreamHTTP/2m0s (121.49s)\nPASS\nok  \twordweave/internal/httpapi\t187.842s\n"
+        }
+      ]
+    },
+    {
+      "id": "final-unit-race",
+      "command": "docker run --rm --pull never --network none --mount type=bind,src=/Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/backend,dst=/src --mount type=volume,src=wordweave-go-mod-cache,dst=/go/pkg/mod --mount type=volume,src=wordweave-go-build,dst=/root/.cache/go-build -w /src -e GOTOOLCHAIN=local -e GOPROXY=off sha256:587c6fae871c9d14eb79352bd3df80670ffb2c297997085aefc39797f3e8af37 go test -race ./internal/ai ./internal/generation ./internal/httpapi -count=1",
+      "results": [
+        {
+          "chunk_id": "c4f86b",
+          "wall_time_seconds": 1.001964125,
+          "session_id": 18939,
+          "original_token_count": 0,
+          "output": ""
+        },
+        {
+          "chunk_id": "f82cf0",
+          "wall_time_seconds": 0.000001208,
+          "exit_code": 0,
+          "original_token_count": 29,
+          "output": "ok  \twordweave/internal/ai\t18.452s\nok  \twordweave/internal/generation\t1.013s\nok  \twordweave/internal/httpapi\t1.026s\n"
+        }
+      ]
+    },
+    {
+      "id": "vet",
+      "command": "docker run --rm --pull never --network none --mount type=bind,src=/Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/backend,dst=/src --mount type=volume,src=wordweave-go-mod-cache,dst=/go/pkg/mod --mount type=volume,src=wordweave-go-build,dst=/root/.cache/go-build -w /src -e GOTOOLCHAIN=local -e GOPROXY=off sha256:587c6fae871c9d14eb79352bd3df80670ffb2c297997085aefc39797f3e8af37 go vet ./internal/ai ./internal/generation ./internal/httpapi ./internal/maintenance",
+      "results": [
+        {
+          "chunk_id": "fbb733",
+          "wall_time_seconds": 1.001388917,
+          "session_id": 81987,
+          "original_token_count": 0,
+          "output": ""
+        },
+        {
+          "chunk_id": "111afd",
+          "wall_time_seconds": 4.59e-7,
+          "exit_code": 0,
+          "original_token_count": 0,
+          "output": ""
+        }
+      ]
+    },
+    {
+      "id": "build-initial-wrong-path-then-corrected",
+      "commands": [
+        "docker run --rm --pull never --network none --mount type=bind,src=/Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/backend,dst=/src --mount type=volume,src=wordweave-go-mod-cache,dst=/go/pkg/mod --mount type=volume,src=wordweave-go-build,dst=/root/.cache/go-build -w /src -e GOTOOLCHAIN=local -e GOPROXY=off sha256:587c6fae871c9d14eb79352bd3df80670ffb2c297997085aefc39797f3e8af37 go build -o /tmp/wordweave-boundaries ./cmd/server",
+        "docker run --rm --pull never --network none --mount type=bind,src=/Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/backend,dst=/src --mount type=volume,src=wordweave-go-mod-cache,dst=/go/pkg/mod --mount type=volume,src=wordweave-go-build,dst=/root/.cache/go-build -w /src -e GOTOOLCHAIN=local -e GOPROXY=off sha256:587c6fae871c9d14eb79352bd3df80670ffb2c297997085aefc39797f3e8af37 go build -o /tmp/wordweave-boundaries ./cmd/wordweave"
+      ],
+      "results": [
+        {
+          "chunk_id": "97641d",
+          "wall_time_seconds": 0.262791625,
+          "exit_code": 1,
+          "original_token_count": 11,
+          "output": "stat /src/cmd/server: directory not found\n"
+        },
+        {
+          "chunk_id": "9fc6cc",
+          "wall_time_seconds": 1.001316334,
+          "session_id": 16021,
+          "original_token_count": 0,
+          "output": ""
+        },
+        {
+          "chunk_id": "da232e",
+          "wall_time_seconds": 8.75e-7,
+          "exit_code": 0,
+          "original_token_count": 0,
+          "output": ""
+        }
+      ]
+    },
+    {
+      "id": "diagnostic-build",
+      "command": "docker run --rm --pull never --network none --mount type=bind,src=/Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/backend,dst=/src --mount type=volume,src=wordweave-go-mod-cache,dst=/go/pkg/mod --mount type=volume,src=wordweave-go-build,dst=/root/.cache/go-build -w /src -e GOTOOLCHAIN=local -e GOPROXY=off sha256:587c6fae871c9d14eb79352bd3df80670ffb2c297997085aefc39797f3e8af37 go build -tags=uatdiagnostics -o /tmp/wordweave-boundaries-diagnostic ./cmd/wordweave",
+      "results": [
+        {
+          "chunk_id": "738622",
+          "wall_time_seconds": 1.000944292,
+          "session_id": 67277,
+          "original_token_count": 0,
+          "output": ""
+        },
+        {
+          "chunk_id": "8d65a8",
+          "wall_time_seconds": 3.75e-7,
+          "exit_code": 0,
+          "original_token_count": 0,
+          "output": ""
+        }
+      ]
+    },
+    {
+      "id": "bounded-decoder-fuzz",
+      "command": "docker run --rm --pull never --network none --mount type=bind,src=/Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/backend,dst=/src --mount type=volume,src=wordweave-go-mod-cache,dst=/go/pkg/mod --mount type=volume,src=wordweave-go-build,dst=/root/.cache/go-build -w /src -e GOTOOLCHAIN=local -e GOPROXY=off sha256:587c6fae871c9d14eb79352bd3df80670ffb2c297997085aefc39797f3e8af37 go test ./internal/ai -run '^$' -fuzz '^FuzzP0CandidateDecoder$' -fuzztime=15s -parallel=1",
+      "results": [
+        {
+          "chunk_id": "92229a",
+          "wall_time_seconds": 1.001529792,
+          "session_id": 78054,
+          "original_token_count": 0,
+          "output": ""
+        },
+        {
+          "chunk_id": "cd7788",
+          "wall_time_seconds": 1.8979778330000001,
+          "exit_code": 0,
+          "original_token_count": 159,
+          "output": "fuzz: elapsed: 0s, gathering baseline coverage: 0/37 completed\nfuzz: elapsed: 0s, gathering baseline coverage: 37/37 completed, now fuzzing with 1 workers\nfuzz: elapsed: 3s, execs: 17220 (5735/sec), new interesting: 6 (total: 43)\nfuzz: elapsed: 6s, execs: 17220 (0/sec), new interesting: 6 (total: 43)\nfuzz: elapsed: 9s, execs: 17220 (0/sec), new interesting: 6 (total: 43)\nfuzz: elapsed: 12s, execs: 17220 (0/sec), new interesting: 6 (total: 43)\nfuzz: elapsed: 15s, execs: 17220 (0/sec), new interesting: 6 (total: 43)\nfuzz: elapsed: 16s, execs: 17220 (0/sec), new interesting: 6 (total: 43)\nPASS\nok  \twordweave/internal/ai\t16.029s\n"
+        }
+      ]
+    }
+  ],
+  "operational_failures": [
+    "First integration invocation did not quote TEST_DATABASE_URL; zsh glob expansion rejected it before Docker executed. Corrected by quoting the URL; no product code change.",
+    "First build targeted nonexistent cmd/server. Replaced with the actual cmd/wordweave entrypoint. Failure remains recorded in build results.",
+    "Initial lifecycle fixture confused DB user_cancelled with API cancelled and omitted existing cumulative charging. Corrected only assertions using generation.Service.Cancel as the existing contract; no production cancellation change.",
+    "Cancelled malformed extractor test already passed before the changes. Entry cancellation checks and bounded fallback are defensive hardening, not an additional red-to-green claim.",
+    "Some read-only rg commands referenced guessed paths/globs and returned nonzero; actual paths were then located using rg --files. These were not test/build PASS results."
+  ],
+  "cleanup": {
+    "container": "wordweave-boundaries-125-pg",
+    "commands": [
+      "count wordweave_test_* databases",
+      "docker stop -t 5 wordweave-boundaries-125-pg",
+      "docker rm wordweave-boundaries-125-pg",
+      "docker ps -a filtered exact temporary container"
+    ],
+    "results": [
+      {
+        "chunk_id": "f3cb06",
+        "wall_time_seconds": 0.000003458,
+        "exit_code": 0,
+        "original_token_count": 1,
+        "output": "0\n"
+      },
+      {
+        "chunk_id": "83e308",
+        "wall_time_seconds": 0.000007917,
+        "exit_code": 0,
+        "original_token_count": 7,
+        "output": "wordweave-boundaries-125-pg\n"
+      },
+      {
+        "chunk_id": "db585b",
+        "wall_time_seconds": 0.000004375,
+        "exit_code": 0,
+        "original_token_count": 7,
+        "output": "wordweave-boundaries-125-pg\n"
+      },
+      {
+        "chunk_id": "3c3bbe",
+        "wall_time_seconds": 0.000002125,
+        "exit_code": 0,
+        "original_token_count": 0,
+        "output": ""
+      }
+    ],
+    "test_data_recoverable": false,
+    "real_data_touched": false
+  },
+  "closing_checks": {
+    "initial": {
+      "chunk_id": "0f9fd1",
+      "wall_time_seconds": 0.029197667,
+      "exit_code": 1,
+      "original_token_count": 36,
+      "output": "-e:8:in `scan': invalid byte sequence in US-ASCII (ArgumentError)\n\tfrom -e:8:in `block in <main>'\n\tfrom -e:7:in `each'\n\tfrom -e:7:in `<main>'\n"
+    },
+    "corrected": {
+      "chunk_id": "d322ba",
+      "wall_time_seconds": 0.057323,
+      "exit_code": 0,
+      "original_token_count": 172,
+      "output": "{\"source_hashes\":6,\"local_links\":23,\"stage\":\"implementation\",\"agent\":\"backend-ethan\",\"pending_user_decisions\":[],\"last_transition\":{\"from\":\"technical-design\",\"to\":\"implementation\",\"operation\":\"transition-stage\",\"previous_role\":\"backend-architect/base\",\"previous_agent\":\"backend-alex\",\"active_role\":\"backend-implementer/base\",\"active_agent\":\"backend-ethan\",\"confirmed_by\":\"user\",\"authorization\":\"CR-041 user boundary and USER-HANDOFF-CONTINUOUS-001\",\"decision_id\":\"TRANSITION-M001-125\",\"timestamp\":\"2026-09-10T09:03:50Z\",\"evidence\":\".planning/milestones/M001/reviews/stream-failure-capture-gates.md\",\"real_model_calls_authorized\":false,\"user_uat_accepted\":false,\"release_approved\":false}}\n"
+    },
+    "note": "Initial local-reference checker used host Ruby US-ASCII and failed; rerun with -EUTF-8 passed. No product code changed. gofmt -l on all four implementation/test files returned no output, exit 0; git remains wholly untracked and untouched."
+  },
+  "remaining": [
+    "identity/exhaustion/concurrency branch closure",
+    "mixed terminal and uncertain commit acknowledgement faults",
+    "complete diagnostic/capture inventory",
+    "G14 frontend consumer/independent QA",
+    "budgeted real-model quality evaluation"
+  ]
+}

@@ -1,0 +1,399 @@
+{
+  "date": "2026-09-05T02:41:55.727Z",
+  "agent_name": "qa-quinn",
+  "baseURL": "http://localhost:6001",
+  "tested_image": "sha256:0cb4bceb35550f7242c3bfd6ed958e006632f46862f644a487010a05e4b4bb85",
+  "verdict": "FAIL",
+  "totals": {
+    "checks": 53,
+    "passed": 31,
+    "failed": 22
+  },
+  "checks": [
+    {
+      "name": "UAT exact frontend image",
+      "actual": "sha256:0cb4bceb35550f7242c3bfd6ed958e006632f46862f644a487010a05e4b4bb85",
+      "expected": "sha256:0cb4bceb35550f7242c3bfd6ed958e006632f46862f644a487010a05e4b4bb85",
+      "status": "PASS"
+    },
+    {
+      "name": "frontend health",
+      "actual": "healthy",
+      "expected": "healthy",
+      "status": "PASS"
+    },
+    {
+      "name": "backend health",
+      "actual": "healthy",
+      "expected": "healthy",
+      "status": "PASS"
+    },
+    {
+      "name": "postgres health",
+      "actual": "healthy",
+      "expected": "healthy",
+      "status": "PASS"
+    },
+    {
+      "name": "/ HTTP",
+      "actual": 200,
+      "expected": 200,
+      "status": "PASS"
+    },
+    {
+      "name": "/api/v1/bootstrap HTTP",
+      "actual": 200,
+      "expected": 200,
+      "status": "PASS"
+    },
+    {
+      "name": "en-US guest route /review",
+      "actual": "/review",
+      "expected": "/review",
+      "status": "PASS"
+    },
+    {
+      "name": "en-US guest card /review",
+      "actual": 0,
+      "expected": 1,
+      "status": "FAIL"
+    },
+    {
+      "name": "en-US guest registration /review",
+      "actual": 0,
+      "expected": 1,
+      "status": "FAIL"
+    },
+    {
+      "name": "en-US guest login /review",
+      "actual": 0,
+      "expected": 1,
+      "status": "FAIL"
+    },
+    {
+      "name": "en-US guest route /library",
+      "actual": "/library",
+      "expected": "/library",
+      "status": "PASS"
+    },
+    {
+      "name": "en-US guest card /library",
+      "actual": 0,
+      "expected": 1,
+      "status": "FAIL"
+    },
+    {
+      "name": "en-US guest registration /library",
+      "actual": 0,
+      "expected": 1,
+      "status": "FAIL"
+    },
+    {
+      "name": "en-US guest login /library",
+      "actual": 0,
+      "expected": 1,
+      "status": "FAIL"
+    },
+    {
+      "name": "zh-CN guest route /review",
+      "actual": "/review",
+      "expected": "/review",
+      "status": "PASS"
+    },
+    {
+      "name": "zh-CN guest card /review",
+      "actual": 0,
+      "expected": 1,
+      "status": "FAIL"
+    },
+    {
+      "name": "zh-CN guest registration /review",
+      "actual": 0,
+      "expected": 1,
+      "status": "FAIL"
+    },
+    {
+      "name": "zh-CN guest login /review",
+      "actual": 0,
+      "expected": 1,
+      "status": "FAIL"
+    },
+    {
+      "name": "zh-CN guest route /library",
+      "actual": "/library",
+      "expected": "/library",
+      "status": "PASS"
+    },
+    {
+      "name": "zh-CN guest card /library",
+      "actual": 0,
+      "expected": 1,
+      "status": "FAIL"
+    },
+    {
+      "name": "zh-CN guest registration /library",
+      "actual": 0,
+      "expected": 1,
+      "status": "FAIL"
+    },
+    {
+      "name": "zh-CN guest login /library",
+      "actual": 0,
+      "expected": 1,
+      "status": "FAIL"
+    },
+    {
+      "name": "Real invalid credentials structured notice",
+      "actual": {
+        "danger": true,
+        "children": [
+          "svg",
+          "div"
+        ],
+        "role": "alert"
+      },
+      "expected": {
+        "danger": true,
+        "children": [
+          "svg",
+          "div"
+        ],
+        "role": "alert"
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "Invalid login preserves username",
+      "actual": "uat_admin",
+      "expected": "uat_admin",
+      "status": "PASS"
+    },
+    {
+      "name": "Real login destination",
+      "actual": "/admin/models",
+      "expected": "/admin/models",
+      "status": "PASS"
+    },
+    {
+      "name": "Models subtitle",
+      "actual": "Manage your API key and available models.",
+      "expected": "Manage your API key and available models.",
+      "status": "PASS"
+    },
+    {
+      "name": "1440 add spacing",
+      "actual": [
+        20,
+        20,
+        16,
+        23
+      ],
+      "expected": [
+        20,
+        20,
+        16,
+        23
+      ],
+      "status": "PASS"
+    },
+    {
+      "name": "1440 add fits viewport",
+      "actual": true,
+      "expected": true,
+      "status": "PASS"
+    },
+    {
+      "name": "1440 add ID input background",
+      "actual": "rgb(255, 255, 255)",
+      "expected": "rgb(255, 255, 255)",
+      "status": "PASS"
+    },
+    {
+      "name": "1440 add Axe serious/critical",
+      "actual": [],
+      "expected": [],
+      "status": "PASS"
+    },
+    {
+      "name": "1440 edit spacing",
+      "actual": [
+        20,
+        20,
+        16,
+        23
+      ],
+      "expected": [
+        20,
+        20,
+        16,
+        23
+      ],
+      "status": "PASS"
+    },
+    {
+      "name": "1440 edit fits viewport",
+      "actual": true,
+      "expected": true,
+      "status": "PASS"
+    },
+    {
+      "name": "1440 edit ID input background",
+      "actual": "rgb(255, 255, 255)",
+      "expected": "rgb(255, 255, 255)",
+      "status": "PASS"
+    },
+    {
+      "name": "1440 edit Axe serious/critical",
+      "actual": [],
+      "expected": [],
+      "status": "PASS"
+    },
+    {
+      "name": "390 add spacing",
+      "actual": [
+        20,
+        20,
+        16,
+        23
+      ],
+      "expected": [
+        20,
+        20,
+        16,
+        23
+      ],
+      "status": "PASS"
+    },
+    {
+      "name": "390 add fits viewport",
+      "actual": true,
+      "expected": true,
+      "status": "PASS"
+    },
+    {
+      "name": "390 add ID input background",
+      "actual": "rgb(255, 255, 255)",
+      "expected": "rgb(255, 255, 255)",
+      "status": "PASS"
+    },
+    {
+      "name": "390 add Axe serious/critical",
+      "actual": [],
+      "expected": [],
+      "status": "PASS"
+    },
+    {
+      "name": "390 edit spacing",
+      "actual": [
+        20,
+        20,
+        16,
+        23
+      ],
+      "expected": [
+        20,
+        20,
+        16,
+        23
+      ],
+      "status": "PASS"
+    },
+    {
+      "name": "390 edit fits viewport",
+      "actual": true,
+      "expected": true,
+      "status": "PASS"
+    },
+    {
+      "name": "390 edit ID input background",
+      "actual": "rgb(255, 255, 255)",
+      "expected": "rgb(255, 255, 255)",
+      "status": "PASS"
+    },
+    {
+      "name": "390 edit Axe serious/critical",
+      "actual": [],
+      "expected": [],
+      "status": "PASS"
+    },
+    {
+      "name": "Plans subtitle",
+      "actual": "设置每种方案可使用的模型、篇幅与次数。",
+      "expected": "Choose the models, lengths, and limits for each plan.",
+      "status": "FAIL"
+    },
+    {
+      "name": "Guest plan visible",
+      "actual": false,
+      "expected": true,
+      "status": "FAIL"
+    },
+    {
+      "name": "Plans approved quota copy",
+      "actual": false,
+      "expected": true,
+      "status": "FAIL"
+    },
+    {
+      "name": "uat_admin plan",
+      "actual": "—",
+      "expected": "—",
+      "status": "PASS"
+    },
+    {
+      "name": "uat_admin plan label",
+      "actual": "当前方案",
+      "expected": "Plan",
+      "status": "FAIL"
+    },
+    {
+      "name": "uat_admin date format",
+      "actual": false,
+      "expected": true,
+      "status": "FAIL"
+    },
+    {
+      "name": "uat_admin status and action",
+      "actual": [
+        "正常",
+        "查看"
+      ],
+      "expected": [
+        "Active",
+        "View"
+      ],
+      "status": "FAIL"
+    },
+    {
+      "name": "uat_learner plan",
+      "actual": "基础版",
+      "expected": "Basic",
+      "status": "FAIL"
+    },
+    {
+      "name": "uat_learner plan label",
+      "actual": "当前方案",
+      "expected": "Plan",
+      "status": "FAIL"
+    },
+    {
+      "name": "uat_learner date format",
+      "actual": false,
+      "expected": true,
+      "status": "FAIL"
+    },
+    {
+      "name": "uat_learner status and action",
+      "actual": [
+        "正常",
+        "查看"
+      ],
+      "expected": [
+        "Active",
+        "View"
+      ],
+      "status": "FAIL"
+    }
+  ]
+}
+

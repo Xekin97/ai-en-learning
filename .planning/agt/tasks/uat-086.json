@@ -1,0 +1,46 @@
+{
+  "objective": "qa-quinn：在独立QA085 PASS且主会话明确写入UAT准备门检后，将已验证配套候选定向部署到现有本地UAT6001并做非破坏性冒烟，交付用户验收入口。不能发布、迁移DB、真实AI调用、替用户接受验收或切工作流。你不是唯一工作者，保留他人编辑与全部既有数据。",
+  "inputs": [
+    ".planning/workflow/state.yaml",
+    ".planning/agt/agents.yaml",
+    ".planning/milestones/M001/reviews/cr037-cr038-continuous-to-uat-approval.md",
+    ".planning/milestones/M001/reviews/cr037-cr038-uat-preparation-approval.md",
+    ".planning/milestones/M001/verification/cr037-cr038-085-report.md",
+    ".planning/milestones/M001/verification/cr037-cr038-085-coverage.md",
+    ".planning/milestones/M001/verification/evidence/cr037-cr038-085",
+    ".planning/milestones/M001/implementation/evidence/cr038-083/candidate.json",
+    ".planning/milestones/M001/implementation/evidence/cr037-084/candidate.json",
+    ".planning/milestones/M001/verification/uat-079-handoff.md",
+    ".planning/milestones/M001/verification/evidence/uat-079/deploy.mjs",
+    ".planning/milestones/M001/verification/evidence/uat-079/smoke.mjs",
+    "compose.yaml"
+  ],
+  "write_scope": [
+    ".planning/milestones/M001/verification/evidence/uat-086",
+    ".planning/milestones/M001/verification/uat-086-handoff.md",
+    ".planning/milestones/M001/verification/uat.md",
+    ".planning/milestones/M001/handoffs/verification.md"
+  ],
+  "acceptance": [
+    "先完整使用 agt-verify-milestone（若同一线程已读齐且仍上下文中可沿用），校验唯一verification/qa-quinn身份、083连续授权和本次UAT准备门；独立报告确实PASS，候选source hash未漂移，两个镜像均为085实际验证的候选才可更新。",
+    "只修改现有 wordweave_uat-backend-1 / frontend-1，按同Compose项目原网络/挂载/实际运行环境参数保留，在内存中解析Docker Config.Env，禁止打印或落入仓库。不能不核对直接用旧backend/.env覆盖实际值；不得改PostgreSQL/Nginx容器或持久卷。可健康后reload现有Nginx。",
+    "部署前创建权限0700私有临时备份目录，pg_dump和当前运行参数文件0600，不显示其内容或敏感hash；报告仅路径、备份存在/大小和非敏感镜像/容器摘要。检查无active生成、无迁移变更。保留当前旧前后端镜像和参数回滚线索，禁止删除旧镜像。",
+    "按已验证固定SHA定向换前后端，不构建或拉新latest、不升级依赖、不运行migrate、不重建DB。每一步错误停止并保存现状，必要时只把本轮替换的前后端恢复旧配套镜像和原参数，不以恢复DB覆盖任何新数据。",
+    "部署前后比较账号/学习批次/模型/生成记录/迁移数量及关键内容摘要、密码摘要仅内部比较不输出、DB卷/DB与Nginx容器ID和运行参数相同；若用户并发修改导致差异不能掩盖，先检查归因。",
+    "UAT冒烟使用localhost:6001，同源登录现有uat专用账号；不改密码、方案、模型、资料、不调用生成/复习动作或注销账号。可用错误当前密码验证弹窗错误可见但必须确认422且没有密码/会话变更；只注销本轮创建的登录会话，不清其他会话。",
+    "冒烟覆盖中英/390/1440访客Review→登录/注册提示正确位置，账号Change password逐字文案、错误显示/取消重开/焦点、无overflow、各角色基本页和后台Users/Plans/Models只读回归、服务健康和配套镜像。源与设计在6010原型不改，失败保留，不降低断言。实际成功改密/破坏性流程已经在085隔离QA验证，不在UAT重复破坏现有账号。",
+    "输出带本轮真实命令和原始结果的deployment/smoke证据、UAT086交付说明，包含入口、原有测试账号/密码未变、重点验收、旧镜像回滚线索、已知平台/真实AI限制；不要把真实供应商AI质量或原生Safari标PASS。",
+    "只更新UAT文档与QA交接当前增量，旧正文保留；不改state/agents/history，由主会话最终记录交付并终止连续授权。保留6001用于用户测试，不清理UAT，临时新增smoke服务若有则精确清理并说明。"
+  ],
+  "risk": "high",
+  "prior_attempts": [],
+  "report": [
+    "deployment_status",
+    "smoke_status",
+    "uat_handoff",
+    "data_preservation",
+    "rollback_location",
+    "known_limits",
+    "actual_model_and_usage_if_observed"
+  ]
+}

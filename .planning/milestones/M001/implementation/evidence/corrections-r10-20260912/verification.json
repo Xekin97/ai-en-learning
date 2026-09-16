@@ -1,0 +1,165 @@
+{
+  "recorded_at": "2026-09-12T07:40:39Z",
+  "revision": "BOUNDED-CORRECTIONS-R10-OFFLINE",
+  "prompt_version": "m001-v5-r10",
+  "validator_version": "m001-v5-wn31-r2",
+  "authorization": {
+    "user_request": "续写、或者纠正这个思路确实可以，允许最高 2次 纠正，而且纠正次数不计在我允许你调试的次数上，你优化一下吧",
+    "max_corrections_per_generation": 2,
+    "debug_budget_unit": "initial_generation",
+    "corrections_count_toward_debug_budget": false,
+    "upstream_calls_per_generation_max": 3,
+    "real_model_calls_this_turn": 0,
+    "rule_effective": "Prospective; frozen r9 results and original 19/20 budget are not rewritten.",
+    "paid_test_budget_newly_granted": null
+  },
+  "scope": [
+    "Recompute measured deficits and deterministic validation failures after each model response.",
+    "Append only for missing entries or insufficient length after other checks pass.",
+    "Targeted correction for supported annotation/hint/meaning-language/tag failures; merge only the diagnosed field.",
+    "Prove exact clean-passage equality and suppress correction passage deltas.",
+    "One selected model, one business run, one final validation/settlement; no transport/schema retry, fallback or quota changes.",
+    "Reuse existing bounded trace/private evidence; distinguish initial response and up to two corrections."
+  ],
+  "commands": [
+    {
+      "command": "go test ./internal/ai ./internal/generationtrace ./internal/generationevidence ./internal/httpapi ./internal/diagnostics",
+      "exit_code": 0
+    },
+    {
+      "command": "go test ./internal/ai -run 'TestCorrection|TestContinuation' -count=1",
+      "exit_code": 0
+    },
+    {
+      "command": "go test -race ./internal/ai ./internal/generation ./internal/generationtrace ./internal/generationevidence ./internal/httpapi ./internal/diagnostics",
+      "exit_code": 0,
+      "final_output": [
+        "ok wordweave/internal/ai 25.520s",
+        "ok wordweave/internal/generation (cached)",
+        "ok wordweave/internal/generationtrace (cached)",
+        "ok wordweave/internal/generationevidence (cached)",
+        "ok wordweave/internal/httpapi 1.375s",
+        "ok wordweave/internal/diagnostics 6.869s"
+      ]
+    },
+    {
+      "command": "go test -race -tags=integration ./internal/httpapi -run 'TestCorrectionsHTTP|TestContinuationHTTP|TestP0GenerationHTTPMatrix|TestP0RefundClaimMatchesPersistence|TestP0ProviderRetryabilityPreserved' -count=1",
+      "exit_code": 0,
+      "elapsed_go_seconds": 66.316,
+      "scenarios": 45,
+      "environment": "Isolated tmpfs PostgreSQL, loopback mock provider with synthetic key; no UAT DB or real model."
+    },
+    {
+      "command": "go test -race -tags=integration ./internal/httpapi -run 'TestContinuationHTTPCancelAndDisconnectDuringCorrections' -count=1",
+      "exit_code": 0,
+      "elapsed_go_seconds": 17.395,
+      "scenarios": 8,
+      "note": "Includes four added hidden-correction cancel/disconnect cases, on model call 2 and 3; 49 distinct HTTP scenarios across both runs."
+    },
+    {
+      "command": "go test -race ./internal/generationevidence -count=1",
+      "exit_code": 0,
+      "elapsed_go_seconds": 2.884,
+      "note": "Rerun after extending private journal fixture to all three responses."
+    },
+    {
+      "command": "go vet ./...",
+      "exit_code": 0
+    },
+    {
+      "command": "go build ./...",
+      "exit_code": 0
+    }
+  ],
+  "toolchain": "go1.27.0 darwin/arm64",
+  "temporary_database": {
+    "name": "wordweave-r10-test-20260912",
+    "container_id": "d1b79bba9be7604f8497e384364459d3c295e9dd104dc0db78689f34713d319a",
+    "image": "postgres",
+    "label": {
+      "wordweave.scope": "r10-offline-test"
+    },
+    "tmpfs": "/var/lib/postgresql",
+    "loopback_port": 58506,
+    "cleanup": "Validated exact container ID/scope before docker rm -f; disposable synthetic data removed. UAT untouched."
+  },
+  "uat": {
+    "deployed": false,
+    "container_id": "6e1c3aeff39d9f120e2ae2934c8309fa7b8a4ab355b4627808140d7a3b1f4656",
+    "image": "sha256:c4b00eb124fd7ccccd62223599336db9ada358861d09e6f852725f477aadefb8",
+    "started_at": "2026-09-12T04:00:15.02626401Z",
+    "health": "healthy",
+    "restart_count": 0,
+    "prompt_version": "m001-v5-r9",
+    "note": "No restart, database write or evidence-policy change to the live UAT environment."
+  },
+  "limitations": [
+    "No r10 live success-rate evidence; cannot claim 90%.",
+    "Semantic mistranslations such as the r9 handicap/person error are not detected by the current deterministic validator.",
+    "Malformed/truncated JSON, transport errors, irreparable prose/collisions are not automatically retried.",
+    "Current single-response replay deliberately refuses multi-attempt journals; raw inspection retains attempt boundaries.",
+    "Future paid-test harness must count initial requests separately, cap corrections at two per run, record total usage, and allow enough time for up to three upstream calls; frozen r9 harness is not reused unchanged."
+  ],
+  "source_sha256": [
+    {
+      "path": "backend/internal/ai/continuation.go",
+      "sha256": "183523d4c5af6699eea0835658c43f6fb69e43b948c9757fb82853b35acefe4c"
+    },
+    {
+      "path": "backend/internal/ai/contract.go",
+      "sha256": "f0587492f26b878d40ebed4618594c90f5aedacf9e475b87bd469e65fd9473be"
+    },
+    {
+      "path": "backend/internal/ai/openrouter.go",
+      "sha256": "3d8cc52d98b9f01d4e1f35d9eeff65dbc07b2082b98d0155a0d919442f4d113c"
+    },
+    {
+      "path": "backend/internal/ai/fingerprint.go",
+      "sha256": "2bb49c6a247bff114a52c22d0d4b16ef99c60980c0dd9da4821399b481e4e4ce"
+    },
+    {
+      "path": "backend/internal/ai/continuation_test.go",
+      "sha256": "b64bea54a41718ce596c80988380dd05259cef358bdf4d822c589db243b34e8b"
+    },
+    {
+      "path": "backend/internal/ai/corrections_test.go",
+      "sha256": "8034151df8609735f37927a7bc8f76e90c7de47da72ef20dfdf693d0c9722d2d"
+    },
+    {
+      "path": "backend/internal/ai/cr040_test.go",
+      "sha256": "f6c0393239ebbf5a408d860458fccfcf6a305c8518c8bdee77e49b0724cc1d2f"
+    },
+    {
+      "path": "backend/internal/ai/annotations_test.go",
+      "sha256": "07f0b891513c6229687fd2bfb3e3f5d036971cb35236b0d8f21ad73fae31c553"
+    },
+    {
+      "path": "backend/internal/httpapi/generation_handlers.go",
+      "sha256": "f1ab0c64e21f6f9a9d5c65bf749a5aa1a7bb4a8386e29d32e18c80410f754a76"
+    },
+    {
+      "path": "backend/internal/httpapi/continuation_integration_test.go",
+      "sha256": "af7c63d40564a037959f743297333776cfc2680ddfb6079192c6243e1d91305c"
+    },
+    {
+      "path": "backend/internal/httpapi/generation_matrix_integration_test.go",
+      "sha256": "9755381ec09fe2f6073bae931b6ac896bdf6ba1f5205e6a61c958ca48a2d177a"
+    },
+    {
+      "path": "backend/internal/httpapi/generation_trace_integration_test.go",
+      "sha256": "a730616a563f688114fcd08f127f3651fc0c6d7ba9cdc07eb6c39ea5b55f82e7"
+    },
+    {
+      "path": "backend/internal/generationtrace/trace.go",
+      "sha256": "01cea3a6bb381bbc0caa483e465ee316d6f1f5ed5613d3f3f2ae4cba1053e3f8"
+    },
+    {
+      "path": "backend/internal/generationevidence/reconstruct.go",
+      "sha256": "bb5ef0347ef93e2a0cb0c030154b5b2cc909a3c4524dbfeca00e794585cbf631"
+    },
+    {
+      "path": "backend/internal/generationevidence/additional_test.go",
+      "sha256": "5453980a2a7413d3943ae056b772a8d2ee253072fa6df5e1dbce2853973fc95b"
+    }
+  ]
+}

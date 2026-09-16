@@ -1,0 +1,281 @@
+{
+  "revision": "FRONTEND-SYNC-133",
+  "recorded_at": "2026-09-12T08:58:09.182Z",
+  "role": "frontend-implementer/base",
+  "agent_name": "frontend-claire",
+  "finding": "Q132-01",
+  "authorization": "TRANSITION-M001-133 / USER-FRONTEND-UAT-SYNC-133",
+  "status": "deployed_scoped_developer_smoke_pass_pending_independent_receipt",
+  "scope": {
+    "production_source_changes": 0,
+    "ui_copy_style_changes": 0,
+    "real_model_calls": 0,
+    "new_test_accounts": 0,
+    "learning_data_mutations": 0,
+    "model_configuration_changes": 0,
+    "backend_or_database_restarts": 0,
+    "full_site_uat_rerun": false,
+    "compatibility_added": false,
+    "workflow_or_qa_artifacts_changed": false
+  },
+  "work_plan": {
+    "workspace": "single existing worktree; no commits, new branches or subagents",
+    "owner": "frontend-claire",
+    "tasks": [
+      "Freeze source/runtime and prior frontend report/handoff",
+      "Build current approved frontend using the unchanged production Dockerfile",
+      "Verify production-image success/save and refund true/false consumers with synthetic API",
+      "Replace only the UAT frontend using Compose --no-deps --no-build; validate/reload existing Nginx",
+      "Verify actual served bundle hash, retain rollback image and hand off delta"
+    ],
+    "shared_dependencies": "Current API-005/006 and backend r10 remain fixed; frontend deployment is sequential, no independent parallel write task."
+  },
+  "candidate": {
+    "image": "sha256:b7ddbbe99c68d687cd101756cd79bcbb82873f52b569ebc12c9a52a15193d730",
+    "tag": "wordweave-frontend:uat-consumer-133-20260912",
+    "previous_image": "sha256:5903591c881165071c1cba08984cfb835854187f5df21a281640b3aacccf4b27",
+    "rollback_tag": "wordweave-frontend:rollback-q132-20260912",
+    "browser_bundle": [
+      {
+        "name": "CWwqOgzc.js",
+        "sha256": "0db74fb3c38cf22fe95962d67a232f4862ee3df3769110243309264986058de0",
+        "excerpt": ":Z,tags:J(Z).min(1).max(3),targets:J(TS).min(1)})}),DS=Y({code:Z,quota_refunded:cx(),retryable:cx(),request_id:Z}),OS=Y({quota_refunded:X(!1)}),kS=Q(Y({status:wx([`cancelled`,`valid`,`failed`]),quota_refunded:cx()})),AS="
+      }
+    ],
+    "source_manifest": "before.json",
+    "source_files_unchanged": 340
+  },
+  "checks": [
+    {
+      "command": "docker build --progress plain -t wordweave-frontend:uat-consumer-133-20260912 frontend",
+      "exit_code": 0,
+      "output": "build.log",
+      "quality_chain": "frozen pnpm install; typecheck; lint; lint:boundaries; unit tests; Nuxt production build",
+      "unit_result": {
+        "files": 26,
+        "tests": 263,
+        "failed": 0
+      },
+      "note": "Unchanged Dockerfile quality gates ran as part of building the deployable artifact, not a new full-site UI/UAT regression. Existing PLUGIN_TIMINGS warning is non-fatal."
+    },
+    {
+      "command": "FRONT133_PACKAGE=<product>/frontend/package.json node <evidence>/smoke.mjs",
+      "exit_code": 0,
+      "output": "smoke-results.json",
+      "result": "3/3 production-image Chromium cases; one success/save, failure refunded=true, failure refunded=false; same visible failure UI, no pageerror. Browser API fully intercepted to synthetic responses/local fixture. Preview SSR pointed only at the synthetic fixture."
+    },
+    {
+      "command": "docker compose --env-file /dev/null -p wordweave_uat -f compose.yaml -f .planning/milestones/M001/implementation/evidence/frontend-sync-133/compose-frontend.yaml up -d --no-deps --no-build --force-recreate --wait --wait-timeout 60 frontend",
+      "exit_code": 0,
+      "output": "deployment.log",
+      "result": "Only wordweave_uat-frontend-1 recreated; healthy. Backend/DB untouched. Command continued successfully after an orchestration result-serialization error; captured session later exited 0."
+    },
+    {
+      "command": "docker exec wordweave_uat-nginx-1 nginx -t",
+      "exit_code": 0
+    },
+    {
+      "command": "docker exec wordweave_uat-nginx-1 nginx -s reload",
+      "exit_code": 0,
+      "result": "Graceful reload of unchanged routing to frontend service; no Nginx container restart."
+    },
+    {
+      "command": "Read-only local HTTP and container/source comparison",
+      "exit_code": 0,
+      "output": "runtime-check.json",
+      "result": "Root/create/backend health/hashed asset 200; actual asset SHA equals tested image; 340 source and 7 protected inputs unchanged. No direct DB connection or business mutation API. Routine SSR/readiness GETs are not claimed to be zero database activity."
+    }
+  ],
+  "environment": {
+    "application_and_build_node": "24.8.0-alpine3.22 (Dockerfile pinned digest)",
+    "pnpm": "10.33.0",
+    "nuxt": "4.5.2",
+    "browser_driver_node": "22.22.2 on host",
+    "browser": "installed Playwright Chromium",
+    "preview_container": "wordweave-front133-preview",
+    "preview_image_identical_to_uat": true
+  },
+  "runtime": {
+    "recorded_at": "2026-09-12T08:58:09.182Z",
+    "runtime": [
+      {
+        "name": "/wordweave_uat-frontend-1",
+        "id": "16a7e6738e426a64f2bc97b3b4028dbf443bb859568adeee8a38667f2e67ad07",
+        "image": "sha256:b7ddbbe99c68d687cd101756cd79bcbb82873f52b569ebc12c9a52a15193d730",
+        "started_at": "2026-09-12T08:57:29.398382552Z",
+        "restarts": 0,
+        "health": "healthy"
+      },
+      {
+        "name": "/wordweave_uat-backend-1",
+        "id": "42d40aa08a6fbce24010a8f0d189b635b6c609bff890496556371b3bb4e4dda4",
+        "image": "sha256:c9bccc60c9674a5bbde37ba4f027f70582a1292782bc8226c52b1903ddfb2ce3",
+        "started_at": "2026-09-12T07:56:19.061377756Z",
+        "restarts": 0,
+        "health": "healthy"
+      },
+      {
+        "name": "/wordweave_uat-postgres-1",
+        "id": "37a6d2fa58c578b1c6b4dbe10028b5ddf0c696fe44fc849a129293a85bbaf839",
+        "image": "sha256:b85269e8c6aa961524542eb4dcca44c4aa1deba2cf507e9e28d5ba8f971aeab9",
+        "started_at": "2026-09-03T02:24:03.164602928Z",
+        "restarts": 0,
+        "health": "healthy"
+      },
+      {
+        "name": "/wordweave_uat-nginx-1",
+        "id": "b789bde4e7825b849640cbf63d35b50ae41c1b77cb6b7ece73b3e26e27eabcb1",
+        "image": "sha256:5f0efd7fead5e8a290f07e5c025e9204052efb646758e1c6883de0e23a6e085c",
+        "started_at": "2026-09-09T04:00:47.530054881Z",
+        "restarts": 0,
+        "health": "healthy"
+      }
+    ],
+    "http": [
+      {
+        "path": "/",
+        "status": 200,
+        "content_type": "text/html;charset=utf-8",
+        "cache_control": "private, no-store, private, no-store",
+        "bytes": 7116
+      },
+      {
+        "path": "/create",
+        "status": 200,
+        "content_type": "text/html;charset=utf-8",
+        "cache_control": "private, no-store, private, no-store",
+        "bytes": 11251
+      },
+      {
+        "path": "/health/live",
+        "status": 200,
+        "content_type": "text/plain; charset=utf-8",
+        "cache_control": "no-store",
+        "bytes": 3
+      },
+      {
+        "path": "/_nuxt/CWwqOgzc.js",
+        "status": 200,
+        "content_type": "text/javascript; charset=utf-8",
+        "cache_control": "max-age=31536000, public, immutable",
+        "bytes": 285661,
+        "bundle_sha256": "0db74fb3c38cf22fe95962d67a232f4862ee3df3769110243309264986058de0"
+      }
+    ],
+    "source_files_unchanged": 340,
+    "protected_inputs_unchanged": 7,
+    "backend_database_containers_unchanged": true,
+    "nginx_container_unchanged_configuration_reloaded": true,
+    "real_model_calls": 0
+  },
+  "rollback": {
+    "override": "compose-rollback.yaml",
+    "command": "docker compose --env-file /dev/null -p wordweave_uat -f compose.yaml -f .planning/milestones/M001/implementation/evidence/frontend-sync-133/compose-rollback.yaml up -d --no-deps --no-build --force-recreate --wait --wait-timeout 60 frontend",
+    "then": "nginx -t and nginx -s reload on existing edge",
+    "executed": false,
+    "warning": "Operational rollback only; old image reintroduces Q132-01. No old API compatibility was implemented. Do not run whole-stack compose up/down using these scoped files."
+  },
+  "cleanup": {
+    "preview_container_removed": true,
+    "synthetic_fixture_process_terminated": true,
+    "fixture_pid": 21092,
+    "fixture_process_exit": 143,
+    "test_ports_16031_38080_closed": true,
+    "synthetic_data_recoverable": false,
+    "source_and_evidence_retained": true,
+    "rollback_image_retained": true
+  },
+  "document_maintenance": {
+    "canonical_entries": [
+      ".planning/milestones/M001/implementation/frontend-validation.md",
+      ".planning/milestones/M001/handoffs/frontend-implementation.md"
+    ],
+    "prior_entries_snapshot": "before.json",
+    "prior_raw_evidence_unchanged": true,
+    "new_session_handoff_test": "not performed; static checks only",
+    "same_scope_size": {
+      "unit": "UTF-8 bytes, same two canonical frontend entrypoints, excludes raw evidence",
+      "before": 7833,
+      "after": 7366
+    }
+  },
+  "open_items": [
+    {
+      "id": "Q132-01",
+      "status": "developer_deployed_and_smoke_pass_pending_independent_receipt"
+    },
+    {
+      "id": "R10-ARCHITECTURE-SYNC",
+      "owner": "backend-alex",
+      "status": "OPEN; outside frontend authority"
+    },
+    {
+      "id": "KNOWN-SAFE-DERIVATION / KNOWN-CORRECTION-FEEDBACK",
+      "status": "OPEN; not modified or waived"
+    },
+    {
+      "id": "CR-039/040/041/042",
+      "status": "Retained open for gate/QA formal handling"
+    }
+  ],
+  "limitations": [
+    "No new live model success-rate measurement.",
+    "Synthetic browser consumer checks were on the same production image before deployment; after deployment actual edge asset hash and read-only endpoints were checked.",
+    "No user UAT or release approval declared; workflow remains implementation/frontend-claire.",
+    "Existing long-generation, correction, cancellation and accounting QA132 evidence reused, not rerun.",
+    "No model switch or measured token usage claimed."
+  ],
+  "evidence_hashes": [
+    {
+      "path": ".planning/milestones/M001/implementation/evidence/frontend-sync-133/before.json",
+      "sha256": "84465dec7128d1769cabeec5fac2cef004ce5325688cc4054d2dce129f125a81"
+    },
+    {
+      "path": ".planning/milestones/M001/implementation/evidence/frontend-sync-133/build.log",
+      "sha256": "6d4a5c1dd4e521beed21414aa46975877f43b65d9a2cfbbc2d704dc4ae33da4f"
+    },
+    {
+      "path": ".planning/milestones/M001/implementation/evidence/frontend-sync-133/smoke.mjs",
+      "sha256": "d198f7a5fcc500e6d8d1d1abbeb22280740ea144b8d4eb909198b21c4c6b3ff4"
+    },
+    {
+      "path": ".planning/milestones/M001/implementation/evidence/frontend-sync-133/smoke-results.json",
+      "sha256": "9a100afae42000a3fd369cedd9ce7676d2f354891e652295136070083067eab9"
+    },
+    {
+      "path": ".planning/milestones/M001/implementation/evidence/frontend-sync-133/runtime-check.json",
+      "sha256": "75ed0e4a372e76b325f4787c6e19bd8212f0a7c87078e6f45075656ba9ce8bce"
+    },
+    {
+      "path": ".planning/milestones/M001/implementation/evidence/frontend-sync-133/deployment.log",
+      "sha256": "b83fb11733524caa75f66b5f4e31ed1d9a9762b184ed307711842dcb33cabf36"
+    }
+  ],
+  "final_checks": {
+    "source_and_protected_count": 347,
+    "unexpected_changes": [],
+    "documents": [
+      {
+        "path": ".planning/milestones/M001/implementation/frontend-validation.md",
+        "before_bytes": 6000,
+        "after_bytes": 4388,
+        "sha256": "44cbb52704d1620b8c8a71d14c3348855b10537446db27b40bd3daf49f7970e4",
+        "missing_links": []
+      },
+      {
+        "path": ".planning/milestones/M001/handoffs/frontend-implementation.md",
+        "before_bytes": 1833,
+        "after_bytes": 2978,
+        "sha256": "54426cd4fb651c0d12e749384b5016f9a737f5cda2c4b7e13ad011e0ba3aefeb",
+        "missing_links": []
+      }
+    ],
+    "document_totals": {
+      "unit": "UTF-8 bytes, same two canonical frontend entrypoints, excludes raw evidence",
+      "before": 7833,
+      "after": 7366
+    },
+    "build_log_truncated": false,
+    "new_session_handoff_test": "not performed"
+  }
+}

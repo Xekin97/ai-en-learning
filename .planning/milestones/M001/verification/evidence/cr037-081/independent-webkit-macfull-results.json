@@ -1,0 +1,106 @@
+{
+  "date": "2026-09-07T02:00:46.561Z",
+  "agent": "qa-quinn",
+  "counts": {
+    "PASS": 10,
+    "FAIL": 0,
+    "ERROR": 1
+  },
+  "checks": [
+    {
+      "id": "qa081_webkit_macful_en register",
+      "status": "PASS",
+      "actual": 201,
+      "expected": 201
+    },
+    {
+      "id": "webkit-macfull en-US account parallel old session login",
+      "status": "PASS",
+      "actual": 200,
+      "expected": 200
+    },
+    {
+      "id": "webkit-macfull en-US account 390dialog h2",
+      "status": "PASS",
+      "actual": [
+        "Change password"
+      ],
+      "expected": [
+        "Change password"
+      ]
+    },
+    {
+      "id": "webkit-macfull en-US account 390dialog .field-label",
+      "status": "PASS",
+      "actual": [
+        "Current password",
+        "New password",
+        "Confirm new password"
+      ],
+      "expected": [
+        "Current password",
+        "New password",
+        "Confirm new password"
+      ]
+    },
+    {
+      "id": "webkit-macfull en-US account 390dialog .helper",
+      "status": "PASS",
+      "actual": [
+        "Confirm it’s you",
+        "8–128 characters",
+        "Enter the same password again"
+      ],
+      "expected": [
+        "Confirm it’s you",
+        "8–128 characters",
+        "Enter the same password again"
+      ]
+    },
+    {
+      "id": "webkit-macfull en-US account 390dialog .notice",
+      "status": "PASS",
+      "actual": [
+        "Your current session will stay open. Other sessions will be signed out."
+      ],
+      "expected": [
+        "Your current session will stay open. Other sessions will be signed out."
+      ]
+    },
+    {
+      "id": "webkit-macfull en-US account 390dialog .dialog-footer button",
+      "status": "PASS",
+      "actual": [
+        "Cancel",
+        "Update password"
+      ],
+      "expected": [
+        "Cancel",
+        "Update password"
+      ]
+    },
+    {
+      "id": "webkit-macfull en-US account 390 no field overlap",
+      "status": "PASS",
+      "actual": true,
+      "expected": true
+    },
+    {
+      "id": "webkit-macfull en-US account 390 dialog fits viewport",
+      "status": "PASS",
+      "actual": true,
+      "expected": true
+    },
+    {
+      "id": "webkit-macfull en-US account execution",
+      "status": "ERROR",
+      "error": "Error: page.evaluate: Target page, context or browser has been closed\nBrowser logs:\n\n<launching> /Users/xekinzhuo/Library/Caches/ms-playwright/webkit-2336/pw_run.sh --inspector-pipe --headless --no-startup-window\n<launched> pid=31381\n[pid=31381][err] 2026-09-07 10:00:45.737 Playwright[31387:858936396] +[IMKClient subclass]: chose IMKClient_Modern\n[pid=31381][err] *** Terminating app due to uncaught exception 'NSInvalidArgumentException', reason: '-[NSTextInputContext textInputClientDidUpdateSelection]: unrecognized selector sent to instance 0x60000155d860'\n[pid=31381][err] *** First throw call stack:\n[pid=31381][err] (\n[pid=31381][err] \t0   CoreFoundation                      0x000000019156ee80 __exceptionPreprocess + 176\n[pid=31381][err] \t1   libobjc.A.dylib                     0x0000000191056cd8 objc_exception_throw + 88\n[pid=31381][err] \t2   CoreFoundation                      0x00000001916241d8 -[NSObject(NSObject) __retain_OA] + 0\n[pid=31381][err] \t3   CoreFoundation                      0x00000001914db830 ___forwarding___ + 1568\n[pid=31381][err] \t4   CoreFoundation                      0x00000001914db150 _CF_forwarding_prep_0 + 96\n[pid=31381][err] \t5   WebKit                              0x0000000105fb3b98 _ZNK3WTF8FunctionIFvvEEclEv + 36\n[pid=31381][err] \t6   WebKit                              0x0000000105fb3b68 _ZN3WTF7RunLoop5Timer5firedEv + 28\n[pid=31381][err] \t7   JavaScriptCore                      0x000000010c3575d0 _ZZN3WTF7RunLoop9TimerBase5startENS_7SecondsEbEN3$_08__invokeEP16__CFRunLoopTimerPv + 68\n[pid=31381][err] \t8   CoreFoundation                      0x0000000191516394 __CFRUNLOOP_IS_CALLING_OUT_TO_A_TIMER_CALLBACK_FUNCTION__ + 32\n[pid=31381][err] \t9   CoreFoundation                      0x0000000191516038 __CFRunLoopDoTimer + 1012\n[pid=31381][err] \t10  CoreFoundation                      0x0000000191515b48 __CFRunLoopDoTimers + 356\n[pid=31381][err] \t11  CoreFoundation                      0x00000001914fb530 __CFRunLoopRun + 1856\n[pid=31381][err] \t12  CoreFoundation                      0x00000001914fa734 CFRunLoopRunSpecific + 588\n[pid=31381][err] \t13  HIToolbox                           0x000000019ca69530 RunCurrentEventLoopInMode + 292\n[pid=31381][err] \t14  HIToolbox                           0x000000019ca6f348 ReceiveNextEventCommon + 676\n[pid=31381][err] \t15  HIToolbox                           0x000000019ca6f508 _BlockUntilNextEventMatchingListInModeWithFilter + 76\n[pid=31381][err] \t16  AppKit                              0x0000000195072848 _DPSNextEvent + 660\n[pid=31381][err] \t17  AppKit                              0x00000001959d8c24 -[NSApplication(NSEventRouting) _nextEventMatchingEventMask:untilDate:inMode:dequeue:] + 688\n[pid=31381][err] \t18  AppKit                              0x0000000195065874 -[NSApplication run] + 480\n[pid=31381][err] \t19  AppKit                              0x000000019503c068 NSApplicationMain + 888\n[pid=31381][err] \t20  dyld                                0x0000000191094274 start + 2840\n[pid=31381][err] )\n[pid=31381][err] libc++abi: terminating due to uncaught exception of type NSException\n[pid=31381][err] /Users/xekinzhuo/Library/Caches/ms-playwright/webkit-2336/pw_run.sh: line 7: 31387 Abort trap: 6           DYLD_FRAMEWORK_PATH=\"$DYLIB_PATH\" DYLD_LIBRARY_PATH=\"$DYLIB_PATH\" \"$PLAYWRIGHT\" \"$@\"\n Please check out https://github.com/dequelabs/axe-core-npm/blob/develop/packages/playwright/error-handling.md"
+    },
+    {
+      "id": "browser JavaScript/hydration errors",
+      "status": "PASS",
+      "actual": [],
+      "expected": []
+    }
+  ]
+}

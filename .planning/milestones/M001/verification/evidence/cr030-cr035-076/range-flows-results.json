@@ -1,0 +1,431 @@
+{
+  "date": "2026-09-06T08:27:24.720Z",
+  "agent": "qa-quinn",
+  "counts": {
+    "PASS": 47,
+    "FAIL": 0,
+    "ERROR": 0
+  },
+  "checks": [
+    {
+      "id": "empty default has both date controls",
+      "status": "PASS",
+      "actual": 2,
+      "expected": 2
+    },
+    {
+      "id": "empty exact real counts",
+      "status": "PASS",
+      "actual": {
+        "batch_count": 0,
+        "entry_count": 0,
+        "empty": true
+      },
+      "expected": {
+        "batch_count": 0,
+        "entry_count": 0,
+        "empty": true
+      }
+    },
+    {
+      "id": "empty dates remain chosen",
+      "status": "PASS",
+      "actual": [
+        "2026-07-15",
+        "2026-07-15"
+      ],
+      "expected": [
+        "2026-07-15",
+        "2026-07-15"
+      ]
+    },
+    {
+      "id": "old default has both date controls",
+      "status": "PASS",
+      "actual": 2,
+      "expected": 2
+    },
+    {
+      "id": "old exact real counts",
+      "status": "PASS",
+      "actual": {
+        "batch_count": 3,
+        "entry_count": 6,
+        "empty": false
+      },
+      "expected": {
+        "batch_count": 3,
+        "entry_count": 6,
+        "empty": false
+      }
+    },
+    {
+      "id": "old dates remain chosen",
+      "status": "PASS",
+      "actual": [
+        "2026-07-15",
+        "2026-07-15"
+      ],
+      "expected": [
+        "2026-07-15",
+        "2026-07-15"
+      ]
+    },
+    {
+      "id": "paused default has both date controls",
+      "status": "PASS",
+      "actual": 2,
+      "expected": 2
+    },
+    {
+      "id": "paused exact real counts",
+      "status": "PASS",
+      "actual": {
+        "batch_count": 0,
+        "entry_count": 0,
+        "empty": true
+      },
+      "expected": {
+        "batch_count": 0,
+        "entry_count": 0,
+        "empty": true
+      }
+    },
+    {
+      "id": "paused dates remain chosen",
+      "status": "PASS",
+      "actual": [
+        "2026-07-15",
+        "2026-07-15"
+      ],
+      "expected": [
+        "2026-07-15",
+        "2026-07-15"
+      ]
+    },
+    {
+      "id": "resize no queries or sessions",
+      "status": "PASS",
+      "actual": {
+        "gets": 0,
+        "posts": 0
+      },
+      "expected": {
+        "gets": 0,
+        "posts": 0
+      }
+    },
+    {
+      "id": "resize retains nodes focus",
+      "status": "PASS",
+      "actual": true,
+      "expected": true
+    },
+    {
+      "id": "locale keeps chosen dates and ready",
+      "status": "PASS",
+      "actual": [
+        "2026-07-15",
+        "2026-07-15"
+      ],
+      "expected": [
+        "2026-07-15",
+        "2026-07-15"
+      ]
+    },
+    {
+      "id": "locale no preview or create",
+      "status": "PASS",
+      "actual": {
+        "gets": 0,
+        "posts": 0
+      },
+      "expected": {
+        "gets": 0,
+        "posts": 0
+      }
+    },
+    {
+      "id": "missing no query",
+      "status": "PASS",
+      "actual": 0,
+      "expected": 0
+    },
+    {
+      "id": "missing aria association",
+      "status": "PASS",
+      "actual": "range-date-error",
+      "expected": "range-date-error"
+    },
+    {
+      "id": "reverse no query",
+      "status": "PASS",
+      "actual": 0,
+      "expected": 0
+    },
+    {
+      "id": "reverse end association",
+      "status": "PASS",
+      "actual": "true",
+      "expected": "true"
+    },
+    {
+      "id": "equal endpoints valid",
+      "status": "PASS",
+      "actual": "3",
+      "expected": "3"
+    },
+    {
+      "id": "ready empty ready nodes persist",
+      "status": "PASS",
+      "actual": true,
+      "expected": true
+    },
+    {
+      "id": "end node persists",
+      "status": "PASS",
+      "actual": true,
+      "expected": true
+    },
+    {
+      "id": "retry removed button returns focus to start",
+      "status": "PASS",
+      "actual": true,
+      "expected": true
+    },
+    {
+      "id": "late ready response cannot replace empty",
+      "status": "PASS",
+      "actual": "empty",
+      "expected": "empty"
+    },
+    {
+      "id": "explicit UI create201",
+      "status": "PASS",
+      "actual": 201,
+      "expected": 201
+    },
+    {
+      "id": "single explicit create only",
+      "status": "PASS",
+      "actual": 1,
+      "expected": 1
+    },
+    {
+      "id": "one new DB session",
+      "status": "PASS",
+      "actual": 1,
+      "expected": 1
+    },
+    {
+      "id": "actual selection has3 batches",
+      "status": "PASS",
+      "actual": 3,
+      "expected": 3
+    },
+    {
+      "id": "randomized fixed target rows",
+      "status": "PASS",
+      "actual": 6,
+      "expected": 6
+    },
+    {
+      "id": "refresh preserves batch order",
+      "status": "PASS",
+      "actual": "1646b180-6014-489d-98b4-a8cca4de4acf|0\n495281f5-1c65-44fe-a501-3f24b4c9b18c|1\nb348f4e4-c37e-4e50-9f75-f6c5b4c0c0a8|2",
+      "expected": "1646b180-6014-489d-98b4-a8cca4de4acf|0\n495281f5-1c65-44fe-a501-3f24b4c9b18c|1\nb348f4e4-c37e-4e50-9f75-f6c5b4c0c0a8|2"
+    },
+    {
+      "id": "refresh preserves target order",
+      "status": "PASS",
+      "actual": "1646b180-6014-489d-98b4-a8cca4de4acf|d30f23dd-2bf6-4d6d-baae-a3835522c967|0\n1646b180-6014-489d-98b4-a8cca4de4acf|661ec1b1-0e2e-4fb9-8ac4-bd9518b9e599|1\n495281f5-1c65-44fe-a501-3f24b4c9b18c|c3c3ad4f-5bbe-4b5f-a7a2-b90d5104e188|0\n495281f5-1c65-44fe-a501-3f24b4c9b18c|52c8c599-602d-4f06-bd30-c02cb18493ab|1\nb348f4e4-c37e-4e50-9f75-f6c5b4c0c0a8|a7181ac8-fe4c-4efb-9c5f-1f04dc2bfb1d|0\nb348f4e4-c37e-4e50-9f75-f6c5b4c0c0a8|ca55ba35-4c42-46d0-8a5e-a7216d98fa82|1",
+      "expected": "1646b180-6014-489d-98b4-a8cca4de4acf|d30f23dd-2bf6-4d6d-baae-a3835522c967|0\n1646b180-6014-489d-98b4-a8cca4de4acf|661ec1b1-0e2e-4fb9-8ac4-bd9518b9e599|1\n495281f5-1c65-44fe-a501-3f24b4c9b18c|c3c3ad4f-5bbe-4b5f-a7a2-b90d5104e188|0\n495281f5-1c65-44fe-a501-3f24b4c9b18c|52c8c599-602d-4f06-bd30-c02cb18493ab|1\nb348f4e4-c37e-4e50-9f75-f6c5b4c0c0a8|a7181ac8-fe4c-4efb-9c5f-1f04dc2bfb1d|0\nb348f4e4-c37e-4e50-9f75-f6c5b4c0c0a8|ca55ba35-4c42-46d0-8a5e-a7216d98fa82|1"
+    },
+    {
+      "id": "spelling hint hides both",
+      "status": "PASS",
+      "actual": 2,
+      "expected": 2
+    },
+    {
+      "id": "unfinished range reused",
+      "status": "PASS",
+      "actual": [
+        200,
+        "01a075d4-41a9-76cc-b3af-006a3011d506",
+        true,
+        {
+          "start_date": "2026-07-15",
+          "end_date": "2026-07-15",
+          "timezone": "Asia/Shanghai"
+        }
+      ],
+      "expected": [
+        200,
+        "01a075d4-41a9-76cc-b3af-006a3011d506",
+        true,
+        {
+          "start_date": "2026-07-15",
+          "end_date": "2026-07-15",
+          "timezone": "Asia/Shanghai"
+        }
+      ]
+    },
+    {
+      "id": "single coexists distinct",
+      "status": "PASS",
+      "actual": true,
+      "expected": true
+    },
+    {
+      "id": "active-range excludes single",
+      "status": "PASS",
+      "actual": "01a075d4-41a9-76cc-b3af-006a3011d506",
+      "expected": "01a075d4-41a9-76cc-b3af-006a3011d506"
+    },
+    {
+      "id": "active-range no answers",
+      "status": "PASS",
+      "actual": false,
+      "expected": false
+    },
+    {
+      "id": "invalid retains real resume",
+      "status": "PASS",
+      "actual": true,
+      "expected": true
+    },
+    {
+      "id": "resume no additional POST",
+      "status": "PASS",
+      "actual": 1,
+      "expected": 1
+    },
+    {
+      "id": "membership changed create422",
+      "status": "PASS",
+      "actual": 422,
+      "expected": 422
+    },
+    {
+      "id": "422 reconciles without auto replay",
+      "status": "PASS",
+      "actual": 1,
+      "expected": 1
+    },
+    {
+      "id": "422 retains chosen dates",
+      "status": "PASS",
+      "actual": [
+        "2026-07-15",
+        "2026-07-15"
+      ],
+      "expected": [
+        "2026-07-15",
+        "2026-07-15"
+      ]
+    },
+    {
+      "id": "browser local default UTC",
+      "status": "PASS",
+      "actual": [
+        "2028-02-24",
+        "2028-03-01"
+      ],
+      "expected": [
+        "2028-02-24",
+        "2028-03-01"
+      ]
+    },
+    {
+      "id": "one correct first query UTC",
+      "status": "PASS",
+      "actual": [
+        {
+          "start_date": "2028-02-24",
+          "end_date": "2028-03-01",
+          "timezone": "UTC"
+        }
+      ],
+      "expected": [
+        {
+          "start_date": "2028-02-24",
+          "end_date": "2028-03-01",
+          "timezone": "UTC"
+        }
+      ]
+    },
+    {
+      "id": "browser local default Asia/Shanghai",
+      "status": "PASS",
+      "actual": [
+        "2028-02-24",
+        "2028-03-01"
+      ],
+      "expected": [
+        "2028-02-24",
+        "2028-03-01"
+      ]
+    },
+    {
+      "id": "one correct first query Asia/Shanghai",
+      "status": "PASS",
+      "actual": [
+        {
+          "start_date": "2028-02-24",
+          "end_date": "2028-03-01",
+          "timezone": "Asia/Shanghai"
+        }
+      ],
+      "expected": [
+        {
+          "start_date": "2028-02-24",
+          "end_date": "2028-03-01",
+          "timezone": "Asia/Shanghai"
+        }
+      ]
+    },
+    {
+      "id": "browser local default America/Los_Angeles",
+      "status": "PASS",
+      "actual": [
+        "2026-03-02",
+        "2026-03-08"
+      ],
+      "expected": [
+        "2026-03-02",
+        "2026-03-08"
+      ]
+    },
+    {
+      "id": "one correct first query America/Los_Angeles",
+      "status": "PASS",
+      "actual": [
+        {
+          "start_date": "2026-03-02",
+          "end_date": "2026-03-08",
+          "timezone": "America/Los_Angeles"
+        }
+      ],
+      "expected": [
+        {
+          "start_date": "2026-03-02",
+          "end_date": "2026-03-08",
+          "timezone": "America/Los_Angeles"
+        }
+      ]
+    },
+    {
+      "id": "range empty axe en-US",
+      "status": "PASS",
+      "actual": [],
+      "expected": []
+    },
+    {
+      "id": "range empty axe zh-CN",
+      "status": "PASS",
+      "actual": [],
+      "expected": []
+    }
+  ]
+}

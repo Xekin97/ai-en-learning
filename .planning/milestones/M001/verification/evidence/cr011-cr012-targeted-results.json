@@ -1,0 +1,53 @@
+{
+  "milestone": "M001",
+  "date": "2026-09-02",
+  "environment": {
+    "entry": "http://127.0.0.1:3313",
+    "compose_project": "wordweave_verify_crfix",
+    "components": ["nginx", "nuxt", "go-backend", "postgresql", "openrouter-protocol-mock"],
+    "browser": "Playwright Chromium",
+    "provider_credential": "deterministic test credential only"
+  },
+  "summary": {
+    "passed": 6,
+    "failed": 0,
+    "total": 6
+  },
+  "results": [
+    {
+      "name": "CR-011 fresh visitor and learner workspaces start without configuration defaults",
+      "status": "PASS",
+      "evidence": "visitor:0 selected/disabled; learner:0 selected/disabled"
+    },
+    {
+      "name": "CR-011 generation unlocks only after all four explicit choices",
+      "status": "PASS",
+      "evidence": [
+        { "selected": 1, "disabled": true },
+        { "selected": 2, "disabled": true },
+        { "selected": 3, "disabled": true },
+        { "selected": 4, "disabled": false }
+      ]
+    },
+    {
+      "name": "CR-011 locale switching preserves the in-progress task",
+      "status": "PASS",
+      "evidence": "word=learn; selected=4; locale=zh-CN"
+    },
+    {
+      "name": "CR-011 create-another starts a fully empty task",
+      "status": "PASS",
+      "evidence": "discard confirmation accepted; words=0; configuration choices=0; generation disabled"
+    },
+    {
+      "name": "CR-012 deletion starts unchecked and requires keyboard-operable explicit consent",
+      "status": "PASS",
+      "evidence": "default unchecked, Space toggle, password-only guard, exact confirmed:true bodies, failure reset, success cascade, session invalidation, deleted identity lookup"
+    },
+    {
+      "name": "targeted pages remain accessible and responsive after both revisions",
+      "status": "PASS",
+      "evidence": "Axe serious/critical=0; /create and /account fit 320/720/900/1280px"
+    }
+  ]
+}

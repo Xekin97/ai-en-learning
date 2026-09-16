@@ -1,0 +1,26 @@
+{
+  "date": "2026-09-07T03:36:26.735Z",
+  "agent": "qa-quinn",
+  "counts": {
+    "PASS": 1,
+    "FAIL": 0,
+    "ERROR": 1
+  },
+  "checks": [
+    {
+      "id": "login with retained synthetic account",
+      "status": "PASS",
+      "actual": 200,
+      "expected": 200
+    },
+    {
+      "id": "batch deletion corrected request execution",
+      "status": "ERROR",
+      "error": "Error: Command failed: docker exec -i ww-qa-085-db psql -U postgres -d qa -X -A -t -v ON_ERROR_STOP=1\nERROR:  relation \"wordweave.batches\" does not exist\nLINE 1: SELECT id FROM wordweave.batches WHERE account_id=(SELECT id...\n                       ^\n\n    at genericNodeError (node:internal/errors:983:15)\n    at wrappedFn (node:internal/errors:537:14)\n    at checkExecSyncError (node:child_process:916:11)\n    at execFileSync (node:child_process:952:15)\n    at sql (file:///Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/.planning/milestones/M001/verification/evidence/cr037-cr038-085/lib.mjs:12:35)\n    at file:///Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/.planning/milestones/M001/verification/evidence/cr037-cr038-085/batch-delete-recheck.mjs:10:19"
+    }
+  ],
+  "origin": "http://127.0.0.1:6101",
+  "topology": "fixed candidate backend through real QA085 Nginx",
+  "correction": "application/json request Content-Type required by global write contract",
+  "safeResponses": []
+}

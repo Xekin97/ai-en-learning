@@ -1,0 +1,35 @@
+{
+  "date": "2026-09-09T08:04:52Z",
+  "agent": "qa-quinn",
+  "status": "scoped_checks_pass_runtime_not_enabled",
+  "realModelCalls": 0,
+  "method": "Additional isolated no-network overlay using user-supplied passage and explicitly synthetic target metadata; not mechanical rerun of developer suite",
+  "command": "go test -race -tags=uatdiagnostics -overlay=/qa/overlay.json ./internal/httpapi -run '^TestQACaptureUserPassage' -count=1 -v",
+  "exit": 0,
+  "output": "qa-output.txt",
+  "baselineComparison": {
+    "files": 119,
+    "changedExisting": [
+      "backend/README.md",
+      "backend/internal/httpapi/generation_handlers.go",
+      "backend/internal/httpapi/server.go"
+    ],
+    "unexpected": []
+  },
+  "containerCleanup": "wordweave-capture-dev-pg and all task test containers removed; only synthetic disposable data removed",
+  "links": {
+    "checked": 29,
+    "missing": 0
+  },
+  "yaml": {
+    "initial": "frontend does not expose yaml module; no configuration changed",
+    "final": "Ruby YAML.parse_file state/history/registry succeeded"
+  },
+  "candidate": "sha256:7c1d2b0eb19ba4328292fabad8698f7738f4a62fe277e2f6079e4d133c0f1963",
+  "uatStillRunning": "sha256:7cb89a2d4628cc568790cf4a556133cc76270f97d3e246aeb3e95374541b936d",
+  "executionAuthorization": "pending user permission for local backend replacement/restart",
+  "userUATAccepted": false,
+  "releaseApproved": false,
+  "subagents": 0,
+  "actualModel": "not_observed"
+}

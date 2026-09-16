@@ -1,0 +1,3238 @@
+{
+  "id": "TARGETED-QUALITY-20-20260911",
+  "date": "2026-09-11",
+  "role": "backend-ethan",
+  "authority": {
+    "user_response": "允许",
+    "scope": "Twenty additional fixed-version generation samples; same dedicated account and MiniMax model; success and content quality only",
+    "max_calls": 20,
+    "used_calls": 20,
+    "remaining_calls": 0,
+    "application_changes": false,
+    "automatic_retries": false
+  },
+  "model_id": "01a07fe3-5c48-736a-a86b-1f4dabd7cb87",
+  "provider_model_id": "minimax/minimax-m3",
+  "account_id": "01a08e5a-2250-7854-81df-5aeb26e7f461",
+  "image": "sha256:8815675c1f149993643dc967545a31b6eae0f2431c73bf33b953f6e2edc3664a",
+  "sampling": {
+    "method": "Four previously supplied five-word groups, each paired once with each of five fixed configurations; not a random production-traffic estimate",
+    "configurations": [
+      [
+        "zh",
+        "story",
+        "short"
+      ],
+      [
+        "zh",
+        "discussion",
+        "medium"
+      ],
+      [
+        "en",
+        "business",
+        "short"
+      ],
+      [
+        "ja",
+        "news",
+        "long"
+      ],
+      [
+        "en",
+        "story",
+        "xlong"
+      ]
+    ],
+    "no_configuration_changes_during_sampling": true,
+    "request_timeout_seconds": 180,
+    "concurrent_requests": 1,
+    "session_batches": 4,
+    "logout_statuses": [
+      204,
+      204,
+      204,
+      204
+    ]
+  },
+  "summary": {
+    "valid": 11,
+    "failed": 9,
+    "observed_success_rate": 0.55,
+    "target": 0.9,
+    "target_met": false,
+    "first_failure_counts": {
+      "passage_too_short": 7,
+      "tag_content_or_language_invalid": 1,
+      "annotation_source_unknown": 1
+    },
+    "by_length": {
+      "short": {
+        "total": 8,
+        "valid": 8
+      },
+      "medium": {
+        "total": 4,
+        "valid": 2
+      },
+      "long": {
+        "total": 4,
+        "valid": 1
+      },
+      "xlong": {
+        "total": 4,
+        "valid": 0
+      }
+    },
+    "duration_ms": {
+      "min": 5008,
+      "median": 8639,
+      "p95_nearest_rank": 11432,
+      "max": 12125
+    },
+    "first_delta_ms": {
+      "min": 795,
+      "max": 3302
+    },
+    "provider_reported_total_tokens": 29924,
+    "fee_usd": null,
+    "fee_note": "Actual invoice not queried; token counts are not a price estimate"
+  },
+  "verification": {
+    "db_rows": 20,
+    "valid_drafts": 11,
+    "failed_drafts": 0,
+    "failed_calls_refunded": 9,
+    "failed_calls_counted_cumulative": 0,
+    "db_mismatches": [],
+    "terminal_count_mismatches": [],
+    "successful_public_projection_mismatches": [],
+    "image_and_container_ids_unchanged": true,
+    "active_generations_after": 0,
+    "all_service_health": "healthy",
+    "quality_review_type": "Current assistant's direct reading, not independent QA or native-speaker UAT",
+    "content_reviews_of_valid": {
+      "no_material_issue_observed": 3,
+      "clear_lexical_grammar_concerns": 2,
+      "other_quality_concerns": 6
+    },
+    "raw_capture_nonexact_cases": [
+      5
+    ],
+    "case_5_review_source": "Dedicated account's persisted validated draft read-only; raw capture redacted a portion of a normal compound word, not an observed browser content change"
+  },
+  "retention": {
+    "raw_content_location": "Backend private tmpfs; max 24h under existing policy",
+    "raw_content_exported_to_repository": false,
+    "credentials_or_capability_tokens_in_evidence": false
+  },
+  "calls": [
+    {
+      "case_id": 1,
+      "group": "A",
+      "model_id": "01a07fe3-5c48-736a-a86b-1f4dabd7cb87",
+      "meaning_language": "zh",
+      "scenario": "story",
+      "length": "short",
+      "entries": [
+        "melancholy",
+        "handicap",
+        "foray",
+        "casino",
+        "upswing"
+      ],
+      "started_at": "2026-09-11T06:53:07.394Z",
+      "status": "generation.validated",
+      "image": "sha256:8815675c1f149993643dc967545a31b6eae0f2431c73bf33b953f6e2edc3664a",
+      "http_status": 200,
+      "run_id": "01a08f3d-cdd3-778c-b1da-9b5a3cf9b6e0",
+      "first_delta_ms": 1606,
+      "preview_equals_result": true,
+      "target_order_valid": true,
+      "target_count": 5,
+      "tag_count": 3,
+      "result_sha256": "6db5c43676adaf5ba1c8fd8f0e758960d2debb639a77766ec9a1622a33afd5b8",
+      "annotation_leaked": false,
+      "changed_form_occurrences": 0,
+      "repeated_passage_targets": 0,
+      "repeated_hint_targets": 0,
+      "positions_valid": true,
+      "duration_ms": 6477,
+      "passage_chars": 627,
+      "terminal_count": 1
+    },
+    {
+      "case_id": 2,
+      "group": "B",
+      "model_id": "01a07fe3-5c48-736a-a86b-1f4dabd7cb87",
+      "meaning_language": "zh",
+      "scenario": "discussion",
+      "length": "medium",
+      "entries": [
+        "young",
+        "grape",
+        "weekend",
+        "danger",
+        "enforce"
+      ],
+      "started_at": "2026-09-11T06:53:13.901Z",
+      "status": "generation.validated",
+      "image": "sha256:8815675c1f149993643dc967545a31b6eae0f2431c73bf33b953f6e2edc3664a",
+      "http_status": 200,
+      "run_id": "01a08f3d-e733-74ed-bcf6-c4c2ff74da2c",
+      "first_delta_ms": 3276,
+      "preview_equals_result": true,
+      "target_order_valid": true,
+      "target_count": 5,
+      "tag_count": 3,
+      "result_sha256": "49c6438b7a11519ecff5cd1de9297744c8c445bc64c7910b1f4d084692614d1e",
+      "annotation_leaked": false,
+      "changed_form_occurrences": 1,
+      "repeated_passage_targets": 2,
+      "repeated_hint_targets": 0,
+      "positions_valid": true,
+      "duration_ms": 9201,
+      "passage_chars": 1312,
+      "terminal_count": 1
+    },
+    {
+      "case_id": 3,
+      "group": "C",
+      "model_id": "01a07fe3-5c48-736a-a86b-1f4dabd7cb87",
+      "meaning_language": "en",
+      "scenario": "business",
+      "length": "short",
+      "entries": [
+        "alleviate",
+        "undermine",
+        "facilitate",
+        "deteriorate",
+        "perceive"
+      ],
+      "started_at": "2026-09-11T06:53:23.128Z",
+      "status": "generation.validated",
+      "image": "sha256:8815675c1f149993643dc967545a31b6eae0f2431c73bf33b953f6e2edc3664a",
+      "http_status": 200,
+      "run_id": "01a08f3e-0b41-7373-81fb-6387bfde1317",
+      "first_delta_ms": 1290,
+      "preview_equals_result": true,
+      "target_order_valid": true,
+      "target_count": 5,
+      "tag_count": 3,
+      "result_sha256": "9ba479883f70416943a6a4a570c92393e0389e81ed1d9f4c122e2f2b9a8eb457",
+      "annotation_leaked": false,
+      "changed_form_occurrences": 0,
+      "repeated_passage_targets": 0,
+      "repeated_hint_targets": 0,
+      "positions_valid": true,
+      "duration_ms": 8836,
+      "passage_chars": 696,
+      "terminal_count": 1
+    },
+    {
+      "case_id": 4,
+      "group": "D",
+      "model_id": "01a07fe3-5c48-736a-a86b-1f4dabd7cb87",
+      "meaning_language": "ja",
+      "scenario": "news",
+      "length": "long",
+      "entries": [
+        "sustainable",
+        "prevalent",
+        "vulnerable",
+        "ambiguous",
+        "coherent"
+      ],
+      "started_at": "2026-09-11T06:53:31.983Z",
+      "status": "generation.failed",
+      "image": "sha256:8815675c1f149993643dc967545a31b6eae0f2431c73bf33b953f6e2edc3664a",
+      "http_status": 200,
+      "run_id": "01a08f3e-2dd5-7b58-b7af-166574b81a13",
+      "first_delta_ms": 3137,
+      "code": "content_validation_failed",
+      "quota_refunded": true,
+      "duration_ms": 11432,
+      "passage_chars": 884,
+      "terminal_count": 1
+    },
+    {
+      "case_id": 5,
+      "group": "A",
+      "model_id": "01a07fe3-5c48-736a-a86b-1f4dabd7cb87",
+      "meaning_language": "zh",
+      "scenario": "discussion",
+      "length": "medium",
+      "entries": [
+        "melancholy",
+        "handicap",
+        "foray",
+        "casino",
+        "upswing"
+      ],
+      "started_at": "2026-09-11T06:53:43.448Z",
+      "status": "generation.validated",
+      "image": "sha256:8815675c1f149993643dc967545a31b6eae0f2431c73bf33b953f6e2edc3664a",
+      "http_status": 200,
+      "run_id": "01a08f3e-5aa2-7313-973b-e4a48d2b8737",
+      "first_delta_ms": 929,
+      "preview_equals_result": true,
+      "target_order_valid": true,
+      "target_count": 5,
+      "tag_count": 3,
+      "result_sha256": "49f76ad43322d0a5518e2ee21f8b298285162b494f2e37437b18c78bf57a73e4",
+      "annotation_leaked": false,
+      "changed_form_occurrences": 0,
+      "repeated_passage_targets": 0,
+      "repeated_hint_targets": 0,
+      "positions_valid": true,
+      "duration_ms": 5746,
+      "passage_chars": 764,
+      "terminal_count": 1
+    },
+    {
+      "case_id": 6,
+      "group": "B",
+      "model_id": "01a07fe3-5c48-736a-a86b-1f4dabd7cb87",
+      "meaning_language": "en",
+      "scenario": "business",
+      "length": "short",
+      "entries": [
+        "young",
+        "grape",
+        "weekend",
+        "danger",
+        "enforce"
+      ],
+      "started_at": "2026-09-11T06:54:09.257Z",
+      "status": "generation.validated",
+      "image": "sha256:8815675c1f149993643dc967545a31b6eae0f2431c73bf33b953f6e2edc3664a",
+      "http_status": 200,
+      "run_id": "01a08f3e-bf72-7c1e-9d9c-4381e9c096c8",
+      "first_delta_ms": 3302,
+      "preview_equals_result": true,
+      "target_order_valid": true,
+      "target_count": 5,
+      "tag_count": 3,
+      "result_sha256": "41e214c83d9c5b01155c2f74b9081ebe67a610b752fd113ae6d9a5a7b1fc007b",
+      "annotation_leaked": false,
+      "changed_form_occurrences": 1,
+      "repeated_passage_targets": 4,
+      "repeated_hint_targets": 0,
+      "positions_valid": true,
+      "duration_ms": 9105,
+      "passage_chars": 766,
+      "terminal_count": 1
+    },
+    {
+      "case_id": 7,
+      "group": "C",
+      "model_id": "01a07fe3-5c48-736a-a86b-1f4dabd7cb87",
+      "meaning_language": "ja",
+      "scenario": "news",
+      "length": "long",
+      "entries": [
+        "alleviate",
+        "undermine",
+        "facilitate",
+        "deteriorate",
+        "perceive"
+      ],
+      "started_at": "2026-09-11T06:54:18.388Z",
+      "status": "generation.failed",
+      "image": "sha256:8815675c1f149993643dc967545a31b6eae0f2431c73bf33b953f6e2edc3664a",
+      "http_status": 200,
+      "run_id": "01a08f3e-e318-7e81-a537-ee806c583f3b",
+      "first_delta_ms": 1089,
+      "code": "content_validation_failed",
+      "quota_refunded": true,
+      "duration_ms": 6263,
+      "passage_chars": 853,
+      "terminal_count": 1
+    },
+    {
+      "case_id": 8,
+      "group": "D",
+      "model_id": "01a07fe3-5c48-736a-a86b-1f4dabd7cb87",
+      "meaning_language": "en",
+      "scenario": "story",
+      "length": "xlong",
+      "entries": [
+        "sustainable",
+        "prevalent",
+        "vulnerable",
+        "ambiguous",
+        "coherent"
+      ],
+      "started_at": "2026-09-11T06:54:24.677Z",
+      "status": "generation.failed",
+      "image": "sha256:8815675c1f149993643dc967545a31b6eae0f2431c73bf33b953f6e2edc3664a",
+      "http_status": 200,
+      "run_id": "01a08f3e-fbaa-72d1-adbc-23f9a66a7a21",
+      "first_delta_ms": 878,
+      "code": "content_validation_failed",
+      "quota_refunded": true,
+      "duration_ms": 10244,
+      "passage_chars": 1286,
+      "terminal_count": 1
+    },
+    {
+      "case_id": 9,
+      "group": "A",
+      "model_id": "01a07fe3-5c48-736a-a86b-1f4dabd7cb87",
+      "meaning_language": "en",
+      "scenario": "business",
+      "length": "short",
+      "entries": [
+        "melancholy",
+        "handicap",
+        "foray",
+        "casino",
+        "upswing"
+      ],
+      "started_at": "2026-09-11T06:54:34.942Z",
+      "status": "generation.validated",
+      "image": "sha256:8815675c1f149993643dc967545a31b6eae0f2431c73bf33b953f6e2edc3664a",
+      "http_status": 200,
+      "run_id": "01a08f3f-23c6-74a8-a887-8bf0666a48ea",
+      "first_delta_ms": 795,
+      "preview_equals_result": true,
+      "target_order_valid": true,
+      "target_count": 5,
+      "tag_count": 3,
+      "result_sha256": "abf0fe89a99aa78ab01131aa296b1c2eeb4ff1bcb8546764d2bf4ddb102541c3",
+      "annotation_leaked": false,
+      "changed_form_occurrences": 0,
+      "repeated_passage_targets": 0,
+      "repeated_hint_targets": 0,
+      "positions_valid": true,
+      "duration_ms": 6128,
+      "passage_chars": 573,
+      "terminal_count": 1
+    },
+    {
+      "case_id": 10,
+      "group": "B",
+      "model_id": "01a07fe3-5c48-736a-a86b-1f4dabd7cb87",
+      "meaning_language": "ja",
+      "scenario": "news",
+      "length": "long",
+      "entries": [
+        "young",
+        "grape",
+        "weekend",
+        "danger",
+        "enforce"
+      ],
+      "started_at": "2026-09-11T06:54:41.090Z",
+      "status": "generation.validated",
+      "image": "sha256:8815675c1f149993643dc967545a31b6eae0f2431c73bf33b953f6e2edc3664a",
+      "http_status": 200,
+      "run_id": "01a08f3f-3bca-7e89-92b5-fa7afd566ec4",
+      "first_delta_ms": 2752,
+      "preview_equals_result": true,
+      "target_order_valid": true,
+      "target_count": 5,
+      "tag_count": 1,
+      "result_sha256": "16a35e9a963e5446fdc703e0fe7f728231ca16004412a9e14c11629c2f8638c3",
+      "annotation_leaked": false,
+      "changed_form_occurrences": 2,
+      "repeated_passage_targets": 4,
+      "repeated_hint_targets": 0,
+      "positions_valid": true,
+      "duration_ms": 8933,
+      "passage_chars": 1459,
+      "terminal_count": 1
+    },
+    {
+      "case_id": 11,
+      "group": "C",
+      "model_id": "01a07fe3-5c48-736a-a86b-1f4dabd7cb87",
+      "meaning_language": "en",
+      "scenario": "story",
+      "length": "xlong",
+      "entries": [
+        "alleviate",
+        "undermine",
+        "facilitate",
+        "deteriorate",
+        "perceive"
+      ],
+      "started_at": "2026-09-11T06:55:04.625Z",
+      "status": "generation.failed",
+      "image": "sha256:8815675c1f149993643dc967545a31b6eae0f2431c73bf33b953f6e2edc3664a",
+      "http_status": 200,
+      "run_id": "01a08f3f-97bc-7d18-a9cf-e590faf81239",
+      "first_delta_ms": 799,
+      "code": "content_validation_failed",
+      "quota_refunded": true,
+      "duration_ms": 8702,
+      "passage_chars": 1032,
+      "terminal_count": 1
+    },
+    {
+      "case_id": 12,
+      "group": "D",
+      "model_id": "01a07fe3-5c48-736a-a86b-1f4dabd7cb87",
+      "meaning_language": "zh",
+      "scenario": "story",
+      "length": "short",
+      "entries": [
+        "sustainable",
+        "prevalent",
+        "vulnerable",
+        "ambiguous",
+        "coherent"
+      ],
+      "started_at": "2026-09-11T06:55:13.355Z",
+      "status": "generation.validated",
+      "image": "sha256:8815675c1f149993643dc967545a31b6eae0f2431c73bf33b953f6e2edc3664a",
+      "http_status": 200,
+      "run_id": "01a08f3f-b9d0-7582-a5be-5f2ba11803b0",
+      "first_delta_ms": 1123,
+      "preview_equals_result": true,
+      "target_order_valid": true,
+      "target_count": 5,
+      "tag_count": 3,
+      "result_sha256": "72d262a818740894da682c57a095a815e11bfc41b60d8a68ebbb6d1b4b2f0e1b",
+      "annotation_leaked": false,
+      "changed_form_occurrences": 0,
+      "repeated_passage_targets": 0,
+      "repeated_hint_targets": 0,
+      "positions_valid": true,
+      "duration_ms": 5008,
+      "passage_chars": 665,
+      "terminal_count": 1
+    },
+    {
+      "case_id": 13,
+      "group": "A",
+      "model_id": "01a07fe3-5c48-736a-a86b-1f4dabd7cb87",
+      "meaning_language": "ja",
+      "scenario": "news",
+      "length": "long",
+      "entries": [
+        "melancholy",
+        "handicap",
+        "foray",
+        "casino",
+        "upswing"
+      ],
+      "started_at": "2026-09-11T06:55:18.387Z",
+      "status": "generation.failed",
+      "image": "sha256:8815675c1f149993643dc967545a31b6eae0f2431c73bf33b953f6e2edc3664a",
+      "http_status": 200,
+      "run_id": "01a08f3f-cd78-7114-8e6c-bec0976aa575",
+      "first_delta_ms": 1325,
+      "code": "content_validation_failed",
+      "quota_refunded": true,
+      "duration_ms": 8576,
+      "passage_chars": 827,
+      "terminal_count": 1
+    },
+    {
+      "case_id": 14,
+      "group": "B",
+      "model_id": "01a07fe3-5c48-736a-a86b-1f4dabd7cb87",
+      "meaning_language": "en",
+      "scenario": "story",
+      "length": "xlong",
+      "entries": [
+        "young",
+        "grape",
+        "weekend",
+        "danger",
+        "enforce"
+      ],
+      "started_at": "2026-09-11T06:55:26.984Z",
+      "status": "generation.failed",
+      "image": "sha256:8815675c1f149993643dc967545a31b6eae0f2431c73bf33b953f6e2edc3664a",
+      "http_status": 200,
+      "run_id": "01a08f3f-ef10-7f60-8a17-d506f26cf0eb",
+      "first_delta_ms": 1146,
+      "code": "content_validation_failed",
+      "quota_refunded": true,
+      "duration_ms": 11326,
+      "passage_chars": 2291,
+      "terminal_count": 1
+    },
+    {
+      "case_id": 15,
+      "group": "C",
+      "model_id": "01a07fe3-5c48-736a-a86b-1f4dabd7cb87",
+      "meaning_language": "zh",
+      "scenario": "story",
+      "length": "short",
+      "entries": [
+        "alleviate",
+        "undermine",
+        "facilitate",
+        "deteriorate",
+        "perceive"
+      ],
+      "started_at": "2026-09-11T06:55:38.335Z",
+      "status": "generation.validated",
+      "image": "sha256:8815675c1f149993643dc967545a31b6eae0f2431c73bf33b953f6e2edc3664a",
+      "http_status": 200,
+      "run_id": "01a08f40-1b63-7c7d-af80-9842573b381e",
+      "first_delta_ms": 839,
+      "preview_equals_result": true,
+      "target_order_valid": true,
+      "target_count": 5,
+      "tag_count": 3,
+      "result_sha256": "8ff5b8b0b4d32e30bc44e113fb7109ed91c431e7e6df350802cf1322e8101240",
+      "annotation_leaked": false,
+      "changed_form_occurrences": 0,
+      "repeated_passage_targets": 0,
+      "repeated_hint_targets": 0,
+      "positions_valid": true,
+      "duration_ms": 5767,
+      "passage_chars": 681,
+      "terminal_count": 1
+    },
+    {
+      "case_id": 16,
+      "group": "D",
+      "model_id": "01a07fe3-5c48-736a-a86b-1f4dabd7cb87",
+      "meaning_language": "zh",
+      "scenario": "discussion",
+      "length": "medium",
+      "entries": [
+        "sustainable",
+        "prevalent",
+        "vulnerable",
+        "ambiguous",
+        "coherent"
+      ],
+      "started_at": "2026-09-11T06:56:06.468Z",
+      "status": "generation.failed",
+      "image": "sha256:8815675c1f149993643dc967545a31b6eae0f2431c73bf33b953f6e2edc3664a",
+      "http_status": 200,
+      "run_id": "01a08f40-8950-73b9-b28c-481e34621b16",
+      "first_delta_ms": 2635,
+      "code": "content_validation_failed",
+      "quota_refunded": true,
+      "duration_ms": 7701,
+      "passage_chars": 1128,
+      "terminal_count": 1
+    },
+    {
+      "case_id": 17,
+      "group": "A",
+      "model_id": "01a07fe3-5c48-736a-a86b-1f4dabd7cb87",
+      "meaning_language": "en",
+      "scenario": "story",
+      "length": "xlong",
+      "entries": [
+        "melancholy",
+        "handicap",
+        "foray",
+        "casino",
+        "upswing"
+      ],
+      "started_at": "2026-09-11T06:56:14.197Z",
+      "status": "generation.failed",
+      "image": "sha256:8815675c1f149993643dc967545a31b6eae0f2431c73bf33b953f6e2edc3664a",
+      "http_status": 200,
+      "run_id": "01a08f40-a77a-7ade-8c0b-6b4d57ebc415",
+      "first_delta_ms": 920,
+      "code": "content_validation_failed",
+      "quota_refunded": true,
+      "duration_ms": 12125,
+      "passage_chars": 2062,
+      "terminal_count": 1
+    },
+    {
+      "case_id": 18,
+      "group": "B",
+      "model_id": "01a07fe3-5c48-736a-a86b-1f4dabd7cb87",
+      "meaning_language": "zh",
+      "scenario": "story",
+      "length": "short",
+      "entries": [
+        "young",
+        "grape",
+        "weekend",
+        "danger",
+        "enforce"
+      ],
+      "started_at": "2026-09-11T06:56:26.346Z",
+      "status": "generation.validated",
+      "image": "sha256:8815675c1f149993643dc967545a31b6eae0f2431c73bf33b953f6e2edc3664a",
+      "http_status": 200,
+      "run_id": "01a08f40-d6f5-760a-b4c7-a8bf8ad5cf53",
+      "first_delta_ms": 832,
+      "preview_equals_result": true,
+      "target_order_valid": true,
+      "target_count": 5,
+      "tag_count": 3,
+      "result_sha256": "42771576ad4c8badbe115d7d114d8665ea21426a957315c39291fde3fd4b0664",
+      "annotation_leaked": false,
+      "changed_form_occurrences": 0,
+      "repeated_passage_targets": 2,
+      "repeated_hint_targets": 0,
+      "positions_valid": true,
+      "duration_ms": 5873,
+      "passage_chars": 537,
+      "terminal_count": 1
+    },
+    {
+      "case_id": 19,
+      "group": "C",
+      "model_id": "01a07fe3-5c48-736a-a86b-1f4dabd7cb87",
+      "meaning_language": "zh",
+      "scenario": "discussion",
+      "length": "medium",
+      "entries": [
+        "alleviate",
+        "undermine",
+        "facilitate",
+        "deteriorate",
+        "perceive"
+      ],
+      "started_at": "2026-09-11T06:56:32.238Z",
+      "status": "generation.failed",
+      "image": "sha256:8815675c1f149993643dc967545a31b6eae0f2431c73bf33b953f6e2edc3664a",
+      "http_status": 200,
+      "run_id": "01a08f40-edf3-7764-9672-019166af6b4d",
+      "first_delta_ms": 941,
+      "code": "content_validation_failed",
+      "quota_refunded": true,
+      "duration_ms": 6034,
+      "passage_chars": 713,
+      "terminal_count": 1
+    },
+    {
+      "case_id": 20,
+      "group": "D",
+      "model_id": "01a07fe3-5c48-736a-a86b-1f4dabd7cb87",
+      "meaning_language": "en",
+      "scenario": "business",
+      "length": "short",
+      "entries": [
+        "sustainable",
+        "prevalent",
+        "vulnerable",
+        "ambiguous",
+        "coherent"
+      ],
+      "started_at": "2026-09-11T06:56:38.297Z",
+      "status": "generation.validated",
+      "image": "sha256:8815675c1f149993643dc967545a31b6eae0f2431c73bf33b953f6e2edc3664a",
+      "http_status": 200,
+      "run_id": "01a08f41-05b7-7e01-b060-afa4defc6b15",
+      "first_delta_ms": 891,
+      "preview_equals_result": true,
+      "target_order_valid": true,
+      "target_count": 5,
+      "tag_count": 3,
+      "result_sha256": "f627d1aa9ec933eb5f0e0441538a6190a4c65a68863f0e57a714b13637c313d7",
+      "annotation_leaked": false,
+      "changed_form_occurrences": 2,
+      "repeated_passage_targets": 2,
+      "repeated_hint_targets": 0,
+      "positions_valid": true,
+      "duration_ms": 9787,
+      "passage_chars": 1430,
+      "terminal_count": 1
+    }
+  ],
+  "diagnostics": [
+    {
+      "case_id": 1,
+      "run_id": "01a08f3d-cdd3-778c-b1da-9b5a3cf9b6e0",
+      "evidence_id": "ed156702-3afe-4925-9cbd-da5edd931d0a",
+      "expires_at": "2026-09-12T06:53:07.400768007Z",
+      "fingerprint": {
+        "source_sha256": "a10f9ab08b2fb4b78622000333daf52896fa81e768230b460038f636ff7a8237",
+        "binary_sha256": "e835b29b9bbedb03dd9afcc425ab6036b953f249255743ba616fe685e3c88915",
+        "template_sha256": "82186f8f8a6546e9a03f5f9cae40663a3ef66a5f87905b306cbcaadfcc6ffca1",
+        "schema_sha256": "2917ffe48a8cc5c3b304aef55cebb35d2685ee66646b6c07c41c9d337eb16282",
+        "validator_sha256": "45455715d8da62d0e00d3b938419912a9a31d29b0220a62fac31ae4b2ae2cea7",
+        "lexicon_sha256": "89e5b41dc8662780e443c10b5ecf81970944fc2b530d5f79372ac482ac744c0b"
+      },
+      "incomplete": false,
+      "capture": {
+        "coalesced_progress": 85,
+        "dropped_records": 0,
+        "dropped_bytes": 0,
+        "truncated": false,
+        "io_failed": false,
+        "redacted": false,
+        "model_ended": true,
+        "unavailable": false
+      },
+      "outcome": "valid",
+      "quota_refunded": false,
+      "stages": [
+        {
+          "stage": "request",
+          "state": "ok",
+          "check": "body"
+        },
+        {
+          "stage": "preflight",
+          "state": "ok",
+          "check": "transaction_commit"
+        },
+        {
+          "stage": "provider_open",
+          "state": "ok",
+          "check": "response_headers"
+        },
+        {
+          "stage": "provider_stream",
+          "state": "ok",
+          "check": ""
+        },
+        {
+          "stage": "passage_decode",
+          "state": "ok",
+          "check": "clean_consistency"
+        },
+        {
+          "stage": "candidate_decode",
+          "state": "ok",
+          "check": "hint_size"
+        },
+        {
+          "stage": "content_validate",
+          "state": "ok",
+          "check": "context"
+        },
+        {
+          "stage": "draft_commit",
+          "state": "ok",
+          "check": "transaction_commit"
+        },
+        {
+          "stage": "settlement",
+          "state": "not_run",
+          "check": ""
+        },
+        {
+          "stage": "delivery",
+          "state": "ok",
+          "check": ""
+        }
+      ],
+      "provider": [
+        {
+          "id": "gen-1789109588-6TytVuyMQWeQK8EeBDP1",
+          "upstream_request_id": "",
+          "http_status": 0,
+          "frame": 30,
+          "bytes": 762,
+          "choice_index": 0,
+          "choice_index_provided": true,
+          "finish_reason": "stop",
+          "error_present": false,
+          "error_code_type": "not_provided",
+          "error_code": 0,
+          "usage_provided": true,
+          "prompt_tokens": 1005,
+          "completion_tokens": 416,
+          "total_tokens": 1421,
+          "syntax_offset": -1
+        }
+      ],
+      "model_end": {
+        "chunks": 28,
+        "bytes": 1667,
+        "redacted": false,
+        "unavailable": false
+      },
+      "raw_sha256": "9f81a65c7ffc3dddbe18e2f8a13b1b134766cfcac8a0baf5232ce4f5765a5b7e"
+    },
+    {
+      "case_id": 2,
+      "run_id": "01a08f3d-e733-74ed-bcf6-c4c2ff74da2c",
+      "evidence_id": "3b801341-d9f7-45eb-ba27-4ef8f90d3b98",
+      "expires_at": "2026-09-12T06:53:13.904081677Z",
+      "fingerprint": {
+        "source_sha256": "a10f9ab08b2fb4b78622000333daf52896fa81e768230b460038f636ff7a8237",
+        "binary_sha256": "e835b29b9bbedb03dd9afcc425ab6036b953f249255743ba616fe685e3c88915",
+        "template_sha256": "82186f8f8a6546e9a03f5f9cae40663a3ef66a5f87905b306cbcaadfcc6ffca1",
+        "schema_sha256": "2917ffe48a8cc5c3b304aef55cebb35d2685ee66646b6c07c41c9d337eb16282",
+        "validator_sha256": "45455715d8da62d0e00d3b938419912a9a31d29b0220a62fac31ae4b2ae2cea7",
+        "lexicon_sha256": "89e5b41dc8662780e443c10b5ecf81970944fc2b530d5f79372ac482ac744c0b"
+      },
+      "incomplete": false,
+      "capture": {
+        "coalesced_progress": 118,
+        "dropped_records": 0,
+        "dropped_bytes": 0,
+        "truncated": false,
+        "io_failed": false,
+        "redacted": false,
+        "model_ended": true,
+        "unavailable": false
+      },
+      "outcome": "valid",
+      "quota_refunded": false,
+      "stages": [
+        {
+          "stage": "request",
+          "state": "ok",
+          "check": "body"
+        },
+        {
+          "stage": "preflight",
+          "state": "ok",
+          "check": "transaction_commit"
+        },
+        {
+          "stage": "provider_open",
+          "state": "ok",
+          "check": "response_headers"
+        },
+        {
+          "stage": "provider_stream",
+          "state": "ok",
+          "check": ""
+        },
+        {
+          "stage": "passage_decode",
+          "state": "ok",
+          "check": "clean_consistency"
+        },
+        {
+          "stage": "candidate_decode",
+          "state": "ok",
+          "check": "hint_size"
+        },
+        {
+          "stage": "content_validate",
+          "state": "ok",
+          "check": "context"
+        },
+        {
+          "stage": "draft_commit",
+          "state": "ok",
+          "check": "transaction_commit"
+        },
+        {
+          "stage": "settlement",
+          "state": "not_run",
+          "check": ""
+        },
+        {
+          "stage": "delivery",
+          "state": "ok",
+          "check": ""
+        }
+      ],
+      "provider": [
+        {
+          "id": "gen-1789109594-vw4i2Q2f6KIMxQLg0cRJ",
+          "upstream_request_id": "",
+          "http_status": 0,
+          "frame": 41,
+          "bytes": 760,
+          "choice_index": 0,
+          "choice_index_provided": true,
+          "finish_reason": "stop",
+          "error_present": false,
+          "error_code_type": "not_provided",
+          "error_code": 0,
+          "usage_provided": true,
+          "prompt_tokens": 996,
+          "completion_tokens": 520,
+          "total_tokens": 1516,
+          "syntax_offset": -1
+        }
+      ],
+      "model_end": {
+        "chunks": 39,
+        "bytes": 2276,
+        "redacted": false,
+        "unavailable": false
+      },
+      "raw_sha256": "85824c46b074a336fc781cef0f7f0e04adc9ec0b9f4605a34145c810b76b0531"
+    },
+    {
+      "case_id": 3,
+      "run_id": "01a08f3e-0b41-7373-81fb-6387bfde1317",
+      "evidence_id": "0c4e71b9-b37c-40db-a913-fd44e07a0f1f",
+      "expires_at": "2026-09-12T06:53:23.1315645Z",
+      "fingerprint": {
+        "source_sha256": "a10f9ab08b2fb4b78622000333daf52896fa81e768230b460038f636ff7a8237",
+        "binary_sha256": "e835b29b9bbedb03dd9afcc425ab6036b953f249255743ba616fe685e3c88915",
+        "template_sha256": "82186f8f8a6546e9a03f5f9cae40663a3ef66a5f87905b306cbcaadfcc6ffca1",
+        "schema_sha256": "2917ffe48a8cc5c3b304aef55cebb35d2685ee66646b6c07c41c9d337eb16282",
+        "validator_sha256": "45455715d8da62d0e00d3b938419912a9a31d29b0220a62fac31ae4b2ae2cea7",
+        "lexicon_sha256": "89e5b41dc8662780e443c10b5ecf81970944fc2b530d5f79372ac482ac744c0b"
+      },
+      "incomplete": false,
+      "capture": {
+        "coalesced_progress": 79,
+        "dropped_records": 0,
+        "dropped_bytes": 0,
+        "truncated": false,
+        "io_failed": false,
+        "redacted": false,
+        "model_ended": true,
+        "unavailable": false
+      },
+      "outcome": "valid",
+      "quota_refunded": false,
+      "stages": [
+        {
+          "stage": "request",
+          "state": "ok",
+          "check": "body"
+        },
+        {
+          "stage": "preflight",
+          "state": "ok",
+          "check": "transaction_commit"
+        },
+        {
+          "stage": "provider_open",
+          "state": "ok",
+          "check": "response_headers"
+        },
+        {
+          "stage": "provider_stream",
+          "state": "ok",
+          "check": ""
+        },
+        {
+          "stage": "passage_decode",
+          "state": "ok",
+          "check": "clean_consistency"
+        },
+        {
+          "stage": "candidate_decode",
+          "state": "ok",
+          "check": "hint_size"
+        },
+        {
+          "stage": "content_validate",
+          "state": "ok",
+          "check": "context"
+        },
+        {
+          "stage": "draft_commit",
+          "state": "ok",
+          "check": "transaction_commit"
+        },
+        {
+          "stage": "settlement",
+          "state": "not_run",
+          "check": ""
+        },
+        {
+          "stage": "delivery",
+          "state": "ok",
+          "check": ""
+        }
+      ],
+      "provider": [
+        {
+          "id": "gen-1789109603-d3PJh66ojhcAg3CvhA5N",
+          "upstream_request_id": "",
+          "http_status": 0,
+          "frame": 28,
+          "bytes": 762,
+          "choice_index": 0,
+          "choice_index_provided": true,
+          "finish_reason": "stop",
+          "error_present": false,
+          "error_code_type": "not_provided",
+          "error_code": 0,
+          "usage_provided": true,
+          "prompt_tokens": 1014,
+          "completion_tokens": 437,
+          "total_tokens": 1451,
+          "syntax_offset": -1
+        }
+      ],
+      "model_end": {
+        "chunks": 26,
+        "bytes": 1954,
+        "redacted": false,
+        "unavailable": false
+      },
+      "raw_sha256": "a067ff55f144c0f744f26234e9dce226d499e6a6855d57ac5ee8fb5ed5678c37"
+    },
+    {
+      "case_id": 4,
+      "run_id": "01a08f3e-2dd5-7b58-b7af-166574b81a13",
+      "evidence_id": "e06d375f-1d8e-4351-99ba-62969bb42431",
+      "expires_at": "2026-09-12T06:53:31.985994255Z",
+      "fingerprint": {
+        "source_sha256": "a10f9ab08b2fb4b78622000333daf52896fa81e768230b460038f636ff7a8237",
+        "binary_sha256": "e835b29b9bbedb03dd9afcc425ab6036b953f249255743ba616fe685e3c88915",
+        "template_sha256": "82186f8f8a6546e9a03f5f9cae40663a3ef66a5f87905b306cbcaadfcc6ffca1",
+        "schema_sha256": "2917ffe48a8cc5c3b304aef55cebb35d2685ee66646b6c07c41c9d337eb16282",
+        "validator_sha256": "45455715d8da62d0e00d3b938419912a9a31d29b0220a62fac31ae4b2ae2cea7",
+        "lexicon_sha256": "89e5b41dc8662780e443c10b5ecf81970944fc2b530d5f79372ac482ac744c0b"
+      },
+      "incomplete": false,
+      "capture": {
+        "coalesced_progress": 82,
+        "dropped_records": 0,
+        "dropped_bytes": 0,
+        "truncated": false,
+        "io_failed": false,
+        "redacted": false,
+        "model_ended": true,
+        "unavailable": false
+      },
+      "first_failure": {
+        "stage": "content_validate",
+        "state": "failed",
+        "begin_ms": 11416,
+        "end_ms": 11416,
+        "duration_ms": 0,
+        "check": "word_count",
+        "detail": {
+          "reason": "passage_too_short",
+          "field": "passage",
+          "target_index": -1,
+          "actual": 127,
+          "limit": 200,
+          "byte_start": -1,
+          "byte_end": -1,
+          "expected_type": "",
+          "actual_type": ""
+        }
+      },
+      "outcome": "failed",
+      "quota_refunded": true,
+      "stages": [
+        {
+          "stage": "request",
+          "state": "ok",
+          "check": "body"
+        },
+        {
+          "stage": "preflight",
+          "state": "ok",
+          "check": "transaction_commit"
+        },
+        {
+          "stage": "provider_open",
+          "state": "ok",
+          "check": "response_headers"
+        },
+        {
+          "stage": "provider_stream",
+          "state": "ok",
+          "check": ""
+        },
+        {
+          "stage": "passage_decode",
+          "state": "ok",
+          "check": "clean_consistency"
+        },
+        {
+          "stage": "candidate_decode",
+          "state": "ok",
+          "check": "hint_size"
+        },
+        {
+          "stage": "content_validate",
+          "state": "failed",
+          "check": "word_count"
+        },
+        {
+          "stage": "draft_commit",
+          "state": "not_run",
+          "check": ""
+        },
+        {
+          "stage": "settlement",
+          "state": "ok",
+          "check": "cas"
+        },
+        {
+          "stage": "delivery",
+          "state": "ok",
+          "check": ""
+        }
+      ],
+      "provider": [
+        {
+          "id": "gen-1789109612-mZmoCMLlLIeC2m88Y1ME",
+          "upstream_request_id": "",
+          "http_status": 0,
+          "frame": 29,
+          "bytes": 761,
+          "choice_index": 0,
+          "choice_index_provided": true,
+          "finish_reason": "stop",
+          "error_present": false,
+          "error_code_type": "not_provided",
+          "error_code": 0,
+          "usage_provided": true,
+          "prompt_tokens": 1005,
+          "completion_tokens": 440,
+          "total_tokens": 1445,
+          "syntax_offset": -1
+        }
+      ],
+      "model_end": {
+        "chunks": 27,
+        "bytes": 2121,
+        "redacted": false,
+        "unavailable": false
+      },
+      "raw_sha256": "833c48026b355dc4a829adbf596a04a07f0bd8faf2015e1d624a4ad77665de51"
+    },
+    {
+      "case_id": 5,
+      "run_id": "01a08f3e-5aa2-7313-973b-e4a48d2b8737",
+      "evidence_id": "ede952bb-92c5-4baa-940e-2ab17d9b140a",
+      "expires_at": "2026-09-12T06:53:43.452363802Z",
+      "fingerprint": {
+        "source_sha256": "a10f9ab08b2fb4b78622000333daf52896fa81e768230b460038f636ff7a8237",
+        "binary_sha256": "e835b29b9bbedb03dd9afcc425ab6036b953f249255743ba616fe685e3c88915",
+        "template_sha256": "82186f8f8a6546e9a03f5f9cae40663a3ef66a5f87905b306cbcaadfcc6ffca1",
+        "schema_sha256": "2917ffe48a8cc5c3b304aef55cebb35d2685ee66646b6c07c41c9d337eb16282",
+        "validator_sha256": "45455715d8da62d0e00d3b938419912a9a31d29b0220a62fac31ae4b2ae2cea7",
+        "lexicon_sha256": "89e5b41dc8662780e443c10b5ecf81970944fc2b530d5f79372ac482ac744c0b"
+      },
+      "incomplete": false,
+      "capture": {
+        "coalesced_progress": 76,
+        "dropped_records": 0,
+        "dropped_bytes": 0,
+        "truncated": false,
+        "io_failed": false,
+        "redacted": true,
+        "model_ended": true,
+        "unavailable": false
+      },
+      "outcome": "valid",
+      "quota_refunded": false,
+      "stages": [
+        {
+          "stage": "request",
+          "state": "ok",
+          "check": "body"
+        },
+        {
+          "stage": "preflight",
+          "state": "ok",
+          "check": "transaction_commit"
+        },
+        {
+          "stage": "provider_open",
+          "state": "ok",
+          "check": "response_headers"
+        },
+        {
+          "stage": "provider_stream",
+          "state": "ok",
+          "check": ""
+        },
+        {
+          "stage": "passage_decode",
+          "state": "ok",
+          "check": "clean_consistency"
+        },
+        {
+          "stage": "candidate_decode",
+          "state": "ok",
+          "check": "hint_size"
+        },
+        {
+          "stage": "content_validate",
+          "state": "ok",
+          "check": "context"
+        },
+        {
+          "stage": "draft_commit",
+          "state": "ok",
+          "check": "transaction_commit"
+        },
+        {
+          "stage": "settlement",
+          "state": "not_run",
+          "check": ""
+        },
+        {
+          "stage": "delivery",
+          "state": "ok",
+          "check": ""
+        }
+      ],
+      "provider": [
+        {
+          "id": "gen-1789109624-pFtRq10DidHnklA67DZY",
+          "upstream_request_id": "",
+          "http_status": 0,
+          "frame": 27,
+          "bytes": 761,
+          "choice_index": 0,
+          "choice_index_provided": true,
+          "finish_reason": "stop",
+          "error_present": false,
+          "error_code_type": "not_provided",
+          "error_code": 0,
+          "usage_provided": true,
+          "prompt_tokens": 1005,
+          "completion_tokens": 345,
+          "total_tokens": 1350,
+          "syntax_offset": -1
+        }
+      ],
+      "model_end": {
+        "chunks": 25,
+        "bytes": 1549,
+        "redacted": true,
+        "unavailable": false
+      },
+      "raw_sha256": "ef02dbcb3c454c54f242f59dd5c2598e31e894d80a428004285bbf6333a344f1"
+    },
+    {
+      "case_id": 6,
+      "run_id": "01a08f3e-bf72-7c1e-9d9c-4381e9c096c8",
+      "evidence_id": "3710d741-1d7f-4435-bd30-f71803f7fa31",
+      "expires_at": "2026-09-12T06:54:09.262638966Z",
+      "fingerprint": {
+        "source_sha256": "a10f9ab08b2fb4b78622000333daf52896fa81e768230b460038f636ff7a8237",
+        "binary_sha256": "e835b29b9bbedb03dd9afcc425ab6036b953f249255743ba616fe685e3c88915",
+        "template_sha256": "82186f8f8a6546e9a03f5f9cae40663a3ef66a5f87905b306cbcaadfcc6ffca1",
+        "schema_sha256": "2917ffe48a8cc5c3b304aef55cebb35d2685ee66646b6c07c41c9d337eb16282",
+        "validator_sha256": "45455715d8da62d0e00d3b938419912a9a31d29b0220a62fac31ae4b2ae2cea7",
+        "lexicon_sha256": "89e5b41dc8662780e443c10b5ecf81970944fc2b530d5f79372ac482ac744c0b"
+      },
+      "incomplete": false,
+      "capture": {
+        "coalesced_progress": 109,
+        "dropped_records": 0,
+        "dropped_bytes": 0,
+        "truncated": false,
+        "io_failed": false,
+        "redacted": false,
+        "model_ended": true,
+        "unavailable": false
+      },
+      "outcome": "valid",
+      "quota_refunded": false,
+      "stages": [
+        {
+          "stage": "request",
+          "state": "ok",
+          "check": "body"
+        },
+        {
+          "stage": "preflight",
+          "state": "ok",
+          "check": "transaction_commit"
+        },
+        {
+          "stage": "provider_open",
+          "state": "ok",
+          "check": "response_headers"
+        },
+        {
+          "stage": "provider_stream",
+          "state": "ok",
+          "check": ""
+        },
+        {
+          "stage": "passage_decode",
+          "state": "ok",
+          "check": "clean_consistency"
+        },
+        {
+          "stage": "candidate_decode",
+          "state": "ok",
+          "check": "hint_size"
+        },
+        {
+          "stage": "content_validate",
+          "state": "ok",
+          "check": "context"
+        },
+        {
+          "stage": "draft_commit",
+          "state": "ok",
+          "check": "transaction_commit"
+        },
+        {
+          "stage": "settlement",
+          "state": "not_run",
+          "check": ""
+        },
+        {
+          "stage": "delivery",
+          "state": "ok",
+          "check": ""
+        }
+      ],
+      "provider": [
+        {
+          "id": "gen-1789109649-FHhpQphEeC8WT9cfad3M",
+          "upstream_request_id": "",
+          "http_status": 0,
+          "frame": 38,
+          "bytes": 761,
+          "choice_index": 0,
+          "choice_index_provided": true,
+          "finish_reason": "stop",
+          "error_present": false,
+          "error_code_type": "not_provided",
+          "error_code": 0,
+          "usage_provided": true,
+          "prompt_tokens": 996,
+          "completion_tokens": 501,
+          "total_tokens": 1497,
+          "syntax_offset": -1
+        }
+      ],
+      "model_end": {
+        "chunks": 36,
+        "bytes": 2153,
+        "redacted": false,
+        "unavailable": false
+      },
+      "raw_sha256": "1fcf8ab459acd62ac577411fd34fb3e0e63b104296e768021f750d9c14f8b4fd"
+    },
+    {
+      "case_id": 7,
+      "run_id": "01a08f3e-e318-7e81-a537-ee806c583f3b",
+      "evidence_id": "c852d073-8aaf-4ea4-a80c-db98783dcbea",
+      "expires_at": "2026-09-12T06:54:18.390569721Z",
+      "fingerprint": {
+        "source_sha256": "a10f9ab08b2fb4b78622000333daf52896fa81e768230b460038f636ff7a8237",
+        "binary_sha256": "e835b29b9bbedb03dd9afcc425ab6036b953f249255743ba616fe685e3c88915",
+        "template_sha256": "82186f8f8a6546e9a03f5f9cae40663a3ef66a5f87905b306cbcaadfcc6ffca1",
+        "schema_sha256": "2917ffe48a8cc5c3b304aef55cebb35d2685ee66646b6c07c41c9d337eb16282",
+        "validator_sha256": "45455715d8da62d0e00d3b938419912a9a31d29b0220a62fac31ae4b2ae2cea7",
+        "lexicon_sha256": "89e5b41dc8662780e443c10b5ecf81970944fc2b530d5f79372ac482ac744c0b"
+      },
+      "incomplete": false,
+      "capture": {
+        "coalesced_progress": 121,
+        "dropped_records": 0,
+        "dropped_bytes": 0,
+        "truncated": false,
+        "io_failed": false,
+        "redacted": false,
+        "model_ended": true,
+        "unavailable": false
+      },
+      "first_failure": {
+        "stage": "content_validate",
+        "state": "failed",
+        "begin_ms": 6256,
+        "end_ms": 6257,
+        "duration_ms": 1,
+        "check": "word_count",
+        "detail": {
+          "reason": "passage_too_short",
+          "field": "passage",
+          "target_index": -1,
+          "actual": 114,
+          "limit": 200,
+          "byte_start": -1,
+          "byte_end": -1,
+          "expected_type": "",
+          "actual_type": ""
+        }
+      },
+      "outcome": "failed",
+      "quota_refunded": true,
+      "stages": [
+        {
+          "stage": "request",
+          "state": "ok",
+          "check": "body"
+        },
+        {
+          "stage": "preflight",
+          "state": "ok",
+          "check": "transaction_commit"
+        },
+        {
+          "stage": "provider_open",
+          "state": "ok",
+          "check": "response_headers"
+        },
+        {
+          "stage": "provider_stream",
+          "state": "ok",
+          "check": ""
+        },
+        {
+          "stage": "passage_decode",
+          "state": "ok",
+          "check": "clean_consistency"
+        },
+        {
+          "stage": "candidate_decode",
+          "state": "ok",
+          "check": "hint_size"
+        },
+        {
+          "stage": "content_validate",
+          "state": "failed",
+          "check": "word_count"
+        },
+        {
+          "stage": "draft_commit",
+          "state": "not_run",
+          "check": ""
+        },
+        {
+          "stage": "settlement",
+          "state": "ok",
+          "check": "cas"
+        },
+        {
+          "stage": "delivery",
+          "state": "ok",
+          "check": ""
+        }
+      ],
+      "provider": [
+        {
+          "id": "gen-1789109658-T2DspZAkTN7kdwIgkG3D",
+          "upstream_request_id": "",
+          "http_status": 0,
+          "frame": 42,
+          "bytes": 762,
+          "choice_index": 0,
+          "choice_index_provided": true,
+          "finish_reason": "stop",
+          "error_present": false,
+          "error_code_type": "not_provided",
+          "error_code": 0,
+          "usage_provided": true,
+          "prompt_tokens": 1014,
+          "completion_tokens": 446,
+          "total_tokens": 1460,
+          "syntax_offset": -1
+        }
+      ],
+      "model_end": {
+        "chunks": 40,
+        "bytes": 2105,
+        "redacted": false,
+        "unavailable": false
+      },
+      "raw_sha256": "124245e1ae9ce3180b91f3a0e4a830eed00cdf2d9f542bde289f1be31ead13c8"
+    },
+    {
+      "case_id": 8,
+      "run_id": "01a08f3e-fbaa-72d1-adbc-23f9a66a7a21",
+      "evidence_id": "0a168797-ddbd-4990-a54b-65cf5780b905",
+      "expires_at": "2026-09-12T06:54:24.679827209Z",
+      "fingerprint": {
+        "source_sha256": "a10f9ab08b2fb4b78622000333daf52896fa81e768230b460038f636ff7a8237",
+        "binary_sha256": "e835b29b9bbedb03dd9afcc425ab6036b953f249255743ba616fe685e3c88915",
+        "template_sha256": "82186f8f8a6546e9a03f5f9cae40663a3ef66a5f87905b306cbcaadfcc6ffca1",
+        "schema_sha256": "2917ffe48a8cc5c3b304aef55cebb35d2685ee66646b6c07c41c9d337eb16282",
+        "validator_sha256": "45455715d8da62d0e00d3b938419912a9a31d29b0220a62fac31ae4b2ae2cea7",
+        "lexicon_sha256": "89e5b41dc8662780e443c10b5ecf81970944fc2b530d5f79372ac482ac744c0b"
+      },
+      "incomplete": false,
+      "capture": {
+        "coalesced_progress": 127,
+        "dropped_records": 0,
+        "dropped_bytes": 0,
+        "truncated": false,
+        "io_failed": false,
+        "redacted": false,
+        "model_ended": true,
+        "unavailable": false
+      },
+      "first_failure": {
+        "stage": "content_validate",
+        "state": "failed",
+        "begin_ms": 10234,
+        "end_ms": 10235,
+        "duration_ms": 1,
+        "check": "word_count",
+        "detail": {
+          "reason": "passage_too_short",
+          "field": "passage",
+          "target_index": -1,
+          "actual": 206,
+          "limit": 400,
+          "byte_start": -1,
+          "byte_end": -1,
+          "expected_type": "",
+          "actual_type": ""
+        }
+      },
+      "outcome": "failed",
+      "quota_refunded": true,
+      "stages": [
+        {
+          "stage": "request",
+          "state": "ok",
+          "check": "body"
+        },
+        {
+          "stage": "preflight",
+          "state": "ok",
+          "check": "transaction_commit"
+        },
+        {
+          "stage": "provider_open",
+          "state": "ok",
+          "check": "response_headers"
+        },
+        {
+          "stage": "provider_stream",
+          "state": "ok",
+          "check": ""
+        },
+        {
+          "stage": "passage_decode",
+          "state": "ok",
+          "check": "clean_consistency"
+        },
+        {
+          "stage": "candidate_decode",
+          "state": "ok",
+          "check": "hint_size"
+        },
+        {
+          "stage": "content_validate",
+          "state": "failed",
+          "check": "word_count"
+        },
+        {
+          "stage": "draft_commit",
+          "state": "not_run",
+          "check": ""
+        },
+        {
+          "stage": "settlement",
+          "state": "ok",
+          "check": "cas"
+        },
+        {
+          "stage": "delivery",
+          "state": "ok",
+          "check": ""
+        }
+      ],
+      "provider": [
+        {
+          "id": "gen-1789109665-7ORCWB5gFwKSyR0Rzpub",
+          "upstream_request_id": "",
+          "http_status": 0,
+          "frame": 44,
+          "bytes": 761,
+          "choice_index": 0,
+          "choice_index_provided": true,
+          "finish_reason": "stop",
+          "error_present": false,
+          "error_code_type": "not_provided",
+          "error_code": 0,
+          "usage_provided": true,
+          "prompt_tokens": 1005,
+          "completion_tokens": 555,
+          "total_tokens": 1560,
+          "syntax_offset": -1
+        }
+      ],
+      "model_end": {
+        "chunks": 42,
+        "bytes": 2608,
+        "redacted": false,
+        "unavailable": false
+      },
+      "raw_sha256": "8e9de5530cfb00197c485f190ec492a8544d857c99023c7d63a8415754709f0f"
+    },
+    {
+      "case_id": 9,
+      "run_id": "01a08f3f-23c6-74a8-a887-8bf0666a48ea",
+      "evidence_id": "6f276a5c-d54c-4686-a4a4-ef8ec62904b7",
+      "expires_at": "2026-09-12T06:54:34.945685839Z",
+      "fingerprint": {
+        "source_sha256": "a10f9ab08b2fb4b78622000333daf52896fa81e768230b460038f636ff7a8237",
+        "binary_sha256": "e835b29b9bbedb03dd9afcc425ab6036b953f249255743ba616fe685e3c88915",
+        "template_sha256": "82186f8f8a6546e9a03f5f9cae40663a3ef66a5f87905b306cbcaadfcc6ffca1",
+        "schema_sha256": "2917ffe48a8cc5c3b304aef55cebb35d2685ee66646b6c07c41c9d337eb16282",
+        "validator_sha256": "45455715d8da62d0e00d3b938419912a9a31d29b0220a62fac31ae4b2ae2cea7",
+        "lexicon_sha256": "89e5b41dc8662780e443c10b5ecf81970944fc2b530d5f79372ac482ac744c0b"
+      },
+      "incomplete": false,
+      "capture": {
+        "coalesced_progress": 103,
+        "dropped_records": 0,
+        "dropped_bytes": 0,
+        "truncated": false,
+        "io_failed": false,
+        "redacted": false,
+        "model_ended": true,
+        "unavailable": false
+      },
+      "outcome": "valid",
+      "quota_refunded": false,
+      "stages": [
+        {
+          "stage": "request",
+          "state": "ok",
+          "check": "body"
+        },
+        {
+          "stage": "preflight",
+          "state": "ok",
+          "check": "transaction_commit"
+        },
+        {
+          "stage": "provider_open",
+          "state": "ok",
+          "check": "response_headers"
+        },
+        {
+          "stage": "provider_stream",
+          "state": "ok",
+          "check": ""
+        },
+        {
+          "stage": "passage_decode",
+          "state": "ok",
+          "check": "clean_consistency"
+        },
+        {
+          "stage": "candidate_decode",
+          "state": "ok",
+          "check": "hint_size"
+        },
+        {
+          "stage": "content_validate",
+          "state": "ok",
+          "check": "context"
+        },
+        {
+          "stage": "draft_commit",
+          "state": "ok",
+          "check": "transaction_commit"
+        },
+        {
+          "stage": "settlement",
+          "state": "not_run",
+          "check": ""
+        },
+        {
+          "stage": "delivery",
+          "state": "ok",
+          "check": ""
+        }
+      ],
+      "provider": [
+        {
+          "id": "gen-1789109675-idG6hA30VOwQ8CulKgQr",
+          "upstream_request_id": "",
+          "http_status": 0,
+          "frame": 36,
+          "bytes": 761,
+          "choice_index": 0,
+          "choice_index_provided": true,
+          "finish_reason": "stop",
+          "error_present": false,
+          "error_code_type": "not_provided",
+          "error_code": 0,
+          "usage_provided": true,
+          "prompt_tokens": 1005,
+          "completion_tokens": 440,
+          "total_tokens": 1445,
+          "syntax_offset": -1
+        }
+      ],
+      "model_end": {
+        "chunks": 34,
+        "bytes": 1970,
+        "redacted": false,
+        "unavailable": false
+      },
+      "raw_sha256": "0ccd755706d462005a83dce026d686c6ad444b4731f97256cde6801eb00a83a9"
+    },
+    {
+      "case_id": 10,
+      "run_id": "01a08f3f-3bca-7e89-92b5-fa7afd566ec4",
+      "evidence_id": "8f6a9473-9da4-4072-945c-1d0a6c8b032e",
+      "expires_at": "2026-09-12T06:54:41.095600842Z",
+      "fingerprint": {
+        "source_sha256": "a10f9ab08b2fb4b78622000333daf52896fa81e768230b460038f636ff7a8237",
+        "binary_sha256": "e835b29b9bbedb03dd9afcc425ab6036b953f249255743ba616fe685e3c88915",
+        "template_sha256": "82186f8f8a6546e9a03f5f9cae40663a3ef66a5f87905b306cbcaadfcc6ffca1",
+        "schema_sha256": "2917ffe48a8cc5c3b304aef55cebb35d2685ee66646b6c07c41c9d337eb16282",
+        "validator_sha256": "45455715d8da62d0e00d3b938419912a9a31d29b0220a62fac31ae4b2ae2cea7",
+        "lexicon_sha256": "89e5b41dc8662780e443c10b5ecf81970944fc2b530d5f79372ac482ac744c0b"
+      },
+      "incomplete": false,
+      "capture": {
+        "coalesced_progress": 109,
+        "dropped_records": 0,
+        "dropped_bytes": 0,
+        "truncated": false,
+        "io_failed": false,
+        "redacted": false,
+        "model_ended": true,
+        "unavailable": false
+      },
+      "outcome": "valid",
+      "quota_refunded": false,
+      "stages": [
+        {
+          "stage": "request",
+          "state": "ok",
+          "check": "body"
+        },
+        {
+          "stage": "preflight",
+          "state": "ok",
+          "check": "transaction_commit"
+        },
+        {
+          "stage": "provider_open",
+          "state": "ok",
+          "check": "response_headers"
+        },
+        {
+          "stage": "provider_stream",
+          "state": "ok",
+          "check": ""
+        },
+        {
+          "stage": "passage_decode",
+          "state": "ok",
+          "check": "clean_consistency"
+        },
+        {
+          "stage": "candidate_decode",
+          "state": "ok",
+          "check": "hint_size"
+        },
+        {
+          "stage": "content_validate",
+          "state": "ok",
+          "check": "context"
+        },
+        {
+          "stage": "draft_commit",
+          "state": "ok",
+          "check": "transaction_commit"
+        },
+        {
+          "stage": "settlement",
+          "state": "not_run",
+          "check": ""
+        },
+        {
+          "stage": "delivery",
+          "state": "ok",
+          "check": ""
+        }
+      ],
+      "provider": [
+        {
+          "id": "gen-1789109681-j2lJl0oj3dmt2KsPiRHu",
+          "upstream_request_id": "",
+          "http_status": 0,
+          "frame": 38,
+          "bytes": 761,
+          "choice_index": 0,
+          "choice_index_provided": true,
+          "finish_reason": "stop",
+          "error_present": false,
+          "error_code_type": "not_provided",
+          "error_code": 0,
+          "usage_provided": true,
+          "prompt_tokens": 996,
+          "completion_tokens": 434,
+          "total_tokens": 1430,
+          "syntax_offset": -1
+        }
+      ],
+      "model_end": {
+        "chunks": 36,
+        "bytes": 2273,
+        "redacted": false,
+        "unavailable": false
+      },
+      "raw_sha256": "c24eb01a8ac9c0332189172b75059b8225ec7efe793ad500537083584c419045"
+    },
+    {
+      "case_id": 11,
+      "run_id": "01a08f3f-97bc-7d18-a9cf-e590faf81239",
+      "evidence_id": "238132b6-d42a-4957-bfaf-fa59266cb7d3",
+      "expires_at": "2026-09-12T06:55:04.632878298Z",
+      "fingerprint": {
+        "source_sha256": "a10f9ab08b2fb4b78622000333daf52896fa81e768230b460038f636ff7a8237",
+        "binary_sha256": "e835b29b9bbedb03dd9afcc425ab6036b953f249255743ba616fe685e3c88915",
+        "template_sha256": "82186f8f8a6546e9a03f5f9cae40663a3ef66a5f87905b306cbcaadfcc6ffca1",
+        "schema_sha256": "2917ffe48a8cc5c3b304aef55cebb35d2685ee66646b6c07c41c9d337eb16282",
+        "validator_sha256": "45455715d8da62d0e00d3b938419912a9a31d29b0220a62fac31ae4b2ae2cea7",
+        "lexicon_sha256": "89e5b41dc8662780e443c10b5ecf81970944fc2b530d5f79372ac482ac744c0b"
+      },
+      "incomplete": false,
+      "capture": {
+        "coalesced_progress": 139,
+        "dropped_records": 0,
+        "dropped_bytes": 0,
+        "truncated": false,
+        "io_failed": false,
+        "redacted": false,
+        "model_ended": true,
+        "unavailable": false
+      },
+      "first_failure": {
+        "stage": "content_validate",
+        "state": "failed",
+        "begin_ms": 8696,
+        "end_ms": 8696,
+        "duration_ms": 0,
+        "check": "word_count",
+        "detail": {
+          "reason": "passage_too_short",
+          "field": "passage",
+          "target_index": -1,
+          "actual": 173,
+          "limit": 400,
+          "byte_start": -1,
+          "byte_end": -1,
+          "expected_type": "",
+          "actual_type": ""
+        }
+      },
+      "outcome": "failed",
+      "quota_refunded": true,
+      "stages": [
+        {
+          "stage": "request",
+          "state": "ok",
+          "check": "body"
+        },
+        {
+          "stage": "preflight",
+          "state": "ok",
+          "check": "transaction_commit"
+        },
+        {
+          "stage": "provider_open",
+          "state": "ok",
+          "check": "response_headers"
+        },
+        {
+          "stage": "provider_stream",
+          "state": "ok",
+          "check": ""
+        },
+        {
+          "stage": "passage_decode",
+          "state": "ok",
+          "check": "clean_consistency"
+        },
+        {
+          "stage": "candidate_decode",
+          "state": "ok",
+          "check": "hint_size"
+        },
+        {
+          "stage": "content_validate",
+          "state": "failed",
+          "check": "word_count"
+        },
+        {
+          "stage": "draft_commit",
+          "state": "not_run",
+          "check": ""
+        },
+        {
+          "stage": "settlement",
+          "state": "ok",
+          "check": "cas"
+        },
+        {
+          "stage": "delivery",
+          "state": "ok",
+          "check": ""
+        }
+      ],
+      "provider": [
+        {
+          "id": "gen-1789109705-jofKq81arO8MRoCA44TI",
+          "upstream_request_id": "",
+          "http_status": 0,
+          "frame": 48,
+          "bytes": 762,
+          "choice_index": 0,
+          "choice_index_provided": true,
+          "finish_reason": "stop",
+          "error_present": false,
+          "error_code_type": "not_provided",
+          "error_code": 0,
+          "usage_provided": true,
+          "prompt_tokens": 1014,
+          "completion_tokens": 532,
+          "total_tokens": 1546,
+          "syntax_offset": -1
+        }
+      ],
+      "model_end": {
+        "chunks": 46,
+        "bytes": 2328,
+        "redacted": false,
+        "unavailable": false
+      },
+      "raw_sha256": "ef707d9dfc63b6773812f3e3cf6c17485c3713ab087828d2bc5cd6120641ab57"
+    },
+    {
+      "case_id": 12,
+      "run_id": "01a08f3f-b9d0-7582-a5be-5f2ba11803b0",
+      "evidence_id": "8182599b-af5f-4baf-89fd-0117bdcee502",
+      "expires_at": "2026-09-12T06:55:13.35791826Z",
+      "fingerprint": {
+        "source_sha256": "a10f9ab08b2fb4b78622000333daf52896fa81e768230b460038f636ff7a8237",
+        "binary_sha256": "e835b29b9bbedb03dd9afcc425ab6036b953f249255743ba616fe685e3c88915",
+        "template_sha256": "82186f8f8a6546e9a03f5f9cae40663a3ef66a5f87905b306cbcaadfcc6ffca1",
+        "schema_sha256": "2917ffe48a8cc5c3b304aef55cebb35d2685ee66646b6c07c41c9d337eb16282",
+        "validator_sha256": "45455715d8da62d0e00d3b938419912a9a31d29b0220a62fac31ae4b2ae2cea7",
+        "lexicon_sha256": "89e5b41dc8662780e443c10b5ecf81970944fc2b530d5f79372ac482ac744c0b"
+      },
+      "incomplete": false,
+      "capture": {
+        "coalesced_progress": 121,
+        "dropped_records": 0,
+        "dropped_bytes": 0,
+        "truncated": false,
+        "io_failed": false,
+        "redacted": false,
+        "model_ended": true,
+        "unavailable": false
+      },
+      "outcome": "valid",
+      "quota_refunded": false,
+      "stages": [
+        {
+          "stage": "request",
+          "state": "ok",
+          "check": "body"
+        },
+        {
+          "stage": "preflight",
+          "state": "ok",
+          "check": "transaction_commit"
+        },
+        {
+          "stage": "provider_open",
+          "state": "ok",
+          "check": "response_headers"
+        },
+        {
+          "stage": "provider_stream",
+          "state": "ok",
+          "check": ""
+        },
+        {
+          "stage": "passage_decode",
+          "state": "ok",
+          "check": "clean_consistency"
+        },
+        {
+          "stage": "candidate_decode",
+          "state": "ok",
+          "check": "hint_size"
+        },
+        {
+          "stage": "content_validate",
+          "state": "ok",
+          "check": "context"
+        },
+        {
+          "stage": "draft_commit",
+          "state": "ok",
+          "check": "transaction_commit"
+        },
+        {
+          "stage": "settlement",
+          "state": "not_run",
+          "check": ""
+        },
+        {
+          "stage": "delivery",
+          "state": "ok",
+          "check": ""
+        }
+      ],
+      "provider": [
+        {
+          "id": "gen-1789109713-6rreO8JIiwiftOsASomT",
+          "upstream_request_id": "",
+          "http_status": 0,
+          "frame": 42,
+          "bytes": 762,
+          "choice_index": 0,
+          "choice_index_provided": true,
+          "finish_reason": "stop",
+          "error_present": false,
+          "error_code_type": "not_provided",
+          "error_code": 0,
+          "usage_provided": true,
+          "prompt_tokens": 1005,
+          "completion_tokens": 431,
+          "total_tokens": 1436,
+          "syntax_offset": -1
+        }
+      ],
+      "model_end": {
+        "chunks": 40,
+        "bytes": 1888,
+        "redacted": false,
+        "unavailable": false
+      },
+      "raw_sha256": "e6f3941b63c51e4c0e9743130040ad3cd8b0807009ea19b5461e0876cf339672"
+    },
+    {
+      "case_id": 13,
+      "run_id": "01a08f3f-cd78-7114-8e6c-bec0976aa575",
+      "evidence_id": "4be55bb4-faf9-4220-bd04-f031ecb92dfd",
+      "expires_at": "2026-09-12T06:55:18.389750887Z",
+      "fingerprint": {
+        "source_sha256": "a10f9ab08b2fb4b78622000333daf52896fa81e768230b460038f636ff7a8237",
+        "binary_sha256": "e835b29b9bbedb03dd9afcc425ab6036b953f249255743ba616fe685e3c88915",
+        "template_sha256": "82186f8f8a6546e9a03f5f9cae40663a3ef66a5f87905b306cbcaadfcc6ffca1",
+        "schema_sha256": "2917ffe48a8cc5c3b304aef55cebb35d2685ee66646b6c07c41c9d337eb16282",
+        "validator_sha256": "45455715d8da62d0e00d3b938419912a9a31d29b0220a62fac31ae4b2ae2cea7",
+        "lexicon_sha256": "89e5b41dc8662780e443c10b5ecf81970944fc2b530d5f79372ac482ac744c0b"
+      },
+      "incomplete": false,
+      "capture": {
+        "coalesced_progress": 103,
+        "dropped_records": 0,
+        "dropped_bytes": 0,
+        "truncated": false,
+        "io_failed": false,
+        "redacted": false,
+        "model_ended": true,
+        "unavailable": false
+      },
+      "first_failure": {
+        "stage": "content_validate",
+        "state": "failed",
+        "begin_ms": 8571,
+        "end_ms": 8572,
+        "duration_ms": 1,
+        "check": "word_count",
+        "detail": {
+          "reason": "passage_too_short",
+          "field": "passage",
+          "target_index": -1,
+          "actual": 123,
+          "limit": 200,
+          "byte_start": -1,
+          "byte_end": -1,
+          "expected_type": "",
+          "actual_type": ""
+        }
+      },
+      "outcome": "failed",
+      "quota_refunded": true,
+      "stages": [
+        {
+          "stage": "request",
+          "state": "ok",
+          "check": "body"
+        },
+        {
+          "stage": "preflight",
+          "state": "ok",
+          "check": "transaction_commit"
+        },
+        {
+          "stage": "provider_open",
+          "state": "ok",
+          "check": "response_headers"
+        },
+        {
+          "stage": "provider_stream",
+          "state": "ok",
+          "check": ""
+        },
+        {
+          "stage": "passage_decode",
+          "state": "ok",
+          "check": "clean_consistency"
+        },
+        {
+          "stage": "candidate_decode",
+          "state": "ok",
+          "check": "hint_size"
+        },
+        {
+          "stage": "content_validate",
+          "state": "failed",
+          "check": "word_count"
+        },
+        {
+          "stage": "draft_commit",
+          "state": "not_run",
+          "check": ""
+        },
+        {
+          "stage": "settlement",
+          "state": "ok",
+          "check": "cas"
+        },
+        {
+          "stage": "delivery",
+          "state": "ok",
+          "check": ""
+        }
+      ],
+      "provider": [
+        {
+          "id": "gen-1789109718-lstl82wfPdOc6YTRJE02",
+          "upstream_request_id": "",
+          "http_status": 0,
+          "frame": 36,
+          "bytes": 762,
+          "choice_index": 0,
+          "choice_index_provided": true,
+          "finish_reason": "stop",
+          "error_present": false,
+          "error_code_type": "not_provided",
+          "error_code": 0,
+          "usage_provided": true,
+          "prompt_tokens": 1005,
+          "completion_tokens": 441,
+          "total_tokens": 1446,
+          "syntax_offset": -1
+        }
+      ],
+      "model_end": {
+        "chunks": 34,
+        "bytes": 1954,
+        "redacted": false,
+        "unavailable": false
+      },
+      "raw_sha256": "833b082d8fb264c68c728e9c74614c744ac73264d6519bf6a79272e3e0be9185"
+    },
+    {
+      "case_id": 14,
+      "run_id": "01a08f3f-ef10-7f60-8a17-d506f26cf0eb",
+      "evidence_id": "bb765dc5-0db5-4c8c-9a64-70707b89e43a",
+      "expires_at": "2026-09-12T06:55:26.989576586Z",
+      "fingerprint": {
+        "source_sha256": "a10f9ab08b2fb4b78622000333daf52896fa81e768230b460038f636ff7a8237",
+        "binary_sha256": "e835b29b9bbedb03dd9afcc425ab6036b953f249255743ba616fe685e3c88915",
+        "template_sha256": "82186f8f8a6546e9a03f5f9cae40663a3ef66a5f87905b306cbcaadfcc6ffca1",
+        "schema_sha256": "2917ffe48a8cc5c3b304aef55cebb35d2685ee66646b6c07c41c9d337eb16282",
+        "validator_sha256": "45455715d8da62d0e00d3b938419912a9a31d29b0220a62fac31ae4b2ae2cea7",
+        "lexicon_sha256": "89e5b41dc8662780e443c10b5ecf81970944fc2b530d5f79372ac482ac744c0b"
+      },
+      "incomplete": false,
+      "capture": {
+        "coalesced_progress": 190,
+        "dropped_records": 0,
+        "dropped_bytes": 0,
+        "truncated": false,
+        "io_failed": false,
+        "redacted": false,
+        "model_ended": true,
+        "unavailable": false
+      },
+      "first_failure": {
+        "stage": "content_validate",
+        "state": "failed",
+        "begin_ms": 11317,
+        "end_ms": 11318,
+        "duration_ms": 1,
+        "check": "word_count",
+        "detail": {
+          "reason": "passage_too_short",
+          "field": "passage",
+          "target_index": -1,
+          "actual": 394,
+          "limit": 400,
+          "byte_start": -1,
+          "byte_end": -1,
+          "expected_type": "",
+          "actual_type": ""
+        }
+      },
+      "outcome": "failed",
+      "quota_refunded": true,
+      "stages": [
+        {
+          "stage": "request",
+          "state": "ok",
+          "check": "body"
+        },
+        {
+          "stage": "preflight",
+          "state": "ok",
+          "check": "transaction_commit"
+        },
+        {
+          "stage": "provider_open",
+          "state": "ok",
+          "check": "response_headers"
+        },
+        {
+          "stage": "provider_stream",
+          "state": "ok",
+          "check": ""
+        },
+        {
+          "stage": "passage_decode",
+          "state": "ok",
+          "check": "clean_consistency"
+        },
+        {
+          "stage": "candidate_decode",
+          "state": "ok",
+          "check": "hint_size"
+        },
+        {
+          "stage": "content_validate",
+          "state": "failed",
+          "check": "word_count"
+        },
+        {
+          "stage": "draft_commit",
+          "state": "not_run",
+          "check": ""
+        },
+        {
+          "stage": "settlement",
+          "state": "ok",
+          "check": "cas"
+        },
+        {
+          "stage": "delivery",
+          "state": "ok",
+          "check": ""
+        }
+      ],
+      "provider": [
+        {
+          "id": "gen-1789109727-lXahVrRWMEKj0KWRPxp2",
+          "upstream_request_id": "",
+          "http_status": 0,
+          "frame": 65,
+          "bytes": 761,
+          "choice_index": 0,
+          "choice_index_provided": true,
+          "finish_reason": "stop",
+          "error_present": false,
+          "error_code_type": "not_provided",
+          "error_code": 0,
+          "usage_provided": true,
+          "prompt_tokens": 996,
+          "completion_tokens": 818,
+          "total_tokens": 1814,
+          "syntax_offset": -1
+        }
+      ],
+      "model_end": {
+        "chunks": 63,
+        "bytes": 3699,
+        "redacted": false,
+        "unavailable": false
+      },
+      "raw_sha256": "a5df117105771aafc22cd2cd81e0ed1077104672b58f79d6a7bd4af68e620753"
+    },
+    {
+      "case_id": 15,
+      "run_id": "01a08f40-1b63-7c7d-af80-9842573b381e",
+      "evidence_id": "2aca41d2-7e5b-422f-9827-524a1837778b",
+      "expires_at": "2026-09-12T06:55:38.337282966Z",
+      "fingerprint": {
+        "source_sha256": "a10f9ab08b2fb4b78622000333daf52896fa81e768230b460038f636ff7a8237",
+        "binary_sha256": "e835b29b9bbedb03dd9afcc425ab6036b953f249255743ba616fe685e3c88915",
+        "template_sha256": "82186f8f8a6546e9a03f5f9cae40663a3ef66a5f87905b306cbcaadfcc6ffca1",
+        "schema_sha256": "2917ffe48a8cc5c3b304aef55cebb35d2685ee66646b6c07c41c9d337eb16282",
+        "validator_sha256": "45455715d8da62d0e00d3b938419912a9a31d29b0220a62fac31ae4b2ae2cea7",
+        "lexicon_sha256": "89e5b41dc8662780e443c10b5ecf81970944fc2b530d5f79372ac482ac744c0b"
+      },
+      "incomplete": false,
+      "capture": {
+        "coalesced_progress": 118,
+        "dropped_records": 0,
+        "dropped_bytes": 0,
+        "truncated": false,
+        "io_failed": false,
+        "redacted": false,
+        "model_ended": true,
+        "unavailable": false
+      },
+      "outcome": "valid",
+      "quota_refunded": false,
+      "stages": [
+        {
+          "stage": "request",
+          "state": "ok",
+          "check": "body"
+        },
+        {
+          "stage": "preflight",
+          "state": "ok",
+          "check": "transaction_commit"
+        },
+        {
+          "stage": "provider_open",
+          "state": "ok",
+          "check": "response_headers"
+        },
+        {
+          "stage": "provider_stream",
+          "state": "ok",
+          "check": ""
+        },
+        {
+          "stage": "passage_decode",
+          "state": "ok",
+          "check": "clean_consistency"
+        },
+        {
+          "stage": "candidate_decode",
+          "state": "ok",
+          "check": "hint_size"
+        },
+        {
+          "stage": "content_validate",
+          "state": "ok",
+          "check": "context"
+        },
+        {
+          "stage": "draft_commit",
+          "state": "ok",
+          "check": "transaction_commit"
+        },
+        {
+          "stage": "settlement",
+          "state": "not_run",
+          "check": ""
+        },
+        {
+          "stage": "delivery",
+          "state": "ok",
+          "check": ""
+        }
+      ],
+      "provider": [
+        {
+          "id": "gen-1789109738-XDHRtmJ6IiCTzkSxMSKI",
+          "upstream_request_id": "",
+          "http_status": 0,
+          "frame": 41,
+          "bytes": 762,
+          "choice_index": 0,
+          "choice_index_provided": true,
+          "finish_reason": "stop",
+          "error_present": false,
+          "error_code_type": "not_provided",
+          "error_code": 0,
+          "usage_provided": true,
+          "prompt_tokens": 1014,
+          "completion_tokens": 439,
+          "total_tokens": 1453,
+          "syntax_offset": -1
+        }
+      ],
+      "model_end": {
+        "chunks": 39,
+        "bytes": 1814,
+        "redacted": false,
+        "unavailable": false
+      },
+      "raw_sha256": "133cf9b7713d284cc358808df8aa9e86b51c64aaf2e5bd3680d6d7eef76dfe38"
+    },
+    {
+      "case_id": 16,
+      "run_id": "01a08f40-8950-73b9-b28c-481e34621b16",
+      "evidence_id": "21f182ae-3a0a-4503-87cc-5730f0a01b08",
+      "expires_at": "2026-09-12T06:56:06.47583459Z",
+      "fingerprint": {
+        "source_sha256": "a10f9ab08b2fb4b78622000333daf52896fa81e768230b460038f636ff7a8237",
+        "binary_sha256": "e835b29b9bbedb03dd9afcc425ab6036b953f249255743ba616fe685e3c88915",
+        "template_sha256": "82186f8f8a6546e9a03f5f9cae40663a3ef66a5f87905b306cbcaadfcc6ffca1",
+        "schema_sha256": "2917ffe48a8cc5c3b304aef55cebb35d2685ee66646b6c07c41c9d337eb16282",
+        "validator_sha256": "45455715d8da62d0e00d3b938419912a9a31d29b0220a62fac31ae4b2ae2cea7",
+        "lexicon_sha256": "89e5b41dc8662780e443c10b5ecf81970944fc2b530d5f79372ac482ac744c0b"
+      },
+      "incomplete": false,
+      "capture": {
+        "coalesced_progress": 94,
+        "dropped_records": 0,
+        "dropped_bytes": 0,
+        "truncated": false,
+        "io_failed": false,
+        "redacted": false,
+        "model_ended": true,
+        "unavailable": false
+      },
+      "first_failure": {
+        "stage": "content_validate",
+        "state": "failed",
+        "begin_ms": 7695,
+        "end_ms": 7695,
+        "duration_ms": 0,
+        "check": "tag_content",
+        "detail": {
+          "reason": "tag_content_or_language_invalid",
+          "field": "tags",
+          "target_index": -1,
+          "actual": 10,
+          "limit": 100,
+          "byte_start": -1,
+          "byte_end": -1,
+          "expected_type": "",
+          "actual_type": ""
+        }
+      },
+      "outcome": "failed",
+      "quota_refunded": true,
+      "stages": [
+        {
+          "stage": "request",
+          "state": "ok",
+          "check": "body"
+        },
+        {
+          "stage": "preflight",
+          "state": "ok",
+          "check": "transaction_commit"
+        },
+        {
+          "stage": "provider_open",
+          "state": "ok",
+          "check": "response_headers"
+        },
+        {
+          "stage": "provider_stream",
+          "state": "ok",
+          "check": ""
+        },
+        {
+          "stage": "passage_decode",
+          "state": "ok",
+          "check": "clean_consistency"
+        },
+        {
+          "stage": "candidate_decode",
+          "state": "ok",
+          "check": "hint_size"
+        },
+        {
+          "stage": "content_validate",
+          "state": "failed",
+          "check": "tag_content"
+        },
+        {
+          "stage": "draft_commit",
+          "state": "not_run",
+          "check": ""
+        },
+        {
+          "stage": "settlement",
+          "state": "ok",
+          "check": "cas"
+        },
+        {
+          "stage": "delivery",
+          "state": "ok",
+          "check": ""
+        }
+      ],
+      "provider": [
+        {
+          "id": "gen-1789109767-ulzS5hvzvLipU9OMrGLn",
+          "upstream_request_id": "",
+          "http_status": 0,
+          "frame": 33,
+          "bytes": 762,
+          "choice_index": 0,
+          "choice_index_provided": true,
+          "finish_reason": "stop",
+          "error_present": false,
+          "error_code_type": "not_provided",
+          "error_code": 0,
+          "usage_provided": true,
+          "prompt_tokens": 1005,
+          "completion_tokens": 498,
+          "total_tokens": 1503,
+          "syntax_offset": -1
+        }
+      ],
+      "model_end": {
+        "chunks": 31,
+        "bytes": 2320,
+        "redacted": false,
+        "unavailable": false
+      },
+      "raw_sha256": "85ca705c0cde103d78b267094441829bf3359a1432f713c759142a0f939e74b6"
+    },
+    {
+      "case_id": 17,
+      "run_id": "01a08f40-a77a-7ade-8c0b-6b4d57ebc415",
+      "evidence_id": "e8ba8d05-ad36-48ad-8c43-61d2b6574fc5",
+      "expires_at": "2026-09-12T06:56:14.199062302Z",
+      "fingerprint": {
+        "source_sha256": "a10f9ab08b2fb4b78622000333daf52896fa81e768230b460038f636ff7a8237",
+        "binary_sha256": "e835b29b9bbedb03dd9afcc425ab6036b953f249255743ba616fe685e3c88915",
+        "template_sha256": "82186f8f8a6546e9a03f5f9cae40663a3ef66a5f87905b306cbcaadfcc6ffca1",
+        "schema_sha256": "2917ffe48a8cc5c3b304aef55cebb35d2685ee66646b6c07c41c9d337eb16282",
+        "validator_sha256": "45455715d8da62d0e00d3b938419912a9a31d29b0220a62fac31ae4b2ae2cea7",
+        "lexicon_sha256": "89e5b41dc8662780e443c10b5ecf81970944fc2b530d5f79372ac482ac744c0b"
+      },
+      "incomplete": false,
+      "capture": {
+        "coalesced_progress": 148,
+        "dropped_records": 0,
+        "dropped_bytes": 0,
+        "truncated": false,
+        "io_failed": false,
+        "redacted": false,
+        "model_ended": true,
+        "unavailable": false
+      },
+      "first_failure": {
+        "stage": "content_validate",
+        "state": "failed",
+        "begin_ms": 12112,
+        "end_ms": 12113,
+        "duration_ms": 1,
+        "check": "word_count",
+        "detail": {
+          "reason": "passage_too_short",
+          "field": "passage",
+          "target_index": -1,
+          "actual": 368,
+          "limit": 400,
+          "byte_start": -1,
+          "byte_end": -1,
+          "expected_type": "",
+          "actual_type": ""
+        }
+      },
+      "outcome": "failed",
+      "quota_refunded": true,
+      "stages": [
+        {
+          "stage": "request",
+          "state": "ok",
+          "check": "body"
+        },
+        {
+          "stage": "preflight",
+          "state": "ok",
+          "check": "transaction_commit"
+        },
+        {
+          "stage": "provider_open",
+          "state": "ok",
+          "check": "response_headers"
+        },
+        {
+          "stage": "provider_stream",
+          "state": "ok",
+          "check": ""
+        },
+        {
+          "stage": "passage_decode",
+          "state": "ok",
+          "check": "clean_consistency"
+        },
+        {
+          "stage": "candidate_decode",
+          "state": "ok",
+          "check": "hint_size"
+        },
+        {
+          "stage": "content_validate",
+          "state": "failed",
+          "check": "word_count"
+        },
+        {
+          "stage": "draft_commit",
+          "state": "not_run",
+          "check": ""
+        },
+        {
+          "stage": "settlement",
+          "state": "ok",
+          "check": "cas"
+        },
+        {
+          "stage": "delivery",
+          "state": "ok",
+          "check": ""
+        }
+      ],
+      "provider": [
+        {
+          "id": "gen-1789109774-EnEVkp0ALnsp1pAZYsHs",
+          "upstream_request_id": "",
+          "http_status": 0,
+          "frame": 51,
+          "bytes": 762,
+          "choice_index": 0,
+          "choice_index_provided": true,
+          "finish_reason": "stop",
+          "error_present": false,
+          "error_code_type": "not_provided",
+          "error_code": 0,
+          "usage_provided": true,
+          "prompt_tokens": 1005,
+          "completion_tokens": 727,
+          "total_tokens": 1732,
+          "syntax_offset": -1
+        }
+      ],
+      "model_end": {
+        "chunks": 49,
+        "bytes": 3259,
+        "redacted": false,
+        "unavailable": false
+      },
+      "raw_sha256": "9f351b6399329f10be31e716417629e92a2aa005e332ab088e6a454149c43b2b"
+    },
+    {
+      "case_id": 18,
+      "run_id": "01a08f40-d6f5-760a-b4c7-a8bf8ad5cf53",
+      "evidence_id": "af452698-6806-4c91-9ce3-d409e6075f0e",
+      "expires_at": "2026-09-12T06:56:26.353108252Z",
+      "fingerprint": {
+        "source_sha256": "a10f9ab08b2fb4b78622000333daf52896fa81e768230b460038f636ff7a8237",
+        "binary_sha256": "e835b29b9bbedb03dd9afcc425ab6036b953f249255743ba616fe685e3c88915",
+        "template_sha256": "82186f8f8a6546e9a03f5f9cae40663a3ef66a5f87905b306cbcaadfcc6ffca1",
+        "schema_sha256": "2917ffe48a8cc5c3b304aef55cebb35d2685ee66646b6c07c41c9d337eb16282",
+        "validator_sha256": "45455715d8da62d0e00d3b938419912a9a31d29b0220a62fac31ae4b2ae2cea7",
+        "lexicon_sha256": "89e5b41dc8662780e443c10b5ecf81970944fc2b530d5f79372ac482ac744c0b"
+      },
+      "incomplete": false,
+      "capture": {
+        "coalesced_progress": 73,
+        "dropped_records": 0,
+        "dropped_bytes": 0,
+        "truncated": false,
+        "io_failed": false,
+        "redacted": false,
+        "model_ended": true,
+        "unavailable": false
+      },
+      "outcome": "valid",
+      "quota_refunded": false,
+      "stages": [
+        {
+          "stage": "request",
+          "state": "ok",
+          "check": "body"
+        },
+        {
+          "stage": "preflight",
+          "state": "ok",
+          "check": "transaction_commit"
+        },
+        {
+          "stage": "provider_open",
+          "state": "ok",
+          "check": "response_headers"
+        },
+        {
+          "stage": "provider_stream",
+          "state": "ok",
+          "check": ""
+        },
+        {
+          "stage": "passage_decode",
+          "state": "ok",
+          "check": "clean_consistency"
+        },
+        {
+          "stage": "candidate_decode",
+          "state": "ok",
+          "check": "hint_size"
+        },
+        {
+          "stage": "content_validate",
+          "state": "ok",
+          "check": "context"
+        },
+        {
+          "stage": "draft_commit",
+          "state": "ok",
+          "check": "transaction_commit"
+        },
+        {
+          "stage": "settlement",
+          "state": "not_run",
+          "check": ""
+        },
+        {
+          "stage": "delivery",
+          "state": "ok",
+          "check": ""
+        }
+      ],
+      "provider": [
+        {
+          "id": "gen-1789109786-nUPPDKDDxzSNE8nbemAw",
+          "upstream_request_id": "",
+          "http_status": 0,
+          "frame": 26,
+          "bytes": 761,
+          "choice_index": 0,
+          "choice_index_provided": true,
+          "finish_reason": "stop",
+          "error_present": false,
+          "error_code_type": "not_provided",
+          "error_code": 0,
+          "usage_provided": true,
+          "prompt_tokens": 996,
+          "completion_tokens": 443,
+          "total_tokens": 1439,
+          "syntax_offset": -1
+        }
+      ],
+      "model_end": {
+        "chunks": 24,
+        "bytes": 1749,
+        "redacted": false,
+        "unavailable": false
+      },
+      "raw_sha256": "98b02f6908abdb16eb443c84904fd0a1f0e968386f3c0aab8dc7a9e365ee1370"
+    },
+    {
+      "case_id": 19,
+      "run_id": "01a08f40-edf3-7764-9672-019166af6b4d",
+      "evidence_id": "4a5c751b-ab8d-45d8-ac53-470e24f35c6c",
+      "expires_at": "2026-09-12T06:56:32.241384088Z",
+      "fingerprint": {
+        "source_sha256": "a10f9ab08b2fb4b78622000333daf52896fa81e768230b460038f636ff7a8237",
+        "binary_sha256": "e835b29b9bbedb03dd9afcc425ab6036b953f249255743ba616fe685e3c88915",
+        "template_sha256": "82186f8f8a6546e9a03f5f9cae40663a3ef66a5f87905b306cbcaadfcc6ffca1",
+        "schema_sha256": "2917ffe48a8cc5c3b304aef55cebb35d2685ee66646b6c07c41c9d337eb16282",
+        "validator_sha256": "45455715d8da62d0e00d3b938419912a9a31d29b0220a62fac31ae4b2ae2cea7",
+        "lexicon_sha256": "89e5b41dc8662780e443c10b5ecf81970944fc2b530d5f79372ac482ac744c0b"
+      },
+      "incomplete": false,
+      "capture": {
+        "coalesced_progress": 91,
+        "dropped_records": 0,
+        "dropped_bytes": 0,
+        "truncated": false,
+        "io_failed": false,
+        "redacted": false,
+        "model_ended": true,
+        "unavailable": false
+      },
+      "first_failure": {
+        "stage": "content_validate",
+        "state": "failed",
+        "begin_ms": 6027,
+        "end_ms": 6028,
+        "duration_ms": 1,
+        "check": "passage_ownership",
+        "detail": {
+          "reason": "annotation_source_unknown",
+          "field": "passage",
+          "target_index": -1,
+          "actual": -1,
+          "limit": -1,
+          "byte_start": -1,
+          "byte_end": -1,
+          "expected_type": "",
+          "actual_type": ""
+        }
+      },
+      "outcome": "failed",
+      "quota_refunded": true,
+      "stages": [
+        {
+          "stage": "request",
+          "state": "ok",
+          "check": "body"
+        },
+        {
+          "stage": "preflight",
+          "state": "ok",
+          "check": "transaction_commit"
+        },
+        {
+          "stage": "provider_open",
+          "state": "ok",
+          "check": "response_headers"
+        },
+        {
+          "stage": "provider_stream",
+          "state": "ok",
+          "check": ""
+        },
+        {
+          "stage": "passage_decode",
+          "state": "ok",
+          "check": "clean_consistency"
+        },
+        {
+          "stage": "candidate_decode",
+          "state": "ok",
+          "check": "hint_size"
+        },
+        {
+          "stage": "content_validate",
+          "state": "failed",
+          "check": "passage_ownership"
+        },
+        {
+          "stage": "draft_commit",
+          "state": "not_run",
+          "check": ""
+        },
+        {
+          "stage": "settlement",
+          "state": "ok",
+          "check": "cas"
+        },
+        {
+          "stage": "delivery",
+          "state": "ok",
+          "check": ""
+        }
+      ],
+      "provider": [
+        {
+          "id": "gen-1789109792-w2bHEi01hwtvWb9INhfj",
+          "upstream_request_id": "",
+          "http_status": 0,
+          "frame": 32,
+          "bytes": 762,
+          "choice_index": 0,
+          "choice_index_provided": true,
+          "finish_reason": "stop",
+          "error_present": false,
+          "error_code_type": "not_provided",
+          "error_code": 0,
+          "usage_provided": true,
+          "prompt_tokens": 1014,
+          "completion_tokens": 369,
+          "total_tokens": 1383,
+          "syntax_offset": -1
+        }
+      ],
+      "model_end": {
+        "chunks": 30,
+        "bytes": 1750,
+        "redacted": false,
+        "unavailable": false
+      },
+      "raw_sha256": "ff1d4902942070a8b8e82e952ca0fbe24a2054df41d4050b9fdeae0d212da190"
+    },
+    {
+      "case_id": 20,
+      "run_id": "01a08f41-05b7-7e01-b060-afa4defc6b15",
+      "evidence_id": "22b20389-1093-4b41-941c-68cd52482176",
+      "expires_at": "2026-09-12T06:56:38.306294049Z",
+      "fingerprint": {
+        "source_sha256": "a10f9ab08b2fb4b78622000333daf52896fa81e768230b460038f636ff7a8237",
+        "binary_sha256": "e835b29b9bbedb03dd9afcc425ab6036b953f249255743ba616fe685e3c88915",
+        "template_sha256": "82186f8f8a6546e9a03f5f9cae40663a3ef66a5f87905b306cbcaadfcc6ffca1",
+        "schema_sha256": "2917ffe48a8cc5c3b304aef55cebb35d2685ee66646b6c07c41c9d337eb16282",
+        "validator_sha256": "45455715d8da62d0e00d3b938419912a9a31d29b0220a62fac31ae4b2ae2cea7",
+        "lexicon_sha256": "89e5b41dc8662780e443c10b5ecf81970944fc2b530d5f79372ac482ac744c0b"
+      },
+      "incomplete": false,
+      "capture": {
+        "coalesced_progress": 151,
+        "dropped_records": 0,
+        "dropped_bytes": 0,
+        "truncated": false,
+        "io_failed": false,
+        "redacted": false,
+        "model_ended": true,
+        "unavailable": false
+      },
+      "outcome": "valid",
+      "quota_refunded": false,
+      "stages": [
+        {
+          "stage": "request",
+          "state": "ok",
+          "check": "body"
+        },
+        {
+          "stage": "preflight",
+          "state": "ok",
+          "check": "transaction_commit"
+        },
+        {
+          "stage": "provider_open",
+          "state": "ok",
+          "check": "response_headers"
+        },
+        {
+          "stage": "provider_stream",
+          "state": "ok",
+          "check": ""
+        },
+        {
+          "stage": "passage_decode",
+          "state": "ok",
+          "check": "clean_consistency"
+        },
+        {
+          "stage": "candidate_decode",
+          "state": "ok",
+          "check": "hint_size"
+        },
+        {
+          "stage": "content_validate",
+          "state": "ok",
+          "check": "context"
+        },
+        {
+          "stage": "draft_commit",
+          "state": "ok",
+          "check": "transaction_commit"
+        },
+        {
+          "stage": "settlement",
+          "state": "not_run",
+          "check": ""
+        },
+        {
+          "stage": "delivery",
+          "state": "ok",
+          "check": ""
+        }
+      ],
+      "provider": [
+        {
+          "id": "gen-1789109798-c7swYcEo9Dt5qBOTpRNF",
+          "upstream_request_id": "",
+          "http_status": 0,
+          "frame": 52,
+          "bytes": 762,
+          "choice_index": 0,
+          "choice_index_provided": true,
+          "finish_reason": "stop",
+          "error_present": false,
+          "error_code_type": "not_provided",
+          "error_code": 0,
+          "usage_provided": true,
+          "prompt_tokens": 1005,
+          "completion_tokens": 592,
+          "total_tokens": 1597,
+          "syntax_offset": -1
+        }
+      ],
+      "model_end": {
+        "chunks": 50,
+        "bytes": 3059,
+        "redacted": false,
+        "unavailable": false
+      },
+      "raw_sha256": "866c8050e12f0141af6a2fcd48839b42cffad04c282dcfbb7f7bd3344c26754f"
+    }
+  ],
+  "content_reviews": [
+    {
+      "case_id": 1,
+      "content_review": "pass",
+      "notes": [],
+      "meaning_review": "pass",
+      "hint_review": "pass",
+      "scenario_review": "pass"
+    },
+    {
+      "case_id": 2,
+      "content_review": "fail",
+      "notes": [
+        "正文 target_index=1 的可数名词使用裸单数，搭配不自然；discussion 内容较偏游记叙事"
+      ],
+      "meaning_review": "pass",
+      "hint_review": "pass",
+      "scenario_review": "concern"
+    },
+    {
+      "case_id": 3,
+      "content_review": "concern",
+      "notes": [
+        "正文 target_index=3 的及物搭配较生硬；不把措辞偏好直接当成确定语法错误"
+      ],
+      "meaning_review": "pass",
+      "hint_review": "pass",
+      "scenario_review": "pass"
+    },
+    {
+      "case_id": 4,
+      "content_review": "unavailable_as_resource",
+      "notes": [
+        "127词，未达到200词下限；可读内容的词义和场景未见明显问题"
+      ],
+      "meaning_review": "pass",
+      "hint_review": "pass",
+      "scenario_review": "pass"
+    },
+    {
+      "case_id": 5,
+      "content_review": "pass",
+      "notes": [
+        "私有原文存在脱敏替换，正文质量改从同账号实际有效草稿核对；不声称原始capture可精确回放"
+      ],
+      "meaning_review": "pass",
+      "hint_review": "pass",
+      "scenario_review": "pass"
+    },
+    {
+      "case_id": 6,
+      "content_review": "concern",
+      "notes": [
+        "正文 target_index=4 与系统名词的搭配生硬，target_index=0 的英文释义混合人物名词解释与形容词定义；五条提示均写成完整例句"
+      ],
+      "meaning_review": "concern",
+      "hint_review": "concern",
+      "scenario_review": "pass"
+    },
+    {
+      "case_id": 7,
+      "content_review": "unavailable_as_resource",
+      "notes": [
+        "114词，未达到200词下限；可读正文场景和词义未见明显错误"
+      ],
+      "meaning_review": "pass",
+      "hint_review": "pass",
+      "scenario_review": "pass"
+    },
+    {
+      "case_id": 8,
+      "content_review": "unavailable_as_resource",
+      "notes": [
+        "206词，未达到400词下限；正文 target_index=4 修饰对象搭配偏生硬"
+      ],
+      "meaning_review": "pass",
+      "hint_review": "pass",
+      "scenario_review": "pass"
+    },
+    {
+      "case_id": 9,
+      "content_review": "fail",
+      "notes": [
+        "正文 target_index=0 用于修饰财务收入，搭配不自然，不宜作为基础学习示范；提示多为完整例句"
+      ],
+      "meaning_review": "pass",
+      "hint_review": "concern",
+      "scenario_review": "pass"
+    },
+    {
+      "case_id": 10,
+      "content_review": "concern",
+      "notes": [
+        "正文总体可读，但目标词重复较刻意；提示均为完整例句，标签仅标文体而缺主题信息"
+      ],
+      "meaning_review": "pass",
+      "hint_review": "concern",
+      "scenario_review": "pass"
+    },
+    {
+      "case_id": 11,
+      "content_review": "unavailable_as_resource",
+      "notes": [
+        "173词，未达到400词下限；正文与原词释义未见明显语义错误"
+      ],
+      "meaning_review": "pass",
+      "hint_review": "pass",
+      "scenario_review": "pass"
+    },
+    {
+      "case_id": 12,
+      "content_review": "concern",
+      "notes": [
+        "正文 target_index=1 的搭配略生硬；有些提示是完整例句，原词释义正确"
+      ],
+      "meaning_review": "pass",
+      "hint_review": "concern",
+      "scenario_review": "pass"
+    },
+    {
+      "case_id": 13,
+      "content_review": "unavailable_as_resource",
+      "notes": [
+        "123词，未达到200词下限；正文和短语大致自然，原词释义未见明显错误"
+      ],
+      "meaning_review": "pass",
+      "hint_review": "pass",
+      "scenario_review": "pass"
+    },
+    {
+      "case_id": 14,
+      "content_review": "unavailable_as_resource",
+      "notes": [
+        "394词，未达到400词下限；直接引语标点可改善，词义/提示内容基本合理"
+      ],
+      "meaning_review": "pass",
+      "hint_review": "pass",
+      "scenario_review": "pass"
+    },
+    {
+      "case_id": 15,
+      "content_review": "concern",
+      "notes": [
+        "灯塔故障与船上维修的场景衔接不够清晰；一个标签是产品用途而非文章主题"
+      ],
+      "meaning_review": "pass",
+      "hint_review": "pass",
+      "scenario_review": "pass"
+    },
+    {
+      "case_id": 16,
+      "content_review": "unavailable_as_resource",
+      "notes": [
+        "中文配置却返回英文标签，其中两个是目标词而非文章主题；正文和释义本身基本可读"
+      ],
+      "meaning_review": "pass",
+      "hint_review": "pass",
+      "scenario_review": "pass"
+    },
+    {
+      "case_id": 17,
+      "content_review": "unavailable_as_resource",
+      "notes": [
+        "368词，未达到400词下限；handicap释义局限身体/心理状况而忽略一般不利条件，语义独立性存在疑虑；后续词法检查未执行"
+      ],
+      "meaning_review": "concern",
+      "hint_review": "pass",
+      "scenario_review": "pass"
+    },
+    {
+      "case_id": 18,
+      "content_review": "pass",
+      "notes": [],
+      "meaning_review": "pass",
+      "hint_review": "pass",
+      "scenario_review": "pass"
+    },
+    {
+      "case_id": 19,
+      "content_review": "unavailable_as_resource",
+      "notes": [
+        "正文首部将五个原词拼成一个标注来源；五条hint还把非目标词误标为目标词，不能直接剥掉错误标注或接受整批"
+      ],
+      "meaning_review": "pass",
+      "hint_review": "fail",
+      "scenario_review": "pass"
+    },
+    {
+      "case_id": 20,
+      "content_review": "concern",
+      "notes": [
+        "正文及原词释义总体自然；五条提示为较长完整例句，偏离短语式提示；正文派生位置已由服务端识别"
+      ],
+      "meaning_review": "pass",
+      "hint_review": "concern",
+      "scenario_review": "pass"
+    }
+  ],
+  "limits": [
+    "First failing validation rule is not proof all later checks pass; all failed calls were short-circuited.",
+    "Balanced chosen configurations conflate language/scenario/length; subgroup counts are descriptive, not causal model rankings.",
+    "Content concerns are qualitative judgments, not a newly approved numeric quality threshold.",
+    "No application source, prompt, routing, model/group data or deployment changes in this sampling turn.",
+    "No additional fee-bearing judge-model calls, retries, regeneration, saved library batches or full-site tests."
+  ],
+  "next_step_proposed": "Refine existing prompt organization for explicit minimum word count, target-language passage-level tags, and single-source target-only annotations; improve natural usage/short hint examples. Keep validators, API, routing and one-call behavior unchanged. Not implemented in this sampling turn."
+}

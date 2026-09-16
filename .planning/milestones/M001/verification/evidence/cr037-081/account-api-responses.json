@@ -1,0 +1,216 @@
+[
+  {
+    "id": "visitor account",
+    "status": 401,
+    "headers": {
+      "content-type": "application/problem+json; charset=utf-8",
+      "cache-control": "no-store"
+    },
+    "problem": {
+      "type": "https://wordweave.example/problems/authentication-required",
+      "title": "Sign in required",
+      "status": 401,
+      "code": "authentication_required",
+      "detail": "Authentication is required for this operation.",
+      "request_id": "req_v8zuALyOTUmF_Ye5YxF5Ag"
+    }
+  },
+  {
+    "id": "visitor password",
+    "status": 401,
+    "headers": {
+      "content-type": "application/problem+json; charset=utf-8",
+      "cache-control": "no-store"
+    },
+    "problem": {
+      "type": "https://wordweave.example/problems/authentication-required",
+      "title": "Sign in required",
+      "status": 401,
+      "code": "authentication_required",
+      "detail": "Authentication is required for this operation.",
+      "request_id": "req__h7ouhenWxMv-X7SphYe8w"
+    }
+  },
+  {
+    "id": "register fixture",
+    "status": 201,
+    "headers": {
+      "content-type": "application/json; charset=utf-8",
+      "cache-control": "no-store"
+    },
+    "problem": null
+  },
+  {
+    "id": "second session",
+    "status": 200,
+    "headers": {
+      "content-type": "application/json; charset=utf-8",
+      "cache-control": "no-store"
+    },
+    "problem": null
+  },
+  {
+    "id": "admin login",
+    "status": 200,
+    "headers": {
+      "content-type": "application/json; charset=utf-8",
+      "cache-control": "no-store"
+    },
+    "problem": null
+  },
+  {
+    "id": "admin password forbidden",
+    "status": 403,
+    "headers": {
+      "content-type": "application/problem+json; charset=utf-8",
+      "cache-control": "no-store"
+    },
+    "problem": {
+      "type": "https://wordweave.example/problems/forbidden",
+      "title": "Access denied",
+      "status": 403,
+      "code": "forbidden",
+      "detail": "This operation is not available for this account.",
+      "request_id": "req_9X5f0LqtvCdpd71avglTSg"
+    }
+  },
+  {
+    "id": "missing csrf",
+    "status": 403,
+    "headers": {
+      "content-type": "application/problem+json; charset=utf-8",
+      "cache-control": "no-store"
+    },
+    "problem": {
+      "type": "https://wordweave.example/problems/csrf-failed",
+      "title": "Request rejected",
+      "status": 403,
+      "code": "csrf_failed",
+      "detail": "The security token is invalid or expired.",
+      "request_id": "req_z96BMA9j_5Fv9vOtR_84Vw"
+    }
+  },
+  {
+    "id": "unknown field",
+    "status": 400,
+    "headers": {
+      "content-type": "application/problem+json; charset=utf-8",
+      "cache-control": "no-store"
+    },
+    "problem": {
+      "type": "https://wordweave.example/problems/malformed-request",
+      "title": "Malformed request",
+      "status": 400,
+      "code": "malformed_request",
+      "detail": "The request body is not valid for this operation.",
+      "request_id": "req_J8NTr1BWUmtGL2gmBd6yXA"
+    }
+  },
+  {
+    "id": "mismatch",
+    "status": 422,
+    "headers": {
+      "content-type": "application/problem+json; charset=utf-8",
+      "cache-control": "no-store"
+    },
+    "problem": {
+      "type": "https://wordweave.example/problems/validation-failed",
+      "title": "Request could not be accepted",
+      "status": 422,
+      "code": "validation_failed",
+      "detail": "One or more fields need attention.",
+      "request_id": "req_A1w_brMniHVrhW6JMl4rNg"
+    }
+  },
+  {
+    "id": "too short",
+    "status": 422,
+    "headers": {
+      "content-type": "application/problem+json; charset=utf-8",
+      "cache-control": "no-store"
+    },
+    "problem": {
+      "type": "https://wordweave.example/problems/validation-failed",
+      "title": "Request could not be accepted",
+      "status": 422,
+      "code": "validation_failed",
+      "detail": "One or more fields need attention.",
+      "request_id": "req_f82xR9lIhLadHm3mDj0nEA"
+    }
+  },
+  {
+    "id": "wrong current",
+    "status": 422,
+    "headers": {
+      "content-type": "application/problem+json; charset=utf-8",
+      "cache-control": "no-store"
+    },
+    "problem": {
+      "type": "https://wordweave.example/problems/validation-failed",
+      "title": "Request could not be accepted",
+      "status": 422,
+      "code": "validation_failed",
+      "detail": "One or more fields need attention.",
+      "request_id": "req_tYpeV1R5T8zr08V5Ox_UMg"
+    }
+  },
+  {
+    "id": "all failed requests preserve other session",
+    "status": 200,
+    "headers": {
+      "content-type": "application/json; charset=utf-8",
+      "cache-control": "no-store"
+    },
+    "problem": null
+  },
+  {
+    "id": "current retained",
+    "status": 200,
+    "headers": {
+      "content-type": "application/json; charset=utf-8",
+      "cache-control": "no-store"
+    },
+    "problem": null
+  },
+  {
+    "id": "other revoked",
+    "status": 401,
+    "headers": {
+      "content-type": "application/problem+json; charset=utf-8",
+      "cache-control": "no-store"
+    },
+    "problem": {
+      "type": "https://wordweave.example/problems/authentication-required",
+      "title": "Sign in required",
+      "status": 401,
+      "code": "authentication_required",
+      "detail": "Authentication is required for this operation.",
+      "request_id": "req_CRcEXbLKyQZEuwferWWxXA"
+    }
+  },
+  {
+    "id": "old secret invalid",
+    "status": 401,
+    "headers": {
+      "content-type": "application/problem+json; charset=utf-8",
+      "cache-control": "no-store"
+    },
+    "problem": {
+      "type": "https://wordweave.example/problems/invalid-credentials",
+      "title": "Sign in failed",
+      "status": 401,
+      "code": "invalid_credentials",
+      "detail": "The username or password is incorrect.",
+      "request_id": "req_EKyRtKPV-oNdPWcvMq7Reg"
+    }
+  },
+  {
+    "id": "new secret accepted",
+    "status": 200,
+    "headers": {
+      "content-type": "application/json; charset=utf-8",
+      "cache-control": "no-store"
+    },
+    "problem": null
+  }
+]

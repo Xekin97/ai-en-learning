@@ -1,0 +1,70 @@
+{
+  "date": "2026-09-06T05:48:38.787Z",
+  "agent": "qa-quinn",
+  "counts": {
+    "PASS": 8,
+    "FAIL": 1,
+    "ERROR": 1
+  },
+  "checks": [
+    {
+      "id": "old-new SSR fails closed",
+      "status": "PASS",
+      "actual": 0,
+      "expected": 0
+    },
+    {
+      "id": "old-new client fails closed",
+      "status": "PASS",
+      "actual": 0,
+      "expected": 0
+    },
+    {
+      "id": "new-old SSR fails closed",
+      "status": "PASS",
+      "actual": 0,
+      "expected": 0
+    },
+    {
+      "id": "new-old client fails closed",
+      "status": "PASS",
+      "actual": 0,
+      "expected": 0
+    },
+    {
+      "id": "old-old rollback paired SSR",
+      "status": "PASS",
+      "actual": true,
+      "expected": true
+    },
+    {
+      "id": "old-old rollback paired client",
+      "status": "PASS",
+      "actual": true,
+      "expected": true
+    },
+    {
+      "id": "new-new paired SSR",
+      "status": "PASS",
+      "actual": true,
+      "expected": true
+    },
+    {
+      "id": "new-new paired client",
+      "status": "PASS",
+      "actual": true,
+      "expected": true
+    },
+    {
+      "id": "resident old tab retains old cached detail until explicit refresh",
+      "status": "FAIL",
+      "actual": 0,
+      "expected": 4
+    },
+    {
+      "id": "version execution",
+      "status": "ERROR",
+      "error": "Error: expect(locator).toHaveCount(expected) failed\n\nLocator:  locator('.definition-list dd')\nExpected: 4\nReceived: 0\nTimeout:  5000ms\n\nCall log:\n  - Expect \"to.have.count\" with timeout 5000ms\n  - waiting for locator('.definition-list dd')\n    14 × locator resolved to 0 elements\n       - unexpected value \"0\"\n"
+    }
+  ]
+}

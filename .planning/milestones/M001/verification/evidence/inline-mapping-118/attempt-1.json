@@ -1,0 +1,111 @@
+{
+  "gate": "TRANSITION-M001-118",
+  "status": "qa_method_error_not_product_failure",
+  "startedAt": "2026-09-09T11:03:29.131Z",
+  "finishedAt": "2026-09-09T11:03:42.912Z",
+  "exit_code": 1,
+  "observations": {
+    "candidateImage": "sha256:90f23b57b1706d2f102a4ef7db5efe03bc95012033b1973ccf221a9673ef794c",
+    "candidateHealthy": true,
+    "configPreserved": true,
+    "protectedTablesMatched": 15,
+    "activeBefore": 0,
+    "activeAfter": 0,
+    "routes": [
+      {
+        "path": "/health/live",
+        "status": 200
+      },
+      {
+        "path": "/health/ready",
+        "status": 200
+      },
+      {
+        "path": "/",
+        "status": 200
+      },
+      {
+        "path": "/api/v1/me",
+        "status": 404,
+        "incorrectExpectedStatus": 401
+      }
+    ],
+    "error": "Local route mismatch: /api/v1/me",
+    "rollback": "previous_backend_restored_capture_disabled"
+  },
+  "methodError": "QA script assumed /api/v1/me exists; server.go:144 defines /api/v1/me/account. Existing script operational rollback ran. No production source change required.",
+  "recheck": {
+    "route": "/api/v1/me/account",
+    "expectedStatus": 401,
+    "source": "backend/internal/httpapi/server.go:144"
+  },
+  "realModelCalls": 0,
+  "migrations": 0,
+  "dataCleanup": 0,
+  "afterRollback": {
+    "backend": {
+      "id": "51b748cd8e7cbfb10ab3fb6d76cc02edb9f8bdfc6ae0a73dd38bf90204f27cad",
+      "name": "/wordweave_uat-backend-1",
+      "image": "sha256:b1e8de6a90cac3fe4806359a0a7616445777186970868d39fe4663dee766f249",
+      "status": "running",
+      "health": "healthy",
+      "started": "2026-09-09T11:03:36.78865001Z",
+      "networks": [
+        "wordweave_uat_data",
+        "wordweave_uat_edge"
+      ],
+      "mounts": [],
+      "readonly": true
+    },
+    "frontend": {
+      "id": "74d1c89a8648e94c3036ff1c1537ef04f8c21ba522886c3dc9cb1ddce1345485",
+      "name": "/wordweave_uat-frontend-1",
+      "image": "sha256:5903591c881165071c1cba08984cfb835854187f5df21a281640b3aacccf4b27",
+      "status": "running",
+      "health": "healthy",
+      "started": "2026-09-09T04:00:41.569487295Z",
+      "networks": [
+        "wordweave_uat_edge"
+      ],
+      "mounts": [],
+      "readonly": false
+    },
+    "nginx": {
+      "id": "b789bde4e7825b849640cbf63d35b50ae41c1b77cb6b7ece73b3e26e27eabcb1",
+      "name": "/wordweave_uat-nginx-1",
+      "image": "sha256:5f0efd7fead5e8a290f07e5c025e9204052efb646758e1c6883de0e23a6e085c",
+      "status": "running",
+      "health": "healthy",
+      "started": "2026-09-09T04:00:47.530054881Z",
+      "networks": [
+        "wordweave_uat_edge"
+      ],
+      "mounts": [],
+      "readonly": true
+    },
+    "postgres": {
+      "id": "37a6d2fa58c578b1c6b4dbe10028b5ddf0c696fe44fc849a129293a85bbaf839",
+      "name": "/wordweave_uat-postgres-1",
+      "image": "sha256:b85269e8c6aa961524542eb4dcca44c4aa1deba2cf507e9e28d5ba8f971aeab9",
+      "status": "running",
+      "health": "healthy",
+      "started": "2026-09-03T02:24:03.164602928Z",
+      "networks": [
+        "wordweave_uat_data"
+      ],
+      "mounts": [
+        {
+          "type": "volume",
+          "name": "wordweave_uat_wordweave-pg",
+          "destination": "/var/lib/postgresql"
+        }
+      ],
+      "readonly": false
+    }
+  },
+  "originalScript": {
+    "path": ".planning/milestones/M001/verification/evidence/inline-mapping-118/deploy.mjs",
+    "sha256": "6888b4eea732a4f932ebbdce0f7a2cd06aca829e17c70f1d059ac9bd5b942caf",
+    "text": "// One approved local UAT backend replacement. No AI, migrations, data cleanup or secret output.\nimport { readFileSync } from 'node:fs';\nimport { join } from 'node:path';\nimport { docker, sql, inspect, envOf, safe, hash, root } from '../uat-108/helpers.mjs';\n\nconst candidate = 'sha256:90f23b57b1706d2f102a4ef7db5efe03bc95012033b1973ccf221a9673ef794c';\nconst previous = 'sha256:b1e8de6a90cac3fe4806359a0a7616445777186970868d39fe4663dee766f249';\nconst result = { gate:'TRANSITION-M001-118', authorization:'UAT-INLINE-117-DEPLOY', startedAt:new Date().toISOString(), realModelCalls:0, explicitDatabaseWrites:0, migrations:0, dataCleanup:0, userAccepted:false, releaseApproved:false };\nconst requireThat = (ok, message) => { if (!ok) throw Error(message); };\nconst canonical = obj => JSON.stringify(Object.fromEntries(Object.entries(obj).sort(([a],[b])=>a.localeCompare(b))));\nconst protectedTables = ['ai_models','openrouter_credentials','entitlement_groups','group_models','group_lengths','schema_migrations','accounts','learning_batches','batch_targets','passage_occurrences','hint_occurrences','review_results','review_session_targets','review_session_batches','review_sessions'];\nfunction protectedDigests() {\n  const fields = protectedTables.map(t=>\"'\"+t+\"',(SELECT md5(coalesce(string_agg(md5(row_to_json(x)::text),'' ORDER BY md5(row_to_json(x)::text)),'')) FROM (SELECT * FROM wordweave.\"+t+\") x)\");\n  return JSON.parse(sql('BEGIN READ ONLY; SELECT json_build_object('+fields.join(',')+'); COMMIT;').split('\\n').find(line=>line.startsWith('{')));\n}\nconst active = () => Number(sql(\"SELECT count(*) FROM wordweave.generation_runs WHERE call_status='active';\"));\nlet before, backendEnv, deployEnv, replacementAttempted=false;\nconst composeBase=['compose','--env-file','/dev/null','--project-name','wordweave_uat','-f',join(root,'compose.yaml'),'-f','-'];\nfunction compose(image,args) {\n  // No capture environment or mount: the approved capture is spent; ordinary build is used.\n  const override={services:{backend:{image}}};\n  return docker([...composeBase,...args],{input:JSON.stringify(override),env:deployEnv});\n}\nasync function healthy() {\n  for(let i=0;i<50;i++) {\n    const b=inspect().backend;\n    if(b.State.Running && b.State.Health?.Status==='healthy') return;\n    await new Promise(resolve=>setTimeout(resolve,1000));\n  }\n  throw Error('Backend readiness did not pass within50seconds');\n}\nfunction reviewedSources() {\n  const e=JSON.parse(readFileSync(join(root,'.planning/milestones/M001/verification/evidence/inline-mapping-117/qa.json'),'utf8'));\n  for(const x of [...e.sourceFiles,...e.qaFiles]) requireThat(hash(readFileSync(join(root,x.path)))===x.sha256,'Reviewed source changed: '+x.path);\n  return e.sourceFiles;\n}\ntry {\n  const auth=readFileSync(join(root,'.planning/workflow/state.yaml'),'utf8').split('\\ninline_mapping_uat_execution_request:\\n')[1]?.split('\\nfailure_capture_revision_authorization:')[0] || '';\n  requireThat(auth.includes('status: authorized_for_one_local_backend_update') && auth.includes('gate: TRANSITION-M001-118') && auth.includes('deployment_authorized: true') && auth.includes('real_model_calls_authorized: false'),'Missing current one-shot deployment authority');\n  result.sourceFiles=reviewedSources();\n  const image=JSON.parse(docker(['image','inspect',candidate]))[0];\n  requireThat(image.Id===candidate && image.Config.User==='nonroot:nonroot' && JSON.stringify(image.Config.Entrypoint)==='[\"/usr/local/bin/wordweave\"]','Candidate image identity or execution boundary mismatch');\n  before=inspect();\n  result.before=Object.fromEntries(Object.entries(before).map(([k,c])=>[k,safe(c)]));\n  for(const c of Object.values(before)) requireThat(c.State.Running && c.State.Health?.Status==='healthy','Existing UAT service unhealthy');\n  requireThat(before.backend.Image===previous && before.backend.Id==='28b0ca2ce546ed957397e484d95e0a19b1664044e3f1a3d1fec94610136272d8','Unexpected backend baseline');\n  requireThat(before.backend.Mounts.length===1 && before.backend.Mounts[0].Name==='wordweave-uat-failure-capture-114','Unexpected backend mount');\n  requireThat(before.postgres.Id==='37a6d2fa58c578b1c6b4dbe10028b5ddf0c696fe44fc849a129293a85bbaf839' && before.postgres.Mounts.some(x=>x.Name==='wordweave_uat_wordweave-pg'),'Unexpected database instance or volume');\n  requireThat(active()===0,'Active generation exists; runtime not modified');\n  result.activeBefore=0;\n  result.protectedBefore=protectedDigests();\n  backendEnv=envOf(before.backend);\n  requireThat(backendEnv.PUBLIC_ORIGIN==='http://localhost:6001' && backendEnv.UAT_FAILURE_CAPTURE_DIR==='/uat-capture','Unexpected runtime origin/capture baseline');\n  const appEnv=Object.fromEntries(Object.entries(backendEnv).filter(([key])=>!['PATH','SSL_CERT_FILE','UAT_FAILURE_CAPTURE_DIR'].includes(key)));\n  deployEnv={...process.env,...appEnv,BACKEND_INTERNAL_ORIGIN:envOf(before.frontend).NUXT_BACKEND_INTERNAL_ORIGIN,WORDWEAVE_PORT:'6001',COMPOSE_PROJECT_NAME:'wordweave_uat',COMPOSE_DISABLE_ENV_FILE:'1'};\n  const config=JSON.parse(compose(candidate,['config','--format','json']));\n  requireThat(canonical(config.services.backend.environment)===canonical(appEnv),'Compose would change application environment');\n  requireThat(config.services.backend.read_only===true && !config.services.backend.volumes?.length && canonical(config.services.backend.healthcheck.test)===canonical(before.backend.Config.Healthcheck.Test),'Unexpected read-only/mount/readiness configuration');\n  requireThat(active()===0,'New active generation appeared; runtime not modified');\n  reviewedSources();\n  console.log(JSON.stringify({progress:'preflight_pass_replacing_only_backend',activeGenerations:0,protectedTableDigests:protectedTables.length,diagnosticCapture:'disabled_in_ordinary_build'}));\n  replacementAttempted=true;\n  compose(candidate,['up','-d','--no-deps','--no-build','--pull','never','--timeout','150','backend']);\n  await healthy();\n  const after=inspect();\n  const expectedEnv=Object.fromEntries(Object.entries(backendEnv).filter(([key])=>key!=='UAT_FAILURE_CAPTURE_DIR'));\n  requireThat(after.backend.Image===candidate,'Wrong running candidate');\n  requireThat(canonical(envOf(after.backend))===canonical(expectedEnv),'Application configuration not preserved');\n  requireThat(after.backend.HostConfig.ReadonlyRootfs && after.backend.Mounts.length===0,'Ordinary runtime must be read-only and not mount capture');\n  for(const k of ['frontend','nginx','postgres']) requireThat(canonical(safe(after[k]))===canonical(safe(before[k])),'Unrelated container changed: '+k);\n  result.protectedAfter=protectedDigests();\n  requireThat(canonical(result.protectedAfter)===canonical(result.protectedBefore),'Protected configuration or learning data changed; investigate without modifying data');\n  requireThat(active()===0,'Unexpected startup active generation');\n  result.activeAfter=0;\n  docker(['exec','wordweave_uat-nginx-1','nginx','-t']);\n  docker(['exec','wordweave_uat-nginx-1','nginx','-s','reload']);\n  result.nginxAction='syntax_check_and_reload_only';\n  result.routes=[];\n  for(const [path,expectedStatus] of [['/health/live',200],['/health/ready',200],['/',200],['/api/v1/me',401]]) {\n    const res=await fetch('http://localhost:6001'+path,{redirect:'manual',signal:AbortSignal.timeout(8000)});\n    await res.arrayBuffer();\n    result.routes.push({path,status:res.status,expectedStatus});\n    requireThat(res.status===expectedStatus,'Local route mismatch: '+path);\n  }\n  result.protectedAfterRoutes=protectedDigests();\n  requireThat(canonical(result.protectedAfterRoutes)===canonical(result.protectedBefore),'Protected rows changed across route checks');\n  result.after=Object.fromEntries(Object.entries(inspect()).map(([k,c])=>[k,safe(c)]));\n  result.configPreserved=true; result.protectedRowsPreserved=true;\n  result.captureEnabled=false; result.currentImage=candidate;\n  result.status='deployed_no_ai_smoke_pass_awaiting_user_uat';\n} catch(error) {\n  result.status='deployment_failed';\n  result.error=error.message;\n  if(replacementAttempted) {\n    try {\n      requireThat(active()===0,'Active generation prevents fallback');\n      // Operational restoration only; no legacy code path or data conversion, capture remains disabled.\n      compose(previous,['up','-d','--no-deps','--no-build','--pull','never','--timeout','150','backend']);\n      await healthy();\n      docker(['exec','wordweave_uat-nginx-1','nginx','-s','reload']);\n      result.rollback=inspect().backend.Image===previous?'previous_backend_restored_capture_disabled':'identity_mismatch';\n    } catch(e) { result.rollbackError=e.message; }\n  }\n  process.exitCode=1;\n} finally {\n  result.finishedAt=new Date().toISOString();\n  console.log(JSON.stringify(result,null,2));\n}\n"
+  }
+}

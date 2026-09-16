@@ -1,0 +1,55 @@
+{
+  "schema_version": 1,
+  "task": "CR037-03",
+  "failures": [
+    {
+      "phase": "RED unit",
+      "command": "corepack pnpm test -- tests/unit/account-password-error.test.ts",
+      "exit": 1,
+      "classification": "expected_product_red",
+      "summary": "3 new assertions failed; 196 existing tests passed"
+    },
+    {
+      "phase": "candidate build attempt 1",
+      "command": "docker build --progress=plain -t wordweave-frontend:cr037-084 frontend",
+      "exit": 1,
+      "classification": "test_lint_failure",
+      "summary": "typecheck passed; lint rejected deferred<void> in the new unit test via no-invalid-void-type. Replaced with deferred<undefined>; no product assertion changed."
+    },
+    {
+      "phase": "full mock E2E attempt 1",
+      "command": "Playwright 1.62.1 / Node 24 container, 122 tests, 5 workers, /work on 2GB tmpfs",
+      "exit": 1,
+      "classification": "environment_resource_failure",
+      "summary": "Nuxt dev web server was killed before meaningful browser assertions; all resulting failures were connection fallout."
+    },
+    {
+      "phase": "full mock E2E attempt 2",
+      "command": "Playwright 1.62.1 / Node 24 container, 122 tests, 2 workers, disk volume",
+      "exit": 130,
+      "classification": "environment_performance_failure_stopped",
+      "summary": "Nuxt dev cold compilation caused unrelated existing tests to take 36-44 seconds and time out while later tests passed. Stopped and replaced by fixed production candidate plus contract mock, without widening assertions."
+    },
+    {
+      "phase": "fixed candidate mock E2E topology attempt",
+      "command": "Playwright 1.62.1 / fixed production candidate served directly without Nginx same-origin proxy",
+      "exit": 130,
+      "classification": "invalid_test_topology_stopped",
+      "summary": "Browser /api requests reached the Nuxt listener instead of the contract mock, producing six routing failures before the run was stopped. Retried against the same fixed candidate through the approved Nginx same-origin topology; no product or test assertion changed."
+    },
+    {
+      "phase": "fixed candidate mock E2E Linux",
+      "command": "Playwright 1.62.1 / Node 24 / fixed production candidate / Nginx same-origin / contract mock, 122 tests",
+      "exit": 1,
+      "classification": "unresolved_cross_platform_geometry_observation",
+      "summary": "120 passed. The existing admin model-dialog spacing assertion expected 23px but observed 24px desktop and 25px mobile in Linux Chromium. CR037 tests all passed. Raw traces/screenshots retained for independent QA; no assertion or style changed."
+    },
+    {
+      "phase": "native macOS WebKit fixture attempt",
+      "command": "DEV084_ENGINE=webkit DEV084_RUN=webkit-darwin password-browser.mjs",
+      "exit": 1,
+      "classification": "test_fixture_collision",
+      "summary": "Linux WebKit had already created the engine-derived usernames, so registration returned 409 and login 401. Updated only the evidence script to derive usernames from the run name; final unique native run passed 48/48."
+    }
+  ]
+}

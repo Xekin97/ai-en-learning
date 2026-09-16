@@ -1,0 +1,82 @@
+{
+  "gate": "TRANSITION-M001-122",
+  "owner": "qa-quinn",
+  "status": "PASS",
+  "sourceFiles": [
+    {
+      "path": "backend/internal/ai/annotation_diagnostic_uat.go",
+      "sha256": "078a8298c16157679a5dc042610801b7f80c2b5d297027c0975b14c8a3d75fe5"
+    },
+    {
+      "path": "backend/internal/ai/annotation_diagnostic_uat_test.go",
+      "sha256": "4c6c3632ac66c8631009660034ff9e2c787f0017e7ab69cb6889fa9b69bfb9dc"
+    },
+    {
+      "path": "backend/internal/httpapi/failure_capture_uat.go",
+      "sha256": "d8c3d0790bad30853e74b83f35a0104977c070f9d0d5c05413e9a423d8c3a0e6"
+    },
+    {
+      "path": "backend/internal/httpapi/annotation_capture_uat_test.go",
+      "sha256": "4ceb66e519b34cbdadeb3ed2be7bc2a3820293816765525cc8fef0ca70d9f280"
+    },
+    {
+      "path": "backend/internal/httpapi/failure_capture_disabled_test.go",
+      "sha256": "0ffbfae12b3a0fa2c47ebc5c9ee5570c10075af9e28339434dd18ecbc888ed45"
+    },
+    {
+      "path": "backend/internal/httpapi/failure_capture_integration_test.go",
+      "sha256": "61966f4037035c885fd25ed79923310fcbd5663e1fe17fde9141996305421fa0"
+    },
+    {
+      "path": "backend/internal/httpapi/failure_capture.go",
+      "sha256": "a9b07339ff521adb1d68c1b69e9506cbe32b371123db5b8d1186025edbd27470"
+    },
+    {
+      "path": "backend/internal/httpapi/failure_capture_disabled.go",
+      "sha256": "c7542b2e3b67142497db6716c5371a5e56f281038b89d6d33c2ceaf460a8f385"
+    },
+    {
+      "path": "backend/internal/httpapi/generation_handlers.go",
+      "sha256": "31c455af35f0933bf4330034aefdd3faa5c3df17ce4add59f62eb43133fddc2f"
+    },
+    {
+      "path": "backend/internal/httpapi/server.go",
+      "sha256": "7694f8c582c123fef5c1a1300db8eb3eb1a5373a60146c36a31eca5c59bc9c6e"
+    },
+    {
+      "path": "backend/cmd/wordweave/main.go",
+      "sha256": "dae2a198ab5618dc7126838a5505bf0323e82b76524df8d37bc5fe1757e726af"
+    },
+    {
+      "path": "backend/Dockerfile.uat-diagnostics",
+      "sha256": "db0e3bac139a7f1f64adef5c2e66ab239c90ee62fcd6a2c77ec66173e003cff9"
+    },
+    {
+      "path": "backend/internal/httpapi/hint_capture_uat_test.go",
+      "sha256": "64330ba8c5f9a3a2c78322d613e23350233b4470dd7ffdd246778cb7c4864fce"
+    },
+    {
+      "path": "backend/internal/ai/annotations.go",
+      "sha256": "2215e1b25310cf1cb28a15d78fea518687105725a8a1da6a622f87fe8fedabf2"
+    },
+    {
+      "path": "backend/internal/ai/validator.go",
+      "sha256": "a2e873308618d5b3694adecafb49ca76688253c86258d7c79296d51ec0bc1598"
+    },
+    {
+      "path": "backend/internal/ai/openrouter.go",
+      "sha256": "5e8d77e2f41bb1c686275f050bfc2fa329f7f9b4e1c18bffa100f7f1b183251f"
+    }
+  ],
+  "result": {
+    "chunk_id": "079102",
+    "wall_time_seconds": 0.000001334,
+    "exit_code": 0,
+    "original_token_count": 410,
+    "output": "=== RUN   TestQA122VisitorCapture\n2026/09/10 02:00:08 INFO http_request request_id=req_3jZHL1KukZ9QaOkNf4Pzzw method=GET route=/api/v1/bootstrap status=200 duration_ms=0\n2026/09/10 02:00:08 INFO http_request request_id=req_hdkAzvVDwXvZIAQtiVdQgQ method=GET route=/api/v1/bootstrap status=200 duration_ms=0\n2026/09/10 02:00:08 WARN ai_candidate_validation_failed run_id=01a0890b-360e-73c8-92dd-0d5f4231917a model_id=01a0890b-3603-7a5b-bc0e-4fbe2eb8c897 prompt_version=m001-v5 validator_version=m001-v5-wn31-r1 category=content_invalid reason=hint_annotation_missing target_index=1\n2026/09/10 02:00:08 INFO http_request request_id=req_KUEfFYmE9dE3nh18jglXtg method=POST route=/api/v1/generations/stream status=200 duration_ms=12\n2026/09/10 02:00:08 INFO http_request request_id=req_GcJxlWV24hOwlsvgds2yvg method=POST route=/api/v1/generations/stream status=200 duration_ms=5\n2026/09/10 02:00:08 WARN ai_candidate_validation_failed run_id=01a0890b-361f-78fe-abc5-aaf0823f0dc7 model_id=01a0890b-3603-7a5b-bc0e-4fbe2eb8c897 prompt_version=m001-v5 validator_version=m001-v5-wn31-r1 category=content_invalid reason=hint_annotation_missing target_index=1\n2026/09/10 02:00:08 INFO uat_minimal_captured run_id=01a0890b-361f-78fe-abc5-aaf0823f0dc7\n2026/09/10 02:00:08 INFO http_request request_id=req_RO5eZfva7heZWwpHzbPwvQ method=POST route=/api/v1/generations/stream status=200 duration_ms=4\n    qa_capture_test.go:141: PASS: two visitors, success preserves slot, matching failure alone captures only second raw hint, clean SSE and quota/draft behavior unchanged\n--- PASS: TestQA122VisitorCapture (0.57s)\nPASS\nok  \twordweave/internal/httpapi\t0.574s\n"
+  },
+  "coverage": "Two visitors, success does not consume slot, only failed second target hint is captured; clean SSE and refund/no-draft unchanged; close deletes sample.",
+  "real_model_calls": 0,
+  "ordinary_tests_rerun": false,
+  "production_source_modified": false
+}

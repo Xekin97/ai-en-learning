@@ -1,0 +1,122 @@
+{
+  "docs": [
+    {
+      "path": "verification/report.md",
+      "header": "---\nmilestone: M001\nstage: verification\nrole: quality/base\nagent_name: qa-quinn\nstatus: awaiting_user_review\ndate: 2026-09-06\nverification_round: TRANSITION-M001-076\nverdict: fail_rework_required\nfunctional_uat: not_reissued\nrelease_readiness: blocked\n---\n",
+      "bodyHash": "ce55e54a23b18fd8ef98d9b345cb4e109ad8843f910975fb1812980462df2c98",
+      "newHeader": "---\nmilestone: M001\nstage: verification\nrole: quality/base\nagent_name: qa-quinn\nstatus: awaiting_user_review\ndate: 2026-09-06\nverification_round: TRANSITION-M001-078\nverdict: passed_for_functional_uat\nfunctional_uat: ready_for_local_preparation\nrelease_readiness: blocked\n---\n",
+      "insertion": "\n<!-- QA078 CURRENT BEGIN -->\n# 第078轮独立验证：可交功能UAT\n\nCR029–036指定修复与关联回归全部PASS，19份原始结果无FAIL/ERROR。[完整报告](./cr036-078-report.md)、[覆盖](./cr036-078-coverage.md)。CR036覆盖原双空0/5及四组单空/零/有效/不限、保存重载、语言切换和保存失败恢复；现无待返工实现项。\n\n依据用户连续批准，8项CR记为resolved，不表示用户UAT或发布已通过。固定前端8fe04108与后端e8c4ee91已独立验证；下一步经交付门保留数据/运行参数更新本地6001。真实AI仍NOT VERIFIED，发布门BLOCKED。\n\n以下第078轮之前正文完整保留为历史。\n<!-- QA078 CURRENT END -->\n"
+    },
+    {
+      "path": "verification/coverage-matrix.md",
+      "header": "---\nmilestone: M001\nstage: verification\nrole: quality/base\nagent_name: qa-quinn\nstatus: awaiting_user_review\ndate: 2026-09-06\nverification_round: TRANSITION-M001-076\nverdict: fail_rework_required\nfunctional_uat: not_reissued\nrelease_readiness: blocked\n---\n",
+      "bodyHash": "4829a5ab12a7bc1c8088640b0fe2e63847f1510350706974f44849b4eb8d9d77",
+      "newHeader": "---\nmilestone: M001\nstage: verification\nrole: quality/base\nagent_name: qa-quinn\nstatus: awaiting_user_review\ndate: 2026-09-06\nverification_round: TRANSITION-M001-078\nverdict: passed_for_functional_uat\nfunctional_uat: ready_for_local_preparation\nrelease_readiness: blocked\n---\n",
+      "insertion": "\n<!-- QA078 CURRENT BEGIN -->\n# 第078轮覆盖入口\n\n[当前覆盖](./cr036-078-coverage.md)与[原始报告](./cr036-078-report.md)：CR036扩展1304项、原双空两组各24项、CR035字段947项及Users/Review/认证/Models/Library指定检查均PASS。每项按身份/状态/双语/视口/行为记录，不机械相加为独立需求数。\n\n19份新环境结果无FAIL/ERROR；开发unit/lint/type/build未重复执行。真机/读屏/Firefox/真实200%/公网压力/真实AI不虚报通过；完整范围见报告。可准备功能UAT，但用户最终验收尚未发生。\n\n以下第078轮之前正文完整保留为历史。\n<!-- QA078 CURRENT END -->\n"
+    },
+    {
+      "path": "verification/ui-design-audit.md",
+      "header": "---\nmilestone: M001\nstage: verification\nrole: quality/base\nagent_name: qa-quinn\nstatus: awaiting_user_review\ndate: 2026-09-06\nverification_round: TRANSITION-M001-076\nverdict: fail_rework_required\nfunctional_uat: not_reissued\nrelease_readiness: blocked\n---\n",
+      "bodyHash": "f689cdcf5776d561e44c8cabc4872075e6dab2771a3b8f157db0a46666f2b010",
+      "newHeader": "---\nmilestone: M001\nstage: verification\nrole: quality/base\nagent_name: qa-quinn\nstatus: awaiting_user_review\ndate: 2026-09-06\nverification_round: TRANSITION-M001-078\nverdict: passed_for_functional_uat\nfunctional_uat: ready_for_local_preparation\nrelease_readiness: blocked\n---\n",
+      "insertion": "\n<!-- QA078 CURRENT BEGIN -->\n# 第078轮UI独立审核通过指定范围\n\nCR036原型警告完整双语、padding/gap/border/背景色/文字色/radius/字形/行高/标题间距/24px下边距一致；四组双引擎双语390/1440全状态保存/重载、语言/500重试与Axe通过。[扩展证据](./evidence/cr036-078/plans-expanded-results.json)。\n\nCR035空/3模型四组、双引擎双语6宽度仍8px/0偏移。Users全部搜索状态1312局部对照、长短名/只读reader及关联复习/访客/模型界面指定回归PASS。人工查看[WebKit英文390](./evidence/cr036-078/screenshots/expanded-webkit-en-US-390.png)，提示与选项层次清楚。\n\nfocus截图等待已在新脚本执行前修正，原076捕获问题不抹除。BASELINE_VARIANCE语言选项本地称呼保留，不宣称整屏像素完全一致。本轮真实200%/真机/读屏未测。[报告与限制](./cr036-078-report.md)。\n\n以下第078轮之前正文完整保留为历史。\n<!-- QA078 CURRENT END -->\n"
+    },
+    {
+      "path": "verification/ai-evaluation.md",
+      "header": "---\nmilestone: M001\nstage: verification\nrole: quality/base\nagent_name: qa-quinn\nstatus: awaiting_user_review\ndate: 2026-09-06\nprompt_version: m001-v2\nvalidator_version: m001-v2\nverification_round: TRANSITION-M001-076\nverdict: fail_rework_required\nfunctional_uat: not_reissued\nrelease_readiness: blocked\n---\n",
+      "bodyHash": "2e461c6d63eedff16d6c455b2877ab241a747d30b6e6cbf0de44ef48c96a0d55",
+      "newHeader": "---\nmilestone: M001\nstage: verification\nrole: quality/base\nagent_name: qa-quinn\nstatus: awaiting_user_review\ndate: 2026-09-06\nprompt_version: m001-v2\nvalidator_version: m001-v2\nverification_round: TRANSITION-M001-078\nverdict: passed_for_functional_uat\nfunctional_uat: ready_for_local_preparation\nrelease_readiness: blocked\n---\n",
+      "insertion": "\n<!-- QA078 CURRENT BEGIN -->\n# 第078轮AI边界\n\n真实供应商请求0、凭证0、4模型停用；14批次和6计量手工合成，不是模型质量样本。[复习22项回归](./evidence/cr036-078/review-regression-results.json)验证重复提示、三种词形、稳定同源颜色和两种成功总结，不验证自然度、概率质量或真实模型兼容性。\n\n真实AI继续NOT VERIFIED，发布门BLOCKED；[当前独立功能/UI修复](./cr036-078-report.md)已PASS，可以准备功能UAT。不能据此宣布M001或AI发布通过，不使用历史密钥自动调用模型。\n\n以下第078轮之前正文完整保留为历史。\n<!-- QA078 CURRENT END -->\n"
+    },
+    {
+      "path": "verification/uat.md",
+      "header": "---\nmilestone: M001\nstage: verification\nrole: quality/base\nagent_name: qa-quinn\nstatus: awaiting_user_review\ndate: 2026-09-06\nverification_round: TRANSITION-M001-076\nverdict: fail_rework_required\nfunctional_uat: not_reissued\nrelease_readiness: blocked\n---\n",
+      "bodyHash": "7f8747b6c40e8c6d7036aa935a732bc92b0b253bbbff40734c6b2d25bcfd6b51",
+      "newHeader": "---\nmilestone: M001\nstage: verification\nrole: quality/base\nagent_name: qa-quinn\nstatus: awaiting_user_review\ndate: 2026-09-06\nverification_round: TRANSITION-M001-078\nverdict: passed_for_functional_uat\nfunctional_uat: ready_for_local_preparation\nrelease_readiness: blocked\n---\n",
+      "insertion": "\n<!-- QA078 CURRENT BEGIN -->\n# 第078轮：独立验证通过，准备本地UAT\n\n[独立报告](./cr036-078-report.md)PASS。固定前端8fe04108/后端e8c4ee91；尚需经交付门更新6001并验证可达性。本节不是已部署声明，也不是用户UAT通过。现有学习数据和运行参数必须保留，不能用旧.env覆盖会话/数据库参数。\n\n更新后的待执行用户清单：\n\n- Plans空模型/空篇幅/零额度有准确提示；恢复有效配置提示消失；四组、语言切换、保存/刷新和8px标题间距一致。\n- Users列表各状态、日期/方案文案、长名详情、搜索返回、正确资料只读弹窗及真实额度。\n- 访客Review/Library原地引导；首页Review和账号注销文案；Models列表及Add/Edit/Replace key弹窗。\n- Review日期范围、旧记录/空态、复习颜色分组/输入不重叠、两类完成总结；Library统计/空态。\n- 升级后强制刷新旧标签；真实AI输出内容另行验收，本轮没有供应商质量结论。\n\n用户最终反馈仍待你执行；项目不会自动标记UAT通过。\n\n以下第078轮之前正文完整保留为历史。\n<!-- QA078 CURRENT END -->\n"
+    },
+    {
+      "path": "handoffs/verification.md",
+      "header": "---\nmilestone: M001\nstage: verification\nrole: quality/base\nagent_name: qa-quinn\nstatus: awaiting_user_review\ndate: 2026-09-06\nverification_round: TRANSITION-M001-076\nverdict: fail_rework_required\nfunctional_uat: not_reissued\nrelease_readiness: blocked\n---\n",
+      "bodyHash": "e9925cc6602f9311abe718f13b06f2e5377487ac4aa00a8c3a8bc5a795239d5a",
+      "newHeader": "---\nmilestone: M001\nstage: verification\nrole: quality/base\nagent_name: qa-quinn\nstatus: awaiting_user_review\ndate: 2026-09-06\nverification_round: TRANSITION-M001-078\nverdict: passed_for_functional_uat\nfunctional_uat: ready_for_local_preparation\nrelease_readiness: blocked\n---\n",
+      "insertion": "\n<!-- QA078 CURRENT BEGIN -->\n# 第078轮质量交接：可准备功能UAT\n\n输入：[078批准](../reviews/implementation-cr036-independent-verification-approval.md)、固定前端8fe04108/后端e8c4ee91、既有产品/设计/API v1.4。输出：[原始报告](../verification/cr036-078-report.md)、[覆盖](../verification/cr036-078-coverage.md)、[UI审核](../verification/ui-design-audit.md)、[AI边界](../verification/ai-evaluation.md)、[UAT清单](../verification/uat.md)。\n\n19份新隔离环境结果均无FAIL/ERROR。CR036原双空与四组单空/零/有效/不限、编辑/保存/重载/语言/故障恢复通过；CR029–035指定回归通过。按用户连续批准将8项CR标为resolved，历史FAIL/开发失败仍原样保留，不等于用户UAT或发布验收。\n\n报告前2688份既有源无变，12份批准快照匹配；仅质量/CR产物改变。4个QA容器/2网络已清理；66账号/14批次/4会话/6合成计量的tmpfs不可恢复，种子可重建。6001四容器仍未改，6010保留。0真实AI；真机/读屏/真实200%/公网压力等限制见原始报告。\n\n下一步：守门器核对独立交付后，依据077连续权限准备本地UAT，保留现有数据与运行参数，使用已测镜像配套更新并冒烟；通过后将地址/账号/清单交用户。UAT未由用户执行，真实AI发布门仍BLOCKED，保持verification不进入milestone-complete。\n\n以下第078轮之前正文完整保留为历史。\n<!-- QA078 CURRENT END -->\n"
+    },
+    {
+      "path": "changes/CR-029.md",
+      "header": "---\nid: CR-029\nstatus: open\nmilestone: M001\nraised_by: quality/base\nowner_stage: implementation\ndate: 2026-09-05\nseverity: MEDIUM\n---\n",
+      "bodyHash": "d6ca460cf5016e4fe11fa5dbfb0190620e150c72f2c0708c8055a40981e9a017",
+      "newHeader": "---\nid: CR-029\nstatus: resolved\nmilestone: M001\nraised_by: quality/base\nowner_stage: implementation\ndate: 2026-09-05\nseverity: MEDIUM\n---\n",
+      "insertion": "\n<!-- QA078 CURRENT BEGIN -->\n## 第078轮独立通过与解决记录\n\nqa-quinn在全新独立栈上完成本项指定修复及关联回归，结果PASS；[完整报告](../verification/cr036-078-report.md)、[追踪覆盖](../verification/cr036-078-coverage.md)。具体场景/视口/证据及未重复执行边界见覆盖矩阵。\n\n依据用户“所有交接均批准，直到给我UAT”的连续权限，本项标为resolved，等待整体功能UAT交付。该状态表示修复已独立验证，不表示用户UAT或真实AI发布通过；历史正文及失败证据保留。\n\n以下第078轮之前正文完整保留为历史。\n<!-- QA078 CURRENT END -->\n"
+    },
+    {
+      "path": "changes/CR-030.md",
+      "header": "---\nid: CR-030\nstatus: open\nmilestone: M001\nraised_by: quality/base\nowner_stage: implementation\ndate: 2026-09-05\nseverity: HIGH\ndepends_on: [CR-031]\n---\n",
+      "bodyHash": "f644fbaff1bddc7c3dba7f76b10166a20ca41ee83d5a9959beec36aaa7b70a15",
+      "newHeader": "---\nid: CR-030\nstatus: resolved\nmilestone: M001\nraised_by: quality/base\nowner_stage: implementation\ndate: 2026-09-05\nseverity: HIGH\ndepends_on: [CR-031]\n---\n",
+      "insertion": "\n<!-- QA078 CURRENT BEGIN -->\n## 第078轮独立通过与解决记录\n\nqa-quinn在全新独立栈上完成本项指定修复及关联回归，结果PASS；[完整报告](../verification/cr036-078-report.md)、[追踪覆盖](../verification/cr036-078-coverage.md)。全部搜索状态、长短名详情、45行分页、精确优先、返回与只读资料、权限/改密等指定场景通过。\n\n依据用户“所有交接均批准，直到给我UAT”的连续权限，本项标为resolved，等待整体功能UAT交付。该状态表示修复已独立验证，不表示用户UAT或真实AI发布通过；历史正文及失败证据保留。\n\n以下第078轮之前正文完整保留为历史。\n<!-- QA078 CURRENT END -->\n"
+    },
+    {
+      "path": "changes/CR-031.md",
+      "header": "---\nid: CR-031\nstatus: open\nmilestone: M001\nraised_by: quality/base\nowner_stage: uiux-design\ndate: 2026-09-05\nseverity: HIGH\n---\n",
+      "bodyHash": "5aae2f783a9fca90d167058f7e5414c81254b957a6e891d8123057fd03241a44",
+      "newHeader": "---\nid: CR-031\nstatus: resolved\nmilestone: M001\nraised_by: quality/base\nowner_stage: uiux-design\ndate: 2026-09-05\nseverity: HIGH\n---\n",
+      "insertion": "\n<!-- QA078 CURRENT BEGIN -->\n## 第078轮独立通过与解决记录\n\nqa-quinn在全新独立栈上完成本项指定修复及关联回归，结果PASS；[完整报告](../verification/cr036-078-report.md)、[追踪覆盖](../verification/cr036-078-coverage.md)。具体场景/视口/证据及未重复执行边界见覆盖矩阵。\n\n依据用户“所有交接均批准，直到给我UAT”的连续权限，本项标为resolved，等待整体功能UAT交付。该状态表示修复已独立验证，不表示用户UAT或真实AI发布通过；历史正文及失败证据保留。\n\n以下第078轮之前正文完整保留为历史。\n<!-- QA078 CURRENT END -->\n"
+    },
+    {
+      "path": "changes/CR-032.md",
+      "header": "---\nid: CR-032\nstatus: open\nmilestone: M001\nraised_by: user\nowner_stage: uiux-design\ndate: 2026-09-05\nseverity: HIGH\n---\n",
+      "bodyHash": "34c453c23e66c705d1571f1d1933e4a28d2fd80306537bcc6348192256e4c165",
+      "newHeader": "---\nid: CR-032\nstatus: resolved\nmilestone: M001\nraised_by: user\nowner_stage: uiux-design\ndate: 2026-09-05\nseverity: HIGH\n---\n",
+      "insertion": "\n<!-- QA078 CURRENT BEGIN -->\n## 第078轮独立通过与解决记录\n\nqa-quinn在全新独立栈上完成本项指定修复及关联回归，结果PASS；[完整报告](../verification/cr036-078-report.md)、[追踪覆盖](../verification/cr036-078-coverage.md)。具体场景/视口/证据及未重复执行边界见覆盖矩阵。\n\n依据用户“所有交接均批准，直到给我UAT”的连续权限，本项标为resolved，等待整体功能UAT交付。该状态表示修复已独立验证，不表示用户UAT或真实AI发布通过；历史正文及失败证据保留。\n\n以下第078轮之前正文完整保留为历史。\n<!-- QA078 CURRENT END -->\n"
+    },
+    {
+      "path": "changes/CR-033.md",
+      "header": "---\nid: CR-033\nstatus: open\nmilestone: M001\nraised_by: frontend-architect/base\nowner_stage: technical-design\ndate: 2026-09-05\nseverity: HIGH\n---\n",
+      "bodyHash": "29c4177f5fc9a2aba5f1bdc711cb626bfcdbb4b2c1915b3d2b0061934738b2c0",
+      "newHeader": "---\nid: CR-033\nstatus: resolved\nmilestone: M001\nraised_by: frontend-architect/base\nowner_stage: technical-design\ndate: 2026-09-05\nseverity: HIGH\n---\n",
+      "insertion": "\n<!-- QA078 CURRENT BEGIN -->\n## 第078轮独立通过与解决记录\n\nqa-quinn在全新独立栈上完成本项指定修复及关联回归，结果PASS；[完整报告](../verification/cr036-078-report.md)、[追踪覆盖](../verification/cr036-078-coverage.md)。具体场景/视口/证据及未重复执行边界见覆盖矩阵。\n\n依据用户“所有交接均批准，直到给我UAT”的连续权限，本项标为resolved，等待整体功能UAT交付。该状态表示修复已独立验证，不表示用户UAT或真实AI发布通过；历史正文及失败证据保留。\n\n以下第078轮之前正文完整保留为历史。\n<!-- QA078 CURRENT END -->\n"
+    },
+    {
+      "path": "changes/CR-034.md",
+      "header": "---\nid: CR-034\nstatus: open\nmilestone: M001\nraised_by: quality/base\nagent_name: qa-quinn\nowner_stage: uiux-design\ndate: 2026-09-05\nseverity: HIGH\n---\n",
+      "bodyHash": "65dfcdb714bb33bd4b536e4f24fd2ee72dea130b0c431508e4c68dc28012ccf9",
+      "newHeader": "---\nid: CR-034\nstatus: resolved\nmilestone: M001\nraised_by: quality/base\nagent_name: qa-quinn\nowner_stage: uiux-design\ndate: 2026-09-05\nseverity: HIGH\n---\n",
+      "insertion": "\n<!-- QA078 CURRENT BEGIN -->\n## 第078轮独立通过与解决记录\n\nqa-quinn在全新独立栈上完成本项指定修复及关联回归，结果PASS；[完整报告](../verification/cr036-078-report.md)、[追踪覆盖](../verification/cr036-078-coverage.md)。具体场景/视口/证据及未重复执行边界见覆盖矩阵。\n\n依据用户“所有交接均批准，直到给我UAT”的连续权限，本项标为resolved，等待整体功能UAT交付。该状态表示修复已独立验证，不表示用户UAT或真实AI发布通过；历史正文及失败证据保留。\n\n以下第078轮之前正文完整保留为历史。\n<!-- QA078 CURRENT END -->\n"
+    },
+    {
+      "path": "changes/CR-035.md",
+      "header": "---\nid: CR-035\nstatus: open\nmilestone: M001\nraised_by: quality/base\nagent_name: qa-quinn\nowner_stage: implementation\ndate: 2026-09-06\nseverity: MEDIUM\n---\n",
+      "bodyHash": "a8d4bca7eeaec83ed719f313335a5a57ebbabe22a329be2d019a9ad5c00b3ffd",
+      "newHeader": "---\nid: CR-035\nstatus: resolved\nmilestone: M001\nraised_by: quality/base\nagent_name: qa-quinn\nowner_stage: implementation\ndate: 2026-09-06\nseverity: MEDIUM\n---\n",
+      "insertion": "\n<!-- QA078 CURRENT BEGIN -->\n## 第078轮独立通过与解决记录\n\nqa-quinn在全新独立栈上完成本项指定修复及关联回归，结果PASS；[完整报告](../verification/cr036-078-report.md)、[追踪覆盖](../verification/cr036-078-coverage.md)。两组标题实际间距8px、文字偏移0，四组/空多模型/保存及双语多宽度均通过。\n\n依据用户“所有交接均批准，直到给我UAT”的连续权限，本项标为resolved，等待整体功能UAT交付。该状态表示修复已独立验证，不表示用户UAT或真实AI发布通过；历史正文及失败证据保留。\n\n以下第078轮之前正文完整保留为历史。\n<!-- QA078 CURRENT END -->\n"
+    },
+    {
+      "path": "changes/CR-036.md",
+      "header": "---\nid: CR-036\nstatus: open\nmilestone: M001\nraised_by: quality/base\nagent_name: qa-quinn\nowner_stage: implementation\ndate: 2026-09-06\nseverity: MEDIUM\n---\n",
+      "bodyHash": "4bb3ccbaa65b24f5030784e3d943dc928861388dec37ab82ce55b9b5b084b5db",
+      "newHeader": "---\nid: CR-036\nstatus: resolved\nmilestone: M001\nraised_by: quality/base\nagent_name: qa-quinn\nowner_stage: implementation\ndate: 2026-09-06\nseverity: MEDIUM\n---\n",
+      "insertion": "\n<!-- QA078 CURRENT BEGIN -->\n## 第078轮独立通过与解决记录\n\nqa-quinn在全新独立栈上完成本项指定修复及关联回归，结果PASS；[完整报告](../verification/cr036-078-report.md)、[追踪覆盖](../verification/cr036-078-coverage.md)。包含双引擎双语四组的单空/双空/零额度/有效/不限、编辑保存刷新、live locale及500重试；未出现新缺陷。\n\n依据用户“所有交接均批准，直到给我UAT”的连续权限，本项标为resolved，等待整体功能UAT交付。该状态表示修复已独立验证，不表示用户UAT或真实AI发布通过；历史正文及失败证据保留。\n\n以下第078轮之前正文完整保留为历史。\n<!-- QA078 CURRENT END -->\n"
+    }
+  ],
+  "added": {
+    "verification/report.md": "# 第078轮独立验证：可交功能UAT\n\nCR029–036指定修复与关联回归全部PASS，19份原始结果无FAIL/ERROR。[完整报告](./cr036-078-report.md)、[覆盖](./cr036-078-coverage.md)。CR036覆盖原双空0/5及四组单空/零/有效/不限、保存重载、语言切换和保存失败恢复；现无待返工实现项。\n\n依据用户连续批准，8项CR记为resolved，不表示用户UAT或发布已通过。固定前端8fe04108与后端e8c4ee91已独立验证；下一步经交付门保留数据/运行参数更新本地6001。真实AI仍NOT VERIFIED，发布门BLOCKED。",
+    "verification/coverage-matrix.md": "# 第078轮覆盖入口\n\n[当前覆盖](./cr036-078-coverage.md)与[原始报告](./cr036-078-report.md)：CR036扩展1304项、原双空两组各24项、CR035字段947项及Users/Review/认证/Models/Library指定检查均PASS。每项按身份/状态/双语/视口/行为记录，不机械相加为独立需求数。\n\n19份新环境结果无FAIL/ERROR；开发unit/lint/type/build未重复执行。真机/读屏/Firefox/真实200%/公网压力/真实AI不虚报通过；完整范围见报告。可准备功能UAT，但用户最终验收尚未发生。",
+    "verification/ui-design-audit.md": "# 第078轮UI独立审核通过指定范围\n\nCR036原型警告完整双语、padding/gap/border/背景色/文字色/radius/字形/行高/标题间距/24px下边距一致；四组双引擎双语390/1440全状态保存/重载、语言/500重试与Axe通过。[扩展证据](./evidence/cr036-078/plans-expanded-results.json)。\n\nCR035空/3模型四组、双引擎双语6宽度仍8px/0偏移。Users全部搜索状态1312局部对照、长短名/只读reader及关联复习/访客/模型界面指定回归PASS。人工查看[WebKit英文390](./evidence/cr036-078/screenshots/expanded-webkit-en-US-390.png)，提示与选项层次清楚。\n\nfocus截图等待已在新脚本执行前修正，原076捕获问题不抹除。BASELINE_VARIANCE语言选项本地称呼保留，不宣称整屏像素完全一致。本轮真实200%/真机/读屏未测。[报告与限制](./cr036-078-report.md)。",
+    "verification/ai-evaluation.md": "# 第078轮AI边界\n\n真实供应商请求0、凭证0、4模型停用；14批次和6计量手工合成，不是模型质量样本。[复习22项回归](./evidence/cr036-078/review-regression-results.json)验证重复提示、三种词形、稳定同源颜色和两种成功总结，不验证自然度、概率质量或真实模型兼容性。\n\n真实AI继续NOT VERIFIED，发布门BLOCKED；[当前独立功能/UI修复](./cr036-078-report.md)已PASS，可以准备功能UAT。不能据此宣布M001或AI发布通过，不使用历史密钥自动调用模型。",
+    "verification/uat.md": "# 第078轮：独立验证通过，准备本地UAT\n\n[独立报告](./cr036-078-report.md)PASS。固定前端8fe04108/后端e8c4ee91；尚需经交付门更新6001并验证可达性。本节不是已部署声明，也不是用户UAT通过。现有学习数据和运行参数必须保留，不能用旧.env覆盖会话/数据库参数。\n\n更新后的待执行用户清单：\n\n- Plans空模型/空篇幅/零额度有准确提示；恢复有效配置提示消失；四组、语言切换、保存/刷新和8px标题间距一致。\n- Users列表各状态、日期/方案文案、长名详情、搜索返回、正确资料只读弹窗及真实额度。\n- 访客Review/Library原地引导；首页Review和账号注销文案；Models列表及Add/Edit/Replace key弹窗。\n- Review日期范围、旧记录/空态、复习颜色分组/输入不重叠、两类完成总结；Library统计/空态。\n- 升级后强制刷新旧标签；真实AI输出内容另行验收，本轮没有供应商质量结论。\n\n用户最终反馈仍待你执行；项目不会自动标记UAT通过。",
+    "handoffs/verification.md": "# 第078轮质量交接：可准备功能UAT\n\n输入：[078批准](../reviews/implementation-cr036-independent-verification-approval.md)、固定前端8fe04108/后端e8c4ee91、既有产品/设计/API v1.4。输出：[原始报告](../verification/cr036-078-report.md)、[覆盖](../verification/cr036-078-coverage.md)、[UI审核](../verification/ui-design-audit.md)、[AI边界](../verification/ai-evaluation.md)、[UAT清单](../verification/uat.md)。\n\n19份新隔离环境结果均无FAIL/ERROR。CR036原双空与四组单空/零/有效/不限、编辑/保存/重载/语言/故障恢复通过；CR029–035指定回归通过。按用户连续批准将8项CR标为resolved，历史FAIL/开发失败仍原样保留，不等于用户UAT或发布验收。\n\n报告前2688份既有源无变，12份批准快照匹配；仅质量/CR产物改变。4个QA容器/2网络已清理；66账号/14批次/4会话/6合成计量的tmpfs不可恢复，种子可重建。6001四容器仍未改，6010保留。0真实AI；真机/读屏/真实200%/公网压力等限制见原始报告。\n\n下一步：守门器核对独立交付后，依据077连续权限准备本地UAT，保留现有数据与运行参数，使用已测镜像配套更新并冒烟；通过后将地址/账号/清单交用户。UAT未由用户执行，真实AI发布门仍BLOCKED，保持verification不进入milestone-complete。",
+    "changes/CR-029.md": "## 第078轮独立通过与解决记录\n\nqa-quinn在全新独立栈上完成本项指定修复及关联回归，结果PASS；[完整报告](../verification/cr036-078-report.md)、[追踪覆盖](../verification/cr036-078-coverage.md)。具体场景/视口/证据及未重复执行边界见覆盖矩阵。\n\n依据用户“所有交接均批准，直到给我UAT”的连续权限，本项标为resolved，等待整体功能UAT交付。该状态表示修复已独立验证，不表示用户UAT或真实AI发布通过；历史正文及失败证据保留。",
+    "changes/CR-030.md": "## 第078轮独立通过与解决记录\n\nqa-quinn在全新独立栈上完成本项指定修复及关联回归，结果PASS；[完整报告](../verification/cr036-078-report.md)、[追踪覆盖](../verification/cr036-078-coverage.md)。全部搜索状态、长短名详情、45行分页、精确优先、返回与只读资料、权限/改密等指定场景通过。\n\n依据用户“所有交接均批准，直到给我UAT”的连续权限，本项标为resolved，等待整体功能UAT交付。该状态表示修复已独立验证，不表示用户UAT或真实AI发布通过；历史正文及失败证据保留。",
+    "changes/CR-031.md": "## 第078轮独立通过与解决记录\n\nqa-quinn在全新独立栈上完成本项指定修复及关联回归，结果PASS；[完整报告](../verification/cr036-078-report.md)、[追踪覆盖](../verification/cr036-078-coverage.md)。具体场景/视口/证据及未重复执行边界见覆盖矩阵。\n\n依据用户“所有交接均批准，直到给我UAT”的连续权限，本项标为resolved，等待整体功能UAT交付。该状态表示修复已独立验证，不表示用户UAT或真实AI发布通过；历史正文及失败证据保留。",
+    "changes/CR-032.md": "## 第078轮独立通过与解决记录\n\nqa-quinn在全新独立栈上完成本项指定修复及关联回归，结果PASS；[完整报告](../verification/cr036-078-report.md)、[追踪覆盖](../verification/cr036-078-coverage.md)。具体场景/视口/证据及未重复执行边界见覆盖矩阵。\n\n依据用户“所有交接均批准，直到给我UAT”的连续权限，本项标为resolved，等待整体功能UAT交付。该状态表示修复已独立验证，不表示用户UAT或真实AI发布通过；历史正文及失败证据保留。",
+    "changes/CR-033.md": "## 第078轮独立通过与解决记录\n\nqa-quinn在全新独立栈上完成本项指定修复及关联回归，结果PASS；[完整报告](../verification/cr036-078-report.md)、[追踪覆盖](../verification/cr036-078-coverage.md)。具体场景/视口/证据及未重复执行边界见覆盖矩阵。\n\n依据用户“所有交接均批准，直到给我UAT”的连续权限，本项标为resolved，等待整体功能UAT交付。该状态表示修复已独立验证，不表示用户UAT或真实AI发布通过；历史正文及失败证据保留。",
+    "changes/CR-034.md": "## 第078轮独立通过与解决记录\n\nqa-quinn在全新独立栈上完成本项指定修复及关联回归，结果PASS；[完整报告](../verification/cr036-078-report.md)、[追踪覆盖](../verification/cr036-078-coverage.md)。具体场景/视口/证据及未重复执行边界见覆盖矩阵。\n\n依据用户“所有交接均批准，直到给我UAT”的连续权限，本项标为resolved，等待整体功能UAT交付。该状态表示修复已独立验证，不表示用户UAT或真实AI发布通过；历史正文及失败证据保留。",
+    "changes/CR-035.md": "## 第078轮独立通过与解决记录\n\nqa-quinn在全新独立栈上完成本项指定修复及关联回归，结果PASS；[完整报告](../verification/cr036-078-report.md)、[追踪覆盖](../verification/cr036-078-coverage.md)。两组标题实际间距8px、文字偏移0，四组/空多模型/保存及双语多宽度均通过。\n\n依据用户“所有交接均批准，直到给我UAT”的连续权限，本项标为resolved，等待整体功能UAT交付。该状态表示修复已独立验证，不表示用户UAT或真实AI发布通过；历史正文及失败证据保留。",
+    "changes/CR-036.md": "## 第078轮独立通过与解决记录\n\nqa-quinn在全新独立栈上完成本项指定修复及关联回归，结果PASS；[完整报告](../verification/cr036-078-report.md)、[追踪覆盖](../verification/cr036-078-coverage.md)。包含双引擎双语四组的单空/双空/零额度/有效/不限、编辑保存刷新、live locale及500重试；未出现新缺陷。\n\n依据用户“所有交接均批准，直到给我UAT”的连续权限，本项标为resolved，等待整体功能UAT交付。该状态表示修复已独立验证，不表示用户UAT或真实AI发布通过；历史正文及失败证据保留。"
+  },
+  "newDocs": [
+    "verification/cr036-078-report.md",
+    "verification/cr036-078-coverage.md"
+  ]
+}

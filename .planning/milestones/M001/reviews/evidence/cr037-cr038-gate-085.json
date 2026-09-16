@@ -1,0 +1,95 @@
+{
+  "status": "PASS_FOR_INDEPENDENT_QA_HANDOFF",
+  "at": "2026-09-07T03:23:49.255Z",
+  "professional_verdict_not_replaced": true,
+  "candidates": [
+    {
+      "image": "sha256:fd251e7439aad8e058656e2751ed84f40715fec570a872da53542688a6dd6904",
+      "source_hashes": [
+        {
+          "path": "frontend/app/pages/account.vue",
+          "match": true
+        },
+        {
+          "path": "frontend/app/runtime/stores/account.ts",
+          "match": true
+        },
+        {
+          "path": "frontend/tests/unit/account-password-error.test.ts",
+          "match": true
+        },
+        {
+          "path": "frontend/tests/e2e/cr037-auth-account.spec.ts",
+          "match": true
+        }
+      ],
+      "image_exists": true
+    },
+    {
+      "image": "sha256:642ed57ad0ed6c8a13e4bba1101d8b50188e8ea636791583a6ffb5eaa6917aac",
+      "source_hashes": [
+        {
+          "path": "backend/internal/httpapi/response.go",
+          "match": true
+        },
+        {
+          "path": "backend/internal/httpapi/response_test.go",
+          "match": true
+        },
+        {
+          "path": "backend/internal/httpapi/response_no_content_integration_test.go",
+          "match": true
+        }
+      ],
+      "image_exists": true
+    }
+  ],
+  "artifacts": {
+    ".planning/milestones/M001/implementation/frontend-cr037-084-validation.md": "9550f0e3784698ac2303231e2e29735f22f424317739e6edf8bcf66b73bb2e6a",
+    ".planning/milestones/M001/implementation/frontend-cr037-084-worktree-plan.md": "d70605142b705929944ee046e4b315a16e8b3651fde28e95a845ec44f502bd7a",
+    ".planning/milestones/M001/implementation/frontend-validation.md": "01dc4672d4650f97f92221bb9f48d59dbcaafba104989fb11489d352d5de8b82",
+    ".planning/milestones/M001/handoffs/frontend-implementation.md": "709d7cebe1a2535f03ce97e22fb340e8d79b51e2f0733bf972b4beb7170546a9",
+    ".planning/milestones/M001/implementation/evidence/cr037-084/candidate.json": "d2f50469dd045a9715f57d38764a088c7323775499c48ccf5ed5334080ab826e",
+    ".planning/milestones/M001/implementation/evidence/cr037-084/commands.json": "428460b27b2e66a78ef285c87260cd9f9c29b6f478f3d989eaabf5af7c5fa90e",
+    ".planning/milestones/M001/implementation/evidence/cr037-084/cleanup.json": "ca0f1a43885908ddf95a587f6a1c8332b939294a717f41c6f3a089835daa5699",
+    ".planning/milestones/M001/implementation/evidence/cr037-084/delivery-validation.json": "31efdc535804b322cab03c59903fcdeab15e0c485497a486ede35233872fdea9",
+    ".planning/milestones/M001/implementation/evidence/cr037-084/linux-geometry-comparison.json": "bad232a631e80a61adc68ea1928ec5186b2a1a1601876665cd9784135082db97",
+    ".planning/milestones/M001/implementation/backend-cr038-083-validation.md": "94daac3218f20439c3323032000c0b69db2d24b451b79960397e06eef4d6fb6d",
+    ".planning/milestones/M001/implementation/backend-validation.md": "6741ad3c605b6e6a72c64fb481d11b3ca0e4f61c7b24ac93a43ff67832413193",
+    ".planning/milestones/M001/handoffs/backend-implementation.md": "7a41319852c6b8246ba6a8013b26df51901c4d8e56eed2446853387d3bf17e0c",
+    ".planning/milestones/M001/implementation/evidence/cr038-083/candidate.json": "9b081998d9a9a58d40ebd7a4cc70e14fafe9b19337155a1fe37381d9afabd745"
+  },
+  "uat": [
+    {
+      "name": "/wordweave_uat-frontend-1",
+      "id": "7f83e902076f5544a5ec2bc76d3775d552b1ba57d5da06530ef5b0698ef40767",
+      "image": "sha256:8fe04108b523cce73820017069ba0509e7bee03589b0fdc9218a4397770274c0",
+      "started": "2026-09-06T09:02:27.5862768Z",
+      "unchanged": true
+    },
+    {
+      "name": "/wordweave_uat-backend-1",
+      "id": "a6719cbffbfb222894123ddb77c0dbd5c07b90d114efcb670d256f1c50947cde",
+      "image": "sha256:e8c4ee91a7c3265cda8c496ccc8fb485328d95b6c1662eaf2502011ce5d005a5",
+      "started": "2026-09-06T09:02:21.852434256Z",
+      "unchanged": true
+    },
+    {
+      "name": "/wordweave_uat-nginx-1",
+      "id": "b789bde4e7825b849640cbf63d35b50ae41c1b77cb6b7ece73b3e26e27eabcb1",
+      "image": "sha256:5f0efd7fead5e8a290f07e5c025e9204052efb646758e1c6883de0e23a6e085c",
+      "started": "2026-09-04T09:36:43.099505383Z",
+      "unchanged": true
+    },
+    {
+      "name": "/wordweave_uat-postgres-1",
+      "id": "37a6d2fa58c578b1c6b4dbe10028b5ddf0c696fe44fc849a129293a85bbaf839",
+      "image": "sha256:b85269e8c6aa961524542eb4dcca44c4aa1deba2cf507e9e28d5ba8f971aeab9",
+      "started": "2026-09-03T02:24:03.164602928Z",
+      "unchanged": true
+    }
+  ],
+  "linux_mock_observation": "120/122; original 2 geometry failures retained; same-platform prototype equality supplied by DEV084 and independently pending",
+  "native_webkit": "DEV084 targeted Playwright macOS PASS; independent targeted verification and real Safari certification are separate"
+}
+

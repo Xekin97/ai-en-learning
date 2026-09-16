@@ -1,0 +1,2005 @@
+{
+  "schema_version": 1,
+  "date": "2026-09-11",
+  "task": "Fixed r4 system/example prompt live sampling; generation quality only",
+  "role": "backend-ethan",
+  "authorization": {
+    "user_response": "这次测 10 次吧",
+    "maximum_calls": 10,
+    "used_calls": 10,
+    "remaining_calls": 0,
+    "local_backend_deployment": true,
+    "application_changes": false,
+    "retries": false,
+    "additional_model_calls_authorized": false
+  },
+  "prompt_version": "m001-v5-r4",
+  "validator_version": "m001-v5-wn31-r1",
+  "account_id": "01a08e5a-2250-7854-81df-5aeb26e7f461",
+  "model_id": "01a07fe3-5c48-736a-a86b-1f4dabd7cb87",
+  "provider_model_id": "minimax/minimax-m3",
+  "sampling": {
+    "selection": "First ten configurations of both preceding fixed twenty-call batches, selected before sending",
+    "same_parameters_verified": true,
+    "length_counts": {
+      "short": 4,
+      "medium": 2,
+      "long": 3,
+      "xlong": 1
+    },
+    "not_random_production_sample": true
+  },
+  "summary": {
+    "valid": 4,
+    "failed": 6,
+    "observed_success_rate": 0.4,
+    "target_met": false,
+    "first_failure_counts": {
+      "tag_content_or_language_invalid": 3,
+      "passage_too_short": 2,
+      "target_source_mismatch": 1
+    },
+    "json_parse_ok": 10,
+    "provider_stream_ok": 10,
+    "candidate_decode_ok": 10,
+    "provider_finish_stop": 10,
+    "usage": {
+      "prompt_tokens": 8307,
+      "completion_tokens": 5098,
+      "total_tokens": 13405
+    },
+    "duration_ms": {
+      "min": 6639,
+      "max": 18276,
+      "median": 8997.5
+    }
+  },
+  "matched_comparison": [
+    {
+      "version": "r2",
+      "valid": 7,
+      "total": 10,
+      "source": "../quality-sampling-20-20260911.json",
+      "call_ids": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ]
+    },
+    {
+      "version": "r3",
+      "valid": 0,
+      "total": 10,
+      "source": "../concise-prompt-20-20260911/results.json",
+      "call_ids": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ]
+    },
+    {
+      "version": "r4",
+      "valid": 4,
+      "total": 10
+    }
+  ],
+  "deployment": {
+    "old_image": "sha256:d970faa33e6c014e98476d32ef88a09ab33f7bbc59faddb27b68ab3a9adee201",
+    "image": "sha256:dc88818690bd8920c47c7d8e70ab44afd7a7316a96257fdb50b693378d2e3b5d",
+    "tag": "wordweave-local:system-example-r4-20260911",
+    "started_at": "2026-09-11T07:38:19.711960679Z",
+    "pre_deploy_active_count": 0,
+    "post_sample_active_count": 0,
+    "other_containers_unchanged": true,
+    "environment_unchanged": true,
+    "health": "healthy",
+    "historical_tmpfs_content_removed_by_recreation": true,
+    "historical_reports_preserved": true,
+    "local_code_changes": false
+  },
+  "execution": {
+    "runner": "/tmp/wordweave-system-example-10.NZMuuJ/run.mjs",
+    "ledger": "/tmp/wordweave-system-example-10.NZMuuJ/calls.json",
+    "commands": [
+      "node /tmp/wordweave-system-example-10.NZMuuJ/run.mjs 5 (cases 1–5)",
+      "node /tmp/wordweave-system-example-10.NZMuuJ/run.mjs 5 (cases 6–10)"
+    ],
+    "logout_statuses": [
+      204,
+      204
+    ],
+    "all_terminal_counts_one": true,
+    "ordinary_and_diagnostic_unit_checks": "Already passed for unchanged r4 source in prior turn; not rerun",
+    "diagnostic_docker_build_exit": 0,
+    "initial_readonly_query_correction": "Unqualified generation_runs/status query failed; corrected from migration to wordweave.generation_runs/call_status and confirmed active=0 before deployment; no write occurred"
+  },
+  "retention": {
+    "location": "Private backend /run/wordweave-evidence tmpfs only",
+    "maximum_hours": 24,
+    "maximum_bundles": 50,
+    "content_exported_to_repository": false,
+    "all_model_text_complete": true,
+    "truncated": false,
+    "redacted": false,
+    "dropped_bytes": 0,
+    "stopping_or_recreating_backend_loses_content_early": true
+  },
+  "limitations": [
+    "Observed generation.validated rate is not complete semantic quality acceptance or a population success-rate guarantee.",
+    "First validation failure short-circuits subsequent checks; raw review found additional defects.",
+    "Ten configurations jointly vary language/scenario/length; no independent causal attribution to one parameter or system examples.",
+    "No prompt cache hit data or provider invoice captured; usage is reported tokens, not billing or Codex usage.",
+    "No changes to prompt, schema, validators, frontend, models/groups/keys during sampling; no repair/retry or extra judge calls."
+  ],
+  "calls": [
+    {
+      "case_id": 1,
+      "group": "A",
+      "model_id": "01a07fe3-5c48-736a-a86b-1f4dabd7cb87",
+      "meaning_language": "zh",
+      "scenario": "story",
+      "length": "short",
+      "entries": [
+        "melancholy",
+        "handicap",
+        "foray",
+        "casino",
+        "upswing"
+      ],
+      "started_at": "2026-09-11T07:38:26.720Z",
+      "status": "generation.failed",
+      "image": "sha256:dc88818690bd8920c47c7d8e70ab44afd7a7316a96257fdb50b693378d2e3b5d",
+      "http_status": 200,
+      "run_id": "01a08f67-4c30-7b2d-bfbd-2cebd2ec286a",
+      "first_delta_ms": 2116,
+      "code": "content_validation_failed",
+      "quota_refunded": true,
+      "duration_ms": 8122,
+      "passage_chars": 647,
+      "terminal_count": 1,
+      "evidence_id": "d179e899-fc71-44d9-bd28-5a5cc4a30a67",
+      "expires_at": "2026-09-12T07:38:26.72821171Z",
+      "spec": {
+        "run_id": "01a08f67-4c30-7b2d-bfbd-2cebd2ec286a",
+        "model_id": "01a07fe3-5c48-736a-a86b-1f4dabd7cb87",
+        "provider_model_id": "minimax/minimax-m3",
+        "meaning_language": "zh",
+        "scenario": "story",
+        "length": "short",
+        "minimum_words": 50,
+        "entries": [
+          "melancholy",
+          "handicap",
+          "foray",
+          "casino",
+          "upswing"
+        ],
+        "prompt_version": "m001-v5-r4"
+      },
+      "fingerprint": {
+        "source_sha256": "feabf07bb820cc61017bea20b695b537e3cd943decc2717d2647ead1de5a4c78",
+        "binary_sha256": "1bacfd51f88a825f9618d0dc62f2a794675232d06fdd1d1c06c6d247b24d9945",
+        "template_sha256": "bc04c553257071eb646fc005b0db5a06e6d6c17091f1bedeeb2fe6c966598a4d",
+        "schema_sha256": "588b6ae1aa83aa356658bf746f93919bd1cfd097ec4874f60b65161bb8ea76a0",
+        "validator_sha256": "8c91f3423ee35871e1c52c8193f3797189645cc8faf29274cdac86c7f918f078",
+        "lexicon_sha256": "89e5b41dc8662780e443c10b5ecf81970944fc2b530d5f79372ac482ac744c0b"
+      },
+      "capture_state": {
+        "coalesced_progress": 103,
+        "dropped_records": 0,
+        "dropped_bytes": 0,
+        "truncated": false,
+        "io_failed": false,
+        "redacted": false,
+        "model_ended": true,
+        "unavailable": false
+      },
+      "incomplete": false,
+      "first_failure": {
+        "stage": "content_validate",
+        "state": "failed",
+        "begin_ms": 8029,
+        "end_ms": 8029,
+        "duration_ms": 0,
+        "check": "tag_content",
+        "detail": {
+          "reason": "tag_content_or_language_invalid",
+          "field": "tags",
+          "target_index": -1,
+          "actual": 9,
+          "limit": 100,
+          "byte_start": -1,
+          "byte_end": -1,
+          "expected_type": "",
+          "actual_type": ""
+        }
+      },
+      "stages": [
+        {
+          "stage": "request",
+          "state": "ok",
+          "check": "body"
+        },
+        {
+          "stage": "preflight",
+          "state": "ok",
+          "check": "transaction_commit"
+        },
+        {
+          "stage": "provider_open",
+          "state": "ok",
+          "check": "response_headers"
+        },
+        {
+          "stage": "provider_stream",
+          "state": "ok",
+          "check": ""
+        },
+        {
+          "stage": "passage_decode",
+          "state": "ok",
+          "check": "clean_consistency"
+        },
+        {
+          "stage": "candidate_decode",
+          "state": "ok",
+          "check": "hint_size"
+        },
+        {
+          "stage": "content_validate",
+          "state": "failed",
+          "check": "tag_content"
+        },
+        {
+          "stage": "draft_commit",
+          "state": "not_run",
+          "check": ""
+        },
+        {
+          "stage": "settlement",
+          "state": "ok",
+          "check": "cas"
+        },
+        {
+          "stage": "delivery",
+          "state": "ok",
+          "check": ""
+        }
+      ],
+      "provider_final": {
+        "id": "gen-1789112308-QtkbKMlMhKzh8ej94bie",
+        "upstream_request_id": "",
+        "http_status": 0,
+        "frame": 36,
+        "bytes": 761,
+        "choice_index": 0,
+        "choice_index_provided": true,
+        "finish_reason": "stop",
+        "error_present": false,
+        "error_code_type": "not_provided",
+        "error_code": 0,
+        "usage_provided": true,
+        "prompt_tokens": 831,
+        "completion_tokens": 434,
+        "total_tokens": 1265,
+        "syntax_offset": -1
+      },
+      "usage": {
+        "prompt_tokens": 831,
+        "completion_tokens": 434,
+        "total_tokens": 1265
+      },
+      "word_count_checks": [],
+      "model_end": {
+        "chunks": 34,
+        "bytes": 1766,
+        "redacted": false,
+        "unavailable": false
+      },
+      "json_parse_ok": true,
+      "target_source_order_matches": false,
+      "db": {
+        "id": "01a08f67-4c30-7b2d-bfbd-2cebd2ec286a",
+        "account_id": "01a08e5a-2250-7854-81df-5aeb26e7f461",
+        "provider_model_id_snapshot": "minimax/minimax-m3",
+        "call_status": "validation_failed",
+        "quota_charged": false,
+        "counts_toward_cumulative": false,
+        "draft_exists": false
+      },
+      "id": "d179e899-fc71-44d9-bd28-5a5cc4a30a67",
+      "bytes": 1766,
+      "raw_sha256": "d87cbf47110c1157e5e915e5652a8bb564a55614f739764a677c2857ae38cbf4",
+      "content_review": {
+        "case_id": 1,
+        "verdict": "failed",
+        "notes": [
+          "中文配置却返回英文 tags。",
+          "source_entry 整体循环错位；首项释义是 melancholy，标签原词却为 handicap，hint 又属于 upswing。正文可读不代表目标资源正确。"
+        ]
+      }
+    },
+    {
+      "case_id": 2,
+      "group": "B",
+      "model_id": "01a07fe3-5c48-736a-a86b-1f4dabd7cb87",
+      "meaning_language": "zh",
+      "scenario": "discussion",
+      "length": "medium",
+      "entries": [
+        "young",
+        "grape",
+        "weekend",
+        "danger",
+        "enforce"
+      ],
+      "started_at": "2026-09-11T07:38:34.872Z",
+      "status": "generation.failed",
+      "image": "sha256:dc88818690bd8920c47c7d8e70ab44afd7a7316a96257fdb50b693378d2e3b5d",
+      "http_status": 200,
+      "run_id": "01a08f67-6bff-797a-b8f1-70a743f1dc42",
+      "first_delta_ms": 825,
+      "code": "content_validation_failed",
+      "quota_refunded": true,
+      "duration_ms": 9027,
+      "passage_chars": 989,
+      "terminal_count": 1,
+      "evidence_id": "6eac4fa5-cb7f-48d3-9bfb-ba841d259509",
+      "expires_at": "2026-09-12T07:38:34.874475506Z",
+      "spec": {
+        "run_id": "01a08f67-6bff-797a-b8f1-70a743f1dc42",
+        "model_id": "01a07fe3-5c48-736a-a86b-1f4dabd7cb87",
+        "provider_model_id": "minimax/minimax-m3",
+        "meaning_language": "zh",
+        "scenario": "discussion",
+        "length": "medium",
+        "minimum_words": 100,
+        "entries": [
+          "young",
+          "grape",
+          "weekend",
+          "danger",
+          "enforce"
+        ],
+        "prompt_version": "m001-v5-r4"
+      },
+      "fingerprint": {
+        "source_sha256": "feabf07bb820cc61017bea20b695b537e3cd943decc2717d2647ead1de5a4c78",
+        "binary_sha256": "1bacfd51f88a825f9618d0dc62f2a794675232d06fdd1d1c06c6d247b24d9945",
+        "template_sha256": "bc04c553257071eb646fc005b0db5a06e6d6c17091f1bedeeb2fe6c966598a4d",
+        "schema_sha256": "588b6ae1aa83aa356658bf746f93919bd1cfd097ec4874f60b65161bb8ea76a0",
+        "validator_sha256": "8c91f3423ee35871e1c52c8193f3797189645cc8faf29274cdac86c7f918f078",
+        "lexicon_sha256": "89e5b41dc8662780e443c10b5ecf81970944fc2b530d5f79372ac482ac744c0b"
+      },
+      "capture_state": {
+        "coalesced_progress": 127,
+        "dropped_records": 0,
+        "dropped_bytes": 0,
+        "truncated": false,
+        "io_failed": false,
+        "redacted": false,
+        "model_ended": true,
+        "unavailable": false
+      },
+      "incomplete": false,
+      "first_failure": {
+        "stage": "content_validate",
+        "state": "failed",
+        "begin_ms": 9019,
+        "end_ms": 9020,
+        "duration_ms": 1,
+        "check": "tag_content",
+        "detail": {
+          "reason": "tag_content_or_language_invalid",
+          "field": "tags",
+          "target_index": -1,
+          "actual": 9,
+          "limit": 100,
+          "byte_start": -1,
+          "byte_end": -1,
+          "expected_type": "",
+          "actual_type": ""
+        }
+      },
+      "stages": [
+        {
+          "stage": "request",
+          "state": "ok",
+          "check": "body"
+        },
+        {
+          "stage": "preflight",
+          "state": "ok",
+          "check": "transaction_commit"
+        },
+        {
+          "stage": "provider_open",
+          "state": "ok",
+          "check": "response_headers"
+        },
+        {
+          "stage": "provider_stream",
+          "state": "ok",
+          "check": ""
+        },
+        {
+          "stage": "passage_decode",
+          "state": "ok",
+          "check": "clean_consistency"
+        },
+        {
+          "stage": "candidate_decode",
+          "state": "ok",
+          "check": "hint_size"
+        },
+        {
+          "stage": "content_validate",
+          "state": "failed",
+          "check": "tag_content"
+        },
+        {
+          "stage": "draft_commit",
+          "state": "not_run",
+          "check": ""
+        },
+        {
+          "stage": "settlement",
+          "state": "ok",
+          "check": "cas"
+        },
+        {
+          "stage": "delivery",
+          "state": "ok",
+          "check": ""
+        }
+      ],
+      "provider_final": {
+        "id": "gen-1789112315-tutcQbBK6FtLCEfAPBst",
+        "upstream_request_id": "",
+        "http_status": 0,
+        "frame": 44,
+        "bytes": 761,
+        "choice_index": 0,
+        "choice_index_provided": true,
+        "finish_reason": "stop",
+        "error_present": false,
+        "error_code_type": "not_provided",
+        "error_code": 0,
+        "usage_provided": true,
+        "prompt_tokens": 828,
+        "completion_tokens": 494,
+        "total_tokens": 1322,
+        "syntax_offset": -1
+      },
+      "usage": {
+        "prompt_tokens": 828,
+        "completion_tokens": 494,
+        "total_tokens": 1322
+      },
+      "word_count_checks": [],
+      "model_end": {
+        "chunks": 42,
+        "bytes": 2118,
+        "redacted": false,
+        "unavailable": false
+      },
+      "json_parse_ok": true,
+      "target_source_order_matches": true,
+      "db": {
+        "id": "01a08f67-6bff-797a-b8f1-70a743f1dc42",
+        "account_id": "01a08e5a-2250-7854-81df-5aeb26e7f461",
+        "provider_model_id_snapshot": "minimax/minimax-m3",
+        "call_status": "validation_failed",
+        "quota_charged": false,
+        "counts_toward_cumulative": false,
+        "draft_exists": false
+      },
+      "id": "6eac4fa5-cb7f-48d3-9bfb-ba841d259509",
+      "bytes": 2118,
+      "raw_sha256": "8aaaaa8be3af19097679facfbaf17baeae1e683a027fc98b7cbef1240d332e6f",
+      "content_review": {
+        "case_id": 2,
+        "verdict": "failed",
+        "notes": [
+          "中文配置却返回英文 tags。",
+          "正文 discussion(weekend) 标注关系错误，不能归咎于前端去标注。",
+          "hint 中 a bunch of ripe grape 使用不自然的单数；结尾提案的并列结构不整齐。"
+        ]
+      }
+    },
+    {
+      "case_id": 3,
+      "group": "C",
+      "model_id": "01a07fe3-5c48-736a-a86b-1f4dabd7cb87",
+      "meaning_language": "en",
+      "scenario": "business",
+      "length": "short",
+      "entries": [
+        "alleviate",
+        "undermine",
+        "facilitate",
+        "deteriorate",
+        "perceive"
+      ],
+      "started_at": "2026-09-11T07:38:43.922Z",
+      "status": "generation.validated",
+      "image": "sha256:dc88818690bd8920c47c7d8e70ab44afd7a7316a96257fdb50b693378d2e3b5d",
+      "http_status": 200,
+      "run_id": "01a08f67-8f59-7452-8e07-d521d3e0d0ba",
+      "first_delta_ms": 845,
+      "preview_equals_result": true,
+      "target_order_valid": true,
+      "target_count": 5,
+      "tag_count": 2,
+      "result_sha256": "ab160b1351b994a0c5d133ac724085d4a52329bfc945a7245f4649ae67dea390",
+      "annotation_leaked": false,
+      "changed_form_occurrences": 0,
+      "repeated_passage_targets": 0,
+      "repeated_hint_targets": 0,
+      "positions_valid": true,
+      "duration_ms": 9221,
+      "passage_chars": 798,
+      "terminal_count": 1,
+      "evidence_id": "7e2f229d-a6bd-477c-91dc-59c9601edd72",
+      "expires_at": "2026-09-12T07:38:43.925592677Z",
+      "spec": {
+        "run_id": "01a08f67-8f59-7452-8e07-d521d3e0d0ba",
+        "model_id": "01a07fe3-5c48-736a-a86b-1f4dabd7cb87",
+        "provider_model_id": "minimax/minimax-m3",
+        "meaning_language": "en",
+        "scenario": "business",
+        "length": "short",
+        "minimum_words": 50,
+        "entries": [
+          "alleviate",
+          "undermine",
+          "facilitate",
+          "deteriorate",
+          "perceive"
+        ],
+        "prompt_version": "m001-v5-r4"
+      },
+      "fingerprint": {
+        "source_sha256": "feabf07bb820cc61017bea20b695b537e3cd943decc2717d2647ead1de5a4c78",
+        "binary_sha256": "1bacfd51f88a825f9618d0dc62f2a794675232d06fdd1d1c06c6d247b24d9945",
+        "template_sha256": "bc04c553257071eb646fc005b0db5a06e6d6c17091f1bedeeb2fe6c966598a4d",
+        "schema_sha256": "588b6ae1aa83aa356658bf746f93919bd1cfd097ec4874f60b65161bb8ea76a0",
+        "validator_sha256": "8c91f3423ee35871e1c52c8193f3797189645cc8faf29274cdac86c7f918f078",
+        "lexicon_sha256": "89e5b41dc8662780e443c10b5ecf81970944fc2b530d5f79372ac482ac744c0b"
+      },
+      "capture_state": {
+        "coalesced_progress": 97,
+        "dropped_records": 0,
+        "dropped_bytes": 0,
+        "truncated": false,
+        "io_failed": false,
+        "redacted": false,
+        "model_ended": true,
+        "unavailable": false
+      },
+      "incomplete": false,
+      "first_failure": null,
+      "stages": [
+        {
+          "stage": "request",
+          "state": "ok",
+          "check": "body"
+        },
+        {
+          "stage": "preflight",
+          "state": "ok",
+          "check": "transaction_commit"
+        },
+        {
+          "stage": "provider_open",
+          "state": "ok",
+          "check": "response_headers"
+        },
+        {
+          "stage": "provider_stream",
+          "state": "ok",
+          "check": ""
+        },
+        {
+          "stage": "passage_decode",
+          "state": "ok",
+          "check": "clean_consistency"
+        },
+        {
+          "stage": "candidate_decode",
+          "state": "ok",
+          "check": "hint_size"
+        },
+        {
+          "stage": "content_validate",
+          "state": "ok",
+          "check": "context"
+        },
+        {
+          "stage": "draft_commit",
+          "state": "ok",
+          "check": "transaction_commit"
+        },
+        {
+          "stage": "settlement",
+          "state": "not_run",
+          "check": ""
+        },
+        {
+          "stage": "delivery",
+          "state": "ok",
+          "check": ""
+        }
+      ],
+      "provider_final": {
+        "id": "gen-1789112324-9sYyYnnMYqZmAvRYt08R",
+        "upstream_request_id": "",
+        "http_status": 0,
+        "frame": 34,
+        "bytes": 761,
+        "choice_index": 0,
+        "choice_index_provided": true,
+        "finish_reason": "stop",
+        "error_present": false,
+        "error_code_type": "not_provided",
+        "error_code": 0,
+        "usage_provided": true,
+        "prompt_tokens": 834,
+        "completion_tokens": 421,
+        "total_tokens": 1255,
+        "syntax_offset": -1
+      },
+      "usage": {
+        "prompt_tokens": 834,
+        "completion_tokens": 421,
+        "total_tokens": 1255
+      },
+      "word_count_checks": [],
+      "model_end": {
+        "chunks": 32,
+        "bytes": 1879,
+        "redacted": false,
+        "unavailable": false
+      },
+      "json_parse_ok": true,
+      "target_source_order_matches": true,
+      "db": {
+        "id": "01a08f67-8f59-7452-8e07-d521d3e0d0ba",
+        "account_id": "01a08e5a-2250-7854-81df-5aeb26e7f461",
+        "provider_model_id_snapshot": "minimax/minimax-m3",
+        "call_status": "valid",
+        "quota_charged": true,
+        "counts_toward_cumulative": true,
+        "draft_exists": true
+      },
+      "id": "7e2f229d-a6bd-477c-91dc-59c9601edd72",
+      "bytes": 1879,
+      "raw_sha256": "c9d28d90973152afe96296f1a68a941e3a134016e8630643a09a730dbdc21cd0",
+      "content_review": {
+        "case_id": 3,
+        "verdict": "validated_with_review_note",
+        "notes": [
+          "正文连贯，五个动词自然融入商业场景，原词释义没有文章作用尾句。",
+          "hint 中 sales began to deteriorate 是完整主谓句，不是清晰的词组；结构校验通过不证明全部提示短语要求达标。"
+        ]
+      }
+    },
+    {
+      "case_id": 4,
+      "group": "D",
+      "model_id": "01a07fe3-5c48-736a-a86b-1f4dabd7cb87",
+      "meaning_language": "ja",
+      "scenario": "news",
+      "length": "long",
+      "entries": [
+        "sustainable",
+        "prevalent",
+        "vulnerable",
+        "ambiguous",
+        "coherent"
+      ],
+      "started_at": "2026-09-11T07:38:53.162Z",
+      "status": "generation.failed",
+      "image": "sha256:dc88818690bd8920c47c7d8e70ab44afd7a7316a96257fdb50b693378d2e3b5d",
+      "http_status": 200,
+      "run_id": "01a08f67-b370-7377-bee4-90e5c0add1bc",
+      "first_delta_ms": 11448,
+      "code": "content_validation_failed",
+      "quota_refunded": true,
+      "duration_ms": 16780,
+      "passage_chars": 1454,
+      "terminal_count": 1,
+      "evidence_id": "c9de9dce-1dee-4098-936c-4a3d7cc2190f",
+      "expires_at": "2026-09-12T07:38:53.165155833Z",
+      "spec": {
+        "run_id": "01a08f67-b370-7377-bee4-90e5c0add1bc",
+        "model_id": "01a07fe3-5c48-736a-a86b-1f4dabd7cb87",
+        "provider_model_id": "minimax/minimax-m3",
+        "meaning_language": "ja",
+        "scenario": "news",
+        "length": "long",
+        "minimum_words": 200,
+        "entries": [
+          "sustainable",
+          "prevalent",
+          "vulnerable",
+          "ambiguous",
+          "coherent"
+        ],
+        "prompt_version": "m001-v5-r4"
+      },
+      "fingerprint": {
+        "source_sha256": "feabf07bb820cc61017bea20b695b537e3cd943decc2717d2647ead1de5a4c78",
+        "binary_sha256": "1bacfd51f88a825f9618d0dc62f2a794675232d06fdd1d1c06c6d247b24d9945",
+        "template_sha256": "bc04c553257071eb646fc005b0db5a06e6d6c17091f1bedeeb2fe6c966598a4d",
+        "schema_sha256": "588b6ae1aa83aa356658bf746f93919bd1cfd097ec4874f60b65161bb8ea76a0",
+        "validator_sha256": "8c91f3423ee35871e1c52c8193f3797189645cc8faf29274cdac86c7f918f078",
+        "lexicon_sha256": "89e5b41dc8662780e443c10b5ecf81970944fc2b530d5f79372ac482ac744c0b"
+      },
+      "capture_state": {
+        "coalesced_progress": 145,
+        "dropped_records": 0,
+        "dropped_bytes": 0,
+        "truncated": false,
+        "io_failed": false,
+        "redacted": false,
+        "model_ended": true,
+        "unavailable": false
+      },
+      "incomplete": false,
+      "first_failure": {
+        "stage": "content_validate",
+        "state": "failed",
+        "begin_ms": 16773,
+        "end_ms": 16773,
+        "duration_ms": 0,
+        "check": "word_count",
+        "detail": {
+          "reason": "passage_too_short",
+          "field": "passage",
+          "target_index": -1,
+          "actual": 197,
+          "limit": 200,
+          "byte_start": -1,
+          "byte_end": -1,
+          "expected_type": "",
+          "actual_type": ""
+        }
+      },
+      "stages": [
+        {
+          "stage": "request",
+          "state": "ok",
+          "check": "body"
+        },
+        {
+          "stage": "preflight",
+          "state": "ok",
+          "check": "transaction_commit"
+        },
+        {
+          "stage": "provider_open",
+          "state": "ok",
+          "check": "response_headers"
+        },
+        {
+          "stage": "provider_stream",
+          "state": "ok",
+          "check": ""
+        },
+        {
+          "stage": "passage_decode",
+          "state": "ok",
+          "check": "clean_consistency"
+        },
+        {
+          "stage": "candidate_decode",
+          "state": "ok",
+          "check": "hint_size"
+        },
+        {
+          "stage": "content_validate",
+          "state": "failed",
+          "check": "word_count"
+        },
+        {
+          "stage": "draft_commit",
+          "state": "not_run",
+          "check": ""
+        },
+        {
+          "stage": "settlement",
+          "state": "ok",
+          "check": "cas"
+        },
+        {
+          "stage": "delivery",
+          "state": "ok",
+          "check": ""
+        }
+      ],
+      "provider_final": {
+        "id": "gen-1789112333-AHl1uAmVkwf3GIbpgCNs",
+        "upstream_request_id": "",
+        "http_status": 0,
+        "frame": 50,
+        "bytes": 761,
+        "choice_index": 0,
+        "choice_index_provided": true,
+        "finish_reason": "stop",
+        "error_present": false,
+        "error_code_type": "not_provided",
+        "error_code": 0,
+        "usage_provided": true,
+        "prompt_tokens": 831,
+        "completion_tokens": 497,
+        "total_tokens": 1328,
+        "syntax_offset": -1
+      },
+      "usage": {
+        "prompt_tokens": 831,
+        "completion_tokens": 497,
+        "total_tokens": 1328
+      },
+      "word_count_checks": [
+        {
+          "reason": "passage_too_short",
+          "field": "passage",
+          "target_index": -1,
+          "actual": 197,
+          "limit": 200,
+          "byte_start": -1,
+          "byte_end": -1,
+          "expected_type": "",
+          "actual_type": ""
+        }
+      ],
+      "model_end": {
+        "chunks": 48,
+        "bytes": 2595,
+        "redacted": false,
+        "unavailable": false
+      },
+      "json_parse_ok": true,
+      "target_source_order_matches": true,
+      "db": {
+        "id": "01a08f67-b370-7377-bee4-90e5c0add1bc",
+        "account_id": "01a08e5a-2250-7854-81df-5aeb26e7f461",
+        "provider_model_id_snapshot": "minimax/minimax-m3",
+        "call_status": "validation_failed",
+        "quota_charged": false,
+        "counts_toward_cumulative": false,
+        "draft_exists": false
+      },
+      "id": "c9de9dce-1dee-4098-936c-4a3d7cc2190f",
+      "bytes": 2595,
+      "raw_sha256": "5a804209b4c4df16d9384c1976d9b6abce31109cd45f917db55cd1c7c93f1b3c",
+      "content_review": {
+        "case_id": 4,
+        "verdict": "failed",
+        "notes": [
+          "实际校验为 197/200 词。",
+          "日文释义和标签可读，标注形式直观；sustainable 释义仅列环境/资源义，未据此另加义项穷尽规则。"
+        ]
+      }
+    },
+    {
+      "case_id": 5,
+      "group": "A",
+      "model_id": "01a07fe3-5c48-736a-a86b-1f4dabd7cb87",
+      "meaning_language": "zh",
+      "scenario": "discussion",
+      "length": "medium",
+      "entries": [
+        "melancholy",
+        "handicap",
+        "foray",
+        "casino",
+        "upswing"
+      ],
+      "started_at": "2026-09-11T07:39:09.977Z",
+      "status": "generation.validated",
+      "image": "sha256:dc88818690bd8920c47c7d8e70ab44afd7a7316a96257fdb50b693378d2e3b5d",
+      "http_status": 200,
+      "run_id": "01a08f67-f51f-79d3-b266-bd0242fd1b49",
+      "first_delta_ms": 888,
+      "preview_equals_result": true,
+      "target_order_valid": true,
+      "target_count": 5,
+      "tag_count": 2,
+      "result_sha256": "c3d6114eda644d6b5f637f5d263ce49833084be9a179060b06c52e13f9907654",
+      "annotation_leaked": false,
+      "changed_form_occurrences": 0,
+      "repeated_passage_targets": 2,
+      "repeated_hint_targets": 0,
+      "positions_valid": true,
+      "duration_ms": 6639,
+      "passage_chars": 925,
+      "terminal_count": 1,
+      "evidence_id": "bd2f4e87-5757-45a5-a14c-20d7c4962d97",
+      "expires_at": "2026-09-12T07:39:09.980203675Z",
+      "spec": {
+        "run_id": "01a08f67-f51f-79d3-b266-bd0242fd1b49",
+        "model_id": "01a07fe3-5c48-736a-a86b-1f4dabd7cb87",
+        "provider_model_id": "minimax/minimax-m3",
+        "meaning_language": "zh",
+        "scenario": "discussion",
+        "length": "medium",
+        "minimum_words": 100,
+        "entries": [
+          "melancholy",
+          "handicap",
+          "foray",
+          "casino",
+          "upswing"
+        ],
+        "prompt_version": "m001-v5-r4"
+      },
+      "fingerprint": {
+        "source_sha256": "feabf07bb820cc61017bea20b695b537e3cd943decc2717d2647ead1de5a4c78",
+        "binary_sha256": "1bacfd51f88a825f9618d0dc62f2a794675232d06fdd1d1c06c6d247b24d9945",
+        "template_sha256": "bc04c553257071eb646fc005b0db5a06e6d6c17091f1bedeeb2fe6c966598a4d",
+        "schema_sha256": "588b6ae1aa83aa356658bf746f93919bd1cfd097ec4874f60b65161bb8ea76a0",
+        "validator_sha256": "8c91f3423ee35871e1c52c8193f3797189645cc8faf29274cdac86c7f918f078",
+        "lexicon_sha256": "89e5b41dc8662780e443c10b5ecf81970944fc2b530d5f79372ac482ac744c0b"
+      },
+      "capture_state": {
+        "coalesced_progress": 82,
+        "dropped_records": 0,
+        "dropped_bytes": 0,
+        "truncated": false,
+        "io_failed": false,
+        "redacted": false,
+        "model_ended": true,
+        "unavailable": false
+      },
+      "incomplete": false,
+      "first_failure": null,
+      "stages": [
+        {
+          "stage": "request",
+          "state": "ok",
+          "check": "body"
+        },
+        {
+          "stage": "preflight",
+          "state": "ok",
+          "check": "transaction_commit"
+        },
+        {
+          "stage": "provider_open",
+          "state": "ok",
+          "check": "response_headers"
+        },
+        {
+          "stage": "provider_stream",
+          "state": "ok",
+          "check": ""
+        },
+        {
+          "stage": "passage_decode",
+          "state": "ok",
+          "check": "clean_consistency"
+        },
+        {
+          "stage": "candidate_decode",
+          "state": "ok",
+          "check": "hint_size"
+        },
+        {
+          "stage": "content_validate",
+          "state": "ok",
+          "check": "context"
+        },
+        {
+          "stage": "draft_commit",
+          "state": "ok",
+          "check": "transaction_commit"
+        },
+        {
+          "stage": "settlement",
+          "state": "not_run",
+          "check": ""
+        },
+        {
+          "stage": "delivery",
+          "state": "ok",
+          "check": ""
+        }
+      ],
+      "provider_final": {
+        "id": "gen-1789112350-3GXnEh3F9uQXbGYX0gWQ",
+        "upstream_request_id": "",
+        "http_status": 0,
+        "frame": 29,
+        "bytes": 761,
+        "choice_index": 0,
+        "choice_index_provided": true,
+        "finish_reason": "stop",
+        "error_present": false,
+        "error_code_type": "not_provided",
+        "error_code": 0,
+        "usage_provided": true,
+        "prompt_tokens": 831,
+        "completion_tokens": 467,
+        "total_tokens": 1298,
+        "syntax_offset": -1
+      },
+      "usage": {
+        "prompt_tokens": 831,
+        "completion_tokens": 467,
+        "total_tokens": 1298
+      },
+      "word_count_checks": [],
+      "model_end": {
+        "chunks": 27,
+        "bytes": 2004,
+        "redacted": false,
+        "unavailable": false
+      },
+      "json_parse_ok": true,
+      "target_source_order_matches": true,
+      "db": {
+        "id": "01a08f67-f51f-79d3-b266-bd0242fd1b49",
+        "account_id": "01a08e5a-2250-7854-81df-5aeb26e7f461",
+        "provider_model_id_snapshot": "minimax/minimax-m3",
+        "call_status": "valid",
+        "quota_charged": true,
+        "counts_toward_cumulative": true,
+        "draft_exists": true
+      },
+      "id": "bd2f4e87-5757-45a5-a14c-20d7c4962d97",
+      "bytes": 2004,
+      "raw_sha256": "6a64200b5d79cc05d9d4814f156bfd7bd9f0a50624dc56189340336dff8b6577",
+      "content_review": {
+        "case_id": 5,
+        "verdict": "validated_with_review_note",
+        "notes": [
+          "中文释义及标签正确，原词解释不附文章作用；重复 melancholy 和 upswing 均标注并通过。",
+          "casino 的个人经历与经济讨论衔接稍牵强，属质量观察而非新增拒绝规则。"
+        ]
+      }
+    },
+    {
+      "case_id": 6,
+      "group": "B",
+      "model_id": "01a07fe3-5c48-736a-a86b-1f4dabd7cb87",
+      "meaning_language": "en",
+      "scenario": "business",
+      "length": "short",
+      "entries": [
+        "young",
+        "grape",
+        "weekend",
+        "danger",
+        "enforce"
+      ],
+      "started_at": "2026-09-11T07:39:23.171Z",
+      "status": "generation.validated",
+      "image": "sha256:dc88818690bd8920c47c7d8e70ab44afd7a7316a96257fdb50b693378d2e3b5d",
+      "http_status": 200,
+      "run_id": "01a08f68-28a9-7011-900f-b2b9501564d9",
+      "first_delta_ms": 3104,
+      "preview_equals_result": true,
+      "target_order_valid": true,
+      "target_count": 5,
+      "tag_count": 2,
+      "result_sha256": "290df7dadd51af3368df2d5b45e3557eff93e5e056ce95c7fcacf90156e11c0f",
+      "annotation_leaked": false,
+      "changed_form_occurrences": 1,
+      "repeated_passage_targets": 4,
+      "repeated_hint_targets": 0,
+      "positions_valid": true,
+      "duration_ms": 8968,
+      "passage_chars": 679,
+      "terminal_count": 1,
+      "evidence_id": "34b1d9e6-b9f6-4964-9986-8c8c8b3f055f",
+      "expires_at": "2026-09-12T07:39:23.173677042Z",
+      "spec": {
+        "run_id": "01a08f68-28a9-7011-900f-b2b9501564d9",
+        "model_id": "01a07fe3-5c48-736a-a86b-1f4dabd7cb87",
+        "provider_model_id": "minimax/minimax-m3",
+        "meaning_language": "en",
+        "scenario": "business",
+        "length": "short",
+        "minimum_words": 50,
+        "entries": [
+          "young",
+          "grape",
+          "weekend",
+          "danger",
+          "enforce"
+        ],
+        "prompt_version": "m001-v5-r4"
+      },
+      "fingerprint": {
+        "source_sha256": "feabf07bb820cc61017bea20b695b537e3cd943decc2717d2647ead1de5a4c78",
+        "binary_sha256": "1bacfd51f88a825f9618d0dc62f2a794675232d06fdd1d1c06c6d247b24d9945",
+        "template_sha256": "bc04c553257071eb646fc005b0db5a06e6d6c17091f1bedeeb2fe6c966598a4d",
+        "schema_sha256": "588b6ae1aa83aa356658bf746f93919bd1cfd097ec4874f60b65161bb8ea76a0",
+        "validator_sha256": "8c91f3423ee35871e1c52c8193f3797189645cc8faf29274cdac86c7f918f078",
+        "lexicon_sha256": "89e5b41dc8662780e443c10b5ecf81970944fc2b530d5f79372ac482ac744c0b"
+      },
+      "capture_state": {
+        "coalesced_progress": 88,
+        "dropped_records": 0,
+        "dropped_bytes": 0,
+        "truncated": false,
+        "io_failed": false,
+        "redacted": false,
+        "model_ended": true,
+        "unavailable": false
+      },
+      "incomplete": false,
+      "first_failure": null,
+      "stages": [
+        {
+          "stage": "request",
+          "state": "ok",
+          "check": "body"
+        },
+        {
+          "stage": "preflight",
+          "state": "ok",
+          "check": "transaction_commit"
+        },
+        {
+          "stage": "provider_open",
+          "state": "ok",
+          "check": "response_headers"
+        },
+        {
+          "stage": "provider_stream",
+          "state": "ok",
+          "check": ""
+        },
+        {
+          "stage": "passage_decode",
+          "state": "ok",
+          "check": "clean_consistency"
+        },
+        {
+          "stage": "candidate_decode",
+          "state": "ok",
+          "check": "hint_size"
+        },
+        {
+          "stage": "content_validate",
+          "state": "ok",
+          "check": "context"
+        },
+        {
+          "stage": "draft_commit",
+          "state": "ok",
+          "check": "transaction_commit"
+        },
+        {
+          "stage": "settlement",
+          "state": "not_run",
+          "check": ""
+        },
+        {
+          "stage": "delivery",
+          "state": "ok",
+          "check": ""
+        }
+      ],
+      "provider_final": {
+        "id": "gen-1789112363-yOzDDrLstFJk2eCwLs2U",
+        "upstream_request_id": "",
+        "http_status": 0,
+        "frame": 31,
+        "bytes": 759,
+        "choice_index": 0,
+        "choice_index_provided": true,
+        "finish_reason": "stop",
+        "error_present": false,
+        "error_code_type": "not_provided",
+        "error_code": 0,
+        "usage_provided": true,
+        "prompt_tokens": 828,
+        "completion_tokens": 425,
+        "total_tokens": 1253,
+        "syntax_offset": -1
+      },
+      "usage": {
+        "prompt_tokens": 828,
+        "completion_tokens": 425,
+        "total_tokens": 1253
+      },
+      "word_count_checks": [],
+      "model_end": {
+        "chunks": 29,
+        "bytes": 1802,
+        "redacted": false,
+        "unavailable": false
+      },
+      "json_parse_ok": true,
+      "target_source_order_matches": true,
+      "db": {
+        "id": "01a08f68-28a9-7011-900f-b2b9501564d9",
+        "account_id": "01a08e5a-2250-7854-81df-5aeb26e7f461",
+        "provider_model_id_snapshot": "minimax/minimax-m3",
+        "call_status": "valid",
+        "quota_charged": true,
+        "counts_toward_cumulative": true,
+        "draft_exists": true
+      },
+      "id": "34b1d9e6-b9f6-4964-9986-8c8c8b3f055f",
+      "bytes": 1802,
+      "raw_sha256": "4393c838872a68024a4a9345666b189a210c17d2e78ae2e34597a80afcd291ca",
+      "content_review": {
+        "case_id": 6,
+        "verdict": "validated_with_review_note",
+        "notes": [
+          "grapes 映射 grape 成功；正文四个目标重复出现，干净预览与终稿、位置一致。",
+          "原词释义为一般定义；operational danger 搭配偏生硬。"
+        ]
+      }
+    },
+    {
+      "case_id": 7,
+      "group": "C",
+      "model_id": "01a07fe3-5c48-736a-a86b-1f4dabd7cb87",
+      "meaning_language": "ja",
+      "scenario": "news",
+      "length": "long",
+      "entries": [
+        "alleviate",
+        "undermine",
+        "facilitate",
+        "deteriorate",
+        "perceive"
+      ],
+      "started_at": "2026-09-11T07:39:32.158Z",
+      "status": "generation.failed",
+      "image": "sha256:dc88818690bd8920c47c7d8e70ab44afd7a7316a96257fdb50b693378d2e3b5d",
+      "http_status": 200,
+      "run_id": "01a08f68-4bc6-72f5-af6d-e6ebcdde5bdb",
+      "first_delta_ms": 721,
+      "code": "content_validation_failed",
+      "quota_refunded": true,
+      "duration_ms": 18276,
+      "passage_chars": 2256,
+      "terminal_count": 1,
+      "evidence_id": "b7eb6dc2-05be-4afe-8be0-c6d48e30dad8",
+      "expires_at": "2026-09-12T07:39:32.161718713Z",
+      "spec": {
+        "run_id": "01a08f68-4bc6-72f5-af6d-e6ebcdde5bdb",
+        "model_id": "01a07fe3-5c48-736a-a86b-1f4dabd7cb87",
+        "provider_model_id": "minimax/minimax-m3",
+        "meaning_language": "ja",
+        "scenario": "news",
+        "length": "long",
+        "minimum_words": 200,
+        "entries": [
+          "alleviate",
+          "undermine",
+          "facilitate",
+          "deteriorate",
+          "perceive"
+        ],
+        "prompt_version": "m001-v5-r4"
+      },
+      "fingerprint": {
+        "source_sha256": "feabf07bb820cc61017bea20b695b537e3cd943decc2717d2647ead1de5a4c78",
+        "binary_sha256": "1bacfd51f88a825f9618d0dc62f2a794675232d06fdd1d1c06c6d247b24d9945",
+        "template_sha256": "bc04c553257071eb646fc005b0db5a06e6d6c17091f1bedeeb2fe6c966598a4d",
+        "schema_sha256": "588b6ae1aa83aa356658bf746f93919bd1cfd097ec4874f60b65161bb8ea76a0",
+        "validator_sha256": "8c91f3423ee35871e1c52c8193f3797189645cc8faf29274cdac86c7f918f078",
+        "lexicon_sha256": "89e5b41dc8662780e443c10b5ecf81970944fc2b530d5f79372ac482ac744c0b"
+      },
+      "capture_state": {
+        "coalesced_progress": 136,
+        "dropped_records": 0,
+        "dropped_bytes": 0,
+        "truncated": false,
+        "io_failed": false,
+        "redacted": false,
+        "model_ended": true,
+        "unavailable": false
+      },
+      "incomplete": false,
+      "first_failure": {
+        "stage": "content_validate",
+        "state": "failed",
+        "begin_ms": 18267,
+        "end_ms": 18268,
+        "duration_ms": 1,
+        "check": "tag_content",
+        "detail": {
+          "reason": "tag_content_or_language_invalid",
+          "field": "tags",
+          "target_index": -1,
+          "actual": 14,
+          "limit": 100,
+          "byte_start": -1,
+          "byte_end": -1,
+          "expected_type": "",
+          "actual_type": ""
+        }
+      },
+      "stages": [
+        {
+          "stage": "request",
+          "state": "ok",
+          "check": "body"
+        },
+        {
+          "stage": "preflight",
+          "state": "ok",
+          "check": "transaction_commit"
+        },
+        {
+          "stage": "provider_open",
+          "state": "ok",
+          "check": "response_headers"
+        },
+        {
+          "stage": "provider_stream",
+          "state": "ok",
+          "check": ""
+        },
+        {
+          "stage": "passage_decode",
+          "state": "ok",
+          "check": "clean_consistency"
+        },
+        {
+          "stage": "candidate_decode",
+          "state": "ok",
+          "check": "hint_size"
+        },
+        {
+          "stage": "content_validate",
+          "state": "failed",
+          "check": "tag_content"
+        },
+        {
+          "stage": "draft_commit",
+          "state": "not_run",
+          "check": ""
+        },
+        {
+          "stage": "settlement",
+          "state": "ok",
+          "check": "cas"
+        },
+        {
+          "stage": "delivery",
+          "state": "ok",
+          "check": ""
+        }
+      ],
+      "provider_final": {
+        "id": "gen-1789112372-pgCf4U2VmlEuP7UG2A14",
+        "upstream_request_id": "",
+        "http_status": 0,
+        "frame": 47,
+        "bytes": 761,
+        "choice_index": 0,
+        "choice_index_provided": true,
+        "finish_reason": "stop",
+        "error_present": false,
+        "error_code_type": "not_provided",
+        "error_code": 0,
+        "usage_provided": true,
+        "prompt_tokens": 834,
+        "completion_tokens": 666,
+        "total_tokens": 1500,
+        "syntax_offset": -1
+      },
+      "usage": {
+        "prompt_tokens": 834,
+        "completion_tokens": 666,
+        "total_tokens": 1500
+      },
+      "word_count_checks": [],
+      "model_end": {
+        "chunks": 45,
+        "bytes": 3447,
+        "redacted": false,
+        "unavailable": false
+      },
+      "json_parse_ok": true,
+      "target_source_order_matches": true,
+      "db": {
+        "id": "01a08f68-4bc6-72f5-af6d-e6ebcdde5bdb",
+        "account_id": "01a08e5a-2250-7854-81df-5aeb26e7f461",
+        "provider_model_id_snapshot": "minimax/minimax-m3",
+        "call_status": "validation_failed",
+        "quota_charged": false,
+        "counts_toward_cumulative": false,
+        "draft_exists": false
+      },
+      "id": "b7eb6dc2-05be-4afe-8be0-c6d48e30dad8",
+      "bytes": 3447,
+      "raw_sha256": "7ea942bb6e2613aa564fb0a09d6f5e7545675fc5dcfe41859ce8bf4782ffa705",
+      "content_review": {
+        "case_id": 7,
+        "verdict": "failed",
+        "notes": [
+          "日文配置返回英文 tags；释义本身为日文。",
+          "正文包含自然屈折与重复；hint 中 conditions gradually deteriorated 是完整主谓句，不能仅以标注正确宣称短语质量通过。"
+        ]
+      }
+    },
+    {
+      "case_id": 8,
+      "group": "D",
+      "model_id": "01a07fe3-5c48-736a-a86b-1f4dabd7cb87",
+      "meaning_language": "en",
+      "scenario": "story",
+      "length": "xlong",
+      "entries": [
+        "sustainable",
+        "prevalent",
+        "vulnerable",
+        "ambiguous",
+        "coherent"
+      ],
+      "started_at": "2026-09-11T07:39:50.456Z",
+      "status": "generation.failed",
+      "image": "sha256:dc88818690bd8920c47c7d8e70ab44afd7a7316a96257fdb50b693378d2e3b5d",
+      "http_status": 200,
+      "run_id": "01a08f68-933e-7d08-bf27-fd45dd07c9ae",
+      "first_delta_ms": 737,
+      "code": "content_validation_failed",
+      "quota_refunded": true,
+      "duration_ms": 16119,
+      "passage_chars": 4399,
+      "terminal_count": 1,
+      "evidence_id": "226a9486-a178-4e01-a2f7-2d2fee64e54c",
+      "expires_at": "2026-09-12T07:39:50.459389638Z",
+      "spec": {
+        "run_id": "01a08f68-933e-7d08-bf27-fd45dd07c9ae",
+        "model_id": "01a07fe3-5c48-736a-a86b-1f4dabd7cb87",
+        "provider_model_id": "minimax/minimax-m3",
+        "meaning_language": "en",
+        "scenario": "story",
+        "length": "xlong",
+        "minimum_words": 400,
+        "entries": [
+          "sustainable",
+          "prevalent",
+          "vulnerable",
+          "ambiguous",
+          "coherent"
+        ],
+        "prompt_version": "m001-v5-r4"
+      },
+      "fingerprint": {
+        "source_sha256": "feabf07bb820cc61017bea20b695b537e3cd943decc2717d2647ead1de5a4c78",
+        "binary_sha256": "1bacfd51f88a825f9618d0dc62f2a794675232d06fdd1d1c06c6d247b24d9945",
+        "template_sha256": "bc04c553257071eb646fc005b0db5a06e6d6c17091f1bedeeb2fe6c966598a4d",
+        "schema_sha256": "588b6ae1aa83aa356658bf746f93919bd1cfd097ec4874f60b65161bb8ea76a0",
+        "validator_sha256": "8c91f3423ee35871e1c52c8193f3797189645cc8faf29274cdac86c7f918f078",
+        "lexicon_sha256": "89e5b41dc8662780e443c10b5ecf81970944fc2b530d5f79372ac482ac744c0b"
+      },
+      "capture_state": {
+        "coalesced_progress": 289,
+        "dropped_records": 0,
+        "dropped_bytes": 0,
+        "truncated": false,
+        "io_failed": false,
+        "redacted": false,
+        "model_ended": true,
+        "unavailable": false
+      },
+      "incomplete": false,
+      "first_failure": {
+        "stage": "content_validate",
+        "state": "failed",
+        "begin_ms": 16105,
+        "end_ms": 16106,
+        "duration_ms": 1,
+        "check": "source_entry",
+        "detail": {
+          "reason": "target_source_mismatch",
+          "field": "source_entry",
+          "target_index": 0,
+          "actual": -1,
+          "limit": -1,
+          "byte_start": -1,
+          "byte_end": -1,
+          "expected_type": "",
+          "actual_type": ""
+        }
+      },
+      "stages": [
+        {
+          "stage": "request",
+          "state": "ok",
+          "check": "body"
+        },
+        {
+          "stage": "preflight",
+          "state": "ok",
+          "check": "transaction_commit"
+        },
+        {
+          "stage": "provider_open",
+          "state": "ok",
+          "check": "response_headers"
+        },
+        {
+          "stage": "provider_stream",
+          "state": "ok",
+          "check": ""
+        },
+        {
+          "stage": "passage_decode",
+          "state": "ok",
+          "check": "clean_consistency"
+        },
+        {
+          "stage": "candidate_decode",
+          "state": "ok",
+          "check": "hint_size"
+        },
+        {
+          "stage": "content_validate",
+          "state": "failed",
+          "check": "source_entry"
+        },
+        {
+          "stage": "draft_commit",
+          "state": "not_run",
+          "check": ""
+        },
+        {
+          "stage": "settlement",
+          "state": "ok",
+          "check": "cas"
+        },
+        {
+          "stage": "delivery",
+          "state": "ok",
+          "check": ""
+        }
+      ],
+      "provider_final": {
+        "id": "gen-1789112390-Nwm9hzhMqMlICbdCZoaG",
+        "upstream_request_id": "",
+        "http_status": 0,
+        "frame": 98,
+        "bytes": 762,
+        "choice_index": 0,
+        "choice_index_provided": true,
+        "finish_reason": "stop",
+        "error_present": false,
+        "error_code_type": "not_provided",
+        "error_code": 0,
+        "usage_provided": true,
+        "prompt_tokens": 831,
+        "completion_tokens": 1137,
+        "total_tokens": 1968,
+        "syntax_offset": -1
+      },
+      "usage": {
+        "prompt_tokens": 831,
+        "completion_tokens": 1137,
+        "total_tokens": 1968
+      },
+      "word_count_checks": [],
+      "model_end": {
+        "chunks": 96,
+        "bytes": 5632,
+        "redacted": false,
+        "unavailable": false
+      },
+      "json_parse_ok": true,
+      "target_source_order_matches": false,
+      "db": {
+        "id": "01a08f68-933e-7d08-bf27-fd45dd07c9ae",
+        "account_id": "01a08e5a-2250-7854-81df-5aeb26e7f461",
+        "provider_model_id_snapshot": "minimax/minimax-m3",
+        "call_status": "validation_failed",
+        "quota_charged": false,
+        "counts_toward_cumulative": false,
+        "draft_exists": false
+      },
+      "id": "226a9486-a178-4e01-a2f7-2d2fee64e54c",
+      "bytes": 5632,
+      "raw_sha256": "486cc7ff9ce026d606ebba37da560b7228944bb5fcfa5613a15b88d447dd8a8b",
+      "content_review": {
+        "case_id": 8,
+        "verdict": "failed",
+        "notes": [
+          "source_entry 循环错位：第一个对象解释 sustainable、hint 也属于 sustainable，但 source_entry 为 prevalent；其余对象同类错配。",
+          "正文完整且有反复标注，但不应通过重排对象掩盖释义/hint/source_entry 失配。"
+        ]
+      }
+    },
+    {
+      "case_id": 9,
+      "group": "A",
+      "model_id": "01a07fe3-5c48-736a-a86b-1f4dabd7cb87",
+      "meaning_language": "en",
+      "scenario": "business",
+      "length": "short",
+      "entries": [
+        "melancholy",
+        "handicap",
+        "foray",
+        "casino",
+        "upswing"
+      ],
+      "started_at": "2026-09-11T07:40:06.602Z",
+      "status": "generation.validated",
+      "image": "sha256:dc88818690bd8920c47c7d8e70ab44afd7a7316a96257fdb50b693378d2e3b5d",
+      "http_status": 200,
+      "run_id": "01a08f68-d254-791f-aeb9-c486b8fed0df",
+      "first_delta_ms": 741,
+      "preview_equals_result": true,
+      "target_order_valid": true,
+      "target_count": 5,
+      "tag_count": 2,
+      "result_sha256": "a725fcf8955e4ce99e495d47ec7104f9ac6fb670661b1dfca341e7439795aaa0",
+      "annotation_leaked": false,
+      "changed_form_occurrences": 0,
+      "repeated_passage_targets": 1,
+      "repeated_hint_targets": 0,
+      "positions_valid": true,
+      "duration_ms": 6857,
+      "passage_chars": 840,
+      "terminal_count": 1,
+      "evidence_id": "7fd94ea7-c310-403d-b9b1-6253956a8c88",
+      "expires_at": "2026-09-12T07:40:06.606505048Z",
+      "spec": {
+        "run_id": "01a08f68-d254-791f-aeb9-c486b8fed0df",
+        "model_id": "01a07fe3-5c48-736a-a86b-1f4dabd7cb87",
+        "provider_model_id": "minimax/minimax-m3",
+        "meaning_language": "en",
+        "scenario": "business",
+        "length": "short",
+        "minimum_words": 50,
+        "entries": [
+          "melancholy",
+          "handicap",
+          "foray",
+          "casino",
+          "upswing"
+        ],
+        "prompt_version": "m001-v5-r4"
+      },
+      "fingerprint": {
+        "source_sha256": "feabf07bb820cc61017bea20b695b537e3cd943decc2717d2647ead1de5a4c78",
+        "binary_sha256": "1bacfd51f88a825f9618d0dc62f2a794675232d06fdd1d1c06c6d247b24d9945",
+        "template_sha256": "bc04c553257071eb646fc005b0db5a06e6d6c17091f1bedeeb2fe6c966598a4d",
+        "schema_sha256": "588b6ae1aa83aa356658bf746f93919bd1cfd097ec4874f60b65161bb8ea76a0",
+        "validator_sha256": "8c91f3423ee35871e1c52c8193f3797189645cc8faf29274cdac86c7f918f078",
+        "lexicon_sha256": "89e5b41dc8662780e443c10b5ecf81970944fc2b530d5f79372ac482ac744c0b"
+      },
+      "capture_state": {
+        "coalesced_progress": 94,
+        "dropped_records": 0,
+        "dropped_bytes": 0,
+        "truncated": false,
+        "io_failed": false,
+        "redacted": false,
+        "model_ended": true,
+        "unavailable": false
+      },
+      "incomplete": false,
+      "first_failure": null,
+      "stages": [
+        {
+          "stage": "request",
+          "state": "ok",
+          "check": "body"
+        },
+        {
+          "stage": "preflight",
+          "state": "ok",
+          "check": "transaction_commit"
+        },
+        {
+          "stage": "provider_open",
+          "state": "ok",
+          "check": "response_headers"
+        },
+        {
+          "stage": "provider_stream",
+          "state": "ok",
+          "check": ""
+        },
+        {
+          "stage": "passage_decode",
+          "state": "ok",
+          "check": "clean_consistency"
+        },
+        {
+          "stage": "candidate_decode",
+          "state": "ok",
+          "check": "hint_size"
+        },
+        {
+          "stage": "content_validate",
+          "state": "ok",
+          "check": "context"
+        },
+        {
+          "stage": "draft_commit",
+          "state": "ok",
+          "check": "transaction_commit"
+        },
+        {
+          "stage": "settlement",
+          "state": "not_run",
+          "check": ""
+        },
+        {
+          "stage": "delivery",
+          "state": "ok",
+          "check": ""
+        }
+      ],
+      "provider_final": {
+        "id": "gen-1789112407-60F2osVfTKOvCYrZJI4S",
+        "upstream_request_id": "",
+        "http_status": 0,
+        "frame": 33,
+        "bytes": 760,
+        "choice_index": 0,
+        "choice_index_provided": true,
+        "finish_reason": "stop",
+        "error_present": false,
+        "error_code_type": "not_provided",
+        "error_code": 0,
+        "usage_provided": true,
+        "prompt_tokens": 831,
+        "completion_tokens": 440,
+        "total_tokens": 1271,
+        "syntax_offset": -1
+      },
+      "usage": {
+        "prompt_tokens": 831,
+        "completion_tokens": 440,
+        "total_tokens": 1271
+      },
+      "word_count_checks": [],
+      "model_end": {
+        "chunks": 31,
+        "bytes": 1899,
+        "redacted": false,
+        "unavailable": false
+      },
+      "json_parse_ok": true,
+      "target_source_order_matches": true,
+      "db": {
+        "id": "01a08f68-d254-791f-aeb9-c486b8fed0df",
+        "account_id": "01a08e5a-2250-7854-81df-5aeb26e7f461",
+        "provider_model_id_snapshot": "minimax/minimax-m3",
+        "call_status": "valid",
+        "quota_charged": true,
+        "counts_toward_cumulative": true,
+        "draft_exists": true
+      },
+      "id": "7fd94ea7-c310-403d-b9b1-6253956a8c88",
+      "bytes": 1899,
+      "raw_sha256": "8e47fac90071240a6f3cc0b36c24dd23ade861faff79d4d4d0a959fbe470748b",
+      "content_review": {
+        "case_id": 9,
+        "verdict": "validated_with_review_note",
+        "notes": [
+          "商业转型故事和原词释义基本合理，重复 melancholy 标注成功。",
+          "a casino platform 等表达可理解；仍属于助手评阅而非独立母语质量验收。"
+        ]
+      }
+    },
+    {
+      "case_id": 10,
+      "group": "B",
+      "model_id": "01a07fe3-5c48-736a-a86b-1f4dabd7cb87",
+      "meaning_language": "ja",
+      "scenario": "news",
+      "length": "long",
+      "entries": [
+        "young",
+        "grape",
+        "weekend",
+        "danger",
+        "enforce"
+      ],
+      "started_at": "2026-09-11T07:40:13.478Z",
+      "status": "generation.failed",
+      "image": "sha256:dc88818690bd8920c47c7d8e70ab44afd7a7316a96257fdb50b693378d2e3b5d",
+      "http_status": 200,
+      "run_id": "01a08f68-ed2b-7884-bfde-015208a1ba21",
+      "first_delta_ms": 6831,
+      "code": "content_validation_failed",
+      "quota_refunded": true,
+      "duration_ms": 8622,
+      "passage_chars": 1,
+      "terminal_count": 1,
+      "evidence_id": "7970fa18-0c3d-4471-b3f8-3c6e9690f7c9",
+      "expires_at": "2026-09-12T07:40:13.481193385Z",
+      "spec": {
+        "run_id": "01a08f68-ed2b-7884-bfde-015208a1ba21",
+        "model_id": "01a07fe3-5c48-736a-a86b-1f4dabd7cb87",
+        "provider_model_id": "minimax/minimax-m3",
+        "meaning_language": "ja",
+        "scenario": "news",
+        "length": "long",
+        "minimum_words": 200,
+        "entries": [
+          "young",
+          "grape",
+          "weekend",
+          "danger",
+          "enforce"
+        ],
+        "prompt_version": "m001-v5-r4"
+      },
+      "fingerprint": {
+        "source_sha256": "feabf07bb820cc61017bea20b695b537e3cd943decc2717d2647ead1de5a4c78",
+        "binary_sha256": "1bacfd51f88a825f9618d0dc62f2a794675232d06fdd1d1c06c6d247b24d9945",
+        "template_sha256": "bc04c553257071eb646fc005b0db5a06e6d6c17091f1bedeeb2fe6c966598a4d",
+        "schema_sha256": "588b6ae1aa83aa356658bf746f93919bd1cfd097ec4874f60b65161bb8ea76a0",
+        "validator_sha256": "8c91f3423ee35871e1c52c8193f3797189645cc8faf29274cdac86c7f918f078",
+        "lexicon_sha256": "89e5b41dc8662780e443c10b5ecf81970944fc2b530d5f79372ac482ac744c0b"
+      },
+      "capture_state": {
+        "coalesced_progress": 37,
+        "dropped_records": 0,
+        "dropped_bytes": 0,
+        "truncated": false,
+        "io_failed": false,
+        "redacted": false,
+        "model_ended": true,
+        "unavailable": false
+      },
+      "incomplete": false,
+      "first_failure": {
+        "stage": "content_validate",
+        "state": "failed",
+        "begin_ms": 8601,
+        "end_ms": 8601,
+        "duration_ms": 0,
+        "check": "word_count",
+        "detail": {
+          "reason": "passage_too_short",
+          "field": "passage",
+          "target_index": -1,
+          "actual": 0,
+          "limit": 200,
+          "byte_start": -1,
+          "byte_end": -1,
+          "expected_type": "",
+          "actual_type": ""
+        }
+      },
+      "stages": [
+        {
+          "stage": "request",
+          "state": "ok",
+          "check": "body"
+        },
+        {
+          "stage": "preflight",
+          "state": "ok",
+          "check": "transaction_commit"
+        },
+        {
+          "stage": "provider_open",
+          "state": "ok",
+          "check": "response_headers"
+        },
+        {
+          "stage": "provider_stream",
+          "state": "ok",
+          "check": ""
+        },
+        {
+          "stage": "passage_decode",
+          "state": "ok",
+          "check": "clean_consistency"
+        },
+        {
+          "stage": "candidate_decode",
+          "state": "ok",
+          "check": "hint_size"
+        },
+        {
+          "stage": "content_validate",
+          "state": "failed",
+          "check": "word_count"
+        },
+        {
+          "stage": "draft_commit",
+          "state": "not_run",
+          "check": ""
+        },
+        {
+          "stage": "settlement",
+          "state": "ok",
+          "check": "cas"
+        },
+        {
+          "stage": "delivery",
+          "state": "ok",
+          "check": ""
+        }
+      ],
+      "provider_final": {
+        "id": "gen-1789112413-fLrFAnv2HUbyN6JQEo7a",
+        "upstream_request_id": "",
+        "http_status": 0,
+        "frame": 14,
+        "bytes": 725,
+        "choice_index": 0,
+        "choice_index_provided": true,
+        "finish_reason": "stop",
+        "error_present": false,
+        "error_code_type": "not_provided",
+        "error_code": 0,
+        "usage_provided": true,
+        "prompt_tokens": 828,
+        "completion_tokens": 117,
+        "total_tokens": 945,
+        "syntax_offset": -1
+      },
+      "usage": {
+        "prompt_tokens": 828,
+        "completion_tokens": 117,
+        "total_tokens": 945
+      },
+      "word_count_checks": [
+        {
+          "reason": "passage_too_short",
+          "field": "passage",
+          "target_index": -1,
+          "actual": 0,
+          "limit": 200,
+          "byte_start": -1,
+          "byte_end": -1,
+          "expected_type": "",
+          "actual_type": ""
+        }
+      ],
+      "model_end": {
+        "chunks": 12,
+        "bytes": 434,
+        "redacted": false,
+        "unavailable": false
+      },
+      "json_parse_ok": true,
+      "target_source_order_matches": true,
+      "db": {
+        "id": "01a08f68-ed2b-7884-bfde-015208a1ba21",
+        "account_id": "01a08e5a-2250-7854-81df-5aeb26e7f461",
+        "provider_model_id_snapshot": "minimax/minimax-m3",
+        "call_status": "validation_failed",
+        "quota_charged": false,
+        "counts_toward_cumulative": false,
+        "draft_exists": false
+      },
+      "id": "7970fa18-0c3d-4471-b3f8-3c6e9690f7c9",
+      "bytes": 434,
+      "raw_sha256": "e8d30b46b2d6c2f993814f02d91657232be3ddba4e8f849f6419781979cbd40f",
+      "content_review": {
+        "case_id": 10,
+        "verdict": "failed",
+        "notes": [
+          "完整上游 JSON 的 passage 只有冒号，tags 为省略；五条 hint 只是冒号包围的原词。",
+          "finish_reason=stop，捕获无截断；实际是无有效正文，不是日志丢失、超时或前端只渲染了一个字符。"
+        ]
+      }
+    }
+  ]
+}

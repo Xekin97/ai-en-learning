@@ -1,0 +1,34 @@
+import{execFileSync}from'node:child_process';import{readFileSync,writeFileSync,mkdtempSync,chmodSync}from'node:fs';import{tmpdir}from'node:os';import{dirname,resolve,join}from'node:path';import{fileURLToPath}from'node:url';import{createHash}from'node:crypto';
+const dir=dirname(fileURLToPath(import.meta.url)),root=resolve(dir,'../../../../../..'),sha=b=>createHash('sha256').update(b).digest('hex');
+const docker=(args,env)=>execFileSync('docker',args,{cwd:root,encoding:'utf8',maxBuffer:16*1024*1024,env:env||process.env}).trim();
+const names=['wordweave_uat-frontend-1','wordweave_uat-backend-1','wordweave_uat-nginx-1','wordweave_uat-postgres-1'],before=JSON.parse(docker(['inspect',...names]));
+for(const x of before)if(x.Config.Labels['com.docker.compose.project']!=='wordweave_uat')throw Error('Not owned UAT project');
+const state=readFileSync(join(root,'.planning/workflow/state.yaml'),'utf8'),gate=readFileSync(join(root,'.planning/milestones/M001/reviews/verification-cr036-uat-preparation-approval.md'),'utf8');
+if(!state.includes('active_agent: qa-quinn')||!state.includes('continuous_authorization:')||!gate.includes('approved_for_local_uat_preparation'))throw Error('UAT preparation not authorized');
+const qa=JSON.parse(readFileSync(join(root,'.planning/milestones/M001/verification/evidence/cr036-078/delivery-validation.json')));if(!qa.validated||qa.verdict!=='passed_for_functional_uat')throw Error('QA not passing');
+const candidate=JSON.parse(readFileSync(join(root,'.planning/milestones/M001/implementation/evidence/cr036-077/candidate.json')));
+for(const f of candidate.sourceFiles)if(sha(readFileSync(join(root,f.path)))!==f.sha256)throw Error('Source drift '+f.path);
+const sql=q=>docker(['exec','wordweave_uat-postgres-1','psql','-U','postgres','-d','wordweave','-X','-A','-t','-v','ON_ERROR_STOP=1','-c',q]);
+const counts=()=>JSON.parse(sql("SELECT json_build_object('accounts',(SELECT count(*) FROM wordweave.accounts),'batches',(SELECT count(*) FROM wordweave.learning_batches),'models',(SELECT count(*) FROM wordweave.ai_models),'runs',(SELECT count(*) FROM wordweave.generation_runs),'active_runs',(SELECT count(*) FROM wordweave.generation_runs WHERE call_status='active'),'migration_count',(SELECT count(*) FROM wordweave.schema_migrations),'latest_version',(SELECT max(version) FROM wordweave.schema_migrations));"));
+const dataBefore=counts();if(dataBefore.active_runs||dataBefore.migration_count!==6||dataBefore.latest_version!=='0006_hint_occurrences_enforce.sql')throw Error('Active workload or migration mismatch; refuse update');
+const baseArgs=['compose','--env-file','backend/.env','--project-name','wordweave_uat','-f','compose.yaml','-f',join(dir,'compose-images.yaml')];
+const initialConfig=JSON.parse(docker([...baseArgs,'config','--format','json'])),envOf=x=>Object.fromEntries(x.Config.Env.map(s=>{const i=s.indexOf('=');return[s.slice(0,i),s.slice(i+1)]}));
+const currentBackend=envOf(before[1]),currentFrontend=envOf(before[0]),runEnv={...process.env};
+for(const key of Object.keys(initialConfig.services.backend.environment)){if(['PATH','HOME','CODEX_HOME','SHELL'].includes(key)||currentBackend[key]===undefined)throw Error('Unsafe/unavailable runtime parameter '+key);runEnv[key]=currentBackend[key];}
+runEnv.BACKEND_INTERNAL_ORIGIN=currentFrontend.NUXT_BACKEND_INTERNAL_ORIGIN;
+const resolved=JSON.parse(docker([...baseArgs,'config','--format','json'],runEnv));
+for(const[service,current]of[['backend',currentBackend],['frontend',currentFrontend]])for(const[k,v]of Object.entries(resolved.services[service].environment))if(String(v)!==current[k])throw Error('Runtime configuration drift '+service+'.'+k);
+const backup=mkdtempSync(join(tmpdir(),'wordweave-uat-079-'));chmodSync(backup,0o700);
+writeFileSync(join(backup,'runtime-private.json'),JSON.stringify(before,null,2),{mode:0o600,flag:'wx'});
+const dump=execFileSync('docker',['exec','wordweave_uat-postgres-1','pg_dump','-U','postgres','-d','wordweave','--format=custom','--no-owner','--no-acl'],{maxBuffer:256*1024*1024});
+writeFileSync(join(backup,'wordweave.dump'),dump,{mode:0o600,flag:'wx'});
+const safe=x=>({name:x.Name,id:x.Id,image:x.Image,started:x.State.StartedAt,health:x.State.Health?.Status,mounts:x.Mounts.map(m=>({type:m.Type,name:m.Name,destination:m.Destination})),networks:Object.keys(x.NetworkSettings.Networks)});
+writeFileSync(join(dir,'preflight.json'),JSON.stringify({date:new Date().toISOString(),before:before.map(safe),dataBefore,backupDirectory:backup,backupBytes:dump.length,backupSha256:sha(dump),runtimeConfiguration:'Existing backend/frontend values preserved and resolved compose compared in memory; no secrets logged',target:{frontend:candidate.frontend,backend:candidate.backend}},null,2),{flag:'wx'});
+docker(['tag',candidate.frontend,'wordweave-uat-frontend:qa078']);docker(['tag',candidate.backend,'wordweave-uat-backend:qa078']);
+const deploy=docker([...baseArgs,'up','-d','--no-deps','--no-build','--pull','never','backend','frontend'],runEnv);writeFileSync(join(dir,'compose-update.log'),deploy,{flag:'wx'});
+let healthy=false;for(let i=0;i<90;i++){const current=JSON.parse(docker(['inspect',names[0],names[1]]));if(current.every(x=>x.State.Health?.Status==='healthy')){healthy=true;break;}await new Promise(r=>setTimeout(r,1000));}
+if(!healthy)throw Error('UAT applications not healthy; use private backup for rollback');
+docker(['exec','wordweave_uat-nginx-1','nginx','-s','reload']);
+const after=JSON.parse(docker(['inspect',...names])),dataAfter=counts();
+const result={date:new Date().toISOString(),before:before.map(safe),after:after.map(safe),dataBefore,dataAfter,dataUnchanged:JSON.stringify(dataBefore)===JSON.stringify(dataAfter),databaseContainerUnchanged:before[3].Id===after[3].Id,nginxContainerUnchanged:before[2].Id===after[2].Id,pairedImages:after[0].Image===candidate.frontend&&after[1].Image===candidate.backend,healthy,runtimeEnvironmentPreserved:after.slice(0,2).every((x,i)=>{const old=envOf(before[i]),now=envOf(x),keys=Object.keys(resolved.services[i===0?'frontend':'backend'].environment);return keys.every(k=>old[k]===now[k]);}),backupDirectory:backup,migrationsRun:false,realAICalls:0};
+writeFileSync(join(dir,'deployment.json'),JSON.stringify(result,null,2),{flag:'wx'});console.log(JSON.stringify({healthy:result.healthy,pairedImages:result.pairedImages,dataUnchanged:result.dataUnchanged,databaseContainerUnchanged:result.databaseContainerUnchanged,runtimeEnvironmentPreserved:result.runtimeEnvironmentPreserved,backupDirectory:backup}));if(!result.pairedImages||!result.dataUnchanged||!result.databaseContainerUnchanged||!result.runtimeEnvironmentPreserved)process.exitCode=1;

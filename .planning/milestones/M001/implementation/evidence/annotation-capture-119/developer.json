@@ -1,0 +1,114 @@
+{
+  "gate": "TRANSITION-M001-119",
+  "built_diagnostic_image": "sha256:7d16e9027ad44134352b5f9022e8d7e13fd5449b94491373c801683cf85ff95c",
+  "diagnostic_image_build_exit_code": 0,
+  "owner": "backend-ethan",
+  "recorded_at": "2026-09-09T11:57:24Z",
+  "authorization": "USER-ANNOTATION-CAPTURE-119",
+  "sourceFiles": [
+    {
+      "path": "backend/internal/ai/annotation_diagnostic_uat.go",
+      "sha256": "078a8298c16157679a5dc042610801b7f80c2b5d297027c0975b14c8a3d75fe5"
+    },
+    {
+      "path": "backend/internal/ai/annotation_diagnostic_uat_test.go",
+      "sha256": "4c6c3632ac66c8631009660034ff9e2c787f0017e7ab69cb6889fa9b69bfb9dc"
+    },
+    {
+      "path": "backend/internal/httpapi/failure_capture_uat.go",
+      "sha256": "b0847c31bf132b7a36e1e99ecc64f115d9e06c7446a34210381800243cce314e"
+    },
+    {
+      "path": "backend/internal/httpapi/annotation_capture_uat_test.go",
+      "sha256": "4ceb66e519b34cbdadeb3ed2be7bc2a3820293816765525cc8fef0ca70d9f280"
+    },
+    {
+      "path": "backend/internal/httpapi/failure_capture_disabled_test.go",
+      "sha256": "de707867930ebfd1506694c37e4557314c399d1a488d4042c08987081dc70021"
+    },
+    {
+      "path": "backend/internal/httpapi/failure_capture_integration_test.go",
+      "sha256": "1f8d7cf9979ebeb7a286560c6a78713b18660208841be715364a0c2e9404cbad"
+    },
+    {
+      "path": "backend/internal/httpapi/failure_capture.go",
+      "sha256": "a9b07339ff521adb1d68c1b69e9506cbe32b371123db5b8d1186025edbd27470"
+    },
+    {
+      "path": "backend/internal/httpapi/failure_capture_disabled.go",
+      "sha256": "c7542b2e3b67142497db6716c5371a5e56f281038b89d6d33c2ceaf460a8f385"
+    },
+    {
+      "path": "backend/internal/httpapi/generation_handlers.go",
+      "sha256": "31c455af35f0933bf4330034aefdd3faa5c3df17ce4add59f62eb43133fddc2f"
+    },
+    {
+      "path": "backend/internal/httpapi/server.go",
+      "sha256": "7694f8c582c123fef5c1a1300db8eb3eb1a5373a60146c36a31eca5c59bc9c6e"
+    },
+    {
+      "path": "backend/cmd/wordweave/main.go",
+      "sha256": "dae2a198ab5618dc7126838a5505bf0323e82b76524df8d37bc5fe1757e726af"
+    },
+    {
+      "path": "backend/Dockerfile.uat-diagnostics",
+      "sha256": "db0e3bac139a7f1f64adef5c2e66ab239c90ee62fcd6a2c77ec66173e003cff9"
+    }
+  ],
+  "scope": "Six new/modified source/test files; only uatdiagnostics capture behavior. Prompt, public errors/DTO, lexical validator, SQL and frontend untouched.",
+  "checks": [
+    {
+      "command": "Go1.26.7 no-network/read-only container: go test -race -tags uatdiagnostics ./internal/ai ./internal/httpapi -run 'Test(InspectUnknownAnnotation|AnnotationCapture|UATCapture)' -count=1",
+      "result": {
+        "chunk_id": "513f5b",
+        "wall_time_seconds": 0.000002542,
+        "exit_code": 0,
+        "original_token_count": 19,
+        "output": "ok  \twordweave/internal/ai\t1.014s\nok  \twordweave/internal/httpapi\t1.527s\n"
+      }
+    },
+    {
+      "command": "Same pinned Go image, isolated tmpfs PG namespace: go test -tags integration,uatdiagnostics ./internal/httpapi -run '^TestUATCaptureHTTPPreservesValidationAndQuota$' -count=1 -v",
+      "result": {
+        "chunk_id": "044275",
+        "wall_time_seconds": 0.000001209,
+        "exit_code": 0,
+        "original_token_count": 2275,
+        "output": "=== RUN   TestUATCaptureHTTPPreservesValidationAndQuota\n=== RUN   TestUATCaptureHTTPPreservesValidationAndQuota/invalid\n2026/09/09 11:57:02 INFO http_request request_id=req_Jq29-2a2f_ldvedcc4JT8Q method=GET route=/api/v1/bootstrap status=200 duration_ms=0\n2026/09/09 11:57:02 INFO http_request request_id=req_-J_x8EJpGo4mdLaHB0CwGA method=POST route=/api/v1/auth/register status=201 duration_ms=147\n2026/09/09 11:57:02 WARN ai_candidate_validation_failed run_id=01a08607-544e-7995-88e6-7510ddc76920 model_id=01a08607-53af-7c5e-8361-3245142840f2 prompt_version=m001-v5 validator_version=m001-v5-wn31-r1 category=content_invalid reason=mapping_surface_absent target_index=0\n2026/09/09 11:57:02 INFO uat_failure_candidate_captured run_id=01a08607-544e-7995-88e6-7510ddc76920\n2026/09/09 11:57:02 INFO http_request request_id=req_10d1mABhbB7Z-5Fwpx-aIw method=POST route=/api/v1/generations/stream status=200 duration_ms=6\n=== RUN   TestUATCaptureHTTPPreservesValidationAndQuota/valid\n2026/09/09 11:57:02 INFO http_request request_id=req_MV1bKkErWletKPtQa0k4Og method=GET route=/api/v1/bootstrap status=200 duration_ms=1\n2026/09/09 11:57:02 INFO http_request request_id=req_PwmynOwAAl4HQz52E0zNLA method=POST route=/api/v1/auth/register status=201 duration_ms=148\n2026/09/09 11:57:02 INFO http_request request_id=req_FEmSyQ807xTjPuZeD3bb6Q method=POST route=/api/v1/generations/stream status=200 duration_ms=4\n=== RUN   TestUATCaptureHTTPPreservesValidationAndQuota/blocked_file\n2026/09/09 11:57:02 INFO http_request request_id=req_viuC7XV_zjx7KsaBAqYG5g method=GET route=/api/v1/bootstrap status=200 duration_ms=0\n2026/09/09 11:57:03 INFO http_request request_id=req_5YjGAcJiQEODrKGbnSwmCQ method=POST route=/api/v1/auth/register status=201 duration_ms=110\n2026/09/09 11:57:03 WARN ai_candidate_validation_failed run_id=01a08607-56ec-7617-b033-dba98f052a1f model_id=01a08607-5678-7a42-b49e-58196086ca50 prompt_version=m001-v5 validator_version=m001-v5-wn31-r1 category=content_invalid reason=mapping_surface_absent target_index=0\n2026/09/09 11:57:03 WARN uat_failure_capture_skipped reason=private_file_unavailable\n2026/09/09 11:57:03 INFO http_request request_id=req_DSKNp3eggw2WArZ0ExtniQ method=POST route=/api/v1/generations/stream status=200 duration_ms=5\n=== RUN   TestUATCaptureHTTPPreservesValidationAndQuota/other_subject\n2026/09/09 11:57:03 INFO http_request request_id=req_JqGxeiWW0a8UUQ3pVrDKbA method=GET route=/api/v1/bootstrap status=200 duration_ms=0\n2026/09/09 11:57:03 INFO http_request request_id=req_MSqBYr6xREv9aDCe2ysiOQ method=POST route=/api/v1/auth/register status=201 duration_ms=75\n2026/09/09 11:57:03 WARN ai_candidate_validation_failed run_id=01a08607-581c-7ebb-b7ff-d0de76139c3a model_id=01a08607-57c5-76fe-aeca-d95a73707077 prompt_version=m001-v5 validator_version=m001-v5-wn31-r1 category=content_invalid reason=mapping_surface_absent target_index=0\n2026/09/09 11:57:03 INFO http_request request_id=req_SNl8qs80Pb595UftU6AKDA method=POST route=/api/v1/generations/stream status=200 duration_ms=11\n=== RUN   TestUATCaptureHTTPPreservesValidationAndQuota/unknown_relation\n2026/09/09 11:57:03 INFO http_request request_id=req_My2CoCzptz1Uy9-WCSjFxg method=GET route=/api/v1/bootstrap status=200 duration_ms=0\n2026/09/09 11:57:03 INFO http_request request_id=req_2Y4wkSuQMYYvWM5jcgeQuw method=POST route=/api/v1/auth/register status=201 duration_ms=142\n2026/09/09 11:57:03 WARN ai_candidate_validation_failed run_id=01a08607-59ae-7a5d-954e-12602e4eb5ac model_id=01a08607-5919-7994-a4cd-71038cd080d9 prompt_version=m001-v5 validator_version=m001-v5-wn31-r1 category=content_invalid reason=mapping_relation_unknown target_index=0\n2026/09/09 11:57:03 INFO uat_failure_candidate_captured run_id=01a08607-59ae-7a5d-954e-12602e4eb5ac\n2026/09/09 11:57:03 INFO http_request request_id=req_uYrRFJVh6CsSrgC47jFDTQ method=POST route=/api/v1/generations/stream status=200 duration_ms=5\n=== RUN   TestUATCaptureHTTPPreservesValidationAndQuota/hint_absent\n2026/09/09 11:57:03 INFO http_request request_id=req_84U7CUQfBqmUBFnxC-og4g method=GET route=/api/v1/bootstrap status=200 duration_ms=0\n2026/09/09 11:57:04 INFO http_request request_id=req_RRyIE2nrg2tiG1gV4V0zhA method=POST route=/api/v1/auth/register status=201 duration_ms=72\n2026/09/09 11:57:04 WARN ai_candidate_validation_failed run_id=01a08607-5ab5-7d57-805f-f61e3d9c815e model_id=01a08607-5a68-76f7-8129-3ac7e47344d9 prompt_version=m001-v5 validator_version=m001-v5-wn31-r1 category=content_invalid reason=mapping_surface_absent target_index=0\n2026/09/09 11:57:04 INFO uat_failure_candidate_captured run_id=01a08607-5ab5-7d57-805f-f61e3d9c815e\n2026/09/09 11:57:04 INFO http_request request_id=req_QilczKkrRF0RjPuwuUqZJg method=POST route=/api/v1/generations/stream status=200 duration_ms=3\n=== RUN   TestUATCaptureHTTPPreservesValidationAndQuota/changed_configuration\n2026/09/09 11:57:04 INFO http_request request_id=req_baoDD9ns5Wbl5IAZCWnA4Q method=GET route=/api/v1/bootstrap status=200 duration_ms=0\n2026/09/09 11:57:04 INFO http_request request_id=req_EVxraeaw4GuVZ9vCR6I2qQ method=POST route=/api/v1/auth/register status=201 duration_ms=75\n2026/09/09 11:57:04 WARN ai_candidate_validation_failed run_id=01a08607-5bb3-71d2-a00b-1b5fba49455e model_id=01a08607-5b62-7285-bcc9-457606d960fb prompt_version=m001-v5 validator_version=m001-v5-wn31-r1 category=content_invalid reason=mapping_surface_absent target_index=1\n2026/09/09 11:57:04 INFO uat_failure_candidate_captured run_id=01a08607-5bb3-71d2-a00b-1b5fba49455e\n2026/09/09 11:57:04 INFO http_request request_id=req_NG_MjOJUcpaXnaXUMD-DSQ method=POST route=/api/v1/generations/stream status=200 duration_ms=5\n=== RUN   TestUATCaptureHTTPPreservesValidationAndQuota/annotation_only\n2026/09/09 11:57:04 INFO http_request request_id=req_UN3vqA5sBkAHTfjmEx_DKw method=GET route=/api/v1/bootstrap status=200 duration_ms=0\n2026/09/09 11:57:04 INFO http_request request_id=req_WwnejnnDwKzCB3vNi3T5zg method=POST route=/api/v1/auth/register status=201 duration_ms=76\n2026/09/09 11:57:04 WARN ai_candidate_validation_failed run_id=01a08607-5cb2-70c4-be8a-91e0772cb161 model_id=01a08607-5c60-7b99-a7cc-db75af857e46 prompt_version=m001-v5 validator_version=m001-v5-wn31-r1 category=content_invalid reason=annotation_source_unknown target_index=-1\n2026/09/09 11:57:04 INFO uat_annotation_captured run_id=01a08607-5cb2-70c4-be8a-91e0772cb161\n2026/09/09 11:57:04 INFO http_request request_id=req_1-V8gSPvhWiAfD4JCYCcKA method=POST route=/api/v1/generations/stream status=200 duration_ms=4\n=== RUN   TestUATCaptureHTTPPreservesValidationAndQuota/annotation_other_subject\n2026/09/09 11:57:04 INFO http_request request_id=req_8jrlVVxkUicCaWRaBNx6EA method=GET route=/api/v1/bootstrap status=200 duration_ms=0\n2026/09/09 11:57:04 INFO http_request request_id=req_f4Ss1g6rzPi7pLxJRNcS2A method=POST route=/api/v1/auth/register status=201 duration_ms=81\n2026/09/09 11:57:04 WARN ai_candidate_validation_failed run_id=01a08607-5dae-7a28-9fc4-4e736ef91d88 model_id=01a08607-5d58-7289-a73d-cfd990d1fe6d prompt_version=m001-v5 validator_version=m001-v5-wn31-r1 category=content_invalid reason=annotation_source_unknown target_index=-1\n2026/09/09 11:57:04 INFO http_request request_id=req_v8nMTHSDGQIDGUBT1_1kzw method=POST route=/api/v1/generations/stream status=200 duration_ms=4\n=== RUN   TestUATCaptureHTTPPreservesValidationAndQuota/annotation_blocked_file\n2026/09/09 11:57:04 INFO http_request request_id=req_eBbrzqK6kqAs155QvIL3GQ method=GET route=/api/v1/bootstrap status=200 duration_ms=0\n2026/09/09 11:57:05 INFO http_request request_id=req_IbLMxdQIF6-1c6gswuwRZw method=POST route=/api/v1/auth/register status=201 duration_ms=71\n2026/09/09 11:57:05 WARN ai_candidate_validation_failed run_id=01a08607-5eaa-7ce3-bece-12bbccefa218 model_id=01a08607-5e5d-781c-ad97-8dc27b88916a prompt_version=m001-v5 validator_version=m001-v5-wn31-r1 category=content_invalid reason=annotation_source_unknown target_index=-1\n2026/09/09 11:57:05 WARN uat_annotation_capture_skipped reason=private_file_unavailable\n2026/09/09 11:57:05 INFO http_request request_id=req_T8X55edMfYKZNGxvSsjfDQ method=POST route=/api/v1/generations/stream status=200 duration_ms=4\n--- PASS: TestUATCaptureHTTPPreservesValidationAndQuota (3.38s)\n    --- PASS: TestUATCaptureHTTPPreservesValidationAndQuota/invalid (0.73s)\n    --- PASS: TestUATCaptureHTTPPreservesValidationAndQuota/valid (0.37s)\n    --- PASS: TestUATCaptureHTTPPreservesValidationAndQuota/blocked_file (0.30s)\n    --- PASS: TestUATCaptureHTTPPreservesValidationAndQuota/other_subject (0.31s)\n    --- PASS: TestUATCaptureHTTPPreservesValidationAndQuota/unknown_relation (0.40s)\n    --- PASS: TestUATCaptureHTTPPreservesValidationAndQuota/hint_absent (0.26s)\n    --- PASS: TestUATCaptureHTTPPreservesValidationAndQuota/changed_configuration (0.26s)\n    --- PASS: TestUATCaptureHTTPPreservesValidationAndQuota/annotation_only (0.25s)\n    --- PASS: TestUATCaptureHTTPPreservesValidationAndQuota/annotation_other_subject (0.25s)\n    --- PASS: TestUATCaptureHTTPPreservesValidationAndQuota/annotation_blocked_file (0.25s)\nPASS\nok  \twordweave/internal/httpapi\t3.412s\n"
+      }
+    },
+    {
+      "command": "Ordinary capture-disabled test; go vet -tags uatdiagnostics ./internal/ai ./internal/httpapi; go build ./cmd/...; go build -tags uatdiagnostics ./cmd/...",
+      "exit_code": 0,
+      "observed_output": "Ordinary test PASS0.003s; vet and builds exited0 without output."
+    }
+  ],
+  "cases": "8 diagnostic projections plus cancellation; minimal allowlist/no logs, wrong identity/model/reason/probe, concurrent single capture, sample-delete plus restart, expiry, dual-mode/symlink/permissions;10 HTTP cases including3 new annotation cases.",
+  "failures": [],
+  "real_model_calls": 0,
+  "actual_database_operations": 0,
+  "runtime_deployments": 0,
+  "production_protocol_changes": 0,
+  "isolated_database": {
+    "container": "wordweave-annotation119-pg",
+    "id": "4d6a7c610e3218d1dbfe02f11f42462b82e598801b9c90ba3054b455648a61b8",
+    "storage": "tmpfs",
+    "network": "none",
+    "published_ports": false,
+    "cleanup": "Temporarily retained for distinct QA consumer checks, then remove only this container."
+  },
+  "previousCurrentDocuments": [
+    {
+      "path": ".planning/milestones/M001/implementation/backend-validation.md",
+      "text": "---\nmilestone: M001\nstage: implementation\nrole: backend-implementer/base\nagent_name: backend-ethan\nstatus: awaiting_gate_review\ndate: 2026-09-09\nrevision: USER-INLINE-MAPPING-115\nopen_change_requests: [CR-039, CR-040]\n---\n\n# 当前后端交付：就地原词标注与干净流式输出\n\n## 范围与实现\n\n[用户确认](../verification/stream-failure-diagnosis.md#inline-source-annotation)、[116接收](../reviews/stream-failure-capture-gates.md)、[后端方案](../technical/backend-cr039.md)是本次输入。正文/hint使用实际形式(原词)，后端提取；删除AI的passage_forms/hint_forms字段，严格拒绝旧/双协议，不增加兼容转换。\n\n[annotations.go](../../../../backend/internal/ai/annotations.go)共用状态解析器缓冲待定括号、保留普通括注，在SSE发送前移除标注；完整Validator只在clean text上核验紧邻关系、覆盖、全部已知位置与跨目标冲突。词数/hint长度按clean内容；原词释义、存储/公开v1.5和复习答案不变。prompt/schema m001-v5，validator m001-v5-wn31-r1，词法资产未更新。\n\n真实慢下游模拟发现末段与完成事件竞争：首轮541/546字符，最后5字符被跳过。改为同步交付passage delta，保证完成事件不会越过尾帧；不是此前真实样本映射失败的归因。已定向复测，原失败输出保留。\n\n追踪：CAP-008/009/010/011/014/018/019，API-005–008，DATA-010–015/017。仅改5份生产Go源和11份相关测试；不改SQL、前端、Nginx、运行配置或模型凭据。\n\n## 开发验证\n\n唯一原件：[开发证据/命令/脱敏输出/16份源码摘要](./evidence/inline-mapping-116/developer.json)。\n\n| 检查 | 结果 |\n| --- | --- |\n| AI单元及新增逐rune/逐JSON字节拆分、半标记、普通括注、Unicode/多词、缺标/错标、500字符clean边界 | PASS；包括旧数组拒绝、原词释义三语言/跨场景保护和全部已知重复补扫 |\n| 相关ai/generation/review/httpapi普通单元与诊断构建单测 | PASS；learning包无独立单测，不虚记通过案例 |\n| 定向集成9个顶层测试 | PASS：真实隔离HTTP、save/claim、复习、CAS/断线、原词释义、失败无草稿/退款、诊断只读原候选保护、新流式链路 |\n| 慢下游流式→保存10轮 | PASS：清理后正文完整一致，普通括注保留，正文3位置/提示2位置，无元数据入库 |\n| 相关包race与新HTTP慢下游race | PASS；后者7.942秒，无数据竞争报告 |\n| go vet普通/诊断及integration标签、普通/诊断cmd构建、gofmt | PASS |\n| 固定词库 | 13,860条，无含保留括号的输入；无词库修改 |\n\n固定Go1.26.7容器、只读源码、禁下载/外网。DB测试仅新建的无网络/无发布端口/tmpfs PostgreSQL，真实UAT库未连接。开发实测大文本校验约100ms（999,990词、1,999,998 rune的合成样本），不等于模型延迟或总体性能承诺。\n\n保留发现：首次慢下游测试为真实代码失败并已修正；首次集成另两项失败分别为旧fixture的私有字段断言和版本元数据未更新，针对新合同修正后复测，未降低退款/拒绝保存/位置/来源保持断言。首次命令有zsh未引用URL问题，测试未执行；修正经过已记证。\n\n## 文档、边界和交接\n\n单工作区顺序实施，契约/fixture强耦合，不创建worktree或子代理；现有全部未提交文件保留。当前开发报告和[交接](../handoffs/backend-implementation.md)复用，旧113两份当前原文已完整冻结在开发证据previousCurrentDocuments；不改其他角色原件与历史失败/审批。\n\n没有真实模型调用、UAT部署、实际数据清理/迁移、模型设置变更或额外预算。旧采集不续期。确定性验证不能证明模型一定遵循新格式、词义/短语合格或失败率下降；真实质量仍NOT VERIFIED。\n\n当前开发完成，按连续交接授权交qa-quinn做不同层级的定向复核，勿机械重跑开发单测/全站。隔离测试容器暂留供QA，之后清理；当前6001仍旧候选，不能宣称已交新版UAT。CR039/040保持open，最终UAT/发布未接受。\n",
+      "sha256": "04e343f1ff32ee9c934d018c1327b87302f5f387402add00a6f77ef4ec6649d5"
+    },
+    {
+      "path": ".planning/milestones/M001/handoffs/backend-implementation.md",
+      "text": "---\nmilestone: M001\nstage: implementation\nrole: backend-implementer/base\nagent_name: backend-ethan\nstatus: awaiting_gate_review\ndate: 2026-09-09\nrevision: USER-INLINE-MAPPING-115\n---\n\n# 当前后端实现交接：标注协议v5\n\n- 确认范围与追踪：[USER-INLINE-MAPPING-115](../verification/stream-failure-diagnosis.md#inline-source-annotation)、[116方案接收](../reviews/stream-failure-capture-gates.md)、[开发报告](../implementation/backend-validation.md)。\n- 已实现实际形式(原词)、三字段target、共用标注清理/流式缓冲、clean词数/位置和独立关系/覆盖。未采用数组剔除；无旧数组兼容、在线二次AI、前端隐藏标注或DB变化。\n- 原始交付：[16份来源摘要与开发证据](../implementation/evidence/inline-mapping-116/developer.json)。新增逐字节/Unicode/多词/错误标记与9个定向集成顶层检查、10轮慢速流式保存、race/vet/两种构建均PASS；历史失败和修正分列，不将无单测包算成用例通过。\n- 额外修复：慢下游完成事件可能超过最后delta；合成首轮丢5字符，改同步传递后重测10轮及race通过。不拿此替代旧真实映射失败根因。\n- QA重点：从消费者角度复核多语言原词释义直通、生成→保存→复习的clean文字/全部位置、元数据不泄露；错误标记仍退产品额度且无草稿，保留原词/实际形式两阶段规则。复用现有合同，不机械重复全站/全部开发单测。\n- CAP-008/009/010/011/014/018/019 → API-005–008 → DATA-010–015/017；C39/C40持续追踪。DBA/前端交付未变，不再做一次相同前端同步。\n- 旧113当前开发原文可从证据previousCurrentDocuments恢复；本轮原件与旧失败/审批各自保留。主会话顺序担当backend-ethan，无子代理或实际模型切换声明。\n- 当前实现就绪待QA接收；普通门禁已由USER-HANDOFF-CONTINUOUS-001授权。未部署6001、未调用模型或操作实际UAT数据/配置；真实生成质量未验证，CR039/040未关闭，UAT/发布未放行。\n- 隔离临时测试实例wordweave-inline116-pg只供本轮合成验证、无外网/端口/tmpfs，QA用后清理；不得把TEST_DATABASE_URL改指真实运行库。\n",
+      "sha256": "89c5e37e6ccead60193023045f5e3149f75edbc1f554eb10d5fda23a1cf588bf"
+    }
+  ],
+  "agent_execution": "Single worktree/main session sequential role execution, no independent subagent/model switch claim.",
+  "limits": "Only synthetic behavior proved; no captured real annotation yet. UAT expiry window starts on later deployment, not now."
+}

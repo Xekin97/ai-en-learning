@@ -1,0 +1,57 @@
+{
+  "recorded_at": "2026-09-07T03:59:11Z",
+  "agent": "qa-quinn",
+  "scope": "UAT086 final read-only delivery validation; no smoke rerun or environment mutation",
+  "result": "PASS",
+  "checks": {
+    "preflight_source_hashes_match_candidate": true,
+    "preflight_candidate_images_present": true,
+    "deployment_record_pass": true,
+    "effective_smoke_100_pass_0_fail_0_error": true,
+    "first_method_error_preserved_and_attributed": true,
+    "manual_visual_review_4_pass": true,
+    "frontend_target_image_running_healthy": true,
+    "backend_target_image_running_healthy": true,
+    "nginx_container_identity_unchanged_running_healthy": true,
+    "postgres_container_identity_unchanged_running_healthy": true,
+    "uat_localhost_6001_http_200": true,
+    "approved_design_localhost_6010_http_200": true,
+    "backup_directory_exists_mode_0700": true,
+    "runtime_private_exists_mode_0600": true,
+    "database_dump_exists_mode_0600": true,
+    "rollback_compose_exists_mode_0600": true,
+    "deployment_public_data_unchanged": true,
+    "deployment_internal_password_and_credential_digests_unchanged": true,
+    "effective_smoke_credentials_verified_unchanged": [
+      "uat_admin",
+      "uat_learner"
+    ],
+    "effective_smoke_forbidden_writes": 0,
+    "real_ai_calls": 0,
+    "password_hashes_emitted": false,
+    "locale_persistence_claim_excluded": true,
+    "user_acceptance_claimed": false,
+    "release_readiness_claimed": false
+  },
+  "runtime": {
+    "frontend_container_id": "c29718b3bea43ab23403ae7cef828968f2c934f6b04128d1f4a61cfb13d82c06",
+    "frontend_image": "sha256:fd251e7439aad8e058656e2751ed84f40715fec570a872da53542688a6dd6904",
+    "backend_container_id": "e1edf901fc0a17433b0caa4f213d4fdd1cd5579d53457290bb15c07d8de690b4",
+    "backend_image": "sha256:642ed57ad0ed6c8a13e4bba1101d8b50188e8ea636791583a6ffb5eaa6917aac",
+    "nginx_container_id": "b789bde4e7825b849640cbf63d35b50ae41c1b77cb6b7ece73b3e26e27eabcb1",
+    "postgres_container_id": "37a6d2fa58c578b1c6b4dbe10028b5ddf0c696fe44fc849a129293a85bbaf839"
+  },
+  "backup": {
+    "directory": "/var/folders/z9/99ckxr957v901zwwc8jdk8640000gn/T/wordweave-uat-086-eudPWJ",
+    "directory_mode": "0700",
+    "runtime_private_mode": "0600",
+    "database_dump_mode": "0600",
+    "rollback_compose_mode": "0600"
+  },
+  "method_limits": [
+    "The Chinese presentation check intercepted the locale PUT to preserve the existing UAT preference; it is not evidence of backend locale persistence.",
+    "Functional UAT is awaiting the user; real AI, real-device Safari/assistive technology, public performance, and release readiness remain outside this handoff."
+  ],
+  "actual_model": "not_observed",
+  "usage": "not_observed"
+}

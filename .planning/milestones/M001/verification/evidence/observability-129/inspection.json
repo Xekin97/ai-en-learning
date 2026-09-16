@@ -1,0 +1,130 @@
+{
+  "id": "OBS-129",
+  "date": "2026-09-11",
+  "role": "quality/base",
+  "agent": "qa-quinn",
+  "scope": "Read-only observation audit; no root-cause claim for unobserved user runs",
+  "runtime_inspection": {
+    "chunk_id": "2397a0",
+    "wall_time_seconds": 0.000003959,
+    "exit_code": 0,
+    "original_token_count": 50,
+    "output": "/wordweave_uat-backend-1 sha256:ee5d52d2e5cd6bb609c050a837e90252c5a35dc4c53d8062e02d868dd6139edb sha256:ee5d52d2e5cd6bb609c050a837e90252c5a35dc4c53d8062e02d868dd6139edb 2026-09-10T02:01:22.075727965Z\n"
+  },
+  "deployment_source_compare": [
+    {
+      "path": "backend/internal/httpapi/generation_handlers.go",
+      "current_sha256": "c4545f8183c6d639113805ddadad95d70e4dc178a0ef69cf6aca644a4592d944",
+      "deployed_manifest_sha256": "31c455af35f0933bf4330034aefdd3faa5c3df17ce4add59f62eb43133fddc2f",
+      "matches": false
+    },
+    {
+      "path": "backend/internal/ai/openrouter.go",
+      "current_sha256": "a4723b2daa88d06a7ed1fecf9fa44b13c22bd932d94b864953098cdd9768f878",
+      "deployed_manifest_sha256": "5e8d77e2f41bb1c686275f050bfc2fa329f7f9b4e1c18bffa100f7f1b183251f",
+      "matches": false
+    },
+    {
+      "path": "backend/internal/ai/validator.go",
+      "current_sha256": "b8b7edf01ff227bafec21f5573c80533adab8ea48b3c32ed333e096f4356cad4",
+      "deployed_manifest_sha256": "a2e873308618d5b3694adecafb49ca76688253c86258d7c79296d51ec0bc1598",
+      "matches": false
+    }
+  ],
+  "runtime_metadata_window": {
+    "chunk_id": "6f2aa2",
+    "wall_time_seconds": 0.175502834,
+    "exit_code": 0,
+    "original_token_count": 42,
+    "output": "{\"window\":\"last24h, whitelisted diagnostics only, not success-rate denominator\",\"json_lines\":8454,\"matching_generation_events\":0,\"event_counts\":{},\"latest_events\":[]}\n"
+  },
+  "initial_tail_window": {
+    "chunk_id": "0c0b31",
+    "wall_time_seconds": 0.019162041,
+    "exit_code": 0,
+    "original_token_count": 41,
+    "output": "{\"window\":\"last24h at most2000 log lines, not a success-rate denominator\",\"json_lines\":2000,\"matching_generation_events\":0,\"event_counts\":{},\"latest_events\":[]}\n"
+  },
+  "source_hashes": [
+    {
+      "path": "backend/internal/httpapi/generation_diagnostic.go",
+      "sha256": "6f3cbcd222be1c78eb31df6512c031d9e3a5277dd83e5000d49851e03a158590"
+    },
+    {
+      "path": "backend/internal/httpapi/generation_handlers.go",
+      "sha256": "c4545f8183c6d639113805ddadad95d70e4dc178a0ef69cf6aca644a4592d944"
+    },
+    {
+      "path": "backend/internal/ai/diagnostic.go",
+      "sha256": "2b6701bffce196ea9e73813239353f46b9ae88d0ae7f895dbbf5aa2c9d5010dd"
+    },
+    {
+      "path": "backend/internal/ai/openrouter.go",
+      "sha256": "a4723b2daa88d06a7ed1fecf9fa44b13c22bd932d94b864953098cdd9768f878"
+    },
+    {
+      "path": "backend/internal/httpapi/failure_capture_uat.go",
+      "sha256": "a930ec0a14f67b37f7623442755517ae87e4bc378ca60513b8201d2f766ad208"
+    },
+    {
+      "path": "backend/internal/httpapi/failure_capture_disabled.go",
+      "sha256": "c7542b2e3b67142497db6716c5371a5e56f281038b89d6d33c2ceaf460a8f385"
+    },
+    {
+      "path": "backend/internal/observability/metrics.go",
+      "sha256": "bb5f50895406147c0dda7c8f18609374c9762e3c86baf5845c166ca9260fa04e"
+    }
+  ],
+  "prior_current_documents": {
+    "verification/report.md": {
+      "sha256": "66ea6764dc4af21617107cefaa5c0306186cfe4495e0ce2a510757088d737129",
+      "content": "---\nmilestone: M001\nstage: verification\nrole: quality/base\nagent_name: qa-quinn\nstatus: failed_scoped_rework_required\ndate: 2026-09-11\nverification_round: AI-INTEGRATION-127\nrelease_readiness: blocked\n---\n\n# 当前结果：确定性跨端验证未通过\n\n8个真实浏览器→Nuxt→Go HTTP→隔离PostgreSQL场景，7通过、1失败。Q127-01是当前版本实现缺陷，交frontend-claire返工；不是模型质量失败，不交用户UAT，也不要求用户继续复现。依据USER-HANDOFF-CONTINUOUS-001按普通开发/测试闭环推进，没有新需求或返工冲突。\n\n唯一当前质量入口为本报告；[覆盖与边界](./coverage-matrix.md)、[AI质量](./ai-evaluation.md)、[UAT状态](./uat.md)、[质量交接](../handoffs/verification.md)各自只维护对应内容。[原始执行、来源摘要与清理](./evidence/ai-integration-127/qa.json)；[旧五份入口快照](./evidence/ai-integration-127/pre-current.json)。旧122采样窗口已过其记录期限，本轮不读取、不续开，不沿用“等待用户复现”的动作。旧诊断/审批/不可变证据未改写。\n\n## Q127-01 / P1：合法结果被前端流缓冲拒绝\n\n关联G03/G05/G10/G14、PAGE-004、CAP-008/009/010、API-005/006。后端[validator](../../../../backend/internal/ai/validator.go)允许本例的1,166,027字符干净英文正文；[HTTP输出](../../../../backend/internal/httpapi/generation_handlers.go)生成1,166,301字符的validated data。前端[消费者](../../../../frontend/app/infrastructure/http/repositories/api-repository.ts)固定maxBufferSize=1,048,576，拒绝此合法终态。\n\n真实页面显示既有“内容无法读取”错误且没有保存入口；同一run已在真实隔离DB中valid、charged=true、cumulative=true、drafts=1、batches=0。上游仅调用一次，没有偷偷重试。这会让用户看到失败却已计次，也无法保存已生成的资源。\n\n独立HTTP对照完整读到287个事件、唯一末尾generation.validated；delta拼接=最终正文=独立构造预期，grapes的位置切片正确，括号标记未泄漏。对同一完整wire按16KiB喂给项目安装的解析库及当前限额，出现max-buffer-size-exceeded、未交付validated。因此根因不是供应商缺字段、后端校验失败或乱码。对照测试“PASS”表示反例证据成立，不是产品通过。\n\n样例只有输入grape，使用固定英文填充扩大正文；没有改产品词数规则、validator、prompt或公开字段。这是防御边界，不声称真实模型经常输出此大小，也不能据此解释过去所有失败run。\n\n## 本轮独立结果\n\n| 场景 | HTTP/浏览器与持久状态结果 |\n|---|---|\n| 正常生成并保存 | PASS；干净正文663字符，valid→保存一批，草稿删除 |\n| 最低词数不足 | PASS；validation_failed，不扣次、不计累计、无草稿/批次/保存入口 |\n| 上游建立流返回503 | PASS；Problem 503；provider_failed退款，无SSE终态伪造 |\n| 显式取消 | PASS；恰好一次cancel，user_cancelled计次，无草稿 |\n| 生成中离页 | PASS；没有显式cancel，stream_failed退款，无草稿 |\n| 头已到、正文静默20秒 | PASS；普通5秒写超时未截断，页面最终可保存 |\n| 退款写入暂时失败 | PASS；失败界面没有保存入口，DB暂active/已占额；移除隔离故障后由真实5秒maintenance定时器补成validation_failed/退款，不是手动调用补退方法 |\n| 合法大正文 | FAIL；Q127-01，后端成功而页面无法保存 |\n\n各场景一次真实应用生成请求及一次本地假供应商调用，零pageerror。额外3次纯合成HTTP对照（前两次QA字段读取错误，第三次正确）共11次假供应商调用，真实模型调用0。浏览器在消费者主动关闭reader后，Playwright response.text不可用；不把此观察当作完整SSE断言，完整wire由独立对照负责。\n\n## 证据复用、方法与约束\n\n审查5份开发原件的42条源码摘要：36条一致，6条旧摘要均可追到后续一致原件，无未知来源漂移。复用开发单测/race/慢流证据，不机械重跑unit/lint/build，不声称本轮穷尽G01–G15。固定源码+测试实际链路，应用Node24.8.0；宿主浏览器/HTTP驱动为Node22，版本差异原样记在原件，不冒称全栈Node24。\n\n临时Docker网络初次不能发布宿主端口、程序注册缺Sec-Fetch-Site、对照误用内部DTO字段均为QA夹具问题，原失败保留并纠正，未修改生产安全校验或放宽断言。Go测试PASS仅表示隔离服务生命周期退出正常，不能覆盖浏览器FAIL。\n\n本轮只拥有verification与质量交接。生产源码只读挂载，无Vue/CSS/i18n、数据库设计或兼容改动，无子代理/运行时换模/提交声明。已移除本轮三个临时容器、两个网络及不可恢复的合成tmpfs数据（含一次重启遗留库）；保留源码、缓存卷及测试原件，现有UAT环境未动。本轮未访问真实密钥/生成样本，未部署或运行收费模型。\n"
+    },
+    "verification/coverage-matrix.md": {
+      "sha256": "60ce0b0bd114853cc1faf90edcc27907f7bea334d31f0efc9b2782c5b47d88c6",
+      "content": "---\nmilestone: M001\nstage: verification\nrole: quality/base\nagent_name: qa-quinn\nstatus: failed_Q127_01\ndate: 2026-09-11\n---\n\n# 当前覆盖矩阵\n\n唯一缺陷定义与结果见[报告Q127-01](./report.md#q127-01--p1合法结果被前端流缓冲拒绝)。本表区分开发证据复用、独立执行与尚未验证，不把单端PASS当整条链路PASS。\n\n| 目标 | 已有开发证据 / 本轮独立增量 | 当前结论 |\n|---|---|---|\n| G01 预检、权限、额度 | AI-BOUNDARIES-125预检 + AI-RACES-125身份/并发原件；本轮真实bootstrap/register及组模型加载 | 定向证据复用；未重跑全权限矩阵 |\n| G02 提供方HTTP | 状态/响应头/静默错误正文开发原件；本轮实际503 Problem、持久退款、页面结束 | 本轮503 PASS，其他状态复用 |\n| G03 SSE/编码/资源 | 开发流协议及消费者原件；实际Go SSE到浏览器 | Q127-01 FAIL（跨层缓冲） |\n| G04 JSON/schema | AI-P0-123及BOUNDARIES-125；严格字段追踪及来源摘要 | 开发证据复用，不冒称新QA穷尽 |\n| G05 正文/最低词数/资源 | 本轮低于最低词数正确拒绝；合法大正文后端有效但前端失败 | 负例PASS；大正文FAIL |\n| G06 文章标签 | 既有数量、重复、三语言边界；本轮单标签fruit | 结构证据复用；语义待真实质量评测 |\n| G07 原词/释义 | 既有顺序/语言/空值/长度；本轮grape独立释义 | 结构证据复用；语义独立性未以mock判定 |\n| G08 标注语法 | annotations与P0协议开发原件；本轮grapes(grape)干净输出 | 定向PASS；不声明所有语法交叉穷尽 |\n| G09 词法与归属 | 既有11原因追踪及2不可达guard证明；本轮grape→grapes位置正确 | 定向PASS；guard证明≠动态命中 |\n| G10 流/位置一致 | P0 Unicode随机分块及旧inline HTTP原件；本轮大正文完整wire delta=final，span切片=grapes | HTTP对照PASS；浏览器大文最终交付FAIL |\n| G11 生命周期 | RACES-125终态竞争原件；本轮真实生成、保存、显式取消、离页断流 | 四场景PASS；不是新压力/SLA测试 |\n| G12 数据/退款 | REFUND-124与RACES-125回执丢失原件；隔离trigger拒绝结算→恢复→生产maintenance补退 | 定时补退PASS；未模拟永久DB丢失 |\n| G13 日志/隐私 | 31诊断投影开发原件；本轮仅临时服务安全日志，无正文/合成key/token | 定向PASS；共享采样排除、未读真实采样 |\n| G14 前端生命周期 | CONSUMER-126的71单测/9浏览器开发原件；本轮8个真实全链路浏览器场景 | 7 PASS、1 FAIL，待Q127-01修复 |\n| G15 慢生成 | 后端60/120秒历史原件；本轮真实浏览器20秒静默后有效完成 | 定向PASS；本轮没有120秒浏览器/Nginx验收 |\n\n[QA执行及5份开发来源核对](./evidence/ai-integration-127/qa.json)：42条摘要36匹配，6旧条目均由后续原件匹配接续。开发原件为ai-p0-123、ai-refund-124、ai-boundaries-125、ai-races-125、ai-consumer-126；结果不能相加成互斥“总测试数”。\n\n修复后针对真实validated整体大小做低于/等于/超过边界、Unicode/转义及重复命中位置数量等交叉验证，核对成功计次与可保存性一致；同时保留非法/超资源输入防御。全矩阵是否可关闭由下一轮QA按改动影响判断，不把这8项当全部质量门槛。\n"
+    },
+    "verification/ai-evaluation.md": {
+      "sha256": "2457c08700934a2b869a88e1bbd125188756c52e3fee0e2bb413ce847b6c0677",
+      "content": "---\nmilestone: M001\nstage: verification\nrole: quality/base\nagent_name: qa-quinn\nstatus: deterministic_failed_semantic_not_evaluated\ndate: 2026-09-11\n---\n\n# AI评测状态\n\n确定性链路发现[Q127-01](./report.md)：合法结果被前端流缓冲拒绝。8个全链路浏览器场景7通过、1失败；完整HTTP反例证明生成内容与位置本身有效。\n\n本轮实际模型调用0，只调用本地替身11次。重复英文大正文用于资源边界，不是合格文章样本；不得推算真实模型成功率、自然度或过去失败原因。此前采样窗口不作为本轮权限或质量结论。\n\n下一顺序：实现修复→独立定向复测→另行明确真实模型与调用预算，再执行[既有质量评测方案](../implementation/backend-validation.md#真实模型评测与uat分工)。重点仍为原词独立释义、文章自然/场景匹配、hint自然度、文章级tag及正确映射。不得靠放宽校验或隐藏失败提升“成功率”。\n\nCR039/040/041、真实语义质量、UAT、发布均未关闭。本轮没有新增付费调用、真实数据操作或样本保留授权。\n"
+    },
+    "verification/uat.md": {
+      "sha256": "0a66ba08326a92f107602479636a750b690ec3765f43a2cc4e737b392460edae",
+      "content": "---\nmilestone: M001\nstage: verification\nrole: quality/base\nagent_name: qa-quinn\nstatus: not_ready_implementation_rework\ndate: 2026-09-11\n---\n\n# 当前不提交UAT\n\n[Q127-01](./report.md)已用隔离自动化复现，交开发修复后由QA复测；用户无需再次试错或提交run_id。\n\n本轮未更新6001候选、未操作实际数据库、未配置/读取真实密钥，也未打开采样窗口。旧122文档的“等待用户复现”已归档，不是当前指令。\n\n待确定性问题闭环且真实模型评测范围/费用获准后，再提供质量验收材料和测试入口。此前UAT通过不等于当前改动已验收；当前也不重启无关全站UI测试。\n"
+    },
+    "handoffs/verification.md": {
+      "sha256": "dfd8f36b02caf5d388dff394db516486712cd3171a84caa8cc23fe0f0214ef29",
+      "content": "---\nmilestone: M001\nstage: verification\nrole: quality/base\nagent_name: qa-quinn\nstatus: failed_scoped_frontend_rework_requested\ndate: 2026-09-11\n---\n\n# QA交接：Q127-01 → frontend-claire\n\n## 已确认范围\n\n[质量报告](../verification/report.md)、[覆盖](../verification/coverage-matrix.md)、[执行原件](../verification/evidence/ai-integration-127/qa.json)。M001本轮7/8跨端浏览器通过；Q127-01是现有PAGE-004/CAP-008/009/010/API-005/006实现不一致，非新需求。USER-HANDOFF-CONTINUOUS-001允许普通返工和定向验证；无待决用户选择。CR039/040/041仍open，不据此新增或关闭产品变更。\n\n当前生产未修：后端发送1,166,301字符合法validated data、持久valid/charged/draft；前端1,048,576缓冲拒绝，用户无法保存。完整HTTP对照及真实DOM/DB证据已齐，不需要真实模型复现。\n\n## 接收责任与验收\n\nfrontend-claire负责当前消费者数据边界和相关测试；不改设计/文案、DTO→转换→状态→渲染原则、原词释义、映射、取消/退款语义或公开字段。先核对整个validated结构与资源边界，不能仅按正文长度随意把常数改成2MiB，也不能取消所有防御或通过缩小产品允许内容来掩盖缺陷。若需要改变合同/需求，明确列出冲突再回溯，不擅自决策。\n\n验收必须包括合法大小边界、Unicode/转义、重复目标带来的occurrences序列化膨胀、任意网络分块、非法超限、防御释放；实际Go HTTP→浏览器能交付合法终态并保存，计次/草稿/页面一致。沿既有失败/取消/旧事件/身份边界做受影响回归；不要机械重跑无关全站。\n\nQA的[服务overlay](../verification/evidence/ai-integration-127/qa127_browser_test.go)、[浏览器脚本](../verification/evidence/ai-integration-127/browser.mjs)、[完整wire对照](../verification/evidence/ai-integration-127/wire-reference.mjs)为可复用证据。wire对照现断言“当前解析库拒绝”，修复复测时应保留此原反例并建立新的正向验收，不覆盖旧红例。证据解释及夹具失败在qa.json。\n\n## 遗留与边界\n\n[AI语义评测](../verification/ai-evaluation.md)未执行；[UAT](../verification/uat.md)未就绪。无付费调用、实际部署/数据操作/真实敏感采样权限；不加旧版兼容。后端开发报告部分“下一步前端”是旧轮交付范围，不是最新QA状态；当前状态以本交接和报告为准。\n\n本轮只整理五份QA当前入口，旧原件冻结可恢复；不修改其他角色报告。采用当前小入口→稳定ID取所需原件方式；因协议定位/故障复现超过8k软上下文目标，未报告不具备测量的精确token。新会话接棒实验未执行（本轮未授权独立新代理），以角色/ID/本地引用/冻结原件静态恢复检查替代，不声称实验PASS。\n\n所有临时容器/网络及合成DB已移除；现有UAT未动。下一动作由守门器按已有授权返回implementation并激活frontend-claire；QA不代写生产修复，不把Go夹具PASS当产品PASS。\n"
+    }
+  },
+  "checks": {
+    "user_success_target": 0.9,
+    "user_observation": "below50%, not measured baseline",
+    "code_stage_diagnostics": "partial: stable failure details and total request duration",
+    "complete_stage_trace": "absent in inspected handler/provider paths",
+    "provider_finish_reason_usage": "not represented in received chunk projection",
+    "capture_before_parsing": "absent: Record accepts ai.Candidate and is called on settled validation failure",
+    "normal_build_capture": "disabled by build tag; UAT capture is scoped and time-limited",
+    "generation_outcome_metrics": "absent from Metrics; HTTP status cannot count successful generations",
+    "uat_matches_latest_validated_source": "no: deployed manifest and current handler/provider/validator differ",
+    "runtime_logs": "no matching named generation diagnostic events in the bounded last24h log window; cannot infer no failures or success rate",
+    "frontend_large_output_blocker": "withdrawn by TRANSITION-M001-129; buffer unchanged"
+  },
+  "actions_not_taken": [
+    "No model call",
+    "No deployment/container restart",
+    "No database connection or mutation",
+    "No secret/config env read",
+    "No content sample read or capture renewal",
+    "No production edit",
+    "No developer unit/lint rerun",
+    "No subagent/actual model switch",
+    "No commits"
+  ],
+  "limits": [
+    "Source review of concrete observability requirements plus image/manifest comparison; not a full functional verification",
+    "Missing historical raw data cannot be recovered by later enabling telemetry",
+    "Source image correlation uses recorded deployment manifest; no binary attestation beyond current image identity",
+    "Raw model retention and deployment remain unapproved; proposed in CR-042"
+  ]
+}

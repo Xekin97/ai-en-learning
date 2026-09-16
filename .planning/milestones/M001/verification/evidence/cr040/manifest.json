@@ -1,0 +1,90 @@
+{
+  "revision": "CR-040 / QA107",
+  "date": "2026-09-09",
+  "role": "quality/base",
+  "agent": "qa-quinn",
+  "method": "Primary session adopted the approved quality role; no separate QA agent or actual model identity asserted.",
+  "result": "PASS_SCOPED_AUTOMATED_CHECKS",
+  "real_model_quality": "NOT_VERIFIED",
+  "uat_deployed": false,
+  "release_approved": false,
+  "runtime": {
+    "backend": "go1.27.0 darwin/arm64 for fresh QA overlay HTTP check; developer pinned Go1.26.7 Linux check accepted separately",
+    "database": "postgres:18-bookworm disposable tmpfs container",
+    "frontend": "wordweave-frontend:cr040-dev",
+    "frontend_image": "sha256:5903591c881165071c1cba08984cfb835854187f5df21a281640b3aacccf4b27",
+    "browser_runner": "Node v22.23.2 and locally installed Playwright Chromium; candidate built with Node24.8.0"
+  },
+  "http": {
+    "command": "TEST_DATABASE_URL=[isolated synthetic DB] go test -overlay ../.planning/milestones/M001/verification/evidence/cr040/overlay.json -tags=integration ./internal/httpapi -run '^TestQA107' -count=1 -v",
+    "exit_code": 0,
+    "scenario_groups": 5,
+    "real_provider_calls": 0,
+    "successful_synthetic_provider_calls": 3,
+    "initial_fixture_invalid_calls": 1,
+    "report": "qa107-http-pass.txt",
+    "initial_failure": {
+      "report": "qa107-http-initial-failure.txt",
+      "classification": "QA fixture defect",
+      "cause": "Artificial passage ended with an ASCII space; established deterministic validator correctly rejected it.",
+      "correction": "Trim artificial passage during fixture construction only; no production change or relaxed oracle.",
+      "resolved": true
+    }
+  },
+  "browser": {
+    "command": "CR040_FRONTEND_ORIGIN=[isolated loopback candidate] node .planning/milestones/M001/verification/evidence/cr040/qa107-browser.mjs",
+    "exit_code": 0,
+    "scenario_groups": 4,
+    "report": "qa107-browser-results.json",
+    "real_provider_calls": 0
+  },
+  "protection": {
+    "protectedCount": 274,
+    "mismatch": [],
+    "artifacts": [
+      {
+        "path": ".planning/milestones/M001/verification/evidence/cr040/qa107_http_test.go",
+        "sha256": "f1ce3ff8d4463969e4db845240f8d88f55fa78fdddd83e5aaa175c68ebe0750b"
+      },
+      {
+        "path": ".planning/milestones/M001/verification/evidence/cr040/overlay.json",
+        "sha256": "c30d138a4fed79592d2e2eba903b28797447ceb3af1ccc385db583eacd47a845"
+      },
+      {
+        "path": ".planning/milestones/M001/verification/evidence/cr040/qa107-http-initial-failure.txt",
+        "sha256": "eb17a8cbff01a3b44b924ca46c1ec1c17a784610b1b63b6ea30721bfdda666de"
+      },
+      {
+        "path": ".planning/milestones/M001/verification/evidence/cr040/qa107-http-pass.txt",
+        "sha256": "b6bd7118d1379ba1526ab8f90bcaa96b14ad481c74f4ae9b645dbe9cf157f00d"
+      },
+      {
+        "path": ".planning/milestones/M001/verification/evidence/cr040/qa107-browser.mjs",
+        "sha256": "deb7b7ee382c2f9125a12bef100d9360076754bfd62f619156a1c34b8abaf74d"
+      },
+      {
+        "path": ".planning/milestones/M001/verification/evidence/cr040/qa107-browser-results.json",
+        "sha256": "781240cb7a085db3b6815acc4dab250288b0e6a23d0c7f8a89d7f8a3c26d24c6"
+      }
+    ]
+  },
+  "cleanup": {
+    "removed": [
+      "wordweave-cr040-frontend-check",
+      "wordweave-cr040-dev-pg (tmpfs synthetic data)"
+    ],
+    "stopped": "PID61185 node tests/e2e/mock-backend.mjs (verified cwd, command and port)",
+    "data_recoverability": "Synthetic fixtures reproducible from retained tests; tmpfs state not retained",
+    "candidate_image_and_evidence_retained": true,
+    "uat_containers_not_modified": true,
+    "uat_database_not_accessed_or_modified": true
+  },
+  "limits": [
+    "No live AI quality proof",
+    "No current UAT deployment or actual cutover",
+    "Developer tests cited, not mechanically rerun or reported as separate QA counts",
+    "Not a full-site UI/accessibility/performance review",
+    "No backwards-compatibility support",
+    "No changes to production code or approved specialist documents during QA"
+  ]
+}

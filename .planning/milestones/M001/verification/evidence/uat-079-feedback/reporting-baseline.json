@@ -1,0 +1,39 @@
+{
+  "docs": [
+    {
+      "path": "verification/report.md",
+      "header": "---\nmilestone: M001\nstage: verification\nrole: quality/base\nagent_name: qa-quinn\nstatus: awaiting_user_review\ndate: 2026-09-06\nverification_round: TRANSITION-M001-078\nverdict: passed_for_functional_uat\nfunctional_uat: awaiting_user_acceptance\nrelease_readiness: blocked\nuat_handoff: UAT-M001-079\n---\n",
+      "bodyHash": "36ab40aae9933532b6141e9ab0e03502d52ef8c0ab9aef10b595778b09bd4c21",
+      "newHeader": "---\nmilestone: M001\nstage: verification\nrole: quality/base\nagent_name: qa-quinn\nstatus: awaiting_user_review\ndate: 2026-09-06\nverification_round: UAT-M001-079-FEEDBACK\nverdict: fail_rework_required\nfunctional_uat: changes_requested\nrelease_readiness: blocked\nuat_handoff: UAT-M001-079\n---\n",
+      "insertion": "\n<!-- UAT079 FEEDBACK CURRENT BEGIN -->\n# UAT079反馈：两项实现偏差，待批准有限返工\n\n[当前原始报告](./uat-079-feedback.md)、[CR037](../changes/CR-037.md)：认证提示位置/状态语义，以及本人改密三处英文已双引擎复现。结果65 PASS / 60重复矩阵FAIL / 0ERROR，对应两项问题。用户本次没有发现其他不一致；不重开既有已闭合项。未修改源码、设计、密码、数据或部署。\n\n当前质量结论为 changes_requested，不是用户UAT通过。建议只交frontend-claire按现有设计修复，再独立复验；原连续授权已到079交付终点，待用户批准。以下QA078/UAT079通过描述保留为当时的有限覆盖与部署记录，不覆盖本次新发现。\n\n以下此前正文完整保留为历史。\n<!-- UAT079 FEEDBACK CURRENT END -->\n"
+    },
+    {
+      "path": "verification/coverage-matrix.md",
+      "header": "---\nmilestone: M001\nstage: verification\nrole: quality/base\nagent_name: qa-quinn\nstatus: awaiting_user_review\ndate: 2026-09-06\nverification_round: TRANSITION-M001-078\nverdict: passed_for_functional_uat\nfunctional_uat: ready_for_local_preparation\nrelease_readiness: blocked\n---\n",
+      "bodyHash": "a3df8f5820c67fb10e50bf320f36f75154cf64b21050cb2a7731a45f23a4da68",
+      "newHeader": "---\nmilestone: M001\nstage: verification\nrole: quality/base\nagent_name: qa-quinn\nstatus: awaiting_user_review\ndate: 2026-09-06\nverification_round: UAT-M001-079-FEEDBACK\nverdict: fail_rework_required\nfunctional_uat: changes_requested\nrelease_readiness: blocked\n---\n",
+      "insertion": "\n<!-- UAT079 FEEDBACK CURRENT BEGIN -->\n# UAT079反馈覆盖补充\n\n[详细覆盖/漏测说明/后续矩阵](./uat-079-feedback.md)、[CR037](../changes/CR-037.md)。PAGE-003/002认证提示：两引擎×中英文×390/1440，文字/样式/返回参数通过，位置/首元素/role=status失败。PAGE-009本人改密：两引擎×英文×390/1440，三处英文不一致；中文静态字典一致，但动态全项对照待复测。\n\n原覆盖遗漏提示相对标题位置与本人改密完整文案，不能用可见性或管理员密码功能代替。后续必须补这些断言及关联目标/错误/claim/共享注销说明回归。未重跑开发unit/lint/build；未执行密码变更或真实AI。\n\n以下此前正文完整保留为历史。\n<!-- UAT079 FEEDBACK CURRENT END -->\n"
+    },
+    {
+      "path": "verification/ui-design-audit.md",
+      "header": "---\nmilestone: M001\nstage: verification\nrole: quality/base\nagent_name: qa-quinn\nstatus: awaiting_user_review\ndate: 2026-09-06\nverification_round: TRANSITION-M001-078\nverdict: passed_for_functional_uat\nfunctional_uat: ready_for_local_preparation\nrelease_readiness: blocked\n---\n",
+      "bodyHash": "4b574157c8fe60465a0a304798b77c5892f8a6d610452140cf15c88ebcdb5463",
+      "newHeader": "---\nmilestone: M001\nstage: verification\nrole: quality/base\nagent_name: qa-quinn\nstatus: awaiting_user_review\ndate: 2026-09-06\nverification_round: UAT-M001-079-FEEDBACK\nverdict: fail_rework_required\nfunctional_uat: changes_requested\nrelease_readiness: blocked\n---\n",
+      "insertion": "\n<!-- UAT079 FEEDBACK CURRENT BEGIN -->\n# UAT079反馈：认证提示与改密文案审核FAIL\n\n[完整实际/设计对照及截图](./uat-079-feedback.md)。登录/注册提示应位于卡片最上方标题之前，实际在标题/副标题之后且缺role=status；本人改密英文辅助说明、会话说明、提交按钮不一致。其余弹窗标题/标签/辅助说明/取消按钮不应概括为全部错误。\n\n这两项已有清晰原型，责任是实现偏差，不是重新设计。已新建CR037，其他既有验证结果和已知语言选项基线差异保留。\n\n以下此前正文完整保留为历史。\n<!-- UAT079 FEEDBACK CURRENT END -->\n"
+    },
+    {
+      "path": "verification/uat.md",
+      "header": "---\nmilestone: M001\nstage: verification\nrole: quality/base\nagent_name: qa-quinn\nstatus: awaiting_user_review\ndate: 2026-09-06\nverification_round: TRANSITION-M001-078\nverdict: passed_for_functional_uat\nfunctional_uat: awaiting_user_acceptance\nrelease_readiness: blocked\nuat_handoff: UAT-M001-079\n---\n",
+      "bodyHash": "a2b6ecfbee509a358ecd1f7269088d0aa2e0a3ac450731339cb6e9d0e16c0305",
+      "newHeader": "---\nmilestone: M001\nstage: verification\nrole: quality/base\nagent_name: qa-quinn\nstatus: awaiting_user_review\ndate: 2026-09-06\nverification_round: UAT-M001-079-FEEDBACK\nverdict: fail_rework_required\nfunctional_uat: changes_requested\nrelease_readiness: blocked\nuat_handoff: UAT-M001-079\n---\n",
+      "insertion": "\n<!-- UAT079 FEEDBACK CURRENT BEGIN -->\n# 用户已反馈UAT：两项待修复\n\nCONFIRMED：Review引导至登录后的提示位置不一致；Change password弹窗文案不一致；用户本次没有发现其他不一致。[逐项复现与下一轮必测](./uat-079-feedback.md)、[CR037](../changes/CR-037.md)。第二项对应/account本人改密，三处英文偏差已经确认。\n\n当前功能UAT为 changes_requested，不邀请用户在同一未修复版本重复验收。6001保持本次受测版本可用；无修改密码或数据。待用户批准有限前端返工，独立复测通过后再交UAT。真实AI质量/发布门状态不变。\n\n以下此前正文完整保留为历史。\n<!-- UAT079 FEEDBACK CURRENT END -->\n"
+    },
+    {
+      "path": "handoffs/verification.md",
+      "header": "---\nmilestone: M001\nstage: verification\nrole: quality/base\nagent_name: qa-quinn\nstatus: awaiting_user_review\ndate: 2026-09-06\nverification_round: TRANSITION-M001-078\nverdict: passed_for_functional_uat\nfunctional_uat: awaiting_user_acceptance\nrelease_readiness: blocked\nuat_handoff: UAT-M001-079\n---\n",
+      "bodyHash": "94a64b59c827a09aab8ad010d72ed436fdc1febf596c381bb9efcc81d4cd8458",
+      "newHeader": "---\nmilestone: M001\nstage: verification\nrole: quality/base\nagent_name: qa-quinn\nstatus: awaiting_user_review\ndate: 2026-09-06\nverification_round: UAT-M001-079-FEEDBACK\nverdict: fail_rework_required\nfunctional_uat: changes_requested\nrelease_readiness: blocked\nuat_handoff: UAT-M001-079\n---\n",
+      "insertion": "\n<!-- UAT079 FEEDBACK CURRENT BEGIN -->\n# UAT079反馈交接：仅建议返回前端实现\n\n输入：用户本次两项UAT反馈、已批准原型、固定QA078候选与实际6001环境。输出：[原始质量报告](../verification/uat-079-feedback.md)、[CR037](../changes/CR-037.md)、[原始诊断](../verification/evidence/uat-079-feedback/results.json)。\n\n追踪PAGE-002/003/007/009，CAP-002/003/004/021，DATA-003/004/018，API-002/003不变。位置与role语义、三处英文文案均可归责implementation / frontend-claire；没有新产品/设计/API决策。其余用户未发现不一致，不因此扩大返工。\n\nOPEN：本次有限返工批准；CR037控制面索引待守门器接收同步。BLOCKED：最终功能UAT因两项偏差未接受；真实AI/发布限制保持。PROPOSED：frontend-claire修复后qa-quinn做新增强制断言及共享组件回归，既有UAT数据与密码不变。\n\n按agt-verify-milestone，本回合仅质量交接，不迁移stage、不激活开发、不更新6001。之前连续授权已到079交UAT结束，不自动续用。\n\n以下此前正文完整保留为历史。\n<!-- UAT079 FEEDBACK CURRENT END -->\n"
+    }
+  ]
+}

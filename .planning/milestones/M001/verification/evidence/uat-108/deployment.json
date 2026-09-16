@@ -1,0 +1,280 @@
+{
+  "date": "2026-09-09T04:00:28.459Z",
+  "stage": "deploy",
+  "realModelCalls": 0,
+  "stopped": true,
+  "cutoverCommitted": true,
+  "countsAtStop": {
+    "schema_migrations": 6,
+    "entitlement_groups": 4,
+    "vocabulary_snapshots": 1,
+    "vocabulary_entries": 13860,
+    "ai_models": 6,
+    "accounts": 591,
+    "openrouter_credentials": 1,
+    "visitor_claims": 0,
+    "review_results": 8,
+    "review_session_targets": 50,
+    "review_session_batches": 17,
+    "review_sessions": 15,
+    "passage_occurrences": 162,
+    "hint_occurrences": 105,
+    "batch_targets": 63,
+    "learning_batches": 22,
+    "generation_drafts": 0,
+    "generation_run_entries": 170,
+    "generation_runs": 93,
+    "account_sessions": 598,
+    "visitor_identities": 47737,
+    "group_models": 7,
+    "group_lengths": 13,
+    "admins": 7,
+    "learners": 584
+  },
+  "cutoverCommandExit": 0,
+  "cutoverStdout": "",
+  "status": "PASS",
+  "countsImmediatelyAfterCutover": {
+    "schema_migrations": 7,
+    "entitlement_groups": 4,
+    "vocabulary_snapshots": 1,
+    "vocabulary_entries": 13860,
+    "ai_models": 6,
+    "accounts": 7,
+    "openrouter_credentials": 1,
+    "visitor_claims": 0,
+    "review_results": 0,
+    "review_session_targets": 0,
+    "review_session_batches": 0,
+    "review_sessions": 0,
+    "passage_occurrences": 0,
+    "hint_occurrences": 0,
+    "batch_targets": 0,
+    "learning_batches": 0,
+    "generation_drafts": 0,
+    "generation_run_entries": 0,
+    "generation_runs": 0,
+    "account_sessions": 0,
+    "visitor_identities": 0,
+    "group_models": 0,
+    "group_lengths": 16,
+    "admins": 7,
+    "learners": 0
+  },
+  "countsAfterStartup": {
+    "schema_migrations": 7,
+    "entitlement_groups": 4,
+    "vocabulary_snapshots": 1,
+    "vocabulary_entries": 13860,
+    "ai_models": 6,
+    "accounts": 7,
+    "openrouter_credentials": 1,
+    "visitor_claims": 0,
+    "review_results": 0,
+    "review_session_targets": 0,
+    "review_session_batches": 0,
+    "review_sessions": 0,
+    "passage_occurrences": 0,
+    "hint_occurrences": 0,
+    "batch_targets": 0,
+    "learning_batches": 0,
+    "generation_drafts": 0,
+    "generation_run_entries": 0,
+    "generation_runs": 0,
+    "account_sessions": 0,
+    "visitor_identities": 3,
+    "group_models": 0,
+    "group_lengths": 16,
+    "admins": 7,
+    "learners": 0
+  },
+  "shape": {
+    "new_column": 1,
+    "old_column": 0,
+    "ledger": 1
+  },
+  "groups": [
+    {
+      "code": "plus",
+      "quota": null,
+      "max_entries": 5,
+      "lengths": [
+        "long",
+        "medium",
+        "short",
+        "xlong"
+      ],
+      "model_count": 0
+    },
+    {
+      "code": "pro",
+      "quota": null,
+      "max_entries": 5,
+      "lengths": [
+        "long",
+        "medium",
+        "short",
+        "xlong"
+      ],
+      "model_count": 0
+    },
+    {
+      "code": "registered",
+      "quota": null,
+      "max_entries": 5,
+      "lengths": [
+        "long",
+        "medium",
+        "short",
+        "xlong"
+      ],
+      "model_count": 0
+    },
+    {
+      "code": "visitor",
+      "quota": 5,
+      "max_entries": 5,
+      "lengths": [
+        "long",
+        "medium",
+        "short",
+        "xlong"
+      ],
+      "model_count": 0
+    }
+  ],
+  "retainedRowsEqual": true,
+  "runtimeEnvironmentPreserved": true,
+  "frontendOriginPreserved": true,
+  "databaseContainerAndVolumePreserved": true,
+  "before": {
+    "backend": {
+      "id": "3b49d8ad1fce549dc9d4244d6b262a748a74dcd89339181a8a46d6f508608558",
+      "name": "/wordweave_uat-backend-1",
+      "image": "sha256:ab12e7dec0a6a8beb55df2ec6a8174d01d288681215c1108cec997e6f99f8eee",
+      "status": "running",
+      "health": "healthy",
+      "started": "2026-09-08T07:02:58.729214345Z",
+      "networks": [
+        "wordweave_uat_data",
+        "wordweave_uat_edge"
+      ],
+      "mounts": [],
+      "readonly": true
+    },
+    "frontend": {
+      "id": "c29718b3bea43ab23403ae7cef828968f2c934f6b04128d1f4a61cfb13d82c06",
+      "name": "/wordweave_uat-frontend-1",
+      "image": "sha256:fd251e7439aad8e058656e2751ed84f40715fec570a872da53542688a6dd6904",
+      "status": "running",
+      "health": "healthy",
+      "started": "2026-09-07T03:54:00.102154461Z",
+      "networks": [
+        "wordweave_uat_edge"
+      ],
+      "mounts": [],
+      "readonly": false
+    },
+    "nginx": {
+      "id": "b789bde4e7825b849640cbf63d35b50ae41c1b77cb6b7ece73b3e26e27eabcb1",
+      "name": "/wordweave_uat-nginx-1",
+      "image": "sha256:5f0efd7fead5e8a290f07e5c025e9204052efb646758e1c6883de0e23a6e085c",
+      "status": "running",
+      "health": "healthy",
+      "started": "2026-09-04T09:36:43.099505383Z",
+      "networks": [
+        "wordweave_uat_edge"
+      ],
+      "mounts": [],
+      "readonly": true
+    },
+    "postgres": {
+      "id": "37a6d2fa58c578b1c6b4dbe10028b5ddf0c696fe44fc849a129293a85bbaf839",
+      "name": "/wordweave_uat-postgres-1",
+      "image": "sha256:b85269e8c6aa961524542eb4dcca44c4aa1deba2cf507e9e28d5ba8f971aeab9",
+      "status": "running",
+      "health": "healthy",
+      "started": "2026-09-03T02:24:03.164602928Z",
+      "networks": [
+        "wordweave_uat_data"
+      ],
+      "mounts": [
+        {
+          "type": "volume",
+          "name": "wordweave_uat_wordweave-pg",
+          "destination": "/var/lib/postgresql"
+        }
+      ],
+      "readonly": false
+    }
+  },
+  "after": {
+    "backend": {
+      "id": "431a2ebd8690815de70bbb1d4eb9ac570acaa4830770569cebf37cd350c87b18",
+      "name": "/wordweave_uat-backend-1",
+      "image": "sha256:7cb89a2d4628cc568790cf4a556133cc76270f97d3e246aeb3e95374541b936d",
+      "status": "running",
+      "health": "healthy",
+      "started": "2026-09-09T04:00:35.732563833Z",
+      "networks": [
+        "wordweave_uat_data",
+        "wordweave_uat_edge"
+      ],
+      "mounts": [],
+      "readonly": true
+    },
+    "frontend": {
+      "id": "74d1c89a8648e94c3036ff1c1537ef04f8c21ba522886c3dc9cb1ddce1345485",
+      "name": "/wordweave_uat-frontend-1",
+      "image": "sha256:5903591c881165071c1cba08984cfb835854187f5df21a281640b3aacccf4b27",
+      "status": "running",
+      "health": "healthy",
+      "started": "2026-09-09T04:00:41.569487295Z",
+      "networks": [
+        "wordweave_uat_edge"
+      ],
+      "mounts": [],
+      "readonly": false
+    },
+    "nginx": {
+      "id": "b789bde4e7825b849640cbf63d35b50ae41c1b77cb6b7ece73b3e26e27eabcb1",
+      "name": "/wordweave_uat-nginx-1",
+      "image": "sha256:5f0efd7fead5e8a290f07e5c025e9204052efb646758e1c6883de0e23a6e085c",
+      "status": "running",
+      "health": "healthy",
+      "started": "2026-09-09T04:00:47.530054881Z",
+      "networks": [
+        "wordweave_uat_edge"
+      ],
+      "mounts": [],
+      "readonly": true
+    },
+    "postgres": {
+      "id": "37a6d2fa58c578b1c6b4dbe10028b5ddf0c696fe44fc849a129293a85bbaf839",
+      "name": "/wordweave_uat-postgres-1",
+      "image": "sha256:b85269e8c6aa961524542eb4dcca44c4aa1deba2cf507e9e28d5ba8f971aeab9",
+      "status": "running",
+      "health": "healthy",
+      "started": "2026-09-03T02:24:03.164602928Z",
+      "networks": [
+        "wordweave_uat_data"
+      ],
+      "mounts": [
+        {
+          "type": "volume",
+          "name": "wordweave_uat_wordweave-pg",
+          "destination": "/var/lib/postgresql"
+        }
+      ],
+      "readonly": false
+    }
+  },
+  "health": {
+    "/health/live": 200,
+    "/health/ready": 200,
+    "/": 200
+  },
+  "backupDirectory": "/var/folders/z9/99ckxr957v901zwwc8jdk8640000gn/T/wordweave-uat108-preserved-WpEYvN",
+  "pairedReadinessPassed": true,
+  "nginxReusedAndRestarted": true
+}

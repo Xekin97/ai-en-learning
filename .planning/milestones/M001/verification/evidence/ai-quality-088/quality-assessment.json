@@ -1,0 +1,90 @@
+{
+  "recorded_at": "2026-09-07T06:35:46Z",
+  "agent": "qa-quinn",
+  "model": "deepseek/deepseek-v4-flash-0731",
+  "overall_verdict": "LIMITED_MIXED_BLOCKED_FOR_RELEASE",
+  "sample_counts": {
+    "attempted": 3,
+    "validated": 2,
+    "saved": 2,
+    "validation_failed_product_quota_refunded": 1
+  },
+  "samples": [
+    {
+      "id": "AQ088-S1",
+      "verdict": "STRUCTURAL_FAIL_PASSAGE_ONLY_GOOD",
+      "deterministic_result": "generation.failed/content_validation_failed; target 0 meaning language or content is invalid",
+      "passage_word_count": 113,
+      "rubric": {
+        "natural_grammar": "PASS for streamed passage",
+        "coherence": "PASS for streamed passage",
+        "scenario_relevance": "PASS; the passage sustains a workplace-policy discussion",
+        "all_entries_natural": "PASS for alleviate, undermine, facilitate, deteriorate, perceive",
+        "contextual_meanings": "NOT_EVALUABLE; the failed candidate's target objects were not exposed",
+        "meaning_language": "FAIL at deterministic validator; the evidence cannot distinguish bad Chinese output from a validator rejection",
+        "hint_phrases": "NOT_EVALUABLE",
+        "tags": "NOT_EVALUABLE",
+        "length": "PASS; 113 >= medium minimum 100",
+        "neutral_educational_context": "PASS for streamed passage"
+      },
+      "saved": false,
+      "quota_refunded": true,
+      "quota_refund_scope": "WordWeave product call quota only; OpenRouter cost refund not observed",
+      "reservation": "The prose is usable, but no complete learning batch exists and it must not be presented as a successful Chinese sample."
+    },
+    {
+      "id": "AQ088-S2",
+      "verdict": "PASS_WITH_RESERVATION",
+      "deterministic_result": "generation.validated and saved",
+      "passage_word_count": 253,
+      "rubric": {
+        "natural_grammar": "PASS",
+        "coherence": "PASS; problem, evidence, policy response, limitations, and conclusion form a continuous article",
+        "scenario_relevance": "PASS as news-style educational prose",
+        "all_entries_natural": "PASS; all five entries appear in context and repeated uses are not forced",
+        "contextual_meanings": "PASS; all five English definitions fit their passage uses",
+        "meaning_language": "PASS; meanings and three tags are English",
+        "hint_phrases": "PASS; each is a natural English phrase containing its target",
+        "tags": "PASS; public health, urban planning, climate policy are passage-level themes",
+        "length": "PASS; 253 >= long minimum 200",
+        "neutral_educational_context": "PASS",
+        "no_full_translation": "PASS"
+      },
+      "saved": true,
+      "reservation": "The passage presents a named review, expert, and quotation that were not fact-checked in this test. It must be treated as an AI-generated language-learning example, not as verified current news. The prevalent definition is correct but slightly stiff."
+    },
+    {
+      "id": "AQ088-S3",
+      "verdict": "PASS",
+      "deterministic_result": "generation.validated and saved",
+      "passage_word_count": 94,
+      "rubric": {
+        "natural_grammar": "PASS",
+        "coherence": "PASS; the attempt-practice-improvement-teaching arc is clear",
+        "scenario_relevance": "PASS; a compact complete story",
+        "all_entries_natural": "PASS; learn and learned occur naturally",
+        "contextual_meanings": "PASS; the Japanese explanation accurately describes acquiring skill through experience and practice",
+        "meaning_language": "PASS; meaning and tags are Japanese",
+        "hint_phrases": "PASS; You learn best by making mistakes is natural and includes the target",
+        "tags": "PASS; three Japanese passage-level tags",
+        "length": "PASS; 94 >= short minimum 50",
+        "neutral_educational_context": "PASS",
+        "no_full_translation": "PASS"
+      },
+      "saved": true,
+      "reservation": "No material quality concern in this one sample."
+    }
+  ],
+  "coverage": {
+    "meaning_languages": ["zh attempted but failed validation", "en validated", "ja validated"],
+    "scenarios": ["discussion", "news", "story"],
+    "lengths": ["medium", "long", "short"],
+    "entry_counts": [5, 5, 1],
+    "omitted_by_authorized_budget": ["business scenario", "xlong length", "full 3x4x4 matrix", "sensitive and multiword families"]
+  },
+  "release_conclusion": "The model demonstrated strong English prose in all three streamed passages and produced two complete high-quality batches, but the Chinese five-entry sample failed deterministic validation. Three samples cannot establish stability, and the model is not approved for production release.",
+  "provider_usage": "unknown",
+  "provider_cost": "unknown",
+  "actual_model": "not_observed",
+  "usage": "not_observed"
+}

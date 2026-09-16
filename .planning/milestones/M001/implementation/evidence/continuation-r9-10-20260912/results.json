@@ -1,0 +1,3404 @@
+{
+  "revision": "BOUNDED-CONTINUATION-R9-LIVE-10-20260912",
+  "role": "backend-ethan",
+  "authorization": {
+    "user_response": "批准10次",
+    "maximum_upstream_calls": 10,
+    "used_upstream_calls": 9,
+    "unspent_calls": 1,
+    "continuations_count": true,
+    "status": "complete_safe_budget_stop",
+    "stop_reason": "A generation can use two upstream calls. One remaining authorization slot cannot safely cover another generation; no configuration override or bypass was introduced."
+  },
+  "scope": {
+    "account_id": "01a08e5a-2250-7854-81df-5aeb26e7f461",
+    "username": "wordweave_uat",
+    "base_url": "http://localhost:6001",
+    "prompt": "m001-v5-r9",
+    "validator": "m001-v5-wn31-r2",
+    "provider": "together",
+    "allow_fallbacks": false,
+    "application_edits_this_round": false,
+    "mid_batch_changes": false,
+    "frontend_edits": false,
+    "database_cleanup": false,
+    "full_site_regression": false,
+    "automatic_continuation_maximum": 1,
+    "manual_resends": 0,
+    "coverage": "Both models: D/en/story/xlong, A/zh/story/short, D/ja/news/long, C/en/business/short. B/zh/discussion/medium not run due upstream budget."
+  },
+  "deployment": {
+    "old_image": "sha256:56a6f59fb322564d4fe36808ee1f374d73de1bfa57b4304fe191752e40459577",
+    "image": "sha256:c4b00eb124fd7ccccd62223599336db9ada358861d09e6f852725f477aadefb8",
+    "configured_image": "wordweave-local:continuation-r9-20260912",
+    "health": "healthy",
+    "restarts": 0,
+    "started_at": "2026-09-12T04:00:15.02626401Z",
+    "environment_unchanged": true,
+    "other_uat_containers_unchanged": true,
+    "prior_active_runs": 0,
+    "old_tmpfs_evidence_cleared": true,
+    "build_command": "docker build -f /tmp/wordweave-r9-10.hUhn5H/Dockerfile -t wordweave-local:continuation-r9-20260912 .",
+    "deployment_command": "node /tmp/wordweave-r9-10.hUhn5H/deploy.mjs"
+  },
+  "aggregates": {
+    "used_calls": 9,
+    "generations": 8,
+    "valid": 7,
+    "first_pass": 7,
+    "models": [
+      {
+        "model": "minimax/minimax-m3",
+        "requests": 4,
+        "valid": 3,
+        "calls": 5,
+        "prompt_tokens": 6495,
+        "completion_tokens": 3223,
+        "min_ms": 6497,
+        "max_ms": 31105
+      },
+      {
+        "model": "z-ai/glm-5.3-flash",
+        "requests": 4,
+        "valid": 4,
+        "calls": 4,
+        "prompt_tokens": 5232,
+        "completion_tokens": 10612,
+        "min_ms": 25650,
+        "max_ms": 56542
+      }
+    ],
+    "word_counts": [
+      {
+        "case_id": 1,
+        "words": [
+          146,
+          843
+        ],
+        "hint_changed": 0
+      },
+      {
+        "case_id": 2,
+        "words": [
+          495
+        ],
+        "hint_changed": 0
+      },
+      {
+        "case_id": 3,
+        "words": [
+          278
+        ],
+        "hint_changed": 0
+      },
+      {
+        "case_id": 4,
+        "words": [
+          73
+        ],
+        "hint_changed": 0
+      },
+      {
+        "case_id": 5,
+        "words": [
+          380
+        ],
+        "hint_changed": 0
+      },
+      {
+        "case_id": 6,
+        "words": [
+          254
+        ],
+        "hint_changed": 0
+      },
+      {
+        "case_id": 7,
+        "words": [
+          232
+        ],
+        "hint_changed": 1
+      },
+      {
+        "case_id": 8,
+        "words": [
+          66
+        ],
+        "hint_changed": 1
+      }
+    ]
+  },
+  "records": [
+    {
+      "case_id": 1,
+      "round": 1,
+      "reference_case_id": 9,
+      "pair_id": 5,
+      "group": "D",
+      "model_id": "01a07fe3-5c48-736a-a86b-1f4dabd7cb87",
+      "provider_model_id": "minimax/minimax-m3",
+      "meaning_language": "en",
+      "scenario": "story",
+      "length": "xlong",
+      "entries": [
+        "sustainable",
+        "prevalent",
+        "vulnerable",
+        "ambiguous",
+        "coherent"
+      ],
+      "started_at": "2026-09-12T04:01:06.698Z",
+      "status": "generation.failed",
+      "upstream_calls": 2,
+      "budget_reserved": 2,
+      "image": "sha256:c4b00eb124fd7ccccd62223599336db9ada358861d09e6f852725f477aadefb8",
+      "http_status": 200,
+      "request_id": null,
+      "run_id": "01a093c6-ae95-7f7e-b72b-6c6513219d1a",
+      "first_delta_ms": 3764,
+      "code": "content_validation_failed",
+      "quota_refunded": true,
+      "duration_ms": 31105,
+      "passage_chars": 5742,
+      "terminal_count": 1,
+      "continuation": true,
+      "evidence_id": "9782f948-ed15-49f7-8e0d-fa7de5e2c442",
+      "expires_at": "2026-09-13T04:01:06.702902839Z",
+      "prompt_version": "m001-v5-r9",
+      "summary": {
+        "request_id": "req_c9NWoCLUCay9tLlIXa2bGQ",
+        "run_id": "01a093c6-ae95-7f7e-b72b-6c6513219d1a",
+        "model_id": "01a07fe3-5c48-736a-a86b-1f4dabd7cb87",
+        "elapsed_ms": 31102,
+        "stages": [
+          {
+            "stage": "request",
+            "state": "ok",
+            "begin_ms": 0,
+            "end_ms": 31102,
+            "duration_ms": 31102,
+            "check": "body",
+            "detail": {
+              "reason": "",
+              "field": "",
+              "target_index": -1,
+              "actual": -1,
+              "limit": -1,
+              "byte_start": -1,
+              "byte_end": -1,
+              "expected_type": "",
+              "actual_type": ""
+            }
+          },
+          {
+            "stage": "preflight",
+            "state": "ok",
+            "begin_ms": 2,
+            "end_ms": 11,
+            "duration_ms": 9,
+            "check": "transaction_commit",
+            "detail": {
+              "reason": "",
+              "field": "",
+              "target_index": -1,
+              "actual": -1,
+              "limit": -1,
+              "byte_start": -1,
+              "byte_end": -1,
+              "expected_type": "",
+              "actual_type": ""
+            }
+          },
+          {
+            "stage": "provider_open",
+            "state": "ok",
+            "begin_ms": 11,
+            "end_ms": 3257,
+            "duration_ms": 3246,
+            "check": "response_headers",
+            "detail": {
+              "reason": "",
+              "field": "",
+              "target_index": -1,
+              "actual": -1,
+              "limit": -1,
+              "byte_start": -1,
+              "byte_end": -1,
+              "expected_type": "",
+              "actual_type": ""
+            }
+          },
+          {
+            "stage": "provider_stream",
+            "state": "ok",
+            "begin_ms": 3258,
+            "end_ms": 9654,
+            "duration_ms": 6396,
+            "check": "",
+            "detail": {
+              "reason": "",
+              "field": "",
+              "target_index": -1,
+              "actual": -1,
+              "limit": -1,
+              "byte_start": -1,
+              "byte_end": -1,
+              "expected_type": "",
+              "actual_type": ""
+            }
+          },
+          {
+            "stage": "passage_decode",
+            "state": "ok",
+            "begin_ms": 3258,
+            "end_ms": 9656,
+            "duration_ms": 6398,
+            "check": "clean_consistency",
+            "detail": {
+              "reason": "",
+              "field": "",
+              "target_index": -1,
+              "actual": -1,
+              "limit": -1,
+              "byte_start": -1,
+              "byte_end": -1,
+              "expected_type": "",
+              "actual_type": ""
+            }
+          },
+          {
+            "stage": "candidate_decode",
+            "state": "ok",
+            "begin_ms": 9654,
+            "end_ms": 9656,
+            "duration_ms": 2,
+            "check": "hint_size",
+            "detail": {
+              "reason": "",
+              "field": "",
+              "target_index": -1,
+              "actual": -1,
+              "limit": -1,
+              "byte_start": -1,
+              "byte_end": -1,
+              "expected_type": "",
+              "actual_type": ""
+            }
+          },
+          {
+            "stage": "content_validate",
+            "state": "failed",
+            "begin_ms": 31100,
+            "end_ms": 31100,
+            "duration_ms": 0,
+            "check": "passage_ownership",
+            "detail": {
+              "reason": "annotation_source_unknown",
+              "field": "passage",
+              "target_index": -1,
+              "actual": -1,
+              "limit": -1,
+              "byte_start": -1,
+              "byte_end": -1,
+              "expected_type": "",
+              "actual_type": ""
+            }
+          },
+          {
+            "stage": "draft_commit",
+            "state": "not_run",
+            "begin_ms": -1,
+            "end_ms": -1,
+            "duration_ms": -1,
+            "check": "",
+            "detail": {
+              "reason": "",
+              "field": "",
+              "target_index": -1,
+              "actual": -1,
+              "limit": -1,
+              "byte_start": -1,
+              "byte_end": -1,
+              "expected_type": "",
+              "actual_type": ""
+            }
+          },
+          {
+            "stage": "settlement",
+            "state": "ok",
+            "begin_ms": 31100,
+            "end_ms": 31102,
+            "duration_ms": 2,
+            "check": "cas",
+            "detail": {
+              "reason": "",
+              "field": "",
+              "target_index": -1,
+              "actual": -1,
+              "limit": -1,
+              "byte_start": -1,
+              "byte_end": -1,
+              "expected_type": "",
+              "actual_type": ""
+            }
+          },
+          {
+            "stage": "delivery",
+            "state": "ok",
+            "begin_ms": 3257,
+            "end_ms": 31102,
+            "duration_ms": 27845,
+            "check": "",
+            "detail": {
+              "reason": "",
+              "field": "",
+              "target_index": -1,
+              "actual": -1,
+              "limit": -1,
+              "byte_start": -1,
+              "byte_end": -1,
+              "expected_type": "",
+              "actual_type": ""
+            }
+          },
+          {
+            "stage": "continuation",
+            "state": "ok",
+            "begin_ms": 9657,
+            "end_ms": 31100,
+            "duration_ms": 21443,
+            "check": "",
+            "detail": {
+              "reason": "",
+              "field": "",
+              "target_index": -1,
+              "actual": -1,
+              "limit": -1,
+              "byte_start": -1,
+              "byte_end": -1,
+              "expected_type": "",
+              "actual_type": ""
+            }
+          }
+        ],
+        "first_failure": {
+          "stage": "content_validate",
+          "state": "failed",
+          "begin_ms": 31100,
+          "end_ms": 31100,
+          "duration_ms": 0,
+          "check": "passage_ownership",
+          "detail": {
+            "reason": "annotation_source_unknown",
+            "field": "passage",
+            "target_index": -1,
+            "actual": -1,
+            "limit": -1,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        },
+        "confirmed_outcome": "failed",
+        "quota_refunded": true,
+        "settlement_pending": false
+      },
+      "continuation_facts": [
+        {
+          "request_id": "req_c9NWoCLUCay9tLlIXa2bGQ",
+          "run_id": "01a093c6-ae95-7f7e-b72b-6c6513219d1a",
+          "model_id": "01a07fe3-5c48-736a-a86b-1f4dabd7cb87",
+          "sequence": 277,
+          "elapsed_ms": 9656,
+          "kind": "fact",
+          "after_http_finish": false,
+          "fact": {
+            "stage": "provider_stream",
+            "state": "ok",
+            "begin_ms": 3258,
+            "end_ms": 9654,
+            "duration_ms": 6396,
+            "check": "continuation_needed",
+            "detail": {
+              "reason": "",
+              "field": "",
+              "target_index": -1,
+              "actual": 146,
+              "limit": 400,
+              "byte_start": -1,
+              "byte_end": -1,
+              "expected_type": "",
+              "actual_type": ""
+            }
+          },
+          "quota_refunded": false
+        },
+        {
+          "request_id": "req_c9NWoCLUCay9tLlIXa2bGQ",
+          "run_id": "01a093c6-ae95-7f7e-b72b-6c6513219d1a",
+          "model_id": "01a07fe3-5c48-736a-a86b-1f4dabd7cb87",
+          "sequence": 278,
+          "elapsed_ms": 9657,
+          "kind": "fact",
+          "after_http_finish": false,
+          "fact": {
+            "stage": "provider_stream",
+            "state": "ok",
+            "begin_ms": 3258,
+            "end_ms": 9654,
+            "duration_ms": 6396,
+            "check": "continuation_missing",
+            "detail": {
+              "reason": "passage_target_missing",
+              "field": "",
+              "target_index": 1,
+              "actual": -1,
+              "limit": -1,
+              "byte_start": -1,
+              "byte_end": -1,
+              "expected_type": "",
+              "actual_type": ""
+            }
+          },
+          "quota_refunded": false
+        },
+        {
+          "request_id": "req_c9NWoCLUCay9tLlIXa2bGQ",
+          "run_id": "01a093c6-ae95-7f7e-b72b-6c6513219d1a",
+          "model_id": "01a07fe3-5c48-736a-a86b-1f4dabd7cb87",
+          "sequence": 279,
+          "elapsed_ms": 9657,
+          "kind": "fact",
+          "after_http_finish": false,
+          "fact": {
+            "stage": "provider_stream",
+            "state": "ok",
+            "begin_ms": 3258,
+            "end_ms": 9654,
+            "duration_ms": 6396,
+            "check": "continuation_missing",
+            "detail": {
+              "reason": "passage_target_missing",
+              "field": "",
+              "target_index": 2,
+              "actual": -1,
+              "limit": -1,
+              "byte_start": -1,
+              "byte_end": -1,
+              "expected_type": "",
+              "actual_type": ""
+            }
+          },
+          "quota_refunded": false
+        },
+        {
+          "request_id": "req_c9NWoCLUCay9tLlIXa2bGQ",
+          "run_id": "01a093c6-ae95-7f7e-b72b-6c6513219d1a",
+          "model_id": "01a07fe3-5c48-736a-a86b-1f4dabd7cb87",
+          "sequence": 280,
+          "elapsed_ms": 9657,
+          "kind": "fact",
+          "after_http_finish": false,
+          "fact": {
+            "stage": "provider_stream",
+            "state": "ok",
+            "begin_ms": 3258,
+            "end_ms": 9654,
+            "duration_ms": 6396,
+            "check": "continuation_missing",
+            "detail": {
+              "reason": "passage_target_missing",
+              "field": "",
+              "target_index": 3,
+              "actual": -1,
+              "limit": -1,
+              "byte_start": -1,
+              "byte_end": -1,
+              "expected_type": "",
+              "actual_type": ""
+            }
+          },
+          "quota_refunded": false
+        },
+        {
+          "request_id": "req_c9NWoCLUCay9tLlIXa2bGQ",
+          "run_id": "01a093c6-ae95-7f7e-b72b-6c6513219d1a",
+          "model_id": "01a07fe3-5c48-736a-a86b-1f4dabd7cb87",
+          "sequence": 281,
+          "elapsed_ms": 9657,
+          "kind": "fact",
+          "after_http_finish": false,
+          "fact": {
+            "stage": "provider_stream",
+            "state": "ok",
+            "begin_ms": 3258,
+            "end_ms": 9654,
+            "duration_ms": 6396,
+            "check": "continuation_missing",
+            "detail": {
+              "reason": "passage_target_missing",
+              "field": "",
+              "target_index": 4,
+              "actual": -1,
+              "limit": -1,
+              "byte_start": -1,
+              "byte_end": -1,
+              "expected_type": "",
+              "actual_type": ""
+            }
+          },
+          "quota_refunded": false
+        },
+        {
+          "request_id": "req_c9NWoCLUCay9tLlIXa2bGQ",
+          "run_id": "01a093c6-ae95-7f7e-b72b-6c6513219d1a",
+          "model_id": "01a07fe3-5c48-736a-a86b-1f4dabd7cb87",
+          "sequence": 282,
+          "elapsed_ms": 9657,
+          "kind": "fact",
+          "after_http_finish": false,
+          "fact": {
+            "stage": "provider_stream",
+            "state": "ok",
+            "begin_ms": 3258,
+            "end_ms": 9654,
+            "duration_ms": 6396,
+            "check": "continuation_started",
+            "detail": {
+              "reason": "",
+              "field": "",
+              "target_index": -1,
+              "actual": -1,
+              "limit": -1,
+              "byte_start": -1,
+              "byte_end": -1,
+              "expected_type": "",
+              "actual_type": ""
+            }
+          },
+          "quota_refunded": false
+        },
+        {
+          "request_id": "req_c9NWoCLUCay9tLlIXa2bGQ",
+          "run_id": "01a093c6-ae95-7f7e-b72b-6c6513219d1a",
+          "model_id": "01a07fe3-5c48-736a-a86b-1f4dabd7cb87",
+          "sequence": 683,
+          "elapsed_ms": 31100,
+          "kind": "fact",
+          "after_http_finish": false,
+          "fact": {
+            "stage": "provider_stream",
+            "state": "ok",
+            "begin_ms": 3258,
+            "end_ms": 9654,
+            "duration_ms": 6396,
+            "check": "continuation_finished",
+            "detail": {
+              "reason": "",
+              "field": "",
+              "target_index": -1,
+              "actual": -1,
+              "limit": -1,
+              "byte_start": -1,
+              "byte_end": -1,
+              "expected_type": "",
+              "actual_type": ""
+            }
+          },
+          "quota_refunded": false
+        }
+      ],
+      "raw_model_responses": 2,
+      "usage": [
+        {
+          "id": "gen-1789185667-Ow8mCgseAvYqN0tT1jPO",
+          "upstream_request_id": "",
+          "http_status": 0,
+          "frame": 30,
+          "bytes": 761,
+          "choice_index": 0,
+          "choice_index_provided": true,
+          "finish_reason": "stop",
+          "error_present": false,
+          "error_code_type": "not_provided",
+          "error_code": 0,
+          "usage_provided": true,
+          "prompt_tokens": 1799,
+          "completion_tokens": 415,
+          "total_tokens": 2214,
+          "syntax_offset": -1
+        },
+        {
+          "id": "gen-1789185676-EZfbFNBilW1g8kMA9oVP",
+          "upstream_request_id": "",
+          "http_status": 0,
+          "frame": 100,
+          "bytes": 762,
+          "choice_index": 0,
+          "choice_index_provided": true,
+          "finish_reason": "stop",
+          "error_present": false,
+          "error_code_type": "not_provided",
+          "error_code": 0,
+          "usage_provided": true,
+          "prompt_tokens": 614,
+          "completion_tokens": 1013,
+          "total_tokens": 1627,
+          "syntax_offset": -1
+        }
+      ],
+      "capture_state": {
+        "coalesced_progress": 380,
+        "dropped_records": 0,
+        "dropped_bytes": 0,
+        "truncated": false,
+        "io_failed": false,
+        "redacted": false,
+        "model_ended": true,
+        "unavailable": false
+      }
+    },
+    {
+      "case_id": 2,
+      "round": 1,
+      "reference_case_id": 10,
+      "pair_id": 5,
+      "group": "D",
+      "model_id": "01a07fe3-f046-7017-97f8-c15539050441",
+      "provider_model_id": "z-ai/glm-5.3-flash",
+      "meaning_language": "en",
+      "scenario": "story",
+      "length": "xlong",
+      "entries": [
+        "sustainable",
+        "prevalent",
+        "vulnerable",
+        "ambiguous",
+        "coherent"
+      ],
+      "started_at": "2026-09-12T04:01:51.593Z",
+      "status": "generation.validated",
+      "upstream_calls": 1,
+      "budget_reserved": 2,
+      "image": "sha256:c4b00eb124fd7ccccd62223599336db9ada358861d09e6f852725f477aadefb8",
+      "http_status": 200,
+      "request_id": null,
+      "run_id": "01a093c7-5df0-75ff-a8bd-39fcfd450c95",
+      "first_delta_ms": 47786,
+      "preview_equals_result": true,
+      "target_order_valid": true,
+      "target_count": 5,
+      "tag_count": 2,
+      "result_sha256": "134447b1a4f889905869316c9b103ec0f32843d6306e2c47d30ed66e54d25858",
+      "annotation_leaked": false,
+      "changed_form_occurrences": 0,
+      "repeated_passage_targets": 2,
+      "repeated_hint_targets": 0,
+      "positions_valid": true,
+      "duration_ms": 56542,
+      "passage_chars": 2884,
+      "terminal_count": 1,
+      "continuation": false,
+      "evidence_id": "cb3f5146-7f65-407d-bde6-f2fa49e74b37",
+      "expires_at": "2026-09-13T04:01:51.596566138Z",
+      "prompt_version": "m001-v5-r9",
+      "summary": {
+        "request_id": "req_yhj0PFSWge0ftjJ6IDYw6A",
+        "run_id": "01a093c7-5df0-75ff-a8bd-39fcfd450c95",
+        "model_id": "01a07fe3-f046-7017-97f8-c15539050441",
+        "elapsed_ms": 56538,
+        "stages": [
+          {
+            "stage": "request",
+            "state": "ok",
+            "begin_ms": 0,
+            "end_ms": 56538,
+            "duration_ms": 56538,
+            "check": "body",
+            "detail": {
+              "reason": "",
+              "field": "",
+              "target_index": -1,
+              "actual": -1,
+              "limit": -1,
+              "byte_start": -1,
+              "byte_end": -1,
+              "expected_type": "",
+              "actual_type": ""
+            }
+          },
+          {
+            "stage": "preflight",
+            "state": "ok",
+            "begin_ms": 1,
+            "end_ms": 5,
+            "duration_ms": 4,
+            "check": "transaction_commit",
+            "detail": {
+              "reason": "",
+              "field": "",
+              "target_index": -1,
+              "actual": -1,
+              "limit": -1,
+              "byte_start": -1,
+              "byte_end": -1,
+              "expected_type": "",
+              "actual_type": ""
+            }
+          },
+          {
+            "stage": "provider_open",
+            "state": "ok",
+            "begin_ms": 5,
+            "end_ms": 1802,
+            "duration_ms": 1797,
+            "check": "response_headers",
+            "detail": {
+              "reason": "",
+              "field": "",
+              "target_index": -1,
+              "actual": -1,
+              "limit": -1,
+              "byte_start": -1,
+              "byte_end": -1,
+              "expected_type": "",
+              "actual_type": ""
+            }
+          },
+          {
+            "stage": "provider_stream",
+            "state": "ok",
+            "begin_ms": 1802,
+            "end_ms": 56521,
+            "duration_ms": 54719,
+            "check": "",
+            "detail": {
+              "reason": "",
+              "field": "",
+              "target_index": -1,
+              "actual": -1,
+              "limit": -1,
+              "byte_start": -1,
+              "byte_end": -1,
+              "expected_type": "",
+              "actual_type": ""
+            }
+          },
+          {
+            "stage": "passage_decode",
+            "state": "ok",
+            "begin_ms": 47752,
+            "end_ms": 56523,
+            "duration_ms": 8771,
+            "check": "clean_consistency",
+            "detail": {
+              "reason": "",
+              "field": "",
+              "target_index": -1,
+              "actual": -1,
+              "limit": -1,
+              "byte_start": -1,
+              "byte_end": -1,
+              "expected_type": "",
+              "actual_type": ""
+            }
+          },
+          {
+            "stage": "candidate_decode",
+            "state": "ok",
+            "begin_ms": 56521,
+            "end_ms": 56523,
+            "duration_ms": 2,
+            "check": "hint_size",
+            "detail": {
+              "reason": "",
+              "field": "",
+              "target_index": -1,
+              "actual": -1,
+              "limit": -1,
+              "byte_start": -1,
+              "byte_end": -1,
+              "expected_type": "",
+              "actual_type": ""
+            }
+          },
+          {
+            "stage": "content_validate",
+            "state": "ok",
+            "begin_ms": 56525,
+            "end_ms": 56528,
+            "duration_ms": 3,
+            "check": "context",
+            "detail": {
+              "reason": "",
+              "field": "",
+              "target_index": -1,
+              "actual": -1,
+              "limit": -1,
+              "byte_start": -1,
+              "byte_end": -1,
+              "expected_type": "",
+              "actual_type": ""
+            }
+          },
+          {
+            "stage": "draft_commit",
+            "state": "ok",
+            "begin_ms": 56528,
+            "end_ms": 56537,
+            "duration_ms": 9,
+            "check": "transaction_commit",
+            "detail": {
+              "reason": "",
+              "field": "",
+              "target_index": -1,
+              "actual": -1,
+              "limit": -1,
+              "byte_start": -1,
+              "byte_end": -1,
+              "expected_type": "",
+              "actual_type": ""
+            }
+          },
+          {
+            "stage": "settlement",
+            "state": "not_run",
+            "begin_ms": -1,
+            "end_ms": -1,
+            "duration_ms": -1,
+            "check": "",
+            "detail": {
+              "reason": "",
+              "field": "",
+              "target_index": -1,
+              "actual": -1,
+              "limit": -1,
+              "byte_start": -1,
+              "byte_end": -1,
+              "expected_type": "",
+              "actual_type": ""
+            }
+          },
+          {
+            "stage": "delivery",
+            "state": "ok",
+            "begin_ms": 1802,
+            "end_ms": 56538,
+            "duration_ms": 54736,
+            "check": "",
+            "detail": {
+              "reason": "",
+              "field": "",
+              "target_index": -1,
+              "actual": -1,
+              "limit": -1,
+              "byte_start": -1,
+              "byte_end": -1,
+              "expected_type": "",
+              "actual_type": ""
+            }
+          },
+          {
+            "stage": "continuation",
+            "state": "not_run",
+            "begin_ms": -1,
+            "end_ms": -1,
+            "duration_ms": -1,
+            "check": "",
+            "detail": {
+              "reason": "",
+              "field": "",
+              "target_index": -1,
+              "actual": -1,
+              "limit": -1,
+              "byte_start": -1,
+              "byte_end": -1,
+              "expected_type": "",
+              "actual_type": ""
+            }
+          }
+        ],
+        "confirmed_outcome": "valid",
+        "quota_refunded": false,
+        "settlement_pending": false
+      },
+      "continuation_facts": [],
+      "raw_model_responses": 1,
+      "usage": [
+        {
+          "id": "gen-1789185711-gdw9vqwrt5R93wr4yTvn",
+          "upstream_request_id": "",
+          "http_status": 0,
+          "frame": 225,
+          "bytes": 763,
+          "choice_index": 0,
+          "choice_index_provided": true,
+          "finish_reason": "stop",
+          "error_present": false,
+          "error_code_type": "not_provided",
+          "error_code": 0,
+          "usage_provided": true,
+          "prompt_tokens": 1633,
+          "completion_tokens": 3408,
+          "total_tokens": 5041,
+          "syntax_offset": -1
+        }
+      ],
+      "capture_state": {
+        "coalesced_progress": 669,
+        "dropped_records": 0,
+        "dropped_bytes": 0,
+        "truncated": false,
+        "io_failed": false,
+        "redacted": false,
+        "model_ended": true,
+        "unavailable": false
+      }
+    },
+    {
+      "case_id": 3,
+      "round": 1,
+      "reference_case_id": 1,
+      "pair_id": 1,
+      "group": "A",
+      "model_id": "01a07fe3-5c48-736a-a86b-1f4dabd7cb87",
+      "provider_model_id": "minimax/minimax-m3",
+      "meaning_language": "zh",
+      "scenario": "story",
+      "length": "short",
+      "entries": [
+        "melancholy",
+        "handicap",
+        "foray",
+        "casino",
+        "upswing"
+      ],
+      "started_at": "2026-09-12T04:02:48.289Z",
+      "status": "generation.validated",
+      "upstream_calls": 1,
+      "budget_reserved": 2,
+      "image": "sha256:c4b00eb124fd7ccccd62223599336db9ada358861d09e6f852725f477aadefb8",
+      "http_status": 200,
+      "request_id": null,
+      "run_id": "01a093c8-3b68-7226-a604-b90df87fd41b",
+      "first_delta_ms": 2780,
+      "preview_equals_result": true,
+      "target_order_valid": true,
+      "target_count": 5,
+      "tag_count": 2,
+      "result_sha256": "bc3c376c74a56801797ffbfa2e27422860cdbc674867465a6cadebb401dbb547",
+      "annotation_leaked": false,
+      "changed_form_occurrences": 0,
+      "repeated_passage_targets": 5,
+      "repeated_hint_targets": 0,
+      "positions_valid": true,
+      "duration_ms": 9552,
+      "passage_chars": 1627,
+      "terminal_count": 1,
+      "continuation": false,
+      "evidence_id": "36dd789d-b1c8-4c41-9552-2e40320566bc",
+      "expires_at": "2026-09-13T04:02:48.292390803Z",
+      "prompt_version": "m001-v5-r9",
+      "summary": {
+        "request_id": "req_cWh28aHkPlVqPXu1fC3EZA",
+        "run_id": "01a093c8-3b68-7226-a604-b90df87fd41b",
+        "model_id": "01a07fe3-5c48-736a-a86b-1f4dabd7cb87",
+        "elapsed_ms": 9548,
+        "stages": [
+          {
+            "stage": "request",
+            "state": "ok",
+            "begin_ms": 0,
+            "end_ms": 9548,
+            "duration_ms": 9548,
+            "check": "body",
+            "detail": {
+              "reason": "",
+              "field": "",
+              "target_index": -1,
+              "actual": -1,
+              "limit": -1,
+              "byte_start": -1,
+              "byte_end": -1,
+              "expected_type": "",
+              "actual_type": ""
+            }
+          },
+          {
+            "stage": "preflight",
+            "state": "ok",
+            "begin_ms": 1,
+            "end_ms": 7,
+            "duration_ms": 6,
+            "check": "transaction_commit",
+            "detail": {
+              "reason": "",
+              "field": "",
+              "target_index": -1,
+              "actual": -1,
+              "limit": -1,
+              "byte_start": -1,
+              "byte_end": -1,
+              "expected_type": "",
+              "actual_type": ""
+            }
+          },
+          {
+            "stage": "provider_open",
+            "state": "ok",
+            "begin_ms": 7,
+            "end_ms": 2724,
+            "duration_ms": 2717,
+            "check": "response_headers",
+            "detail": {
+              "reason": "",
+              "field": "",
+              "target_index": -1,
+              "actual": -1,
+              "limit": -1,
+              "byte_start": -1,
+              "byte_end": -1,
+              "expected_type": "",
+              "actual_type": ""
+            }
+          },
+          {
+            "stage": "provider_stream",
+            "state": "ok",
+            "begin_ms": 2726,
+            "end_ms": 9539,
+            "duration_ms": 6813,
+            "check": "",
+            "detail": {
+              "reason": "",
+              "field": "",
+              "target_index": -1,
+              "actual": -1,
+              "limit": -1,
+              "byte_start": -1,
+              "byte_end": -1,
+              "expected_type": "",
+              "actual_type": ""
+            }
+          },
+          {
+            "stage": "passage_decode",
+            "state": "ok",
+            "begin_ms": 2726,
+            "end_ms": 9541,
+            "duration_ms": 6815,
+            "check": "clean_consistency",
+            "detail": {
+              "reason": "",
+              "field": "",
+              "target_index": -1,
+              "actual": -1,
+              "limit": -1,
+              "byte_start": -1,
+              "byte_end": -1,
+              "expected_type": "",
+              "actual_type": ""
+            }
+          },
+          {
+            "stage": "candidate_decode",
+            "state": "ok",
+            "begin_ms": 9539,
+            "end_ms": 9540,
+            "duration_ms": 1,
+            "check": "hint_size",
+            "detail": {
+              "reason": "",
+              "field": "",
+              "target_index": -1,
+              "actual": -1,
+              "limit": -1,
+              "byte_start": -1,
+              "byte_end": -1,
+              "expected_type": "",
+              "actual_type": ""
+            }
+          },
+          {
+            "stage": "content_validate",
+            "state": "ok",
+            "begin_ms": 9542,
+            "end_ms": 9544,
+            "duration_ms": 2,
+            "check": "context",
+            "detail": {
+              "reason": "",
+              "field": "",
+              "target_index": -1,
+              "actual": -1,
+              "limit": -1,
+              "byte_start": -1,
+              "byte_end": -1,
+              "expected_type": "",
+              "actual_type": ""
+            }
+          },
+          {
+            "stage": "draft_commit",
+            "state": "ok",
+            "begin_ms": 9544,
+            "end_ms": 9547,
+            "duration_ms": 3,
+            "check": "transaction_commit",
+            "detail": {
+              "reason": "",
+              "field": "",
+              "target_index": -1,
+              "actual": -1,
+              "limit": -1,
+              "byte_start": -1,
+              "byte_end": -1,
+              "expected_type": "",
+              "actual_type": ""
+            }
+          },
+          {
+            "stage": "settlement",
+            "state": "not_run",
+            "begin_ms": -1,
+            "end_ms": -1,
+            "duration_ms": -1,
+            "check": "",
+            "detail": {
+              "reason": "",
+              "field": "",
+              "target_index": -1,
+              "actual": -1,
+              "limit": -1,
+              "byte_start": -1,
+              "byte_end": -1,
+              "expected_type": "",
+              "actual_type": ""
+            }
+          },
+          {
+            "stage": "delivery",
+            "state": "ok",
+            "begin_ms": 2724,
+            "end_ms": 9548,
+            "duration_ms": 6824,
+            "check": "",
+            "detail": {
+              "reason": "",
+              "field": "",
+              "target_index": -1,
+              "actual": -1,
+              "limit": -1,
+              "byte_start": -1,
+              "byte_end": -1,
+              "expected_type": "",
+              "actual_type": ""
+            }
+          },
+          {
+            "stage": "continuation",
+            "state": "not_run",
+            "begin_ms": -1,
+            "end_ms": -1,
+            "duration_ms": -1,
+            "check": "",
+            "detail": {
+              "reason": "",
+              "field": "",
+              "target_index": -1,
+              "actual": -1,
+              "limit": -1,
+              "byte_start": -1,
+              "byte_end": -1,
+              "expected_type": "",
+              "actual_type": ""
+            }
+          }
+        ],
+        "confirmed_outcome": "valid",
+        "quota_refunded": false,
+        "settlement_pending": false
+      },
+      "continuation_facts": [],
+      "raw_model_responses": 1,
+      "usage": [
+        {
+          "id": "gen-1789185768-fZ4yn86Jm0s7L1fdOUYa",
+          "upstream_request_id": "",
+          "http_status": 0,
+          "frame": 44,
+          "bytes": 758,
+          "choice_index": 0,
+          "choice_index_provided": true,
+          "finish_reason": "stop",
+          "error_present": false,
+          "error_code_type": "not_provided",
+          "error_code": 0,
+          "usage_provided": true,
+          "prompt_tokens": 1281,
+          "completion_tokens": 590,
+          "total_tokens": 1871,
+          "syntax_offset": -1
+        }
+      ],
+      "capture_state": {
+        "coalesced_progress": 127,
+        "dropped_records": 0,
+        "dropped_bytes": 0,
+        "truncated": false,
+        "io_failed": false,
+        "redacted": false,
+        "model_ended": true,
+        "unavailable": false
+      }
+    },
+    {
+      "case_id": 4,
+      "round": 1,
+      "reference_case_id": 2,
+      "pair_id": 1,
+      "group": "A",
+      "model_id": "01a07fe3-f046-7017-97f8-c15539050441",
+      "provider_model_id": "z-ai/glm-5.3-flash",
+      "meaning_language": "zh",
+      "scenario": "story",
+      "length": "short",
+      "entries": [
+        "melancholy",
+        "handicap",
+        "foray",
+        "casino",
+        "upswing"
+      ],
+      "started_at": "2026-09-12T04:03:04.572Z",
+      "status": "generation.validated",
+      "upstream_calls": 1,
+      "budget_reserved": 2,
+      "image": "sha256:c4b00eb124fd7ccccd62223599336db9ada358861d09e6f852725f477aadefb8",
+      "http_status": 200,
+      "request_id": null,
+      "run_id": "01a093c8-7b01-7c35-8199-f3886d98814e",
+      "first_delta_ms": 46206,
+      "preview_equals_result": true,
+      "target_order_valid": true,
+      "target_count": 5,
+      "tag_count": 2,
+      "result_sha256": "29164c77b8436c32b5b19cd5b9ff418c5f0c696a1aa1983fd1ef1584f9365c20",
+      "annotation_leaked": false,
+      "changed_form_occurrences": 0,
+      "repeated_passage_targets": 1,
+      "repeated_hint_targets": 0,
+      "positions_valid": true,
+      "duration_ms": 49481,
+      "passage_chars": 414,
+      "terminal_count": 1,
+      "continuation": false,
+      "evidence_id": "4d3a2a51-02c6-4b8e-813a-bc81fd6e7334",
+      "expires_at": "2026-09-13T04:03:04.575129713Z",
+      "prompt_version": "m001-v5-r9",
+      "summary": {
+        "request_id": "req_T7THeFcUSUWY-PvtYTqoRg",
+        "run_id": "01a093c8-7b01-7c35-8199-f3886d98814e",
+        "model_id": "01a07fe3-f046-7017-97f8-c15539050441",
+        "elapsed_ms": 49478,
+        "stages": [
+          {
+            "stage": "request",
+            "state": "ok",
+            "begin_ms": 0,
+            "end_ms": 49478,
+            "duration_ms": 49478,
+            "check": "body",
+            "detail": {
+              "reason": "",
+              "field": "",
+              "target_index": -1,
+              "actual": -1,
+              "limit": -1,
+              "byte_start": -1,
+              "byte_end": -1,
+              "expected_type": "",
+              "actual_type": ""
+            }
+          },
+          {
+            "stage": "preflight",
+            "state": "ok",
+            "begin_ms": 1,
+            "end_ms": 4,
+            "duration_ms": 3,
+            "check": "transaction_commit",
+            "detail": {
+              "reason": "",
+              "field": "",
+              "target_index": -1,
+              "actual": -1,
+              "limit": -1,
+              "byte_start": -1,
+              "byte_end": -1,
+              "expected_type": "",
+              "actual_type": ""
+            }
+          },
+          {
+            "stage": "provider_open",
+            "state": "ok",
+            "begin_ms": 4,
+            "end_ms": 1644,
+            "duration_ms": 1640,
+            "check": "response_headers",
+            "detail": {
+              "reason": "",
+              "field": "",
+              "target_index": -1,
+              "actual": -1,
+              "limit": -1,
+              "byte_start": -1,
+              "byte_end": -1,
+              "expected_type": "",
+              "actual_type": ""
+            }
+          },
+          {
+            "stage": "provider_stream",
+            "state": "ok",
+            "begin_ms": 1645,
+            "end_ms": 49465,
+            "duration_ms": 47820,
+            "check": "",
+            "detail": {
+              "reason": "",
+              "field": "",
+              "target_index": -1,
+              "actual": -1,
+              "limit": -1,
+              "byte_start": -1,
+              "byte_end": -1,
+              "expected_type": "",
+              "actual_type": ""
+            }
+          },
+          {
+            "stage": "passage_decode",
+            "state": "ok",
+            "begin_ms": 46077,
+            "end_ms": 49469,
+            "duration_ms": 3392,
+            "check": "clean_consistency",
+            "detail": {
+              "reason": "",
+              "field": "",
+              "target_index": -1,
+              "actual": -1,
+              "limit": -1,
+              "byte_start": -1,
+              "byte_end": -1,
+              "expected_type": "",
+              "actual_type": ""
+            }
+          },
+          {
+            "stage": "candidate_decode",
+            "state": "ok",
+            "begin_ms": 49465,
+            "end_ms": 49469,
+            "duration_ms": 4,
+            "check": "hint_size",
+            "detail": {
+              "reason": "",
+              "field": "",
+              "target_index": -1,
+              "actual": -1,
+              "limit": -1,
+              "byte_start": -1,
+              "byte_end": -1,
+              "expected_type": "",
+              "actual_type": ""
+            }
+          },
+          {
+            "stage": "content_validate",
+            "state": "ok",
+            "begin_ms": 49471,
+            "end_ms": 49473,
+            "duration_ms": 2,
+            "check": "context",
+            "detail": {
+              "reason": "",
+              "field": "",
+              "target_index": -1,
+              "actual": -1,
+              "limit": -1,
+              "byte_start": -1,
+              "byte_end": -1,
+              "expected_type": "",
+              "actual_type": ""
+            }
+          },
+          {
+            "stage": "draft_commit",
+            "state": "ok",
+            "begin_ms": 49473,
+            "end_ms": 49478,
+            "duration_ms": 5,
+            "check": "transaction_commit",
+            "detail": {
+              "reason": "",
+              "field": "",
+              "target_index": -1,
+              "actual": -1,
+              "limit": -1,
+              "byte_start": -1,
+              "byte_end": -1,
+              "expected_type": "",
+              "actual_type": ""
+            }
+          },
+          {
+            "stage": "settlement",
+            "state": "not_run",
+            "begin_ms": -1,
+            "end_ms": -1,
+            "duration_ms": -1,
+            "check": "",
+            "detail": {
+              "reason": "",
+              "field": "",
+              "target_index": -1,
+              "actual": -1,
+              "limit": -1,
+              "byte_start": -1,
+              "byte_end": -1,
+              "expected_type": "",
+              "actual_type": ""
+            }
+          },
+          {
+            "stage": "delivery",
+            "state": "ok",
+            "begin_ms": 1644,
+            "end_ms": 49478,
+            "duration_ms": 47834,
+            "check": "",
+            "detail": {
+              "reason": "",
+              "field": "",
+              "target_index": -1,
+              "actual": -1,
+              "limit": -1,
+              "byte_start": -1,
+              "byte_end": -1,
+              "expected_type": "",
+              "actual_type": ""
+            }
+          },
+          {
+            "stage": "continuation",
+            "state": "not_run",
+            "begin_ms": -1,
+            "end_ms": -1,
+            "duration_ms": -1,
+            "check": "",
+            "detail": {
+              "reason": "",
+              "field": "",
+              "target_index": -1,
+              "actual": -1,
+              "limit": -1,
+              "byte_start": -1,
+              "byte_end": -1,
+              "expected_type": "",
+              "actual_type": ""
+            }
+          }
+        ],
+        "confirmed_outcome": "valid",
+        "quota_refunded": false,
+        "settlement_pending": false
+      },
+      "continuation_facts": [],
+      "raw_model_responses": 1,
+      "usage": [
+        {
+          "id": "gen-1789185784-PD485pNuTwtHN2DGNCLO",
+          "upstream_request_id": "",
+          "http_status": 0,
+          "frame": 109,
+          "bytes": 760,
+          "choice_index": 0,
+          "choice_index_provided": true,
+          "finish_reason": "stop",
+          "error_present": false,
+          "error_code_type": "not_provided",
+          "error_code": 0,
+          "usage_provided": true,
+          "prompt_tokens": 1104,
+          "completion_tokens": 1662,
+          "total_tokens": 2766,
+          "syntax_offset": -1
+        }
+      ],
+      "capture_state": {
+        "coalesced_progress": 321,
+        "dropped_records": 0,
+        "dropped_bytes": 0,
+        "truncated": false,
+        "io_failed": false,
+        "redacted": false,
+        "model_ended": true,
+        "unavailable": false
+      }
+    },
+    {
+      "case_id": 5,
+      "round": 1,
+      "reference_case_id": 7,
+      "pair_id": 4,
+      "group": "D",
+      "model_id": "01a07fe3-5c48-736a-a86b-1f4dabd7cb87",
+      "provider_model_id": "minimax/minimax-m3",
+      "meaning_language": "ja",
+      "scenario": "news",
+      "length": "long",
+      "entries": [
+        "sustainable",
+        "prevalent",
+        "vulnerable",
+        "ambiguous",
+        "coherent"
+      ],
+      "started_at": "2026-09-12T04:03:54.220Z",
+      "status": "generation.validated",
+      "upstream_calls": 1,
+      "budget_reserved": 2,
+      "image": "sha256:c4b00eb124fd7ccccd62223599336db9ada358861d09e6f852725f477aadefb8",
+      "http_status": 200,
+      "request_id": null,
+      "run_id": "01a093c9-3cf9-76c8-bd01-0f223a63b5c8",
+      "first_delta_ms": 806,
+      "preview_equals_result": true,
+      "target_order_valid": true,
+      "target_count": 5,
+      "tag_count": 2,
+      "result_sha256": "9de0980946c6d5d931e6c5ae2d701f4bd9297b8216197526989bd172a253a8a5",
+      "annotation_leaked": false,
+      "changed_form_occurrences": 1,
+      "repeated_passage_targets": 2,
+      "repeated_hint_targets": 0,
+      "positions_valid": true,
+      "duration_ms": 10445,
+      "passage_chars": 2791,
+      "terminal_count": 1,
+      "continuation": false,
+      "evidence_id": "58bf59f3-bf7f-4afa-911d-3f907d5144e2",
+      "expires_at": "2026-09-13T04:03:54.228972208Z",
+      "prompt_version": "m001-v5-r9",
+      "summary": {
+        "request_id": "req_kBOVW1LthBS9K1gwMDpO1Q",
+        "run_id": "01a093c9-3cf9-76c8-bd01-0f223a63b5c8",
+        "model_id": "01a07fe3-5c48-736a-a86b-1f4dabd7cb87",
+        "elapsed_ms": 10436,
+        "stages": [
+          {
+            "stage": "request",
+            "state": "ok",
+            "begin_ms": 0,
+            "end_ms": 10436,
+            "duration_ms": 10436,
+            "check": "body",
+            "detail": {
+              "reason": "",
+              "field": "",
+              "target_index": -1,
+              "actual": -1,
+              "limit": -1,
+              "byte_start": -1,
+              "byte_end": -1,
+              "expected_type": "",
+              "actual_type": ""
+            }
+          },
+          {
+            "stage": "preflight",
+            "state": "ok",
+            "begin_ms": 1,
+            "end_ms": 8,
+            "duration_ms": 7,
+            "check": "transaction_commit",
+            "detail": {
+              "reason": "",
+              "field": "",
+              "target_index": -1,
+              "actual": -1,
+              "limit": -1,
+              "byte_start": -1,
+              "byte_end": -1,
+              "expected_type": "",
+              "actual_type": ""
+            }
+          },
+          {
+            "stage": "provider_open",
+            "state": "ok",
+            "begin_ms": 8,
+            "end_ms": 744,
+            "duration_ms": 736,
+            "check": "response_headers",
+            "detail": {
+              "reason": "",
+              "field": "",
+              "target_index": -1,
+              "actual": -1,
+              "limit": -1,
+              "byte_start": -1,
+              "byte_end": -1,
+              "expected_type": "",
+              "actual_type": ""
+            }
+          },
+          {
+            "stage": "provider_stream",
+            "state": "ok",
+            "begin_ms": 744,
+            "end_ms": 10422,
+            "duration_ms": 9678,
+            "check": "",
+            "detail": {
+              "reason": "",
+              "field": "",
+              "target_index": -1,
+              "actual": -1,
+              "limit": -1,
+              "byte_start": -1,
+              "byte_end": -1,
+              "expected_type": "",
+              "actual_type": ""
+            }
+          },
+          {
+            "stage": "passage_decode",
+            "state": "ok",
+            "begin_ms": 744,
+            "end_ms": 10426,
+            "duration_ms": 9682,
+            "check": "clean_consistency",
+            "detail": {
+              "reason": "",
+              "field": "",
+              "target_index": -1,
+              "actual": -1,
+              "limit": -1,
+              "byte_start": -1,
+              "byte_end": -1,
+              "expected_type": "",
+              "actual_type": ""
+            }
+          },
+          {
+            "stage": "candidate_decode",
+            "state": "ok",
+            "begin_ms": 10422,
+            "end_ms": 10425,
+            "duration_ms": 3,
+            "check": "hint_size",
+            "detail": {
+              "reason": "",
+              "field": "",
+              "target_index": -1,
+              "actual": -1,
+              "limit": -1,
+              "byte_start": -1,
+              "byte_end": -1,
+              "expected_type": "",
+              "actual_type": ""
+            }
+          },
+          {
+            "stage": "content_validate",
+            "state": "ok",
+            "begin_ms": 10428,
+            "end_ms": 10430,
+            "duration_ms": 2,
+            "check": "context",
+            "detail": {
+              "reason": "",
+              "field": "",
+              "target_index": -1,
+              "actual": -1,
+              "limit": -1,
+              "byte_start": -1,
+              "byte_end": -1,
+              "expected_type": "",
+              "actual_type": ""
+            }
+          },
+          {
+            "stage": "draft_commit",
+            "state": "ok",
+            "begin_ms": 10430,
+            "end_ms": 10435,
+            "duration_ms": 5,
+            "check": "transaction_commit",
+            "detail": {
+              "reason": "",
+              "field": "",
+              "target_index": -1,
+              "actual": -1,
+              "limit": -1,
+              "byte_start": -1,
+              "byte_end": -1,
+              "expected_type": "",
+              "actual_type": ""
+            }
+          },
+          {
+            "stage": "settlement",
+            "state": "not_run",
+            "begin_ms": -1,
+            "end_ms": -1,
+            "duration_ms": -1,
+            "check": "",
+            "detail": {
+              "reason": "",
+              "field": "",
+              "target_index": -1,
+              "actual": -1,
+              "limit": -1,
+              "byte_start": -1,
+              "byte_end": -1,
+              "expected_type": "",
+              "actual_type": ""
+            }
+          },
+          {
+            "stage": "delivery",
+            "state": "ok",
+            "begin_ms": 744,
+            "end_ms": 10436,
+            "duration_ms": 9692,
+            "check": "",
+            "detail": {
+              "reason": "",
+              "field": "",
+              "target_index": -1,
+              "actual": -1,
+              "limit": -1,
+              "byte_start": -1,
+              "byte_end": -1,
+              "expected_type": "",
+              "actual_type": ""
+            }
+          },
+          {
+            "stage": "continuation",
+            "state": "not_run",
+            "begin_ms": -1,
+            "end_ms": -1,
+            "duration_ms": -1,
+            "check": "",
+            "detail": {
+              "reason": "",
+              "field": "",
+              "target_index": -1,
+              "actual": -1,
+              "limit": -1,
+              "byte_start": -1,
+              "byte_end": -1,
+              "expected_type": "",
+              "actual_type": ""
+            }
+          }
+        ],
+        "confirmed_outcome": "valid",
+        "quota_refunded": false,
+        "settlement_pending": false
+      },
+      "continuation_facts": [],
+      "raw_model_responses": 1,
+      "usage": [
+        {
+          "id": "gen-1789185834-N1lyLsraWR7y0PuxSpwc",
+          "upstream_request_id": "",
+          "http_status": 0,
+          "frame": 61,
+          "bytes": 759,
+          "choice_index": 0,
+          "choice_index_provided": true,
+          "finish_reason": "stop",
+          "error_present": false,
+          "error_code_type": "not_provided",
+          "error_code": 0,
+          "usage_provided": true,
+          "prompt_tokens": 1483,
+          "completion_tokens": 667,
+          "total_tokens": 2150,
+          "syntax_offset": -1
+        }
+      ],
+      "capture_state": {
+        "coalesced_progress": 178,
+        "dropped_records": 0,
+        "dropped_bytes": 0,
+        "truncated": false,
+        "io_failed": false,
+        "redacted": false,
+        "model_ended": true,
+        "unavailable": false
+      }
+    },
+    {
+      "case_id": 6,
+      "round": 1,
+      "reference_case_id": 8,
+      "pair_id": 4,
+      "group": "D",
+      "model_id": "01a07fe3-f046-7017-97f8-c15539050441",
+      "provider_model_id": "z-ai/glm-5.3-flash",
+      "meaning_language": "ja",
+      "scenario": "news",
+      "length": "long",
+      "entries": [
+        "sustainable",
+        "prevalent",
+        "vulnerable",
+        "ambiguous",
+        "coherent"
+      ],
+      "started_at": "2026-09-12T04:04:04.823Z",
+      "status": "generation.validated",
+      "upstream_calls": 1,
+      "budget_reserved": 2,
+      "image": "sha256:c4b00eb124fd7ccccd62223599336db9ada358861d09e6f852725f477aadefb8",
+      "http_status": 200,
+      "request_id": null,
+      "run_id": "01a093c9-665d-76c9-b139-8156e3072f93",
+      "first_delta_ms": 35709,
+      "preview_equals_result": true,
+      "target_order_valid": true,
+      "target_count": 5,
+      "tag_count": 2,
+      "result_sha256": "638ea67349bda7e3459cb83154dfb17a1bfd63b5092ed21ac7a154227f60e711",
+      "annotation_leaked": false,
+      "changed_form_occurrences": 1,
+      "repeated_passage_targets": 5,
+      "repeated_hint_targets": 0,
+      "positions_valid": true,
+      "duration_ms": 41096,
+      "passage_chars": 1623,
+      "terminal_count": 1,
+      "continuation": false,
+      "evidence_id": "893f4d9d-20f9-44ef-ae81-231237f35634",
+      "expires_at": "2026-09-13T04:04:04.827019047Z",
+      "prompt_version": "m001-v5-r9",
+      "summary": {
+        "request_id": "req_cT7CGW8lOuPSODcmAiBEBA",
+        "run_id": "01a093c9-665d-76c9-b139-8156e3072f93",
+        "model_id": "01a07fe3-f046-7017-97f8-c15539050441",
+        "elapsed_ms": 41041,
+        "stages": [
+          {
+            "stage": "request",
+            "state": "ok",
+            "begin_ms": 0,
+            "end_ms": 41041,
+            "duration_ms": 41041,
+            "check": "body",
+            "detail": {
+              "reason": "",
+              "field": "",
+              "target_index": -1,
+              "actual": -1,
+              "limit": -1,
+              "byte_start": -1,
+              "byte_end": -1,
+              "expected_type": "",
+              "actual_type": ""
+            }
+          },
+          {
+            "stage": "preflight",
+            "state": "ok",
+            "begin_ms": 0,
+            "end_ms": 3,
+            "duration_ms": 3,
+            "check": "transaction_commit",
+            "detail": {
+              "reason": "",
+              "field": "",
+              "target_index": -1,
+              "actual": -1,
+              "limit": -1,
+              "byte_start": -1,
+              "byte_end": -1,
+              "expected_type": "",
+              "actual_type": ""
+            }
+          },
+          {
+            "stage": "provider_open",
+            "state": "ok",
+            "begin_ms": 3,
+            "end_ms": 853,
+            "duration_ms": 850,
+            "check": "response_headers",
+            "detail": {
+              "reason": "",
+              "field": "",
+              "target_index": -1,
+              "actual": -1,
+              "limit": -1,
+              "byte_start": -1,
+              "byte_end": -1,
+              "expected_type": "",
+              "actual_type": ""
+            }
+          },
+          {
+            "stage": "provider_stream",
+            "state": "ok",
+            "begin_ms": 853,
+            "end_ms": 41026,
+            "duration_ms": 40173,
+            "check": "",
+            "detail": {
+              "reason": "",
+              "field": "",
+              "target_index": -1,
+              "actual": -1,
+              "limit": -1,
+              "byte_start": -1,
+              "byte_end": -1,
+              "expected_type": "",
+              "actual_type": ""
+            }
+          },
+          {
+            "stage": "passage_decode",
+            "state": "ok",
+            "begin_ms": 35563,
+            "end_ms": 41030,
+            "duration_ms": 5467,
+            "check": "clean_consistency",
+            "detail": {
+              "reason": "",
+              "field": "",
+              "target_index": -1,
+              "actual": -1,
+              "limit": -1,
+              "byte_start": -1,
+              "byte_end": -1,
+              "expected_type": "",
+              "actual_type": ""
+            }
+          },
+          {
+            "stage": "candidate_decode",
+            "state": "ok",
+            "begin_ms": 41027,
+            "end_ms": 41030,
+            "duration_ms": 3,
+            "check": "hint_size",
+            "detail": {
+              "reason": "",
+              "field": "",
+              "target_index": -1,
+              "actual": -1,
+              "limit": -1,
+              "byte_start": -1,
+              "byte_end": -1,
+              "expected_type": "",
+              "actual_type": ""
+            }
+          },
+          {
+            "stage": "content_validate",
+            "state": "ok",
+            "begin_ms": 41033,
+            "end_ms": 41035,
+            "duration_ms": 2,
+            "check": "context",
+            "detail": {
+              "reason": "",
+              "field": "",
+              "target_index": -1,
+              "actual": -1,
+              "limit": -1,
+              "byte_start": -1,
+              "byte_end": -1,
+              "expected_type": "",
+              "actual_type": ""
+            }
+          },
+          {
+            "stage": "draft_commit",
+            "state": "ok",
+            "begin_ms": 41035,
+            "end_ms": 41040,
+            "duration_ms": 5,
+            "check": "transaction_commit",
+            "detail": {
+              "reason": "",
+              "field": "",
+              "target_index": -1,
+              "actual": -1,
+              "limit": -1,
+              "byte_start": -1,
+              "byte_end": -1,
+              "expected_type": "",
+              "actual_type": ""
+            }
+          },
+          {
+            "stage": "settlement",
+            "state": "not_run",
+            "begin_ms": -1,
+            "end_ms": -1,
+            "duration_ms": -1,
+            "check": "",
+            "detail": {
+              "reason": "",
+              "field": "",
+              "target_index": -1,
+              "actual": -1,
+              "limit": -1,
+              "byte_start": -1,
+              "byte_end": -1,
+              "expected_type": "",
+              "actual_type": ""
+            }
+          },
+          {
+            "stage": "delivery",
+            "state": "ok",
+            "begin_ms": 853,
+            "end_ms": 41041,
+            "duration_ms": 40188,
+            "check": "",
+            "detail": {
+              "reason": "",
+              "field": "",
+              "target_index": -1,
+              "actual": -1,
+              "limit": -1,
+              "byte_start": -1,
+              "byte_end": -1,
+              "expected_type": "",
+              "actual_type": ""
+            }
+          },
+          {
+            "stage": "continuation",
+            "state": "not_run",
+            "begin_ms": -1,
+            "end_ms": -1,
+            "duration_ms": -1,
+            "check": "",
+            "detail": {
+              "reason": "",
+              "field": "",
+              "target_index": -1,
+              "actual": -1,
+              "limit": -1,
+              "byte_start": -1,
+              "byte_end": -1,
+              "expected_type": "",
+              "actual_type": ""
+            }
+          }
+        ],
+        "confirmed_outcome": "valid",
+        "quota_refunded": false,
+        "settlement_pending": false
+      },
+      "continuation_facts": [],
+      "raw_model_responses": 1,
+      "usage": [
+        {
+          "id": "gen-1789185845-oyLcGpDQuNRel3JcrQ13",
+          "upstream_request_id": "",
+          "http_status": 0,
+          "frame": 169,
+          "bytes": 764,
+          "choice_index": 0,
+          "choice_index_provided": true,
+          "finish_reason": "stop",
+          "error_present": false,
+          "error_code_type": "not_provided",
+          "error_code": 0,
+          "usage_provided": true,
+          "prompt_tokens": 1343,
+          "completion_tokens": 4137,
+          "total_tokens": 5480,
+          "syntax_offset": -1
+        }
+      ],
+      "capture_state": {
+        "coalesced_progress": 501,
+        "dropped_records": 0,
+        "dropped_bytes": 0,
+        "truncated": false,
+        "io_failed": false,
+        "redacted": false,
+        "model_ended": true,
+        "unavailable": false
+      }
+    },
+    {
+      "case_id": 7,
+      "round": 1,
+      "reference_case_id": 5,
+      "pair_id": 3,
+      "group": "C",
+      "model_id": "01a07fe3-5c48-736a-a86b-1f4dabd7cb87",
+      "provider_model_id": "minimax/minimax-m3",
+      "meaning_language": "en",
+      "scenario": "business",
+      "length": "short",
+      "entries": [
+        "alleviate",
+        "undermine",
+        "facilitate",
+        "deteriorate",
+        "perceive"
+      ],
+      "started_at": "2026-09-12T04:05:07.314Z",
+      "status": "generation.validated",
+      "upstream_calls": 1,
+      "budget_reserved": 2,
+      "image": "sha256:c4b00eb124fd7ccccd62223599336db9ada358861d09e6f852725f477aadefb8",
+      "http_status": 200,
+      "request_id": null,
+      "run_id": "01a093ca-5a81-7966-8d70-334a1bd385c0",
+      "first_delta_ms": 1172,
+      "preview_equals_result": true,
+      "target_order_valid": true,
+      "target_count": 5,
+      "tag_count": 3,
+      "result_sha256": "9053285a30ea5b6946b673df84c9a6568ff3173f9cddc0457e20ae6406838620",
+      "annotation_leaked": false,
+      "changed_form_occurrences": 1,
+      "repeated_passage_targets": 0,
+      "repeated_hint_targets": 0,
+      "positions_valid": true,
+      "duration_ms": 6497,
+      "passage_chars": 1679,
+      "terminal_count": 1,
+      "continuation": false,
+      "evidence_id": "6d9491d9-4842-4408-99bd-0141409d4e8c",
+      "expires_at": "2026-09-13T04:05:07.325785798Z",
+      "prompt_version": "m001-v5-r9",
+      "summary": {
+        "request_id": "req_kK37NlJTCjQeNnPxx8KzQg",
+        "run_id": "01a093ca-5a81-7966-8d70-334a1bd385c0",
+        "model_id": "01a07fe3-5c48-736a-a86b-1f4dabd7cb87",
+        "elapsed_ms": 6492,
+        "stages": [
+          {
+            "stage": "request",
+            "state": "ok",
+            "begin_ms": 0,
+            "end_ms": 6492,
+            "duration_ms": 6492,
+            "check": "body",
+            "detail": {
+              "reason": "",
+              "field": "",
+              "target_index": -1,
+              "actual": -1,
+              "limit": -1,
+              "byte_start": -1,
+              "byte_end": -1,
+              "expected_type": "",
+              "actual_type": ""
+            }
+          },
+          {
+            "stage": "preflight",
+            "state": "ok",
+            "begin_ms": 1,
+            "end_ms": 7,
+            "duration_ms": 6,
+            "check": "transaction_commit",
+            "detail": {
+              "reason": "",
+              "field": "",
+              "target_index": -1,
+              "actual": -1,
+              "limit": -1,
+              "byte_start": -1,
+              "byte_end": -1,
+              "expected_type": "",
+              "actual_type": ""
+            }
+          },
+          {
+            "stage": "provider_open",
+            "state": "ok",
+            "begin_ms": 7,
+            "end_ms": 1090,
+            "duration_ms": 1083,
+            "check": "response_headers",
+            "detail": {
+              "reason": "",
+              "field": "",
+              "target_index": -1,
+              "actual": -1,
+              "limit": -1,
+              "byte_start": -1,
+              "byte_end": -1,
+              "expected_type": "",
+              "actual_type": ""
+            }
+          },
+          {
+            "stage": "provider_stream",
+            "state": "ok",
+            "begin_ms": 1090,
+            "end_ms": 6480,
+            "duration_ms": 5390,
+            "check": "",
+            "detail": {
+              "reason": "",
+              "field": "",
+              "target_index": -1,
+              "actual": -1,
+              "limit": -1,
+              "byte_start": -1,
+              "byte_end": -1,
+              "expected_type": "",
+              "actual_type": ""
+            }
+          },
+          {
+            "stage": "passage_decode",
+            "state": "ok",
+            "begin_ms": 1091,
+            "end_ms": 6483,
+            "duration_ms": 5392,
+            "check": "clean_consistency",
+            "detail": {
+              "reason": "",
+              "field": "",
+              "target_index": -1,
+              "actual": -1,
+              "limit": -1,
+              "byte_start": -1,
+              "byte_end": -1,
+              "expected_type": "",
+              "actual_type": ""
+            }
+          },
+          {
+            "stage": "candidate_decode",
+            "state": "ok",
+            "begin_ms": 6480,
+            "end_ms": 6483,
+            "duration_ms": 3,
+            "check": "hint_size",
+            "detail": {
+              "reason": "",
+              "field": "",
+              "target_index": -1,
+              "actual": -1,
+              "limit": -1,
+              "byte_start": -1,
+              "byte_end": -1,
+              "expected_type": "",
+              "actual_type": ""
+            }
+          },
+          {
+            "stage": "content_validate",
+            "state": "ok",
+            "begin_ms": 6486,
+            "end_ms": 6487,
+            "duration_ms": 1,
+            "check": "context",
+            "detail": {
+              "reason": "",
+              "field": "",
+              "target_index": -1,
+              "actual": -1,
+              "limit": -1,
+              "byte_start": -1,
+              "byte_end": -1,
+              "expected_type": "",
+              "actual_type": ""
+            }
+          },
+          {
+            "stage": "draft_commit",
+            "state": "ok",
+            "begin_ms": 6487,
+            "end_ms": 6492,
+            "duration_ms": 5,
+            "check": "transaction_commit",
+            "detail": {
+              "reason": "",
+              "field": "",
+              "target_index": -1,
+              "actual": -1,
+              "limit": -1,
+              "byte_start": -1,
+              "byte_end": -1,
+              "expected_type": "",
+              "actual_type": ""
+            }
+          },
+          {
+            "stage": "settlement",
+            "state": "not_run",
+            "begin_ms": -1,
+            "end_ms": -1,
+            "duration_ms": -1,
+            "check": "",
+            "detail": {
+              "reason": "",
+              "field": "",
+              "target_index": -1,
+              "actual": -1,
+              "limit": -1,
+              "byte_start": -1,
+              "byte_end": -1,
+              "expected_type": "",
+              "actual_type": ""
+            }
+          },
+          {
+            "stage": "delivery",
+            "state": "ok",
+            "begin_ms": 1090,
+            "end_ms": 6492,
+            "duration_ms": 5402,
+            "check": "",
+            "detail": {
+              "reason": "",
+              "field": "",
+              "target_index": -1,
+              "actual": -1,
+              "limit": -1,
+              "byte_start": -1,
+              "byte_end": -1,
+              "expected_type": "",
+              "actual_type": ""
+            }
+          },
+          {
+            "stage": "continuation",
+            "state": "not_run",
+            "begin_ms": -1,
+            "end_ms": -1,
+            "duration_ms": -1,
+            "check": "",
+            "detail": {
+              "reason": "",
+              "field": "",
+              "target_index": -1,
+              "actual": -1,
+              "limit": -1,
+              "byte_start": -1,
+              "byte_end": -1,
+              "expected_type": "",
+              "actual_type": ""
+            }
+          }
+        ],
+        "confirmed_outcome": "valid",
+        "quota_refunded": false,
+        "settlement_pending": false
+      },
+      "continuation_facts": [],
+      "raw_model_responses": 1,
+      "usage": [
+        {
+          "id": "gen-1789185907-TEBeeSkpMjKBIbdi9X2x",
+          "upstream_request_id": "",
+          "http_status": 0,
+          "frame": 50,
+          "bytes": 759,
+          "choice_index": 0,
+          "choice_index_provided": true,
+          "finish_reason": "stop",
+          "error_present": false,
+          "error_code_type": "not_provided",
+          "error_code": 0,
+          "usage_provided": true,
+          "prompt_tokens": 1318,
+          "completion_tokens": 538,
+          "total_tokens": 1856,
+          "syntax_offset": -1
+        }
+      ],
+      "capture_state": {
+        "coalesced_progress": 145,
+        "dropped_records": 0,
+        "dropped_bytes": 0,
+        "truncated": false,
+        "io_failed": false,
+        "redacted": false,
+        "model_ended": true,
+        "unavailable": false
+      }
+    },
+    {
+      "case_id": 8,
+      "round": 1,
+      "reference_case_id": 6,
+      "pair_id": 3,
+      "group": "C",
+      "model_id": "01a07fe3-f046-7017-97f8-c15539050441",
+      "provider_model_id": "z-ai/glm-5.3-flash",
+      "meaning_language": "en",
+      "scenario": "business",
+      "length": "short",
+      "entries": [
+        "alleviate",
+        "undermine",
+        "facilitate",
+        "deteriorate",
+        "perceive"
+      ],
+      "started_at": "2026-09-12T04:05:13.986Z",
+      "status": "generation.validated",
+      "upstream_calls": 1,
+      "budget_reserved": 2,
+      "image": "sha256:c4b00eb124fd7ccccd62223599336db9ada358861d09e6f852725f477aadefb8",
+      "http_status": 200,
+      "request_id": null,
+      "run_id": "01a093ca-7487-7b49-b024-c440618a9600",
+      "first_delta_ms": 22432,
+      "preview_equals_result": true,
+      "target_order_valid": true,
+      "target_count": 5,
+      "tag_count": 2,
+      "result_sha256": "3837e6fbe8489c70d727e355459c6b0e692427085efeb0bd048cf6cdd4493214",
+      "annotation_leaked": false,
+      "changed_form_occurrences": 5,
+      "repeated_passage_targets": 2,
+      "repeated_hint_targets": 0,
+      "positions_valid": true,
+      "duration_ms": 25650,
+      "passage_chars": 503,
+      "terminal_count": 1,
+      "continuation": false,
+      "evidence_id": "91d7ca0c-d825-4920-99d7-af5b94cec388",
+      "expires_at": "2026-09-13T04:05:13.989197301Z",
+      "prompt_version": "m001-v5-r9",
+      "summary": {
+        "request_id": "req_l3QWDfp0mg_msm77gq1lMQ",
+        "run_id": "01a093ca-7487-7b49-b024-c440618a9600",
+        "model_id": "01a07fe3-f046-7017-97f8-c15539050441",
+        "elapsed_ms": 25645,
+        "stages": [
+          {
+            "stage": "request",
+            "state": "ok",
+            "begin_ms": 0,
+            "end_ms": 25645,
+            "duration_ms": 25645,
+            "check": "body",
+            "detail": {
+              "reason": "",
+              "field": "",
+              "target_index": -1,
+              "actual": -1,
+              "limit": -1,
+              "byte_start": -1,
+              "byte_end": -1,
+              "expected_type": "",
+              "actual_type": ""
+            }
+          },
+          {
+            "stage": "preflight",
+            "state": "ok",
+            "begin_ms": 0,
+            "end_ms": 3,
+            "duration_ms": 3,
+            "check": "transaction_commit",
+            "detail": {
+              "reason": "",
+              "field": "",
+              "target_index": -1,
+              "actual": -1,
+              "limit": -1,
+              "byte_start": -1,
+              "byte_end": -1,
+              "expected_type": "",
+              "actual_type": ""
+            }
+          },
+          {
+            "stage": "provider_open",
+            "state": "ok",
+            "begin_ms": 3,
+            "end_ms": 1359,
+            "duration_ms": 1356,
+            "check": "response_headers",
+            "detail": {
+              "reason": "",
+              "field": "",
+              "target_index": -1,
+              "actual": -1,
+              "limit": -1,
+              "byte_start": -1,
+              "byte_end": -1,
+              "expected_type": "",
+              "actual_type": ""
+            }
+          },
+          {
+            "stage": "provider_stream",
+            "state": "ok",
+            "begin_ms": 1359,
+            "end_ms": 25634,
+            "duration_ms": 24275,
+            "check": "",
+            "detail": {
+              "reason": "",
+              "field": "",
+              "target_index": -1,
+              "actual": -1,
+              "limit": -1,
+              "byte_start": -1,
+              "byte_end": -1,
+              "expected_type": "",
+              "actual_type": ""
+            }
+          },
+          {
+            "stage": "passage_decode",
+            "state": "ok",
+            "begin_ms": 21902,
+            "end_ms": 25636,
+            "duration_ms": 3734,
+            "check": "clean_consistency",
+            "detail": {
+              "reason": "",
+              "field": "",
+              "target_index": -1,
+              "actual": -1,
+              "limit": -1,
+              "byte_start": -1,
+              "byte_end": -1,
+              "expected_type": "",
+              "actual_type": ""
+            }
+          },
+          {
+            "stage": "candidate_decode",
+            "state": "ok",
+            "begin_ms": 25634,
+            "end_ms": 25635,
+            "duration_ms": 1,
+            "check": "hint_size",
+            "detail": {
+              "reason": "",
+              "field": "",
+              "target_index": -1,
+              "actual": -1,
+              "limit": -1,
+              "byte_start": -1,
+              "byte_end": -1,
+              "expected_type": "",
+              "actual_type": ""
+            }
+          },
+          {
+            "stage": "content_validate",
+            "state": "ok",
+            "begin_ms": 25637,
+            "end_ms": 25639,
+            "duration_ms": 2,
+            "check": "context",
+            "detail": {
+              "reason": "",
+              "field": "",
+              "target_index": -1,
+              "actual": -1,
+              "limit": -1,
+              "byte_start": -1,
+              "byte_end": -1,
+              "expected_type": "",
+              "actual_type": ""
+            }
+          },
+          {
+            "stage": "draft_commit",
+            "state": "ok",
+            "begin_ms": 25639,
+            "end_ms": 25645,
+            "duration_ms": 6,
+            "check": "transaction_commit",
+            "detail": {
+              "reason": "",
+              "field": "",
+              "target_index": -1,
+              "actual": -1,
+              "limit": -1,
+              "byte_start": -1,
+              "byte_end": -1,
+              "expected_type": "",
+              "actual_type": ""
+            }
+          },
+          {
+            "stage": "settlement",
+            "state": "not_run",
+            "begin_ms": -1,
+            "end_ms": -1,
+            "duration_ms": -1,
+            "check": "",
+            "detail": {
+              "reason": "",
+              "field": "",
+              "target_index": -1,
+              "actual": -1,
+              "limit": -1,
+              "byte_start": -1,
+              "byte_end": -1,
+              "expected_type": "",
+              "actual_type": ""
+            }
+          },
+          {
+            "stage": "delivery",
+            "state": "ok",
+            "begin_ms": 1359,
+            "end_ms": 25645,
+            "duration_ms": 24286,
+            "check": "",
+            "detail": {
+              "reason": "",
+              "field": "",
+              "target_index": -1,
+              "actual": -1,
+              "limit": -1,
+              "byte_start": -1,
+              "byte_end": -1,
+              "expected_type": "",
+              "actual_type": ""
+            }
+          },
+          {
+            "stage": "continuation",
+            "state": "not_run",
+            "begin_ms": -1,
+            "end_ms": -1,
+            "duration_ms": -1,
+            "check": "",
+            "detail": {
+              "reason": "",
+              "field": "",
+              "target_index": -1,
+              "actual": -1,
+              "limit": -1,
+              "byte_start": -1,
+              "byte_end": -1,
+              "expected_type": "",
+              "actual_type": ""
+            }
+          }
+        ],
+        "confirmed_outcome": "valid",
+        "quota_refunded": false,
+        "settlement_pending": false
+      },
+      "continuation_facts": [],
+      "raw_model_responses": 1,
+      "usage": [
+        {
+          "id": "gen-1789185914-HAzvOT2NXoU5DE3Sz7AL",
+          "upstream_request_id": "",
+          "http_status": 0,
+          "frame": 102,
+          "bytes": 761,
+          "choice_index": 0,
+          "choice_index_provided": true,
+          "finish_reason": "stop",
+          "error_present": false,
+          "error_code_type": "not_provided",
+          "error_code": 0,
+          "usage_provided": true,
+          "prompt_tokens": 1152,
+          "completion_tokens": 1405,
+          "total_tokens": 2557,
+          "syntax_offset": -1
+        }
+      ],
+      "capture_state": {
+        "coalesced_progress": 300,
+        "dropped_records": 0,
+        "dropped_bytes": 0,
+        "truncated": false,
+        "io_failed": false,
+        "redacted": false,
+        "model_ended": true,
+        "unavailable": false
+      }
+    }
+  ],
+  "content_metrics": [
+    {
+      "case_id": 1,
+      "attempts": [
+        {
+          "words": 146,
+          "paragraphs": 1,
+          "annotations": [
+            {
+              "surface": "sustainable",
+              "entry": "sustainable"
+            }
+          ],
+          "tags": [
+            "community",
+            "environment"
+          ],
+          "hint_changed_form_count": 0
+        },
+        {
+          "words": 843,
+          "paragraphs": 1,
+          "annotations": [
+            {
+              "surface": "young",
+              "entry": "young"
+            },
+            {
+              "surface": "vulnerable",
+              "entry": "vulnerable"
+            },
+            {
+              "surface": "ambiguous",
+              "entry": "ambiguous"
+            },
+            {
+              "surface": "fragile",
+              "entry": "fragile"
+            },
+            {
+              "surface": "coherent",
+              "entry": "coherent"
+            }
+          ],
+          "tags": [
+            "community resilience",
+            "climate adaptation",
+            "tradition and change"
+          ],
+          "hint_changed_form_count": 0
+        }
+      ]
+    },
+    {
+      "case_id": 2,
+      "attempts": [
+        {
+          "words": 495,
+          "paragraphs": 1,
+          "annotations": [
+            {
+              "surface": "vulnerable",
+              "entry": "vulnerable"
+            },
+            {
+              "surface": "ambiguous",
+              "entry": "ambiguous"
+            },
+            {
+              "surface": "prevalent",
+              "entry": "prevalent"
+            },
+            {
+              "surface": "coherent",
+              "entry": "coherent"
+            },
+            {
+              "surface": "sustainable",
+              "entry": "sustainable"
+            },
+            {
+              "surface": "sustainable",
+              "entry": "sustainable"
+            },
+            {
+              "surface": "ambiguous",
+              "entry": "ambiguous"
+            },
+            {
+              "surface": "sustainable",
+              "entry": "sustainable"
+            }
+          ],
+          "tags": [
+            "environment",
+            "community"
+          ],
+          "hint_changed_form_count": 0
+        }
+      ]
+    },
+    {
+      "case_id": 3,
+      "attempts": [
+        {
+          "words": 278,
+          "paragraphs": 1,
+          "annotations": [
+            {
+              "surface": "casino",
+              "entry": "casino"
+            },
+            {
+              "surface": "melancholy",
+              "entry": "melancholy"
+            },
+            {
+              "surface": "handicap",
+              "entry": "handicap"
+            },
+            {
+              "surface": "upswing",
+              "entry": "upswing"
+            },
+            {
+              "surface": "casino",
+              "entry": "casino"
+            },
+            {
+              "surface": "foray",
+              "entry": "foray"
+            },
+            {
+              "surface": "foray",
+              "entry": "foray"
+            },
+            {
+              "surface": "melancholy",
+              "entry": "melancholy"
+            },
+            {
+              "surface": "handicap",
+              "entry": "handicap"
+            },
+            {
+              "surface": "upswing",
+              "entry": "upswing"
+            },
+            {
+              "surface": "casino",
+              "entry": "casino"
+            }
+          ],
+          "tags": [
+            "复苏",
+            "赌场"
+          ],
+          "hint_changed_form_count": 0
+        }
+      ]
+    },
+    {
+      "case_id": 4,
+      "attempts": [
+        {
+          "words": 73,
+          "paragraphs": 1,
+          "annotations": [
+            {
+              "surface": "melancholy",
+              "entry": "melancholy"
+            },
+            {
+              "surface": "foray",
+              "entry": "foray"
+            },
+            {
+              "surface": "casino",
+              "entry": "casino"
+            },
+            {
+              "surface": "handicap",
+              "entry": "handicap"
+            },
+            {
+              "surface": "upswing",
+              "entry": "upswing"
+            },
+            {
+              "surface": "melancholy",
+              "entry": "melancholy"
+            }
+          ],
+          "tags": [
+            "心境变化",
+            "命运转折"
+          ],
+          "hint_changed_form_count": 0
+        }
+      ]
+    },
+    {
+      "case_id": 5,
+      "attempts": [
+        {
+          "words": 380,
+          "paragraphs": 1,
+          "annotations": [
+            {
+              "surface": "sustainable",
+              "entry": "sustainable"
+            },
+            {
+              "surface": "sustainable",
+              "entry": "sustainable"
+            },
+            {
+              "surface": "prevalent",
+              "entry": "prevalent"
+            },
+            {
+              "surface": "vulnerable",
+              "entry": "vulnerable"
+            },
+            {
+              "surface": "ambiguous",
+              "entry": "ambiguous"
+            },
+            {
+              "surface": "ambiguous",
+              "entry": "ambiguous"
+            },
+            {
+              "surface": "coherent",
+              "entry": "coherent"
+            }
+          ],
+          "tags": [
+            "国際貿易",
+            "持続可能性"
+          ],
+          "hint_changed_form_count": 0
+        }
+      ]
+    },
+    {
+      "case_id": 6,
+      "attempts": [
+        {
+          "words": 254,
+          "paragraphs": 1,
+          "annotations": [
+            {
+              "surface": "prevalent",
+              "entry": "prevalent"
+            },
+            {
+              "surface": "vulnerable",
+              "entry": "vulnerable"
+            },
+            {
+              "surface": "sustainable",
+              "entry": "sustainable"
+            },
+            {
+              "surface": "sustainable",
+              "entry": "sustainable"
+            },
+            {
+              "surface": "ambiguous",
+              "entry": "ambiguous"
+            },
+            {
+              "surface": "ambiguous",
+              "entry": "ambiguous"
+            },
+            {
+              "surface": "coherent",
+              "entry": "coherent"
+            },
+            {
+              "surface": "coherent",
+              "entry": "coherent"
+            },
+            {
+              "surface": "Ambiguity",
+              "entry": "ambiguous"
+            },
+            {
+              "surface": "prevalent",
+              "entry": "prevalent"
+            },
+            {
+              "surface": "vulnerable",
+              "entry": "vulnerable"
+            },
+            {
+              "surface": "sustainable",
+              "entry": "sustainable"
+            }
+          ],
+          "tags": [
+            "気候変動",
+            "地域の政策"
+          ],
+          "hint_changed_form_count": 0
+        }
+      ]
+    },
+    {
+      "case_id": 7,
+      "attempts": [
+        {
+          "words": 232,
+          "paragraphs": 1,
+          "annotations": [
+            {
+              "surface": "deteriorate",
+              "entry": "deteriorate"
+            },
+            {
+              "surface": "perceived",
+              "entry": "perceive"
+            },
+            {
+              "surface": "undermine",
+              "entry": "undermine"
+            },
+            {
+              "surface": "facilitate",
+              "entry": "facilitate"
+            },
+            {
+              "surface": "alleviate",
+              "entry": "alleviate"
+            }
+          ],
+          "tags": [
+            "business",
+            "strategy",
+            "risk management"
+          ],
+          "hint_changed_form_count": 1
+        }
+      ]
+    },
+    {
+      "case_id": 8,
+      "attempts": [
+        {
+          "words": 66,
+          "paragraphs": 1,
+          "annotations": [
+            {
+              "surface": "deteriorated",
+              "entry": "deteriorate"
+            },
+            {
+              "surface": "perceived",
+              "entry": "perceive"
+            },
+            {
+              "surface": "undermined",
+              "entry": "undermine"
+            },
+            {
+              "surface": "alleviate",
+              "entry": "alleviate"
+            },
+            {
+              "surface": "facilitate",
+              "entry": "facilitate"
+            },
+            {
+              "surface": "perceived",
+              "entry": "perceive"
+            },
+            {
+              "surface": "deteriorating",
+              "entry": "deteriorate"
+            }
+          ],
+          "tags": [
+            "workplace communication",
+            "employee morale"
+          ],
+          "hint_changed_form_count": 1
+        }
+      ]
+    }
+  ],
+  "database": [
+    {
+      "run_id": "01a093c6-ae95-7f7e-b72b-6c6513219d1a",
+      "account_id": "01a08e5a-2250-7854-81df-5aeb26e7f461",
+      "status": "validation_failed",
+      "disposition": "pending",
+      "quota_charged": false,
+      "counts_toward_cumulative": false,
+      "failure_code": "content_validation_failed",
+      "minimum_words": 400,
+      "draft_present": false,
+      "word_count": null,
+      "validator_version": null,
+      "saved_batches": 0
+    },
+    {
+      "run_id": "01a093c7-5df0-75ff-a8bd-39fcfd450c95",
+      "account_id": "01a08e5a-2250-7854-81df-5aeb26e7f461",
+      "status": "valid",
+      "disposition": "pending",
+      "quota_charged": true,
+      "counts_toward_cumulative": true,
+      "failure_code": null,
+      "minimum_words": 400,
+      "draft_present": true,
+      "word_count": "495",
+      "validator_version": "m001-v5-wn31-r2",
+      "saved_batches": 0
+    },
+    {
+      "run_id": "01a093c8-3b68-7226-a604-b90df87fd41b",
+      "account_id": "01a08e5a-2250-7854-81df-5aeb26e7f461",
+      "status": "valid",
+      "disposition": "pending",
+      "quota_charged": true,
+      "counts_toward_cumulative": true,
+      "failure_code": null,
+      "minimum_words": 50,
+      "draft_present": true,
+      "word_count": "278",
+      "validator_version": "m001-v5-wn31-r2",
+      "saved_batches": 0
+    },
+    {
+      "run_id": "01a093c8-7b01-7c35-8199-f3886d98814e",
+      "account_id": "01a08e5a-2250-7854-81df-5aeb26e7f461",
+      "status": "valid",
+      "disposition": "pending",
+      "quota_charged": true,
+      "counts_toward_cumulative": true,
+      "failure_code": null,
+      "minimum_words": 50,
+      "draft_present": true,
+      "word_count": "73",
+      "validator_version": "m001-v5-wn31-r2",
+      "saved_batches": 0
+    },
+    {
+      "run_id": "01a093c9-3cf9-76c8-bd01-0f223a63b5c8",
+      "account_id": "01a08e5a-2250-7854-81df-5aeb26e7f461",
+      "status": "valid",
+      "disposition": "pending",
+      "quota_charged": true,
+      "counts_toward_cumulative": true,
+      "failure_code": null,
+      "minimum_words": 200,
+      "draft_present": true,
+      "word_count": "380",
+      "validator_version": "m001-v5-wn31-r2",
+      "saved_batches": 0
+    },
+    {
+      "run_id": "01a093c9-665d-76c9-b139-8156e3072f93",
+      "account_id": "01a08e5a-2250-7854-81df-5aeb26e7f461",
+      "status": "valid",
+      "disposition": "pending",
+      "quota_charged": true,
+      "counts_toward_cumulative": true,
+      "failure_code": null,
+      "minimum_words": 200,
+      "draft_present": true,
+      "word_count": "254",
+      "validator_version": "m001-v5-wn31-r2",
+      "saved_batches": 0
+    },
+    {
+      "run_id": "01a093ca-5a81-7966-8d70-334a1bd385c0",
+      "account_id": "01a08e5a-2250-7854-81df-5aeb26e7f461",
+      "status": "valid",
+      "disposition": "pending",
+      "quota_charged": true,
+      "counts_toward_cumulative": true,
+      "failure_code": null,
+      "minimum_words": 50,
+      "draft_present": true,
+      "word_count": "232",
+      "validator_version": "m001-v5-wn31-r2",
+      "saved_batches": 0
+    },
+    {
+      "run_id": "01a093ca-7487-7b49-b024-c440618a9600",
+      "account_id": "01a08e5a-2250-7854-81df-5aeb26e7f461",
+      "status": "valid",
+      "disposition": "pending",
+      "quota_charged": true,
+      "counts_toward_cumulative": true,
+      "failure_code": null,
+      "minimum_words": 50,
+      "draft_present": true,
+      "word_count": "66",
+      "validator_version": "m001-v5-wn31-r2",
+      "saved_batches": 0
+    }
+  ],
+  "checks": {
+    "files": [
+      {
+        "path": "backend/internal/ai/contract.go",
+        "sha256": "d5f1bee8fc8238e87ee133cf10337d8475b21e98ba7aa68d46e98332f550c04d",
+        "match": true
+      },
+      {
+        "path": "backend/internal/ai/validator.go",
+        "sha256": "c06385a0b3280df2faae0ccd0adf5e8e0e1e8a8d86a1705015bf2f057fe2f9c6",
+        "match": true
+      },
+      {
+        "path": "backend/internal/ai/lexicon.go",
+        "sha256": "ad8353318556e17085f5b88fb7ac7d1a4a51af43b2192f942017554e227da705",
+        "match": true
+      },
+      {
+        "path": "backend/internal/ai/openrouter.go",
+        "sha256": "d7c3df5163b7a1c658f52720f842733787646d5691ddd36a6c0158de8b38a229",
+        "match": true
+      },
+      {
+        "path": "backend/internal/ai/continuation.go",
+        "sha256": "f8e799cda7b3b39e00b2946017e0aafb0939dc69d07da9a43f18447626f29b43",
+        "match": true
+      },
+      {
+        "path": "backend/internal/ai/fingerprint.go",
+        "sha256": "a43dc7b5f458880dcac813ea07ebc25e200d8fc124ea636140e032a07047998e",
+        "match": true
+      },
+      {
+        "path": "backend/internal/ai/continuation_test.go",
+        "sha256": "e3e235716adc3bdcb5257f813777c83c93e3ca7828e8986f54eb1d3b2a329884",
+        "match": true
+      },
+      {
+        "path": "backend/internal/ai/cr040_test.go",
+        "sha256": "f952a8c8c30b6ca2313728308875d60bf2339f26fd2d3b15e41ff12c176820f3",
+        "match": true
+      },
+      {
+        "path": "backend/internal/ai/annotations_test.go",
+        "sha256": "12d84105e550c7d24b4777dd42298cb73fcedf1677b8cb64bf98e51f8c00a5c6",
+        "match": true
+      },
+      {
+        "path": "backend/internal/httpapi/generation_handlers.go",
+        "sha256": "eea07ce3f4f80f5424110c366a5ec292c65d2845950ec45206d3a5a67023ea73",
+        "match": true
+      },
+      {
+        "path": "backend/internal/httpapi/generation_matrix_integration_test.go",
+        "sha256": "bdee546c7b15863e5a2aa6ffb50084a1af8cc82bf5f47294e432d8352b958908",
+        "match": true
+      },
+      {
+        "path": "backend/internal/httpapi/continuation_integration_test.go",
+        "sha256": "fddfda1628d08589856a3e6f481bd3305ef67783f5d47e2f1a55052dcff06e4e",
+        "match": true
+      },
+      {
+        "path": "backend/internal/generationtrace/trace.go",
+        "sha256": "e357b184199e0151b215b67f84007314bc2484c10f77ff270debd563b0e3d765",
+        "match": true
+      },
+      {
+        "path": "backend/internal/generationevidence/reconstruct.go",
+        "sha256": "940c3671fe44622882b1def7f91320e337af306313d3d0e7e38726940546dbe9",
+        "match": true
+      },
+      {
+        "path": "backend/internal/generationevidence/additional_test.go",
+        "sha256": "7aafb006d7fa524eb65056090a469f2dadc06ae5bd6d7e4bd22e8f3c3b0d41c3",
+        "match": true
+      },
+      {
+        "path": "backend/internal/diagnostics/commands_test.go",
+        "sha256": "f2236d60a30f94f0770e7da335710ceaee1d95d20a8f182ff88b79c73a9abb50",
+        "match": true
+      }
+    ],
+    "runtime": {
+      "image": "sha256:c4b00eb124fd7ccccd62223599336db9ada358861d09e6f852725f477aadefb8",
+      "configured_image": "wordweave-local:continuation-r9-20260912",
+      "health": "healthy",
+      "restarts": 0,
+      "started_at": "2026-09-12T04:00:15.02626401Z"
+    },
+    "tooling": {
+      "node": "v22.23.2"
+    },
+    "harness_sha256": "11af3ab868ec7d5c7fbfbb38f89c4c9f66ebeacbfeac2996bd9857e0c583afd7",
+    "active_runs": 0
+  },
+  "assessment": {
+    "interface_first_pass_rate": 0.875,
+    "interface_final_rate": 0.875,
+    "continuation_triggered": 1,
+    "continuation_salvaged": 0,
+    "failure": {
+      "case_id": 1,
+      "first_passage_words": 146,
+      "minimum_words": 400,
+      "first_missing": [
+        "prevalent",
+        "vulnerable",
+        "ambiguous",
+        "coherent"
+      ],
+      "continuation_words": 843,
+      "combined_words": 989,
+      "final_first_error": "annotation_source_unknown",
+      "unknown_sources": [
+        "young",
+        "fragile"
+      ],
+      "remaining_missing": [
+        "prevalent"
+      ],
+      "final_valid": false,
+      "refunded": true,
+      "independent_cause": "Both upstream responses were complete JSON and finished with stop. The second response introduced unselected annotations and still omitted a selected entry. This is evidenced model-output noncompliance, not an unexplained transport failure."
+    },
+    "quality": [
+      "All eight target resources keep original-entry dictionary meanings; no passage-role tail observed. Chinese, English and Japanese meanings/tags reviewed; English hints and prose preserved.",
+      "Seven successful payloads have matching clean stream/final prose, original target ordering and correct Unicode blank/occurrence offsets. Directly related sustainability and Ambiguity accepted; no bracket annotation leaked in successful payloads.",
+      "Business examples use intransitive deteriorate correctly. Two of forty original-entry hints use changed forms; this is descriptive, not a mandatory ratio.",
+      "MiniMax successful short passages have 278 and 232 words versus GLM 73 and 66. No upper bound was required, so this is a length-control observation, not an acceptance failure.",
+      "Every upstream passage is a single paragraph; the attempted repair adds a single 843-word paragraph. No formal multi-paragraph acceptance imposed.",
+      "Case 4 links gambling winnings to relief from melancholy; this is a narrative-quality concern, not a new forbidden-content rule. Case 3 also repeats the casino/disability/melancholy setup from prior samples.",
+      "The bounded repair keeps story context but failed to rescue the one eligible result. This round provides no measured final-success improvement from repair.",
+      "The melancholy->melancholic fix was not exercised by these live outputs; its offline regression is not a live success-rate claim."
+    ],
+    "limits": [
+      "Eight generation runs, not ten; nine upstream calls. Small, failure-weighted sample, not directly comparable to r8 full twenty-call rate.",
+      "No 90% acceptance, independent QA or UAT completion claimed.",
+      "Architecture document synchronization for the already user-approved limited continuation exception remains pending; no other role approved artifact edited.",
+      "No paid retry or larger sample authorized beyond this cap.",
+      "Token counts are provider reported; cached tokens, monetary cost and billing details unknown."
+    ]
+  },
+  "retention": {
+    "private_dir": "/run/wordweave-evidence",
+    "unchanged_hours": 24,
+    "cap_bytes_per_bundle": 1048576,
+    "raw_copied_to_repository": false,
+    "full_content_available_only_until_expiry_or_backend_recreation": true,
+    "prior_reports_preserved": true
+  },
+  "evidence_paths": {
+    "ledger": "/tmp/wordweave-r9-10.hUhn5H/calls.json",
+    "harness": "/tmp/wordweave-r9-10.hUhn5H/run.mjs",
+    "pre_test": "pre-test.json",
+    "offline": "../continuation-r9-20260912/verification.json"
+  }
+}

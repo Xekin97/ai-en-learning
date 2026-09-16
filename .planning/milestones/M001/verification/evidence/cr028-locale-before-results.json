@@ -1,0 +1,146 @@
+{
+  "date": "2026-09-05T02:44:13.539Z",
+  "agent_name": "qa-quinn",
+  "run": "before",
+  "tested_image": "sha256:0cb4bceb35550f7242c3bfd6ed958e006632f46862f644a487010a05e4b4bb85",
+  "verdict": "FAIL",
+  "totals": {
+    "checks": 22,
+    "passed": 14,
+    "failed": 8
+  },
+  "checks": [
+    {
+      "name": "admin save zh-CN",
+      "actual": 200,
+      "expected": 200,
+      "status": "PASS"
+    },
+    {
+      "name": "admin zh-CN destination",
+      "actual": "/admin/models",
+      "expected": "/admin/models",
+      "status": "PASS"
+    },
+    {
+      "name": "admin zh-CN before reload",
+      "actual": "en-US",
+      "expected": "zh-CN",
+      "status": "FAIL"
+    },
+    {
+      "name": "admin zh-CN brand",
+      "actual": "WordWeave",
+      "expected": "词涟",
+      "status": "FAIL"
+    },
+    {
+      "name": "admin zh-CN after reload",
+      "actual": "zh-CN",
+      "expected": "zh-CN",
+      "status": "PASS"
+    },
+    {
+      "name": "admin save en-US",
+      "actual": 200,
+      "expected": 200,
+      "status": "PASS"
+    },
+    {
+      "name": "admin en-US destination",
+      "actual": "/admin/models",
+      "expected": "/admin/models",
+      "status": "PASS"
+    },
+    {
+      "name": "admin en-US before reload",
+      "actual": "zh-CN",
+      "expected": "en-US",
+      "status": "FAIL"
+    },
+    {
+      "name": "admin en-US brand",
+      "actual": "词涟",
+      "expected": "WordWeave",
+      "status": "FAIL"
+    },
+    {
+      "name": "admin en-US after reload",
+      "actual": "en-US",
+      "expected": "en-US",
+      "status": "PASS"
+    },
+    {
+      "name": "admin restore fixture locale",
+      "actual": 200,
+      "expected": 200,
+      "status": "PASS"
+    },
+    {
+      "name": "learner save zh-CN",
+      "actual": 200,
+      "expected": 200,
+      "status": "PASS"
+    },
+    {
+      "name": "learner zh-CN destination",
+      "actual": "/library",
+      "expected": "/library",
+      "status": "PASS"
+    },
+    {
+      "name": "learner zh-CN before reload",
+      "actual": "en-US",
+      "expected": "zh-CN",
+      "status": "FAIL"
+    },
+    {
+      "name": "learner zh-CN brand",
+      "actual": "WordWeave",
+      "expected": "词涟",
+      "status": "FAIL"
+    },
+    {
+      "name": "learner zh-CN after reload",
+      "actual": "zh-CN",
+      "expected": "zh-CN",
+      "status": "PASS"
+    },
+    {
+      "name": "learner save en-US",
+      "actual": 200,
+      "expected": 200,
+      "status": "PASS"
+    },
+    {
+      "name": "learner en-US destination",
+      "actual": "/library",
+      "expected": "/library",
+      "status": "PASS"
+    },
+    {
+      "name": "learner en-US before reload",
+      "actual": "zh-CN",
+      "expected": "en-US",
+      "status": "FAIL"
+    },
+    {
+      "name": "learner en-US brand",
+      "actual": "词涟",
+      "expected": "WordWeave",
+      "status": "FAIL"
+    },
+    {
+      "name": "learner en-US after reload",
+      "actual": "en-US",
+      "expected": "en-US",
+      "status": "PASS"
+    },
+    {
+      "name": "learner restore fixture locale",
+      "actual": 200,
+      "expected": 200,
+      "status": "PASS"
+    }
+  ]
+}

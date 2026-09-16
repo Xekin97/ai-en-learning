@@ -1,0 +1,12 @@
+--- FAIL: TestWriteNoContentEnforcesPrivateNoStoreResponse (0.00s)
+    --- FAIL: TestWriteNoContentEnforcesPrivateNoStoreResponse/empty_headers (0.00s)
+        response_test.go:50: Cache-Control = "", want "no-store"
+    --- FAIL: TestWriteNoContentEnforcesPrivateNoStoreResponse/overrides_preset_cache_policy (0.00s)
+        response_test.go:50: Cache-Control = "private, max-age=60", want "no-store"
+    --- FAIL: TestWriteNoContentEnforcesPrivateNoStoreResponse/removes_preset_content_type (0.00s)
+        response_test.go:50: Cache-Control = "", want "no-store"
+    --- FAIL: TestWriteNoContentEnforcesPrivateNoStoreResponse/removes_content_type_and_overrides_cache_policy (0.00s)
+        response_test.go:50: Cache-Control = "public, max-age=3600", want "no-store"
+FAIL
+FAIL	wordweave/internal/httpapi	0.335s
+FAIL

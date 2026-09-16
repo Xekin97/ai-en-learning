@@ -1,0 +1,49 @@
+{
+  "date": "2026-09-06T08:56:04.929Z",
+  "agent": "qa-quinn",
+  "counts": {
+    "PASS": 5,
+    "FAIL": 0,
+    "ERROR": 0
+  },
+  "checks": [
+    {
+      "id": "tampered cursor rejected",
+      "status": "PASS",
+      "actual": 422,
+      "expected": 422
+    },
+    {
+      "id": "cursor bound to administrator",
+      "status": "PASS",
+      "actual": 422,
+      "expected": 422
+    },
+    {
+      "id": "trim/case exact tier vs independent SQL",
+      "status": "PASS",
+      "actual": [
+        "qa078_exact",
+        "a_qa078_exact",
+        "qa078_exact_z"
+      ],
+      "expected": [
+        "qa078_exact",
+        "a_qa078_exact",
+        "qa078_exact_z"
+      ]
+    },
+    {
+      "id": "/api/v1/admin/users?username=qa078_search local p95 below diagnostic 1s",
+      "status": "PASS",
+      "actual": true,
+      "expected": true
+    },
+    {
+      "id": "/api/v1/admin/users/01a075eb-89fb-7f67-b6ae-e3e002557f5a local p95 below diagnostic 1s",
+      "status": "PASS",
+      "actual": true,
+      "expected": true
+    }
+  ]
+}

@@ -1,0 +1,104 @@
+{
+  "date": "2026-09-09T08:01:04Z",
+  "role": "backend-ethan",
+  "scope": "UAT-only bounded failure capture",
+  "realModelCalls": 0,
+  "uatDeployed": false,
+  "image": "sha256:7c1d2b0eb19ba4328292fabad8698f7738f4a62fe277e2f6079e4d133c0f1963",
+  "imageTag": "wordweave-backend:uat-failure-capture-110",
+  "toolchain": "Go 1.26.7 linux/arm64 pinned Docker builder",
+  "checks": [
+    {
+      "command": "go test -race -tags=uatdiagnostics,integration ./internal/httpapi -run '^TestUATCapture' -count=1",
+      "exit": 0,
+      "output": "ok wordweave/internal/httpapi 8.901s",
+      "database": "isolated tmpfs wordweave-capture-dev-pg; three disposable databases",
+      "syntheticHTTPCalls": 3
+    },
+    {
+      "command": "go test -race ./internal/httpapi ./internal/ai ./internal/generation",
+      "exit": 0,
+      "output": "ok wordweave/internal/httpapi 1.058s\nok wordweave/internal/ai 9.277s\nok wordweave/internal/generation 1.051s"
+    },
+    {
+      "command": "go vet -tags=uatdiagnostics ./internal/httpapi",
+      "exit": 0
+    },
+    {
+      "command": "go build -tags=uatdiagnostics -o /tmp/wordweave ./cmd/wordweave",
+      "exit": 0
+    },
+    {
+      "command": "go build ./...; gofmt check of affected Go files",
+      "exit": 0
+    },
+    {
+      "command": "go list -f '{{join .GoFiles \" \"}}' ./internal/httpapi",
+      "exit": 0,
+      "normalCaptureFiles": [
+        "failure_capture.go",
+        "failure_capture_disabled.go"
+      ],
+      "uatImplementationIncluded": false
+    },
+    {
+      "command": "docker build --pull=false -f backend/Dockerfile.uat-diagnostics -t wordweave-backend:uat-failure-capture-110 backend",
+      "exit": 0
+    }
+  ],
+  "initialMethodIssue": {
+    "commandStage": "first isolated Docker test launch",
+    "exit": 1,
+    "cause": "zsh unquoted ? in synthetic TEST_DATABASE_URL, no test command started",
+    "correction": "quoted synthetic URL, pinned test suite passed; no production change to address it"
+  },
+  "developerSelfReview": [
+    "Timer initialization synchronized with cleanup",
+    "Capture gated by successful failure-settlement CAS, no sampling if cancellation already won",
+    "Dedicated image includes existing wordweave-admin readiness executable"
+  ],
+  "sources": [
+    {
+      "path": "backend/internal/httpapi/failure_capture.go",
+      "sha256": "90811e59d3d1fdaa71b52165def4af5c8edc090167104630ebad1746c867e661"
+    },
+    {
+      "path": "backend/internal/httpapi/failure_capture_disabled.go",
+      "sha256": "c7542b2e3b67142497db6716c5371a5e56f281038b89d6d33c2ceaf460a8f385"
+    },
+    {
+      "path": "backend/internal/httpapi/failure_capture_uat.go",
+      "sha256": "a7a13fd4c8a34b1b1144b075e6aefcc4869bd5b62c908e3f195eb6c2e984ca8a"
+    },
+    {
+      "path": "backend/internal/httpapi/failure_capture_disabled_test.go",
+      "sha256": "408f2211d8e7586784b13f0b431b9d026020264bd38f64b3d20a72eb627b959c"
+    },
+    {
+      "path": "backend/internal/httpapi/failure_capture_uat_test.go",
+      "sha256": "61cf0d07fdb72f62feae423bcb042d15c88825bb34462e076b854a814827b0d1"
+    },
+    {
+      "path": "backend/internal/httpapi/failure_capture_integration_test.go",
+      "sha256": "c4a86aae6f86d9126c6ff44c3e8df0f938816153837f45ca95a76151be1ad40e"
+    },
+    {
+      "path": "backend/internal/httpapi/generation_handlers.go",
+      "sha256": "0367a1a46a1cf61b3f5f42891f99cd4e094e50c06b097e12a7090004a91070a1"
+    },
+    {
+      "path": "backend/internal/httpapi/server.go",
+      "sha256": "7694f8c582c123fef5c1a1300db8eb3eb1a5373a60146c36a31eca5c59bc9c6e"
+    },
+    {
+      "path": "backend/Dockerfile.uat-diagnostics",
+      "sha256": "db0e3bac139a7f1f64adef5c2e66ab239c90ee62fcd6a2c77ec66173e003cff9"
+    },
+    {
+      "path": "backend/README.md",
+      "sha256": "012be0272a23df0e89068c84e2278ac1a7a0b0e2114f64a474d3e0107d78ef6a"
+    }
+  ],
+  "usage": "not_observed",
+  "subagents": 0
+}

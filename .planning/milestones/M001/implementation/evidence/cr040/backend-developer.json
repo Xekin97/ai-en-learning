@@ -1,0 +1,527 @@
+{
+  "role": "backend-ethan",
+  "revision": "CR-040",
+  "date": "2026-09-09",
+  "environment": {
+    "postgres": "isolated synthetic postgres:18-bookworm tmpfs container wordweave-cr040-dev-pg",
+    "go": "go1.26.7 linux/arm64",
+    "uat": "untouched",
+    "real_model_calls": 0
+  },
+  "checks": [
+    {
+      "command": "go run github.com/sqlc-dev/sqlc/cmd/sqlc@v1.31.1 generate",
+      "exit_code": 0,
+      "stdout": "",
+      "notes": "Local Go 1.27 tool invocation; pinned application compiler checked separately."
+    },
+    {
+      "command": "docker run --rm --network container:wordweave-cr040-dev-pg --mount type=bind,src=/Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/backend,dst=/src,readonly --mount type=bind,src=/Users/xekinzhuo/go/pkg/mod,dst=/go/pkg/mod --workdir /src --env GOCACHE=/tmp/go-cache --env TEST_DATABASE_URL=[synthetic local database] golang:1.26-bookworm sh -c 'go version && go test -race ./internal/ai ./internal/generation ./internal/learning ./internal/review ./internal/httpapi ./internal/platform/postgres ./cmd/wordweave-admin && go test -race -tags=integration ./internal/platform/postgres ./internal/httpapi -run \"TestCR040|TestCR039|Test.*Draft|TestHintOccurrenceMigrations|TestClaimedBatch\" -count=1 && go vet ./... && go build ./...'",
+      "exit_code": 0,
+      "output": "go version go1.26.7 linux/arm64\nok wordweave/internal/ai 12.819s\nok wordweave/internal/generation 1.010s\n? wordweave/internal/learning [no test files]\nok wordweave/internal/review 1.011s\nok wordweave/internal/httpapi 1.017s\n? wordweave/internal/platform/postgres [no test files]\nok wordweave/cmd/wordweave-admin 1.010s\nok wordweave/internal/platform/postgres 11.891s\nok wordweave/internal/httpapi 30.888s\n",
+      "output_note": "Observed stdout across tool polling chunks, whitespace normalized; vet/build emitted no stdout and combined command exited 0."
+    },
+    {
+      "command": "go mod verify",
+      "exit_code": 0,
+      "output": "all modules verified"
+    },
+    {
+      "command": "gofmt -l internal/ai internal/generation internal/learning internal/review internal/httpapi internal/platform/postgres internal/dbgen cmd/wordweave-admin",
+      "exit_code": 0,
+      "output": ""
+    }
+  ],
+  "coverage": {
+    "C40_01_02_03": "Dedicated prompt/schema instruction tested across 3 languages × 4 scenarios × normal/probe modes; no claim of real-model compliance.",
+    "C40_04_06": "Current candidate/snapshot strict keys; Unicode boundary; no truncation; projections including next/retry spelling; persistence and same-version restart; invalid-draft transaction rollback.",
+    "C40_05": "Existing lexical mapping, multiple occurrences, anonymous grouping, source/derived answer distinction and terminal lifecycle targeted integration retained.",
+    "DB40_01_02_03": "Synthetic all-table cutover, preservation, defaults, unknown target/schema/credential owner, deletion/constraint/migration/ledger failures, locks, ambiguous commits, no retry, ordinary migrate no cleanup, repeat refusal after new data.",
+    "DB40_04": "Existing HTTP draft save/claim/process restart plus new current snapshot and negative cases.",
+    "DB40_05": "Session deletion/no assignments checked in DB; post-cutover actual administrator login and generation-preflight HTTP still for QA."
+  },
+  "scope_limits": [
+    "No UAT database connection or reset/migration",
+    "No model/key access or paid calls",
+    "No UI/full-site regression",
+    "No deployment/release"
+  ],
+  "sources": [
+    {
+      "path": "backend/.dockerignore",
+      "sha256": "3a9b43d2618391a349f817ecee5978feb0feb3fba40d086f1cd18859d05c2bc2"
+    },
+    {
+      "path": "backend/Dockerfile",
+      "sha256": "fafa95128428b0a85f9765a63f249426e37d418ffa521991d7cb7a2bd51a36bd"
+    },
+    {
+      "path": "backend/Makefile",
+      "sha256": "19f438fb92bc6438c1b1f5bca7f778faa4f5df293145051873043c71686fdf41"
+    },
+    {
+      "path": "backend/README.md",
+      "sha256": "e3b0c024e0cb31e21e02468e21181b42631fdc64c5a0318f50783a87d9f52a5a"
+    },
+    {
+      "path": "backend/assets/lexicon/NOTICE.txt",
+      "sha256": "4fa5c4a5314c5710d4962b4ed53d21489188b3658831b096645fa2d9840c57af"
+    },
+    {
+      "path": "backend/assets/lexicon/digest.go",
+      "sha256": "7adb459ad66b2f0a92df2914821733e3230846b74f9a3d5998c2cb23978cbb20"
+    },
+    {
+      "path": "backend/assets/lexicon/embed.go",
+      "sha256": "44f4ef1e4c1098362819c01e12de48f697181ae423bb26efee9e151ea8ed0fad"
+    },
+    {
+      "path": "backend/assets/lexicon/manifest.json",
+      "sha256": "c897c024df6ede5297376b6f35f8fc1878ce2fd77ead703ca7a1bce70ab5ac56"
+    },
+    {
+      "path": "backend/assets/lexicon/wordnet31.json.gz",
+      "sha256": "8ae86f814d468630986270171c1c09a86a96556c8a71f90da1a4ef4b03ad4b4a"
+    },
+    {
+      "path": "backend/assets/vocabulary/embed.go",
+      "sha256": "f3e7a2ad043260f16d01a56912fa1e739c94022a3576e3a03fe11875525652aa"
+    },
+    {
+      "path": "backend/assets/vocabulary/english-words.json",
+      "sha256": "de75e77fdff529b4e6726730c80c11415abbce215ec7852a6c4a670b061dea75"
+    },
+    {
+      "path": "backend/cmd/build-lexicon/main.go",
+      "sha256": "41ad062938c95080c926f788f5a311bd1ee4eec1cc68f3ac048af1d6b99439b1"
+    },
+    {
+      "path": "backend/cmd/wordweave-admin/entry_meaning_cutover.go",
+      "sha256": "ccf15ddfab10c850c47f032e9f182923eccf9713eac50ba6057e7f6d6a03d0fa"
+    },
+    {
+      "path": "backend/cmd/wordweave-admin/entry_meaning_cutover_test.go",
+      "sha256": "22437d062a540b0a2d69b39d3ca256eb4af4ccb4ba4d58eb3433d9b23e582f57"
+    },
+    {
+      "path": "backend/cmd/wordweave-admin/main.go",
+      "sha256": "8eb46a26add4e0804fd08b7511933fe0249eaf5d607fd9987ec92ffe39019a37"
+    },
+    {
+      "path": "backend/cmd/wordweave/main.go",
+      "sha256": "dae2a198ab5618dc7126838a5505bf0323e82b76524df8d37bc5fe1757e726af"
+    },
+    {
+      "path": "backend/db/migrations/0001_roles_and_schema.sql",
+      "sha256": "f043bde359b4ec68408555fa99cfac3460f9716356b63cb83a1008a3ec881961"
+    },
+    {
+      "path": "backend/db/migrations/0002_core_tables.sql",
+      "sha256": "8749737c2b92b9387f4b1d1f0bb39ec64b3869dc41c4ce76be6865e9c5f6b585"
+    },
+    {
+      "path": "backend/db/migrations/0003_fixed_groups.sql",
+      "sha256": "f328770bed5d86e4c7e597a13d7b10f8229e7049b9e97854e026fea3004c6390"
+    },
+    {
+      "path": "backend/db/migrations/0004_vocabulary_m001.sql",
+      "sha256": "62cb0424ba33b0cd20aea6c89a9169aa7737244e6991d00200376fe59ea80d16"
+    },
+    {
+      "path": "backend/db/migrations/0005_hint_occurrences_expand.sql",
+      "sha256": "8bb260408b0c41b84b5b15062ff527f56943f9b40363ddaef7ce725eadedec31"
+    },
+    {
+      "path": "backend/db/migrations/0006_hint_occurrences_enforce.sql",
+      "sha256": "4a2ae5c2f73463fc8ce8bbd349d37e2d9d66272fadf0214bb463fe0f032ee5f4"
+    },
+    {
+      "path": "backend/db/migrations/0007_entry_meaning.sql",
+      "sha256": "2aa72b1e42e033a276e41ae698fe761a6d8bdde5107039f8477631e955dca1c5"
+    },
+    {
+      "path": "backend/db/migrations/embed.go",
+      "sha256": "0eba857d485c8979fe768a3a12f19512ce3c4c160c14d3d6cb3a70f30dc62e6e"
+    },
+    {
+      "path": "backend/db/queries/entitlement.sql",
+      "sha256": "82d3dccf0e2e3017002f35b21ceb955a4b738560234433c0ce09e5cdf9a9144e"
+    },
+    {
+      "path": "backend/db/queries/identity.sql",
+      "sha256": "ed460223b1f14ad66ecc7d667194e73d2bb364a3a54cb603a54478cc9cc72eee"
+    },
+    {
+      "path": "backend/db/queries/platform.sql",
+      "sha256": "23c2de502f6a73fdc36dcc0856296a6a806386bd718dccd15b7bfcefe12b9898"
+    },
+    {
+      "path": "backend/db/queries/vocabulary.sql",
+      "sha256": "91b0fb7ee85eb99597ad46d22204fbbd1132b32134f833034e7736a044b8697c"
+    },
+    {
+      "path": "backend/go.mod",
+      "sha256": "9f67b6018e8d8e98bc54e1aca4457a8aadc75ce19f7176bdccc7127c56ad51c3"
+    },
+    {
+      "path": "backend/go.sum",
+      "sha256": "c2c4f963826215bdb8948c0680bd4c96a08c850c2d41b9746d771b53af961f8e"
+    },
+    {
+      "path": "backend/internal/admin/service.go",
+      "sha256": "866e1b3d08b93162b3a836e6d26cfe3f1823a0c7ac48544f8bf3a0891f9a4dd7"
+    },
+    {
+      "path": "backend/internal/admin/service_test.go",
+      "sha256": "9fd6fa02b503cfb063ef1940a46bdce3ecc020de33e27df3f51b3560a0806a0b"
+    },
+    {
+      "path": "backend/internal/admin/user_detail.go",
+      "sha256": "095bbf22f8cb76aae2668b104fa831404b0a857bab682e93a06fa57f883a6917"
+    },
+    {
+      "path": "backend/internal/admin/user_detail_integration_test.go",
+      "sha256": "5d93b1e0eeb1be2df06468f9b89f758243beabef05e5d6a48534902c7173123f"
+    },
+    {
+      "path": "backend/internal/admin/user_detail_test.go",
+      "sha256": "28c8a2c37a6ae2cad38fdca8f9cb62822b98130c36afb72044a1f576828b5e12"
+    },
+    {
+      "path": "backend/internal/ai/contract.go",
+      "sha256": "17eee8f9337e650b4bd3e3f6a68ef44af4854a26fca8ab8150e9623aad0ec6ab"
+    },
+    {
+      "path": "backend/internal/ai/cr039_test.go",
+      "sha256": "f5a8e3578f295a3c65190075570ca00c5cc6ca846299a62b3af0b9957a44b579"
+    },
+    {
+      "path": "backend/internal/ai/cr040_test.go",
+      "sha256": "c4a502b5970e216d6fd316c8a21fe6440fc717258bfc3d367578b433f6d05cec"
+    },
+    {
+      "path": "backend/internal/ai/credential_store.go",
+      "sha256": "0e98496d44cd0ab04d0f703da66d5bbf701dd036e59e539317a9125a1d95b47c"
+    },
+    {
+      "path": "backend/internal/ai/lexicon.go",
+      "sha256": "6af407e3c508f4e64cbd54ca6359fd77f6823690e6cba73bef1a36c6f6fc61d7"
+    },
+    {
+      "path": "backend/internal/ai/morphology.go",
+      "sha256": "8485fba0435a7bd1e3a6a69baaf5cfea1f73a8284e49b204fccb0e52ded96d74"
+    },
+    {
+      "path": "backend/internal/ai/occurrence_scan.go",
+      "sha256": "f9ea2825a4b53aa14b68a7db3290b0ac01ec92538a43aa245ac3fa6aa4e69973"
+    },
+    {
+      "path": "backend/internal/ai/openrouter.go",
+      "sha256": "f23926d1a4c18eb79aa027cdaabcd0f03dab6913fe6cd4e26ee68b07870b4166"
+    },
+    {
+      "path": "backend/internal/ai/openrouter_test.go",
+      "sha256": "a8de474a65734d2d8fad0b0875e52ee3d78cde6deb4af98ece36800aea70d8ab"
+    },
+    {
+      "path": "backend/internal/ai/snapshot.go",
+      "sha256": "942a24c135c4f15e75c64cc20a167584d48ecc7c5814f37f8c7f1cfcdb1cfb3a"
+    },
+    {
+      "path": "backend/internal/ai/validator.go",
+      "sha256": "5f4b77fe937eb820035f386c250b9cc6aef524fcdbc7f49dd42aaf6280cd36f0"
+    },
+    {
+      "path": "backend/internal/ai/validator_test.go",
+      "sha256": "a375553a566c0721e33c67e7dda671e07703c5a54465b8833d97b8d793625d52"
+    },
+    {
+      "path": "backend/internal/dbgen/db.go",
+      "sha256": "84f598c6b75bfcb2abf4c6fbe856276271ccb1899028c767b01f05ad1f13cd87"
+    },
+    {
+      "path": "backend/internal/dbgen/entitlement.sql.go",
+      "sha256": "83b3a7f7feb7f4562ee79f6d11d722b8ed7f83fa5799e40816e8954f11b0890f"
+    },
+    {
+      "path": "backend/internal/dbgen/identity.sql.go",
+      "sha256": "6db146a3239cefabc34f91952a48c69a4609875d3d790b5531297f04278554f9"
+    },
+    {
+      "path": "backend/internal/dbgen/models.go",
+      "sha256": "4a6e5cac4c9da2f7b8cccb85432f5d38b19c6051c06ce174efdacb57b508a7d5"
+    },
+    {
+      "path": "backend/internal/dbgen/platform.sql.go",
+      "sha256": "10468f403839611e1ea793733cf85b7203e28006e581024ce5bba10573a0ad42"
+    },
+    {
+      "path": "backend/internal/dbgen/querier.go",
+      "sha256": "bff260d0148d7e4948f08aa5ee1f96d6e72e7a32ce7c5d1a23b1d4224c49b29f"
+    },
+    {
+      "path": "backend/internal/dbgen/vocabulary.sql.go",
+      "sha256": "d7dc64a38d985c534224805fec1b2a7582d922c8e11efbcdac34eb7648f10126"
+    },
+    {
+      "path": "backend/internal/entitlement/service.go",
+      "sha256": "42e4db29403eff944dd8cd7797bb3d8f88df50de05f4309ea23cd8c0d540e0ef"
+    },
+    {
+      "path": "backend/internal/generation/registry.go",
+      "sha256": "6e4884d44fe4ed08f634f4682411dead457a10faac937f30d536f63ad1edb6d0"
+    },
+    {
+      "path": "backend/internal/generation/service.go",
+      "sha256": "bafc62bf98ebb9483273dddae575118b97ceda0c4221251c4c70f9639e980dee"
+    },
+    {
+      "path": "backend/internal/generation/token.go",
+      "sha256": "7c1b2f64e66a1fbc1faba12912f769b294f5ddd47d203027004eb3bad169b0f7"
+    },
+    {
+      "path": "backend/internal/generation/token_test.go",
+      "sha256": "560b8adc99aa81ff730b1f7d2303dffa02b4042da2363341f6bd349c2025d2ea"
+    },
+    {
+      "path": "backend/internal/httpapi/admin_handlers.go",
+      "sha256": "6e546be8ab505a7e6218b909ec8379657f8cfb4f9effc76598b8d772ef3c46d2"
+    },
+    {
+      "path": "backend/internal/httpapi/admin_quota_integration_test.go",
+      "sha256": "6694f29503029ebbe3f3d6d6d0c402829fcd41d87c4197df5a7a9ecdd7378c87"
+    },
+    {
+      "path": "backend/internal/httpapi/admin_users_integration_test.go",
+      "sha256": "fbc1e99ed031c6af56c448c01f652fa382ff6373f2f8656287031a2970cf55b4"
+    },
+    {
+      "path": "backend/internal/httpapi/catalog_handlers.go",
+      "sha256": "bfc0ec76bb63b3a1c5cb44908526b13370eccbb8c6ea04530c7e9a9a72a43623"
+    },
+    {
+      "path": "backend/internal/httpapi/claimed_batch_delete_integration_test.go",
+      "sha256": "181f1e8a0e9cae00a66dd2c740acb38dd36a9689544af907b9cdb95f99e12f72"
+    },
+    {
+      "path": "backend/internal/httpapi/contract_v13_test.go",
+      "sha256": "35a6a05c7c7fab84c10b432a8004a530f7669669fa98907c82439d1ce05aebb0"
+    },
+    {
+      "path": "backend/internal/httpapi/contract_v14_test.go",
+      "sha256": "a0b9e141e9d737ce5ccc9bcfad1e9ad1d02ae2bf2451cb1eae9d8bdef7d48ecf"
+    },
+    {
+      "path": "backend/internal/httpapi/cr039_mapping_integration_test.go",
+      "sha256": "974e4622d18539468960743283381f87133059eadf85ce25de6c726f11d19601"
+    },
+    {
+      "path": "backend/internal/httpapi/cr039_snapshot_integration_test.go",
+      "sha256": "376d82d2eea6a0e0e6e973524cb407ba3c902edea2d118c9d1c8d8bfa536fb62"
+    },
+    {
+      "path": "backend/internal/httpapi/cr040_contract_test.go",
+      "sha256": "b82d3169e2f90d44555312b6bd1e7fddb15def517e01df77e22de45ad620bf6a"
+    },
+    {
+      "path": "backend/internal/httpapi/cr040_snapshot_integration_test.go",
+      "sha256": "951ad2cc4c46bcee716ecf418453c413b86e84d925988407d8990b7ba847d48a"
+    },
+    {
+      "path": "backend/internal/httpapi/draft_lifecycle_integration_test.go",
+      "sha256": "6759b94dd57629ff78b2b8569bf681cf4670f3a192c4812091f491c08b72a7d5"
+    },
+    {
+      "path": "backend/internal/httpapi/draft_process_integration_test.go",
+      "sha256": "ed8b50dddfc2d51a4cb9aeda2767f9dcefccab6dce8686bfff058cb7a0e4093e"
+    },
+    {
+      "path": "backend/internal/httpapi/e2e_integration_test.go",
+      "sha256": "901603bd4c989de97c82cd2d3684db90aeda69700d162b25c3b49a8e22172411"
+    },
+    {
+      "path": "backend/internal/httpapi/generation_handlers.go",
+      "sha256": "4566e76f5d9f62fb46355c89767b76e56acff8e7aa56ad3a24175e9f572ad73f"
+    },
+    {
+      "path": "backend/internal/httpapi/identity_handlers.go",
+      "sha256": "fde490276d7455d2c981a43d4e609a009264b2b4560f772f547da63c249cd6df"
+    },
+    {
+      "path": "backend/internal/httpapi/learning_handlers.go",
+      "sha256": "72005f5e8bcc33547c9d719b135e19968a37f88e2b56c7ee6af2c8f9732ba9bc"
+    },
+    {
+      "path": "backend/internal/httpapi/middleware.go",
+      "sha256": "c21e982f5e61270a3d90924a246783fa0b0951afe5fadc3686832aaa17e2bc6c"
+    },
+    {
+      "path": "backend/internal/httpapi/openrouter_live_integration_test.go",
+      "sha256": "bc2097b2b21a1f81c00b94c6891c18e46f0e26d6c3470d4430dc96c1d7f0f9ba"
+    },
+    {
+      "path": "backend/internal/httpapi/rate_limit.go",
+      "sha256": "8eb2ba1940e2692b5542149abf1a2dd6343e85d38ccf436e7c74b38faf1dbf51"
+    },
+    {
+      "path": "backend/internal/httpapi/rate_limit_test.go",
+      "sha256": "4cbe884db78bb048221d5dad5087b51f04965ae4c692c051d66e2c686780eb29"
+    },
+    {
+      "path": "backend/internal/httpapi/response.go",
+      "sha256": "7b3e69b6d2080f2a5086a3f02082c9484028df50ed0c49fac692525a274ed0b2"
+    },
+    {
+      "path": "backend/internal/httpapi/response_no_content_integration_test.go",
+      "sha256": "497b33fda185eea8d265994d16e2236afa192841cb3915c75706452244123b44"
+    },
+    {
+      "path": "backend/internal/httpapi/response_test.go",
+      "sha256": "aa6cc5b757f22ae0bc55d13b579edf6169bb2358c89d0cea0f268b92e2ec7ce1"
+    },
+    {
+      "path": "backend/internal/httpapi/review_handlers.go",
+      "sha256": "b40fb5e348e85c6af38bb0fc05a947c2ae7534d9e7df979204c74bf28e3450c1"
+    },
+    {
+      "path": "backend/internal/httpapi/server.go",
+      "sha256": "3b8e817e24a888f60a0f4a01556d51e8161b75e1a5adebdd3ef786b571eda334"
+    },
+    {
+      "path": "backend/internal/identity/service.go",
+      "sha256": "12dd6e9565316a6599acb235acfa018e92fb7a46f8bfeb0fcf7144d41b40fc57"
+    },
+    {
+      "path": "backend/internal/learning/service.go",
+      "sha256": "805422600990b4fde060ce4565baa2cfe26eac01e241328b2422ec18c806c900"
+    },
+    {
+      "path": "backend/internal/maintenance/maintenance.go",
+      "sha256": "00aaa98abb7a47891b12605ff5138e583007168e2be96a17ef6deb87975bedf1"
+    },
+    {
+      "path": "backend/internal/observability/logging.go",
+      "sha256": "8abed31f39ba54ed43a0f31b6c2c2ad3385922157cfd2d89fbfd42831e5ae26c"
+    },
+    {
+      "path": "backend/internal/observability/metrics.go",
+      "sha256": "bb5f50895406147c0dda7c8f18609374c9762e3c86baf5845c166ca9260fa04e"
+    },
+    {
+      "path": "backend/internal/platform/config/config.go",
+      "sha256": "684ba7b1dd2188bdc1730c7be01883b4667df7327843aa51408ef81bdea13842"
+    },
+    {
+      "path": "backend/internal/platform/config/config_test.go",
+      "sha256": "9dbd69bc56a9d3a9f59d6a9e3bebc629e463b8da6d68635149ba0d79c7579e8f"
+    },
+    {
+      "path": "backend/internal/platform/postgres/entry_meaning_cutover.go",
+      "sha256": "d3202857e5f29a767ee2f9be0e7d2236ff73993861d1b6c6905f7c9922bcfca0"
+    },
+    {
+      "path": "backend/internal/platform/postgres/entry_meaning_cutover_integration_test.go",
+      "sha256": "b596beaa2e4e7a008846bff7487185e277e1db8a872b46d57ef5f9d9706d9c86"
+    },
+    {
+      "path": "backend/internal/platform/postgres/migrate.go",
+      "sha256": "a7eb1f73713f6d8f92adfb0fc15712caa9f410b26d582d8c5f54455aea2994d5"
+    },
+    {
+      "path": "backend/internal/platform/postgres/migrate_integration_test.go",
+      "sha256": "1867f06bfcf2844b857e59ae0544f38a135388267fe3e85a052516ccb2046723"
+    },
+    {
+      "path": "backend/internal/platform/postgres/postgres.go",
+      "sha256": "b69d210367e4eb9b07892d71c515da144a0480cfe83c832ac8f3b8dcf369b283"
+    },
+    {
+      "path": "backend/internal/platform/security/envelope.go",
+      "sha256": "b9c620619507a9574e463d17f126d071a865be9aa9acc513ccef87be7eadd7a8"
+    },
+    {
+      "path": "backend/internal/platform/security/password.go",
+      "sha256": "9af61da14194fa8d74389209df42f172558d14f827bd30acafacc7c37d6d61de"
+    },
+    {
+      "path": "backend/internal/platform/security/security_test.go",
+      "sha256": "a70830f4e2665d03be590de9d7834c1750c82ff59a6ed966018d70c16ffd7099"
+    },
+    {
+      "path": "backend/internal/platform/security/token.go",
+      "sha256": "d5acda83ac43a0e9f72e16ecdcd0dc4fbd5fe1bf7e37ed9180d0e118d9c46227"
+    },
+    {
+      "path": "backend/internal/review/attempt.go",
+      "sha256": "ff8183242154c549db30fbbd4758cbebc4277100d2cfe8ea46cf01c714942e02"
+    },
+    {
+      "path": "backend/internal/review/attempt_test.go",
+      "sha256": "03901d21a98ceb8440f1278866ad6f0447332735b5eb2a3d4f1c403c3e151a80"
+    },
+    {
+      "path": "backend/internal/review/service.go",
+      "sha256": "38d5956b7d5614724fb9698a231779c96eef6c7ee86d853f9c0d32d8444d199a"
+    },
+    {
+      "path": "backend/internal/vocabulary/service.go",
+      "sha256": "85629c674925d25155fea23659fc056c82b95c8e54f97fa8e2e01fb3485dac7d"
+    },
+    {
+      "path": "backend/internal/wordnet/build.go",
+      "sha256": "526e092f3f55f13df0b8e54dec9d9c43e6588600175cbde586cf210b667ad3c0"
+    },
+    {
+      "path": "backend/internal/wordnet/build_test.go",
+      "sha256": "f34d6861ac26707d4a7dfbed7414a16810540c75236a1c6650d6ed0e5f94e77e"
+    },
+    {
+      "path": "backend/internal/wordnet/data.go",
+      "sha256": "9210d9f237199199707807d7e347e12b22fe1faa1ba0afa6da733bf1d4dc5d0d"
+    },
+    {
+      "path": "backend/sqlc.yaml",
+      "sha256": "b0359d2433da64b4d81117f5070d1501a806f7732dd98116af4a30b62dde8b3f"
+    },
+    {
+      "path": "backend/testdata/contracts/v1.4/group-limited.json",
+      "sha256": "0aa1c6b5a6c6b350bf95e5f26f2679e362be928d9620858a538cfe3cecf9148b"
+    },
+    {
+      "path": "backend/testdata/contracts/v1.4/group-unlimited.json",
+      "sha256": "a67d08d7868961bbfc1731da80c01b1a2075ca1970c0f1568bd6d93a482661f3"
+    },
+    {
+      "path": "backend/testdata/contracts/v1.4/group-zero.json",
+      "sha256": "fa421c99039775748218204651520983d8da195049df089a3454ef83d4e0c99b"
+    },
+    {
+      "path": "backend/testdata/contracts/v1.4/manifest.json",
+      "sha256": "40d0b9fab2c76bc239caf6c91dc527857a49abde4298aa05ae4471d0c2ce7d9a"
+    },
+    {
+      "path": "backend/testdata/contracts/v1.4/user-admin.json",
+      "sha256": "a0cde5a5bb116453be060b6b56ea0710d864f5ccd8eb235f206b3dfe3d42cb29"
+    },
+    {
+      "path": "backend/testdata/contracts/v1.4/user-limited.json",
+      "sha256": "85563f1d9ce1671e24e8c02bc3805e4d4867c7c37cdf969b704fb90e949d9326"
+    },
+    {
+      "path": "backend/testdata/contracts/v1.4/user-unlimited.json",
+      "sha256": "104b47974f391ead75ee43a262bc5b404d931daef47852356db7f84f559c9ab6"
+    },
+    {
+      "path": "backend/testdata/contracts/v1.4/user-zero.json",
+      "sha256": "94018a8d690f340cdab8d8b70ba5b766f62a8aa0c163f0d16a61f980c76edf6b"
+    },
+    {
+      "path": "backend/testdata/cr039/v3-validated.json",
+      "sha256": "ca70619828bb3a6c2c78173529744449ded69cd8cff4e021c6b47e0c6d8fb4f3"
+    },
+    {
+      "path": "backend/testdata/cr040/v4-validated.json",
+      "sha256": "dd85765390f9f36c00c9380f1b148550d6da792fe038656b184a3fd1292bc8d8"
+    }
+  ]
+}

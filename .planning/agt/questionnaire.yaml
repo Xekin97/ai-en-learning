@@ -1,0 +1,224 @@
+schema_version: 1
+record_type: "initialization-questionnaire"
+captured_on: "2026-08-28"
+product_repository: "/Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning"
+agt_repository: "/Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/agt-coding-v2"
+agt_skill_source: ".agents/skills/agt-start-project/SKILL.md"
+
+# This file preserves initialization input. It is not an approved product
+# specification; product planning must still confirm unresolved decisions.
+initialization:
+  status: "COMPLETED"
+  completed_at: "2026-08-28T11:00:33Z"
+  selected_profile: "consumer-ai-web@1.0.0"
+  selected_by: "user"
+  agt_revision: "b5badf88cd7194400c3d4d0e9395e7c98490dc26"
+  resolved_blockers:
+    - code: "NO_USABLE_PROFILE"
+      resolution: "consumer-ai-web@1.0.0 now exists, is available, and passes validate-profile.sh."
+    - code: "NO_AGT_GIT_REVISION"
+      resolution: "The selected Profile is locked to agt revision b5badf88cd7194400c3d4d0e9395e7c98490dc26."
+  artifacts_created:
+    - ".planning/agt/project.yaml"
+    - ".planning/agt/agents.yaml"
+    - ".planning/workflow/state.yaml"
+
+answers:
+  A_product_intent:
+    A1_product_name:
+      status: "PROVISIONAL"
+      answer: "中文暂定名为‘词涟’，英文暂定名为‘WordWeave’。"
+    A2_one_sentence_intent:
+      status: "CONFIRMED"
+      answer: >-
+        产品面向自主学习英语的人群。用户自由输入若干单词并配置造句维度，
+        产品通过 AI 生成融合这些单词与指定场景的英语学习资源，并支持后续复习和打卡；
+        高级能力未来可能覆盖四六级、雅思和托福等学习场景。
+    A3_reason_and_current_alternatives:
+      status: "CONFIRMED"
+      answer: >-
+        传统语言学习软件通常依赖预制词库、单一词语翻译和权威词典例句，
+        难以把用户自选词汇融合进用户指定场景；制作例句、文章和复习资源也需要大量人工。
+        现在可使用 AI 完成翻译与造句造文，在减少数据资源制作成本的同时，
+        满足用户通过自选场景学习自选词汇的需求。
+
+  B_users_and_purchase_relationship:
+    B1_primary_users:
+      status: "CONFIRMED"
+      answer: "所有自主英语学习者，不限定为特定考试或职业群体。"
+    B2_adoption_and_payment:
+      status: "NOT_APPLICABLE"
+      answer: >-
+        首版不提供付费升级，只要求打通基础功能和资源生产链，因此首版的付费决策不适用。
+        用户面向公众自行注册；未来由谁决定或承担付费尚未确认。
+    B3_roles:
+      status: "CONFIRMED"
+      answer: "首版只需要学习者和管理员，不设置独立的内容审核者或运营人员。"
+
+  C_core_value_and_scenarios:
+    C1_first_use_goal:
+      status: "CONFIRMED"
+      answer: >-
+        用户输入自选单词并配置造句条件，获得可直接用于学习的 AI 生成资源。
+    C2_core_scenarios:
+      status: "CONFIRMED"
+      answer: |-
+        1. 用户进入网站并选择“立即学习”，直接进入造句界面；生成后可选择将资源添加进复习库。
+        2. 用户选择“开始复习”，选择复习日期范围后进入复习界面。先根据单词翻译以及未显示目标单词的短语进行单词默写，再在生成句子中隐藏用户输入的单词，让用户结合句子回忆并填写；全部填写正确才视为复习成功。
+        3. 用户查看自己的全部学习历史和简单统计，例如学过多少单词、造过多少次句子，以及多少句子被用户认可并加入复习库。
+    C3_first_value_event:
+      status: "CONFIRMED"
+      answer: "用户生成一次满意的学习资源并将其加入复习库时，视为第一次获得价值。"
+    C4_first_milestone_exclusions:
+      status: "CONFIRMED"
+      answer: >-
+        首版不做词库选择和付费升级功能。四六级、雅思、托福等专项高级学习场景不作为首版基础闭环。
+
+  D_product_form:
+    D1_delivery_channel:
+      status: "CONFIRMED"
+      answer: "首版仅提供面向公众的 Web 网站，不做移动 App、桌面端或开放 API。"
+    D2_access_and_accounts:
+      status: "CONFIRMED"
+      answer: >-
+        用户可以公开自行注册，不需要邀请。未登录访客只能使用造句功能，
+        不能使用复习功能，也没有学习历史；登录用户可以使用完整基础学习闭环。
+        首版不提供付费购买或升级入口。
+    D3_audience_model:
+      status: "CONFIRMED"
+      answer: "这是单一公众消费产品，首版不考虑学校、企业租户或组织空间。"
+    D4_permission_groups:
+      status: "CONFIRMED"
+      answer: >-
+        权限与调用限制采用可配置的用户组机制，例如访客组、正式账号组、Pro 组和 Plus 组；
+        每个组都可以配置可用模型及相关调用限制。
+    D5_pro_plus_first_release_operation:
+      status: "PROVISIONAL"
+      answer: >-
+        当前暂按“首版让 Pro/Plus 组真实可用但不接支付，由管理员手动分配”理解。
+        用户对带有两个备选分支的问题回答了“是”，需在产品规划时再次明确该解释，
+        或确认首版是否只实现访客组和正式账号组并预留 Pro/Plus。
+
+  E_data_and_permissions:
+    E1_stored_data:
+      status: "CONFIRMED"
+      answer: >-
+        主要存储账号资料、用户输入的单词与造句配置、AI 生成内容、复习库、
+        学习与复习记录、简单统计、用户组与额度用量，以及 OpenRouter API 密钥和模型配置。
+    E1_data_ownership:
+      status: "UNKNOWN"
+      answer: "用户学习内容及生成内容的法律或产品层面归属尚未明确。"
+    E2_ai_generated_resource_shape:
+      status: "CONFIRMED"
+      answer: |-
+        一次 AI 生成资源不是单一文本，包含：
+        - 每个输入单词的独立翻译，翻译目标语言由用户在造句前配置；
+        - 单词对应的短语，不提供短语翻译；
+        - 融合输入单词的英语句子，不提供整句翻译；
+        - 适合句子本身的标签，标签使用用户配置的翻译目标语言生成。
+    E3_visibility_and_isolation:
+      status: "CONFIRMED"
+      answer: >-
+        学习者查看自己的复习库、学习历史和统计；管理员可以查看用户学习内容。
+        模型与调用额度按用户组隔离和配置。
+    E4_sensitive_data:
+      status: "UNKNOWN"
+      answer: >-
+        已知系统会保存需要保密的 OpenRouter API 密钥，也会保存注册账号资料，
+        但账号字段、个人信息范围及未成年人相关隐私要求尚未明确。首版不涉及支付数据。
+    E5_retention_export_and_deletion:
+      status: "CONFIRMED"
+      answer: >-
+        提供账号注销和数据删除，不提供数据导出。首版不设置数据保存期限，也不要求操作审计。
+
+  F_collaboration_and_business_process:
+    F1_collaboration:
+      status: "CONFIRMED"
+      answer: "首版为个人学习产品，不提供好友、班级、内容分享或多人协作。"
+    F2_notifications_and_workflow:
+      status: "NOT_APPLICABLE"
+      answer: "首版不需要复习提醒或其他通知，也没有多人审批、分配或协作流转。"
+    F3_integrations:
+      status: "CONFIRMED"
+      answer: "首版除 OpenRouter 外，不需要接入其他第三方服务。"
+
+  G_runtime_and_delivery_constraints:
+    G1_deployment_and_network:
+      status: "UNKNOWN"
+      answer: "尚未确定部署平台、服务器地区或域名；当前没有强制地区、网络或合规限制。"
+    G2_scale_latency_and_availability:
+      status: "PROVISIONAL"
+      answer: >-
+        首版不控制 AI 响应时间，但最好使用流式渲染，避免用户因等待过久失去兴趣。
+        用户规模、并发量及可用性指标尚未确定。
+    G3_offline:
+      status: "NOT_APPLICABLE"
+      answer: "不要求离线使用。"
+    G4_existing_technology_or_infrastructure:
+      status: "NOT_APPLICABLE"
+      answer: "没有必须沿用的前后端技术栈、数据库、云服务、基础设施或现有代码。"
+
+  H_first_milestone:
+    H1_end_to_end_flows:
+      status: "CONFIRMED"
+      answer: |-
+        学习者流程：注册或登录 -> 配置并生成学习资源 -> 确认满意并加入复习库 -> 按日期范围开始复习 -> 完成单词默写和句子挖空回忆 -> 查看学习历史与统计。
+        管理员流程：配置 OpenRouter API 与模型 -> 配置各用户组的模型和调用限制 -> 手动分配 Pro/Plus 用户组 -> 查看用户学习内容。
+    H2_success_evidence:
+      status: "CONFIRMED"
+      answer: "首个里程碑只要求功能成功验收，不设置生成成功率、收藏率或复习成功率等业务效果指标。"
+    H3_time_cost_people_and_dependencies:
+      status: "NOT_APPLICABLE"
+      answer: "当前没有明确的上线时间、成本上限、开发人数或外部依赖限制。"
+
+ai_constraints:
+  provider:
+    status: "CONFIRMED"
+    value: "OpenRouter"
+    scope: "首版只支持通过 OpenRouter API 配置和调用模型。"
+  admin_configuration:
+    status: "CONFIRMED"
+    value: "管理员可配置 OpenRouter API、模型、用户组可用模型和调用限制。"
+  anonymous_default:
+    status: "CONFIRMED"
+    value: "访客只能使用低成本模型，并限制每 24 小时的造句次数。"
+  registered_default:
+    status: "CONFIRMED"
+    value: "正式账号首版默认暂不限制次数，但组策略本身可配置。"
+  future_monetization:
+    status: "PROVISIONAL"
+    value: "未来付费权益可能按更高规格模型及更多造句次数区分。"
+  rendering:
+    status: "PROVISIONAL"
+    value: "AI 生成结果最好流式渲染。"
+
+classification:
+  confirmed_facts:
+    - "产品是面向所有自主英语学习者的公众 Web 应用。"
+    - "核心闭环是自选词和条件 -> AI 生成资源 -> 加入复习库 -> 默写与句子回忆 -> 历史统计。"
+    - "首版角色为学习者和管理员，个人使用且无需协作或通知。"
+    - "首版 AI 提供方仅为 OpenRouter，模型和额度按可配置用户组控制。"
+    - "首版不做词库选择、支付升级、移动端、组织租户、开放 API 或数据导出。"
+  assumptions:
+    - status: "PROVISIONAL"
+      detail: "Pro/Plus 首版可实际分配但不接支付，暂按管理员手动分配理解。"
+  conflicts:
+    - status: "OPEN"
+      detail: >-
+        “首版不做付费升级”与“首版存在 Pro/Plus 组”不是必然冲突；
+        如果 Pro/Plus 由管理员手动分配则可同时成立，但用户的简短回答未排除仅预留组结构的方案。
+  missing_information:
+    - status: "UNKNOWN"
+      detail: "未来付费的决定者或付款者。"
+    - status: "UNKNOWN"
+      detail: "注册账号字段、未成年人隐私要求和学习/生成内容归属。"
+    - status: "UNKNOWN"
+      detail: "部署平台、地区、用户规模、并发量及可用性目标。"
+
+next_step:
+  status: "READY"
+  stage: "product-planning"
+  active_role: "product/to-c"
+  active_agent: "product-maya"
+  suggested_skill: "$agt-product-planning"
+  instruction: "启动产品策划角色，但不要把本问卷直接视为已批准产品需求。"

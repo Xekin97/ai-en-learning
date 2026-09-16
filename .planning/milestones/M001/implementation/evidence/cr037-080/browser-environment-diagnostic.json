@@ -1,0 +1,46 @@
+{
+  "date": "2026-09-06",
+  "scope": "DEV080 only; source and UAT deployment unchanged after final build",
+  "environment": {
+    "macOS": "15.3",
+    "playwright": "1.62.1",
+    "webkitBuild": 2336
+  },
+  "observations": [
+    {
+      "evidence": "browser-final-results.json",
+      "counts": {
+        "PASS": 126,
+        "FAIL": 0,
+        "ERROR": 1
+      },
+      "observation": "WebKit closed during password interaction; cleanup error masked the primary exception."
+    },
+    {
+      "evidence": "browser-final2-results.json",
+      "log": "browser-final2.log",
+      "counts": {
+        "PASS": 129,
+        "FAIL": 0,
+        "ERROR": 2
+      },
+      "observation": "Serial rerun after E2E finished; Chromium completed both locales. WebKit process exit134 with native NSInvalidArgumentException: -[NSTextInputContext textInputClientDidUpdateSelection]: unrecognized selector."
+    },
+    {
+      "evidence": "browser-webkit-keyboard-results.json",
+      "log": "browser-webkit-keyboard.log",
+      "counts": {
+        "PASS": 38,
+        "FAIL": 0,
+        "ERROR": 1
+      },
+      "observation": "Real sequential key events reproduced the same native exception, without app changes or setting changes."
+    }
+  ],
+  "interpretation": "The recorded failure is a macOS Playwright WebKit native process failure, not a failed JavaScript copy/DOM assertion. Exact library/OS compatibility root cause is not established. Do not count interrupted WebKit flows as PASS.",
+  "alternative": {
+    "runner": "mcr.microsoft.com/playwright@sha256:941cc91e5022880ac1d14ae90b476b624deb6399dbbc28d612d5d5bd7928fcbd",
+    "version": "v1.62.1-noble arm64",
+    "isolation": "Temporary labeled Linux browser container; mounts only frontend/node_modules read-only and DEV080 evidence. Loopback TCP forwarding preserves unchanged app origin and CSRF policy. Same fixed production candidate and same original assertions."
+  }
+}

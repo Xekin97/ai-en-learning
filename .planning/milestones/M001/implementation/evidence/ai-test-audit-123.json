@@ -1,0 +1,367 @@
+{
+  "recordedAt": "2026-09-10 02:55:08 UTC",
+  "scope": "Read-only code/test audit and existing AI unit baseline; not new regression implementation or UAT",
+  "request": "用户要求根据既有代码全面设计测试，不再依赖逐次UAT暴露失败",
+  "sourceFiles": [
+    {
+      "path": "backend/internal/ai/openrouter.go",
+      "sha256": "5e8d77e2f41bb1c686275f050bfc2fa329f7f9b4e1c18bffa100f7f1b183251f"
+    },
+    {
+      "path": "backend/internal/ai/validator.go",
+      "sha256": "a2e873308618d5b3694adecafb49ca76688253c86258d7c79296d51ec0bc1598"
+    },
+    {
+      "path": "backend/internal/ai/annotations.go",
+      "sha256": "2215e1b25310cf1cb28a15d78fea518687105725a8a1da6a622f87fe8fedabf2"
+    },
+    {
+      "path": "backend/internal/ai/contract.go",
+      "sha256": "0328c28985f697b3ae53bb9508e503e07c99d1eef0649322768fedfce54c9cd6"
+    },
+    {
+      "path": "backend/internal/ai/openrouter_test.go",
+      "sha256": "c887aa2903c22193704e52ca5b961a9e7c378db0958eb25f8ed9e4c9c11d73bd"
+    },
+    {
+      "path": "backend/internal/ai/validator_test.go",
+      "sha256": "a103e9e4d90b8d5428ecd1e6a7a9126e63129cdd2dc5e1c7687debed99330e75"
+    },
+    {
+      "path": "backend/internal/ai/annotations_test.go",
+      "sha256": "41e4a6ebf1709597d04ea17ff9db0e9a0b624801ef5ff0b4b4df99c0580e087e"
+    },
+    {
+      "path": "backend/internal/ai/cr039_test.go",
+      "sha256": "ea210cb2d7af1606fc147bce008be6f9293084cbc108f3c5943d0ada50c59c35"
+    },
+    {
+      "path": "backend/internal/ai/cr040_test.go",
+      "sha256": "7dd56e4b4576e04a8b91f3e437ac3628d51f390d9d9292044e0ee7a67f55b15b"
+    },
+    {
+      "path": "backend/internal/httpapi/generation_handlers.go",
+      "sha256": "31c455af35f0933bf4330034aefdd3faa5c3df17ce4add59f62eb43133fddc2f"
+    },
+    {
+      "path": "backend/internal/generation/service.go",
+      "sha256": "bafc62bf98ebb9483273dddae575118b97ceda0c4221251c4c70f9639e980dee"
+    },
+    {
+      "path": "backend/internal/httpapi/cr039_mapping_integration_test.go",
+      "sha256": "f82efb04f7eb9cbc8b45180d5dd78e71412f2a30e241440118a360efc8ee1ae8"
+    },
+    {
+      "path": "backend/internal/httpapi/inline_mapping_integration_test.go",
+      "sha256": "d45684a36dc678fcd54c670085030738fad297dfacc6bd626e35de84415eb862"
+    },
+    {
+      "path": "backend/internal/httpapi/failure_capture_integration_test.go",
+      "sha256": "61966f4037035c885fd25ed79923310fcbd5663e1fe17fde9141996305421fa0"
+    },
+    {
+      "path": "frontend/app/application/generation/reducer.ts",
+      "sha256": "091d36464a931d83d0682f42ec4a90a6e1cacc4354b85e482092920576d2a770"
+    },
+    {
+      "path": "frontend/tests/unit/generation-reducer.test.ts",
+      "sha256": "53961986e59e92937e493b6d6e700fc94182ebaded10bd06eb585854d7f986d1"
+    }
+  ],
+  "validatorBranches": [
+    {
+      "path": "backend/internal/ai/openrouter.go",
+      "sites": [
+        {
+          "line": 66,
+          "expression": "return nil, &ProviderError{Category: FailureUnavailable, Retryable: true, Err: err}"
+        },
+        {
+          "line": 75,
+          "expression": "return nil, &ProviderError{Category: FailureProtocol, Retryable: true, Err: errors.New(\"OpenRouter response is not an SSE stream\")}"
+        },
+        {
+          "line": 92,
+          "expression": "return &ProviderError{Category: FailureUnavailable, Retryable: true, Err: err}"
+        },
+        {
+          "line": 106,
+          "expression": "return &ProviderError{Category: FailureProtocol, Retryable: true, Err: err}"
+        },
+        {
+          "line": 115,
+          "expression": "return &ProviderError{Category: FailureAuthorization, Retryable: false, Err: errors.New(\"model does not declare structured output support\")}"
+        },
+        {
+          "line": 119,
+          "expression": "return &ProviderError{Category: FailureAuthorization, Retryable: false, Err: errors.New(\"model is not present in OpenRouter catalog\")}"
+        },
+        {
+          "line": 141,
+          "expression": "return invalid(\"compatibility probe clean stream differs from final passage\")"
+        },
+        {
+          "line": 155,
+          "expression": "return invalid(\"compatibility probe did not preserve repeated and differently inflected hint occurrences\")"
+        },
+        {
+          "line": 164,
+          "expression": "return mappingInvalid(\"compatibility_derivation_missing\", 1)"
+        },
+        {
+          "line": 171,
+          "expression": "return &ProviderError{Category: FailureAuthentication, Retryable: false, Err: errors.New(\"OpenRouter key is empty\")}"
+        },
+        {
+          "line": 180,
+          "expression": "return &ProviderError{Category: FailureUnavailable, Retryable: true, Err: err}"
+        },
+        {
+          "line": 223,
+          "expression": "return false, &ProviderError{Category: FailureProtocol, Retryable: true, Err: err}"
+        },
+        {
+          "line": 233,
+          "expression": "return false, &ProviderError{Category: FailureProtocol, Retryable: false, Err: errors.New(\"structured candidate exceeds defensive resource limit\")}"
+        },
+        {
+          "line": 238,
+          "expression": "return false, &ProviderError{Category: FailureProtocol, Retryable: true, Err: err}"
+        },
+        {
+          "line": 276,
+          "expression": "return Candidate{}, &ProviderError{Category: FailureProtocol, Retryable: false, Err: errors.New(\"OpenRouter SSE event exceeds defensive resource limit\")}"
+        },
+        {
+          "line": 281,
+          "expression": "return Candidate{}, &ProviderError{Category: FailureProtocol, Retryable: true, Err: err}"
+        },
+        {
+          "line": 290,
+          "expression": "return Candidate{}, &ProviderError{Category: FailureSchema, Retryable: true, Err: err}"
+        },
+        {
+          "line": 294,
+          "expression": "return Candidate{}, &ProviderError{Category: FailureSchema, Retryable: true, Err: err}"
+        },
+        {
+          "line": 297,
+          "expression": "return Candidate{}, &ProviderError{Category: FailureProtocol, Retryable: true, Err: errors.New(\"clean passage stream differs from final text\")}"
+        },
+        {
+          "line": 417,
+          "expression": "return errors.New(\"structured candidate is not UTF-8\")"
+        },
+        {
+          "line": 420,
+          "expression": "return errors.New(\"structured candidate is empty\")"
+        },
+        {
+          "line": 423,
+          "expression": "return errors.New(\"passage must be the first structured candidate property\")"
+        },
+        {
+          "line": 432,
+          "expression": "return errors.New(\"structured candidate schema_error\")"
+        },
+        {
+          "line": 436,
+          "expression": "return errors.New(\"structured candidate schema_error\")"
+        },
+        {
+          "line": 440,
+          "expression": "return errors.New(\"structured candidate schema_error\")"
+        },
+        {
+          "line": 449,
+          "expression": "return errors.New(\"structured candidate contains trailing content\")"
+        },
+        {
+          "line": 452,
+          "expression": "return errors.New(\"structured candidate schema_error\")"
+        },
+        {
+          "line": 456,
+          "expression": "return errors.New(\"structured candidate schema_error\")"
+        },
+        {
+          "line": 461,
+          "expression": "return errors.New(\"structured candidate schema_error\")"
+        },
+        {
+          "line": 486,
+          "expression": "return errors.New(\"structured candidate contains trailing content\")"
+        },
+        {
+          "line": 497,
+          "expression": "return errors.New(\"structured candidate contains null\")"
+        },
+        {
+          "line": 513,
+          "expression": "return errors.New(\"structured candidate contains a non-string object key\")"
+        },
+        {
+          "line": 534,
+          "expression": "return errors.New(\"structured candidate contains an unexpected delimiter\")"
+        },
+        {
+          "line": 629,
+          "expression": "return &ProviderError{Category: FailureAuthentication, Retryable: false, Err: errors.New(\"OpenRouter authentication failed\")}"
+        },
+        {
+          "line": 631,
+          "expression": "return &ProviderError{Category: FailureAuthorization, Retryable: false, Err: errors.New(\"OpenRouter model or route is unavailable\")}"
+        },
+        {
+          "line": 633,
+          "expression": "return &ProviderError{Category: FailureRateLimited, Retryable: true, Err: errors.New(\"OpenRouter rate limit reached\")}"
+        },
+        {
+          "line": 635,
+          "expression": "return &ProviderError{Category: FailureUnavailable, Retryable: status >= 500, Err: fmt.Errorf(\"OpenRouter returned HTTP %d\", status)}"
+        }
+      ]
+    },
+    {
+      "path": "backend/internal/ai/validator.go",
+      "sites": [
+        {
+          "line": 36,
+          "expression": "return ValidatedBatch{}, invalid(\"passage is empty or invalid UTF-8\")"
+        },
+        {
+          "line": 40,
+          "expression": "return ValidatedBatch{}, invalid(\"passage contains %d words; minimum is %d\", wordCount, spec.MinimumWords)"
+        },
+        {
+          "line": 43,
+          "expression": "return ValidatedBatch{}, invalid(\"passage does not look like English text\")"
+        },
+        {
+          "line": 46,
+          "expression": "return ValidatedBatch{}, invalid(\"tags must contain 1 to 3 values\")"
+        },
+        {
+          "line": 52,
+          "expression": "return ValidatedBatch{}, invalid(\"tag language or content is invalid\")"
+        },
+        {
+          "line": 55,
+          "expression": "return ValidatedBatch{}, invalid(\"tags contain duplicate values\")"
+        },
+        {
+          "line": 60,
+          "expression": "return ValidatedBatch{}, invalid(\"target count differs from input count\")"
+        },
+        {
+          "line": 78,
+          "expression": "return ValidatedBatch{}, invalid(\"target %d source entry differs from input\", index)"
+        },
+        {
+          "line": 82,
+          "expression": "return ValidatedBatch{}, invalid(\"target %d meaning language or content is invalid\", index)"
+        },
+        {
+          "line": 85,
+          "expression": "return ValidatedBatch{}, invalid(\"target %d English meaning only repeats the entry\", index)"
+        },
+        {
+          "line": 92,
+          "expression": "return ValidatedBatch{}, mappingInvalid(\"annotation_syntax_invalid\", index)"
+        },
+        {
+          "line": 97,
+          "expression": "return ValidatedBatch{}, mappingInvalid(\"annotation_target_mismatch\", index)"
+        },
+        {
+          "line": 102,
+          "expression": "return ValidatedBatch{}, invalid(\"target %d hint phrase is invalid\", index)"
+        },
+        {
+          "line": 105,
+          "expression": "return ValidatedBatch{}, mappingInvalid(\"passage_annotation_missing\", index)"
+        },
+        {
+          "line": 108,
+          "expression": "return ValidatedBatch{}, mappingInvalid(\"hint_annotation_missing\", index)"
+        },
+        {
+          "line": 130,
+          "expression": "return ValidatedBatch{}, mappingInvalid(\"passage_target_missing\", index)"
+        },
+        {
+          "line": 133,
+          "expression": "return ValidatedBatch{}, mappingInvalid(\"hint_occurrence_missing\", index)"
+        },
+        {
+          "line": 168,
+          "expression": "return ValidatedBatch{}, mappingInvalid(\"passage_occurrence_collision\", occupied[i].target)"
+        },
+        {
+          "line": 188,
+          "expression": "func mappingInvalid(reason string, index int) error { return &MappingValidationError{reason, index} }"
+        }
+      ]
+    },
+    {
+      "path": "backend/internal/ai/annotations.go",
+      "sites": [
+        {
+          "line": 40,
+          "expression": "parser.err = mappingInvalid(\"annotation_syntax_invalid\", -1)"
+        },
+        {
+          "line": 129,
+          "expression": "return nil, mappingInvalid(\"annotation_source_unknown\", -1)"
+        },
+        {
+          "line": 154,
+          "expression": "return mappingInvalid(\"mapping_surface_absent\", target)"
+        },
+        {
+          "line": 165,
+          "expression": "return mappingInvalid(reason, target)"
+        }
+      ]
+    }
+  ],
+  "baseline": {
+    "command": "Isolated pinned Go 1.26.7 container; --network none; backend read-only; go test ./internal/ai -count=1 -coverprofile=/tmp/ai.cover && go tool cover -func=/tmp/ai.cover",
+    "result": {
+      "chunk_id": "61a926",
+      "wall_time_seconds": 0.000164042,
+      "exit_code": 0,
+      "original_token_count": 911,
+      "output": "ok  \twordweave/internal/ai\t2.084s\tcoverage: 72.6% of statements\nwordweave/internal/ai/annotations.go:35:\tPush\t\t\t92.3%\nwordweave/internal/ai/annotations.go:114:\tparseAnnotatedText\t100.0%\nwordweave/internal/ai/annotations.go:120:\tgroupAnnotations\t100.0%\nwordweave/internal/ai/annotations.go:138:\tvalidateAnnotations\t95.2%\nwordweave/internal/ai/contract.go:84:\t\tError\t\t\t0.0%\nwordweave/internal/ai/contract.go:91:\t\tUnwrap\t\t\t0.0%\nwordweave/internal/ai/credential_store.go:26:\tNewCredentialStore\t0.0%\nwordweave/internal/ai/credential_store.go:30:\tGet\t\t\t0.0%\nwordweave/internal/ai/credential_store.go:49:\tPut\t\t\t0.0%\nwordweave/internal/ai/credential_store.go:73:\tStatus\t\t\t0.0%\nwordweave/internal/ai/lexicon.go:50:\t\tLoadEmbeddedLexicon\t100.0%\nwordweave/internal/ai/lexicon.go:52:\t\tloadLexicon\t\t88.5%\nwordweave/internal/ai/lexicon.go:89:\t\tnewLexicon\t\t89.5%\nwordweave/internal/ai/lexicon.go:123:\t\tAnalyze\t\t\t100.0%\nwordweave/internal/ai/lexicon.go:134:\t\tknownForms\t\t100.0%\nwordweave/internal/ai/lexicon.go:165:\t\tanalyses\t\t91.7%\nwordweave/internal/ai/lexicon.go:202:\t\tinflections\t\t93.3%\nwordweave/internal/ai/lexicon.go:229:\t\tpluralOrThird\t\t100.0%\nwordweave/internal/ai/lexicon.go:241:\t\tverbForms\t\t87.5%\nwordweave/internal/ai/occurrence_scan.go:19:\twordRune\t\t100.0%\nwordweave/internal/ai/occurrence_scan.go:21:\tnewTextIndex\t\t95.0%\nwordweave/internal/ai/occurrence_scan.go:51:\tfind\t\t\t87.1%\nwordweave/internal/ai/occurrence_scan.go:98:\tscan\t\t\t78.9%\nwordweave/internal/ai/openrouter.go:29:\t\tNewOpenRouter\t\t0.0%\nwordweave/internal/ai/openrouter.go:46:\t\tOpen\t\t\t0.0%\nwordweave/internal/ai/openrouter.go:80:\t\tCheckCompatibility\t0.0%\nwordweave/internal/ai/openrouter.go:169:\tValidateAPIKey\t\t0.0%\nwordweave/internal/ai/openrouter.go:194:\tClose\t\t\t0.0%\nwordweave/internal/ai/openrouter.go:196:\tReceive\t\t\t73.8%\nwordweave/internal/ai/openrouter.go:307:\tExtract\t\t\t91.7%\nwordweave/internal/ai/openrouter.go:345:\ttrailingHighSurrogate\t100.0%\nwordweave/internal/ai/openrouter.go:364:\tpassageStringStart\t81.8%\nwordweave/internal/ai/openrouter.go:397:\tfindJSONStringEnd\t100.0%\nwordweave/internal/ai/openrouter.go:415:\tdecodeCandidateStrict\t81.2%\nwordweave/internal/ai/openrouter.go:467:\texactObjectKeys\t\t100.0%\nwordweave/internal/ai/openrouter.go:479:\trejectDuplicateJSONKeys\t100.0%\nwordweave/internal/ai/openrouter.go:491:\tinspectJSONValue\t86.7%\nwordweave/internal/ai/openrouter.go:538:\topenRouterRequest\t100.0%\nwordweave/internal/ai/openrouter.go:556:\tsystemPrompt\t\t100.0%\nwordweave/internal/ai/openrouter.go:564:\tuserPrompt\t\t100.0%\nwordweave/internal/ai/openrouter.go:600:\toutputSchema\t\t100.0%\nwordweave/internal/ai/openrouter.go:626:\tmapOpenRouterStatus\t0.0%\nwordweave/internal/ai/openrouter.go:639:\tstringSliceContains\t0.0%\nwordweave/internal/ai/snapshot.go:15:\t\tDecodeSnapshot\t\t86.4%\nwordweave/internal/ai/snapshot.go:51:\t\tvalidEntryMeaning\t100.0%\nwordweave/internal/ai/snapshot.go:57:\t\tValidateSnapshot\t82.4%\nwordweave/internal/ai/snapshot.go:86:\t\tvalidStoredSpans\t87.5%\nwordweave/internal/ai/validator.go:17:\t\tNewValidator\t\t100.0%\nwordweave/internal/ai/validator.go:19:\t\tValidate\t\t77.3%\nwordweave/internal/ai/validator.go:184:\t\tError\t\t\t100.0%\nwordweave/internal/ai/validator.go:187:\t\tUnwrap\t\t\t0.0%\nwordweave/internal/ai/validator.go:188:\t\tmappingInvalid\t\t100.0%\nwordweave/internal/ai/validator.go:190:\t\tCountWords\t\t100.0%\nwordweave/internal/ai/validator.go:211:\t\tlooksEnglish\t\t100.0%\nwordweave/internal/ai/validator.go:225:\t\tmatchesMeaningLanguage\t85.0%\nwordweave/internal/ai/validator.go:259:\t\tcontainsFold\t\t100.0%\nwordweave/internal/ai/validator.go:268:\t\tspansOverlap\t\t0.0%\nwordweave/internal/ai/validator.go:272:\t\tinvalid\t\t\t100.0%\ntotal:\t\t\t\t\t\t(statements)\t\t72.6%\n"
+    },
+    "coverageScope": "AI package unit statements only; excludes integration tags and HTTP/DB/frontend. Not branch or total system coverage."
+  },
+  "findings": {
+    "existingTestsAlreadyCoverBothReportedCategories": "TestInlineAnnotationValidationBoundaries includes unknown_source/noncanonical_source and no_hint_marker.",
+    "genericValidatorFailureSites": 11,
+    "mappingReasonCodes": [
+      "annotation_syntax_invalid",
+      "annotation_source_unknown",
+      "annotation_target_mismatch",
+      "passage_annotation_missing",
+      "hint_annotation_missing",
+      "mapping_surface_absent",
+      "mapping_relation_unknown",
+      "mapping_relation_rejected",
+      "passage_target_missing",
+      "hint_occurrence_missing",
+      "passage_occurrence_collision"
+    ],
+    "scopeNote": "Mapping list from current validator/parser. Compatibility probe and provider/schema/preflight/DB/transport reasons are additional, not included in these 11.",
+    "loggingGap": "generation_handlers.go only extracts MappingValidationError details; 11 generic validation sites collapse into content_validation_failed/-1.",
+    "testOracleGap": "TestValidatorRejectsMissingTargetAndWrongMeaningLanguage supplies multiple simultaneous defects and asserts only non-nil; cannot prove later branch coverage.",
+    "settlementRiskNotYetReproduced": "settleGenerationFailure suppresses non-race persistence errors; failure DTO sets quota_refunded true unconditionally; fault-injection verification required.",
+    "retryabilityRiskNotYetReproduced": "ProviderError Retryable varies by category, while mid-stream failures use generationFailureDTO(..., true, ...); mapping needs explicit contract assertion."
+  },
+  "realModelCalls": 0,
+  "uatRuntimeChanges": 0,
+  "actualDatabaseReadsOrWrites": 0,
+  "newRegressionCasesExecuted": 0,
+  "priorInterruptedEdits": "Shared capture and ordinary-build-disable-test partial edits remain unverified and undeployed; paused, not reverted.",
+  "execution": "Single main session backend-ethan role; no subagents, no independent-model review or actual-model switching claimed."
+}

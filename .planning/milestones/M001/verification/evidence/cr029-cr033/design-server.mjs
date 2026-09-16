@@ -1,0 +1,4 @@
+import{createServer}from'node:http';import{readFile}from'node:fs/promises';import{resolve,extname}from'node:path';import{dir}from'./lib.mjs';
+const root=resolve(dir,'../../../design');
+createServer(async(req,res)=>{try{let path=decodeURIComponent(new URL(req.url,'http://localhost').pathname);if(path.endsWith('/'))path+='index.html';const file=resolve(root,'.'+path);if(!file.startsWith(root+'/'))throw Error('path');const body=await readFile(file);res.writeHead(200,{'content-type':({'.html':'text/html','.js':'text/javascript','.css':'text/css','.svg':'image/svg+xml','.woff2':'font/woff2'})[extname(file)]||'application/octet-stream'});res.end(body);}catch{res.writeHead(404);res.end();}}).listen(6110,'127.0.0.1',()=>console.log('QA approved design server on 6110'));
+

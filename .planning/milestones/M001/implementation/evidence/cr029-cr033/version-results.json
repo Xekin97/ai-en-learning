@@ -1,0 +1,37 @@
+[
+  {
+    "combination": "old-frontend-new-backend",
+    "ssr": "contract safely rejected; no quota value",
+    "client": "contract safely rejected; no quota value",
+    "result": "PASS"
+  },
+  {
+    "combination": "old-old",
+    "ssr": "compatible detail rendered",
+    "scope": "rollback smoke only; quota fix absent",
+    "result": "PASS"
+  },
+  {
+    "combination": "new-frontend-old-backend",
+    "ssr": "contract safely rejected; no quota value",
+    "client": "contract safely rejected; no quota value",
+    "result": "PASS"
+  },
+  {
+    "combination": "new-new",
+    "result": "PASS",
+    "groupPuts": 3,
+    "checks": [
+      "real registration return to Review without session creation",
+      "admin return priority",
+      "real GET finite 5 / admin null",
+      "real PUT zero/unlimited/finite full user",
+      "no reload quota update",
+      "SSR refresh and mapped payload",
+      "logout private cleanup",
+      "no hydration errors",
+      "repeated after pair rollback"
+    ],
+    "providerCalls": 0
+  }
+]

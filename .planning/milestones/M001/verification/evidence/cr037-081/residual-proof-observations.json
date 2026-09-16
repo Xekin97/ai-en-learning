@@ -1,0 +1,24 @@
+{
+  "ui": {
+    "viewport": 390,
+    "alertText": "Check the information you entered.",
+    "alertInsideModal": false,
+    "accessibleTree": "- link \"Skip to main content\":\n  - /url: \"#main-content\"\n- banner:\n  - link \"WordWeave\":\n    - /url: /\n  - text: Interface language\n  - combobox \"Interface language\":\n    - option \"中文\"\n    - option \"EN\" [selected]\n  - button \"Open navigation\"\n- main:\n  - paragraph: Account\n  - heading \"Account settings\" [level=1]\n  - alert: Check the information you entered.\n  - heading \"Account\" [level=2]\n  - term: Username\n  - definition: qa081_diag\n  - term: Current plan\n  - definition: Basic\n  - term: Sign-in method\n  - definition: Username and password\n  - button \"Change password\"\n  - button \"Sign out\"\n  - heading \"Delete account\" [level=2]\n  - paragraph: This can’t be undone.\n  - paragraph: Your stories, review history, and account will be deleted.\n  - button \"Delete my account\"\n- dialog \"Change password\":\n  - heading \"Change password\" [level=2]\n  - text: Current password\n  - textbox \"Current password Confirm it’s you\": [redacted synthetic field]\n  - text: Confirm it’s you New password\n  - textbox \"New password 8–128 characters\": [redacted synthetic field]\n  - text: 8–128 characters Confirm new password\n  - textbox \"Confirm new password Enter the same password again\": [redacted synthetic field]\n  - text: Enter the same password again Your current session will stay open. Other sessions will be signed out.\n  - button \"Cancel\"\n  - button \"Update password\"",
+    "alertInAccessibleTree": true,
+    "redaction": "Only synthetic password-field values are redacted; observations and verdict unchanged."
+  },
+  "api": {
+    "method": "PUT",
+    "path": "/api/v1/me/password",
+    "status": 204,
+    "headers": {
+      "server": "nginx",
+      "date": "Mon, 07 Sep 2026 02:00:46 GMT",
+      "connection": "keep-alive",
+      "content-security-policy": "default-src 'self'; object-src 'none'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'",
+      "referrer-policy": "strict-origin-when-cross-origin",
+      "x-content-type-options": "nosniff"
+    },
+    "bodyBytes": 0
+  }
+}

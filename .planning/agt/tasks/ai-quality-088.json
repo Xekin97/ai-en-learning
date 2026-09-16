@@ -1,0 +1,80 @@
+{
+  "objective": "qa-quinn：用户已接受UAT086，要求用此前测试OpenRouter Key/model配置本地UAT6001，并仅进行真实模型造文质量专项。不要重复全覆盖测试。只按088新授权工作，旧083已结束。你不是唯一工作者，保留他人编辑。",
+  "inputs": [
+    ".planning/workflow/state.yaml",
+    ".planning/agt/agents.yaml",
+    ".planning/agt/project.yaml",
+    ".planning/agt/model-routing-v1.lock.json",
+    ".planning/milestones/M001/reviews/uat-086-acceptance-ai-quality-authorization.md",
+    ".planning/milestones/M001/verification/uat-086-handoff.md",
+    ".planning/milestones/M001/verification/ai-evaluation.md",
+    ".planning/milestones/M001/product/ai-behavior.md",
+    ".planning/milestones/M001/technical/ai-integration.md",
+    ".planning/milestones/M001/technical/api/index.md",
+    "backend/internal/ai/openrouter.go",
+    "backend/internal/ai/contract.go",
+    ".planning/milestones/M001/verification/evidence/uat-086/deploy.mjs",
+    ".planning/milestones/M001/verification/evidence/uat-086/smoke.mjs"
+  ],
+  "write_scope": [
+    ".planning/milestones/M001/verification/evidence/ai-quality-088",
+    ".planning/milestones/M001/verification/ai-quality-088-report.md",
+    ".planning/milestones/M001/verification/ai-quality-088-samples.md",
+    ".planning/milestones/M001/verification/ai-evaluation.md",
+    ".planning/milestones/M001/verification/uat.md",
+    ".planning/milestones/M001/handoffs/verification.md"
+  ],
+  "risk": "high",
+  "user_supplied_quality_samples": [
+    {
+      "original_entries": ["Alleviate", "Undermine", "Facilitate", "Deteriorate", "Perceive"],
+      "preferred_meaning_language": "zh",
+      "preferred_scenario": "discussion",
+      "preferred_length": "medium"
+    },
+    {
+      "original_entries": ["Sustainable", "Prevalent", "Vulnerable", "Ambiguous", "Coherent"],
+      "preferred_meaning_language": "en",
+      "preferred_scenario": "news",
+      "preferred_length": "long"
+    }
+  ],
+  "sample_selection_clarification": "The two user-supplied five-word sets replace planned samples rather than increase request count. Normalize case only after exact frozen-vocabulary lookup and honor current group policy. Prefer a third one-word Japanese/story/short sample. No passage occurrence order or exact surface-form requirement. News content is an AI language-learning example, not factual reporting. After a successful compatibility probe, an individual content_validation_failed result does not cancel the remaining distinct planned samples: preserve it without retrying that input and continue the next distinct sample within the total cap. Stop for actual credential/balance/provider-wide availability blockers. Do not blame unseen raw meanings on the model based only on a server validation category.",
+  "execution_clarification": {
+    "recorded_at": "2026-09-07T06:27:28Z",
+    "user_context": "此前真实生成可能需要1至2分钟，30秒测试工具等待不足。",
+    "qa_client_timeout_ms": 300000,
+    "production_timeout_changes": false,
+    "initial_enable_attempt": "QA client default 30000ms timeout; not proof of model incompatibility",
+    "recovery": "Read-only confirm no first probe remains active. If already enabled, no repeat. If client interruption alone left disabled, one explicit recovery probe using stored encrypted credential is allowed.",
+    "total_inference_request_cap": 5,
+    "sample_cap_after_recovery_probe": 3,
+    "coverage_after_recovery": "Prioritize three meaning languages and different scenes/lengths; report omitted fourth scene without extra requests.",
+    "precedence": "This execution clarification supersedes the one-probe/four-sample count only when the specified QA-client-timeout recovery is needed. Other acceptance boundaries remain unchanged.",
+    "error_safety": "Never persist or echo raw Playwright errors that include request headers; controlled categories and timeout only."
+  },
+  "prior_attempts": [],
+  "acceptance": [
+    "完整使用agt-verify-milestone及所有必读引用/模型路由；state=verification/qa-quinn active、功能UAT用户接受、088授权。只读必要生成契约与旧安全部署方法，不重读/重跑所有历史UI用例。",
+    "用户指定模型deepseek/deepseek-v4-flash-0731。根主控已实际查OpenRouter models API 200找到精确ID及structured_outputs/response_format；你可保存自己的只读目录摘录。模型页面 https://openrouter.ai/deepseek/deepseek-v4-flash-0731；不要自行替换模型。",
+    "Key由根主控通过禁回显stdin提供，不在任务包/代码/报告/argv/输出写原文。你先创建无Key的安全输入helper：TTY raw mode/no echo，打印 READY_FOR_SECRET，读取一行进内存后通过产品管理员PUT存储，执行完释放；告诉主控exec session ID，让主控write_stdin注入。不要从历史文件广搜Key、不要将Key转发到旧本地模拟服务。若工具session不是全局共享，由根主控启动helper然后供Key，配置逻辑仍由你编写。",
+    "配置前安全只读探查当前admin credential metadata/models/groups和运行环境，记录脱敏前态。当前backend providerBase=http://host.docker.internal:6002/v1，确认为mock-openrouter.mjs PID77903；不得把mock输出当真实AI。以实际Config.Env内存构造并逐项验证，仅允许OPENROUTER_BASE_URL改https://openrouter.ai/api/v1。私有0700备份(敏感文件0600)、无active gen、保留DB和账号密码/历史资料/模型/组旧设置，固定backend SHA不build/pull/migrate，只recreate backend，frontend/DB/Nginx不重建，可reload既有Nginx。报告不输出配置秘密。",
+    "正常管理员API替换加密测试Key；必要时GET官方https://openrouter.ai/api/v1/key只读验证有效性但不输出余额/标识等私密信息（官方文档https://openrouter.ai/docs/api_reference/limits）。复用或新增精确模型，启用必须正常兼容性检查不绕过。只basic组添加新模型并保留原其他model IDs/额度/max_entries/长度；确认provider/integration确为旧模拟模型可停用不删除；其他组不变。",
+    "最多一次模型启用probe+四次用户造文调用，无自动重试/换模型/固定48矩阵。必要API GET不计生成。兼容失败即如实停，不能BYPASS；生成失败记录原始安全终态、已到达段落、受控低基数原因，不打印系统prompt/Key/token。若暂无现有授权长度适合计划，调整样本而非改权益。初始4样本应覆盖三种释义语言与四场景，尽量覆盖短中长特长且有1/5词对照及自然词形；选冻结词库真实存在词条。",
+    "用专用质量账号（若需创建只一个明确uat_ai_quality_088名称，密码只作为本地专用凭据）避免改变既有学习者内容。保存有效生成原文/targets/tags、输入、时间、prompt/validator版本、run与终态；脱敏generation_token/Cookie/CSRF/API key。Markdown完整展示原始内容供用户看，可在专用账号保存本轮有效样本，但不得保存无效内容或向旧用户库写入。",
+    "逐篇语义评估：自然/语法、连贯而非单句拼凑、场景相关性、目标用法/所有输入覆盖但不限制出现顺序/词形、情境释义准确/目标语言、短语自然且包含目标、标签为篇章主题/目标语言1–3、>=档位词数下限/无整文或短语翻译/中性教育语境。区分确定性结构通过和主观质量，给具体原文证据及保留意见，不机械给全PASS；有限4篇不称稳定性或全模型发布认证。",
+    "不做unit/lint/build、全站视觉、多角色/复习/权限等重复测试。仅最小确认6001真实造文链路/内容可见，其他UAT通过范围不回退。不改生产源码、prompt、validator、API或设计；若发现真实偏差报告归属，等待主控/用户方向。",
+    "只写允许QA增量，历史正文保留，不改state/agents/history、Git提交、发布状态。报告具体配置差异、真实调用数、样本及质量、当前用户能选模型方式、保存的数据与Key安全边界（聊天中出现过的测试Key上线前应轮换）。供应商usage/cost没观测则unknown，不声称0费用。清理仅自己临时资源/新测试会话，保留配置和用户要看的样本；6001保持可用。结束交原始报告，不自动返工。"
+  ],
+  "report": [
+    "configuration_result",
+    "real_model_id",
+    "real_call_count",
+    "quality_verdict_per_sample",
+    "complete_samples",
+    "limitations",
+    "existing_data_preservation",
+    "original_report",
+    "actual_model_and_usage_if_observed"
+  ]
+}

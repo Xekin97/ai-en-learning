@@ -1,0 +1,4097 @@
+{
+  "revision": "BOUNDED-CONTINUATION-R9-LIVE-20-20260912",
+  "role": "backend-ethan",
+  "authorization": {
+    "user_response": "再测 20 次吧",
+    "maximum_upstream_calls": 20,
+    "used_calls": 19,
+    "remaining_calls": 1,
+    "carry_over_from_previous_round": 0,
+    "includes_automatic_continuation": true,
+    "status": "complete_safe_budget_stop",
+    "stop_reason": "One remaining slot cannot cover a new generation with its possible second upstream call."
+  },
+  "scope": {
+    "account_id": "01a08e5a-2250-7854-81df-5aeb26e7f461",
+    "username": "wordweave_uat",
+    "base_url": "http://localhost:6001",
+    "prompt_version": "m001-v5-r9",
+    "validator_version": "m001-v5-wn31-r2",
+    "provider": "together",
+    "allow_fallbacks": false,
+    "application_changes": false,
+    "config_changes": false,
+    "deployment": false,
+    "database_cleanup": false,
+    "manual_resends": 0,
+    "frontend_changes": false,
+    "full_site_regression": false,
+    "test_client_timeout_ms": 180000,
+    "timeout_occurrences": 0
+  },
+  "sample_order": {
+    "configurations": [
+      "B/zh/discussion/medium",
+      "D/en/story/xlong",
+      "A/zh/story/short",
+      "D/ja/news/long",
+      "C/en/business/short"
+    ],
+    "models_alternate": [
+      "minimax/minimax-m3",
+      "z-ai/glm-5.3-flash"
+    ],
+    "completed_generation_runs": 15,
+    "coverage": "First complete five-pair cycle, then both models B medium and D xlong, then MiniMax A short; budget prevents next GLM run. Every request uses five entries."
+  },
+  "aggregates": {
+    "current": {
+      "generations": 15,
+      "calls": 19,
+      "first_pass": 10,
+      "valid": 12,
+      "continuations": 4,
+      "salvaged": 2,
+      "models": [
+        {
+          "model": "minimax/minimax-m3",
+          "generations": 8,
+          "calls": 10,
+          "first_pass": 5,
+          "valid": 5,
+          "continuations": 2,
+          "salvaged": 0,
+          "min_ms": 6063,
+          "max_ms": 77348,
+          "prompt_tokens": 14487,
+          "completion_tokens": 7300
+        },
+        {
+          "model": "z-ai/glm-5.3-flash",
+          "generations": 7,
+          "calls": 9,
+          "first_pass": 5,
+          "valid": 7,
+          "continuations": 2,
+          "salvaged": 2,
+          "min_ms": 21187,
+          "max_ms": 160326,
+          "prompt_tokens": 9960,
+          "completion_tokens": 33440
+        }
+      ]
+    },
+    "cumulative_r9": {
+      "generations": 23,
+      "calls": 28,
+      "first_pass": 17,
+      "valid": 19,
+      "continuations": 5,
+      "salvaged": 2,
+      "models": [
+        {
+          "model": "minimax/minimax-m3",
+          "generations": 12,
+          "calls": 15,
+          "first_pass": 8,
+          "valid": 8,
+          "continuations": 3,
+          "salvaged": 0,
+          "min_ms": 6063,
+          "max_ms": 77348,
+          "prompt_tokens": 20982,
+          "completion_tokens": 10523
+        },
+        {
+          "model": "z-ai/glm-5.3-flash",
+          "generations": 11,
+          "calls": 13,
+          "first_pass": 9,
+          "valid": 11,
+          "continuations": 2,
+          "salvaged": 2,
+          "min_ms": 21187,
+          "max_ms": 160326,
+          "prompt_tokens": 15192,
+          "completion_tokens": 44052
+        }
+      ]
+    }
+  },
+  "records": [
+    {
+      "case_id": 1,
+      "round": 1,
+      "reference_case_id": 3,
+      "pair_id": 2,
+      "group": "B",
+      "model_id": "01a07fe3-5c48-736a-a86b-1f4dabd7cb87",
+      "provider_model_id": "minimax/minimax-m3",
+      "meaning_language": "zh",
+      "scenario": "discussion",
+      "length": "medium",
+      "entries": [
+        "young",
+        "grape",
+        "weekend",
+        "danger",
+        "enforce"
+      ],
+      "started_at": "2026-09-12T05:51:55.744Z",
+      "status": "generation.failed",
+      "upstream_calls": 1,
+      "budget_reserved": 2,
+      "image": "sha256:c4b00eb124fd7ccccd62223599336db9ada358861d09e6f852725f477aadefb8",
+      "http_status": 200,
+      "request_id": "req_UuldOma9PQmQeDw3SbIvRA",
+      "run_id": "01a0942c-237b-7faf-a53f-bf02ff5df443",
+      "first_delta_ms": 3142,
+      "code": "content_validation_failed",
+      "quota_refunded": true,
+      "duration_ms": 9759,
+      "passage_chars": 1772,
+      "terminal_count": 1,
+      "continuation": false,
+      "evidence_id": "d7fe0221-b4c6-475e-b6ac-7caf74a07910",
+      "expires_at": "2026-09-13T05:51:55.75140068Z",
+      "prompt_version": "m001-v5-r9",
+      "summary": {
+        "request_id": "req_UuldOma9PQmQeDw3SbIvRA",
+        "run_id": "01a0942c-237b-7faf-a53f-bf02ff5df443",
+        "model_id": "01a07fe3-5c48-736a-a86b-1f4dabd7cb87",
+        "elapsed_ms": 9754,
+        "stages": [
+          {
+            "stage": "request",
+            "state": "ok",
+            "duration_ms": 9754,
+            "check": "body",
+            "reason": ""
+          },
+          {
+            "stage": "preflight",
+            "state": "ok",
+            "duration_ms": 23,
+            "check": "transaction_commit",
+            "reason": ""
+          },
+          {
+            "stage": "provider_open",
+            "state": "ok",
+            "duration_ms": 3057,
+            "check": "response_headers",
+            "reason": ""
+          },
+          {
+            "stage": "provider_stream",
+            "state": "ok",
+            "duration_ms": 6659,
+            "check": "",
+            "reason": ""
+          },
+          {
+            "stage": "passage_decode",
+            "state": "ok",
+            "duration_ms": 6659,
+            "check": "clean_consistency",
+            "reason": ""
+          },
+          {
+            "stage": "candidate_decode",
+            "state": "ok",
+            "duration_ms": 4,
+            "check": "hint_size",
+            "reason": ""
+          },
+          {
+            "stage": "content_validate",
+            "state": "failed",
+            "duration_ms": 2,
+            "check": "passage_relations",
+            "reason": "mapping_relation_rejected"
+          },
+          {
+            "stage": "draft_commit",
+            "state": "not_run",
+            "duration_ms": -1,
+            "check": "",
+            "reason": ""
+          },
+          {
+            "stage": "settlement",
+            "state": "ok",
+            "duration_ms": 3,
+            "check": "cas",
+            "reason": ""
+          },
+          {
+            "stage": "delivery",
+            "state": "ok",
+            "duration_ms": 6670,
+            "check": "",
+            "reason": ""
+          },
+          {
+            "stage": "continuation",
+            "state": "not_run",
+            "duration_ms": -1,
+            "check": "",
+            "reason": ""
+          }
+        ],
+        "first_failure": {
+          "stage": "content_validate",
+          "state": "failed",
+          "begin_ms": 9749,
+          "end_ms": 9751,
+          "duration_ms": 2,
+          "check": "passage_relations",
+          "detail": {
+            "reason": "mapping_relation_rejected",
+            "field": "passage",
+            "target_index": 3,
+            "actual": -1,
+            "limit": -1,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        },
+        "confirmed_outcome": "failed",
+        "quota_refunded": true,
+        "settlement_pending": false
+      },
+      "continuation_facts": [],
+      "raw_model_responses": 1,
+      "usage": [
+        {
+          "id": "gen-1789192316-PBVFr2wWIQAgG5JPSZle",
+          "usage_provided": true,
+          "prompt_tokens": 1347,
+          "completion_tokens": 582,
+          "total_tokens": 1929,
+          "finish_reason": "stop"
+        }
+      ],
+      "capture_state": {
+        "coalesced_progress": 127,
+        "dropped_records": 0,
+        "dropped_bytes": 0,
+        "truncated": false,
+        "io_failed": false,
+        "redacted": false,
+        "model_ended": true,
+        "unavailable": false
+      }
+    },
+    {
+      "case_id": 2,
+      "round": 1,
+      "reference_case_id": 4,
+      "pair_id": 2,
+      "group": "B",
+      "model_id": "01a07fe3-f046-7017-97f8-c15539050441",
+      "provider_model_id": "z-ai/glm-5.3-flash",
+      "meaning_language": "zh",
+      "scenario": "discussion",
+      "length": "medium",
+      "entries": [
+        "young",
+        "grape",
+        "weekend",
+        "danger",
+        "enforce"
+      ],
+      "started_at": "2026-09-12T05:52:05.731Z",
+      "status": "generation.validated",
+      "upstream_calls": 1,
+      "budget_reserved": 2,
+      "image": "sha256:c4b00eb124fd7ccccd62223599336db9ada358861d09e6f852725f477aadefb8",
+      "http_status": 200,
+      "request_id": "req_u5irtMoOD73uL254T14aOA",
+      "run_id": "01a0942c-4a6d-75dc-abe1-2a21355757b1",
+      "first_delta_ms": 19159,
+      "preview_equals_result": true,
+      "target_order_valid": true,
+      "target_count": 5,
+      "tag_count": 2,
+      "result_sha256": "f4c9be7bfda33730871406eba4b7a92a6d7fe75e084c7dd2a117c06f650a9504",
+      "annotation_leaked": false,
+      "changed_form_occurrences": 1,
+      "repeated_passage_targets": 5,
+      "repeated_hint_targets": 0,
+      "positions_valid": true,
+      "duration_ms": 21940,
+      "passage_chars": 804,
+      "terminal_count": 1,
+      "continuation": false,
+      "evidence_id": "f08ac5da-6020-44af-899e-06e4a704ca58",
+      "expires_at": "2026-09-13T05:52:05.737169921Z",
+      "prompt_version": "m001-v5-r9",
+      "summary": {
+        "request_id": "req_u5irtMoOD73uL254T14aOA",
+        "run_id": "01a0942c-4a6d-75dc-abe1-2a21355757b1",
+        "model_id": "01a07fe3-f046-7017-97f8-c15539050441",
+        "elapsed_ms": 22127,
+        "stages": [
+          {
+            "stage": "request",
+            "state": "ok",
+            "duration_ms": 22127,
+            "check": "body",
+            "reason": ""
+          },
+          {
+            "stage": "preflight",
+            "state": "ok",
+            "duration_ms": 11,
+            "check": "transaction_commit",
+            "reason": ""
+          },
+          {
+            "stage": "provider_open",
+            "state": "ok",
+            "duration_ms": 1443,
+            "check": "response_headers",
+            "reason": ""
+          },
+          {
+            "stage": "provider_stream",
+            "state": "ok",
+            "duration_ms": 20651,
+            "check": "",
+            "reason": ""
+          },
+          {
+            "stage": "passage_decode",
+            "state": "ok",
+            "duration_ms": 2765,
+            "check": "clean_consistency",
+            "reason": ""
+          },
+          {
+            "stage": "candidate_decode",
+            "state": "ok",
+            "duration_ms": 3,
+            "check": "hint_size",
+            "reason": ""
+          },
+          {
+            "stage": "content_validate",
+            "state": "ok",
+            "duration_ms": 5,
+            "check": "context",
+            "reason": ""
+          },
+          {
+            "stage": "draft_commit",
+            "state": "ok",
+            "duration_ms": 8,
+            "check": "transaction_commit",
+            "reason": ""
+          },
+          {
+            "stage": "settlement",
+            "state": "not_run",
+            "duration_ms": -1,
+            "check": "",
+            "reason": ""
+          },
+          {
+            "stage": "delivery",
+            "state": "ok",
+            "duration_ms": 20672,
+            "check": "",
+            "reason": ""
+          },
+          {
+            "stage": "continuation",
+            "state": "not_run",
+            "duration_ms": -1,
+            "check": "",
+            "reason": ""
+          }
+        ],
+        "confirmed_outcome": "valid",
+        "quota_refunded": false,
+        "settlement_pending": false
+      },
+      "continuation_facts": [],
+      "raw_model_responses": 1,
+      "usage": [
+        {
+          "id": "gen-1789192325-CyhUT8GBu3gr5eniIPR7",
+          "usage_provided": true,
+          "prompt_tokens": 1171,
+          "completion_tokens": 2238,
+          "total_tokens": 3409,
+          "finish_reason": "stop"
+        }
+      ],
+      "capture_state": {
+        "coalesced_progress": 297,
+        "dropped_records": 0,
+        "dropped_bytes": 0,
+        "truncated": false,
+        "io_failed": false,
+        "redacted": false,
+        "model_ended": true,
+        "unavailable": false
+      }
+    },
+    {
+      "case_id": 3,
+      "round": 1,
+      "reference_case_id": 9,
+      "pair_id": 5,
+      "group": "D",
+      "model_id": "01a07fe3-5c48-736a-a86b-1f4dabd7cb87",
+      "provider_model_id": "minimax/minimax-m3",
+      "meaning_language": "en",
+      "scenario": "story",
+      "length": "xlong",
+      "entries": [
+        "sustainable",
+        "prevalent",
+        "vulnerable",
+        "ambiguous",
+        "coherent"
+      ],
+      "started_at": "2026-09-12T05:52:27.826Z",
+      "status": "generation.failed",
+      "upstream_calls": 2,
+      "budget_reserved": 2,
+      "image": "sha256:c4b00eb124fd7ccccd62223599336db9ada358861d09e6f852725f477aadefb8",
+      "http_status": 200,
+      "request_id": "req_jMzg4MnBrggE4ndAPiOdCA",
+      "run_id": "01a0942c-a0bc-7123-8eaf-9d8855c8b389",
+      "first_delta_ms": 2849,
+      "code": "content_validation_failed",
+      "quota_refunded": true,
+      "duration_ms": 17821,
+      "passage_chars": 2987,
+      "terminal_count": 1,
+      "continuation": true,
+      "evidence_id": "694a6ec9-c082-40f6-9aa3-41767b99aa85",
+      "expires_at": "2026-09-13T05:52:27.831345292Z",
+      "prompt_version": "m001-v5-r9",
+      "summary": {
+        "request_id": "req_jMzg4MnBrggE4ndAPiOdCA",
+        "run_id": "01a0942c-a0bc-7123-8eaf-9d8855c8b389",
+        "model_id": "01a07fe3-5c48-736a-a86b-1f4dabd7cb87",
+        "elapsed_ms": 17815,
+        "stages": [
+          {
+            "stage": "request",
+            "state": "ok",
+            "duration_ms": 17815,
+            "check": "body",
+            "reason": ""
+          },
+          {
+            "stage": "preflight",
+            "state": "ok",
+            "duration_ms": 6,
+            "check": "transaction_commit",
+            "reason": ""
+          },
+          {
+            "stage": "provider_open",
+            "state": "ok",
+            "duration_ms": 2810,
+            "check": "response_headers",
+            "reason": ""
+          },
+          {
+            "stage": "provider_stream",
+            "state": "ok",
+            "duration_ms": 7324,
+            "check": "",
+            "reason": ""
+          },
+          {
+            "stage": "passage_decode",
+            "state": "ok",
+            "duration_ms": 7326,
+            "check": "clean_consistency",
+            "reason": ""
+          },
+          {
+            "stage": "candidate_decode",
+            "state": "ok",
+            "duration_ms": 2,
+            "check": "hint_size",
+            "reason": ""
+          },
+          {
+            "stage": "content_validate",
+            "state": "failed",
+            "duration_ms": 1,
+            "check": "passage_ownership",
+            "reason": "annotation_source_unknown"
+          },
+          {
+            "stage": "draft_commit",
+            "state": "not_run",
+            "duration_ms": -1,
+            "check": "",
+            "reason": ""
+          },
+          {
+            "stage": "settlement",
+            "state": "ok",
+            "duration_ms": 1,
+            "check": "cas",
+            "reason": ""
+          },
+          {
+            "stage": "delivery",
+            "state": "ok",
+            "duration_ms": 14997,
+            "check": "",
+            "reason": ""
+          },
+          {
+            "stage": "continuation",
+            "state": "ok",
+            "duration_ms": 7667,
+            "check": "",
+            "reason": ""
+          }
+        ],
+        "first_failure": {
+          "stage": "content_validate",
+          "state": "failed",
+          "begin_ms": 17813,
+          "end_ms": 17814,
+          "duration_ms": 1,
+          "check": "passage_ownership",
+          "detail": {
+            "reason": "annotation_source_unknown",
+            "field": "passage",
+            "target_index": -1,
+            "actual": -1,
+            "limit": -1,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        },
+        "confirmed_outcome": "failed",
+        "quota_refunded": true,
+        "settlement_pending": false
+      },
+      "continuation_facts": [
+        {
+          "check": "continuation_needed",
+          "elapsed_ms": 10146,
+          "reason": "",
+          "target_index": -1,
+          "actual": 168,
+          "limit": 400
+        },
+        {
+          "check": "continuation_missing",
+          "elapsed_ms": 10146,
+          "reason": "passage_target_missing",
+          "target_index": 1,
+          "actual": -1,
+          "limit": -1
+        },
+        {
+          "check": "continuation_missing",
+          "elapsed_ms": 10146,
+          "reason": "passage_target_missing",
+          "target_index": 2,
+          "actual": -1,
+          "limit": -1
+        },
+        {
+          "check": "continuation_missing",
+          "elapsed_ms": 10146,
+          "reason": "passage_target_missing",
+          "target_index": 3,
+          "actual": -1,
+          "limit": -1
+        },
+        {
+          "check": "continuation_missing",
+          "elapsed_ms": 10146,
+          "reason": "passage_target_missing",
+          "target_index": 4,
+          "actual": -1,
+          "limit": -1
+        },
+        {
+          "check": "continuation_started",
+          "elapsed_ms": 10146,
+          "reason": "",
+          "target_index": -1,
+          "actual": -1,
+          "limit": -1
+        },
+        {
+          "check": "continuation_finished",
+          "elapsed_ms": 17813,
+          "reason": "",
+          "target_index": -1,
+          "actual": -1,
+          "limit": -1
+        }
+      ],
+      "raw_model_responses": 2,
+      "usage": [
+        {
+          "id": "gen-1789192348-zjIaKLKFp6so7XDUihS9",
+          "usage_provided": true,
+          "prompt_tokens": 1799,
+          "completion_tokens": 439,
+          "total_tokens": 2238,
+          "finish_reason": "stop"
+        },
+        {
+          "id": "gen-1789192358-BlrLcJtCnppjOtW7an0H",
+          "usage_provided": true,
+          "prompt_tokens": 634,
+          "completion_tokens": 398,
+          "total_tokens": 1032,
+          "finish_reason": "stop"
+        }
+      ],
+      "capture_state": {
+        "coalesced_progress": 212,
+        "dropped_records": 0,
+        "dropped_bytes": 0,
+        "truncated": false,
+        "io_failed": false,
+        "redacted": false,
+        "model_ended": true,
+        "unavailable": false
+      }
+    },
+    {
+      "case_id": 4,
+      "round": 1,
+      "reference_case_id": 10,
+      "pair_id": 5,
+      "group": "D",
+      "model_id": "01a07fe3-f046-7017-97f8-c15539050441",
+      "provider_model_id": "z-ai/glm-5.3-flash",
+      "meaning_language": "en",
+      "scenario": "story",
+      "length": "xlong",
+      "entries": [
+        "sustainable",
+        "prevalent",
+        "vulnerable",
+        "ambiguous",
+        "coherent"
+      ],
+      "started_at": "2026-09-12T05:52:45.841Z",
+      "status": "generation.validated",
+      "upstream_calls": 1,
+      "budget_reserved": 2,
+      "image": "sha256:c4b00eb124fd7ccccd62223599336db9ada358861d09e6f852725f477aadefb8",
+      "http_status": 200,
+      "request_id": "req_oKzx2wY82JHfyFj-4vc1Sw",
+      "run_id": "01a0942c-e717-7b99-b38d-0c3d7957c27b",
+      "first_delta_ms": 39432,
+      "preview_equals_result": true,
+      "target_order_valid": true,
+      "target_count": 5,
+      "tag_count": 2,
+      "result_sha256": "8145f02eddde8ac73299859bac8f5b71e0e72700249c35a67581ae0902f905ef",
+      "annotation_leaked": false,
+      "changed_form_occurrences": 1,
+      "repeated_passage_targets": 4,
+      "repeated_hint_targets": 0,
+      "positions_valid": true,
+      "duration_ms": 45433,
+      "passage_chars": 2917,
+      "terminal_count": 1,
+      "continuation": false,
+      "evidence_id": "dd4142b4-c091-4cb2-b7cc-e52b5c494609",
+      "expires_at": "2026-09-13T05:52:45.844129092Z",
+      "prompt_version": "m001-v5-r9",
+      "summary": {
+        "request_id": "req_oKzx2wY82JHfyFj-4vc1Sw",
+        "run_id": "01a0942c-e717-7b99-b38d-0c3d7957c27b",
+        "model_id": "01a07fe3-f046-7017-97f8-c15539050441",
+        "elapsed_ms": 45429,
+        "stages": [
+          {
+            "stage": "request",
+            "state": "ok",
+            "duration_ms": 45429,
+            "check": "body",
+            "reason": ""
+          },
+          {
+            "stage": "preflight",
+            "state": "ok",
+            "duration_ms": 4,
+            "check": "transaction_commit",
+            "reason": ""
+          },
+          {
+            "stage": "provider_open",
+            "state": "ok",
+            "duration_ms": 842,
+            "check": "response_headers",
+            "reason": ""
+          },
+          {
+            "stage": "provider_stream",
+            "state": "ok",
+            "duration_ms": 44570,
+            "check": "",
+            "reason": ""
+          },
+          {
+            "stage": "passage_decode",
+            "state": "ok",
+            "duration_ms": 5993,
+            "check": "clean_consistency",
+            "reason": ""
+          },
+          {
+            "stage": "candidate_decode",
+            "state": "ok",
+            "duration_ms": 1,
+            "check": "hint_size",
+            "reason": ""
+          },
+          {
+            "stage": "content_validate",
+            "state": "ok",
+            "duration_ms": 2,
+            "check": "context",
+            "reason": ""
+          },
+          {
+            "stage": "draft_commit",
+            "state": "ok",
+            "duration_ms": 5,
+            "check": "transaction_commit",
+            "reason": ""
+          },
+          {
+            "stage": "settlement",
+            "state": "not_run",
+            "duration_ms": -1,
+            "check": "",
+            "reason": ""
+          },
+          {
+            "stage": "delivery",
+            "state": "ok",
+            "duration_ms": 44582,
+            "check": "",
+            "reason": ""
+          },
+          {
+            "stage": "continuation",
+            "state": "not_run",
+            "duration_ms": -1,
+            "check": "",
+            "reason": ""
+          }
+        ],
+        "confirmed_outcome": "valid",
+        "quota_refunded": false,
+        "settlement_pending": false
+      },
+      "continuation_facts": [],
+      "raw_model_responses": 1,
+      "usage": [
+        {
+          "id": "gen-1789192366-ZDXWLy2IkIhMElqMGuRy",
+          "usage_provided": true,
+          "prompt_tokens": 1633,
+          "completion_tokens": 4441,
+          "total_tokens": 6074,
+          "finish_reason": "stop"
+        }
+      ],
+      "capture_state": {
+        "coalesced_progress": 582,
+        "dropped_records": 0,
+        "dropped_bytes": 0,
+        "truncated": false,
+        "io_failed": false,
+        "redacted": false,
+        "model_ended": true,
+        "unavailable": false
+      }
+    },
+    {
+      "case_id": 5,
+      "round": 1,
+      "reference_case_id": 1,
+      "pair_id": 1,
+      "group": "A",
+      "model_id": "01a07fe3-5c48-736a-a86b-1f4dabd7cb87",
+      "provider_model_id": "minimax/minimax-m3",
+      "meaning_language": "zh",
+      "scenario": "story",
+      "length": "short",
+      "entries": [
+        "melancholy",
+        "handicap",
+        "foray",
+        "casino",
+        "upswing"
+      ],
+      "started_at": "2026-09-12T05:53:31.441Z",
+      "status": "generation.validated",
+      "upstream_calls": 1,
+      "budget_reserved": 2,
+      "image": "sha256:c4b00eb124fd7ccccd62223599336db9ada358861d09e6f852725f477aadefb8",
+      "http_status": 200,
+      "request_id": "req_Kl5r2jrGsQQSDVF_Ffjsyg",
+      "run_id": "01a0942d-993a-77b6-b820-131467067273",
+      "first_delta_ms": 2960,
+      "preview_equals_result": true,
+      "target_order_valid": true,
+      "target_count": 5,
+      "tag_count": 2,
+      "result_sha256": "8202871a5720ea93c4cbe93030c3da7437cddabed5d7335d25316b8da2570cb6",
+      "annotation_leaked": false,
+      "changed_form_occurrences": 0,
+      "repeated_passage_targets": 5,
+      "repeated_hint_targets": 0,
+      "positions_valid": true,
+      "duration_ms": 8890,
+      "passage_chars": 1325,
+      "terminal_count": 1,
+      "continuation": false,
+      "evidence_id": "91eb7b59-26c7-4a2c-843d-deb82c63ac55",
+      "expires_at": "2026-09-13T05:53:31.446010669Z",
+      "prompt_version": "m001-v5-r9",
+      "summary": {
+        "request_id": "req_Kl5r2jrGsQQSDVF_Ffjsyg",
+        "run_id": "01a0942d-993a-77b6-b820-131467067273",
+        "model_id": "01a07fe3-5c48-736a-a86b-1f4dabd7cb87",
+        "elapsed_ms": 8885,
+        "stages": [
+          {
+            "stage": "request",
+            "state": "ok",
+            "duration_ms": 8885,
+            "check": "body",
+            "reason": ""
+          },
+          {
+            "stage": "preflight",
+            "state": "ok",
+            "duration_ms": 8,
+            "check": "transaction_commit",
+            "reason": ""
+          },
+          {
+            "stage": "provider_open",
+            "state": "ok",
+            "duration_ms": 2611,
+            "check": "response_headers",
+            "reason": ""
+          },
+          {
+            "stage": "provider_stream",
+            "state": "ok",
+            "duration_ms": 6252,
+            "check": "",
+            "reason": ""
+          },
+          {
+            "stage": "passage_decode",
+            "state": "ok",
+            "duration_ms": 5923,
+            "check": "clean_consistency",
+            "reason": ""
+          },
+          {
+            "stage": "candidate_decode",
+            "state": "ok",
+            "duration_ms": 5,
+            "check": "hint_size",
+            "reason": ""
+          },
+          {
+            "stage": "content_validate",
+            "state": "ok",
+            "duration_ms": 2,
+            "check": "context",
+            "reason": ""
+          },
+          {
+            "stage": "draft_commit",
+            "state": "ok",
+            "duration_ms": 3,
+            "check": "transaction_commit",
+            "reason": ""
+          },
+          {
+            "stage": "settlement",
+            "state": "not_run",
+            "duration_ms": -1,
+            "check": "",
+            "reason": ""
+          },
+          {
+            "stage": "delivery",
+            "state": "ok",
+            "duration_ms": 6265,
+            "check": "",
+            "reason": ""
+          },
+          {
+            "stage": "continuation",
+            "state": "not_run",
+            "duration_ms": -1,
+            "check": "",
+            "reason": ""
+          }
+        ],
+        "confirmed_outcome": "valid",
+        "quota_refunded": false,
+        "settlement_pending": false
+      },
+      "continuation_facts": [],
+      "raw_model_responses": 1,
+      "usage": [
+        {
+          "id": "gen-1789192411-UwVMiPU7J28xWUU6yhYs",
+          "usage_provided": true,
+          "prompt_tokens": 1281,
+          "completion_tokens": 527,
+          "total_tokens": 1808,
+          "finish_reason": "stop"
+        }
+      ],
+      "capture_state": {
+        "coalesced_progress": 133,
+        "dropped_records": 0,
+        "dropped_bytes": 0,
+        "truncated": false,
+        "io_failed": false,
+        "redacted": false,
+        "model_ended": true,
+        "unavailable": false
+      }
+    },
+    {
+      "case_id": 6,
+      "round": 1,
+      "reference_case_id": 2,
+      "pair_id": 1,
+      "group": "A",
+      "model_id": "01a07fe3-f046-7017-97f8-c15539050441",
+      "provider_model_id": "z-ai/glm-5.3-flash",
+      "meaning_language": "zh",
+      "scenario": "story",
+      "length": "short",
+      "entries": [
+        "melancholy",
+        "handicap",
+        "foray",
+        "casino",
+        "upswing"
+      ],
+      "started_at": "2026-09-12T05:53:49.710Z",
+      "status": "generation.validated",
+      "upstream_calls": 1,
+      "budget_reserved": 2,
+      "image": "sha256:c4b00eb124fd7ccccd62223599336db9ada358861d09e6f852725f477aadefb8",
+      "http_status": 200,
+      "request_id": "req_7uHQYQG0ibBeWLtgUNyAEQ",
+      "run_id": "01a0942d-e0a7-74e7-bb09-196c367200c7",
+      "first_delta_ms": 34500,
+      "preview_equals_result": true,
+      "target_order_valid": true,
+      "target_count": 5,
+      "tag_count": 2,
+      "result_sha256": "45c3e449e8f1f9ad1bed78efe0a20903c84a9d954b596c8ca92a13205955ae8f",
+      "annotation_leaked": false,
+      "changed_form_occurrences": 0,
+      "repeated_passage_targets": 1,
+      "repeated_hint_targets": 0,
+      "positions_valid": true,
+      "duration_ms": 37343,
+      "passage_chars": 428,
+      "terminal_count": 1,
+      "continuation": false,
+      "evidence_id": "4ffcdac2-f5a9-447b-9583-e380a6f5e199",
+      "expires_at": "2026-09-13T05:53:49.717836386Z",
+      "prompt_version": "m001-v5-r9",
+      "summary": {
+        "request_id": "req_7uHQYQG0ibBeWLtgUNyAEQ",
+        "run_id": "01a0942d-e0a7-74e7-bb09-196c367200c7",
+        "model_id": "01a07fe3-f046-7017-97f8-c15539050441",
+        "elapsed_ms": 37338,
+        "stages": [
+          {
+            "stage": "request",
+            "state": "ok",
+            "duration_ms": 37338,
+            "check": "body",
+            "reason": ""
+          },
+          {
+            "stage": "preflight",
+            "state": "ok",
+            "duration_ms": 13,
+            "check": "transaction_commit",
+            "reason": ""
+          },
+          {
+            "stage": "provider_open",
+            "state": "ok",
+            "duration_ms": 731,
+            "check": "response_headers",
+            "reason": ""
+          },
+          {
+            "stage": "provider_stream",
+            "state": "ok",
+            "duration_ms": 36567,
+            "check": "",
+            "reason": ""
+          },
+          {
+            "stage": "passage_decode",
+            "state": "ok",
+            "duration_ms": 2834,
+            "check": "clean_consistency",
+            "reason": ""
+          },
+          {
+            "stage": "candidate_decode",
+            "state": "ok",
+            "duration_ms": 10,
+            "check": "hint_size",
+            "reason": ""
+          },
+          {
+            "stage": "content_validate",
+            "state": "ok",
+            "duration_ms": 2,
+            "check": "context",
+            "reason": ""
+          },
+          {
+            "stage": "draft_commit",
+            "state": "ok",
+            "duration_ms": 5,
+            "check": "transaction_commit",
+            "reason": ""
+          },
+          {
+            "stage": "settlement",
+            "state": "not_run",
+            "duration_ms": -1,
+            "check": "",
+            "reason": ""
+          },
+          {
+            "stage": "delivery",
+            "state": "ok",
+            "duration_ms": 36588,
+            "check": "",
+            "reason": ""
+          },
+          {
+            "stage": "continuation",
+            "state": "not_run",
+            "duration_ms": -1,
+            "check": "",
+            "reason": ""
+          }
+        ],
+        "confirmed_outcome": "valid",
+        "quota_refunded": false,
+        "settlement_pending": false
+      },
+      "continuation_facts": [],
+      "raw_model_responses": 1,
+      "usage": [
+        {
+          "id": "gen-1789192430-nzBRoHTC9t9pJTyGPA6u",
+          "usage_provided": true,
+          "prompt_tokens": 1104,
+          "completion_tokens": 2138,
+          "total_tokens": 3242,
+          "finish_reason": "stop"
+        }
+      ],
+      "capture_state": {
+        "coalesced_progress": 255,
+        "dropped_records": 0,
+        "dropped_bytes": 0,
+        "truncated": false,
+        "io_failed": false,
+        "redacted": false,
+        "model_ended": true,
+        "unavailable": false
+      }
+    },
+    {
+      "case_id": 7,
+      "round": 1,
+      "reference_case_id": 7,
+      "pair_id": 4,
+      "group": "D",
+      "model_id": "01a07fe3-5c48-736a-a86b-1f4dabd7cb87",
+      "provider_model_id": "minimax/minimax-m3",
+      "meaning_language": "ja",
+      "scenario": "news",
+      "length": "long",
+      "entries": [
+        "sustainable",
+        "prevalent",
+        "vulnerable",
+        "ambiguous",
+        "coherent"
+      ],
+      "started_at": "2026-09-12T05:54:27.218Z",
+      "status": "generation.validated",
+      "upstream_calls": 1,
+      "budget_reserved": 2,
+      "image": "sha256:c4b00eb124fd7ccccd62223599336db9ada358861d09e6f852725f477aadefb8",
+      "http_status": 200,
+      "request_id": "req_BVImT2gm6nxHfX521ow_-g",
+      "run_id": "01a0942e-731a-7a0d-9132-4ebd8e38df21",
+      "first_delta_ms": 1187,
+      "preview_equals_result": true,
+      "target_order_valid": true,
+      "target_count": 5,
+      "tag_count": 2,
+      "result_sha256": "a7c736aa3c8a69e61f986c467bedca0fb68634a587c5f4a5dc9da1ea73d796f1",
+      "annotation_leaked": false,
+      "changed_form_occurrences": 0,
+      "repeated_passage_targets": 0,
+      "repeated_hint_targets": 0,
+      "positions_valid": true,
+      "duration_ms": 14315,
+      "passage_chars": 3633,
+      "terminal_count": 1,
+      "continuation": false,
+      "evidence_id": "bfe00320-e0d9-4a7a-8931-be2250f02e26",
+      "expires_at": "2026-09-13T05:54:27.222059083Z",
+      "prompt_version": "m001-v5-r9",
+      "summary": {
+        "request_id": "req_BVImT2gm6nxHfX521ow_-g",
+        "run_id": "01a0942e-731a-7a0d-9132-4ebd8e38df21",
+        "model_id": "01a07fe3-5c48-736a-a86b-1f4dabd7cb87",
+        "elapsed_ms": 14310,
+        "stages": [
+          {
+            "stage": "request",
+            "state": "ok",
+            "duration_ms": 14310,
+            "check": "body",
+            "reason": ""
+          },
+          {
+            "stage": "preflight",
+            "state": "ok",
+            "duration_ms": 8,
+            "check": "transaction_commit",
+            "reason": ""
+          },
+          {
+            "stage": "provider_open",
+            "state": "ok",
+            "duration_ms": 881,
+            "check": "response_headers",
+            "reason": ""
+          },
+          {
+            "stage": "provider_stream",
+            "state": "ok",
+            "duration_ms": 13403,
+            "check": "",
+            "reason": ""
+          },
+          {
+            "stage": "passage_decode",
+            "state": "ok",
+            "duration_ms": 13406,
+            "check": "clean_consistency",
+            "reason": ""
+          },
+          {
+            "stage": "candidate_decode",
+            "state": "ok",
+            "duration_ms": 3,
+            "check": "hint_size",
+            "reason": ""
+          },
+          {
+            "stage": "content_validate",
+            "state": "ok",
+            "duration_ms": 3,
+            "check": "context",
+            "reason": ""
+          },
+          {
+            "stage": "draft_commit",
+            "state": "ok",
+            "duration_ms": 7,
+            "check": "transaction_commit",
+            "reason": ""
+          },
+          {
+            "stage": "settlement",
+            "state": "not_run",
+            "duration_ms": -1,
+            "check": "",
+            "reason": ""
+          },
+          {
+            "stage": "delivery",
+            "state": "ok",
+            "duration_ms": 13420,
+            "check": "",
+            "reason": ""
+          },
+          {
+            "stage": "continuation",
+            "state": "not_run",
+            "duration_ms": -1,
+            "check": "",
+            "reason": ""
+          }
+        ],
+        "confirmed_outcome": "valid",
+        "quota_refunded": false,
+        "settlement_pending": false
+      },
+      "continuation_facts": [],
+      "raw_model_responses": 1,
+      "usage": [
+        {
+          "id": "gen-1789192467-c2HIz79Muqg9nhLKEECo",
+          "usage_provided": true,
+          "prompt_tokens": 1483,
+          "completion_tokens": 858,
+          "total_tokens": 2341,
+          "finish_reason": "stop"
+        }
+      ],
+      "capture_state": {
+        "coalesced_progress": 256,
+        "dropped_records": 0,
+        "dropped_bytes": 0,
+        "truncated": false,
+        "io_failed": false,
+        "redacted": false,
+        "model_ended": true,
+        "unavailable": false
+      }
+    },
+    {
+      "case_id": 8,
+      "round": 1,
+      "reference_case_id": 8,
+      "pair_id": 4,
+      "group": "D",
+      "model_id": "01a07fe3-f046-7017-97f8-c15539050441",
+      "provider_model_id": "z-ai/glm-5.3-flash",
+      "meaning_language": "ja",
+      "scenario": "news",
+      "length": "long",
+      "entries": [
+        "sustainable",
+        "prevalent",
+        "vulnerable",
+        "ambiguous",
+        "coherent"
+      ],
+      "started_at": "2026-09-12T05:54:41.677Z",
+      "status": "generation.validated",
+      "upstream_calls": 2,
+      "budget_reserved": 2,
+      "image": "sha256:c4b00eb124fd7ccccd62223599336db9ada358861d09e6f852725f477aadefb8",
+      "http_status": 200,
+      "request_id": "req_OHci95CXMzeOrCpLh5Zghw",
+      "run_id": "01a0942e-ab95-72cb-8b09-1f3e50261ec7",
+      "first_delta_ms": 20448,
+      "preview_equals_result": true,
+      "target_order_valid": true,
+      "target_count": 5,
+      "tag_count": 3,
+      "result_sha256": "37524221d3fbf30f8ca3c5c880abc2f20227b95267f20b2b18f2775705a32090",
+      "annotation_leaked": false,
+      "changed_form_occurrences": 2,
+      "repeated_passage_targets": 1,
+      "repeated_hint_targets": 0,
+      "positions_valid": true,
+      "duration_ms": 76150,
+      "passage_chars": 1743,
+      "terminal_count": 1,
+      "continuation": true,
+      "evidence_id": "7e57a4aa-32d6-49db-93db-da0e4b4ca0f4",
+      "expires_at": "2026-09-13T05:54:41.681184299Z",
+      "prompt_version": "m001-v5-r9",
+      "summary": {
+        "request_id": "req_OHci95CXMzeOrCpLh5Zghw",
+        "run_id": "01a0942e-ab95-72cb-8b09-1f3e50261ec7",
+        "model_id": "01a07fe3-f046-7017-97f8-c15539050441",
+        "elapsed_ms": 76147,
+        "stages": [
+          {
+            "stage": "request",
+            "state": "ok",
+            "duration_ms": 76147,
+            "check": "body",
+            "reason": ""
+          },
+          {
+            "stage": "preflight",
+            "state": "ok",
+            "duration_ms": 5,
+            "check": "transaction_commit",
+            "reason": ""
+          },
+          {
+            "stage": "provider_open",
+            "state": "ok",
+            "duration_ms": 925,
+            "check": "response_headers",
+            "reason": ""
+          },
+          {
+            "stage": "provider_stream",
+            "state": "ok",
+            "duration_ms": 22782,
+            "check": "",
+            "reason": ""
+          },
+          {
+            "stage": "passage_decode",
+            "state": "ok",
+            "duration_ms": 3327,
+            "check": "clean_consistency",
+            "reason": ""
+          },
+          {
+            "stage": "candidate_decode",
+            "state": "ok",
+            "duration_ms": 2,
+            "check": "hint_size",
+            "reason": ""
+          },
+          {
+            "stage": "content_validate",
+            "state": "ok",
+            "duration_ms": 5,
+            "check": "context",
+            "reason": ""
+          },
+          {
+            "stage": "draft_commit",
+            "state": "ok",
+            "duration_ms": 5,
+            "check": "transaction_commit",
+            "reason": ""
+          },
+          {
+            "stage": "settlement",
+            "state": "not_run",
+            "duration_ms": -1,
+            "check": "",
+            "reason": ""
+          },
+          {
+            "stage": "delivery",
+            "state": "ok",
+            "duration_ms": 75216,
+            "check": "",
+            "reason": ""
+          },
+          {
+            "stage": "continuation",
+            "state": "ok",
+            "duration_ms": 52421,
+            "check": "",
+            "reason": ""
+          }
+        ],
+        "confirmed_outcome": "valid",
+        "quota_refunded": false,
+        "settlement_pending": false
+      },
+      "continuation_facts": [
+        {
+          "check": "continuation_needed",
+          "elapsed_ms": 23716,
+          "reason": "",
+          "target_index": -1,
+          "actual": 60,
+          "limit": 200
+        },
+        {
+          "check": "continuation_missing",
+          "elapsed_ms": 23716,
+          "reason": "passage_target_missing",
+          "target_index": 4,
+          "actual": -1,
+          "limit": -1
+        },
+        {
+          "check": "continuation_started",
+          "elapsed_ms": 23716,
+          "reason": "",
+          "target_index": -1,
+          "actual": -1,
+          "limit": -1
+        },
+        {
+          "check": "continuation_finished",
+          "elapsed_ms": 76137,
+          "reason": "",
+          "target_index": -1,
+          "actual": -1,
+          "limit": -1
+        }
+      ],
+      "raw_model_responses": 2,
+      "usage": [
+        {
+          "id": "gen-1789192482-xD3J4g16cxyG98z9WvjT",
+          "usage_provided": true,
+          "prompt_tokens": 1343,
+          "completion_tokens": 1652,
+          "total_tokens": 2995,
+          "finish_reason": "stop"
+        },
+        {
+          "id": "gen-1789192505-yFE8b7TGtFky14y92CFs",
+          "usage_provided": true,
+          "prompt_tokens": 350,
+          "completion_tokens": 4597,
+          "total_tokens": 4947,
+          "finish_reason": "stop"
+        }
+      ],
+      "capture_state": {
+        "coalesced_progress": 462,
+        "dropped_records": 0,
+        "dropped_bytes": 0,
+        "truncated": false,
+        "io_failed": false,
+        "redacted": false,
+        "model_ended": true,
+        "unavailable": false
+      }
+    },
+    {
+      "case_id": 9,
+      "round": 1,
+      "reference_case_id": 5,
+      "pair_id": 3,
+      "group": "C",
+      "model_id": "01a07fe3-5c48-736a-a86b-1f4dabd7cb87",
+      "provider_model_id": "minimax/minimax-m3",
+      "meaning_language": "en",
+      "scenario": "business",
+      "length": "short",
+      "entries": [
+        "alleviate",
+        "undermine",
+        "facilitate",
+        "deteriorate",
+        "perceive"
+      ],
+      "started_at": "2026-09-12T05:55:57.983Z",
+      "status": "generation.validated",
+      "upstream_calls": 1,
+      "budget_reserved": 2,
+      "image": "sha256:c4b00eb124fd7ccccd62223599336db9ada358861d09e6f852725f477aadefb8",
+      "http_status": 200,
+      "request_id": "req_vzOruUH0pDzPihzBe64VSg",
+      "run_id": "01a0942f-d5aa-7dda-834d-82b2a1b6fa3b",
+      "first_delta_ms": 1291,
+      "preview_equals_result": true,
+      "target_order_valid": true,
+      "target_count": 5,
+      "tag_count": 2,
+      "result_sha256": "e74e12b075318e243d65d1bfdd3059a8e64bc943ddfeb81bf3ca0c5aae14657c",
+      "annotation_leaked": false,
+      "changed_form_occurrences": 5,
+      "repeated_passage_targets": 5,
+      "repeated_hint_targets": 0,
+      "positions_valid": true,
+      "duration_ms": 6063,
+      "passage_chars": 874,
+      "terminal_count": 1,
+      "continuation": false,
+      "evidence_id": "0c20d3f3-6d28-43d9-ad4a-98b284931946",
+      "expires_at": "2026-09-13T05:55:57.990916Z",
+      "prompt_version": "m001-v5-r9",
+      "summary": {
+        "request_id": "req_vzOruUH0pDzPihzBe64VSg",
+        "run_id": "01a0942f-d5aa-7dda-834d-82b2a1b6fa3b",
+        "model_id": "01a07fe3-5c48-736a-a86b-1f4dabd7cb87",
+        "elapsed_ms": 6054,
+        "stages": [
+          {
+            "stage": "request",
+            "state": "ok",
+            "duration_ms": 6054,
+            "check": "body",
+            "reason": ""
+          },
+          {
+            "stage": "preflight",
+            "state": "ok",
+            "duration_ms": 7,
+            "check": "transaction_commit",
+            "reason": ""
+          },
+          {
+            "stage": "provider_open",
+            "state": "ok",
+            "duration_ms": 823,
+            "check": "response_headers",
+            "reason": ""
+          },
+          {
+            "stage": "provider_stream",
+            "state": "ok",
+            "duration_ms": 5213,
+            "check": "",
+            "reason": ""
+          },
+          {
+            "stage": "passage_decode",
+            "state": "ok",
+            "duration_ms": 5217,
+            "check": "clean_consistency",
+            "reason": ""
+          },
+          {
+            "stage": "candidate_decode",
+            "state": "ok",
+            "duration_ms": 4,
+            "check": "hint_size",
+            "reason": ""
+          },
+          {
+            "stage": "content_validate",
+            "state": "ok",
+            "duration_ms": 2,
+            "check": "context",
+            "reason": ""
+          },
+          {
+            "stage": "draft_commit",
+            "state": "ok",
+            "duration_ms": 4,
+            "check": "transaction_commit",
+            "reason": ""
+          },
+          {
+            "stage": "settlement",
+            "state": "not_run",
+            "duration_ms": -1,
+            "check": "",
+            "reason": ""
+          },
+          {
+            "stage": "delivery",
+            "state": "ok",
+            "duration_ms": 5223,
+            "check": "",
+            "reason": ""
+          },
+          {
+            "stage": "continuation",
+            "state": "not_run",
+            "duration_ms": -1,
+            "check": "",
+            "reason": ""
+          }
+        ],
+        "confirmed_outcome": "valid",
+        "quota_refunded": false,
+        "settlement_pending": false
+      },
+      "continuation_facts": [],
+      "raw_model_responses": 1,
+      "usage": [
+        {
+          "id": "gen-1789192558-0BtzeYgcUY7p5KE8eNhe",
+          "usage_provided": true,
+          "prompt_tokens": 1318,
+          "completion_tokens": 425,
+          "total_tokens": 1743,
+          "finish_reason": "stop"
+        }
+      ],
+      "capture_state": {
+        "coalesced_progress": 100,
+        "dropped_records": 0,
+        "dropped_bytes": 0,
+        "truncated": false,
+        "io_failed": false,
+        "redacted": false,
+        "model_ended": true,
+        "unavailable": false
+      }
+    },
+    {
+      "case_id": 10,
+      "round": 1,
+      "reference_case_id": 6,
+      "pair_id": 3,
+      "group": "C",
+      "model_id": "01a07fe3-f046-7017-97f8-c15539050441",
+      "provider_model_id": "z-ai/glm-5.3-flash",
+      "meaning_language": "en",
+      "scenario": "business",
+      "length": "short",
+      "entries": [
+        "alleviate",
+        "undermine",
+        "facilitate",
+        "deteriorate",
+        "perceive"
+      ],
+      "started_at": "2026-09-12T05:56:04.212Z",
+      "status": "generation.validated",
+      "upstream_calls": 1,
+      "budget_reserved": 2,
+      "image": "sha256:c4b00eb124fd7ccccd62223599336db9ada358861d09e6f852725f477aadefb8",
+      "http_status": 200,
+      "request_id": "req_CWV5a8mJZxgsvY-qrBQAlQ",
+      "run_id": "01a0942f-edfb-755b-8628-998ae5a7d7ba",
+      "first_delta_ms": 18485,
+      "preview_equals_result": true,
+      "target_order_valid": true,
+      "target_count": 5,
+      "tag_count": 2,
+      "result_sha256": "0cac83aac1c738ec39a51037855c45cf1df791b72258f61ee6526be3bc1cb270",
+      "annotation_leaked": false,
+      "changed_form_occurrences": 3,
+      "repeated_passage_targets": 1,
+      "repeated_hint_targets": 0,
+      "positions_valid": true,
+      "duration_ms": 21187,
+      "passage_chars": 481,
+      "terminal_count": 1,
+      "continuation": false,
+      "evidence_id": "277f76ec-9755-4ecb-bdbe-07ed64b6c679",
+      "expires_at": "2026-09-13T05:56:04.217133587Z",
+      "prompt_version": "m001-v5-r9",
+      "summary": {
+        "request_id": "req_CWV5a8mJZxgsvY-qrBQAlQ",
+        "run_id": "01a0942f-edfb-755b-8628-998ae5a7d7ba",
+        "model_id": "01a07fe3-f046-7017-97f8-c15539050441",
+        "elapsed_ms": 21184,
+        "stages": [
+          {
+            "stage": "request",
+            "state": "ok",
+            "duration_ms": 21184,
+            "check": "body",
+            "reason": ""
+          },
+          {
+            "stage": "preflight",
+            "state": "ok",
+            "duration_ms": 4,
+            "check": "transaction_commit",
+            "reason": ""
+          },
+          {
+            "stage": "provider_open",
+            "state": "ok",
+            "duration_ms": 1359,
+            "check": "response_headers",
+            "reason": ""
+          },
+          {
+            "stage": "provider_stream",
+            "state": "ok",
+            "duration_ms": 19809,
+            "check": "",
+            "reason": ""
+          },
+          {
+            "stage": "passage_decode",
+            "state": "ok",
+            "duration_ms": 2697,
+            "check": "clean_consistency",
+            "reason": ""
+          },
+          {
+            "stage": "candidate_decode",
+            "state": "ok",
+            "duration_ms": 5,
+            "check": "hint_size",
+            "reason": ""
+          },
+          {
+            "stage": "content_validate",
+            "state": "ok",
+            "duration_ms": 1,
+            "check": "context",
+            "reason": ""
+          },
+          {
+            "stage": "draft_commit",
+            "state": "ok",
+            "duration_ms": 3,
+            "check": "transaction_commit",
+            "reason": ""
+          },
+          {
+            "stage": "settlement",
+            "state": "not_run",
+            "duration_ms": -1,
+            "check": "",
+            "reason": ""
+          },
+          {
+            "stage": "delivery",
+            "state": "ok",
+            "duration_ms": 19821,
+            "check": "",
+            "reason": ""
+          },
+          {
+            "stage": "continuation",
+            "state": "not_run",
+            "duration_ms": -1,
+            "check": "",
+            "reason": ""
+          }
+        ],
+        "confirmed_outcome": "valid",
+        "quota_refunded": false,
+        "settlement_pending": false
+      },
+      "continuation_facts": [],
+      "raw_model_responses": 1,
+      "usage": [
+        {
+          "id": "gen-1789192564-7hWEfd70hcgA3qzLHiDE",
+          "usage_provided": true,
+          "prompt_tokens": 1152,
+          "completion_tokens": 2056,
+          "total_tokens": 3208,
+          "finish_reason": "stop"
+        }
+      ],
+      "capture_state": {
+        "coalesced_progress": 303,
+        "dropped_records": 0,
+        "dropped_bytes": 0,
+        "truncated": false,
+        "io_failed": false,
+        "redacted": false,
+        "model_ended": true,
+        "unavailable": false
+      }
+    },
+    {
+      "case_id": 11,
+      "round": 2,
+      "reference_case_id": 3,
+      "pair_id": 2,
+      "group": "B",
+      "model_id": "01a07fe3-5c48-736a-a86b-1f4dabd7cb87",
+      "provider_model_id": "minimax/minimax-m3",
+      "meaning_language": "zh",
+      "scenario": "discussion",
+      "length": "medium",
+      "entries": [
+        "young",
+        "grape",
+        "weekend",
+        "danger",
+        "enforce"
+      ],
+      "started_at": "2026-09-12T05:56:31.530Z",
+      "status": "generation.validated",
+      "upstream_calls": 1,
+      "budget_reserved": 2,
+      "image": "sha256:c4b00eb124fd7ccccd62223599336db9ada358861d09e6f852725f477aadefb8",
+      "http_status": 200,
+      "request_id": "req_0rAJ3_OC-8XiQzG5OeOQ3w",
+      "run_id": "01a09430-58b4-7fef-8672-bb0757877f2d",
+      "first_delta_ms": 1133,
+      "preview_equals_result": true,
+      "target_order_valid": true,
+      "target_count": 5,
+      "tag_count": 2,
+      "result_sha256": "093cad940a3ba8d93a80afb000889c4003651e8ddea0585f9283bab44958b57f",
+      "annotation_leaked": false,
+      "changed_form_occurrences": 6,
+      "repeated_passage_targets": 5,
+      "repeated_hint_targets": 0,
+      "positions_valid": true,
+      "duration_ms": 8161,
+      "passage_chars": 1442,
+      "terminal_count": 1,
+      "continuation": false,
+      "evidence_id": "1dca2269-946c-4604-98ee-8be3bc7dfb34",
+      "expires_at": "2026-09-13T05:56:31.532840585Z",
+      "prompt_version": "m001-v5-r9",
+      "summary": {
+        "request_id": "req_0rAJ3_OC-8XiQzG5OeOQ3w",
+        "run_id": "01a09430-58b4-7fef-8672-bb0757877f2d",
+        "model_id": "01a07fe3-5c48-736a-a86b-1f4dabd7cb87",
+        "elapsed_ms": 8156,
+        "stages": [
+          {
+            "stage": "request",
+            "state": "ok",
+            "duration_ms": 8156,
+            "check": "body",
+            "reason": ""
+          },
+          {
+            "stage": "preflight",
+            "state": "ok",
+            "duration_ms": 9,
+            "check": "transaction_commit",
+            "reason": ""
+          },
+          {
+            "stage": "provider_open",
+            "state": "ok",
+            "duration_ms": 736,
+            "check": "response_headers",
+            "reason": ""
+          },
+          {
+            "stage": "provider_stream",
+            "state": "ok",
+            "duration_ms": 7400,
+            "check": "",
+            "reason": ""
+          },
+          {
+            "stage": "passage_decode",
+            "state": "ok",
+            "duration_ms": 7402,
+            "check": "clean_consistency",
+            "reason": ""
+          },
+          {
+            "stage": "candidate_decode",
+            "state": "ok",
+            "duration_ms": 2,
+            "check": "hint_size",
+            "reason": ""
+          },
+          {
+            "stage": "content_validate",
+            "state": "ok",
+            "duration_ms": 2,
+            "check": "context",
+            "reason": ""
+          },
+          {
+            "stage": "draft_commit",
+            "state": "ok",
+            "duration_ms": 4,
+            "check": "transaction_commit",
+            "reason": ""
+          },
+          {
+            "stage": "settlement",
+            "state": "not_run",
+            "duration_ms": -1,
+            "check": "",
+            "reason": ""
+          },
+          {
+            "stage": "delivery",
+            "state": "ok",
+            "duration_ms": 7409,
+            "check": "",
+            "reason": ""
+          },
+          {
+            "stage": "continuation",
+            "state": "not_run",
+            "duration_ms": -1,
+            "check": "",
+            "reason": ""
+          }
+        ],
+        "confirmed_outcome": "valid",
+        "quota_refunded": false,
+        "settlement_pending": false
+      },
+      "continuation_facts": [],
+      "raw_model_responses": 1,
+      "usage": [
+        {
+          "id": "gen-1789192591-PuS9xSh5rH3898BbgDR2",
+          "usage_provided": true,
+          "prompt_tokens": 1347,
+          "completion_tokens": 519,
+          "total_tokens": 1866,
+          "finish_reason": "stop"
+        }
+      ],
+      "capture_state": {
+        "coalesced_progress": 139,
+        "dropped_records": 0,
+        "dropped_bytes": 0,
+        "truncated": false,
+        "io_failed": false,
+        "redacted": false,
+        "model_ended": true,
+        "unavailable": false
+      }
+    },
+    {
+      "case_id": 12,
+      "round": 2,
+      "reference_case_id": 4,
+      "pair_id": 2,
+      "group": "B",
+      "model_id": "01a07fe3-f046-7017-97f8-c15539050441",
+      "provider_model_id": "z-ai/glm-5.3-flash",
+      "meaning_language": "zh",
+      "scenario": "discussion",
+      "length": "medium",
+      "entries": [
+        "young",
+        "grape",
+        "weekend",
+        "danger",
+        "enforce"
+      ],
+      "started_at": "2026-09-12T05:56:39.850Z",
+      "status": "generation.validated",
+      "upstream_calls": 1,
+      "budget_reserved": 2,
+      "image": "sha256:c4b00eb124fd7ccccd62223599336db9ada358861d09e6f852725f477aadefb8",
+      "http_status": 200,
+      "request_id": "req_F6XgedRQu57qpGCviRr3Ag",
+      "run_id": "01a09430-7930-7d83-bbf2-4fd7c2691b61",
+      "first_delta_ms": 19624,
+      "preview_equals_result": true,
+      "target_order_valid": true,
+      "target_count": 5,
+      "tag_count": 2,
+      "result_sha256": "7cb586eeddf0185b92017fa8d468b7f438db0bd655da9bcb20661225ed37dc56",
+      "annotation_leaked": false,
+      "changed_form_occurrences": 4,
+      "repeated_passage_targets": 2,
+      "repeated_hint_targets": 0,
+      "positions_valid": true,
+      "duration_ms": 27261,
+      "passage_chars": 785,
+      "terminal_count": 1,
+      "continuation": false,
+      "evidence_id": "0ec2bb0c-f6e5-4607-8812-48e0750f2527",
+      "expires_at": "2026-09-13T05:56:39.854078339Z",
+      "prompt_version": "m001-v5-r9",
+      "summary": {
+        "request_id": "req_F6XgedRQu57qpGCviRr3Ag",
+        "run_id": "01a09430-7930-7d83-bbf2-4fd7c2691b61",
+        "model_id": "01a07fe3-f046-7017-97f8-c15539050441",
+        "elapsed_ms": 27258,
+        "stages": [
+          {
+            "stage": "request",
+            "state": "ok",
+            "duration_ms": 27258,
+            "check": "body",
+            "reason": ""
+          },
+          {
+            "stage": "preflight",
+            "state": "ok",
+            "duration_ms": 3,
+            "check": "transaction_commit",
+            "reason": ""
+          },
+          {
+            "stage": "provider_open",
+            "state": "ok",
+            "duration_ms": 803,
+            "check": "response_headers",
+            "reason": ""
+          },
+          {
+            "stage": "provider_stream",
+            "state": "ok",
+            "duration_ms": 26435,
+            "check": "",
+            "reason": ""
+          },
+          {
+            "stage": "passage_decode",
+            "state": "ok",
+            "duration_ms": 7635,
+            "check": "clean_consistency",
+            "reason": ""
+          },
+          {
+            "stage": "candidate_decode",
+            "state": "ok",
+            "duration_ms": 8,
+            "check": "hint_size",
+            "reason": ""
+          },
+          {
+            "stage": "content_validate",
+            "state": "ok",
+            "duration_ms": 2,
+            "check": "context",
+            "reason": ""
+          },
+          {
+            "stage": "draft_commit",
+            "state": "ok",
+            "duration_ms": 4,
+            "check": "transaction_commit",
+            "reason": ""
+          },
+          {
+            "stage": "settlement",
+            "state": "not_run",
+            "duration_ms": -1,
+            "check": "",
+            "reason": ""
+          },
+          {
+            "stage": "delivery",
+            "state": "ok",
+            "duration_ms": 26451,
+            "check": "",
+            "reason": ""
+          },
+          {
+            "stage": "continuation",
+            "state": "not_run",
+            "duration_ms": -1,
+            "check": "",
+            "reason": ""
+          }
+        ],
+        "confirmed_outcome": "valid",
+        "quota_refunded": false,
+        "settlement_pending": false
+      },
+      "continuation_facts": [],
+      "raw_model_responses": 1,
+      "usage": [
+        {
+          "id": "gen-1789192600-LVJPv3bp0aTwgMf6EwiC",
+          "usage_provided": true,
+          "prompt_tokens": 1171,
+          "completion_tokens": 1660,
+          "total_tokens": 2831,
+          "finish_reason": "stop"
+        }
+      ],
+      "capture_state": {
+        "coalesced_progress": 309,
+        "dropped_records": 0,
+        "dropped_bytes": 0,
+        "truncated": false,
+        "io_failed": false,
+        "redacted": false,
+        "model_ended": true,
+        "unavailable": false
+      }
+    },
+    {
+      "case_id": 13,
+      "round": 2,
+      "reference_case_id": 9,
+      "pair_id": 5,
+      "group": "D",
+      "model_id": "01a07fe3-5c48-736a-a86b-1f4dabd7cb87",
+      "provider_model_id": "minimax/minimax-m3",
+      "meaning_language": "en",
+      "scenario": "story",
+      "length": "xlong",
+      "entries": [
+        "sustainable",
+        "prevalent",
+        "vulnerable",
+        "ambiguous",
+        "coherent"
+      ],
+      "started_at": "2026-09-12T05:57:07.247Z",
+      "status": "generation.failed",
+      "upstream_calls": 2,
+      "budget_reserved": 2,
+      "image": "sha256:c4b00eb124fd7ccccd62223599336db9ada358861d09e6f852725f477aadefb8",
+      "http_status": 200,
+      "request_id": "req_dISgplXyEzS9_1vp4b62ow",
+      "run_id": "01a09430-e43a-71ed-9b0e-699d1186c3d0",
+      "first_delta_ms": 1060,
+      "code": "content_validation_failed",
+      "quota_refunded": true,
+      "duration_ms": 77348,
+      "passage_chars": 14935,
+      "terminal_count": 1,
+      "continuation": true,
+      "evidence_id": "ad9e35c5-0e03-44f6-a55f-3b01f6acc380",
+      "expires_at": "2026-09-13T05:57:07.253914796Z",
+      "prompt_version": "m001-v5-r9",
+      "summary": {
+        "request_id": "req_dISgplXyEzS9_1vp4b62ow",
+        "run_id": "01a09430-e43a-71ed-9b0e-699d1186c3d0",
+        "model_id": "01a07fe3-5c48-736a-a86b-1f4dabd7cb87",
+        "elapsed_ms": 77342,
+        "stages": [
+          {
+            "stage": "request",
+            "state": "ok",
+            "duration_ms": 77342,
+            "check": "body",
+            "reason": ""
+          },
+          {
+            "stage": "preflight",
+            "state": "ok",
+            "duration_ms": 6,
+            "check": "transaction_commit",
+            "reason": ""
+          },
+          {
+            "stage": "provider_open",
+            "state": "ok",
+            "duration_ms": 875,
+            "check": "response_headers",
+            "reason": ""
+          },
+          {
+            "stage": "provider_stream",
+            "state": "ok",
+            "duration_ms": 52074,
+            "check": "",
+            "reason": ""
+          },
+          {
+            "stage": "passage_decode",
+            "state": "ok",
+            "duration_ms": 52079,
+            "check": "clean_consistency",
+            "reason": ""
+          },
+          {
+            "stage": "candidate_decode",
+            "state": "ok",
+            "duration_ms": 5,
+            "check": "hint_size",
+            "reason": ""
+          },
+          {
+            "stage": "content_validate",
+            "state": "failed",
+            "duration_ms": 5,
+            "check": "passage_annotation_presence",
+            "reason": "passage_annotation_missing"
+          },
+          {
+            "stage": "draft_commit",
+            "state": "not_run",
+            "duration_ms": -1,
+            "check": "",
+            "reason": ""
+          },
+          {
+            "stage": "settlement",
+            "state": "ok",
+            "duration_ms": 2,
+            "check": "cas",
+            "reason": ""
+          },
+          {
+            "stage": "delivery",
+            "state": "ok",
+            "duration_ms": 76460,
+            "check": "",
+            "reason": ""
+          },
+          {
+            "stage": "continuation",
+            "state": "ok",
+            "duration_ms": 24370,
+            "check": "",
+            "reason": ""
+          }
+        ],
+        "first_failure": {
+          "stage": "content_validate",
+          "state": "failed",
+          "begin_ms": 77335,
+          "end_ms": 77340,
+          "duration_ms": 5,
+          "check": "passage_annotation_presence",
+          "detail": {
+            "reason": "passage_annotation_missing",
+            "field": "passage",
+            "target_index": 1,
+            "actual": -1,
+            "limit": -1,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        },
+        "confirmed_outcome": "failed",
+        "quota_refunded": true,
+        "settlement_pending": false
+      },
+      "continuation_facts": [
+        {
+          "check": "continuation_needed",
+          "elapsed_ms": 52965,
+          "reason": "",
+          "target_index": -1,
+          "actual": 1560,
+          "limit": 400
+        },
+        {
+          "check": "continuation_missing",
+          "elapsed_ms": 52965,
+          "reason": "passage_target_missing",
+          "target_index": 1,
+          "actual": -1,
+          "limit": -1
+        },
+        {
+          "check": "continuation_missing",
+          "elapsed_ms": 52965,
+          "reason": "passage_target_missing",
+          "target_index": 2,
+          "actual": -1,
+          "limit": -1
+        },
+        {
+          "check": "continuation_missing",
+          "elapsed_ms": 52965,
+          "reason": "passage_target_missing",
+          "target_index": 4,
+          "actual": -1,
+          "limit": -1
+        },
+        {
+          "check": "continuation_started",
+          "elapsed_ms": 52965,
+          "reason": "",
+          "target_index": -1,
+          "actual": -1,
+          "limit": -1
+        },
+        {
+          "check": "continuation_finished",
+          "elapsed_ms": 77335,
+          "reason": "",
+          "target_index": -1,
+          "actual": -1,
+          "limit": -1
+        }
+      ],
+      "raw_model_responses": 2,
+      "usage": [
+        {
+          "id": "gen-1789192627-5G9SaG71zQKsCSABbt3d",
+          "usage_provided": true,
+          "prompt_tokens": 1799,
+          "completion_tokens": 1940,
+          "total_tokens": 3739,
+          "finish_reason": "stop"
+        },
+        {
+          "id": "gen-1789192680-3bkuXuuVndggb9TGTJse",
+          "usage_provided": true,
+          "prompt_tokens": 2198,
+          "completion_tokens": 1113,
+          "total_tokens": 3311,
+          "finish_reason": "stop"
+        }
+      ],
+      "capture_state": {
+        "coalesced_progress": 857,
+        "dropped_records": 0,
+        "dropped_bytes": 0,
+        "truncated": false,
+        "io_failed": false,
+        "redacted": false,
+        "model_ended": true,
+        "unavailable": false
+      }
+    },
+    {
+      "case_id": 14,
+      "round": 2,
+      "reference_case_id": 10,
+      "pair_id": 5,
+      "group": "D",
+      "model_id": "01a07fe3-f046-7017-97f8-c15539050441",
+      "provider_model_id": "z-ai/glm-5.3-flash",
+      "meaning_language": "en",
+      "scenario": "story",
+      "length": "xlong",
+      "entries": [
+        "sustainable",
+        "prevalent",
+        "vulnerable",
+        "ambiguous",
+        "coherent"
+      ],
+      "started_at": "2026-09-12T05:58:24.734Z",
+      "status": "generation.validated",
+      "upstream_calls": 2,
+      "budget_reserved": 2,
+      "image": "sha256:c4b00eb124fd7ccccd62223599336db9ada358861d09e6f852725f477aadefb8",
+      "http_status": 200,
+      "request_id": "req_xN120ta1vFy2imvEQXjrMw",
+      "run_id": "01a09432-12e5-7c98-adcc-29c2283b3875",
+      "first_delta_ms": 55925,
+      "preview_equals_result": true,
+      "target_order_valid": true,
+      "target_count": 5,
+      "tag_count": 3,
+      "result_sha256": "dd3cbe3b242d2ba66883329c3f2b0c1b89fc62993ffce1a4db78770f361391a0",
+      "annotation_leaked": false,
+      "changed_form_occurrences": 0,
+      "repeated_passage_targets": 4,
+      "repeated_hint_targets": 0,
+      "positions_valid": true,
+      "duration_ms": 160326,
+      "passage_chars": 3287,
+      "terminal_count": 1,
+      "continuation": true,
+      "evidence_id": "2ca53fa0-5ebb-4448-a4d1-b7067a3b00b2",
+      "expires_at": "2026-09-13T05:58:24.738634096Z",
+      "prompt_version": "m001-v5-r9",
+      "summary": {
+        "request_id": "req_xN120ta1vFy2imvEQXjrMw",
+        "run_id": "01a09432-12e5-7c98-adcc-29c2283b3875",
+        "model_id": "01a07fe3-f046-7017-97f8-c15539050441",
+        "elapsed_ms": 160326,
+        "stages": [
+          {
+            "stage": "request",
+            "state": "ok",
+            "duration_ms": 160326,
+            "check": "body",
+            "reason": ""
+          },
+          {
+            "stage": "preflight",
+            "state": "ok",
+            "duration_ms": 4,
+            "check": "transaction_commit",
+            "reason": ""
+          },
+          {
+            "stage": "provider_open",
+            "state": "ok",
+            "duration_ms": 1419,
+            "check": "response_headers",
+            "reason": ""
+          },
+          {
+            "stage": "provider_stream",
+            "state": "ok",
+            "duration_ms": 57412,
+            "check": "",
+            "reason": ""
+          },
+          {
+            "stage": "passage_decode",
+            "state": "ok",
+            "duration_ms": 2923,
+            "check": "clean_consistency",
+            "reason": ""
+          },
+          {
+            "stage": "candidate_decode",
+            "state": "ok",
+            "duration_ms": 5,
+            "check": "hint_size",
+            "reason": ""
+          },
+          {
+            "stage": "content_validate",
+            "state": "ok",
+            "duration_ms": 5,
+            "check": "context",
+            "reason": ""
+          },
+          {
+            "stage": "draft_commit",
+            "state": "ok",
+            "duration_ms": 6,
+            "check": "transaction_commit",
+            "reason": ""
+          },
+          {
+            "stage": "settlement",
+            "state": "not_run",
+            "duration_ms": -1,
+            "check": "",
+            "reason": ""
+          },
+          {
+            "stage": "delivery",
+            "state": "ok",
+            "duration_ms": 158902,
+            "check": "",
+            "reason": ""
+          },
+          {
+            "stage": "continuation",
+            "state": "ok",
+            "duration_ms": 101466,
+            "check": "",
+            "reason": ""
+          }
+        ],
+        "confirmed_outcome": "valid",
+        "quota_refunded": false,
+        "settlement_pending": false
+      },
+      "continuation_facts": [
+        {
+          "check": "continuation_needed",
+          "elapsed_ms": 58849,
+          "reason": "",
+          "target_index": -1,
+          "actual": 102,
+          "limit": 400
+        },
+        {
+          "check": "continuation_missing",
+          "elapsed_ms": 58849,
+          "reason": "passage_target_missing",
+          "target_index": 0,
+          "actual": -1,
+          "limit": -1
+        },
+        {
+          "check": "continuation_missing",
+          "elapsed_ms": 58849,
+          "reason": "passage_target_missing",
+          "target_index": 2,
+          "actual": -1,
+          "limit": -1
+        },
+        {
+          "check": "continuation_missing",
+          "elapsed_ms": 58849,
+          "reason": "passage_target_missing",
+          "target_index": 3,
+          "actual": -1,
+          "limit": -1
+        },
+        {
+          "check": "continuation_missing",
+          "elapsed_ms": 58849,
+          "reason": "passage_target_missing",
+          "target_index": 4,
+          "actual": -1,
+          "limit": -1
+        },
+        {
+          "check": "continuation_started",
+          "elapsed_ms": 58849,
+          "reason": "",
+          "target_index": -1,
+          "actual": -1,
+          "limit": -1
+        },
+        {
+          "check": "continuation_finished",
+          "elapsed_ms": 160315,
+          "reason": "",
+          "target_index": -1,
+          "actual": -1,
+          "limit": -1
+        }
+      ],
+      "raw_model_responses": 2,
+      "usage": [
+        {
+          "id": "gen-1789192705-5Nvw4EHET4AM3SXj9Bxz",
+          "usage_provided": true,
+          "prompt_tokens": 1633,
+          "completion_tokens": 7354,
+          "total_tokens": 8987,
+          "finish_reason": "stop"
+        },
+        {
+          "id": "gen-1789192763-YddSNthTXSf19ydY0TsP",
+          "usage_provided": true,
+          "prompt_tokens": 403,
+          "completion_tokens": 7304,
+          "total_tokens": 7707,
+          "finish_reason": "stop"
+        }
+      ],
+      "capture_state": {
+        "coalesced_progress": 774,
+        "dropped_records": 0,
+        "dropped_bytes": 0,
+        "truncated": false,
+        "io_failed": false,
+        "redacted": false,
+        "model_ended": true,
+        "unavailable": false
+      }
+    },
+    {
+      "case_id": 15,
+      "round": 2,
+      "reference_case_id": 1,
+      "pair_id": 1,
+      "group": "A",
+      "model_id": "01a07fe3-5c48-736a-a86b-1f4dabd7cb87",
+      "provider_model_id": "minimax/minimax-m3",
+      "meaning_language": "zh",
+      "scenario": "story",
+      "length": "short",
+      "entries": [
+        "melancholy",
+        "handicap",
+        "foray",
+        "casino",
+        "upswing"
+      ],
+      "started_at": "2026-09-12T06:01:05.214Z",
+      "status": "generation.validated",
+      "upstream_calls": 1,
+      "budget_reserved": 2,
+      "image": "sha256:c4b00eb124fd7ccccd62223599336db9ada358861d09e6f852725f477aadefb8",
+      "http_status": 200,
+      "request_id": "req_Q7QvbxhM66ngCVm5VL97LA",
+      "run_id": "01a09434-85c9-7c31-95a2-216395321be0",
+      "first_delta_ms": 950,
+      "preview_equals_result": true,
+      "target_order_valid": true,
+      "target_count": 5,
+      "tag_count": 2,
+      "result_sha256": "ccd898d67958ae995882ed60eabfc115acf8bf9cb5a36127bd312eace0a27024",
+      "annotation_leaked": false,
+      "changed_form_occurrences": 0,
+      "repeated_passage_targets": 5,
+      "repeated_hint_targets": 0,
+      "positions_valid": true,
+      "duration_ms": 7613,
+      "passage_chars": 1132,
+      "terminal_count": 1,
+      "continuation": false,
+      "evidence_id": "4b2acc14-96d4-4df7-b72e-724bba2b595d",
+      "expires_at": "2026-09-13T06:01:05.218198629Z",
+      "prompt_version": "m001-v5-r9",
+      "summary": {
+        "request_id": "req_Q7QvbxhM66ngCVm5VL97LA",
+        "run_id": "01a09434-85c9-7c31-95a2-216395321be0",
+        "model_id": "01a07fe3-5c48-736a-a86b-1f4dabd7cb87",
+        "elapsed_ms": 7609,
+        "stages": [
+          {
+            "stage": "request",
+            "state": "ok",
+            "duration_ms": 7609,
+            "check": "body",
+            "reason": ""
+          },
+          {
+            "stage": "preflight",
+            "state": "ok",
+            "duration_ms": 8,
+            "check": "transaction_commit",
+            "reason": ""
+          },
+          {
+            "stage": "provider_open",
+            "state": "ok",
+            "duration_ms": 770,
+            "check": "response_headers",
+            "reason": ""
+          },
+          {
+            "stage": "provider_stream",
+            "state": "ok",
+            "duration_ms": 6812,
+            "check": "",
+            "reason": ""
+          },
+          {
+            "stage": "passage_decode",
+            "state": "ok",
+            "duration_ms": 6811,
+            "check": "clean_consistency",
+            "reason": ""
+          },
+          {
+            "stage": "candidate_decode",
+            "state": "ok",
+            "duration_ms": 2,
+            "check": "hint_size",
+            "reason": ""
+          },
+          {
+            "stage": "content_validate",
+            "state": "ok",
+            "duration_ms": 7,
+            "check": "context",
+            "reason": ""
+          },
+          {
+            "stage": "draft_commit",
+            "state": "ok",
+            "duration_ms": 4,
+            "check": "transaction_commit",
+            "reason": ""
+          },
+          {
+            "stage": "settlement",
+            "state": "not_run",
+            "duration_ms": -1,
+            "check": "",
+            "reason": ""
+          },
+          {
+            "stage": "delivery",
+            "state": "ok",
+            "duration_ms": 6828,
+            "check": "",
+            "reason": ""
+          },
+          {
+            "stage": "continuation",
+            "state": "not_run",
+            "duration_ms": -1,
+            "check": "",
+            "reason": ""
+          }
+        ],
+        "confirmed_outcome": "valid",
+        "quota_refunded": false,
+        "settlement_pending": false
+      },
+      "continuation_facts": [],
+      "raw_model_responses": 1,
+      "usage": [
+        {
+          "id": "gen-1789192865-QUFh82ZXZyiZj1YWLkhe",
+          "usage_provided": true,
+          "prompt_tokens": 1281,
+          "completion_tokens": 499,
+          "total_tokens": 1780,
+          "finish_reason": "stop"
+        }
+      ],
+      "capture_state": {
+        "coalesced_progress": 124,
+        "dropped_records": 0,
+        "dropped_bytes": 0,
+        "truncated": false,
+        "io_failed": false,
+        "redacted": false,
+        "model_ended": true,
+        "unavailable": false
+      }
+    }
+  ],
+  "content_metrics": [
+    {
+      "case_id": 1,
+      "attempts": [
+        {
+          "json_complete": true,
+          "words": 266,
+          "paragraphs": 1,
+          "annotations": [
+            {
+              "surface": "young",
+              "entry": "young"
+            },
+            {
+              "surface": "weekend",
+              "entry": "weekend"
+            },
+            {
+              "surface": "grapes",
+              "entry": "grape"
+            },
+            {
+              "surface": "danger",
+              "entry": "danger"
+            },
+            {
+              "surface": "weekend",
+              "entry": "weekend"
+            },
+            {
+              "surface": "danger",
+              "entry": "danger"
+            },
+            {
+              "surface": "grapes",
+              "entry": "grape"
+            },
+            {
+              "surface": "enforce",
+              "entry": "enforce"
+            },
+            {
+              "surface": "enforced",
+              "entry": "enforce"
+            },
+            {
+              "surface": "carries",
+              "entry": "danger"
+            },
+            {
+              "surface": "weekend",
+              "entry": "weekend"
+            },
+            {
+              "surface": "grapes",
+              "entry": "grape"
+            },
+            {
+              "surface": "young",
+              "entry": "young"
+            },
+            {
+              "surface": "enforce",
+              "entry": "enforce"
+            },
+            {
+              "surface": "danger",
+              "entry": "danger"
+            },
+            {
+              "surface": "weekend",
+              "entry": "weekend"
+            },
+            {
+              "surface": "grape",
+              "entry": "grape"
+            },
+            {
+              "surface": "enforced",
+              "entry": "enforce"
+            }
+          ],
+          "tags": [
+            "社区讨论",
+            "农业安全"
+          ],
+          "changed_hints": [
+            "enforce",
+            "grape"
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": 2,
+      "attempts": [
+        {
+          "json_complete": true,
+          "words": 128,
+          "paragraphs": 1,
+          "annotations": [
+            {
+              "surface": "young",
+              "entry": "young"
+            },
+            {
+              "surface": "weekend",
+              "entry": "weekend"
+            },
+            {
+              "surface": "grapes",
+              "entry": "grape"
+            },
+            {
+              "surface": "danger",
+              "entry": "danger"
+            },
+            {
+              "surface": "enforce",
+              "entry": "enforce"
+            },
+            {
+              "surface": "young",
+              "entry": "young"
+            },
+            {
+              "surface": "grape",
+              "entry": "grape"
+            },
+            {
+              "surface": "weekend",
+              "entry": "weekend"
+            },
+            {
+              "surface": "enforce",
+              "entry": "enforce"
+            },
+            {
+              "surface": "danger",
+              "entry": "danger"
+            }
+          ],
+          "tags": [
+            "社区",
+            "安全"
+          ],
+          "changed_hints": [
+            "grape"
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": 3,
+      "attempts": [
+        {
+          "json_complete": true,
+          "words": 168,
+          "paragraphs": 1,
+          "annotations": [
+            {
+              "surface": "sustainable",
+              "entry": "sustainable"
+            },
+            {
+              "surface": "sustainable",
+              "entry": "sustainable"
+            }
+          ],
+          "tags": [
+            "climate",
+            "community"
+          ],
+          "changed_hints": []
+        },
+        {
+          "json_complete": true,
+          "words": 325,
+          "paragraphs": 1,
+          "annotations": [
+            {
+              "surface": "ambiguous",
+              "entry": "ambiguous"
+            },
+            {
+              "surface": "vulnerability",
+              "entry": "vulnerability"
+            },
+            {
+              "surface": "coherent",
+              "entry": "coherent"
+            },
+            {
+              "surface": "prevalent",
+              "entry": "prevalent"
+            }
+          ],
+          "tags": [
+            "resilience",
+            "community",
+            "environmental adaptation"
+          ],
+          "changed_hints": []
+        }
+      ]
+    },
+    {
+      "case_id": 4,
+      "attempts": [
+        {
+          "json_complete": true,
+          "words": 489,
+          "paragraphs": 1,
+          "annotations": [
+            {
+              "surface": "ambiguous",
+              "entry": "ambiguous"
+            },
+            {
+              "surface": "prevalent",
+              "entry": "prevalent"
+            },
+            {
+              "surface": "vulnerable",
+              "entry": "vulnerable"
+            },
+            {
+              "surface": "vulnerable",
+              "entry": "vulnerable"
+            },
+            {
+              "surface": "coherent",
+              "entry": "coherent"
+            },
+            {
+              "surface": "sustainable",
+              "entry": "sustainable"
+            },
+            {
+              "surface": "sustainable",
+              "entry": "sustainable"
+            },
+            {
+              "surface": "coherent",
+              "entry": "coherent"
+            },
+            {
+              "surface": "ambiguity",
+              "entry": "ambiguous"
+            }
+          ],
+          "tags": [
+            "environment",
+            "community"
+          ],
+          "changed_hints": []
+        }
+      ]
+    },
+    {
+      "case_id": 5,
+      "attempts": [
+        {
+          "json_complete": true,
+          "words": 217,
+          "paragraphs": 1,
+          "annotations": [
+            {
+              "surface": "melancholy",
+              "entry": "melancholy"
+            },
+            {
+              "surface": "handicap",
+              "entry": "handicap"
+            },
+            {
+              "surface": "foray",
+              "entry": "foray"
+            },
+            {
+              "surface": "upswing",
+              "entry": "upswing"
+            },
+            {
+              "surface": "casino",
+              "entry": "casino"
+            },
+            {
+              "surface": "casino",
+              "entry": "casino"
+            },
+            {
+              "surface": "upswing",
+              "entry": "upswing"
+            },
+            {
+              "surface": "melancholy",
+              "entry": "melancholy"
+            },
+            {
+              "surface": "handicap",
+              "entry": "handicap"
+            },
+            {
+              "surface": "foray",
+              "entry": "foray"
+            },
+            {
+              "surface": "melancholy",
+              "entry": "melancholy"
+            },
+            {
+              "surface": "upswing",
+              "entry": "upswing"
+            }
+          ],
+          "tags": [
+            "运气",
+            "转折"
+          ],
+          "changed_hints": []
+        }
+      ]
+    },
+    {
+      "case_id": 6,
+      "attempts": [
+        {
+          "json_complete": true,
+          "words": 72,
+          "paragraphs": 1,
+          "annotations": [
+            {
+              "surface": "melancholy",
+              "entry": "melancholy"
+            },
+            {
+              "surface": "foray",
+              "entry": "foray"
+            },
+            {
+              "surface": "casino",
+              "entry": "casino"
+            },
+            {
+              "surface": "handicap",
+              "entry": "handicap"
+            },
+            {
+              "surface": "upswing",
+              "entry": "upswing"
+            },
+            {
+              "surface": "melancholy",
+              "entry": "melancholy"
+            }
+          ],
+          "tags": [
+            "晚年生活",
+            "情绪起伏"
+          ],
+          "changed_hints": []
+        }
+      ]
+    },
+    {
+      "case_id": 7,
+      "attempts": [
+        {
+          "json_complete": true,
+          "words": 538,
+          "paragraphs": 1,
+          "annotations": [
+            {
+              "surface": "sustainable",
+              "entry": "sustainable"
+            },
+            {
+              "surface": "ambiguous",
+              "entry": "ambiguous"
+            },
+            {
+              "surface": "vulnerable",
+              "entry": "vulnerable"
+            },
+            {
+              "surface": "prevalent",
+              "entry": "prevalent"
+            },
+            {
+              "surface": "coherent",
+              "entry": "coherent"
+            }
+          ],
+          "tags": [
+            "公共政策",
+            "環境"
+          ],
+          "changed_hints": []
+        }
+      ]
+    },
+    {
+      "case_id": 8,
+      "attempts": [
+        {
+          "json_complete": true,
+          "words": 60,
+          "paragraphs": 1,
+          "annotations": [
+            {
+              "surface": "sustainable",
+              "entry": "sustainable"
+            },
+            {
+              "surface": "prevalent",
+              "entry": "prevalent"
+            },
+            {
+              "surface": "vulnerable",
+              "entry": "vulnerable"
+            },
+            {
+              "surface": "ambiguous",
+              "entry": "ambiguous"
+            }
+          ],
+          "tags": [
+            "環境",
+            "都市政策"
+          ],
+          "changed_hints": []
+        },
+        {
+          "json_complete": true,
+          "words": 192,
+          "paragraphs": 1,
+          "annotations": [
+            {
+              "surface": "coherent",
+              "entry": "coherent"
+            },
+            {
+              "surface": "coherence",
+              "entry": "coherent"
+            },
+            {
+              "surface": "coherently",
+              "entry": "coherent"
+            },
+            {
+              "surface": "coherent",
+              "entry": "coherent"
+            }
+          ],
+          "tags": [
+            "都市計画",
+            "気候変動",
+            "公共政策"
+          ],
+          "changed_hints": []
+        }
+      ]
+    },
+    {
+      "case_id": 9,
+      "attempts": [
+        {
+          "json_complete": true,
+          "words": 113,
+          "paragraphs": 1,
+          "annotations": [
+            {
+              "surface": "deteriorate",
+              "entry": "deteriorate"
+            },
+            {
+              "surface": "undermining",
+              "entry": "undermine"
+            },
+            {
+              "surface": "perceive",
+              "entry": "perceive"
+            },
+            {
+              "surface": "facilitate",
+              "entry": "facilitate"
+            },
+            {
+              "surface": "alleviated",
+              "entry": "alleviate"
+            },
+            {
+              "surface": "undermine",
+              "entry": "undermine"
+            },
+            {
+              "surface": "deteriorating",
+              "entry": "deteriorate"
+            },
+            {
+              "surface": "perceived",
+              "entry": "perceive"
+            },
+            {
+              "surface": "facilitate",
+              "entry": "facilitate"
+            },
+            {
+              "surface": "alleviate",
+              "entry": "alleviate"
+            },
+            {
+              "surface": "deteriorating",
+              "entry": "deteriorate"
+            }
+          ],
+          "tags": [
+            "management",
+            "operations"
+          ],
+          "changed_hints": []
+        }
+      ]
+    },
+    {
+      "case_id": 10,
+      "attempts": [
+        {
+          "json_complete": true,
+          "words": 70,
+          "paragraphs": 1,
+          "annotations": [
+            {
+              "surface": "deteriorated",
+              "entry": "deteriorate"
+            },
+            {
+              "surface": "perceived",
+              "entry": "perceive"
+            },
+            {
+              "surface": "alleviate",
+              "entry": "alleviate"
+            },
+            {
+              "surface": "facilitate",
+              "entry": "facilitate"
+            },
+            {
+              "surface": "undermine",
+              "entry": "undermine"
+            },
+            {
+              "surface": "perceived",
+              "entry": "perceive"
+            }
+          ],
+          "tags": [
+            "crisis management",
+            "business communication"
+          ],
+          "changed_hints": [
+            "deteriorate",
+            "perceive"
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": 11,
+      "attempts": [
+        {
+          "json_complete": true,
+          "words": 228,
+          "paragraphs": 1,
+          "annotations": [
+            {
+              "surface": "Younger",
+              "entry": "young"
+            },
+            {
+              "surface": "weekend",
+              "entry": "weekend"
+            },
+            {
+              "surface": "grape",
+              "entry": "grape"
+            },
+            {
+              "surface": "danger",
+              "entry": "danger"
+            },
+            {
+              "surface": "enforced",
+              "entry": "enforce"
+            },
+            {
+              "surface": "enforced",
+              "entry": "enforce"
+            },
+            {
+              "surface": "grapes",
+              "entry": "grape"
+            },
+            {
+              "surface": "Young",
+              "entry": "young"
+            },
+            {
+              "surface": "danger",
+              "entry": "danger"
+            },
+            {
+              "surface": "weekend",
+              "entry": "weekend"
+            },
+            {
+              "surface": "enforced",
+              "entry": "enforce"
+            },
+            {
+              "surface": "younger",
+              "entry": "young"
+            },
+            {
+              "surface": "grape",
+              "entry": "grape"
+            }
+          ],
+          "tags": [
+            "农业",
+            "安全"
+          ],
+          "changed_hints": [
+            "enforce",
+            "young"
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": 12,
+      "attempts": [
+        {
+          "json_complete": true,
+          "words": 124,
+          "paragraphs": 1,
+          "annotations": [
+            {
+              "surface": "weekend",
+              "entry": "weekend"
+            },
+            {
+              "surface": "younger",
+              "entry": "young"
+            },
+            {
+              "surface": "danger",
+              "entry": "danger"
+            },
+            {
+              "surface": "grapes",
+              "entry": "grape"
+            },
+            {
+              "surface": "enforced",
+              "entry": "enforce"
+            },
+            {
+              "surface": "grapes",
+              "entry": "grape"
+            },
+            {
+              "surface": "weekend",
+              "entry": "weekend"
+            }
+          ],
+          "tags": [
+            "乡村生活",
+            "安全"
+          ],
+          "changed_hints": [
+            "enforce",
+            "grape",
+            "young"
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": 13,
+      "attempts": [
+        {
+          "json_complete": true,
+          "words": 1560,
+          "paragraphs": 1,
+          "annotations": [
+            {
+              "surface": "sustainable",
+              "entry": "sustainable"
+            },
+            {
+              "surface": "ambiguous",
+              "entry": "ambiguous"
+            },
+            {
+              "surface": "sustainable",
+              "entry": "sustainable"
+            }
+          ],
+          "tags": [
+            "community",
+            "environment",
+            "memory"
+          ],
+          "changed_hints": []
+        },
+        {
+          "json_complete": true,
+          "words": 980,
+          "paragraphs": 1,
+          "annotations": [
+            {
+              "surface": "vulnerable",
+              "entry": "vulnerable"
+            },
+            {
+              "surface": "coherent",
+              "entry": "coherent"
+            }
+          ],
+          "tags": [
+            "community resilience",
+            "environmental stewardship",
+            "honest dialogue"
+          ],
+          "changed_hints": []
+        }
+      ]
+    },
+    {
+      "case_id": 14,
+      "attempts": [
+        {
+          "json_complete": true,
+          "words": 102,
+          "paragraphs": 1,
+          "annotations": [
+            {
+              "surface": "prevalent",
+              "entry": "prevalent"
+            }
+          ],
+          "tags": [
+            "community",
+            "environment",
+            "rebuilding"
+          ],
+          "changed_hints": []
+        },
+        {
+          "json_complete": true,
+          "words": 453,
+          "paragraphs": 1,
+          "annotations": [
+            {
+              "surface": "vulnerable",
+              "entry": "vulnerable"
+            },
+            {
+              "surface": "sustainable",
+              "entry": "sustainable"
+            },
+            {
+              "surface": "ambiguous",
+              "entry": "ambiguous"
+            },
+            {
+              "surface": "vulnerable",
+              "entry": "vulnerable"
+            },
+            {
+              "surface": "coherent",
+              "entry": "coherent"
+            },
+            {
+              "surface": "coherent",
+              "entry": "coherent"
+            },
+            {
+              "surface": "ambiguous",
+              "entry": "ambiguous"
+            },
+            {
+              "surface": "sustainable",
+              "entry": "sustainable"
+            },
+            {
+              "surface": "vulnerable",
+              "entry": "vulnerable"
+            }
+          ],
+          "tags": [
+            "community resilience",
+            "environmental adaptation",
+            "homecoming"
+          ],
+          "changed_hints": []
+        }
+      ]
+    },
+    {
+      "case_id": 15,
+      "attempts": [
+        {
+          "json_complete": true,
+          "words": 195,
+          "paragraphs": 1,
+          "annotations": [
+            {
+              "surface": "foray",
+              "entry": "foray"
+            },
+            {
+              "surface": "melancholy",
+              "entry": "melancholy"
+            },
+            {
+              "surface": "casino",
+              "entry": "casino"
+            },
+            {
+              "surface": "handicap",
+              "entry": "handicap"
+            },
+            {
+              "surface": "upswing",
+              "entry": "upswing"
+            },
+            {
+              "surface": "handicap",
+              "entry": "handicap"
+            },
+            {
+              "surface": "melancholy",
+              "entry": "melancholy"
+            },
+            {
+              "surface": "foray",
+              "entry": "foray"
+            },
+            {
+              "surface": "casino",
+              "entry": "casino"
+            },
+            {
+              "surface": "upswing",
+              "entry": "upswing"
+            }
+          ],
+          "tags": [
+            "自我救赎",
+            "赌博与转变"
+          ],
+          "changed_hints": []
+        }
+      ]
+    }
+  ],
+  "database": [
+    {
+      "run_id": "01a0942c-237b-7faf-a53f-bf02ff5df443",
+      "account_id": "01a08e5a-2250-7854-81df-5aeb26e7f461",
+      "status": "validation_failed",
+      "disposition": "pending",
+      "quota_charged": false,
+      "counts_toward_cumulative": false,
+      "failure_code": "content_validation_failed",
+      "minimum_words": 100,
+      "draft_present": false,
+      "word_count": null,
+      "validator_version": null,
+      "saved_batches": 0
+    },
+    {
+      "run_id": "01a0942c-4a6d-75dc-abe1-2a21355757b1",
+      "account_id": "01a08e5a-2250-7854-81df-5aeb26e7f461",
+      "status": "valid",
+      "disposition": "pending",
+      "quota_charged": true,
+      "counts_toward_cumulative": true,
+      "failure_code": null,
+      "minimum_words": 100,
+      "draft_present": true,
+      "word_count": "128",
+      "validator_version": "m001-v5-wn31-r2",
+      "saved_batches": 0
+    },
+    {
+      "run_id": "01a0942c-a0bc-7123-8eaf-9d8855c8b389",
+      "account_id": "01a08e5a-2250-7854-81df-5aeb26e7f461",
+      "status": "validation_failed",
+      "disposition": "pending",
+      "quota_charged": false,
+      "counts_toward_cumulative": false,
+      "failure_code": "content_validation_failed",
+      "minimum_words": 400,
+      "draft_present": false,
+      "word_count": null,
+      "validator_version": null,
+      "saved_batches": 0
+    },
+    {
+      "run_id": "01a0942c-e717-7b99-b38d-0c3d7957c27b",
+      "account_id": "01a08e5a-2250-7854-81df-5aeb26e7f461",
+      "status": "valid",
+      "disposition": "pending",
+      "quota_charged": true,
+      "counts_toward_cumulative": true,
+      "failure_code": null,
+      "minimum_words": 400,
+      "draft_present": true,
+      "word_count": "489",
+      "validator_version": "m001-v5-wn31-r2",
+      "saved_batches": 0
+    },
+    {
+      "run_id": "01a0942d-993a-77b6-b820-131467067273",
+      "account_id": "01a08e5a-2250-7854-81df-5aeb26e7f461",
+      "status": "valid",
+      "disposition": "pending",
+      "quota_charged": true,
+      "counts_toward_cumulative": true,
+      "failure_code": null,
+      "minimum_words": 50,
+      "draft_present": true,
+      "word_count": "217",
+      "validator_version": "m001-v5-wn31-r2",
+      "saved_batches": 0
+    },
+    {
+      "run_id": "01a0942d-e0a7-74e7-bb09-196c367200c7",
+      "account_id": "01a08e5a-2250-7854-81df-5aeb26e7f461",
+      "status": "valid",
+      "disposition": "pending",
+      "quota_charged": true,
+      "counts_toward_cumulative": true,
+      "failure_code": null,
+      "minimum_words": 50,
+      "draft_present": true,
+      "word_count": "72",
+      "validator_version": "m001-v5-wn31-r2",
+      "saved_batches": 0
+    },
+    {
+      "run_id": "01a0942e-731a-7a0d-9132-4ebd8e38df21",
+      "account_id": "01a08e5a-2250-7854-81df-5aeb26e7f461",
+      "status": "valid",
+      "disposition": "pending",
+      "quota_charged": true,
+      "counts_toward_cumulative": true,
+      "failure_code": null,
+      "minimum_words": 200,
+      "draft_present": true,
+      "word_count": "538",
+      "validator_version": "m001-v5-wn31-r2",
+      "saved_batches": 0
+    },
+    {
+      "run_id": "01a0942e-ab95-72cb-8b09-1f3e50261ec7",
+      "account_id": "01a08e5a-2250-7854-81df-5aeb26e7f461",
+      "status": "valid",
+      "disposition": "pending",
+      "quota_charged": true,
+      "counts_toward_cumulative": true,
+      "failure_code": null,
+      "minimum_words": 200,
+      "draft_present": true,
+      "word_count": "252",
+      "validator_version": "m001-v5-wn31-r2",
+      "saved_batches": 0
+    },
+    {
+      "run_id": "01a0942f-d5aa-7dda-834d-82b2a1b6fa3b",
+      "account_id": "01a08e5a-2250-7854-81df-5aeb26e7f461",
+      "status": "valid",
+      "disposition": "pending",
+      "quota_charged": true,
+      "counts_toward_cumulative": true,
+      "failure_code": null,
+      "minimum_words": 50,
+      "draft_present": true,
+      "word_count": "113",
+      "validator_version": "m001-v5-wn31-r2",
+      "saved_batches": 0
+    },
+    {
+      "run_id": "01a0942f-edfb-755b-8628-998ae5a7d7ba",
+      "account_id": "01a08e5a-2250-7854-81df-5aeb26e7f461",
+      "status": "valid",
+      "disposition": "pending",
+      "quota_charged": true,
+      "counts_toward_cumulative": true,
+      "failure_code": null,
+      "minimum_words": 50,
+      "draft_present": true,
+      "word_count": "70",
+      "validator_version": "m001-v5-wn31-r2",
+      "saved_batches": 0
+    },
+    {
+      "run_id": "01a09430-58b4-7fef-8672-bb0757877f2d",
+      "account_id": "01a08e5a-2250-7854-81df-5aeb26e7f461",
+      "status": "valid",
+      "disposition": "pending",
+      "quota_charged": true,
+      "counts_toward_cumulative": true,
+      "failure_code": null,
+      "minimum_words": 100,
+      "draft_present": true,
+      "word_count": "228",
+      "validator_version": "m001-v5-wn31-r2",
+      "saved_batches": 0
+    },
+    {
+      "run_id": "01a09430-7930-7d83-bbf2-4fd7c2691b61",
+      "account_id": "01a08e5a-2250-7854-81df-5aeb26e7f461",
+      "status": "valid",
+      "disposition": "pending",
+      "quota_charged": true,
+      "counts_toward_cumulative": true,
+      "failure_code": null,
+      "minimum_words": 100,
+      "draft_present": true,
+      "word_count": "124",
+      "validator_version": "m001-v5-wn31-r2",
+      "saved_batches": 0
+    },
+    {
+      "run_id": "01a09430-e43a-71ed-9b0e-699d1186c3d0",
+      "account_id": "01a08e5a-2250-7854-81df-5aeb26e7f461",
+      "status": "validation_failed",
+      "disposition": "pending",
+      "quota_charged": false,
+      "counts_toward_cumulative": false,
+      "failure_code": "content_validation_failed",
+      "minimum_words": 400,
+      "draft_present": false,
+      "word_count": null,
+      "validator_version": null,
+      "saved_batches": 0
+    },
+    {
+      "run_id": "01a09432-12e5-7c98-adcc-29c2283b3875",
+      "account_id": "01a08e5a-2250-7854-81df-5aeb26e7f461",
+      "status": "valid",
+      "disposition": "pending",
+      "quota_charged": true,
+      "counts_toward_cumulative": true,
+      "failure_code": null,
+      "minimum_words": 400,
+      "draft_present": true,
+      "word_count": "555",
+      "validator_version": "m001-v5-wn31-r2",
+      "saved_batches": 0
+    },
+    {
+      "run_id": "01a09434-85c9-7c31-95a2-216395321be0",
+      "account_id": "01a08e5a-2250-7854-81df-5aeb26e7f461",
+      "status": "valid",
+      "disposition": "pending",
+      "quota_charged": true,
+      "counts_toward_cumulative": true,
+      "failure_code": null,
+      "minimum_words": 50,
+      "draft_present": true,
+      "word_count": "195",
+      "validator_version": "m001-v5-wn31-r2",
+      "saved_batches": 0
+    }
+  ],
+  "successful_continuations": [
+    {
+      "case_id": 8,
+      "run_id": "01a0942e-ab95-72cb-8b09-1f3e50261ec7",
+      "meanings_retained": true,
+      "hints_retained": true,
+      "passage_append_exact": true,
+      "tags_from_continuation": true,
+      "word_count": 252
+    },
+    {
+      "case_id": 14,
+      "run_id": "01a09432-12e5-7c98-adcc-29c2283b3875",
+      "meanings_retained": true,
+      "hints_retained": true,
+      "passage_append_exact": true,
+      "tags_from_continuation": true,
+      "word_count": 555
+    }
+  ],
+  "failures": [
+    {
+      "case_id": 1,
+      "run_id": "01a0942c-237b-7faf-a53f-bf02ff5df443",
+      "stage": "content_validate",
+      "check": "passage_relations",
+      "reason": "mapping_relation_rejected",
+      "evidence": "carries(danger)",
+      "assessment": "carries is not a form of danger. First response already contains valid danger occurrences; the wrong additional mapping is rejected. No continuation eligible."
+    },
+    {
+      "case_id": 3,
+      "run_id": "01a0942c-a0bc-7123-8eaf-9d8855c8b389",
+      "stage": "content_validate",
+      "check": "passage_ownership",
+      "reason": "annotation_source_unknown",
+      "first_words": 168,
+      "continuation_words": 325,
+      "combined_words": 493,
+      "minimum": 400,
+      "evidence": "vulnerability(vulnerability)",
+      "assessment": "Continuation used a derived word as its source label instead of the exact selected entry vulnerable. Final validation rejects the unknown source; corrected-candidate success is not claimed."
+    },
+    {
+      "case_id": 13,
+      "run_id": "01a09430-e43a-71ed-9b0e-699d1186c3d0",
+      "stage": "content_validate",
+      "check": "passage_annotation_presence",
+      "reason": "passage_annotation_missing",
+      "first_words": 1560,
+      "continuation_words": 980,
+      "combined_words": 2540,
+      "minimum": 400,
+      "missing": [
+        "prevalent"
+      ],
+      "assessment": "The selected entry prevalent remains absent in both original and continuation prose. More words did not resolve target coverage."
+    }
+  ],
+  "quality": {
+    "interface_first_pass_rate": 0.6666666666666666,
+    "interface_final_rate": 0.8,
+    "repair_salvage_rate": 0.5,
+    "cumulative_r9_first_pass_rate": 0.7391304347826086,
+    "cumulative_r9_final_rate": 0.8260869565217391,
+    "definite_meaning_error": {
+      "case_id": 5,
+      "entry": "handicap",
+      "observed_excerpt": "障碍；不利条件；残疾人。",
+      "issue": "The person translation is inaccurate for the input noun handicap.",
+      "source": "https://dictionary.cambridge.org/dictionary/english-chinese-simplified/handicap",
+      "verification": "Cambridge English-Chinese entry describes condition/difficulty/competition and the verb, not a disabled person."
+    },
+    "observations": [
+      "All 19 upstream responses are complete JSON and finish with stop; zero opaque transport failures or client timeouts. All 15 runs have exactly one terminal event.",
+      "All 12 successful SSE streams equal validated prose with correct target ordering, Unicode positions and no leaked inline annotations. Persisted payload equality was separately checked for the two successful continuations.",
+      "Both successful continuations preserve original-entry meanings and clean hints exactly, append prose exactly, and use new whole-passage tags; verified against real draft payloads.",
+      "No passage-role explanatory tails observed in the original-entry meanings. Meanings and tags follow zh/en/ja; hints and prose remain English. This does not certify every lexical definition.",
+      "Ten of 75 original-entry hints contain inflection; no required inflection percentage introduced.",
+      "Every upstream response passage is one paragraph. The longest failed combined passage has 2540 words yet still misses prevalent; no upper-bound or segmentation requirement added.",
+      "Case 5 and 6 frame gambling gains/visits as relief from unemployment or melancholy. Case 15 instead leaves gambling for training; stories are not uniformly the same. These are narrative-quality observations, not new bans.",
+      "Case 13 changes Tariq to Tara once; case 15 shifts from watching/hearing news to rereading/folding a paper without introducing it. Minor continuity observations kept separate from interface outcomes.",
+      "The melancholy-to-melancholic fix is still not exercised by the current live sample; prior offline proof is not mislabeled as live coverage."
+    ],
+    "conclusion": "Bounded continuation rescues 2 GLM runs but none of 2 MiniMax eligible runs. Current 80% and combined r9 82.6% do not meet the 90% target. Small mixed samples and different counts per model do not justify a stable production-rate claim. Interface success does not imply content-quality acceptance."
+  },
+  "checks": {
+    "files": [
+      {
+        "path": "backend/internal/ai/contract.go",
+        "sha256": "d5f1bee8fc8238e87ee133cf10337d8475b21e98ba7aa68d46e98332f550c04d",
+        "match": true
+      },
+      {
+        "path": "backend/internal/ai/validator.go",
+        "sha256": "c06385a0b3280df2faae0ccd0adf5e8e0e1e8a8d86a1705015bf2f057fe2f9c6",
+        "match": true
+      },
+      {
+        "path": "backend/internal/ai/lexicon.go",
+        "sha256": "ad8353318556e17085f5b88fb7ac7d1a4a51af43b2192f942017554e227da705",
+        "match": true
+      },
+      {
+        "path": "backend/internal/ai/openrouter.go",
+        "sha256": "d7c3df5163b7a1c658f52720f842733787646d5691ddd36a6c0158de8b38a229",
+        "match": true
+      },
+      {
+        "path": "backend/internal/ai/continuation.go",
+        "sha256": "f8e799cda7b3b39e00b2946017e0aafb0939dc69d07da9a43f18447626f29b43",
+        "match": true
+      },
+      {
+        "path": "backend/internal/ai/fingerprint.go",
+        "sha256": "a43dc7b5f458880dcac813ea07ebc25e200d8fc124ea636140e032a07047998e",
+        "match": true
+      },
+      {
+        "path": "backend/internal/ai/continuation_test.go",
+        "sha256": "e3e235716adc3bdcb5257f813777c83c93e3ca7828e8986f54eb1d3b2a329884",
+        "match": true
+      },
+      {
+        "path": "backend/internal/ai/cr040_test.go",
+        "sha256": "f952a8c8c30b6ca2313728308875d60bf2339f26fd2d3b15e41ff12c176820f3",
+        "match": true
+      },
+      {
+        "path": "backend/internal/ai/annotations_test.go",
+        "sha256": "12d84105e550c7d24b4777dd42298cb73fcedf1677b8cb64bf98e51f8c00a5c6",
+        "match": true
+      },
+      {
+        "path": "backend/internal/httpapi/generation_handlers.go",
+        "sha256": "eea07ce3f4f80f5424110c366a5ec292c65d2845950ec45206d3a5a67023ea73",
+        "match": true
+      },
+      {
+        "path": "backend/internal/httpapi/generation_matrix_integration_test.go",
+        "sha256": "bdee546c7b15863e5a2aa6ffb50084a1af8cc82bf5f47294e432d8352b958908",
+        "match": true
+      },
+      {
+        "path": "backend/internal/httpapi/continuation_integration_test.go",
+        "sha256": "fddfda1628d08589856a3e6f481bd3305ef67783f5d47e2f1a55052dcff06e4e",
+        "match": true
+      },
+      {
+        "path": "backend/internal/generationtrace/trace.go",
+        "sha256": "e357b184199e0151b215b67f84007314bc2484c10f77ff270debd563b0e3d765",
+        "match": true
+      },
+      {
+        "path": "backend/internal/generationevidence/reconstruct.go",
+        "sha256": "940c3671fe44622882b1def7f91320e337af306313d3d0e7e38726940546dbe9",
+        "match": true
+      },
+      {
+        "path": "backend/internal/generationevidence/additional_test.go",
+        "sha256": "7aafb006d7fa524eb65056090a469f2dadc06ae5bd6d7e4bd22e8f3c3b0d41c3",
+        "match": true
+      },
+      {
+        "path": "backend/internal/diagnostics/commands_test.go",
+        "sha256": "f2236d60a30f94f0770e7da335710ceaee1d95d20a8f182ff88b79c73a9abb50",
+        "match": true
+      }
+    ],
+    "runtime": {
+      "id": "6e1c3aeff39d9f120e2ae2934c8309fa7b8a4ab355b4627808140d7a3b1f4656",
+      "image": "sha256:c4b00eb124fd7ccccd62223599336db9ada358861d09e6f852725f477aadefb8",
+      "configured_image": "wordweave-local:continuation-r9-20260912",
+      "health": "healthy",
+      "restarts": 0,
+      "started_at": "2026-09-12T04:00:15.02626401Z"
+    },
+    "existing_bundles": [
+      {
+        "id": "4b2acc14-96d4-4df7-b72e-724bba2b595d",
+        "expires_at": "2026-09-13T06:01:05.218198629Z"
+      },
+      {
+        "id": "2ca53fa0-5ebb-4448-a4d1-b7067a3b00b2",
+        "expires_at": "2026-09-13T05:58:24.738634096Z"
+      },
+      {
+        "id": "ad9e35c5-0e03-44f6-a55f-3b01f6acc380",
+        "expires_at": "2026-09-13T05:57:07.253914796Z"
+      },
+      {
+        "id": "0ec2bb0c-f6e5-4607-8812-48e0750f2527",
+        "expires_at": "2026-09-13T05:56:39.854078339Z"
+      },
+      {
+        "id": "1dca2269-946c-4604-98ee-8be3bc7dfb34",
+        "expires_at": "2026-09-13T05:56:31.532840585Z"
+      },
+      {
+        "id": "277f76ec-9755-4ecb-bdbe-07ed64b6c679",
+        "expires_at": "2026-09-13T05:56:04.217133587Z"
+      },
+      {
+        "id": "0c20d3f3-6d28-43d9-ad4a-98b284931946",
+        "expires_at": "2026-09-13T05:55:57.990916Z"
+      },
+      {
+        "id": "7e57a4aa-32d6-49db-93db-da0e4b4ca0f4",
+        "expires_at": "2026-09-13T05:54:41.681184299Z"
+      },
+      {
+        "id": "bfe00320-e0d9-4a7a-8931-be2250f02e26",
+        "expires_at": "2026-09-13T05:54:27.222059083Z"
+      },
+      {
+        "id": "4ffcdac2-f5a9-447b-9583-e380a6f5e199",
+        "expires_at": "2026-09-13T05:53:49.717836386Z"
+      },
+      {
+        "id": "91eb7b59-26c7-4a2c-843d-deb82c63ac55",
+        "expires_at": "2026-09-13T05:53:31.446010669Z"
+      },
+      {
+        "id": "dd4142b4-c091-4cb2-b7cc-e52b5c494609",
+        "expires_at": "2026-09-13T05:52:45.844129092Z"
+      },
+      {
+        "id": "694a6ec9-c082-40f6-9aa3-41767b99aa85",
+        "expires_at": "2026-09-13T05:52:27.831345292Z"
+      },
+      {
+        "id": "f08ac5da-6020-44af-899e-06e4a704ca58",
+        "expires_at": "2026-09-13T05:52:05.737169921Z"
+      },
+      {
+        "id": "d7fe0221-b4c6-475e-b6ac-7caf74a07910",
+        "expires_at": "2026-09-13T05:51:55.75140068Z"
+      },
+      {
+        "id": "91d7ca0c-d825-4920-99d7-af5b94cec388",
+        "expires_at": "2026-09-13T04:05:13.989197301Z"
+      },
+      {
+        "id": "6d9491d9-4842-4408-99bd-0141409d4e8c",
+        "expires_at": "2026-09-13T04:05:07.325785798Z"
+      },
+      {
+        "id": "893f4d9d-20f9-44ef-ae81-231237f35634",
+        "expires_at": "2026-09-13T04:04:04.827019047Z"
+      },
+      {
+        "id": "58bf59f3-bf7f-4afa-911d-3f907d5144e2",
+        "expires_at": "2026-09-13T04:03:54.228972208Z"
+      },
+      {
+        "id": "4d3a2a51-02c6-4b8e-813a-bc81fd6e7334",
+        "expires_at": "2026-09-13T04:03:04.575129713Z"
+      },
+      {
+        "id": "36dd789d-b1c8-4c41-9552-2e40320566bc",
+        "expires_at": "2026-09-13T04:02:48.292390803Z"
+      },
+      {
+        "id": "cb3f5146-7f65-407d-bde6-f2fa49e74b37",
+        "expires_at": "2026-09-13T04:01:51.596566138Z"
+      },
+      {
+        "id": "9782f948-ed15-49f7-8e0d-fa7de5e2c442",
+        "expires_at": "2026-09-13T04:01:06.702902839Z"
+      }
+    ],
+    "active_runs": 0,
+    "provider_response_count": 19,
+    "all_provider_finish_stop": true,
+    "all_success_stream_checks": true,
+    "all_raw_json_complete": true,
+    "old_bundle_ids_preserved": true,
+    "same_container": true
+  },
+  "retention": {
+    "hours": 24,
+    "max_bundle_bytes": 1048576,
+    "private_dir": "/run/wordweave-evidence",
+    "raw_model_content_copied_to_repository": false,
+    "old_evidence_cleared": false,
+    "early_loss_if_backend_recreated": true
+  },
+  "paths": {
+    "pre_test": "pre-test.json",
+    "previous_round": "../continuation-r9-10-20260912/results.json",
+    "offline": "../continuation-r9-20260912/verification.json",
+    "ledger": "/tmp/wordweave-r9-20.TerHOn/calls.json",
+    "ledger_sha256": "35407d39f637e5183e3e2f635c366463efd395ab6e327dc45529cae31727fd34",
+    "harness": "/tmp/wordweave-r9-20.TerHOn/run.mjs"
+  },
+  "remaining": [
+    "CR-039/040/041/042 and 90% goal remain open.",
+    "No independent QA, UAT or release approval claimed.",
+    "Previously approved finite-continuation architecture-document synchronization and safe-family coverage gaps remain open; no other-role artifact edited.",
+    "Further paid calls need explicit adequate budget; old unspent slot not silently carried over."
+  ],
+  "tooling": {
+    "test_execution": "Node fetch + existing Docker diagnostics + scoped read-only SQL",
+    "actual_assistant_model_switch": false,
+    "assistant_token_usage": "unknown"
+  }
+}

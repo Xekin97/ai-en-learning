@@ -1,0 +1,99 @@
+{
+  "date": "2026-09-07T06:23:52.630Z",
+  "agent": "qa-quinn",
+  "providerBase": "https://openrouter.ai/api/v1",
+  "credential": {
+    "configured": true,
+    "updated_at": "2026-09-04T07:26:03.521637Z"
+  },
+  "models": [
+    {
+      "id": "01a06515-4ab4-7bfd-b2e7-92372215f942",
+      "display_name": "UAT deterministic model",
+      "description": "Local functional UAT provider",
+      "openrouter_model_id": "provider/integration",
+      "enabled": true,
+      "assigned_group_codes": [
+        "visitor",
+        "basic",
+        "pro",
+        "plus"
+      ],
+      "created_at": "2026-09-03T02:24:49.332725Z",
+      "updated_at": "2026-09-04T07:26:03.726311Z"
+    }
+  ],
+  "groups": [
+    {
+      "code": "visitor",
+      "rolling_24h_limit": 5,
+      "max_entries": 5,
+      "allowed_lengths": [
+        "short"
+      ],
+      "models": [
+        {
+          "id": "01a06515-4ab4-7bfd-b2e7-92372215f942",
+          "display_name": "UAT deterministic model",
+          "enabled": true
+        }
+      ]
+    },
+    {
+      "code": "basic",
+      "rolling_24h_limit": null,
+      "max_entries": 5,
+      "allowed_lengths": [
+        "short",
+        "medium",
+        "long",
+        "xlong"
+      ],
+      "models": [
+        {
+          "id": "01a06515-4ab4-7bfd-b2e7-92372215f942",
+          "display_name": "UAT deterministic model",
+          "enabled": true
+        }
+      ]
+    },
+    {
+      "code": "pro",
+      "rolling_24h_limit": null,
+      "max_entries": 5,
+      "allowed_lengths": [
+        "short",
+        "medium",
+        "long",
+        "xlong"
+      ],
+      "models": [
+        {
+          "id": "01a06515-4ab4-7bfd-b2e7-92372215f942",
+          "display_name": "UAT deterministic model",
+          "enabled": true
+        }
+      ]
+    },
+    {
+      "code": "plus",
+      "rolling_24h_limit": null,
+      "max_entries": 5,
+      "allowed_lengths": [
+        "short",
+        "medium",
+        "long",
+        "xlong"
+      ],
+      "models": [
+        {
+          "id": "01a06515-4ab4-7bfd-b2e7-92372215f942",
+          "display_name": "UAT deterministic model",
+          "enabled": true
+        }
+      ]
+    }
+  ],
+  "activeGenerationCheckedByDeployment": true,
+  "secretsEmitted": false
+}

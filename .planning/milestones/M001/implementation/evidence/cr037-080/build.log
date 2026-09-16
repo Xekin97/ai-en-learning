@@ -1,0 +1,343 @@
+#0 building with "desktop-linux" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 1.03kB done
+#1 DONE 0.0s
+
+#2 [internal] load metadata for docker.io/library/node:24.8.0-alpine3.22@sha256:3e843c608bb5232f39ecb2b25e41214b958b0795914707374c8acc28487dea17
+#2 DONE 1.6s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 155B done
+#3 DONE 0.0s
+
+#4 [build 1/7] FROM docker.io/library/node:24.8.0-alpine3.22@sha256:3e843c608bb5232f39ecb2b25e41214b958b0795914707374c8acc28487dea17
+#4 DONE 0.0s
+
+#5 [internal] load build context
+#5 transferring context: 56.98kB 0.0s done
+#5 DONE 0.0s
+
+#6 [build 2/7] WORKDIR /app
+#6 CACHED
+
+#7 [build 3/7] RUN corepack enable && corepack prepare pnpm@10.33.0 --activate
+#7 CACHED
+
+#8 [build 4/7] COPY package.json pnpm-lock.yaml ./
+#8 CACHED
+
+#9 [build 5/7] RUN pnpm install --frozen-lockfile
+#9 CACHED
+
+#10 [build 6/7] COPY . .
+#10 DONE 0.1s
+
+#11 [build 7/7] RUN pnpm typecheck && pnpm lint && pnpm lint:boundaries && pnpm test && pnpm build
+#11 0.602 
+#11 0.602 > wordweave-frontend@0.1.0 typecheck /app
+#11 0.602 > nuxt typecheck
+#11 0.602 
+#11 11.23 
+#11 11.23 > wordweave-frontend@0.1.0 lint /app
+#11 11.23 > eslint .
+#11 11.23 
+#11 21.20 
+#11 21.20 > wordweave-frontend@0.1.0 lint:boundaries /app
+#11 21.20 > depcruise app --config dependency-cruiser.cjs
+#11 21.20 
+#11 24.22 
+#11 24.22 ✔ no dependency violations found (118 modules, 89 dependencies cruised)
+#11 24.22 
+#11 24.53 
+#11 24.53 > wordweave-frontend@0.1.0 test /app
+#11 24.53 > vitest run
+#11 24.53 
+#11 25.23 
+#11 25.23 [1m[30m[46m RUN [49m[39m[22m [36mv4.1.11 [39m[90m/app[39m
+#11 25.23 
+#11 29.54  [32m✓[39m tests/unit/admin-user-search.test.ts [2m([22m[2m8 tests[22m[2m)[22m[32m 37[2mms[22m[39m
+#11 29.64  [32m✓[39m tests/unit/passage-cloze-presenter.test.ts [2m([22m[2m4 tests[22m[2m)[22m[32m 13[2mms[22m[39m
+#11 30.96  [32m✓[39m tests/unit/private-session-state.test.ts [2m([22m[2m5 tests[22m[2m)[22m[32m 16[2mms[22m[39m
+#11 31.36  [32m✓[39m tests/unit/review-range-setup.test.ts [2m([22m[2m47 tests[22m[2m)[22m[33m 399[2mms[22m[39m
+#11 31.40  [32m✓[39m tests/unit/auth-reader-presenters.test.ts [2m([22m[2m8 tests[22m[2m)[22m[32m 12[2mms[22m[39m
+#11 31.52  [32m✓[39m tests/unit/admin-detail-state.test.ts [2m([22m[2m15 tests[22m[2m)[22m[32m 240[2mms[22m[39m
+#11 31.60  [32m✓[39m tests/unit/review-setup-presenter.test.ts [2m([22m[2m4 tests[22m[2m)[22m[33m 500[2mms[22m[39m
+#11 31.60    [33m[2m✓[22m[39m preserves input nodes and focus while rendering every preview state and locale [33m 396[2mms[22m[39m
+#11 31.75  [32m✓[39m tests/unit/strict-contracts.test.ts [2m([22m[2m6 tests[22m[2m)[22m[32m 177[2mms[22m[39m
+#11 31.96  [32m✓[39m tests/unit/admin-plan-policy.test.ts [2m([22m[2m14 tests[22m[2m)[22m[32m 10[2mms[22m[39m
+#11 32.16  [32m✓[39m tests/unit/admin-quota-contract.test.ts [2m([22m[2m26 tests[22m[2m)[22m[32m 290[2mms[22m[39m
+#11 32.68  [32m✓[39m tests/unit/auth-card-design.test.ts [2m([22m[2m22 tests[22m[2m)[22m[33m 1519[2mms[22m[39m
+#11 32.68      [33m[2m✓[22m[39m omits a hint for an absent or unsafe target: "//outside.test" [33m 370[2mms[22m[39m
+#11 35.27  [32m✓[39m tests/unit/generation-reducer.test.ts [2m([22m[2m2 tests[22m[2m)[22m[32m 14[2mms[22m[39m
+#11 35.41  [32m✓[39m tests/unit/review-summary-presenter.test.ts [2m([22m[2m4 tests[22m[2m)[22m[32m 5[2mms[22m[39m
+#11 35.44  [32m✓[39m tests/unit/span-mapper.test.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 24[2mms[22m[39m
+#11 35.48  [32m✓[39m tests/unit/admin-layout-content.test.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 12[2mms[22m[39m
+#11 35.56  [32m✓[39m tests/unit/library-page-presenter.test.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 9[2mms[22m[39m
+#11 35.57  [32m✓[39m tests/unit/admin-user-position.test.ts [2m([22m[2m2 tests[22m[2m)[22m[32m 10[2mms[22m[39m
+#11 35.59  [32m✓[39m tests/unit/return-intent.test.ts [2m([22m[2m13 tests[22m[2m)[22m[32m 8[2mms[22m[39m
+#11 35.69  [32m✓[39m tests/unit/token-vault.test.ts [2m([22m[2m2 tests[22m[2m)[22m[32m 10[2mms[22m[39m
+#11 35.74  [32m✓[39m tests/unit/generation-selection.test.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 10[2mms[22m[39m
+#11 36.39  [32m✓[39m tests/unit/admin-approved-copy.test.ts [2m([22m[2m2 tests[22m[2m)[22m[32m 10[2mms[22m[39m
+#11 36.42 
+#11 36.42 [2m Test Files [22m [1m[32m21 passed[39m[22m[90m (21)[39m
+#11 36.42 [2m      Tests [22m [1m[32m196 passed[39m[22m[90m (196)[39m
+#11 36.42 [2m   Start at [22m 10:16:17
+#11 36.42 [2m   Duration [22m 11.16s[2m (transform 19.41s, setup 0ms, import 29.46s, tests 3.33s, environment 40.20s)[22m
+#11 36.42 
+#11 37.38 
+#11 37.38 > wordweave-frontend@0.1.0 build /app
+#11 37.38 > nuxt build
+#11 37.38 
+#11 37.84 ┌  Building Nuxt for production...
+#11 38.30 │
+#11 38.30 ●  Nuxt 4.5.2 (with Nitro 2.13.4, Vite 8.2.2 and Vue 3.5.42)
+#11 40.87 │
+#11 40.87 ●  Nitro preset: node-server
+#11 45.74 ℹ Building client...
+#11 45.94 ℹ vite v8.2.2 building client environment for production...
+#11 46.25 transforming...
+#11 62.43 ✓ 458 modules transformed.
+#11 63.56 rendering chunks...
+#11 63.71 computing gzip size...
+#11 63.72 ℹ node_modules/.cache/nuxt/.nuxt/dist/client/manifest.json                  15.95 kB │ gzip:  1.73 kB
+#11 63.72 node_modules/.cache/nuxt/.nuxt/dist/client/_nuxt/error-500.BCwb1ls_.css    1.90 kB │ gzip:  0.72 kB
+#11 63.72 node_modules/.cache/nuxt/.nuxt/dist/client/_nuxt/error-404.DtX14caB.css    2.42 kB │ gzip:  0.85 kB
+#11 63.72 node_modules/.cache/nuxt/.nuxt/dist/client/_nuxt/entry.CEzDe9vQ.css       57.83 kB │ gzip: 11.37 kB
+#11 63.72 node_modules/.cache/nuxt/.nuxt/dist/client/_nuxt/CNs_Ozdc.js               0.02 kB │ gzip:  0.04 kB
+#11 63.72 node_modules/.cache/nuxt/.nuxt/dist/client/_nuxt/BDNMzG2s.js               0.08 kB │ gzip:  0.09 kB
+#11 63.72 node_modules/.cache/nuxt/.nuxt/dist/client/_nuxt/S5_MK9-o.js               0.10 kB │ gzip:  0.10 kB
+#11 63.72 node_modules/.cache/nuxt/.nuxt/dist/client/_nuxt/tCkLUWL1.js               0.10 kB │ gzip:  0.10 kB
+#11 63.72 node_modules/.cache/nuxt/.nuxt/dist/client/_nuxt/DIYIsLm9.js               0.23 kB │ gzip:  0.19 kB
+#11 63.72 node_modules/.cache/nuxt/.nuxt/dist/client/_nuxt/Bt_zpNgQ.js               0.24 kB │ gzip:  0.19 kB
+#11 63.72 node_modules/.cache/nuxt/.nuxt/dist/client/_nuxt/BERFr0du.js               0.28 kB │ gzip:  0.22 kB
+#11 63.72 node_modules/.cache/nuxt/.nuxt/dist/client/_nuxt/5GuO1-aO.js               0.52 kB │ gzip:  0.34 kB
+#11 63.72 node_modules/.cache/nuxt/.nuxt/dist/client/_nuxt/-1Kx9Afa.js               0.53 kB │ gzip:  0.28 kB
+#11 63.72 node_modules/.cache/nuxt/.nuxt/dist/client/_nuxt/BDYDzGT2.js               0.57 kB │ gzip:  0.40 kB
+#11 63.72 node_modules/.cache/nuxt/.nuxt/dist/client/_nuxt/Cf92AYbD.js               0.94 kB │ gzip:  0.56 kB
+#11 63.72 node_modules/.cache/nuxt/.nuxt/dist/client/_nuxt/BeHUuxLI.js               1.12 kB │ gzip:  0.60 kB
+#11 63.72 node_modules/.cache/nuxt/.nuxt/dist/client/_nuxt/DCWT57rh.js               1.16 kB │ gzip:  0.62 kB
+#11 63.72 node_modules/.cache/nuxt/.nuxt/dist/client/_nuxt/5-iaFy1v.js               1.42 kB │ gzip:  0.81 kB
+#11 63.72 node_modules/.cache/nuxt/.nuxt/dist/client/_nuxt/DRgoZ4a1.js               1.99 kB │ gzip:  0.76 kB
+#11 63.72 node_modules/.cache/nuxt/.nuxt/dist/client/_nuxt/DmOJ-VTW.js               2.26 kB │ gzip:  0.98 kB
+#11 63.72 node_modules/.cache/nuxt/.nuxt/dist/client/_nuxt/l1sNY-Nk.js               2.88 kB │ gzip:  1.25 kB
+#11 63.72 node_modules/.cache/nuxt/.nuxt/dist/client/_nuxt/BqskFqFP.js               2.92 kB │ gzip:  0.92 kB
+#11 63.72 node_modules/.cache/nuxt/.nuxt/dist/client/_nuxt/DA1bTKku.js               3.09 kB │ gzip:  1.13 kB
+#11 63.72 node_modules/.cache/nuxt/.nuxt/dist/client/_nuxt/C84e44Jr.js               3.18 kB │ gzip:  1.31 kB
+#11 63.72 node_modules/.cache/nuxt/.nuxt/dist/client/_nuxt/kfNnKW0M.js               3.31 kB │ gzip:  1.51 kB
+#11 63.72 node_modules/.cache/nuxt/.nuxt/dist/client/_nuxt/ZFMDAfrj.js               3.40 kB │ gzip:  1.54 kB
+#11 63.72 node_modules/.cache/nuxt/.nuxt/dist/client/_nuxt/iNk9x6Dm.js               3.75 kB │ gzip:  1.70 kB
+#11 63.72 node_modules/.cache/nuxt/.nuxt/dist/client/_nuxt/-TkFbPo6.js               3.75 kB │ gzip:  1.60 kB
+#11 63.72 node_modules/.cache/nuxt/.nuxt/dist/client/_nuxt/Bm7gilV3.js               3.94 kB │ gzip:  1.40 kB
+#11 63.72 node_modules/.cache/nuxt/.nuxt/dist/client/_nuxt/DcEG0Sfi.js               4.88 kB │ gzip:  2.00 kB
+#11 63.72 node_modules/.cache/nuxt/.nuxt/dist/client/_nuxt/DvAY2-3O.js               5.32 kB │ gzip:  2.03 kB
+#11 63.72 node_modules/.cache/nuxt/.nuxt/dist/client/_nuxt/CtxfIjMK.js               6.15 kB │ gzip:  1.73 kB
+#11 63.72 node_modules/.cache/nuxt/.nuxt/dist/client/_nuxt/BJFZgYue.js               6.35 kB │ gzip:  2.81 kB
+#11 63.72 node_modules/.cache/nuxt/.nuxt/dist/client/_nuxt/D5RaLiGN.js               6.72 kB │ gzip:  2.44 kB
+#11 63.72 node_modules/.cache/nuxt/.nuxt/dist/client/_nuxt/BW8tLj2B.js               7.00 kB │ gzip:  2.26 kB
+#11 63.72 node_modules/.cache/nuxt/.nuxt/dist/client/_nuxt/Ddu7jS-E.js               7.58 kB │ gzip:  2.31 kB
+#11 63.72 node_modules/.cache/nuxt/.nuxt/dist/client/_nuxt/wg7sL3Bu.js               8.10 kB │ gzip:  3.01 kB
+#11 63.72 node_modules/.cache/nuxt/.nuxt/dist/client/_nuxt/DurFGb6a.js               8.33 kB │ gzip:  3.36 kB
+#11 63.72 node_modules/.cache/nuxt/.nuxt/dist/client/_nuxt/z0aVqf-7.js               9.27 kB │ gzip:  3.92 kB
+#11 63.72 node_modules/.cache/nuxt/.nuxt/dist/client/_nuxt/Cm3Y0Alp.js              13.08 kB │ gzip:  4.68 kB
+#11 63.72 node_modules/.cache/nuxt/.nuxt/dist/client/_nuxt/BTZguKw7.js              13.46 kB │ gzip:  5.77 kB
+#11 63.72 node_modules/.cache/nuxt/.nuxt/dist/client/_nuxt/7wLIyU_z.js              16.65 kB │ gzip:  5.63 kB
+#11 63.72 node_modules/.cache/nuxt/.nuxt/dist/client/_nuxt/cFnuA2TA.js              17.11 kB │ gzip:  5.04 kB
+#11 63.72 node_modules/.cache/nuxt/.nuxt/dist/client/_nuxt/VfD9bjV9.js              20.08 kB │ gzip:  6.76 kB
+#11 63.72 node_modules/.cache/nuxt/.nuxt/dist/client/_nuxt/BY7JDMyC.js              87.22 kB │ gzip: 33.69 kB
+#11 63.72 node_modules/.cache/nuxt/.nuxt/dist/client/_nuxt/LxjL9JUs.js             284.83 kB │ gzip: 91.40 kB
+#11 63.72 
+#11 63.72 ℹ ✓ built in 17.78s
+#11 63.72 
+#11 63.72  WARN  [33m[PLUGIN_TIMINGS] [0mYour build spent 93% of 17.7s inside plugin hooks (16.5s).
+#11 63.72 Measured inside the callback, so queue time is excluded and time the callback itself awaited is not:
+#11 63.72   - vite-plugin-checker buildEnd (35%, 6.3s, 1 call)
+#11 63.72 Those rows are 35% of the build; the rest of the 93% is below.
+#11 63.72 Not measurable — 2 hooks whose calls overlap, so elapsed time covers work other calls were doing. Profile with node --cpu-prof:
+#11 63.72   - nuxt:ssr-styles:client resolveId (81 calls)
+#11 63.72   - nuxt:resolve-bare-imports resolveId (28 calls)
+#11 63.72 See https://rolldown.rs/reference/InputOptions.checks#plugintimings for more details.
+#11 63.72 
+#11 63.72 
+#11 63.73 ✔ Client built in 17991ms
+#11 63.73 ℹ Building server...
+#11 63.75 ℹ vite v8.2.2 building ssr environment for production...
+#11 63.81 transforming...
+#11 73.07 ✓ 275 modules transformed.
+#11 73.46 rendering chunks...
+#11 73.62 ℹ node_modules/.cache/nuxt/.nuxt/dist/server/_nuxt/error-404-styles.UP1AHB9m.mjs            0.08 kB
+#11 73.62 node_modules/.cache/nuxt/.nuxt/dist/server/_nuxt/error-500-styles.CvfOP9g8.mjs            0.08 kB
+#11 73.62 node_modules/.cache/nuxt/.nuxt/dist/server/styles.mjs                                     0.61 kB
+#11 73.62 node_modules/.cache/nuxt/.nuxt/dist/server/_nuxt/_plugin-vue_export-helper-BOaGB7Aw.js    0.26 kB
+#11 73.62 node_modules/.cache/nuxt/.nuxt/dist/server/_nuxt/page-loader-UVBqIJ9m.js                  0.29 kB │ map:   0.42 kB
+#11 73.62 node_modules/.cache/nuxt/.nuxt/dist/server/_nuxt/use-localized-head-kCfEfn-y.js           0.31 kB │ map:   0.41 kB
+#11 73.62 node_modules/.cache/nuxt/.nuxt/dist/server/_nuxt/pages-D2t2w1JB.js                        0.36 kB │ map:   1.81 kB
+#11 73.62 node_modules/.cache/nuxt/.nuxt/dist/server/_nuxt/admin-SUGvyn9s.js                        0.75 kB │ map:   0.52 kB
+#11 73.62 node_modules/.cache/nuxt/.nuxt/dist/server/_nuxt/learner-DWYrwDof.js                      0.77 kB │ map:   0.61 kB
+#11 73.62 node_modules/.cache/nuxt/.nuxt/dist/server/_nuxt/guest-CZ9dA_sH.js                        0.81 kB │ map:   0.63 kB
+#11 73.62 node_modules/.cache/nuxt/.nuxt/dist/server/_nuxt/use-display-formatters-CC0sSAvc.js       0.91 kB │ map:   1.73 kB
+#11 73.62 node_modules/.cache/nuxt/.nuxt/dist/server/_nuxt/AppError-QqXg0akp.js                     1.75 kB │ map:   1.50 kB
+#11 73.62 node_modules/.cache/nuxt/.nuxt/dist/server/_nuxt/return-intent-BCvjMq5m.js                1.82 kB │ map:   4.18 kB
+#11 73.62 node_modules/.cache/nuxt/.nuxt/dist/server/_nuxt/_batchId_-s_dskQGB.js                    1.98 kB │ map:   2.09 kB
+#11 73.62 node_modules/.cache/nuxt/.nuxt/dist/server/_nuxt/AppDialog-CYBW5QxB.js                    2.10 kB │ map:   2.94 kB
+#11 73.62 node_modules/.cache/nuxt/.nuxt/dist/server/_nuxt/AdminUserSearchForm-CsetNBMI.js          2.35 kB │ map:   3.07 kB
+#11 73.62 node_modules/.cache/nuxt/.nuxt/dist/server/_nuxt/error-500-styles-1.mjs-BIY4rstB.js       2.44 kB │ map:   5.29 kB
+#11 73.62 node_modules/.cache/nuxt/.nuxt/dist/server/_nuxt/error-404-styles-1.mjs-DwzLrrzA.js       2.97 kB │ map:   5.93 kB
+#11 73.62 node_modules/.cache/nuxt/.nuxt/dist/server/_nuxt/LocaleSwitch-Dq9FGmQc.js                 3.23 kB │ map:   3.06 kB
+#11 73.62 node_modules/.cache/nuxt/.nuxt/dist/server/_nuxt/AppIcon-BBgbpNJY.js                      4.11 kB │ map:   8.16 kB
+#11 73.62 node_modules/.cache/nuxt/.nuxt/dist/server/_nuxt/pages-DBjaq-Lo.js                        4.18 kB │ map:   6.03 kB
+#11 73.62 node_modules/.cache/nuxt/.nuxt/dist/server/_nuxt/error-500-bZxxDWmE.js                    4.65 kB │ map:   5.62 kB
+#11 73.62 node_modules/.cache/nuxt/.nuxt/dist/server/_nuxt/library-PIcnRoQj.js                      4.83 kB │ map:   8.95 kB
+#11 73.62 node_modules/.cache/nuxt/.nuxt/dist/server/_nuxt/login-B0Y8AWzP.js                        5.34 kB │ map:  10.79 kB
+#11 73.62 node_modules/.cache/nuxt/.nuxt/dist/server/_nuxt/error-404-BqlOhFLd.js                    5.36 kB │ map:   6.42 kB
+#11 73.62 node_modules/.cache/nuxt/.nuxt/dist/server/_nuxt/admin-3Uha7UV0.js                        5.74 kB │ map:   7.54 kB
+#11 73.62 node_modules/.cache/nuxt/.nuxt/dist/server/_nuxt/register-Bx8ZFIXi.js                     5.80 kB │ map:  12.18 kB
+#11 73.62 node_modules/.cache/nuxt/.nuxt/dist/server/_nuxt/session-DPiX-h4A.js                      6.27 kB │ map:  15.37 kB
+#11 73.62 node_modules/.cache/nuxt/.nuxt/dist/server/_nuxt/learner-access-BBiXRKUa.js               6.93 kB │ map:   8.91 kB
+#11 73.62 node_modules/.cache/nuxt/.nuxt/dist/server/_nuxt/plans-DnmMsMyj.js                        7.01 kB │ map:  18.57 kB
+#11 73.62 node_modules/.cache/nuxt/.nuxt/dist/server/_nuxt/error-BPGGxyvI.js                        8.66 kB │ map:  22.84 kB
+#11 73.62 node_modules/.cache/nuxt/.nuxt/dist/server/_nuxt/default-D63W4LCs.js                     10.89 kB │ map:  14.01 kB
+#11 73.62 node_modules/.cache/nuxt/.nuxt/dist/server/_nuxt/admin-599BK9mQ.js                       11.03 kB │ map:  23.55 kB
+#11 73.62 node_modules/.cache/nuxt/.nuxt/dist/server/_nuxt/users-DGoxw4e3.js                       12.33 kB │ map:  25.50 kB
+#11 73.62 node_modules/.cache/nuxt/.nuxt/dist/server/_nuxt/nuxt-DW-Uw1IM.js                        12.41 kB │ map:  32.92 kB
+#11 73.62 node_modules/.cache/nuxt/.nuxt/dist/server/_nuxt/nuxt-link-6DNZRqqt.js                   13.94 kB │ map:  33.44 kB
+#11 73.62 node_modules/.cache/nuxt/.nuxt/dist/server/_nuxt/models-BG4k0CUt.js                      14.78 kB │ map:  27.02 kB
+#11 73.62 node_modules/.cache/nuxt/.nuxt/dist/server/_nuxt/_batchId_-jpkN0AzA.js                   18.24 kB │ map:  26.51 kB
+#11 73.62 node_modules/.cache/nuxt/.nuxt/dist/server/_nuxt/devtools-CLRpXhL7-CYb7ggQw.js           21.27 kB │ map:  73.01 kB
+#11 73.62 node_modules/.cache/nuxt/.nuxt/dist/server/_nuxt/library-BrgUX0S5.js                     22.20 kB │ map:  30.88 kB
+#11 73.62 node_modules/.cache/nuxt/.nuxt/dist/server/_nuxt/review-B5ScTS69.js                      23.70 kB │ map:  45.37 kB
+#11 73.62 node_modules/.cache/nuxt/.nuxt/dist/server/_nuxt/create-C89zIjDI.js                      24.38 kB │ map:  74.54 kB
+#11 73.62 node_modules/.cache/nuxt/.nuxt/dist/server/_nuxt/account-DZMm8uvE.js                     27.13 kB │ map:  35.79 kB
+#11 73.62 node_modules/.cache/nuxt/.nuxt/dist/server/_nuxt/_userId_-CYMlP_Zl.js                    30.03 kB │ map:  56.41 kB
+#11 73.62 node_modules/.cache/nuxt/.nuxt/dist/server/_nuxt/_sessionId_-DPLhU6Ai.js                 39.96 kB │ map:  71.07 kB
+#11 73.62 node_modules/.cache/nuxt/.nuxt/dist/server/server.mjs                                   323.50 kB │ map: 841.53 kB
+#11 73.62 
+#11 73.62 ℹ ✓ built in 9.87s
+#11 73.62 
+#11 73.62  WARN  [33m[PLUGIN_TIMINGS] [0mYour build spent 95% of 9.8s inside plugin hooks (9.4s).
+#11 73.62 Measured inside the callback, so queue time is excluded and time the callback itself awaited is not:
+#11 73.62   - vite-plugin-checker buildEnd (78%, 7.7s, 1 call)
+#11 73.62 Those rows are 78% of the build; the rest of the 95% is below.
+#11 73.62 Not measurable — 4 hooks whose calls overlap, so elapsed time covers work other calls were doing. Profile with node --cpu-prof:
+#11 73.62   - nuxt:ssr-styles:ssr resolveId (81 calls)
+#11 73.62   - nuxt:resolve-externals:external resolveId (43 calls)
+#11 73.62   - nuxt:resolve-bare-imports resolveId (21 calls)
+#11 73.62   … and 1 more
+#11 73.62 See https://rolldown.rs/reference/InputOptions.checks#plugintimings for more details.
+#11 73.62 
+#11 73.62 
+#11 73.65 ✔ Server built in 9915ms
+#11 73.83 [nitro] ✔ Generated public .output/public
+#11 73.94 [nitro] ℹ Building Nuxt Nitro server (preset: node-server, compatibility date: 2026-09-01)
+#11 80.12 [nitro] ✔ Nuxt Nitro server built
+#11 80.26   ├─ .output/server/chunks/_/error-500.mjs (5.05 kB) (2.07 kB gzip)
+#11 80.26   ├─ .output/server/chunks/_/error-500.mjs.map (259 B) (202 B gzip)
+#11 80.26   ├─ .output/server/chunks/build/_batchId_-jpkN0AzA.mjs (18.6 kB) (3.89 kB gzip)
+#11 80.26   ├─ .output/server/chunks/build/_batchId_-jpkN0AzA.mjs.map (15.3 kB) (3.02 kB gzip)
+#11 80.26   ├─ .output/server/chunks/build/_batchId_-s_dskQGB.mjs (2.35 kB) (976 B gzip)
+#11 80.26   ├─ .output/server/chunks/build/_batchId_-s_dskQGB.mjs.map (864 B) (376 B gzip)
+#11 80.26   ├─ .output/server/chunks/build/_plugin-vue_export-helper-BOaGB7Aw.mjs (320 B) (227 B gzip)
+#11 80.26   ├─ .output/server/chunks/build/_plugin-vue_export-helper-BOaGB7Aw.mjs.map (225 B) (172 B gzip)
+#11 80.26   ├─ .output/server/chunks/build/_sessionId_-DPLhU6Ai.mjs (40.3 kB) (8.61 kB gzip)
+#11 80.26   ├─ .output/server/chunks/build/_sessionId_-DPLhU6Ai.mjs.map (35.4 kB) (7.21 kB gzip)
+#11 80.26   ├─ .output/server/chunks/build/_userId_-CYMlP_Zl.mjs (29.9 kB) (6.96 kB gzip)
+#11 80.26   ├─ .output/server/chunks/build/_userId_-CYMlP_Zl.mjs.map (28.1 kB) (5.56 kB gzip)
+#11 80.26   ├─ .output/server/chunks/build/account-DZMm8uvE.mjs (27.5 kB) (4.37 kB gzip)
+#11 80.26   ├─ .output/server/chunks/build/account-DZMm8uvE.mjs.map (23.4 kB) (3.61 kB gzip)
+#11 80.26   ├─ .output/server/chunks/build/admin-3Uha7UV0.mjs (6.17 kB) (1.79 kB gzip)
+#11 80.26   ├─ .output/server/chunks/build/admin-3Uha7UV0.mjs.map (3.65 kB) (834 B gzip)
+#11 80.26   ├─ .output/server/chunks/build/admin-599BK9mQ.mjs (11 kB) (2.4 kB gzip)
+#11 80.26   ├─ .output/server/chunks/build/admin-599BK9mQ.mjs.map (11.7 kB) (2.38 kB gzip)
+#11 80.26   ├─ .output/server/chunks/build/admin-SUGvyn9s.mjs (1.06 kB) (485 B gzip)
+#11 80.26   ├─ .output/server/chunks/build/admin-SUGvyn9s.mjs.map (411 B) (236 B gzip)
+#11 80.26   ├─ .output/server/chunks/build/AdminUserSearchForm-CsetNBMI.mjs (2.35 kB) (936 B gzip)
+#11 80.26   ├─ .output/server/chunks/build/AdminUserSearchForm-CsetNBMI.mjs.map (873 B) (345 B gzip)
+#11 80.26   ├─ .output/server/chunks/build/AppDialog-CYBW5QxB.mjs (2.09 kB) (875 B gzip)
+#11 80.26   ├─ .output/server/chunks/build/AppDialog-CYBW5QxB.mjs.map (852 B) (375 B gzip)
+#11 80.26   ├─ .output/server/chunks/build/AppError-QqXg0akp.mjs (1.75 kB) (760 B gzip)
+#11 80.26   ├─ .output/server/chunks/build/AppError-QqXg0akp.mjs.map (638 B) (278 B gzip)
+#11 80.26   ├─ .output/server/chunks/build/AppIcon-BBgbpNJY.mjs (4.1 kB) (1.38 kB gzip)
+#11 80.26   ├─ .output/server/chunks/build/AppIcon-BBgbpNJY.mjs.map (1.54 kB) (338 B gzip)
+#11 80.26   ├─ .output/server/chunks/build/create-C89zIjDI.mjs (24.8 kB) (5.5 kB gzip)
+#11 80.26   ├─ .output/server/chunks/build/create-C89zIjDI.mjs.map (20.9 kB) (4.16 kB gzip)
+#11 80.26   ├─ .output/server/chunks/build/default-D63W4LCs.mjs (11.3 kB) (2.42 kB gzip)
+#11 80.26   ├─ .output/server/chunks/build/default-D63W4LCs.mjs.map (7.18 kB) (1.25 kB gzip)
+#11 80.26   ├─ .output/server/chunks/build/error-404-BqlOhFLd.mjs (5.83 kB) (2.39 kB gzip)
+#11 80.26   ├─ .output/server/chunks/build/error-404-BqlOhFLd.mjs.map (323 B) (244 B gzip)
+#11 80.26   ├─ .output/server/chunks/build/error-404-styles.UP1AHB9m.mjs (3.02 kB) (1.15 kB gzip)
+#11 80.26   ├─ .output/server/chunks/build/error-404-styles.UP1AHB9m.mjs.map (217 B) (170 B gzip)
+#11 80.26   ├─ .output/server/chunks/build/error-500-bZxxDWmE.mjs (5.17 kB) (2.14 kB gzip)
+#11 80.26   ├─ .output/server/chunks/build/error-500-bZxxDWmE.mjs.map (323 B) (243 B gzip)
+#11 80.26   ├─ .output/server/chunks/build/error-500-styles.CvfOP9g8.mjs (2.49 kB) (1.02 kB gzip)
+#11 80.26   ├─ .output/server/chunks/build/error-500-styles.CvfOP9g8.mjs.map (217 B) (167 B gzip)
+#11 80.26   ├─ .output/server/chunks/build/guest-CZ9dA_sH.mjs (1.12 kB) (527 B gzip)
+#11 80.26   ├─ .output/server/chunks/build/guest-CZ9dA_sH.mjs.map (468 B) (257 B gzip)
+#11 80.26   ├─ .output/server/chunks/build/learner-access-BBiXRKUa.mjs (6.78 kB) (2 kB gzip)
+#11 80.26   ├─ .output/server/chunks/build/learner-access-BBiXRKUa.mjs.map (4.31 kB) (1.22 kB gzip)
+#11 80.26   ├─ .output/server/chunks/build/learner-DWYrwDof.mjs (1.08 kB) (493 B gzip)
+#11 80.26   ├─ .output/server/chunks/build/learner-DWYrwDof.mjs.map (410 B) (238 B gzip)
+#11 80.26   ├─ .output/server/chunks/build/library-BrgUX0S5.mjs (22.7 kB) (4.49 kB gzip)
+#11 80.26   ├─ .output/server/chunks/build/library-BrgUX0S5.mjs.map (18.5 kB) (3.49 kB gzip)
+#11 80.26   ├─ .output/server/chunks/build/library-PIcnRoQj.mjs (4.79 kB) (1.17 kB gzip)
+#11 80.26   ├─ .output/server/chunks/build/library-PIcnRoQj.mjs.map (5.2 kB) (1.08 kB gzip)
+#11 80.26   ├─ .output/server/chunks/build/LocaleSwitch-Dq9FGmQc.mjs (3.24 kB) (1.26 kB gzip)
+#11 80.26   ├─ .output/server/chunks/build/LocaleSwitch-Dq9FGmQc.mjs.map (834 B) (364 B gzip)
+#11 80.26   ├─ .output/server/chunks/build/login-B0Y8AWzP.mjs (5.62 kB) (1.92 kB gzip)
+#11 80.26   ├─ .output/server/chunks/build/login-B0Y8AWzP.mjs.map (3.29 kB) (867 B gzip)
+#11 80.26   ├─ .output/server/chunks/build/models-BG4k0CUt.mjs (15.2 kB) (3.33 kB gzip)
+#11 80.26   ├─ .output/server/chunks/build/models-BG4k0CUt.mjs.map (11.8 kB) (2.24 kB gzip)
+#11 80.26   ├─ .output/server/chunks/build/page-loader-UVBqIJ9m.mjs (292 B) (228 B gzip)
+#11 80.26   ├─ .output/server/chunks/build/page-loader-UVBqIJ9m.mjs.map (265 B) (199 B gzip)
+#11 80.26   ├─ .output/server/chunks/build/pages-DBjaq-Lo.mjs (4.64 kB) (1.39 kB gzip)
+#11 80.26   ├─ .output/server/chunks/build/pages-DBjaq-Lo.mjs.map (2.47 kB) (618 B gzip)
+#11 80.26   ├─ .output/server/chunks/build/plans-DnmMsMyj.mjs (7.39 kB) (2.4 kB gzip)
+#11 80.26   ├─ .output/server/chunks/build/plans-DnmMsMyj.mjs.map (4.46 kB) (1.26 kB gzip)
+#11 80.26   ├─ .output/server/chunks/build/register-Bx8ZFIXi.mjs (6.09 kB) (1.98 kB gzip)
+#11 80.26   ├─ .output/server/chunks/build/register-Bx8ZFIXi.mjs.map (3.57 kB) (902 B gzip)
+#11 80.26   ├─ .output/server/chunks/build/return-intent-BCvjMq5m.mjs (1.81 kB) (795 B gzip)
+#11 80.26   ├─ .output/server/chunks/build/return-intent-BCvjMq5m.mjs.map (2.28 kB) (765 B gzip)
+#11 80.26   ├─ .output/server/chunks/build/review-B5ScTS69.mjs (23.7 kB) (6.05 kB gzip)
+#11 80.26   ├─ .output/server/chunks/build/review-B5ScTS69.mjs.map (20.4 kB) (4.59 kB gzip)
+#11 80.26   ├─ .output/server/chunks/build/use-display-formatters-CC0sSAvc.mjs (915 B) (428 B gzip)
+#11 80.26   ├─ .output/server/chunks/build/use-display-formatters-CC0sSAvc.mjs.map (1.1 kB) (434 B gzip)
+#11 80.26   ├─ .output/server/chunks/build/use-localized-head-kCfEfn-y.mjs (316 B) (236 B gzip)
+#11 80.26   ├─ .output/server/chunks/build/use-localized-head-kCfEfn-y.mjs.map (299 B) (209 B gzip)
+#11 80.26   ├─ .output/server/chunks/build/users-DGoxw4e3.mjs (12.4 kB) (3.63 kB gzip)
+#11 80.26   ├─ .output/server/chunks/build/users-DGoxw4e3.mjs.map (8.57 kB) (2.27 kB gzip)
+#11 80.26   ├─ .output/server/chunks/nitro/nitro.mjs (213 kB) (53.6 kB gzip)
+#11 80.26   ├─ .output/server/chunks/nitro/nitro.mjs.map (10.7 kB) (1.43 kB gzip)
+#11 80.26   ├─ .output/server/chunks/raw/32f854db.mjs (16.5 kB) (5.98 kB gzip)
+#11 80.26   ├─ .output/server/chunks/raw/32f854db.mjs.map (76 B) (89 B gzip)
+#11 80.26   ├─ .output/server/chunks/raw/5111540e.mjs (16.6 kB) (5.24 kB gzip)
+#11 80.26   ├─ .output/server/chunks/raw/5111540e.mjs.map (76 B) (89 B gzip)
+#11 80.26   ├─ .output/server/chunks/routes/renderer.mjs (15.4 kB) (5.35 kB gzip)
+#11 80.26   ├─ .output/server/chunks/routes/renderer.mjs.map (2.07 kB) (428 B gzip)
+#11 80.26   ├─ .output/server/chunks/virtual/_virtual_spa-template.mjs (94 B) (100 B gzip)
+#11 80.26   ├─ .output/server/chunks/virtual/_virtual_spa-template.mjs.map (88 B) (97 B gzip)
+#11 80.26   ├─ .output/server/chunks/virtual/entry.mjs (384 kB) (93.2 kB gzip)
+#11 80.26   ├─ .output/server/chunks/virtual/entry.mjs.map (20.3 kB) (2.93 kB gzip)
+#11 80.26   ├─ .output/server/chunks/virtual/precomputed.mjs (34.3 kB) (2.9 kB gzip)
+#11 80.26   ├─ .output/server/chunks/virtual/precomputed.mjs.map (181 B) (150 B gzip)
+#11 80.26   ├─ .output/server/chunks/virtual/styles.mjs (690 B) (327 B gzip)
+#11 80.26   ├─ .output/server/chunks/virtual/styles.mjs.map (164 B) (142 B gzip)
+#11 80.26   ├─ .output/server/index.mjs (374 B) (215 B gzip)
+#11 80.26   └─ .output/server/package.json (1.27 kB) (497 B gzip)
+#11 80.26 Σ Total size: 4.2 MB (1.03 MB gzip)
+#11 80.26 [nitro] ✔ You can preview this build using node .output/server/index.mjs
+#11 80.26 │
+#11 80.26 └  ✨ Build complete!
+#11 DONE 80.6s
+
+#12 [runtime 3/4] RUN addgroup -S wordweave && adduser -S -G wordweave -u 10001 wordweave
+#12 CACHED
+
+#13 [runtime 4/4] COPY --from=build --chown=wordweave:wordweave /app/.output ./.output
+#13 DONE 0.1s
+
+#14 exporting to image
+#14 exporting layers 0.0s done
+#14 writing image sha256:b2a40d904d73f2abecf9fd665ee5e4e0fb1b9c18c0bb4db8a16d9124e97e6b87 done
+#14 naming to docker.io/library/wordweave-frontend:cr037-080 done
+#14 DONE 0.1s
+
+View build details: docker-desktop://dashboard/build/desktop-linux/desktop-linux/sk34h8gkbn2vpwb4znocwqck0

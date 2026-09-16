@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "task": "CR037-084",
+  "tag": "wordweave-frontend:cr037-084",
+  "image_id": "sha256:fd251e7439aad8e058656e2751ed84f40715fec570a872da53542688a6dd6904",
+  "platform": "linux/arm64",
+  "runtime_user": "wordweave",
+  "paired_backend": {
+    "tag": "wordweave-backend:cr038-083",
+    "image_id": "sha256:642ed57ad0ed6c8a13e4bba1101d8b50188e8ea636791583a6ffb5eaa6917aac"
+  },
+  "source": {
+    "frontend/app/pages/account.vue": "sha256:baa32328bcd00f7309f70fa8bc834581046c11e000bbba1fc46fc719b6633583",
+    "frontend/app/runtime/stores/account.ts": "sha256:6e913bffd238eb24708857f8f1840788f6d38f854a9f1cac54f126555ed6a6c3",
+    "frontend/tests/unit/account-password-error.test.ts": "sha256:1ed6595371aa16dd04499122234f90ec171665590a5049b0599e9ecf5ea24822",
+    "frontend/tests/e2e/cr037-auth-account.spec.ts": "sha256:f561c81cf2bbd4a9478009841d447ee3dde7052687b7b3807c1c5ce108468c94"
+  },
+  "development_checks": "pass_with_linux_cross_platform_geometry_observation_retained",
+  "independent_qa": "not_run_by_frontend_implementer",
+  "actual_model": "not_observed",
+  "usage": "not_observed"
+}

@@ -1,0 +1,158 @@
+{
+  "date": "2026-09-06T09:10:42.574Z",
+  "agent": "gatekeeper-owen",
+  "validated": true,
+  "checks": [
+    {
+      "id": "79 unique history entries",
+      "pass": true
+    },
+    {
+      "id": "001-078 byte-preserved",
+      "pass": true
+    },
+    {
+      "id": "last history matches control",
+      "pass": true
+    },
+    {
+      "id": "remains in verification awaiting user",
+      "pass": true
+    },
+    {
+      "id": "no stale open CR or decisions",
+      "pass": true
+    },
+    {
+      "id": "UAT never auto-accepted or released",
+      "pass": true
+    },
+    {
+      "id": "approved snapshot .planning/milestones/M001/verification/cr036-078-report.md",
+      "pass": true
+    },
+    {
+      "id": "approved snapshot .planning/milestones/M001/verification/cr036-078-coverage.md",
+      "pass": true
+    },
+    {
+      "id": "approved snapshot .planning/milestones/M001/verification/evidence/cr036-078/delivery-validation.json",
+      "pass": true
+    },
+    {
+      "id": "approved snapshot .planning/milestones/M001/verification/uat-079-handoff.md",
+      "pass": true
+    },
+    {
+      "id": "approved snapshot .planning/milestones/M001/verification/evidence/uat-079/deployment.json",
+      "pass": true
+    },
+    {
+      "id": "approved snapshot .planning/milestones/M001/verification/evidence/uat-079/smoke-final-results.json",
+      "pass": true
+    },
+    {
+      "id": "approved snapshot .planning/milestones/M001/verification/report.md",
+      "pass": true
+    },
+    {
+      "id": "approved snapshot .planning/milestones/M001/verification/uat.md",
+      "pass": true
+    },
+    {
+      "id": "approved snapshot .planning/milestones/M001/handoffs/verification.md",
+      "pass": true
+    },
+    {
+      "id": "only approved QA/control existing files modified",
+      "pass": true
+    },
+    {
+      "id": "registered role still consistent",
+      "pass": true
+    },
+    {
+      "id": "current handoff links resolve",
+      "pass": true
+    },
+    {
+      "id": "UAT four healthy paired services",
+      "pass": true
+    },
+    {
+      "id": "live UAT HTTP reachable",
+      "pass": true
+    }
+  ],
+  "historyEntries": 79,
+  "currentState": {
+    "stage": "verification",
+    "agent": "qa-quinn",
+    "status": "awaiting_user_review",
+    "openCR": [],
+    "uat": {
+      "id": "UAT-M001-079",
+      "url": "http://localhost:6001",
+      "handoff": ".planning/milestones/M001/verification/uat-079-handoff.md",
+      "functional_status": "awaiting_user_acceptance",
+      "user_accepted": false,
+      "release_readiness": "blocked",
+      "real_ai": "not_verified",
+      "frontend_image": "sha256:8fe04108b523cce73820017069ba0509e7bee03589b0fdc9218a4397770274c0",
+      "backend_image": "sha256:e8c4ee91a7c3265cda8c496ccc8fb485328d95b6c1662eaf2502011ce5d005a5"
+    }
+  },
+  "changedExistingFiles": [
+    ".planning/workflow/history.yaml",
+    ".planning/workflow/state.yaml",
+    ".planning/milestones/M001/handoffs/verification.md",
+    ".planning/milestones/M001/verification/coverage-matrix.md",
+    ".planning/milestones/M001/verification/ui-design-audit.md",
+    ".planning/milestones/M001/verification/report.md",
+    ".planning/milestones/M001/changes/CR-035.md",
+    ".planning/milestones/M001/changes/CR-031.md",
+    ".planning/milestones/M001/changes/CR-030.md",
+    ".planning/milestones/M001/changes/CR-034.md",
+    ".planning/milestones/M001/changes/CR-029.md",
+    ".planning/milestones/M001/changes/CR-033.md",
+    ".planning/milestones/M001/changes/CR-036.md",
+    ".planning/milestones/M001/changes/CR-032.md",
+    ".planning/milestones/M001/verification/uat.md",
+    ".planning/milestones/M001/verification/ai-evaluation.md"
+  ],
+  "linksChecked": 63,
+  "containers": [
+    {
+      "name": "/wordweave_uat-frontend-1",
+      "image": "sha256:8fe04108b523cce73820017069ba0509e7bee03589b0fdc9218a4397770274c0",
+      "health": "healthy"
+    },
+    {
+      "name": "/wordweave_uat-backend-1",
+      "image": "sha256:e8c4ee91a7c3265cda8c496ccc8fb485328d95b6c1662eaf2502011ce5d005a5",
+      "health": "healthy"
+    },
+    {
+      "name": "/wordweave_uat-nginx-1",
+      "image": "sha256:5f0efd7fead5e8a290f07e5c025e9204052efb646758e1c6883de0e23a6e085c",
+      "health": "healthy"
+    },
+    {
+      "name": "/wordweave_uat-postgres-1",
+      "image": "sha256:b85269e8c6aa961524542eb4dcca44c4aa1deba2cf507e9e28d5ba8f971aeab9",
+      "health": "healthy"
+    }
+  ],
+  "responses": [
+    {
+      "path": "/",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/bootstrap",
+      "status": 200
+    }
+  ],
+  "userAccepted": false,
+  "releaseApproved": false
+}

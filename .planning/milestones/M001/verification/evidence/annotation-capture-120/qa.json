@@ -1,0 +1,99 @@
+{
+  "gate": "TRANSITION-M001-120",
+  "owner": "qa-quinn",
+  "recorded_at": "2026-09-09T12:01:14Z",
+  "verdict": "scoped_pass",
+  "method": "Read-only production source with QA-only overlay; real HTTP and isolated temporary PG, two independent visitor cookie jars,3 synthetic provider requests; not a browser UI test or live model call.",
+  "checks": [
+    "Other visitor's matching failure not captured",
+    "Bound visitor success does not consume sample",
+    "Bound visitor failure alone captures source_label=banana and adjacent_word=Vulnerability",
+    "No body/hint/meaning/tag/configuration/credentials/identity in sample; no label in public SSE",
+    "Valid outcome retains charged draft, failures refund and create no draft; Close removes sample"
+  ],
+  "result": {
+    "chunk_id": "e254b4",
+    "wall_time_seconds": 0.00000175,
+    "exit_code": 0,
+    "original_token_count": 410,
+    "output": "=== RUN   TestQA120VisitorCapture\n2026/09/09 12:01:14 INFO http_request request_id=req_amMFXMPAaSZ6xZyUtEPDvw method=GET route=/api/v1/bootstrap status=200 duration_ms=0\n2026/09/09 12:01:14 INFO http_request request_id=req__Kcdh4jzHrA75ZMLuvoLOQ method=GET route=/api/v1/bootstrap status=200 duration_ms=0\n2026/09/09 12:01:14 WARN ai_candidate_validation_failed run_id=01a0860b-2b76-7df5-8d8b-9dd4f65a5074 model_id=01a0860b-2b6c-7c27-9867-e7bb5c75c87b prompt_version=m001-v5 validator_version=m001-v5-wn31-r1 category=content_invalid reason=annotation_source_unknown target_index=-1\n2026/09/09 12:01:14 INFO http_request request_id=req_AFwfUW5iw72Z3G2_EqZw2w method=POST route=/api/v1/generations/stream status=200 duration_ms=5\n2026/09/09 12:01:14 INFO http_request request_id=req_C7fQFZ_cAfKmCJiyPaUjXg method=POST route=/api/v1/generations/stream status=200 duration_ms=4\n2026/09/09 12:01:14 WARN ai_candidate_validation_failed run_id=01a0860b-2b80-797c-965d-9985fba43212 model_id=01a0860b-2b6c-7c27-9867-e7bb5c75c87b prompt_version=m001-v5 validator_version=m001-v5-wn31-r1 category=content_invalid reason=annotation_source_unknown target_index=-1\n2026/09/09 12:01:14 INFO uat_annotation_captured run_id=01a0860b-2b80-797c-965d-9985fba43212\n2026/09/09 12:01:14 INFO http_request request_id=req_VoViwxIA82PDSjdxNnAT9w method=POST route=/api/v1/generations/stream status=200 duration_ms=8\n    qa_capture_test.go:80: PASS: two visitors, success preserves slot, matching failure alone captures two fields, clean SSE and quota/draft behavior unchanged\n--- PASS: TestQA120VisitorCapture (0.52s)\nPASS\nok  \twordweave/internal/httpapi\t0.528s\n"
+  },
+  "first_method_failure": {
+    "result": {
+      "chunk_id": "04decc",
+      "wall_time_seconds": 0.000001375,
+      "exit_code": 1,
+      "original_token_count": 70,
+      "output": "=== RUN   TestQA120VisitorCapture\n    qa_capture_test.go:23: ERROR: insert or update on table \"group_models\" violates foreign key constraint \"group_models_group_code_fkey\" (SQLSTATE 23503)\n--- FAIL: TestQA120VisitorCapture (0.57s)\nFAIL\nFAIL\twordweave/internal/httpapi\t0.580s\nFAIL\n"
+    },
+    "original_test_source": "//go:build integration && uatdiagnostics\n\npackage httpapi\n\nimport (\n\t\"encoding/json\"\n\t\"fmt\"\n\t\"io\"\n\t\"net/http\"\n\t\"net/http/httptest\"\n\t\"os\"\n\t\"path/filepath\"\n\t\"strings\"\n\t\"sync/atomic\"\n\t\"testing\"\n\n\t\"wordweave/internal/ai\"\n)\n\nfunc TestQA120VisitorCapture(t *testing.T) {\n\tctx, initial, pool, actor, model, cfg := cr039Harness(t)\n\tif err := initial.credentials.Put(ctx, actor.ID, \"synthetic-qa120-key\"); err != nil { t.Fatal(err) }\n\tif _, err := pool.Exec(ctx, \"INSERT INTO wordweave.group_models(group_code,model_id) VALUES ('guest',$1)\", model); err != nil { t.Fatal(err) }\n\tvar invalid atomic.Bool\n\tvar calls atomic.Int32\n\tprovider := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {\n\t\tcalls.Add(1)\n\t\tlabel := \"vulnerable\"\n\t\tif invalid.Load() { label = \"banana\" }\n\t\tcandidate := ai.Candidate{\n\t\t\tPassage: \"Vulnerability(\"+label+\") matters. \"+strings.TrimSpace(strings.Repeat(\"Neighbors share useful ideas and practical support. \", 10)),\n\t\t\tTags: []string{\"community\"}, Targets: []ai.CandidateTarget{{SourceEntry:\"vulnerable\", EntryMeaning:\"open to harm\", HintPhrase:\"vulnerable(vulnerable) people\"}},\n\t\t}\n\t\traw, _ := json.Marshal(candidate)\n\t\tw.Header().Set(\"Content-Type\",\"text/event-stream\")\n\t\tfor i:=0;i<len(raw);i+=3 {\n\t\t\tend:=i+3;if end>len(raw){end=len(raw)}\n\t\t\tchunk,_:=json.Marshal(map[string]any{\"choices\":[]any{map[string]any{\"delta\":map[string]string{\"content\":string(raw[i:end])}}}})\n\t\t\tfmt.Fprintf(w,\"data: %s\\n\\n\",chunk)\n\t\t}\n\t\tfmt.Fprint(w,\"data: [DONE]\\n\\n\")\n\t}))\n\tdefer provider.Close()\n\tcfg.OpenRouterBaseURL=provider.URL\n\tcfg.PublicOrigin=\"http://localhost:6001\"\n\tapi,err:=New(cfg,pool,pool);if err!=nil{t.Fatal(err)}\n\tapplication:=httptest.NewServer(api.Handler());defer application.Close()\n\tfirst:=newBrowserClient(t);firstCSRF:=bootstrap(t,first,application.URL)\n\tvar firstID string\n\tif err:=pool.QueryRow(ctx,\"SELECT id::text FROM wordweave.visitor_identities ORDER BY created_at DESC,id DESC LIMIT 1\").Scan(&firstID);err!=nil{t.Fatal(err)}\n\tsecond:=newBrowserClient(t);secondCSRF:=bootstrap(t,second,application.URL)\n\tdir,ticket,_,_:=annotationFixture(t)\n\tticket.ModelID=model.String();ticket.SubjectHash=captureSubjectHash(\"visitor:\"+firstID)\n\twriteCaptureTicket(t,dir,ticket)\n\tapi.failureCapture=openTestCapture(t)\n\tfor _, step:=range []struct{ name string; client *http.Client; csrf string; bad, capture bool }{\n\t\t{\"other_visitor_failure\",second,secondCSRF,true,false},\n\t\t{\"bound_visitor_success\",first,firstCSRF,false,false},\n\t\t{\"bound_visitor_failure\",first,firstCSRF,true,true},\n\t} {\n\t\tinvalid.Store(step.bad)\n\t\tresp:=rawJSONRequest(t,step.client,http.MethodPost,application.URL+\"/api/v1/generations/stream\",step.csrf,map[string]any{\"model_id\":model.String(),\"meaning_language\":\"en\",\"scenario\":\"discussion\",\"length\":\"short\",\"entries\":[]string{\"vulnerable\"}},map[string]string{\"Origin\":cfg.PublicOrigin})\n\t\tif resp.StatusCode!=200 {resp.Body.Close();t.Fatalf(\"%s unexpected status\",step.name)}\n\t\traw,err:=io.ReadAll(resp.Body);resp.Body.Close();if err!=nil{t.Fatal(err)}\n\t\trun,_,valid:=readGenerationSSE(t,strings.NewReader(string(raw)))\n\t\tif run==\"\" || valid==step.bad || strings.Contains(string(raw),\"banana\") || strings.Contains(string(raw),\"(vulnerable)\") {t.Fatal(\"consumer stream changed or leaked annotation\")}\n\t\tvar charged bool;var drafts int\n\t\tif err:=pool.QueryRow(ctx,\"SELECT quota_charged,(SELECT count(*) FROM wordweave.generation_drafts WHERE run_id=$1) FROM wordweave.generation_runs WHERE id=$1\",run).Scan(&charged,&drafts);err!=nil{t.Fatal(err)}\n\t\tif charged==step.bad || drafts!=map[bool]int{true:0,false:1}[step.bad]{t.Fatal(\"quota/draft mismatch\")}\n\t\tif step.bad && (strings.Count(string(raw),\"event: generation.failed\")!=1 || !strings.Contains(string(raw),`\"quota_refunded\":true`)){t.Fatal(\"failure terminal mismatch\")}\n\t\tif !step.capture {assertNoAnnotation(t,dir);continue}\n\t\tsample,err:=os.ReadFile(filepath.Join(dir,annotationCaptureFilename));if err!=nil{t.Fatal(err)}\n\t\tvar data map[string]json.RawMessage;var a ai.AnnotationSourceDiagnostic\n\t\tif json.Unmarshal(sample,&data)!=nil || len(data)!=7 || json.Unmarshal(data[\"annotation\"],&a)!=nil || a.SourceLabel!=\"banana\" || a.AdjacentWord!=\"Vulnerability\"{t.Fatal(\"incorrect minimal sample\")}\n\t\tfor _, forbidden:=range []string{\"Neighbors\",\"community\",\"open to harm\",\"vulnerable people\",\"synthetic-qa120-key\",firstID,\"candidate\",\"configuration\"}{if strings.Contains(string(sample),forbidden){t.Fatal(\"sample exceeded scope\")}}\n\t\tvar capturedRun string;json.Unmarshal(data[\"run_id\"],&capturedRun);if capturedRun!=run{t.Fatal(\"wrong sample run\")}\n\t}\n\tif calls.Load()!=3{t.Fatal(\"unexpected provider calls\")}\n\tapi.failureCapture.Close();assertNoAnnotation(t,dir)\n\tt.Log(\"PASS: two visitors, success preserves slot, matching failure alone captures two fields, clean SSE and quota/draft behavior unchanged\")\n}\n",
+    "cause": "QA used display concept guest as group_code; actual contract uses visitor; corrected QA-only fixture before provider/network execution. No production defect or source change."
+  },
+  "sourceFiles": [
+    {
+      "path": "backend/internal/ai/annotation_diagnostic_uat.go",
+      "sha256": "078a8298c16157679a5dc042610801b7f80c2b5d297027c0975b14c8a3d75fe5"
+    },
+    {
+      "path": "backend/internal/ai/annotation_diagnostic_uat_test.go",
+      "sha256": "4c6c3632ac66c8631009660034ff9e2c787f0017e7ab69cb6889fa9b69bfb9dc"
+    },
+    {
+      "path": "backend/internal/httpapi/failure_capture_uat.go",
+      "sha256": "b0847c31bf132b7a36e1e99ecc64f115d9e06c7446a34210381800243cce314e"
+    },
+    {
+      "path": "backend/internal/httpapi/annotation_capture_uat_test.go",
+      "sha256": "4ceb66e519b34cbdadeb3ed2be7bc2a3820293816765525cc8fef0ca70d9f280"
+    },
+    {
+      "path": "backend/internal/httpapi/failure_capture_disabled_test.go",
+      "sha256": "de707867930ebfd1506694c37e4557314c399d1a488d4042c08987081dc70021"
+    },
+    {
+      "path": "backend/internal/httpapi/failure_capture_integration_test.go",
+      "sha256": "1f8d7cf9979ebeb7a286560c6a78713b18660208841be715364a0c2e9404cbad"
+    },
+    {
+      "path": "backend/internal/httpapi/failure_capture.go",
+      "sha256": "a9b07339ff521adb1d68c1b69e9506cbe32b371123db5b8d1186025edbd27470"
+    },
+    {
+      "path": "backend/internal/httpapi/failure_capture_disabled.go",
+      "sha256": "c7542b2e3b67142497db6716c5371a5e56f281038b89d6d33c2ceaf460a8f385"
+    },
+    {
+      "path": "backend/internal/httpapi/generation_handlers.go",
+      "sha256": "31c455af35f0933bf4330034aefdd3faa5c3df17ce4add59f62eb43133fddc2f"
+    },
+    {
+      "path": "backend/internal/httpapi/server.go",
+      "sha256": "7694f8c582c123fef5c1a1300db8eb3eb1a5373a60146c36a31eca5c59bc9c6e"
+    },
+    {
+      "path": "backend/cmd/wordweave/main.go",
+      "sha256": "dae2a198ab5618dc7126838a5505bf0323e82b76524df8d37bc5fe1757e726af"
+    },
+    {
+      "path": "backend/Dockerfile.uat-diagnostics",
+      "sha256": "db0e3bac139a7f1f64adef5c2e66ab239c90ee62fcd6a2c77ec66173e003cff9"
+    }
+  ],
+  "real_model_calls": 0,
+  "actual_database_operations": 0,
+  "production_source_changes_by_qa": 0,
+  "cleanup": {
+    "result": {
+      "chunk_id": "03621f",
+      "wall_time_seconds": 0.118711125,
+      "exit_code": 0,
+      "original_token_count": 8,
+      "output": "0\nwordweave-annotation119-pg\n"
+    },
+    "container": "wordweave-annotation119-pg",
+    "id": "4d6a7c610e3218d1dbfe02f11f42462b82e598801b9c90ba3054b455648a61b8",
+    "scope": "Only owned none-network/tmpfs container; temporary DB count0 before removal, no UAT data or existing cache volumes touched."
+  },
+  "next_action": "Proceed under USER-ANNOTATION-CAPTURE-119 with one local diagnostic backend deployment; no model calls; await user reproduction.",
+  "agent_execution": "Sequential quality role in main session, no separate model or subagent review claim."
+}

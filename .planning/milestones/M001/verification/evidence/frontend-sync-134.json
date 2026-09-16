@@ -1,0 +1,269 @@
+{
+  "revision": "FRONTEND-RECEIPT-134",
+  "recorded_at": "2026-09-12T09:57:43.070Z",
+  "role": "quality/base",
+  "agent_name": "qa-quinn",
+  "authorization": [
+    "TRANSITION-M001-134",
+    "USER-UAT-ACCEPTANCE-134"
+  ],
+  "result": "Q132-01 resolved; user UAT accepted; architecture documentation and known limitations retained",
+  "scope": {
+    "new_tests": 0,
+    "real_model_calls": 0,
+    "production_changes": 0,
+    "deployments": 0,
+    "database_or_account_operations": 0,
+    "private_content_reads": 0,
+    "scope": "Existing evidence receipt, source/artifact hashes, read-only runtime version and one static JS GET"
+  },
+  "runtime": {
+    "recorded_at": "2026-09-12T09:57:43.070Z",
+    "method": "Read-only docker inspect projected fields and one static JS GET; no login, browser generation, database access, deployment or test execution",
+    "runtime": [
+      {
+        "name": "/wordweave_uat-frontend-1",
+        "id": "16a7e6738e426a64f2bc97b3b4028dbf443bb859568adeee8a38667f2e67ad07",
+        "image": "sha256:b7ddbbe99c68d687cd101756cd79bcbb82873f52b569ebc12c9a52a15193d730",
+        "started_at": "2026-09-12T08:57:29.398382552Z",
+        "restarts": 0,
+        "health": "healthy"
+      },
+      {
+        "name": "/wordweave_uat-backend-1",
+        "id": "42d40aa08a6fbce24010a8f0d189b635b6c609bff890496556371b3bb4e4dda4",
+        "image": "sha256:c9bccc60c9674a5bbde37ba4f027f70582a1292782bc8226c52b1903ddfb2ce3",
+        "started_at": "2026-09-12T07:56:19.061377756Z",
+        "restarts": 0,
+        "health": "healthy"
+      },
+      {
+        "name": "/wordweave_uat-postgres-1",
+        "id": "37a6d2fa58c578b1c6b4dbe10028b5ddf0c696fe44fc849a129293a85bbaf839",
+        "image": "sha256:b85269e8c6aa961524542eb4dcca44c4aa1deba2cf507e9e28d5ba8f971aeab9",
+        "started_at": "2026-09-03T02:24:03.164602928Z",
+        "restarts": 0,
+        "health": "healthy"
+      },
+      {
+        "name": "/wordweave_uat-nginx-1",
+        "id": "b789bde4e7825b849640cbf63d35b50ae41c1b77cb6b7ece73b3e26e27eabcb1",
+        "image": "sha256:5f0efd7fead5e8a290f07e5c025e9204052efb646758e1c6883de0e23a6e085c",
+        "started_at": "2026-09-09T04:00:47.530054881Z",
+        "restarts": 0,
+        "health": "healthy"
+      }
+    ],
+    "runtime_matches_deployment": true,
+    "asset": {
+      "url": "http://localhost:6001/_nuxt/CWwqOgzc.js",
+      "status": 200,
+      "bytes": 285661,
+      "sha256": "0db74fb3c38cf22fe95962d67a232f4862ee3df3769110243309264986058de0",
+      "matches_tested_bundle": true,
+      "cache_control": "max-age=31536000, public, immutable"
+    },
+    "qa132_sources": {
+      "count": 28,
+      "mismatches": []
+    }
+  },
+  "source_check": {
+    "manifest": ".planning/milestones/M001/implementation/evidence/frontend-sync-133/before.json",
+    "count": 340,
+    "mismatches": []
+  },
+  "developer_evidence": {
+    "manifest": ".planning/milestones/M001/implementation/evidence/frontend-sync-133/developer.json",
+    "artifact_mismatches": [],
+    "reviewed_script": ".planning/milestones/M001/implementation/evidence/frontend-sync-133/smoke.mjs",
+    "review": "Valid result includes passage/resources and save navigation; two boolean refund values each end in non-saving retryable error with same text and no pageerror. Fixture isolates business calls. Existing 3/3 result reused, not executed by this receipt."
+  },
+  "reused_qa": ".planning/milestones/M001/verification/evidence/closeout-132/qa.json",
+  "protected_inputs": [
+    {
+      "path": ".planning/workflow/state.yaml",
+      "sha256": "fa8b125fc975ff7e2d1a4279d2760b058109a4bb435cac230d6f551695885dc9"
+    },
+    {
+      "path": ".planning/workflow/history.yaml",
+      "sha256": "d7f29e3b0e1eb3a77ba6ee27ecc568ac291dd30e4e69aba44dac8e7166745b6e"
+    },
+    {
+      "path": ".planning/agt/agents.yaml",
+      "sha256": "fac3c78cc176cf0e28278445ea3618817bb62acaf85f168dd15bef1a46c713e0"
+    },
+    {
+      "path": ".planning/milestones/M001/reviews/stream-failure-capture-gates.md",
+      "sha256": "f7fae11a023371f3b71b79261848fcf29415b3f7e921c5a0746e14fcb56f1aac"
+    },
+    {
+      "path": ".planning/milestones/M001/technical/backend.md",
+      "sha256": "59b1f2f5a7d27bea193ee701355061abc71e048b6ca1651d054aaacc9c012921"
+    },
+    {
+      "path": ".planning/milestones/M001/technical/ai-integration.md",
+      "sha256": "f0727edd7edb965b20c958afc814de12aae167695357c50eda933bb8198c1750"
+    },
+    {
+      "path": ".planning/milestones/M001/technical/api/index.md",
+      "sha256": "753d04187032ef1b7a729d31b80d8018f40156773b181d689c060e0b6eae5555"
+    },
+    {
+      "path": ".planning/milestones/M001/handoffs/backend-architecture.md",
+      "sha256": "6be23dfd1518515c89b535ebda52f4508cd74a8561386155980073a38206f7a5"
+    },
+    {
+      "path": ".planning/milestones/M001/implementation/backend-validation.md",
+      "sha256": "8aa8ac7437bf318d9bda90cba517b5f51496f8fb43dff1a56414dc6b851606d1"
+    },
+    {
+      "path": ".planning/milestones/M001/handoffs/backend-implementation.md",
+      "sha256": "ea979a36b097a9d8b1851a3968d579b9933f4ebbae76981009adb29ca1371dd4"
+    },
+    {
+      "path": ".planning/milestones/M001/implementation/evidence/frontend-sync-133/developer.json",
+      "sha256": "bd98c268c49187e28ba8213a19eafdf4547bb3f4f5466d65c625bb921512b151"
+    },
+    {
+      "path": ".planning/milestones/M001/verification/evidence/closeout-132/qa.json",
+      "sha256": "4a80ea1b8476351affc96dc7d1f23ad60542a9c99a1b8d3e14a288cf2a7a8959"
+    },
+    {
+      "path": ".planning/milestones/M001/verification/evidence/closeout-132/browser-results.json",
+      "sha256": "5c460c427983b3beac02038125373f39aad3f388633899027b72c47632301b69"
+    },
+    {
+      "path": ".planning/milestones/M001/implementation/evidence/frontend-sync-133/before.json",
+      "sha256": "84465dec7128d1769cabeec5fac2cef004ce5325688cc4054d2dce129f125a81"
+    },
+    {
+      "path": ".planning/milestones/M001/implementation/evidence/frontend-sync-133/build.log",
+      "sha256": "6d4a5c1dd4e521beed21414aa46975877f43b65d9a2cfbbc2d704dc4ae33da4f"
+    },
+    {
+      "path": ".planning/milestones/M001/implementation/evidence/frontend-sync-133/smoke.mjs",
+      "sha256": "d198f7a5fcc500e6d8d1d1abbeb22280740ea144b8d4eb909198b21c4c6b3ff4"
+    },
+    {
+      "path": ".planning/milestones/M001/implementation/evidence/frontend-sync-133/smoke-results.json",
+      "sha256": "9a100afae42000a3fd369cedd9ce7676d2f354891e652295136070083067eab9"
+    },
+    {
+      "path": ".planning/milestones/M001/implementation/evidence/frontend-sync-133/runtime-check.json",
+      "sha256": "75ed0e4a372e76b325f4787c6e19bd8212f0a7c87078e6f45075656ba9ce8bce"
+    },
+    {
+      "path": ".planning/milestones/M001/implementation/evidence/frontend-sync-133/deployment.log",
+      "sha256": "b83fb11733524caa75f66b5f4e31ed1d9a9762b184ed307711842dcb33cabf36"
+    },
+    {
+      "path": ".planning/milestones/M001/implementation/frontend-validation.md",
+      "sha256": "44cbb52704d1620b8c8a71d14c3348855b10537446db27b40bd3daf49f7970e4"
+    },
+    {
+      "path": ".planning/milestones/M001/handoffs/frontend-implementation.md",
+      "sha256": "54426cd4fb651c0d12e749384b5016f9a737f5cda2c4b7e13ad011e0ba3aefeb"
+    }
+  ],
+  "prior_documents": [
+    {
+      "path": ".planning/milestones/M001/verification/report.md",
+      "sha256": "b41eb63e316f285e6447c433f03ecdeb49ec45f00f2ecf9266fa51bc8b8ea419",
+      "text": "---\nmilestone: M001\nstage: verification\nrole: quality/base\nagent_name: qa-quinn\nstatus: scoped_pass_uat_frontend_sync_pending\ndate: 2026-09-12\nverification_round: CLOSEOUT-132\n---\n\n# 局部验收通过，UAT 前端待同步\n\n本轮按 TRANSITION-M001-132 验证近期 AI 链路，不新增功能、不继续调模型。**8 条独立浏览器场景全部通过；尚不能把当前 UAT 环境当作完整新候选交付。**\n\n[测试原件与版本清单](./evidence/closeout-132/qa.json)、[浏览器逐项结果](./evidence/closeout-132/browser-results.json)。真实模型调用 0、UAT 数据写入 0、部署 0、生产源码修改 0。Go/Nuxt/PostgreSQL 为隔离实例，上游为本地合成响应；不是开发单测重跑，也不是新一轮真实成功率测试。\n\n## 本轮结果\n\n| 场景 | 模拟上游调用 | 浏览器与业务结果 |\n| --- | ---: | --- |\n| 首轮成功 | 1 | 正文可见、无内部括号、保存成功 |\n| 正文标注纠正后再纠正 hint | 3 | 仅一个生成、正文不重复，成功保存 |\n| 长度不足后续写 | 2 | 仅追加一次，预览与最终正文摘要一致，成功保存 |\n| 两次纠正耗尽 | 3 | 一个失败终态、退款、无草稿或保存 |\n| 纠正中主动取消 | 2 | 取消终态、正常扣次、停止后续调用 |\n| 纠正中离开页面 | 2 | 断连按系统失败退款，不伪装主动取消 |\n| JSON 不合法 | 1 | 不调用纠正，失败退款，日志定位 candidate_decode/json_invalid |\n| 退款暂时写入失败 | 1 | 事件先报 quota_refunded=false，界面正常；恢复数据库后维护任务完成退款 |\n\n最终 8 次产生 3 个保存批次、4 次系统失败退款、1 次主动取消扣次。每次仅一个 run；连接仍在时仅一个终态。纠正正文无重复、续写前后预览与最终文本摘要一致。全部私有日志完整、低于 1 MiB，模型结束记录数与调用数一致；普通日志未出现所检查的合成秘密和生成内容。\n\n最初同组 8 条业务检查亦通过，但浏览器 CDP 在应用释放 reader 后无法提供响应正文，因此补充 reader 观察后重跑同组；总计 **16 次合成生成、30 次本地模拟上游请求**，不隐去重复，也不算模型费用。环境/夹具准备错误见原件，未归为产品缺陷。\n\n## 发现与未决事项\n\n**Q132-01：UAT 前端候选不一致，交付阻断。** 当前后端为 r10 镜像 c9bccc60c967…；前端仍为 5903591c8811…（9 月 9 日启动）。其公开构建文件 BNUOi_Z4.js 仍把失败事件 quota_refunded 定义为 true 常量，而[当前源码](../../../../frontend/app/infrastructure/http/schemas/generation.ts)接收 boolean，且本轮 false 场景通过。不能把源码测试通过当成 UAT 已部署通过。下一动作是同步当前前端候选并做相关定向冒烟；本轮不部署，不要求再全站复测。\n\n现有未解决限制继续 OPEN：safe→safety/safely 被拒、safer 未识别；未知标注的纠正反馈不够精确；近期真实失败样本仍失败。停止调优不是豁免这些限制。本轮不扩大词形规则、不加重试、不重新调 Prompt。后端交接中的“有限纠正架构说明同步”仍应由原责任角色补齐，属于已批准行为的文档收尾。\n\nQ127-01 旧大结果反例保留，但按用户决定不阻断、不扩容。CR-039/040/041/042 不由 QA 擅自关闭。\n\n## 证据与质量结论\n\n已独立读取既有真实失败的 3 份模型回复：首轮多标 younger(young)，第一纠正保留同一错误，第二纠正删掉正文标注；最终明确为 passage_annotation_missing 并退款。原文完整，不能再归为“前端报错所以原因未知”。没有在仓库另存原文，也未续长留存期限。\n\n另定向评阅既有 Luna 5 份文本：释义未见文中作用解释；英/中/日资源、标签及正文可用。57 词故事较单薄，部分表达仍可更自然。既有 r10 MiniMax 4/5、GLM 5/5，Luna 独立 5/5（零纠正）是小样本事实，不证明稳定 ≥90%，也不能合并成所有模型成功率。详见[AI 评测](./ai-evaluation.md)。\n\n28 项候选源文件摘要全部匹配开发证据；复用开发侧回归、竞态及隐私检查，不重复执行 unit/lint/type/build。隔离环境已删除，合成数据库归零，证据保留；实际 UAT 镜像和 38 份私有记录清单未改。\n\n旧 OBS-129“留存待确认/采集未启用”状态已被后续授权和 r10 实现取代；旧六份 QA 入口完整保存在[修订前快照](./evidence/closeout-132/previous-qa.json)。当前阶段仍 verification / qa-quinn；本报告不等于里程碑完成。\n"
+    },
+    {
+      "path": ".planning/milestones/M001/verification/coverage-matrix.md",
+      "sha256": "ed57240c5741d85587c45f141ad25ebe48dfe48f6005472cfe869a8ab1bf6f4c",
+      "text": "---\nmilestone: M001\nstage: verification\nrole: quality/base\nagent_name: qa-quinn\nstatus: scoped_pass_with_release_gap\ndate: 2026-09-12\nverification_round: CLOSEOUT-132\n---\n\n# CLOSEOUT-132 定向覆盖\n\n[报告](./report.md)与[原件](./evidence/closeout-132/qa.json)为当前入口。只接收 r10 AI 与 consumer-126 改动；历史全站 UAT 不重跑、不改写。\n\n| 验收项 | 关联 | 方法与结论 |\n| --- | --- | --- |\n| 首轮成功、保存 | CAP-008/010，PAGE-004，API-005/006，DATA-009/011/012/013 | 隔离浏览器→Nuxt→Go→PG PASS；3 个成功场景均实际保存 |\n| 纠正/续写共享最多 2 次 | CAP-008/009，API-005，用户 r10 授权 | 两种纠正串联 3 次上游、续写 2 次、耗尽 3 次；单 run / 单计量 PASS |\n| 公开流不泄漏内部标注、不重复正文 | PAGE-004，API-005，CR-039 | reader 实际收到事件；纠正 1 次正文 delta、续写 2 次；最终/预览摘要一致 PASS |\n| 取消与离开 | CAP-009，API-005 | 纠正中的取消扣次/断连退款、无后续调用 PASS；第 3 次调用竞争等复用开发 r10 49 场景证据 |\n| 退款真实性和恢复 | CAP-009，API-005/006，CR-041 | 失败确认 true、结算未确认 false；故障移除后维护任务恢复 PASS |\n| 解析前失败也有证据 | CR-042，G03/G04/G08/G09/G13 | malformed 记录原始片段、candidate_decode/json_invalid、后续 not_run、结算事实 PASS |\n| 多次回复可辨认 | CR-042，G02/G04/G09/G13 | 每个 run 的 model_end 数=上游调用数；既有真实失败 3 份回复可核对 PASS |\n| 隐私与容量 | CR-042 | 当前合成日志完整、<1 MiB、普通日志未见指定私密字段 PASS；身份排除、TTL/满额/损坏等复用开发专项，不机械重跑 |\n| 原词释义 | CAP-008，API-005/007/008，CR-040 | 既有 Luna 5 份定向人工评阅：未见文章作用提示；旧 CR-040 定向证据继续有效，非全词条语义保证 |\n| 实际候选同步 | PAGE-004，API-005，CR-041 | **Q132-01 FAIL**：UAT 前端仍旧 true-only schema；当前源码 boolean，待发布同步 |\n| 已确认 ≥90% 目标 | USER-GENERATION-QUALITY-129 | 沿用 r10 两模型 9/10、另 Luna 5/5；样本小、模型不同，不声明稳定达标 |\n| 超大结果 | Q127-01 | 用户已撤销当前阻断；原件保留，不扩容、不新增大体积用例 |\n\n当前 28 个候选源码摘要与开发证据一致。更广合同/并发验证复用[后端 r10](../implementation/evidence/corrections-r10-20260912/verification.json)和[前端 consumer-126](../implementation/evidence/ai-consumer-126/developer.json)；本轮独立浏览器结果不是那些开发检查的重命名。\n\n未覆盖：真实模型新采样、全站视觉/多端无障碍、生产前端构建后的集成、用户最终新候选验收。safe 派生、精确纠正反馈和技术说明同步未关闭。旧 OBS-129 与 G01–G15 历史覆盖保存在[前一版快照](./evidence/closeout-132/previous-qa.json)，引用中的原始红例不变。\n"
+    },
+    {
+      "path": ".planning/milestones/M001/verification/ai-evaluation.md",
+      "sha256": "5e8ffd3b5a34f8e39c2f07ec95659204304e98a7e59b770b7e0b207bce022616",
+      "text": "---\nmilestone: M001\nstage: verification\nrole: quality/base\nagent_name: qa-quinn\nstatus: tuning_stopped_existing_samples_reviewed\ndate: 2026-09-12\nverification_round: CLOSEOUT-132\n---\n\n# AI 评测：停止调优后的证据收尾\n\n用户已停止模型调优。本轮 **0 次真实模型调用**；只读既有受控内容，新增隔离合成链路验证。结果入口：[CLOSEOUT-132](./report.md)、[原件](./evidence/closeout-132/qa.json)。\n\n| 冻结批次 | 首轮 / 最终成功 | 纠正调用 | 结论边界 |\n| --- | --- | ---: | --- |\n| r10 MiniMax | 4/5 → 4/5 | 2 | 唯一失败未获纠正救回 |\n| r10 GLM | 5/5 → 5/5 | 0 | 当前五份样本成功 |\n| r10 Luna | 5/5 → 5/5 | 0 | 与前两模型分开统计；不能推导长期稳定成功率 |\n\n[两模型 10 次原件](../implementation/evidence/corrections-r10-10-20260912/results.json)、[Luna 5 次原件](../implementation/evidence/luna-r10-5-20260912/results.json)。Luna 测试名为 ~openai/gpt-luna-latest，开发证据按提供方元数据确认实际模型；本轮不更改模型启用、分组或默认配置。≥90% 仍是已确认目标；小样本点估计不是稳定性证明，不由“停止调优”改成免验。\n\n## 独立内容评阅\n\n本轮只读 Luna 5 个既有私有样本并逐篇核对原词释义、英文正文/提示、主题标签、目标覆盖与自然度。样本 ID 与评语保留在原件，不另存正文，不延长最长 24 小时留存。\n\n- 中/英/日释义未见文章作用、剧情解释或按派生词替换原词的明显现象；标签描述短文而非各单词。\n- discussion 样本包含 grapes/grape、younger/young；business 样本包含 perceived/perceive、undermining/undermine。变形与重复目标能在正文中自然出现。\n- 554 词故事分 7 段，场景和资源一致；57 词故事虽满足下限、目标齐全，但叙事单薄，不能把结构通过等同高文学质量。\n- 这是定向人工评阅，不保证所有多义词释义、所有模型或之后每次输出质量。\n\n## 同一真实失败的原因有据可查\n\nrun 01a094a0-f848-779e-906e-05b4059dc3c1 / 私有证据 83f1fd3d-4a12-4998-b22e-cd75534831c1：\n\n1. 输入是 sustainable/prevalent/vulnerable/ambiguous/coherent，但首轮正文多出 younger(young) 标注。\n2. 第一次纠正的候选摘要与首轮一致，错误仍在。\n3. 第二次回复删去全部正文标注；最终 passage_annotation_missing，业务失败且退款。\n\n3 份回复均能解析 JSON，证据完整，非凭 EventStream 猜测。现有单回复 replay 命令不支持整包多回复；本轮直接按 model_end 分段核查，不新增回放工具或宣称已执行该回放命令。\n\n## 保留限制\n\nsafe→safety/safely 被拒、safer 未识别仍见[既有证据](../implementation/evidence/ten-entry-example-r8-20260911/verification.json)；未知标注反馈定位不精确、r10 真实失败仍 OPEN。未批准兼容、词形扩展或新 Prompt 试验，本轮均未做。\n\n新增合成测试证明的是“成功可交付、失败可解释、最多两次纠正、结算不乱”，不是模型聪明程度或真实成功率。下一步先解决[UAT 前端版本差异](./report.md)，不再以 QA 名义自动收费测模型。\n"
+    },
+    {
+      "path": ".planning/milestones/M001/verification/uat.md",
+      "sha256": "6f9d078743ee28e12042684ce5c05d18a70df7f5d0c31593f286c1b58571f495",
+      "text": "---\nmilestone: M001\nstage: verification\nrole: quality/base\nagent_name: qa-quinn\nstatus: not_ready_until_frontend_candidate_sync\ndate: 2026-09-12\nverification_round: CLOSEOUT-132\n---\n\n# UAT 交付前检查\n\n当前入口仍为 http://localhost:6001，专用账号 wordweave_uat；凭据继续保留仓库外，不在报告回显。本轮未登录或修改实际 UAT 账号，未生成、保存、删改真实学习数据。\n\n历史功能 UAT 已通过，依据[086 用户验收记录](../reviews/uat-086-acceptance-ai-quality-authorization.md)及后续定向记录，不要求用户重新测全站。\n\n## 当前不能直接提交的原因\n\n[Q132-01](./report.md)：UAT 后端已是 r10，前端仍旧版本，其失败事件只接受 quota_refunded=true。当前前端已改为 boolean，独立隔离测试通过，但未部署。请由发布责任角色先同步候选，不把源码测试当成环境已更新。\n\n本轮不部署，不重启 UAT 服务，不调用真实模型，也不把用户停止调优当成当前新候选最终验收。\n\n## 同步后的最小检查\n\n1. 确认实际前端产物含 boolean 失败 schema，未改变既有 UI/文案/样式；后端 r10、模型配置、数据保持原样。\n2. 仅对生成终态消费做定向冒烟，核对成功可保存与失败后可重试；退款暂未确认场景沿隔离合成故障证据验证，禁止在 UAT 数据库注入故障。\n3. 交付时沿用[现有 Luna 5 次及两模型 10 次](./ai-evaluation.md)质量证据。如用户主动再测，内容证据只来自专用账号，遵守现有期限与容量；没有新增付费预算，不自动测。\n\n无需重新校验首页、管理员列表、文案、复习全流程等未变更功能。safe 派生与纠正反馈仍是未解决限制，另由用户/守门按已确认范围处理，不暗中豁免。\n\n本轮新增 8 个独立场景全部通过，详见[浏览器证据](./evidence/closeout-132/browser-results.json)。测试容器/合成库已删除、证据仍可查看；QA 不宣布 M001 完成。\n"
+    },
+    {
+      "path": ".planning/milestones/M001/verification/CR-042-generation-evidence.md",
+      "sha256": "d6d5051d65f152ad77d461acf2ea689f536ef28b5ec9cdfe08c2a186eb3221ca",
+      "text": "---\nid: CR-042\nstatus: scoped_independent_verification_pass_formal_closeout_pending\nmilestone: M001\nraised_by: quality/base\nagent_name: qa-quinn\nowner_stage: technical-design\ndate: 2026-09-12\n---\n\n# 生成阶段与内容证据链\n\n用户要求“先有阶段/内容证据再排查”，限定专用账号，反对扩展成监控平台。原始 OBS-129 缺口与提案完整保存在[前一版快照](./evidence/closeout-132/previous-qa.json)，后续授权以[131/132 交接记录](../reviews/stream-failure-capture-gates.md)为准；不再把“留存待确认、未实施”作为当前状态。\n\n## 当前边界与实现\n\n普通日志保留阶段、安全计数和结算事实；必要模型输出进入独立私有通道，不进入普通日志。采集只绑定 account 身份的专用 ID 01a08e5a-2250-7854-81df-5aeb26e7f461，排除其他账号/访客。容量最近 50 份、最长 24 小时、每份最多 1 MiB，标明截断/不可用；容量不是模型调用授权。\n\n后端 r10 已部署受控采集，当前只读见 38 份既有记录。新旧 prompt/build 由各 manifest 识别，不冒称全部来自 r10。普通构建默认关闭与专用运行配置、安全边界沿后端既有方案，不在 QA 扩建设备、平台或接口。\n\n## CLOSEOUT-132 独立结果\n\n[报告](./report.md)、[覆盖](./coverage-matrix.md)、[原件](./evidence/closeout-132/qa.json)。隔离正常规模测试覆盖成功、两次纠正、续写、纠正耗尽、取消、断连、JSON 失败及退款恢复，8/8 PASS。每个私有记录可关联 run、模型回复数、失败阶段及结算；解析前失败也有内容片段，不再只在 Candidate 已存在时采样。普通日志未发现所检查的合成秘密和文本。\n\n真实失败 83f1fd3d-4a12-4998-b22e-cd75534831c1 的三次回复及最终失败已独立核对；首轮错误、纠正不变和末轮标注缺失有原文证据。没有新调用、没有原文复制到仓库、没有续长留存。多次回复按 model_end 分段读取；现有单回复 replay 命令不能直接回放整包，本轮不增加工具，也不虚报回放成功。\n\nTTL/满额/身份排除/存储失败等专项复用与当前源码摘要匹配的开发证据，不重复跑开发单测；当前新增 PASS 不能冒充所有分支重新独立覆盖。\n\n## 未决与路由\n\nCR-042 的阶段取证目标在本轮有限范围内通过，正式关闭仍交守门，不改 workflow 的 open 标记。Q132-01 是 UAT 前端版本同步问题，不是新监控需求。safe 派生、纠正反馈精度和小样本成功率的限制仍公开保留，不靠增加监控掩盖质量问题。有限纠正说明由后端架构按已经批准的 r10 行为同步；不得引入新需求、兼容或自动模型试验。\n"
+    },
+    {
+      "path": ".planning/milestones/M001/handoffs/verification.md",
+      "sha256": "5ea4a47a553e94040af71c41b8dd11bd1e733605f783819402c6499a59bd5b58",
+      "text": "---\nmilestone: M001\nstage: verification\nrole: quality/base\nagent_name: qa-quinn\nstatus: scoped_pass_uat_frontend_sync_pending\ndate: 2026-09-12\nverification_round: CLOSEOUT-132\n---\n\n# qa-quinn：局部验收交接\n\n## 输入与确认闭环\n\n输入为 TRANSITION-M001-132、[后端 r10 交接](./backend-implementation.md)、[前端 consumer-126 交接](./frontend-implementation.md)、CAP-008/009/010、API-005/006、CR-039/040/041/042。按用户“停止模型调优”和普通交接连续授权执行：只用已有样本/隔离模拟，不部署、不调用真实模型、不写 UAT 数据、不全站回归。不新增验收要求或兼容；停止调优不等于旧限制豁免。\n\n## 本次产物与验证\n\n[报告](../verification/report.md)、[覆盖](../verification/coverage-matrix.md)、[AI 评阅](../verification/ai-evaluation.md)、[UAT 待办](../verification/uat.md)、[原始证据](../verification/evidence/closeout-132/qa.json)。\n\n8 项独立真实浏览器/HTTP/PG 合成场景 PASS，含 2 次纠正、续写、单次计量、成功保存、失败退款和维护恢复。最终读流证据确认单终态、预览/最终摘要一致；首轮观察方法不足后同组重测，总共 16 次合成生成、30 次本地模拟请求。实际模型调用 0。私有日志能关联每次回复、失败原因与退款，既有真实失败的 3 份回复已核对，Luna 5 份内容定向评阅完成。\n\n当前 28 项候选源码摘要全部匹配。开发单测/竞态/隐私与前端检查沿原件复用；不是把开发测试改名独立 QA。没有改生产源码或实际部署，无新子代理。Nuxt 测试为隔离 dev server，不冒称生产构建已验收。\n\n## 未决事项与风险\n\n- **Q132-01 / UAT 交付阻断**：前端仍 5903591c8811…，公开 bundle 的失败 schema 为 true-only；当前源码 boolean 已通过 false 场景。同步前端候选后才交新 UAT，不需要全站重测或后端源码返工。\n- safe→safety/safely、safer 识别限制、纠正反馈精度仍 OPEN；本轮未修复/豁免。真实 9/10 与另 Luna 5/5 均为小样本，不声明稳定 ≥90%。\n- r10 有限纠正的技术文档同步仍由 backend-alex 负责，只记载已批准行为，不开新方案。\n- CR-039/040/041/042 不由 QA 关闭；Q127-01 按用户决定非当前阻断，保留历史反例不扩容。\n\n## 文档整理与追踪\n\n六份旧 QA 入口完整保存在[修订前快照](../verification/evidence/closeout-132/previous-qa.json)，本轮就地合并旧 OBS-129 未启用状态与后续 r10 事实，不新增一系列轮次报告。当前权威入口是本交接和 report.md；原始红例、批准记录、开发证据均未改。未完成 ID 的去向如上；文件引用和源码摘要已静态核对，新会话/代理交接试验未执行。本轮整理前后同口径六份入口的字节数记录于 qa.json，不把归档当作批准。\n\n隔离容器/网络已删除，合成库清理后数量为 0；合成数据不可恢复、证据保留。实际 UAT 容器与既有 38 份清单未变。\n\n## 下一步建议\n\n守门接收本次“代码局部 PASS / UAT 前端待同步”交接，按已有普通交接授权路由 frontend-claire 准备/同步当前前端产物，并让后端责任角色完成已批准纠正行为的说明同步。实际部署遵守独立授权边界；本轮没有该动作。\n\n完成条件：Q132-01 的实际运行前端版本与候选一致，定向冒烟有证据，已知限制继续公开呈现。然后交付最小 UAT，不再次让用户反复测试定位后台失败、不自动收取新模型费用。本交接不切换 verification / qa-quinn、不宣布里程碑完成。\n"
+    }
+  ],
+  "user_acceptance": {
+    "decision": "USER-UAT-ACCEPTANCE-134",
+    "response": "验收完毕",
+    "accepted": true,
+    "individual_cases_provided": false,
+    "repeated_uat_required": false
+  },
+  "open_items": [
+    "R10-ARCHITECTURE-SYNC owned by backend-alex",
+    "Safe derivation / correction feedback precision remain open, no tuning authorized",
+    "CR-039/040/041/042 formal closure remains for gate; no blanket waiver"
+  ],
+  "document_maintenance": {
+    "same_scope": "Same six QA current entrypoints; UTF-8 bytes excluding raw evidence",
+    "prior_snapshot": "prior_documents in this file",
+    "new_session_test": "not performed; static traceability only"
+  },
+  "actual_model": "unknown",
+  "tokens": "unknown",
+  "final_checks": {
+    "recorded_at": "2026-09-12T09:59:30.528Z",
+    "documents": [
+      {
+        "path": ".planning/milestones/M001/verification/report.md",
+        "before_bytes": 4659,
+        "after_bytes": 4025,
+        "sha256": "e67e4ef129e61dbe0cbdbd142c6fac170ae0e6763887893f83f7b2551dfbe951"
+      },
+      {
+        "path": ".planning/milestones/M001/verification/coverage-matrix.md",
+        "before_bytes": 3010,
+        "after_bytes": 3485,
+        "sha256": "803118e13ecbe2f97ee9cbdcf120dcb9c64d900b53db175f8cef3c360aecdb67"
+      },
+      {
+        "path": ".planning/milestones/M001/verification/ai-evaluation.md",
+        "before_bytes": 3248,
+        "after_bytes": 3492,
+        "sha256": "d67225afa360958fb5c9dfcedd9b61cd9ede3d35346d312b1907af9842610398"
+      },
+      {
+        "path": ".planning/milestones/M001/verification/uat.md",
+        "before_bytes": 2033,
+        "after_bytes": 1595,
+        "sha256": "7b5001a46a22d443fb95a5965491ef40363c46d72c8b931667dc6d562a949c63"
+      },
+      {
+        "path": ".planning/milestones/M001/verification/CR-042-generation-evidence.md",
+        "before_bytes": 2764,
+        "after_bytes": 2922,
+        "sha256": "3b7ac4fd8620026ee50c50e44984587d278343e9db91561a264cca117373db58"
+      },
+      {
+        "path": ".planning/milestones/M001/handoffs/verification.md",
+        "before_bytes": 3681,
+        "after_bytes": 3006,
+        "sha256": "5244ae949cc1c6bd97553bd24305bb72020b63ed73008eb4289f497683b40e48"
+      }
+    ],
+    "before_bytes": 19395,
+    "after_bytes": 18525,
+    "protected_files": 21,
+    "protected_changes": [],
+    "source_count": 340,
+    "source_changes": [],
+    "missing_links": [],
+    "snapshots_verified": true
+  }
+}

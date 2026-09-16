@@ -1,0 +1,41 @@
+{
+  "date": "2026-09-05T08:58:25.754Z",
+  "agent": "qa-quinn",
+  "counts": {
+    "PASS": 4,
+    "FAIL": 0,
+    "ERROR": 0
+  },
+  "checks": [
+    {
+      "id": "admin target is not a changeable learner",
+      "status": "PASS",
+      "actual": 404,
+      "expected": 404
+    },
+    {
+      "id": "admin role unchanged",
+      "status": "PASS",
+      "actual": "admin|",
+      "expected": "admin|"
+    },
+    {
+      "id": "final fixed new pair quota",
+      "status": "PASS",
+      "actual": {
+        "kind": "limited",
+        "remaining": 0
+      },
+      "expected": {
+        "kind": "limited",
+        "remaining": 0
+      }
+    },
+    {
+      "id": "no provider credential",
+      "status": "PASS",
+      "actual": "0",
+      "expected": "0"
+    }
+  ]
+}

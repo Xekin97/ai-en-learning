@@ -1,0 +1,85 @@
+{
+  "date": "2026-09-06T08:50:02.206Z",
+  "agent": "frontend-claire",
+  "frontend": "sha256:8fe04108b523cce73820017069ba0509e7bee03589b0fdc9218a4397770274c0",
+  "backend": "sha256:e8c4ee91a7c3265cda8c496ccc8fb485328d95b6c1662eaf2502011ce5d005a5",
+  "sourceFiles": [
+    {
+      "path": "frontend/app/pages/admin/plans.vue",
+      "sha256": "9cb240f50b7229abb35c94f1cd7caba12217a41cc2ab0aba5d2334c4ebde90d4"
+    },
+    {
+      "path": "frontend/app/assets/css/application.css",
+      "sha256": "c55af5a1e57d0f099745edfd28dce70b9c9d6185ceae3427a30e0ffec0bc3509"
+    },
+    {
+      "path": "frontend/i18n/locales/en-US.json",
+      "sha256": "10dbae5c5d8d68ca84df0d3566439d7fd6dc8f576cda83b28f25677fb50a3a2d"
+    },
+    {
+      "path": "frontend/i18n/locales/zh-CN.json",
+      "sha256": "454b570fbf82bba01480715d6d6ffebdb1cc0bfbfe9df022d30016473401eccd"
+    },
+    {
+      "path": "frontend/app/application/admin/plan-policy.ts",
+      "sha256": "3ff0b5e67434c2e62c9e5137e9b6d31415c72a0a12affa7d2b325f58723b1b91"
+    },
+    {
+      "path": "frontend/app/presentation/admin/admin-plan-presenter.ts",
+      "sha256": "28bc8d282948d6b87cc9af49056ad4589fcc3fdb9a2f32c00f17dd496b611e8b"
+    },
+    {
+      "path": "frontend/tests/unit/admin-plan-policy.test.ts",
+      "sha256": "c75a231d9cb94c6a9df3008536510e7dffcd9887c7fd6623a3c41d6807e1f3cd"
+    }
+  ],
+  "modifiedExistingFiles": [
+    "frontend/i18n/locales/en-US.json",
+    "frontend/i18n/locales/zh-CN.json",
+    "frontend/app/pages/admin/plans.vue",
+    "frontend/app/assets/css/application.css"
+  ],
+  "quality": [
+    {
+      "name": "format",
+      "cmd": "pnpm",
+      "args": [
+        "--dir",
+        "frontend",
+        "format:check"
+      ],
+      "status": 0,
+      "seconds": 2.851
+    },
+    {
+      "name": "build",
+      "cmd": "docker",
+      "args": [
+        "build",
+        "--progress=plain",
+        "--tag",
+        "wordweave-frontend:cr036-077",
+        "frontend"
+      ],
+      "status": 0,
+      "seconds": 64.333
+    }
+  ],
+  "unit": {
+    "files": 20,
+    "tests": 174
+  },
+  "browser": {
+    "PASS": 560,
+    "FAIL": 0,
+    "ERROR": 0
+  },
+  "e2e": {
+    "startTime": "2026-09-06T08:47:01.888Z",
+    "duration": 171389.30899999998,
+    "expected": 110,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

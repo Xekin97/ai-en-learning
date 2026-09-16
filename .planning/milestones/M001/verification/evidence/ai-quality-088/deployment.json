@@ -1,0 +1,177 @@
+{
+  "date": "2026-09-07T06:22:37.709Z",
+  "agent": "qa-quinn",
+  "deploymentStatus": "PASS",
+  "before": [
+    {
+      "name": "/wordweave_uat-frontend-1",
+      "id": "c29718b3bea43ab23403ae7cef828968f2c934f6b04128d1f4a61cfb13d82c06",
+      "image": "sha256:fd251e7439aad8e058656e2751ed84f40715fec570a872da53542688a6dd6904",
+      "created": "2026-09-07T03:53:54.281118416Z",
+      "started": "2026-09-07T03:54:00.102154461Z",
+      "status": "running",
+      "health": "healthy",
+      "mounts": [],
+      "networks": [
+        "wordweave_uat_edge"
+      ]
+    },
+    {
+      "name": "/wordweave_uat-backend-1",
+      "id": "e1edf901fc0a17433b0caa4f213d4fdd1cd5579d53457290bb15c07d8de690b4",
+      "image": "sha256:642ed57ad0ed6c8a13e4bba1101d8b50188e8ea636791583a6ffb5eaa6917aac",
+      "created": "2026-09-07T03:53:53.800641514Z",
+      "started": "2026-09-07T03:53:54.382687833Z",
+      "status": "running",
+      "health": "healthy",
+      "mounts": [],
+      "networks": [
+        "wordweave_uat_data",
+        "wordweave_uat_edge"
+      ]
+    },
+    {
+      "name": "/wordweave_uat-nginx-1",
+      "id": "b789bde4e7825b849640cbf63d35b50ae41c1b77cb6b7ece73b3e26e27eabcb1",
+      "image": "sha256:5f0efd7fead5e8a290f07e5c025e9204052efb646758e1c6883de0e23a6e085c",
+      "created": "2026-09-04T09:36:37.259905255Z",
+      "started": "2026-09-04T09:36:43.099505383Z",
+      "status": "running",
+      "health": "healthy",
+      "mounts": [],
+      "networks": [
+        "wordweave_uat_edge"
+      ]
+    },
+    {
+      "name": "/wordweave_uat-postgres-1",
+      "id": "37a6d2fa58c578b1c6b4dbe10028b5ddf0c696fe44fc849a129293a85bbaf839",
+      "image": "sha256:b85269e8c6aa961524542eb4dcca44c4aa1deba2cf507e9e28d5ba8f971aeab9",
+      "created": "2026-09-03T02:24:02.646638386Z",
+      "started": "2026-09-03T02:24:03.164602928Z",
+      "status": "running",
+      "health": "healthy",
+      "mounts": [
+        {
+          "type": "volume",
+          "name": "wordweave_uat_wordweave-pg",
+          "destination": "/var/lib/postgresql"
+        }
+      ],
+      "networks": [
+        "wordweave_uat_data"
+      ]
+    }
+  ],
+  "after": [
+    {
+      "name": "/wordweave_uat-frontend-1",
+      "id": "c29718b3bea43ab23403ae7cef828968f2c934f6b04128d1f4a61cfb13d82c06",
+      "image": "sha256:fd251e7439aad8e058656e2751ed84f40715fec570a872da53542688a6dd6904",
+      "created": "2026-09-07T03:53:54.281118416Z",
+      "started": "2026-09-07T03:54:00.102154461Z",
+      "status": "running",
+      "health": "healthy",
+      "mounts": [],
+      "networks": [
+        "wordweave_uat_edge"
+      ]
+    },
+    {
+      "name": "/wordweave_uat-backend-1",
+      "id": "fd3e61281c4cc1ad330820dbaea45e9299d4ca8cd1096b52bd70a50d8bc5c8ca",
+      "image": "sha256:642ed57ad0ed6c8a13e4bba1101d8b50188e8ea636791583a6ffb5eaa6917aac",
+      "created": "2026-09-07T06:22:30.831283459Z",
+      "started": "2026-09-07T06:22:31.127746168Z",
+      "status": "running",
+      "health": "healthy",
+      "mounts": [],
+      "networks": [
+        "wordweave_uat_data",
+        "wordweave_uat_edge"
+      ]
+    },
+    {
+      "name": "/wordweave_uat-nginx-1",
+      "id": "b789bde4e7825b849640cbf63d35b50ae41c1b77cb6b7ece73b3e26e27eabcb1",
+      "image": "sha256:5f0efd7fead5e8a290f07e5c025e9204052efb646758e1c6883de0e23a6e085c",
+      "created": "2026-09-04T09:36:37.259905255Z",
+      "started": "2026-09-04T09:36:43.099505383Z",
+      "status": "running",
+      "health": "healthy",
+      "mounts": [],
+      "networks": [
+        "wordweave_uat_edge"
+      ]
+    },
+    {
+      "name": "/wordweave_uat-postgres-1",
+      "id": "37a6d2fa58c578b1c6b4dbe10028b5ddf0c696fe44fc849a129293a85bbaf839",
+      "image": "sha256:b85269e8c6aa961524542eb4dcca44c4aa1deba2cf507e9e28d5ba8f971aeab9",
+      "created": "2026-09-03T02:24:02.646638386Z",
+      "started": "2026-09-03T02:24:03.164602928Z",
+      "status": "running",
+      "health": "healthy",
+      "mounts": [
+        {
+          "type": "volume",
+          "name": "wordweave_uat_wordweave-pg",
+          "destination": "/var/lib/postgresql"
+        }
+      ],
+      "networks": [
+        "wordweave_uat_data"
+      ]
+    }
+  ],
+  "backendImage": "sha256:642ed57ad0ed6c8a13e4bba1101d8b50188e8ea636791583a6ffb5eaa6917aac",
+  "providerBaseBefore": "http://host.docker.internal:6002/v1",
+  "providerBaseAfter": "https://openrouter.ai/api/v1",
+  "changedEnvironmentKeys": [
+    "OPENROUTER_BASE_URL"
+  ],
+  "backup": {
+    "directory": "/var/folders/z9/99ckxr957v901zwwc8jdk8640000gn/T/wordweave-ai-quality-088-ewWiPG",
+    "privateRollback": "/var/folders/z9/99ckxr957v901zwwc8jdk8640000gn/T/wordweave-ai-quality-088-ewWiPG/rollback-provider.yaml"
+  },
+  "checks": {
+    "backendHealthy": true,
+    "backendImageUnchanged": true,
+    "frontendContainerUnchanged": true,
+    "nginxContainerUnchanged": true,
+    "postgresContainerUnchanged": true,
+    "databaseVolumeUnchanged": true,
+    "onlyProviderBaseChanged": true,
+    "protectedDataUnchangedBeforeCredentialConfiguration": true,
+    "migrationsRun": false,
+    "imagesBuiltOrPulled": false,
+    "realInferenceCalls": 0
+  },
+  "dataBefore": {
+    "counts": {
+      "accounts": 589,
+      "sessions": 598,
+      "batches": 17,
+      "models": 1,
+      "credentials": 1,
+      "runs": 79,
+      "active_runs": 0,
+      "migrations": 6,
+      "latest_migration": "0006_hint_occurrences_enforce.sql"
+    }
+  },
+  "dataAfter": {
+    "counts": {
+      "accounts": 589,
+      "sessions": 598,
+      "batches": 17,
+      "models": 1,
+      "credentials": 1,
+      "runs": 79,
+      "active_runs": 0,
+      "migrations": 6,
+      "latest_migration": "0006_hint_occurrences_enforce.sql"
+    }
+  },
+  "sensitiveDigestsEmitted": false
+}

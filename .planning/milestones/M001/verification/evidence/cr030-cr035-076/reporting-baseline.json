@@ -1,0 +1,155 @@
+{
+  "date": "2026-09-06T08:35:16.309Z",
+  "docs": [
+    {
+      "path": "verification/report.md",
+      "header": "---\nmilestone: M001\nstage: verification\nrole: quality/base\nagent_name: qa-quinn\nstatus: awaiting_user_review\ndate: 2026-09-06\nverification_round: TRANSITION-M001-074\nverdict: fail_rework_required\nfunctional_uat: not_reissued\nrelease_readiness: blocked\n---\n",
+      "bodyHash": "d4671759c40efd2c388ff754b85a699dd5471c6a41ba2d50324b083c5f8e9942",
+      "fileHash": "6713b0f6cc1604361c8c7c30a5b2c588eb831ca5e5af75353dbf8e60628634f3",
+      "insertion": "\n<!-- QA076 CURRENT BEGIN -->\n# 第076轮独立测试：原两项通过，新增Plans状态遗漏\n\nCR030-R074-01长用户名详情与CR035标题间距/对齐均已独立通过。关联配置测试发现[CR036](../changes/CR-036.md)：保存空模型、空篇幅后不显示批准的“当前方案已暂停生成”提示，额度0和5均在双引擎、双语、390/1440复现。\n\n本轮总体FAIL，暂不交UAT。已有明确产品/设计/API基线，建议直接交frontend-claire有限返工后独立复验，不重开需求/设计。6001未更新，真实AI发布门保留。\n\n[完整报告](./cr030-cr035-076-report.md) · [覆盖](./cr030-cr035-076-coverage.md) · [交接](../handoffs/verification.md)。旧结果不改写；原7项仅更新验证进展，CR029–036均open，新增CR036待守门器同步。\n\n---\n\n以下为第076轮前的历史正文，保留原样，不代表当前结论。\n<!-- QA076 CURRENT END -->\n"
+    },
+    {
+      "path": "verification/coverage-matrix.md",
+      "header": "---\nmilestone: M001\nstage: verification\nrole: quality/base\nagent_name: qa-quinn\nstatus: awaiting_user_review\ndate: 2026-09-06\nverification_round: TRANSITION-M001-074\nverdict: fail_rework_required\n---\n",
+      "bodyHash": "fcde13d49a3ca66a9db888a87d512167820a418693ceec23b76823799af097c7",
+      "fileHash": "422ab0051fec052a0878fdc3d4ca1efa16d03b350814970b2bf201980f4c9d3e",
+      "insertion": "\n<!-- QA076 CURRENT BEGIN -->\n# 第076轮覆盖入口\n\n以[076覆盖矩阵](./cr030-cr035-076-coverage.md)与[报告](./cr030-cr035-076-report.md)为当前结论。Users所有列表状态、长名详情/reader、真实分页/改密/权限/额度、日期恢复和关联回归通过指定检查；CR035字段布局通过不等于所有Plans状态通过。\n\n新增CR036：两类选择全空，额度0/5，真实保存/刷新后警告缺失，16局部失败归于同一缺陷。整体FAIL，UAT不重发。真实AI、真机/读屏、Firefox、公网负载及本轮真实200%均未验证；不累计旧轮或开发断言。\n\n---\n\n以下为第076轮前的历史正文，保留原样，不代表当前结论。\n<!-- QA076 CURRENT END -->\n"
+    },
+    {
+      "path": "verification/ui-design-audit.md",
+      "header": "---\nmilestone: M001\nstage: verification\nrole: quality/base\nagent_name: qa-quinn\nstatus: awaiting_user_review\ndate: 2026-09-06\nverification_round: TRANSITION-M001-074\nverdict: fail_rework_required\n---\n",
+      "bodyHash": "16e8ff7a8bf20572c32497ec38b2003c40c8e5ed2b329c2e34e6aee1335be65e",
+      "fileHash": "c0ded2248cc2c863b09ffe344fc24ea602772c5380ae1ac18d7a3ad802484178",
+      "insertion": "\n<!-- QA076 CURRENT BEGIN -->\n# 第076轮UI独立审核\n\n- CR030-R074-01 PASS：双引擎双语320/390/720/721/900/901/1280/1440，合法32字符及短名详情全名/徽章/搜索保留，无页面溢出；另测长名拥有两篇资料的reader。\n- CR035 PASS：四组、空/3模型、双引擎双语6宽度，两个fieldset的标题到选项均8px，文字偏移均0；未以不同夹具的整页高度比较。\n- CR036 FAIL：Guest清空模型与篇幅，额度0或5保存并刷新后缺少批准警告。实际notice-warning为空，原型显示黄色提示。[问题与双语证据](../changes/CR-036.md)。\n- BASELINE_VARIANCE保留：英文原型语言选项Chinese与实现中文的宽度不同，实现符合本地称呼规范，不擅改语言规则、不宣称整屏像素相同。\n- 捕获校准：focus末尾部分long-detail截图未等待再次导航，实际是列表；不作详情视觉证明。另等待真实标题、字体、两帧后生成[确认截图](./evidence/cr030-cr035-076/screenshots/confirmed-detail-webkit-en-US-320.png)和[24项检查](./evidence/cr030-cr035-076/detail-capture-results.json)，原文件保留。\n\n已人工查看Plans英文实际/原型、中文额度5实际以及修正后的WebKit320长名详情；其他局部测量/键盘/Axe、执行范围与限制见[报告](./cr030-cr035-076-report.md)。当前整体FAIL；真实200%、真机和VoiceOver不是本轮通过项。\n\n---\n\n以下为第076轮前的历史正文，保留原样，不代表当前结论。\n<!-- QA076 CURRENT END -->\n"
+    },
+    {
+      "path": "verification/ai-evaluation.md",
+      "header": "---\nmilestone: M001\nstage: verification\nrole: quality/base\nagent_name: qa-quinn\nstatus: awaiting_user_review\ndate: 2026-09-06\nprompt_version: m001-v2\nvalidator_version: m001-v2\n---\n",
+      "bodyHash": "289b8734db59097bf203cabd8998e91cf130c095b08817a5d9fce80c64253b9d",
+      "fileHash": "7bf351c929c5340e8da5d2a78808984b5ce19b4130ece1b05b8c7a75e485d53c",
+      "insertion": "\n<!-- QA076 CURRENT BEGIN -->\n# 第076轮AI边界\n\n真实供应商调用为0，凭证0，4个模型全部停用；后端外部提供方禁用且处于内部网络。未读取或使用历史密钥。14个批次和6条generation_runs均为合成夹具，不是AI生成质量样本。\n\n[22项复习回归](./evidence/cr030-cr035-076/review-regression-results.json)验证重复提示全挖空、learn/learned/learning独立填写、同源颜色稳定、不重叠、错误纠正与两类成功总结。它们只证明固定数据上的复习行为。\n\n真实模型兼容性、概率质量和自然度继续NOT VERIFIED，发布门BLOCKED。本轮另因Plans状态提示缺失CR036而总体FAIL，见[报告](./cr030-cr035-076-report.md)。历史确定性AI矩阵不计入本轮，6001不更新。\n\n---\n\n以下为第076轮前的历史正文，保留原样，不代表当前结论。\n<!-- QA076 CURRENT END -->\n"
+    },
+    {
+      "path": "verification/uat.md",
+      "header": "---\nmilestone: M001\nstage: verification\nrole: quality/base\nagent_name: qa-quinn\nstatus: awaiting_user_review\ndate: 2026-09-06\nverification_round: TRANSITION-M001-074\nverdict: fail_rework_required\n---\n",
+      "bodyHash": "569672b481cbc57e033930b5ef8fcd051269facd6c6e655a1b8bf18ee6f21266",
+      "fileHash": "a17c634b5e943f553c1d522b0361720195690daf9ee697df82d097e97d9250bb",
+      "insertion": "\n<!-- QA076 CURRENT BEGIN -->\n# 第076轮：暂不重新邀请UAT\n\n独立测试已结束，但CR036使当前结果仍为FAIL。原长名详情与Plans间距已通过。6001四容器ID/镜像/启动时间保持不变，是原UAT环境；不要求用户现在重复验收。\n\n再次UAT前需先完成CR036前端修复与独立复验。以下只是后续待执行清单，不代表已部署、用户通过或真实AI通过：\n\n- Plans清空模型与篇幅、额度0/5保存及刷新后出现准确的中英文不可生成提示；恢复有效配置、四组切换和既定边界一致，仍允许主动保存不可生成配置。\n- Plans模型/篇幅标题均8px且对齐；选择/取消、有限/不限、键盘/禁用/保存不退化。\n- Users长名和短名的列表/详情/正确资料弹窗、返回焦点/滚动；全部列表状态、三页/追加失败/终页、真实额度和重置密码。\n- 旧记录/空范围仍可改日期；错误/重试/范围恢复/单篇并存，重复提示/同源颜色/两类复习总结。\n- 首页Review、注销说明、访客原地引导和认证返回、Models文案/弹窗、Library六统计及空态。\n- 配套升级后刷新旧管理员常驻标签；真实AI需另行验证，不能用合成资料替代。\n\n[当前报告](./cr030-cr035-076-report.md)。QA没有授权自己部署6001或宣布UAT通过。\n\n---\n\n以下为第076轮前的历史正文，保留原样，不代表当前结论。\n<!-- QA076 CURRENT END -->\n"
+    },
+    {
+      "path": "handoffs/verification.md",
+      "header": "---\nmilestone: M001\nstage: verification\nrole: quality/base\nagent_name: qa-quinn\nstatus: awaiting_user_review\ndate: 2026-09-06\nverification_round: TRANSITION-M001-074\nverdict: fail_rework_required\n---\n",
+      "bodyHash": "b612b9a75de5770700ad774c3249a91f593e6b8f8c3b44c9f9c1dff64e63f479",
+      "fileHash": "962cae5f37b0471ce6ef102a354c14aab8a5bb19a460f84ab407b24cae66c562",
+      "insertion": "\n<!-- QA076 CURRENT BEGIN -->\n# 第076轮独立测试交接\n\n## 使用的输入与当前结果\n\n依据[076批准](../reviews/implementation-cr030-cr035-reverification-approval.md)及固定frontend 22ae24c0 / backend e8c4ee91执行，16份获批快照已验证。遵守用户先独立测试、后UAT以及开发—测试有限循环授权。\n\n结果FAIL：CR030-R074-01合法32字符详情与CR035字段布局均PASS；新[CR036](../changes/CR-036.md)为空模型+空篇幅方案保存/刷新后警告缺失。额度0与5均在Chromium/WebKit、en-US/zh-CN、390/1440复现。一个缺陷对应16个矩阵失败，未删除原始失败。\n\n## 本次产物\n\n[原始报告](../verification/cr030-cr035-076-report.md)、[覆盖矩阵](../verification/cr030-cr035-076-coverage.md)、[UI审核](../verification/ui-design-audit.md)、[AI边界](../verification/ai-evaluation.md)、[后续UAT清单](../verification/uat.md)、[执行计划](../verification/evidence/cr030-cr035-076/PLAN.md)、[交付校验](../verification/evidence/cr030-cr035-076/delivery-validation.json)。\n\n## 责任与追踪\n\nCR036关联PAGE-102、CAP-103/021、DATA-006/008/018、API-102。implementation / frontend-claire有限补齐既有不可生成提示；没有新的产品/设计/API选择，不要重新开这些阶段。保存空配置本来合法，不能用禁止保存或默认补选项代替提示。保留转换层→状态→presenter分层、fieldset/legend与当前8px间距。\n\n其余PAGE-103查询/权限/分页/改密/额度/只读内容、PAGE-007范围、PAGE-008复习、认证及Models/Library指定回归追踪详见矩阵。开发单测、lint/type/build未重跑，也不把旧轮结果计成本轮通过。\n\n## 完整性与环境\n\n报告前2303份既有源未变。只增加质量证据/报告和CR验证进展；生产、原型、依赖、开发记录和workflow保持原样。13份既有质量/CR历史正文保留。\n\n已清理精确标签核验的4个QA容器、2个网络；66账号/14批次/4会话/6手工计量/4停用模型所在临时库不可恢复，种子和证据可重建。6101释放，6001四容器不变，6010原进程保留。\n\n## 未决事项与风险\n\n- OPEN：CR029–036均open；旧7项指定回归通过不等于自关闭。控制面仍列7项，新增CR036待守门器同步。\n- BLOCKED：当前UI/功能交付因CR036未通过；不重发UAT。真实AI兼容性/概率质量NOT VERIFIED，发布门继续BLOCKED。\n- 定向Axe/键盘通过不等于真机/VoiceOver/真实200%通过；本地20次API采样不等于公网SLA。\n- 原focus末尾截图捕获时序问题已用confirmed-detail补拍，原文件保留；语言选项基线差异单列，不扩大为语言规则修改。\n- 完整混合版本矩阵未本轮重测；旧管理员常驻标签配套升级后需刷新。\n\n## 下一步建议\n\nPROPOSED：守门器依既有开发—测试授权有限返回frontend-claire处理CR036，再由qa-quinn独立复验；现在不要交UAT。\n\n按agt-verify-milestone，本回合只提交质量专业交接后停止。workflow仍为verification / quality/base / qa-quinn / active / TRANSITION-M001-076；本交接不能切换阶段，不自行激活开发、不更新6001、不宣布完成。\n\n---\n\n以下为第076轮前的历史正文，保留原样，不代表当前结论。\n<!-- QA076 CURRENT END -->\n"
+    },
+    {
+      "path": "changes/CR-029.md",
+      "header": "---\nid: CR-029\nstatus: open\nmilestone: M001\nraised_by: quality/base\nowner_stage: implementation\ndate: 2026-09-05\nseverity: MEDIUM\n---\n",
+      "bodyHash": "917a378807ef698477a2129c472eb6f3b1f3567df71ffea53edd53a3c1ca4cc5",
+      "fileHash": "05a2952c2eef2890806b2b08ff8ccfc97b81fd9a6d323e615fae55a1a043a432",
+      "insertion": "\n<!-- QA076 CURRENT BEGIN -->\n## 第076轮独立复验进展\n\n首页Review、日期44px等高等宽、注销准确文案/中性色及日期恢复指定检查PASS。\n\n见[076报告](../verification/cr030-cr035-076-report.md)及[覆盖](../verification/cr030-cr035-076-coverage.md)。本轮整体因新[CR036](./CR-036.md)而FAIL；本项保持open等待交付处理，不表示要重做已通过的上游设计。未修改产品/设计/技术/API、生产或工作流，6001未更新。\n\n---\n\n以下为第076轮前的历史正文，保留原样，不代表当前结论。\n<!-- QA076 CURRENT END -->\n"
+    },
+    {
+      "path": "changes/CR-030.md",
+      "header": "---\nid: CR-030\nstatus: open\nmilestone: M001\nraised_by: quality/base\nowner_stage: implementation\ndate: 2026-09-05\nseverity: HIGH\ndepends_on: [CR-031]\n---\n",
+      "bodyHash": "9ea716c5bea36fb70ac0b9f3b7a3522d93297c0747cdb4a4ae18046c258ff3f8",
+      "fileHash": "e262f142680700284a7da2b96ec868856bfb66631622afc8a05fc14fa0447e66",
+      "insertion": "\n<!-- QA076 CURRENT BEGIN -->\n## 第076轮独立复验进展\n\nCR030-R074-01已PASS：32字符/32个w/短名，双引擎双语8宽度完整姓名、徽章和无页面溢出；列表所有状态、45行分页/精确优先/作用域游标/40行返回、正确资料modal、改密/权限回归PASS。增加长名账号两份真实批次reader验证；末尾截图捕获时序问题已补拍confirmed-detail，不使用误拍列表作为详情证据。\n\n见[076报告](../verification/cr030-cr035-076-report.md)及[覆盖](../verification/cr030-cr035-076-coverage.md)。本轮整体因新[CR036](./CR-036.md)而FAIL；本项保持open等待交付处理，不表示要重做已通过的上游设计。未修改产品/设计/技术/API、生产或工作流，6001未更新。\n\n---\n\n以下为第076轮前的历史正文，保留原样，不代表当前结论。\n<!-- QA076 CURRENT END -->\n"
+    },
+    {
+      "path": "changes/CR-031.md",
+      "header": "---\nid: CR-031\nstatus: open\nmilestone: M001\nraised_by: quality/base\nowner_stage: uiux-design\ndate: 2026-09-05\nseverity: HIGH\n---\n",
+      "bodyHash": "1b88f7498199cb90d3a61ba5aa9701e3f3176e512da30f533c6b9c9003ea275a",
+      "fileHash": "71296d422111a491d1a8fbafa247d027d90b11ecfdff6de60a9be796a15042b1",
+      "insertion": "\n<!-- QA076 CURRENT BEGIN -->\n## 第076轮独立复验进展\n\n正常/长名用户的正确批次只读reader、长短文、500/404/准确重试、深链/旧URL/前进后退、焦点/滚动/键盘与作用域Axe指定场景PASS。本轮未实际200%，不沿用旧轮数量。\n\n见[076报告](../verification/cr030-cr035-076-report.md)及[覆盖](../verification/cr030-cr035-076-coverage.md)。本轮整体因新[CR036](./CR-036.md)而FAIL；本项保持open等待交付处理，不表示要重做已通过的上游设计。未修改产品/设计/技术/API、生产或工作流，6001未更新。\n\n---\n\n以下为第076轮前的历史正文，保留原样，不代表当前结论。\n<!-- QA076 CURRENT END -->\n"
+    },
+    {
+      "path": "changes/CR-032.md",
+      "header": "---\nid: CR-032\nstatus: open\nmilestone: M001\nraised_by: user\nowner_stage: uiux-design\ndate: 2026-09-05\nseverity: HIGH\n---\n",
+      "bodyHash": "13aa8db28d8aa44a0d24c3c5fad8977c6a40fb97aeccc1c0423f135c469a19aa",
+      "fileHash": "6eac36caedc7f2e1b8957f279bc01d5eae1c4079170a0b247d027f91cb752806",
+      "insertion": "\n<!-- QA076 CURRENT BEGIN -->\n## 第076轮独立复验进展\n\n五类访客原地引导、完整文案/品牌/样式、SSR和浏览器私有数据隔离、认证返回/错误/账号语言优先/退出、无自动复习创建指定检查PASS。\n\n见[076报告](../verification/cr030-cr035-076-report.md)及[覆盖](../verification/cr030-cr035-076-coverage.md)。本轮整体因新[CR036](./CR-036.md)而FAIL；本项保持open等待交付处理，不表示要重做已通过的上游设计。未修改产品/设计/技术/API、生产或工作流，6001未更新。\n\n---\n\n以下为第076轮前的历史正文，保留原样，不代表当前结论。\n<!-- QA076 CURRENT END -->\n"
+    },
+    {
+      "path": "changes/CR-033.md",
+      "header": "---\nid: CR-033\nstatus: open\nmilestone: M001\nraised_by: frontend-architect/base\nowner_stage: technical-design\ndate: 2026-09-05\nseverity: HIGH\n---\n",
+      "bodyHash": "88020c7c3ecec6fe14fb4abe4e91fd80fa2d68faa8294c9f956fa383e4ecd907",
+      "fileHash": "444898452b56ada59059db0beb8f6db9fbadcdee14ee6fef8c599ef119ecc753",
+      "insertion": "\n<!-- QA076 CURRENT BEGIN -->\n## 第076轮独立复验进展\n\n真实GET/PUT额度有限/零/无限/admin null、窗口/active/退款/降额归零、换组和丢响应1PUT+1GET对账PASS。6条计量是手工数据，无真实AI调用；完整混合版本矩阵未本轮重测，配套升级需刷新旧管理员页。\n\n见[076报告](../verification/cr030-cr035-076-report.md)及[覆盖](../verification/cr030-cr035-076-coverage.md)。本轮整体因新[CR036](./CR-036.md)而FAIL；本项保持open等待交付处理，不表示要重做已通过的上游设计。未修改产品/设计/技术/API、生产或工作流，6001未更新。\n\n---\n\n以下为第076轮前的历史正文，保留原样，不代表当前结论。\n<!-- QA076 CURRENT END -->\n"
+    },
+    {
+      "path": "changes/CR-034.md",
+      "header": "---\nid: CR-034\nstatus: open\nmilestone: M001\nraised_by: quality/base\nagent_name: qa-quinn\nowner_stage: uiux-design\ndate: 2026-09-05\nseverity: HIGH\n---\n",
+      "bodyHash": "9b51e23fc045c29e152f973b7d5fd68dfec9daa134093c19801e420d9bb71107",
+      "fileHash": "d4106aed1d95e959b20215da5ac3b5af966eb8b786bbd4b0dc44bfa5917789ea",
+      "insertion": "\n<!-- QA076 CURRENT BEGIN -->\n## 第076轮独立复验进展\n\n旧库/空库/全不参与仍保留日期；上海单日3批6词、空有切换/迟到/失败重试/422、真实创建/范围复用/单篇并存/刷新顺序、时区默认范围及指定1080断点PASS。未重跑本轮真实200%。\n\n见[076报告](../verification/cr030-cr035-076-report.md)及[覆盖](../verification/cr030-cr035-076-coverage.md)。本轮整体因新[CR036](./CR-036.md)而FAIL；本项保持open等待交付处理，不表示要重做已通过的上游设计。未修改产品/设计/技术/API、生产或工作流，6001未更新。\n\n---\n\n以下为第076轮前的历史正文，保留原样，不代表当前结论。\n<!-- QA076 CURRENT END -->\n"
+    },
+    {
+      "path": "changes/CR-035.md",
+      "header": "---\nid: CR-035\nstatus: open\nmilestone: M001\nraised_by: quality/base\nagent_name: qa-quinn\nowner_stage: implementation\ndate: 2026-09-06\nseverity: MEDIUM\n---\n",
+      "bodyHash": "d936c72935112be0215ecb32f8ca3420042fc41e0a968a35a70de73a1325e74b",
+      "fileHash": "4daba2df2a42c41c1a23a93436ac4ad9b5c58ebeb51eb0a5530fdb7ff5a0e296",
+      "insertion": "\n<!-- QA076 CURRENT BEGIN -->\n## 第076轮独立复验进展\n\n两组标题实际gap均8px、文字相对选项偏移0，fieldset/legend保留；四组、空/3模型、双引擎双语320/390/720/900/901/1440与真实保存/重载/键盘/0/7/不限指定检查PASS。本项原几何缺陷通过；关联不可生成配置提示缺失另建CR036，不能把字段布局PASS等同整个Plans PASS。\n\n见[076报告](../verification/cr030-cr035-076-report.md)及[覆盖](../verification/cr030-cr035-076-coverage.md)。本轮整体因新[CR036](./CR-036.md)而FAIL；本项保持open等待交付处理，不表示要重做已通过的上游设计。未修改产品/设计/技术/API、生产或工作流，6001未更新。\n\n---\n\n以下为第076轮前的历史正文，保留原样，不代表当前结论。\n<!-- QA076 CURRENT END -->\n"
+    }
+  ],
+  "added": [
+    {
+      "path": "verification/report.md",
+      "content": "# 第076轮独立测试：原两项通过，新增Plans状态遗漏\n\nCR030-R074-01长用户名详情与CR035标题间距/对齐均已独立通过。关联配置测试发现[CR036](../changes/CR-036.md)：保存空模型、空篇幅后不显示批准的“当前方案已暂停生成”提示，额度0和5均在双引擎、双语、390/1440复现。\n\n本轮总体FAIL，暂不交UAT。已有明确产品/设计/API基线，建议直接交frontend-claire有限返工后独立复验，不重开需求/设计。6001未更新，真实AI发布门保留。\n\n[完整报告](./cr030-cr035-076-report.md) · [覆盖](./cr030-cr035-076-coverage.md) · [交接](../handoffs/verification.md)。旧结果不改写；原7项仅更新验证进展，CR029–036均open，新增CR036待守门器同步。"
+    },
+    {
+      "path": "verification/coverage-matrix.md",
+      "content": "# 第076轮覆盖入口\n\n以[076覆盖矩阵](./cr030-cr035-076-coverage.md)与[报告](./cr030-cr035-076-report.md)为当前结论。Users所有列表状态、长名详情/reader、真实分页/改密/权限/额度、日期恢复和关联回归通过指定检查；CR035字段布局通过不等于所有Plans状态通过。\n\n新增CR036：两类选择全空，额度0/5，真实保存/刷新后警告缺失，16局部失败归于同一缺陷。整体FAIL，UAT不重发。真实AI、真机/读屏、Firefox、公网负载及本轮真实200%均未验证；不累计旧轮或开发断言。"
+    },
+    {
+      "path": "verification/ui-design-audit.md",
+      "content": "# 第076轮UI独立审核\n\n- CR030-R074-01 PASS：双引擎双语320/390/720/721/900/901/1280/1440，合法32字符及短名详情全名/徽章/搜索保留，无页面溢出；另测长名拥有两篇资料的reader。\n- CR035 PASS：四组、空/3模型、双引擎双语6宽度，两个fieldset的标题到选项均8px，文字偏移均0；未以不同夹具的整页高度比较。\n- CR036 FAIL：Guest清空模型与篇幅，额度0或5保存并刷新后缺少批准警告。实际notice-warning为空，原型显示黄色提示。[问题与双语证据](../changes/CR-036.md)。\n- BASELINE_VARIANCE保留：英文原型语言选项Chinese与实现中文的宽度不同，实现符合本地称呼规范，不擅改语言规则、不宣称整屏像素相同。\n- 捕获校准：focus末尾部分long-detail截图未等待再次导航，实际是列表；不作详情视觉证明。另等待真实标题、字体、两帧后生成[确认截图](./evidence/cr030-cr035-076/screenshots/confirmed-detail-webkit-en-US-320.png)和[24项检查](./evidence/cr030-cr035-076/detail-capture-results.json)，原文件保留。\n\n已人工查看Plans英文实际/原型、中文额度5实际以及修正后的WebKit320长名详情；其他局部测量/键盘/Axe、执行范围与限制见[报告](./cr030-cr035-076-report.md)。当前整体FAIL；真实200%、真机和VoiceOver不是本轮通过项。"
+    },
+    {
+      "path": "verification/ai-evaluation.md",
+      "content": "# 第076轮AI边界\n\n真实供应商调用为0，凭证0，4个模型全部停用；后端外部提供方禁用且处于内部网络。未读取或使用历史密钥。14个批次和6条generation_runs均为合成夹具，不是AI生成质量样本。\n\n[22项复习回归](./evidence/cr030-cr035-076/review-regression-results.json)验证重复提示全挖空、learn/learned/learning独立填写、同源颜色稳定、不重叠、错误纠正与两类成功总结。它们只证明固定数据上的复习行为。\n\n真实模型兼容性、概率质量和自然度继续NOT VERIFIED，发布门BLOCKED。本轮另因Plans状态提示缺失CR036而总体FAIL，见[报告](./cr030-cr035-076-report.md)。历史确定性AI矩阵不计入本轮，6001不更新。"
+    },
+    {
+      "path": "verification/uat.md",
+      "content": "# 第076轮：暂不重新邀请UAT\n\n独立测试已结束，但CR036使当前结果仍为FAIL。原长名详情与Plans间距已通过。6001四容器ID/镜像/启动时间保持不变，是原UAT环境；不要求用户现在重复验收。\n\n再次UAT前需先完成CR036前端修复与独立复验。以下只是后续待执行清单，不代表已部署、用户通过或真实AI通过：\n\n- Plans清空模型与篇幅、额度0/5保存及刷新后出现准确的中英文不可生成提示；恢复有效配置、四组切换和既定边界一致，仍允许主动保存不可生成配置。\n- Plans模型/篇幅标题均8px且对齐；选择/取消、有限/不限、键盘/禁用/保存不退化。\n- Users长名和短名的列表/详情/正确资料弹窗、返回焦点/滚动；全部列表状态、三页/追加失败/终页、真实额度和重置密码。\n- 旧记录/空范围仍可改日期；错误/重试/范围恢复/单篇并存，重复提示/同源颜色/两类复习总结。\n- 首页Review、注销说明、访客原地引导和认证返回、Models文案/弹窗、Library六统计及空态。\n- 配套升级后刷新旧管理员常驻标签；真实AI需另行验证，不能用合成资料替代。\n\n[当前报告](./cr030-cr035-076-report.md)。QA没有授权自己部署6001或宣布UAT通过。"
+    },
+    {
+      "path": "handoffs/verification.md",
+      "content": "# 第076轮独立测试交接\n\n## 使用的输入与当前结果\n\n依据[076批准](../reviews/implementation-cr030-cr035-reverification-approval.md)及固定frontend 22ae24c0 / backend e8c4ee91执行，16份获批快照已验证。遵守用户先独立测试、后UAT以及开发—测试有限循环授权。\n\n结果FAIL：CR030-R074-01合法32字符详情与CR035字段布局均PASS；新[CR036](../changes/CR-036.md)为空模型+空篇幅方案保存/刷新后警告缺失。额度0与5均在Chromium/WebKit、en-US/zh-CN、390/1440复现。一个缺陷对应16个矩阵失败，未删除原始失败。\n\n## 本次产物\n\n[原始报告](../verification/cr030-cr035-076-report.md)、[覆盖矩阵](../verification/cr030-cr035-076-coverage.md)、[UI审核](../verification/ui-design-audit.md)、[AI边界](../verification/ai-evaluation.md)、[后续UAT清单](../verification/uat.md)、[执行计划](../verification/evidence/cr030-cr035-076/PLAN.md)、[交付校验](../verification/evidence/cr030-cr035-076/delivery-validation.json)。\n\n## 责任与追踪\n\nCR036关联PAGE-102、CAP-103/021、DATA-006/008/018、API-102。implementation / frontend-claire有限补齐既有不可生成提示；没有新的产品/设计/API选择，不要重新开这些阶段。保存空配置本来合法，不能用禁止保存或默认补选项代替提示。保留转换层→状态→presenter分层、fieldset/legend与当前8px间距。\n\n其余PAGE-103查询/权限/分页/改密/额度/只读内容、PAGE-007范围、PAGE-008复习、认证及Models/Library指定回归追踪详见矩阵。开发单测、lint/type/build未重跑，也不把旧轮结果计成本轮通过。\n\n## 完整性与环境\n\n报告前2303份既有源未变。只增加质量证据/报告和CR验证进展；生产、原型、依赖、开发记录和workflow保持原样。13份既有质量/CR历史正文保留。\n\n已清理精确标签核验的4个QA容器、2个网络；66账号/14批次/4会话/6手工计量/4停用模型所在临时库不可恢复，种子和证据可重建。6101释放，6001四容器不变，6010原进程保留。\n\n## 未决事项与风险\n\n- OPEN：CR029–036均open；旧7项指定回归通过不等于自关闭。控制面仍列7项，新增CR036待守门器同步。\n- BLOCKED：当前UI/功能交付因CR036未通过；不重发UAT。真实AI兼容性/概率质量NOT VERIFIED，发布门继续BLOCKED。\n- 定向Axe/键盘通过不等于真机/VoiceOver/真实200%通过；本地20次API采样不等于公网SLA。\n- 原focus末尾截图捕获时序问题已用confirmed-detail补拍，原文件保留；语言选项基线差异单列，不扩大为语言规则修改。\n- 完整混合版本矩阵未本轮重测；旧管理员常驻标签配套升级后需刷新。\n\n## 下一步建议\n\nPROPOSED：守门器依既有开发—测试授权有限返回frontend-claire处理CR036，再由qa-quinn独立复验；现在不要交UAT。\n\n按agt-verify-milestone，本回合只提交质量专业交接后停止。workflow仍为verification / quality/base / qa-quinn / active / TRANSITION-M001-076；本交接不能切换阶段，不自行激活开发、不更新6001、不宣布完成。"
+    },
+    {
+      "path": "changes/CR-029.md",
+      "content": "## 第076轮独立复验进展\n\n首页Review、日期44px等高等宽、注销准确文案/中性色及日期恢复指定检查PASS。\n\n见[076报告](../verification/cr030-cr035-076-report.md)及[覆盖](../verification/cr030-cr035-076-coverage.md)。本轮整体因新[CR036](./CR-036.md)而FAIL；本项保持open等待交付处理，不表示要重做已通过的上游设计。未修改产品/设计/技术/API、生产或工作流，6001未更新。"
+    },
+    {
+      "path": "changes/CR-030.md",
+      "content": "## 第076轮独立复验进展\n\nCR030-R074-01已PASS：32字符/32个w/短名，双引擎双语8宽度完整姓名、徽章和无页面溢出；列表所有状态、45行分页/精确优先/作用域游标/40行返回、正确资料modal、改密/权限回归PASS。增加长名账号两份真实批次reader验证；末尾截图捕获时序问题已补拍confirmed-detail，不使用误拍列表作为详情证据。\n\n见[076报告](../verification/cr030-cr035-076-report.md)及[覆盖](../verification/cr030-cr035-076-coverage.md)。本轮整体因新[CR036](./CR-036.md)而FAIL；本项保持open等待交付处理，不表示要重做已通过的上游设计。未修改产品/设计/技术/API、生产或工作流，6001未更新。"
+    },
+    {
+      "path": "changes/CR-031.md",
+      "content": "## 第076轮独立复验进展\n\n正常/长名用户的正确批次只读reader、长短文、500/404/准确重试、深链/旧URL/前进后退、焦点/滚动/键盘与作用域Axe指定场景PASS。本轮未实际200%，不沿用旧轮数量。\n\n见[076报告](../verification/cr030-cr035-076-report.md)及[覆盖](../verification/cr030-cr035-076-coverage.md)。本轮整体因新[CR036](./CR-036.md)而FAIL；本项保持open等待交付处理，不表示要重做已通过的上游设计。未修改产品/设计/技术/API、生产或工作流，6001未更新。"
+    },
+    {
+      "path": "changes/CR-032.md",
+      "content": "## 第076轮独立复验进展\n\n五类访客原地引导、完整文案/品牌/样式、SSR和浏览器私有数据隔离、认证返回/错误/账号语言优先/退出、无自动复习创建指定检查PASS。\n\n见[076报告](../verification/cr030-cr035-076-report.md)及[覆盖](../verification/cr030-cr035-076-coverage.md)。本轮整体因新[CR036](./CR-036.md)而FAIL；本项保持open等待交付处理，不表示要重做已通过的上游设计。未修改产品/设计/技术/API、生产或工作流，6001未更新。"
+    },
+    {
+      "path": "changes/CR-033.md",
+      "content": "## 第076轮独立复验进展\n\n真实GET/PUT额度有限/零/无限/admin null、窗口/active/退款/降额归零、换组和丢响应1PUT+1GET对账PASS。6条计量是手工数据，无真实AI调用；完整混合版本矩阵未本轮重测，配套升级需刷新旧管理员页。\n\n见[076报告](../verification/cr030-cr035-076-report.md)及[覆盖](../verification/cr030-cr035-076-coverage.md)。本轮整体因新[CR036](./CR-036.md)而FAIL；本项保持open等待交付处理，不表示要重做已通过的上游设计。未修改产品/设计/技术/API、生产或工作流，6001未更新。"
+    },
+    {
+      "path": "changes/CR-034.md",
+      "content": "## 第076轮独立复验进展\n\n旧库/空库/全不参与仍保留日期；上海单日3批6词、空有切换/迟到/失败重试/422、真实创建/范围复用/单篇并存/刷新顺序、时区默认范围及指定1080断点PASS。未重跑本轮真实200%。\n\n见[076报告](../verification/cr030-cr035-076-report.md)及[覆盖](../verification/cr030-cr035-076-coverage.md)。本轮整体因新[CR036](./CR-036.md)而FAIL；本项保持open等待交付处理，不表示要重做已通过的上游设计。未修改产品/设计/技术/API、生产或工作流，6001未更新。"
+    },
+    {
+      "path": "changes/CR-035.md",
+      "content": "## 第076轮独立复验进展\n\n两组标题实际gap均8px、文字相对选项偏移0，fieldset/legend保留；四组、空/3模型、双引擎双语320/390/720/900/901/1440与真实保存/重载/键盘/0/7/不限指定检查PASS。本项原几何缺陷通过；关联不可生成配置提示缺失另建CR036，不能把字段布局PASS等同整个Plans PASS。\n\n见[076报告](../verification/cr030-cr035-076-report.md)及[覆盖](../verification/cr030-cr035-076-coverage.md)。本轮整体因新[CR036](./CR-036.md)而FAIL；本项保持open等待交付处理，不表示要重做已通过的上游设计。未修改产品/设计/技术/API、生产或工作流，6001未更新。"
+    }
+  ],
+  "newDocs": [
+    "verification/cr030-cr035-076-report.md",
+    "verification/cr030-cr035-076-coverage.md",
+    "changes/CR-036.md"
+  ]
+}

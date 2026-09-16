@@ -1,0 +1,155 @@
+{
+  "date": "2026-09-07T06:27:49.473Z",
+  "agent": "qa-quinn",
+  "phase": "after_initial_30000ms_client_timeout_before_authorized_recovery",
+  "result": "PASS_WITH_EXPECTED_CONFIGURATION_DELTA",
+  "counts": {
+    "accounts": 589,
+    "sessions": 598,
+    "batches": 17,
+    "models": 2,
+    "credentials": 1,
+    "runs": 79,
+    "active_runs": 0,
+    "quality_accounts": 0,
+    "quality_batches": 0,
+    "migrations": 6,
+    "latest_migration": "0006_hint_occurrences_enforce.sql"
+  },
+  "credential": {
+    "configured": true,
+    "updated_at": "2026-09-07T06:25:06.765654+00:00"
+  },
+  "models": [
+    {
+      "id": "01a06515-4ab4-7bfd-b2e7-92372215f942",
+      "display_name": "UAT deterministic model",
+      "provider_model_id": "provider/integration",
+      "enabled": true,
+      "created_at": "2026-09-03T02:24:49.332725+00:00",
+      "updated_at": "2026-09-04T07:26:03.726311+00:00",
+      "assigned_groups": [
+        "plus",
+        "pro",
+        "registered",
+        "visitor"
+      ]
+    },
+    {
+      "id": "01a07a8a-b8d6-739a-ac65-cb37120e3ac4",
+      "display_name": "DeepSeek V4 Flash 0731",
+      "provider_model_id": "deepseek/deepseek-v4-flash-0731",
+      "enabled": false,
+      "created_at": "2026-09-07T06:25:06.774145+00:00",
+      "updated_at": "2026-09-07T06:25:06.774145+00:00",
+      "assigned_groups": []
+    }
+  ],
+  "groups": [
+    {
+      "code": "plus",
+      "rolling_quota_limit": null,
+      "max_entries_per_run": 5,
+      "lengths": [
+        "short",
+        "medium",
+        "long",
+        "xlong"
+      ],
+      "model_ids": [
+        "01a06515-4ab4-7bfd-b2e7-92372215f942"
+      ]
+    },
+    {
+      "code": "pro",
+      "rolling_quota_limit": null,
+      "max_entries_per_run": 5,
+      "lengths": [
+        "short",
+        "medium",
+        "long",
+        "xlong"
+      ],
+      "model_ids": [
+        "01a06515-4ab4-7bfd-b2e7-92372215f942"
+      ]
+    },
+    {
+      "code": "registered",
+      "rolling_quota_limit": null,
+      "max_entries_per_run": 5,
+      "lengths": [
+        "short",
+        "medium",
+        "long",
+        "xlong"
+      ],
+      "model_ids": [
+        "01a06515-4ab4-7bfd-b2e7-92372215f942"
+      ]
+    },
+    {
+      "code": "visitor",
+      "rolling_quota_limit": 5,
+      "max_entries_per_run": 5,
+      "lengths": [
+        "short"
+      ],
+      "model_ids": [
+        "01a06515-4ab4-7bfd-b2e7-92372215f942"
+      ]
+    }
+  ],
+  "containers": [
+    {
+      "name": "/wordweave_uat-frontend-1",
+      "id": "c29718b3bea43ab23403ae7cef828968f2c934f6b04128d1f4a61cfb13d82c06",
+      "image": "sha256:fd251e7439aad8e058656e2751ed84f40715fec570a872da53542688a6dd6904",
+      "status": "running",
+      "health": "healthy"
+    },
+    {
+      "name": "/wordweave_uat-backend-1",
+      "id": "fd3e61281c4cc1ad330820dbaea45e9299d4ca8cd1096b52bd70a50d8bc5c8ca",
+      "image": "sha256:642ed57ad0ed6c8a13e4bba1101d8b50188e8ea636791583a6ffb5eaa6917aac",
+      "status": "running",
+      "health": "healthy",
+      "providerBase": "https://openrouter.ai/api/v1"
+    },
+    {
+      "name": "/wordweave_uat-nginx-1",
+      "id": "b789bde4e7825b849640cbf63d35b50ae41c1b77cb6b7ece73b3e26e27eabcb1",
+      "image": "sha256:5f0efd7fead5e8a290f07e5c025e9204052efb646758e1c6883de0e23a6e085c",
+      "status": "running",
+      "health": "healthy"
+    },
+    {
+      "name": "/wordweave_uat-postgres-1",
+      "id": "37a6d2fa58c578b1c6b4dbe10028b5ddf0c696fe44fc849a129293a85bbaf839",
+      "image": "sha256:b85269e8c6aa961524542eb4dcca44c4aa1deba2cf507e9e28d5ba8f971aeab9",
+      "status": "running",
+      "health": "healthy"
+    }
+  ],
+  "preservation": {
+    "unchangedPublicDigests": {
+      "accounts": true,
+      "batches": true,
+      "targets": true,
+      "groups": true,
+      "groupModels": true,
+      "groupLengths": true,
+      "runs": true,
+      "migrations": true
+    },
+    "modelCountDelta": 1,
+    "credentialCountDelta": 0,
+    "existingAccountPasswordMutationCalls": 0,
+    "existingLearningDataMutationCalls": 0,
+    "qualityGenerationRequests": 0,
+    "noActiveGeneration": true,
+    "migrationCountAndLatestUnchanged": true
+  },
+  "expectedDelta": "OpenRouter credential replaced through product API and one disabled model record created. No group assignment, mock-model status, account, learning batch, or generation run changed.",
+  "secretsEmitted": false
+}

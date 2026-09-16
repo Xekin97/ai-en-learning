@@ -1,0 +1,72 @@
+{
+  "checkedAt": "2026-09-09T08:27:04.506Z",
+  "runs": [
+    {
+      "id": "01a08544-b5ea-7826-b266-0d592fc38aff",
+      "model_id": "01a07fe3-f046-7017-97f8-c15539050441",
+      "meaning_language": "zh",
+      "scenario": "story",
+      "length_code": "short",
+      "call_status": "valid",
+      "failure_code": null,
+      "quota_charged": true,
+      "started_at": "2026-09-09T08:24:27.88254+00:00",
+      "completed_at": "2026-09-09T08:24:46.664194+00:00",
+      "entries": [
+        "young",
+        "grape",
+        "weekend",
+        "danger",
+        "enforce"
+      ],
+      "draft_count": 1
+    },
+    {
+      "id": "01a08545-17ee-76ba-a812-9e7086dabb82",
+      "model_id": "01a07fe3-f046-7017-97f8-c15539050441",
+      "meaning_language": "zh",
+      "scenario": "discussion",
+      "length_code": "short",
+      "call_status": "validation_failed",
+      "failure_code": "content_validation_failed",
+      "quota_charged": false,
+      "started_at": "2026-09-09T08:24:52.974473+00:00",
+      "completed_at": "2026-09-09T08:24:58.592965+00:00",
+      "entries": [
+        "young",
+        "grape",
+        "weekend",
+        "danger",
+        "enforce"
+      ],
+      "draft_count": 0
+    }
+  ],
+  "error": {
+    "run_id": "01a08545-17ee-76ba-a812-9e7086dabb82",
+    "reason": "mapping_relation_unknown",
+    "target_index": 0,
+    "target": "young"
+  },
+  "capture": {
+    "samplePresent": false,
+    "observedDirectoryEntries": [
+      "ticket.json"
+    ],
+    "ticketScenario": "story",
+    "failedScenario": "discussion",
+    "wordsMatch": true,
+    "scopeMatch": false,
+    "expiresAt": "2026-09-09T09:10:51Z"
+  },
+  "runtime": {
+    "image": "sha256:7c1d2b0eb19ba4328292fabad8698f7738f4a62fe277e2f6079e4d133c0f1963",
+    "restartCount": 0,
+    "health": "healthy"
+  },
+  "conclusion": "Original word list matched, but successful story is not sampled and failed discussion is excluded; unknown form and model-versus-lexicon attribution remain unavailable",
+  "userDecision": "No capture-scope expansion; reproduce with original word list",
+  "agentModelCalls": 0,
+  "databaseWrites": 0,
+  "codeChanges": 0
+}

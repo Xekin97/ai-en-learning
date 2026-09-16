@@ -1,0 +1,22 @@
+{
+  "date": "2026-09-08T04:02:36.249Z",
+  "agent": "qa-quinn",
+  "counts": {
+    "PASS": 0,
+    "FAIL": 0,
+    "ERROR": 1
+  },
+  "checks": [
+    {
+      "id": "QA098/harness-completion",
+      "status": "ERROR",
+      "error": "Error: Command failed: docker exec -i ww-qa-cr039-098-db psql -U postgres -d qa098 -XAt -v ON_ERROR_STOP=1\nERROR:  column \"openrouter_model_id\" does not exist\nLINE 1: SELECT id FROM wordweave.ai_models WHERE openrouter_model_id...\n                                                 ^\n",
+      "stack": "Error: Command failed: docker exec -i ww-qa-cr039-098-db psql -U postgres -d qa098 -XAt -v ON_ERROR_STOP=1\nERROR:  column \"openrouter_model_id\" does not exist\nLINE 1: SELECT id FROM wordweave.ai_models WHERE openrouter_model_id...\n                                                 ^\n\n    at genericNodeError (node:internal/errors:983:15)\n    at wrappedFn (node:internal/errors:537:14)\n    at checkExecSyncError (node:child_process:916:11)\n    at execFileSync (node:child_process:952:15)\n    at docker (file:///Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/.planning/milestones/M001/verification/evidence/cr039-098/setup.mjs:12:35)\n    at sql (file:///Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/.planning/milestones/M001/verification/evidence/cr039-098/setup.mjs:13:21)\n    at file:///Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/.planning/milestones/M001/verification/evidence/cr039-098/suite.mjs:48:17"
+    }
+  ],
+  "traces": [],
+  "observations": [],
+  "real_model_calls": 0,
+  "expected_injected_http_500": 1,
+  "scope": "Independent HTTP candidate097; same-version restart; synthetic DB row locks and timestamp fixtures only"
+}

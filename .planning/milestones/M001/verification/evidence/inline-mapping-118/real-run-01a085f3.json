@@ -1,0 +1,125 @@
+{
+  "schema_version": 1,
+  "milestone": "M001",
+  "owner": "qa-quinn",
+  "stage": "verification",
+  "runtime_gate": "TRANSITION-M001-118",
+  "observed_at": "2026-09-09T11:36:11Z",
+  "run": {
+    "run_id": "01a085f3-4938-737e-a4f8-0effffdb5438",
+    "model": "MiniMax",
+    "provider_model": "minimax/minimax-m3",
+    "meaning_language": "zh",
+    "scenario": "discussion",
+    "length": "short",
+    "minimum_words": 50,
+    "status": "validation_failed",
+    "disposition": "pending",
+    "failure_code": "content_validation_failed",
+    "quota_charged": false,
+    "counts_toward_cumulative": false,
+    "started_at": "2026-09-09T11:35:08.856268+00:00",
+    "completed_at": "2026-09-09T11:35:16.868416+00:00",
+    "elapsed_seconds": 8.012148,
+    "entries": [
+      "melancholy",
+      "handicap",
+      "foray",
+      "casino",
+      "upswing"
+    ],
+    "draft_count": 0
+  },
+  "runtime": {
+    "id": "899657c23b512a1057f7235f7d13a89f2c6744cf8d42e0d5ed45182343074ec5",
+    "name": "/wordweave_uat-backend-1",
+    "image": "sha256:90f23b57b1706d2f102a4ef7db5efe03bc95012033b1973ccf221a9673ef794c",
+    "status": "running",
+    "health": "healthy",
+    "started": "2026-09-09T11:04:18.930924835Z",
+    "networks": [
+      "wordweave_uat_data",
+      "wordweave_uat_edge"
+    ],
+    "mounts": [],
+    "readonly": true
+  },
+  "logs": [
+    {
+      "time": "2026-09-09T11:35:16.866226834Z",
+      "level": "WARN",
+      "msg": "ai_candidate_validation_failed",
+      "run_id": "01a085f3-4938-737e-a4f8-0effffdb5438",
+      "model_id": "01a07fe3-5c48-736a-a86b-1f4dabd7cb87",
+      "prompt_version": "m001-v5",
+      "validator_version": "m001-v5-wn31-r1",
+      "category": "content_invalid",
+      "reason": "annotation_source_unknown",
+      "target_index": -1
+    }
+  ],
+  "conclusions": {
+    "confirmed": [
+      "Actual m001-v5 / m001-v5-wn31-r1 backend is running, same118 image with no capture mount.",
+      "The first failure is groupAnnotations on the passage: a parsed annotation.Source is not an exact member of this request's entries.",
+      "This happens before target-specific hint and lexical relation validation, so target_index=-1 does not identify the first input.",
+      "Run completed as content_validation_failed after8.012148s, quota_charged=false, counts_toward_cumulative=false, draft_count=0."
+    ],
+    "not_proven": [
+      "Exact offending source label or surface; no raw candidate was retained.",
+      "Whether the cause is case/spelling, annotating an unselected word, ordinary-parenthetical interpretation, or a parser defect.",
+      "This does not prove all other passage/hint/meaning checks would pass; not a timeout or old-array diagnosis."
+    ],
+    "limits": "Only log reason and ledger were read; no attempt to reconstruct a deleted candidate or equate a fabricated example with model output."
+  },
+  "source_hashes_verified": 16,
+  "code_references": [
+    "backend/internal/ai/validator.go:26",
+    "backend/internal/ai/annotations.go:120",
+    "backend/internal/httpapi/generation_handlers.go:136",
+    "backend/internal/ai/openrouter.go:584"
+  ],
+  "real_model_calls": 0,
+  "database_writes": 0,
+  "source_changes": 0,
+  "runtime_changes": 0,
+  "candidate_capture_enabled": false,
+  "generation_token_used_or_recorded": false,
+  "proposal": {
+    "status": "PROPOSED_NOT_AUTHORIZED",
+    "scope": "One next matching annotation_source_unknown failure for the testing identity from this run and MiniMax model, private temporary offending source label plus adjacent surface only; no full passage/hint, credentials or public logs; at most one hour, delete after reading/expiry; scoped backend diagnostic deployment needed.",
+    "limits": "No validator relaxation, permanent content logging, paid replay, probe or general deployment authorization."
+  },
+  "previousCurrentDocuments": [
+    {
+      "path": ".planning/milestones/M001/verification/stream-failure-diagnosis.md",
+      "text": "---\nmilestone: M001\nstage: verification\nrole: quality/base\nagent_name: qa-quinn\ndate: 2026-09-09\nstatus: deployed_awaiting_user_uat\n---\n\n# UAT 流式生成末尾失败：当前诊断\n\n<a id=\"inline-source-annotation\"></a>\n\n## 当前确认：原词就地标注，后端提取（USER-INLINE-MAPPING-115）\n\nCONFIRMED，2026-09-09：用户提出“那就这样改吧，调整提示词限制，无论是短文还是 hint，生成时都应显示为 xxxxx grapes(grape) xxx. 其中 grape 是原词，grapes 是符合句子或者短语语义的词，后端再进行提取”；随后对“标注仅供后端解析，流式预览和最终展示均不显示括号标注”的澄清回复“是”。\n\n| 已确认范围 | 对实现和验收的约束 |\n| --- | --- |\n| 正文与提示就地标注 | 模型输出如 `She bought grapes(grape).`、`fresh grapes(grape)`；后端取得实际形式 `grapes` 与输入原词 `grape` 的对应关系，不再要求模型分别维护 passage_forms / hint_forms 数组 |\n| 标注不面向用户 | 流式预览与最终正文/提示仅显示 `She bought grapes.`、`fresh grapes`；不能先显示括号再在完成时隐藏 |\n| 沿用独立校验 | 标注仍是不可信候选关系，不替代本地词形关系验证；全部目标覆盖、全部合法重复位置扫描、跨目标冲突检查不放宽 |\n| 复习与释义不变 | 阶段一仍答原始词条、阶段二仍答实际形式；位置必须对应清理后的正文/提示。entry_meaning只解释输入原词，与文章、场景、实际词形及派生无关 |\n| 替换而非兼容 | 不实施下文“剔除多报数组”假设，也不增加旧数组协议双读、自动重试、备用模型或第二次模型调用；沿USER-COMPAT-001 |\n\n## 当前落实与定向复核（116–117）\n\n已由backend-alex完成[技术修订](../technical/backend-cr039.md)，backend-ethan完成[开发交付](../implementation/backend-validation.md)，117接收后qa-quinn完成[消费者侧复核](./evidence/inline-mapping-117/qa.json)。prompt m001-v5 / validator m001-v5-wn31-r1；标注与普通括注区分、跨块缓冲、clean rune位置、版本/schema/探针一致切换均已实施。公开API、SQL、前端和复习格式不变；未增加旧数组兼容。\n\nQA三语言的HTTP生成→保存→详情→两阶段复习通过；正文与hint中未逐次标注的已知重复词形仍全量挖空，同源空位保持匿名分组。两项错误hint标注均只有失败终态、退款且无草稿。结果仅覆盖合成提供方与隔离数据库，不能推出真实模型的语义质量或失败率。开发的逐块/边界/并发等证据单独接收，不与QA数量累计；未重跑全站UI。\n\n开发另在慢下游测试中发现流式尾段竞争：541/546字符，末5字符被完成事件越过；改为同步交付delta后10轮及race通过。此为独立确定性缺陷，不冒充下文真实content_validation_failed的根因。\n\n追踪：CR-039，CAP-008/009/018/019、API-005–008、DATA-010–015；CR-040原词释义保护不变。无新实质需求选择或返工冲突；普通交接已沿USER-HANDOFF-CONTINUOUS-001完成。\n\n用户“允许”批准UAT-INLINE-117-DEPLOY，118于11:04:25Z完成[本地后端更新](./evidence/inline-mapping-118/deployment.json)：6001当前运行普通v5镜像90f23b57，4路由/权限检查、配置与15表摘要保留PASS，前端/nginx/PG容器未替换，Nginx仅reload。首次检查脚本误用了不存在的/me路由并触发恢复；正确/account路由复验通过，[原始方法失败](./evidence/inline-mapping-118/attempt-1.json)保留，不是产品返工。\n\n代理真实模型调用0，无直接数据修改/迁移/清库；正常访问可产生访客等生命周期数据，不能声称全库零写入。114样本已分析删除，采集挂载和环境已移除，不续期。既有功能验收保留，当前真实质量、CR039/040与发布仍未验收；现交用户测试造文质量。\n\n当前入口复用[报告](./report.md)、[覆盖](./coverage-matrix.md)、[AI评估](./ai-evaluation.md)、[UAT](./uat.md)和[交接](../handoffs/verification.md)。115时六份原文保留在[117证据](./evidence/inline-mapping-117/qa.json)的previousCurrentDocuments；更早原件在[修订前快照](./archive/pre-inline-mapping-115.json)。下文24项旧假设检查仍未采用，不算新协议通过证据。\n\n## 已完成诊断：真实失败的离线归因\n\n用户提供run 01a0855e-2c7e-7059-bd88-1460b7ea4d1f，2026-09-09T08:52:29Z已命中114临时采集。GLM / zh / discussion / short，输入minus、deep、land、seed、read、message；原正文62词，下限50。耗时约13.06秒，content_validation_failed、quota_charged=false、累计计数false、草稿0。[脱敏证据与原件回放结果](./evidence/failure-capture/real-run-01a0855e.json)。\n\n| 对象 | 模型声明 | 对应提示中实际情况 | 结果 |\n| --- | --- | --- | --- |\n| seed的hint_forms | seed、seeds | seed两处，seeds零处 | mapping_surface_absent，target_index=3 |\n| read的hint_forms | read、reading | read一处，reading零处 | 前项修正后mapping_surface_absent，target_index=4 |\n\n这两个额外词形都出现在正文，而且本地词法验证器均判定关系known；问题是被声明到没有使用它们的提示里，不是派生未收录或超时。完整候选已解码，当前适配器按字段直接解码，没有将正文/提示数组互换的转换层。能确认上游候选违反分段映射契约，但不推测模型内部是否实际复制了正文数组。\n\n### 可重复的因果对照\n\n使用同版本词法资产/校验器、网络禁用的隔离Go运行器；只读原私有文件，摘要匹配；没有新增模型调用/DB访问或生产源码修改。\n\n1. 原候选原样回放：seed的mapping_surface_absent，与运行日志及采集一致。\n2. 仅在内存把seed.hint_forms改为单项seed：转为read的mapping_surface_absent。\n3. 再仅把read.hint_forms改为单项read：整批确定性校验通过，正文/标签/释义/提示内容完全未改。seed提示2处/正文2处，read提示1处/正文2处，全部位置仍被扫描。\n\n因此本条失败根因为模型多报提示映射，服务端按既有“任何错误声明整批失败”规则拦截；不是已证实的校验实现误判。其他旧run的mapping_relation_unknown仍缺原候选，不能拿本条归因替代。确定性通过不等于整篇语义质量通过。\n\n<a id=\"mapping-pruning-boundary\"></a>\n\n### 历史检查：有限剔除边界（未采用，已由就地标注方案取代）\n\n以下为当时的假设及检查记录，全部建议仅代表历史，不再是待用户决定或待实现的当前方案；原始结果不改。\n\n用户本轮“下一步检查”只授权检查，不代表批准放宽规则。QA在不挂载真实样本、无网络、生产源码只读的隔离环境中，以合成数据验证假设；[24项原始输出与源摘要](./evidence/failure-capture/policy-boundary-check.json)全部符合预期。测试辅助逻辑仅在QA overlay内，不是候选生产实现或新正式验收标准。\n\n| 情况 | 建议处理与检查结果 |\n| --- | --- |\n| 关系已验证、但在其对应正文/提示中未出现的多报词形；该段还保留有效声明 | 仅从映射剔除，不改文字；正文/提示各自处理，合成正例通过 |\n| 已出现的实际词形、大小写变体、重复或模型漏列但服务器可识别的形式 | 全量独立扫描保留，Unicode位置及当前快照往返通过 |\n| 未知或无关词形、错误拼写 | 不因“没出现”而静默过滤；无论出现与否都保留拒绝边界 |\n| 原始数组缺失/空/null/超限/非法字符串，或者剔除后没有任何有效声明 | 继续失败；即使扫描能找到别的原词，也暂不自动补造空数组 |\n| 正文或提示缺目标、只在别的提示出现、仅在别词内部命中 | 继续失败，不跨段借用覆盖 |\n| 不同目标争用同一正文位置、取消、目标数量或身份不匹配 | 保留原拒绝/取消边界，不靠数组过滤绕过 |\n\n关键反例：只按“字符串不出现”删除，会把seed的无关banana声明一起藏掉，得到本不该通过的结果。因此建议先验证关系，只处理“关系known但对应段不存在”的冗余项；不是把所有错误映射当噪声。\n\n5个正例保留正文/标签/原词释义/提示字符串，seed正文3处/提示2处、read正文2处/提示1处均被扫描；其中4个在现有规则失败、在假设规则通过。其他17个表内反例拒绝，另有取消和不安全过滤反证，共24项。只证明列出的边界与当前快照形状；没有运行修改后的真实HTTP、保存/复习E2E、并发发布或性能验收。\n\n### 历史假设的影响检查与当时待确认差异（不再待批准）\n\n- 现有代码已独立计算最终occurrences；保存和复习读这些可信位置，不直接读取passage_forms/hint_forms。从当前依赖看，此有限改动不需要公开API、数据库或UI形状改变；本轮没有改动它们。\n- 原词释义仍只解释输入词条；正文内容、目标顺序自由、自然词形、全部已知重复位置、同词分组及两阶段作答规则不变。词法资料未覆盖的unknown不会被此方案放行，也不能保证解决旧young失败或整体失败率。\n- 如果之后采用此规则而使一批结果有效，会按正常成功计次，不再退还该次产品额度；本轮没有写账本或新增模型费用。\n- 与当前[CR039 §3.1/§5](../technical/backend-cr039.md)、[AI方案§5.3](../technical/ai-integration.md)及C39-09的“错误声明整批失败”存在明确差异，必须由用户确认。推荐仅返回backend-alex作受影响技术修订，随后开发与定向测试；不重开无关产品/UI，不引入旧版兼容、静默重试或在线二次校验。\n- 当前源码的提示词已经要求仅列对应段实际形式，不能把问题归为完全漏写这条要求。hint_phrase及两类数组的schema属性没有各自语义描述/例子；可评估补强分段语义和自然搭配示例，但未经真实质量测试不能承诺降低失败率。\n- 提示资源偏词典式解释，不是产品所需的英文提示短语，是另一项质量观察；建议按既有短语需求改善生成约束，不改entry_meaning，不用“含冒号/means就拒绝”等未经确认的语义正则充当校验。\n\n### 暂存清理\n\n08:56:23Z已删除私有tmpfs内failure.json，目录只剩ticket.json；原文未存入仓库或普通日志，无法从仓库恢复。保留摘要、有限字段缺陷与回放输出；本次单份名额已消费，不要求继续复现、不续期或重启后端。原114期限仍至09:42:05.964Z。两项诊断方法错误（临时执行目录noexec、最初日志筛选按文本而非JSON）已纠正，未改变产品或污染实际失败结论。\n\n## 历史已确认事实（完整候选缺失的旧run）\n\n用户提供的 run 01a08514-75a4-733f-8350-a24cca79dafd 使用 z-ai/glm-5.3-flash，输入 young / grape / weekend / danger / enforce，zh / story / short。服务端12.45秒后记录 mapping_surface_absent、target_index=1（grape），额度退还，无草稿。\n\n用户贴出的正文包含全部目标，enforce 使用 enforced；这不是缺词或超时的证据。完整候选的提示、释义、候选数组未保留，不能把推测的 grapes 声明写成事实，也不能判断整个批次合格。\n\n浏览器仅接收 passage.delta；完整校验后才返回 generation.validated。失败只返回 generation.failed，因此浏览器缺少提示短语不是用户漏贴，也不代表上游没有生成。\n\n## 用户确认与范围\n\n### 历史批准：测试身份与模型绑定（113，114样本已消费并删除）\n\n2026-09-09用户“允许”明确批准：修改临时诊断，仅绑定当前测试身份和GLM模型；不再以词组、场景、释义语言或篇幅过滤；最多下一份校验失败，启用起不超过一小时，读取后/到期删除，不记录密钥、登录令牌或其他用户内容。先用模拟提供方验证不同配置、其他身份、成功请求及限量清理，再短暂替换6001后端。前端、数据库、模型分配、业务校验不变；代理真实模型调用0。此批准取代前次“不用了”时未采用的扩展建议，原112证据仍属历史。\n\nCAP-008/009、API-005及DATA-010/011的无效结果不入正式资源规则不变。返工目标是采集过滤，不是直接放宽词法规则；现有两个失败类型的归因仍待实际候选。普通交接沿USER-HANDOFF-CONTINUOUS-001，无需重复审批；实际执行已由本次用户单独批准。\n\n### 历史授权（110–112，具体过滤由113取代）\n\n2026-09-09：在解释需要在后端失败位置暂存候选后，用户回复“继续”。采用紧邻建议：仅本地UAT、受控失败暂存、排除凭据/账号信息、排查后删除。不包含更改校验、提示词、业务规则、API、数据库、自动重试或代理收费调用。\n\n沿 [CR-039 §7](../technical/backend-cr039.md#7-错误和可观测性)已有临时捕获授权例外实施，不改普通日志禁令。仅下一份匹配同模型与上述完整输入配置的校验失败；一小时捕获/保留上限，最多一份；普通构建不带捕获实现；私有tmpfs目录0700、文件0600，过期或结束删除。期限/容量为本次诊断的保守执行上限，不是新产品保留规则。\n\n## 定向验收与交接\n\nCAP-008/009、API-005；DATA-010/011不得新增无效草稿或正式资源。\n\n- 默认构建禁用；显式调试构建、loopback origin、私有配置和有效期限共同启用。\n- 不匹配身份/模型、成功、取消、供应商失败不采集；并发最多一份；过期不采集并删除暂存。\n- 完整候选包含 passage/tags/targets及两类forms，以及允许的生成配置，可供离线重放；无请求头、generation_token、账号或凭据。\n- 磁盘失败不改变原校验结论、退款和失败事件；不向日志/前端增加内容。\n- 用合成候选及隔离HTTP/数据库验证，不调用真实模型，不重跑无关全站覆盖。\n\n110交 backend-ethan 做此有限诊断实现，普通交接沿 USER-HANDOFF-CONTINUOUS-001；111检查完成时实际部署仍待明确授权。112用户回复“行吧，你试试看”后，按已说明的短暂后端替换范围单独授权执行，不复用已耗尽108部署或模型预算。\n\n## 历史结果（110–112，原始失败证据保持）\n\n110开发交付和111接收完成，定向QA复核PASS。112已将6001后端替换为已审查诊断镜像并通过tmpfs/权限/配置保留及3路由检查；2026-09-09T08:13:10Z启用、09:10:51Z截止，最多一份匹配失败，参见[当前报告](./report.md)和[实际证据](./evidence/failure-capture/deployment-112.json)。真实模型调用0，待用户复现；QA合成metadata不等于丢失的真实候选，也不代表问题已修复。\n\n### 用户再次复现：诊断范围未命中\n\n2026-09-09T08:22:58Z只读核查：[证据](./evidence/failure-capture/scope-miss-20260909.json)。run 01a08540-c3d7-772a-8586-e2b78cec9555使用同一GLM模型、zh/story/short，但输入变为weekend/test/switch/learn/grape/number。约8.68秒后mapping_surface_absent，target_index=0对应weekend；quota_charged=false，草稿0。\n\n后端诊断镜像健康且未重启，票据未过期；私有目录只有ticket.json。failure_capture_uat.go的Record使用slices.Equal精确比较输入列表，因此本次在保存前被过滤，而不是读到样本后解析失败。首次docker cp读取返回非零；随后只读挂载列目录、运行配置及账本/日志核对确认文件不存在。没有候选可以离线重放或删除；没有发起新模型调用。\n\nCONFIRMED：本次诊断没有覆盖用户改换词组的复现，捕获条件过窄是当前排查阻碍；原映射故障仍未确定具体surface及正文/提示位置，不能归责模型或匹配器。112部署检查PASS不代表本次真实样本已捕获。\n\n此前建议取消固定词组限制；用户随后明确“不用了，我用上一次的词组，又复现了”，因此本轮不采纳扩展建议，不改过滤条件、票据或期限，不再把该建议记为待批准。\n\n### 原五词再次复现：成功故事与失败讨论\n\n2026-09-09T08:27:04Z只读核查：[原件](./evidence/failure-capture/scenario-miss-20260909.json)。两次输入均为原五词、同模型、zh/short：\n\n- run 01a08544-b5ea-7826-b266-0d592fc38aff，story，08:24:46Z完成，valid，有一份草稿；成功结果不属于失败采集范围，未读取其学习内容。\n- run 01a08545-17ee-76ba-a812-9e7086dabb82，discussion，08:24:58Z失败，mapping_relation_unknown、target_index=0（young），约5.62秒；额度退还、草稿0。\n\n本轮词组已匹配，但failure_capture_uat.go还精确比较Scenario，票据仅story，discussion在记录前被过滤。私有目录仍仅ticket.json，后端健康且未重启；没有完整候选、没有可删除的失败样本，也没有代理模型调用。\n\n可以确定失败发生在已解码候选的词法关系校验，而非超时或流传输中断。validator.go先判断候选形式是否属于young的已知关系集，不属于且词法分析为空时返回mapping_relation_unknown；因此不能把本次说成mapping_surface_absent，也不能直接断言英语派生错误。仍缺实际声明形式及其正文/提示归属，模型错报、词法覆盖不足或实现问题的进一步归因尚未完成。\n\n诊断设置对场景也过度绑定是第二个真实覆盖缺口。当时遵循用户不扩展的选择，仅报告事实，未改票据或部署；随后113用户明确“允许”新范围，已由114完成部署。上述原件与当时结论保留，不再作为当前采集条件。\n",
+      "sha256": "efd14b9fd6a912ea2a3feee5f56fc865a57332bcb0ed3faa826ea79df1b28bfa"
+    },
+    {
+      "path": ".planning/milestones/M001/verification/report.md",
+      "text": "---\nmilestone: M001\nstage: verification\nrole: quality/base\nagent_name: qa-quinn\nstatus: deployed_awaiting_user_uat\ndate: 2026-09-09\nverification_round: TRANSITION-M001-118\nverdict: scoped_consumer_verification_pass\nrelease_readiness: blocked\n---\n\n# 就地原词标注：已部署本地UAT，待用户造文测试\n\n[用户确认](./stream-failure-diagnosis.md#inline-source-annotation)已落实：正文/hint使用实际形式(原词)，后端提取并在流式发送前去掉标注；替换旧数组，不做兼容。prompt m001-v5 / validator m001-v5-wn31-r1。公开API、DB、前端及原词释义规则不变。\n\n## 当前结果\n\n[QA原件、overlay源码、16份开发源码摘要及清理记录](./evidence/inline-mapping-117/qa.json)；[开发证据](../implementation/evidence/inline-mapping-116/developer.json)、[技术方案](../technical/backend-cr039.md)。\n\n| QA消费者情景 | 结果 |\n| --- | --- |\n| 英文释义：HTTP生成→保存→详情→两阶段复习 | PASS |\n| 中文释义：同一链路、Unicode与原词释义原值保持 | PASS |\n| 日文释义：同一链路、Unicode与原词释义原值保持 | PASS |\n| hint标到其他输入原词 | PASS：拒绝、退款、无草稿、无元数据泄露 |\n| hint标注未闭合 | PASS：拒绝、退款、无草稿、无元数据泄露 |\n\n共5个QA情景，2.142秒；每个正例只有1次合成提供方调用。3-rune分块正文预览完整且与最终内容一致；正文4空、每个提示2空，同源匿名分组正确，输入顺序与正文出现顺序不同。阶段一答原词，阶段二答实际形式。释义为固定输入数据，原样流经消费链路，不据此认定模型翻译准确。\n\n另接收开发9个顶层定向集成、逐块解析/边界、10轮慢下游、race/vet与两种构建结果，不机械重跑或与QA数量相加。开发慢下游首次541/546字符的真实尾段竞争已修复；两项旧fixture失败及命令方法错误均保留原件。QA没有新增产品失败；一次macOS哈希命令locale错误改用Node只读摘要检查通过，不属于测试失败。\n\n## 边界与下一步\n\n- QA不改生产代码；16份开发来源摘要一致，辅助测试只在verification目录并通过只读overlay使用。主会话顺序履行质量角色，无独立子代理或模型审查声明。\n- 本轮仅自建无外网、无发布端口的tmpfs PostgreSQL；临时测试库已清理，容器已删除。真实UAT库、业务卷、模型配置、密钥与缓存卷未动。\n- 用户“允许”后，118已将普通v5镜像90f23b57部署至6001。应用环境（移除已消费采集项之外）保持一致；15张配置/账号/学习/复习表摘要未变，前端/nginx/PG容器身份保持，Nginx仅语法检查和reload。\n- live/ready/首页200、未登录/me/account401均通过；[实际部署证据](./evidence/inline-mapping-118/deployment.json)。首次脚本使用不存在的/me路径得到404并恢复旧后端，修正检查路由后重新部署成功，[方法失败原件](./evidence/inline-mapping-118/attempt-1.json)未覆盖。无需产品代码返工。\n- 无付费模型/probe调用、迁移或清库，没有重跑全站UI。正常HTTP访问产生访客属运行行为，不声称全库零写入。采集挂载/环境不再启用；旧采集卷定义保留但未挂载，无续期或再次读取全文。\n- 普通交接与本次部署许可均已完成，当前交用户在[6001](http://localhost:6001)测试造文质量，无需重配模型或清缓存。不能承诺实际失败率下降或所有词形支持；CR039/040、语义质量、用户接受与发布仍open。\n\n## 历史证据保留\n\n[真实失败归因](./stream-failure-diagnosis.md)：seed/read的提示数组多报本段不存在形式，内存分别修正后逐步转为通过；不是超时或这两个词形未知。全文已于08:56:23Z删除；新实现不需要恢复该全文。[24项剔除假设](./evidence/failure-capture/policy-boundary-check.json)未采用，不作为v5验收。\n\n114诊断部署已由118普通v5后端替换，其历史原件：[部署原件](./evidence/failure-capture/deployment-114.json)。以前的当前六份文档完整保留在[本次证据](./evidence/inline-mapping-117/qa.json)previousCurrentDocuments；旧失败、审批及UAT108原件不改。受影响覆盖与后续质量清单分别见[覆盖矩阵](./coverage-matrix.md)、[AI评估](./ai-evaluation.md)、[UAT](./uat.md)。\n\n118更新前六份当前文档已冻结在[部署证据](./evidence/inline-mapping-118/deployment.json)previousCurrentDocuments；当前入口只维护有效结果，不另建重复总结。\n",
+      "sha256": "ba3f44037ed402d2f092e7f505cfc6c0cffb560b4903b82017564457e434eaf5"
+    },
+    {
+      "path": ".planning/milestones/M001/verification/coverage-matrix.md",
+      "text": "---\nmilestone: M001\nstage: verification\nrole: quality/base\nagent_name: qa-quinn\nstatus: deployed_awaiting_user_uat\ndate: 2026-09-09\nverification_round: TRANSITION-M001-118\n---\n\n# 当前定向覆盖：原词就地标注与消费者链路\n\n需求来源：[USER-INLINE-MAPPING-115](./stream-failure-diagnosis.md#inline-source-annotation)。实现/开发验证已由117接收；QA仅补消费者层验证，不重跑全站。\n\n| 追踪 | 方法与结论 |\n| --- | --- |\n| CR039 / CAP-008/009 / API-005 | 接收开发标注语法、逐块/Unicode/普通括注、独立词形关系、覆盖与冲突检查PASS；QA三语言真实HTTP接合成提供方，完整干净流与最终正文一致PASS |\n| C39-08/09/10/11 / DATA-010/011 | 接收开发缺失/无关/未知/错误词形拒绝、全部已知重复补扫；QA错hint归属和未闭合hint各失败一次、退额、无草稿PASS |\n| API-006/007/008 / DATA-012–015 | QA三语言生成→保存→详情→复习PASS；正文与提示不保存标注，原词释义逐字保持 |\n| CAP-018/019 / DATA-014/015 | QA两条原词默写，各提示2空；短文4空，read与reading、seed与seeds正确归属且不透露答案PASS；输入/出现顺序不同 |\n| C40-01/03/04/06 | 原词释义en/zh/ja固定值全链路保持PASS；输入词义独立性提示/schema保护由开发检查接收；真实语义准确性NOT VERIFIED |\n| C40-02 / CR039真实词形质量 | 未调用真实模型；跨场景语义独立、自然提示搭配、新格式遵循及实际失败率NOT VERIFIED |\n| API-005流式尾段 | 开发慢下游曾FAIL 541/546，修复后10轮及race PASS；QA不同消费者流也验证最终一致，不把这一修复归为旧映射失败根因 |\n| 当前部署与UAT | 118已部署普通v5；live/ready/首页200及未登录/account401、15表摘要/应用配置保留PASS；用户UAT仍NOT ACCEPTED |\n\n[QA原始5情景及16份来源摘要](./evidence/inline-mapping-117/qa.json)、[开发命令和原始失败/复验](../implementation/evidence/inline-mapping-116/developer.json)。QA无新产品失败，不把开发/QA案例合计。没有UI/SQL/公开API变更，不复跑设计对齐、全站性能或可访问性。\n\n既有CR040、DB40和UAT108已接受的功能/数据覆盖不撤销，也不包装成此次重新执行。完整旧矩阵位于[本次冻结原文](./evidence/inline-mapping-117/qa.json)previousCurrentDocuments；[CR040证据](./evidence/cr040/manifest.json)、[UAT108](./evidence/uat-108/manifest.json)、[114诊断](./evidence/failure-capture/qa-114.json)保持原样。24项旧剔除假设未采用，不能充当新协议覆盖。\n\n[118部署原件](./evidence/inline-mapping-118/deployment.json)与[首次方法错误](./evidence/inline-mapping-118/attempt-1.json)分别保留；错误/me路径404不是产品缺陷，正确/account复验通过。实际前端与PG未替换，不新增真实AI或全站测试覆盖。\n",
+      "sha256": "800706ebd5566d6e61700d6b7747fcf54da3ac33dee66b1df29571d7a477b609"
+    },
+    {
+      "path": ".planning/milestones/M001/verification/ai-evaluation.md",
+      "text": "---\nmilestone: M001\nstage: verification\nrole: quality/base\nagent_name: qa-quinn\nstatus: deployed_awaiting_user_uat\ndate: 2026-09-09\nverification_round: TRANSITION-M001-118\nreal_model_quality: not_verified\n---\n\n# AI质量：v5确定性链路通过，真实生成待验证\n\n当前协议：[就地标注确认](./stream-failure-diagnosis.md#inline-source-annotation)及[AI设计](../technical/ai-integration.md)。prompt m001-v5 / validator m001-v5-wn31-r1；正文/hint输出实际形式(原词)，后端提取。targets仅source_entry、entry_meaning、hint_phrase；移除两类forms数组，不双读旧协议。\n\n已证明：开发解析/词法/覆盖/跨块与慢下游检查通过；QA三语言合成响应经真实HTTP、保存及两阶段复习后，原词释义、正文和提示保持一致，标注不泄露。错归属/未闭合hint拒绝并退额。见[QA原件](./evidence/inline-mapping-117/qa.json)。这些是固定响应的程序测试，不证明真实模型会遵循标注或给出准确释义。\n\n## 真实样本应评阅的内容\n\n1. 正文与每个提示就地标注正确，覆盖所有输入词；顺序自由，允许经独立词法证明的自然变化，不要求短文其他词都在输入词库。\n2. 后端清理后正文/提示自然完整，没有括号元数据闪现或尾段丢失；提示是英文搭配短语而非词典式解释。\n3. entry_meaning只解释输入原词，与文章、场景、屈折/派生及句中作用无关；中/英/日跟随释义目标语言，不随UI语言改变。\n4. 全部合法重复位置都能挖空，同源分组正确；保存与复习不引入新的解释或泄露答案。\n5. 标签描述短文；不新增短语翻译或整篇翻译。\n\n真实模型调用0；没有续用已耗尽预算，没有自动probe/retry/fallback。118已获准并完成[6001后端更新](./evidence/inline-mapping-118/deployment.json)，用户可直接自行测试；若委托代理生成，需另明确模型、样本与费用范围。候选词组沿用户先前两组，及本次seed/read故障相关词组，但均不是自动批量调用授权。1–2分钟延迟不自动判失败或触发第二次调用。\n\n不能用合成PASS宣称真实失败率已下降、所有派生均支持或新提示语义质量合格；未覆盖维度保持NOT VERIFIED。当前未放宽独立词法校验。\n\n## 历史结论\n\n[真实114样本](./evidence/failure-capture/real-run-01a0855e.json)：seed/read提示映射多报seeds/reading，只有两数组内存改正后确定性通过；全文分析后删除。旧young unknown缺完整候选，不能据此归因。[24项剔除假设](./evidence/failure-capture/policy-boundary-check.json)未采用。\n\nv4/CR040自动覆盖和历史评阅完整保留在[此次归并前原文](./evidence/inline-mapping-117/qa.json)previousCurrentDocuments；[CR040原件](./evidence/cr040/manifest.json)、[GPT-oss旧样本](./ai-quality-gpt-oss-090-samples.md)不改写。旧结果不当作v5真实通过。\n",
+      "sha256": "343e0cc3813c6252100e87c93a2cd1cf95147ea78ce871c89cd686aa70864c86"
+    },
+    {
+      "path": ".planning/milestones/M001/verification/uat.md",
+      "text": "---\nmilestone: M001\nstage: verification\nrole: quality/base\nagent_name: qa-quinn\nstatus: deployed_awaiting_user_uat\ndate: 2026-09-09\nverification_round: TRANSITION-M001-118\ncandidate_deployed: true\nruntime_baseline_deployed: UAT-M001-118-INLINE\nuser_accepted_current_candidate: false\n---\n\n# 新版造文UAT已就绪\n\n入口：[http://localhost:6001](http://localhost:6001)。普通v5后端已于2026-09-09T11:04:25Z完成更新，镜像90f23b57；直接刷新页面即可，无需清缓存、重登或重新配置模型。\n\n用户“允许”批准UAT-INLINE-117-DEPLOY，118[执行原件](./evidence/inline-mapping-118/deployment.json)记录：后端ready、首页与未登录权限检查PASS；模型/组配置、密钥、账号、学习记录和复习数据摘要保持，前端/PG未替换。Nginx只reload；没有迁移、清库、收费模型/probe或失败全文采集续期。\n\n首次QA脚本把/account路由写成/me导致404并恢复旧后端；改正后完成部署和检查，原件保留，不是产品缺陷。普通交接及本次部署许可已完成，不再等待重复批准；下一步由用户评阅真实生成。\n\n## 本轮只测受影响的造文质量\n\n| 用户体验 | 预期 |\n| --- | --- |\n| 流式预览 | 正文连贯完整，不出现grapes(grape)等后台标注 |\n| 目标词与提示 | 自然使用全部目标；英文提示是搭配短语，允许自然词形 |\n| 原词释义 | 只解释用户输入词，不解释文中作用或派生词 |\n| 保存与复习 | 内容一致；全部同源空位正确分组，原词/实际形式两阶段答案正确 |\n\n可先用这次失败相关词组minus/deep/land/seed/read/message；这只是用户手动建议，不会代为调用模型。若再有失败，提供run_id即可先读脱敏原因；不自动抓取/持久保存新的全文。\n\n不重测已接受的全站UI；真实模型格式遵循、语义准确性及失败率仍待实际样本。详细口径见[AI评估](./ai-evaluation.md)。用户接受和发布仍未发生。\n\n## 历史与清理\n\n114已确认的失败全文于08:56:23Z删除，单份采集名额已消费，不续期。原错误诊断在[当前诊断](./stream-failure-diagnosis.md)。本轮新建隔离测试PG已删除，真实业务数据未操作。\n\nUAT108的历史清库/部署步骤与旧当前文档均保存在[本次证据](./evidence/inline-mapping-117/qa.json)previousCurrentDocuments和[108原件](./evidence/uat-108/manifest.json)；它们不是本轮要再执行的步骤。\n",
+      "sha256": "8ac9c38d9dd44ee8587ed7bdce7e3bc8328cecfdcc07451bcb470ecc65086b39"
+    },
+    {
+      "path": ".planning/milestones/M001/handoffs/verification.md",
+      "text": "---\nmilestone: M001\nstage: verification\nrole: quality/base\nagent_name: qa-quinn\nstatus: deployed_awaiting_user_uat\ndate: 2026-09-09\nverification_round: TRANSITION-M001-118\n---\n\n# 当前质量交接：v5已部署6001，交用户造文UAT\n\n- 需求：[USER-INLINE-MAPPING-115](../verification/stream-failure-diagnosis.md#inline-source-annotation)。实际形式(原词)只供后端；流式/最终均不显示。独立词法、覆盖、重复扫描、复习和原词释义不变，不兼容旧数组。\n- 已接收：[技术方案](../technical/backend-cr039.md)、[116开发交付](./backend-implementation.md)与[117门禁](../reviews/stream-failure-capture-gates.md)。普通交接沿USER-HANDOFF-CONTINUOUS-001完成，无新需求或返工冲突。\n- QA：[5情景原件](../verification/evidence/inline-mapping-117/qa.json)。en/zh/ja真实HTTP接合成提供方，生成→保存→详情→两阶段复习PASS；2错误hint情景退款/无草稿PASS。16份开发源摘要一致，QA仅写独立overlay与本角色文档。\n- 开发慢下游541/546尾段竞争已修复并复验，不是之前真实提示映射错误的根因。开发边界/race/build检查单独接收，没有机械全站或单元重跑。\n- [报告](../verification/report.md)、[覆盖](../verification/coverage-matrix.md)、[AI质量](../verification/ai-evaluation.md)、[UAT](../verification/uat.md)为唯一当前入口；旧六份原文完整保存在QA证据previousCurrentDocuments，旧失败、未采用假设和审批不改。\n- 用户“允许”批准UAT-INLINE-117-DEPLOY；118已完成[本地部署](../verification/evidence/inline-mapping-118/deployment.json)，普通v5镜像90f23b57运行于6001。4路由/权限检查、15表摘要与应用配置保留PASS；前端/PG未替换，Nginx仅reload，不再挂载采集目录。\n- [首次QA方法失败](../verification/evidence/inline-mapping-118/attempt-1.json)：不存在的/me路径404触发恢复，改为已核实/account后重新部署通过。未改产品源码，不将此归为产品返工或隐藏失败。\n- 主会话顺序执行，无独立子代理/模型审查声明。付费调用0，无直接数据修改/清理/迁移；正常访客访问不等于全库零写入。更新前六份当前文档完整冻结在118部署原件previousCurrentDocuments。\n- 下一步交用户在[6001](http://localhost:6001)测试真实造文质量，无需重新配置模型/清缓存；不再待部署或普通交接批准，不续期采集或默许收费调用。质量角色保持qa-quinn。\n- CR039/040、真实语义质量、用户接受与发布保持open。实际环境已是118而非114；部署PASS不等于语义质量通过或失败率改善。\n",
+      "sha256": "afa2468dd796d6cffabbbd375e39437bdda4942f1e291034cd693e43881fa3f2"
+    }
+  ]
+}

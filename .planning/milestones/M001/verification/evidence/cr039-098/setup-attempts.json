@@ -1,0 +1,6 @@
+{
+  "attempt_1": "Setup stopped before migration: socket pg_isready observed PostgreSQL temporary initialization server before TCP listener was ready. Candidate admin migrate received connection refused. No learning/AI requests occurred.",
+  "classification": "QA harness readiness race, not application defect",
+  "correction": "Use TCP pg_isready and explicitly resume only the label-verified pristine QA098 database; preserve original baseline and initial script.",
+  "real_model_calls": 0
+}

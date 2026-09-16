@@ -1,0 +1,12 @@
+{
+ "setup": "Temporary PostgreSQL socket readiness preceded final TCP listener; fixed to TCP readiness and verified pristine label-owned database before resume. Original setup script/baseline preserved.",
+ "initial_suite": {"counts":{"PASS":42,"FAIL":17,"ERROR":1},"cause":"QA DELETE helper omitted both JSON body and Content-Type. Global JSON middleware correctly returned 400 before ownership and deletion; downstream absence checks consequently invalid; rollback lock observation timed out because DELETE never entered a DB transaction.","evidence":"api-results-initial.json and suite-initial.mjs","fix":"Send the contract JSON request as existing application/QA096 clients do; use new synthetic learner and visitor identities, retain all initial synthetic records, and rerun only this scoped suite. No application edits or weakened status expectations."},
+ "resumption_setup_errors": [
+  {"evidence":"api-results-setup-collision.json","counts":{"PASS":0,"FAIL":0,"ERROR":1},"cause":"Attempted duplicate synthetic model creation when resuming the existing disposable DB; model identity is unique.","correction":"Reuse the owned synthetic model, not create another."},
+  {"evidence":"api-results-setup-column.json","counts":{"PASS":0,"FAIL":0,"ERROR":1},"cause":"Resume lookup used public DTO openrouter_model_id instead of storage provider_model_id.","correction":"Use the schema-confirmed provider_model_id column."}
+ ],
+ "effective_run":"New qa098_owner4/other4 plus a fresh visitor; existing first-attempt resources retained until final temporary-environment cleanup. api-results.json: 196 PASS / 0 FAIL / 0 ERROR; one explicitly injected DB cancellation returns expected HTTP 500.",
+ "classification":"Harness defects, not candidate deletion defects. Original failure observations are retained and not counted as successful requirements.",
+ "document_finalization":"Initial self-check checked its own yet-to-be-generated output links too early. Preserved self-check-initial.json; finalizer recognizes the three outputs it creates in the same run. Final document existence and manifest hashes verified after generation. No business retest required.",
+ "real_model_calls":0
+}

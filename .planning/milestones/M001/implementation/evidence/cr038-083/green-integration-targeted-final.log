@@ -1,0 +1,38 @@
+=== RUN   TestNoContentConsumersEnforcePrivateNoStoreResponse
+2026/09/07 10:49:52 INFO http_request request_id=req_nkNlk8e5Ri9jZwpzZuXbUw method=GET route=/api/v1/bootstrap status=200 duration_ms=2
+2026/09/07 10:49:53 INFO http_request request_id=req_PiDDTMKdYDFBFx2ix7xDWQ method=POST route=/api/v1/auth/login status=200 duration_ms=925
+2026/09/07 10:49:53 INFO http_request request_id=req_-kn2ZcKBq-id9cjo2kYilA method=PUT route=/api/v1/admin/openrouter-credential status=200 duration_ms=7
+2026/09/07 10:49:53 INFO http_request request_id=req_0fly82b9ueOmgQH2il3-wg method=POST route=/api/v1/admin/models status=201 duration_ms=5
+2026/09/07 10:49:53 INFO http_request request_id=req_9ZSfDWAQS-QPdVick46Xvw method=POST route=/api/v1/admin/models/{model_id}/enable status=200 duration_ms=7
+2026/09/07 10:49:53 INFO http_request request_id=req_OZ6Z1Uqw7kewD9v7F8zELw method=PUT route=/api/v1/admin/groups/{group_code} status=200 duration_ms=11
+2026/09/07 10:49:53 INFO http_request request_id=req_5YmfQGatPPwMZjCZHR8YFA method=GET route=/api/v1/bootstrap status=200 duration_ms=0
+2026/09/07 10:49:54 INFO http_request request_id=req_h9Kjo_4ysxAfdsySTtZvpg method=POST route=/api/v1/auth/register status=201 duration_ms=755
+=== RUN   TestNoContentConsumersEnforcePrivateNoStoreResponse/logout
+2026/09/07 10:49:54 INFO http_request request_id=req_9lLsA3lzz_vXvGZmxASjWA method=POST route=/api/v1/auth/logout status=204 duration_ms=2
+2026/09/07 10:49:54 INFO http_request request_id=req_X-XjEVO6kWsQNNiO9LVJeQ method=GET route=/api/v1/bootstrap status=200 duration_ms=1
+2026/09/07 10:49:55 INFO http_request request_id=req_at7z1RmMe5YNlkXXLKbcQA method=POST route=/api/v1/auth/login status=200 duration_ms=766
+=== RUN   TestNoContentConsumersEnforcePrivateNoStoreResponse/learner_password_change
+2026/09/07 10:49:57 INFO http_request request_id=req_82eogcOljAHCMKbmq5Q99Q method=PUT route=/api/v1/me/password status=204 duration_ms=1558
+=== RUN   TestNoContentConsumersEnforcePrivateNoStoreResponse/generation_discard
+2026/09/07 10:49:57 INFO http_request request_id=req_2UV9oMsNDbBVdsww_VHIsg method=POST route=/api/v1/generations/stream status=200 duration_ms=20
+2026/09/07 10:49:57 INFO http_request request_id=req_h4_tBduQRBdavc6sXca5pw method=POST route=/api/v1/generations/{run_id}/discard status=204 duration_ms=2
+=== RUN   TestNoContentConsumersEnforcePrivateNoStoreResponse/batch_deletion_cascades_its_single-batch_review_session
+2026/09/07 10:49:57 INFO http_request request_id=req_iK4OCaQ8O7wT9M9htVpZAg method=POST route=/api/v1/generations/stream status=200 duration_ms=14
+2026/09/07 10:49:57 INFO http_request request_id=req_Ly9qGPAPBTK6eVGtoxukpA method=POST route=/api/v1/generations/{run_id}/save status=201 duration_ms=23
+2026/09/07 10:49:57 INFO http_request request_id=req_gfwQuS6c-AU2gXn3zpCzJg method=POST route=/api/v1/me/review-sessions status=201 duration_ms=17
+2026/09/07 10:49:57 INFO http_request request_id=req_jxrXObb_N7voFaz4bbSNJA method=DELETE route=/api/v1/me/batches/{batch_id} status=204 duration_ms=4
+=== RUN   TestNoContentConsumersEnforcePrivateNoStoreResponse/administrator_password_reset
+2026/09/07 10:49:57 INFO http_request request_id=req_HV8l3_PIcuADqh4CM9Jpqw method=PUT route=/api/v1/admin/users/{user_id}/password status=204 duration_ms=757
+2026/09/07 10:49:57 INFO http_request request_id=req_mZFzLHOT1OzOXbP2DlW2GQ method=GET route=/api/v1/bootstrap status=200 duration_ms=0
+2026/09/07 10:49:58 INFO http_request request_id=req_Ncs4z0nRuM26OeNjMTIsog method=POST route=/api/v1/auth/register status=201 duration_ms=790
+=== RUN   TestNoContentConsumersEnforcePrivateNoStoreResponse/account_deletion
+2026/09/07 10:49:59 INFO http_request request_id=req_li-hPul8cfd112Up1QGKnw method=DELETE route=/api/v1/me/account status=204 duration_ms=769
+--- PASS: TestNoContentConsumersEnforcePrivateNoStoreResponse (7.67s)
+    --- PASS: TestNoContentConsumersEnforcePrivateNoStoreResponse/logout (0.00s)
+    --- PASS: TestNoContentConsumersEnforcePrivateNoStoreResponse/learner_password_change (1.56s)
+    --- PASS: TestNoContentConsumersEnforcePrivateNoStoreResponse/generation_discard (0.02s)
+    --- PASS: TestNoContentConsumersEnforcePrivateNoStoreResponse/batch_deletion_cascades_its_single-batch_review_session (0.06s)
+    --- PASS: TestNoContentConsumersEnforcePrivateNoStoreResponse/administrator_password_reset (0.76s)
+    --- PASS: TestNoContentConsumersEnforcePrivateNoStoreResponse/account_deletion (0.77s)
+PASS
+ok  	wordweave/internal/httpapi	9.011s

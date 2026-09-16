@@ -1,0 +1,134 @@
+{
+  "date": "2026-09-09",
+  "authorization": "TRANSITION-M001-108",
+  "role": "quality/base",
+  "agent": "qa-quinn",
+  "verdict": "UAT_READY_SCOPED_SMOKE_PASS",
+  "realModelCalls": 0,
+  "realModelQuality": "NOT_VERIFIED",
+  "deployed": true,
+  "candidate": {
+    "backend": "sha256:7cb89a2d4628cc568790cf4a556133cc76270f97d3e246aeb3e95374541b936d",
+    "frontend": "sha256:5903591c881165071c1cba08984cfb835854187f5df21a281640b3aacccf4b27"
+  },
+  "preflight": "preflight-recheck.json",
+  "cutover": "cutover.json",
+  "deployment": "deployment.json",
+  "smoke": "smoke-recheck.json",
+  "smokeCounts": {
+    "PASS": 50,
+    "FAIL": 0,
+    "ERROR": 0
+  },
+  "initialEvidence": [
+    {
+      "file": "preflight.json",
+      "kind": "QA script error before backup/deletion",
+      "cause": "Retention inventory incorrectly referenced nonexistent entitlement_groups.created_at; corrected to actual code identity projection; no schema or production change."
+    },
+    {
+      "file": "smoke.json",
+      "kind": "QA script error",
+      "cause": "GET groups response has models, not PUT model_ids; first smoke reached 34 PASS and one method ERROR; own session removed, no learner created. Corrected contract lookup; final scoped smoke passed."
+    }
+  ],
+  "backup": {
+    "directory": "/var/folders/z9/99ckxr957v901zwwc8jdk8640000gn/T/wordweave-uat108-preserved-WpEYvN",
+    "contents": "Only schema, full administrators, model/credential/vocabulary/migration/fixed-group rows and exact runtime recovery configuration; no learner or learning business rows",
+    "mode": "directory0700/files0600",
+    "restore": "Restored into isolated no-network tmpfs PG container; preserved rows matched, learner/generation/library rows absent; temporary container removed",
+    "recoveryLimit": "Not a backup of deleted business data. Reopening any restored environment still requires current schema/group policy and read-only checks; no automatic restore performed."
+  },
+  "cleanup": {
+    "learnerAccountsDeleted": 584,
+    "oldSessionsDeleted": 598,
+    "oldVisitorsDeleted": 47737,
+    "learningBatchesDeleted": 22,
+    "generationRunsDeleted": 93,
+    "modelsPreserved": 6,
+    "administratorsPreserved": 7,
+    "vocabularyEntriesPreserved": 13860,
+    "temporarySmokeAccountRemoved": true,
+    "temporaryAdminSessionRemoved": true,
+    "newVisitorRows": "Expected from health/page requests; no repeat cleanup"
+  },
+  "protected": {
+    "sourceCount": 260,
+    "changed": [],
+    "artifacts": [
+      {
+        "path": ".planning/milestones/M001/verification/evidence/uat-108/admin-models-recheck.png",
+        "sha256": "8fe9ff127282ccb15e7c2cb4d2df9f2f72ddb99a4070d8bb59950a60613e72c2"
+      },
+      {
+        "path": ".planning/milestones/M001/verification/evidence/uat-108/admin-models.png",
+        "sha256": "8fe9ff127282ccb15e7c2cb4d2df9f2f72ddb99a4070d8bb59950a60613e72c2"
+      },
+      {
+        "path": ".planning/milestones/M001/verification/evidence/uat-108/backend-build.txt",
+        "sha256": "d8084a4ef4f2f9f5716cc3786f116a43b569f8fe79b52ba43232c2e3b8f4399b"
+      },
+      {
+        "path": ".planning/milestones/M001/verification/evidence/uat-108/compose-images.yaml",
+        "sha256": "97f8eb4afbde29b6aaad49c9861dfe5248e067d13cdaabd22ffb87807529bbfd"
+      },
+      {
+        "path": ".planning/milestones/M001/verification/evidence/uat-108/cutover.json",
+        "sha256": "88b2482082be09ae75d7ffb398ce2b8e2e6639cbf9c2761b1cc4130f28401afc"
+      },
+      {
+        "path": ".planning/milestones/M001/verification/evidence/uat-108/deploy.mjs",
+        "sha256": "2751e22166ef3ffd1c6c98c632e938e9d1253e697c05bc9c8c609fcf9549ce60"
+      },
+      {
+        "path": ".planning/milestones/M001/verification/evidence/uat-108/deployment.json",
+        "sha256": "053d702ecd384661498f6f796891c3875c9bffbdb0d5e096e2b368442819e149"
+      },
+      {
+        "path": ".planning/milestones/M001/verification/evidence/uat-108/helpers.mjs",
+        "sha256": "89084d7f50df38182feacf996361b47fea3ef91662122e08214ac615685b9722"
+      },
+      {
+        "path": ".planning/milestones/M001/verification/evidence/uat-108/library-empty-recheck.png",
+        "sha256": "ec9f78aa967dad111403bd4b25cfd3b882118aef4b67604bd8e0350def99b8a0"
+      },
+      {
+        "path": ".planning/milestones/M001/verification/evidence/uat-108/preflight-recheck.json",
+        "sha256": "5718e13a06194d8925ef4fc5174381dd0448f1c00f3a0e40d2734c5d68383b79"
+      },
+      {
+        "path": ".planning/milestones/M001/verification/evidence/uat-108/preflight.json",
+        "sha256": "d02a344c3ea0055e9f4fafc40c7b8c0780429f557df6254ca058129aeaeaf77b"
+      },
+      {
+        "path": ".planning/milestones/M001/verification/evidence/uat-108/preflight.mjs",
+        "sha256": "c9cebb2a057c9b9371db2471bc2a37e89ea0cd02e88e383ea6e8665ebd9ae46a"
+      },
+      {
+        "path": ".planning/milestones/M001/verification/evidence/uat-108/smoke-recheck.json",
+        "sha256": "31221a41b0c0cf70bd0d82a2b2f807a291dff9ed2e8682dd334e366c451dc655"
+      },
+      {
+        "path": ".planning/milestones/M001/verification/evidence/uat-108/smoke.json",
+        "sha256": "3b436a6ebd09198090c10d1f15e95873abb4ea0eca2cb5cca9295750afc9ffbc"
+      },
+      {
+        "path": ".planning/milestones/M001/verification/evidence/uat-108/smoke.mjs",
+        "sha256": "3c22689a7c3517a5520c2fb642aab0ee9370fb0917d57cebcf8af3ebdecd85a2"
+      }
+    ]
+  },
+  "scopeLimits": [
+    "No real AI/probe/fallback requests",
+    "No model or credential changes or group reassignment",
+    "No old-version compatibility",
+    "No full-site retest",
+    "No user acceptance or release"
+  ],
+  "executionIdentity": {
+    "method": "Primary session sequential role adoption, no subagents",
+    "requestedTier": "high-risk strong or above",
+    "actualModel": "not_observed",
+    "usage": "not_observed"
+  }
+}

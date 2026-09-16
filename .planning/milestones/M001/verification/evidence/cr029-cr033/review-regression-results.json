@@ -1,0 +1,191 @@
+{
+  "date": "2026-09-05T08:57:22.151Z",
+  "agent": "qa-quinn",
+  "counts": {
+    "PASS": 22,
+    "FAIL": 0,
+    "ERROR": 0
+  },
+  "checks": [
+    {
+      "id": "single_batch hints blank all occurrences",
+      "status": "PASS",
+      "actual": 2,
+      "expected": 2
+    },
+    {
+      "id": "single_batch hints no answer",
+      "status": "PASS",
+      "actual": false,
+      "expected": false
+    },
+    {
+      "id": "single_batch same lemma grouping",
+      "status": "PASS",
+      "actual": 1,
+      "expected": 1
+    },
+    {
+      "id": "single_batch cloze no original spelling",
+      "status": "PASS",
+      "actual": false,
+      "expected": false
+    },
+    {
+      "id": "single_batch no overlapping inputs",
+      "status": "PASS",
+      "actual": true,
+      "expected": true
+    },
+    {
+      "id": "single_batch group stable after wrong",
+      "status": "PASS",
+      "actual": [
+        "cloze-slot cloze-tone-slate cloze-pattern-double",
+        "cloze-slot cloze-tone-slate cloze-pattern-double",
+        "cloze-slot cloze-tone-slate cloze-pattern-double"
+      ],
+      "expected": [
+        "cloze-slot cloze-tone-slate cloze-pattern-double",
+        "cloze-slot cloze-tone-slate cloze-pattern-double",
+        "cloze-slot cloze-tone-slate cloze-pattern-double"
+      ]
+    },
+    {
+      "id": "single_batch summary labels",
+      "status": "PASS",
+      "actual": [
+        "Completed",
+        "Mastered",
+        "Review again"
+      ],
+      "expected": [
+        "Completed",
+        "Mastered",
+        "Review again"
+      ]
+    },
+    {
+      "id": "single_batch summary scope",
+      "status": "PASS",
+      "actual": "STORY REVIEW COMPLETE",
+      "expected": "STORY REVIEW COMPLETE"
+    },
+    {
+      "id": "single_batch summary restart",
+      "status": "PASS",
+      "actual": "Review this story again",
+      "expected": "Review this story again"
+    },
+    {
+      "id": "single_batch summary stats",
+      "status": "PASS",
+      "actual": [
+        "1",
+        "1",
+        "0"
+      ],
+      "expected": [
+        "1",
+        "1",
+        "0"
+      ]
+    },
+    {
+      "id": "range hints blank all occurrences",
+      "status": "PASS",
+      "actual": 2,
+      "expected": 2
+    },
+    {
+      "id": "range hints no answer",
+      "status": "PASS",
+      "actual": false,
+      "expected": false
+    },
+    {
+      "id": "range same lemma grouping",
+      "status": "PASS",
+      "actual": 1,
+      "expected": 1
+    },
+    {
+      "id": "range cloze no original spelling",
+      "status": "PASS",
+      "actual": false,
+      "expected": false
+    },
+    {
+      "id": "range no overlapping inputs",
+      "status": "PASS",
+      "actual": true,
+      "expected": true
+    },
+    {
+      "id": "range group stable after wrong",
+      "status": "PASS",
+      "actual": [
+        "cloze-slot cloze-tone-plum cloze-pattern-solid",
+        "cloze-slot cloze-tone-plum cloze-pattern-solid",
+        "cloze-slot cloze-tone-plum cloze-pattern-solid"
+      ],
+      "expected": [
+        "cloze-slot cloze-tone-plum cloze-pattern-solid",
+        "cloze-slot cloze-tone-plum cloze-pattern-solid",
+        "cloze-slot cloze-tone-plum cloze-pattern-solid"
+      ]
+    },
+    {
+      "id": "range summary labels",
+      "status": "PASS",
+      "actual": [
+        "Completed",
+        "Mastered",
+        "Review again"
+      ],
+      "expected": [
+        "Completed",
+        "Mastered",
+        "Review again"
+      ]
+    },
+    {
+      "id": "range summary scope",
+      "status": "PASS",
+      "actual": "DATE REVIEW COMPLETE",
+      "expected": "DATE REVIEW COMPLETE"
+    },
+    {
+      "id": "range summary restart",
+      "status": "PASS",
+      "actual": "Review again",
+      "expected": "Review again"
+    },
+    {
+      "id": "range summary stats",
+      "status": "PASS",
+      "actual": [
+        "1",
+        "1",
+        "0"
+      ],
+      "expected": [
+        "1",
+        "1",
+        "0"
+      ]
+    },
+    {
+      "id": "ordinary auth no auto review POST",
+      "status": "PASS",
+      "actual": 0,
+      "expected": 0
+    },
+    {
+      "id": "ordinary auth no DB session creation",
+      "status": "PASS",
+      "actual": "2",
+      "expected": "2"
+    }
+  ]
+}

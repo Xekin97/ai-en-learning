@@ -1,0 +1,177 @@
+{
+  "id": "UAT-ACCOUNT-129",
+  "date": "2026-09-11T02:44:27.283Z",
+  "agent_name": "qa-quinn",
+  "authorization": {
+    "source": "USER-UAT-ACCOUNT-129",
+    "request": "你专门建立一个测试账号吧，就所有 UAT 证据都从这个账号获取",
+    "scope": "Create one dedicated learner; all subsequent account/content UAT evidence must use this identity. Historical evidence remains historical."
+  },
+  "identity": {
+    "id": "01a08e5a-2250-7854-81df-5aeb26e7f461",
+    "username": "wordweave_uat",
+    "role": "learner",
+    "group_code": "registered",
+    "created_at": "2026-09-11T02:44:26.83112+00:00",
+    "remaining_sessions": 0
+  },
+  "login_url": "http://localhost:6001/login",
+  "private_credentials": {
+    "location": "/Users/xekinzhuo/Library/Application Support/WordWeave/UAT/dedicated-account.json",
+    "file_mode": "0600",
+    "directory_mode": "0700",
+    "password_in_evidence": false
+  },
+  "binding": {
+    "actor_kind": "account",
+    "actor_id": "01a08e5a-2250-7854-81df-5aeb26e7f461",
+    "exclude_other_accounts": true,
+    "exclude_visitors": true,
+    "content_capture_enabled_by_this_task": false,
+    "retention_limit_and_ttl": "50 requests / 24 hours remain proposed, not confirmed by this account-creation request"
+  },
+  "registration_and_auth_verification": {
+    "started_at": "2026-09-11T02:44:26.606Z",
+    "username": "wordweave_uat",
+    "steps": [
+      {
+        "method": "GET",
+        "path": "/bootstrap",
+        "status": 200
+      },
+      {
+        "method": "POST",
+        "path": "/auth/register",
+        "status": 201
+      },
+      {
+        "method": "GET",
+        "path": "/me/account",
+        "status": 200
+      },
+      {
+        "method": "GET",
+        "path": "/generation-options",
+        "status": 200
+      },
+      {
+        "method": "GET",
+        "path": "/me/learning-summary",
+        "status": 200
+      },
+      {
+        "method": "POST",
+        "path": "/auth/logout",
+        "status": 204
+      },
+      {
+        "method": "GET",
+        "path": "/bootstrap",
+        "status": 200
+      },
+      {
+        "method": "POST",
+        "path": "/auth/login",
+        "status": 200
+      },
+      {
+        "method": "GET",
+        "path": "/me/account",
+        "status": 200
+      },
+      {
+        "method": "POST",
+        "path": "/auth/logout",
+        "status": 204
+      }
+    ],
+    "provider_calls": 0,
+    "registration_actor": {
+      "kind": "account",
+      "username": "wordweave_uat",
+      "role": "learner",
+      "plan_code": "basic"
+    },
+    "account": {
+      "username": "wordweave_uat",
+      "plan_code": "basic",
+      "ui_locale": "en-US"
+    },
+    "generation_options": {
+      "model_count": 3,
+      "models": [
+        {
+          "id": "01a07a8a-b8d6-739a-ac65-cb37120e3ac4",
+          "name": "DeepSeek V4 Flash 0731"
+        },
+        {
+          "id": "01a07fe3-f046-7017-97f8-c15539050441",
+          "name": "GLM"
+        },
+        {
+          "id": "01a07fe3-5c48-736a-a86b-1f4dabd7cb87",
+          "name": "MiniMax"
+        }
+      ],
+      "availability": {
+        "can_generate": true,
+        "reason": null
+      },
+      "max_entries": 20,
+      "quota_kind": "unlimited"
+    },
+    "initial_learning_summary": {
+      "generation_count": 0,
+      "unique_learned_entries": 0,
+      "participating_batches": 0,
+      "paused_batches": 0,
+      "successful_review_count": 0,
+      "batches_ever_reviewed_successfully": 0
+    },
+    "result": "pass",
+    "finished_at": "2026-09-11T02:44:27.283Z"
+  },
+  "earlier_attempt": {
+    "started_at": "2026-09-11T02:44:07.067Z",
+    "username": "wordweave_uat",
+    "steps": [
+      {
+        "method": "GET",
+        "path": "/bootstrap",
+        "status": 200
+      },
+      {
+        "method": "POST",
+        "path": "/auth/register",
+        "status": 403
+      }
+    ],
+    "provider_calls": 0,
+    "result": "failed",
+    "failure": "POST /auth/register returned unexpected HTTP status\n\n403 !== 201\n",
+    "finished_at": "2026-09-11T02:44:07.119Z",
+    "classification": "QA setup origin mismatch; request used http://127.0.0.1:6001 but deployed PUBLIC_ORIGIN is http://localhost:6001. Corrected client origin, no product or server configuration change."
+  },
+  "verification_method": {
+    "api_client": "Playwright APIRequestContext with cookie jar, configured Origin, Sec-Fetch-Site same-origin and current X-CSRF-Token; no tokens retained",
+    "identity_query": "docker exec wordweave_uat-postgres-1 psql -X -U postgres -d wordweave -tA -c \"SELECT json_build_object('id', a.id, 'username', a.username, 'role', a.role, 'group_code', a.group_code, 'created_at', a.created_at, 'remaining_sessions', (SELECT count(*) FROM wordweave.account_sessions s WHERE s.account_id = a.id)) FROM wordweave.accounts a WHERE lower(a.username) = 'wordweave_uat';\"",
+    "login_page_http_status": 200
+  },
+  "limits": {
+    "provider_calls": 0,
+    "existing_accounts_changed": false,
+    "admin_created": false,
+    "models_or_groups_changed": false,
+    "db_reset_or_migration": false,
+    "deployed": false,
+    "source_code_changed": false,
+    "stage_transition": false,
+    "browser_ui_assertions": "not performed; API account/authentication setup only"
+  },
+  "runtime": {
+    "base_url": "http://localhost:6001",
+    "backend_container": "wordweave_uat-backend-1",
+    "backend_image": "sha256:ee5d52d2e5cd6bb609c050a837e90252c5a35dc4c53d8062e02d868dd6139edb",
+    "current_monitoring_gaps": "CR-042 not yet implemented/deployed; account readiness is not capture readiness"
+  }
+}

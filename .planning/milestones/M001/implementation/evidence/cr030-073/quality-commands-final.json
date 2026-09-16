@@ -1,0 +1,26 @@
+[
+  {
+    "name": "format-final",
+    "cmd": "pnpm",
+    "args": [
+      "--dir",
+      "frontend",
+      "format:check"
+    ],
+    "status": 0,
+    "seconds": 1.83
+  },
+  {
+    "name": "build-final",
+    "cmd": "docker",
+    "args": [
+      "build-final",
+      "--progress=plain",
+      "--tag",
+      "wordweave-frontend:cr030-073-final",
+      "frontend"
+    ],
+    "status": 125,
+    "seconds": 0.245
+  }
+]

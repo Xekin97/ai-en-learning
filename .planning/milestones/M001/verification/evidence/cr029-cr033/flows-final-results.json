@@ -1,0 +1,152 @@
+{
+  "date": "2026-09-05T08:51:57.103Z",
+  "agent": "qa-quinn",
+  "counts": {
+    "PASS": 21,
+    "FAIL": 0,
+    "ERROR": 3
+  },
+  "checks": [
+    {
+      "id": "login register intent errors locale refresh return",
+      "status": "ERROR",
+      "error": "Error: locator.fill: Error: strict mode violation: locator('input[type=password]') resolved to 2 elements:\n    1) <input value=\"\" required=\"\" minlength=\"8\" type=\"password\" maxlength=\"128\" class=\"text-input\" autocomplete=\"new-password\"/> aka getByRole('textbox', { name: 'Password 8–128 characters' })\n    2) <input value=\"\" required=\"\" minlength=\"8\" type=\"password\" maxlength=\"128\" class=\"text-input\" autocomplete=\"new-password\"/> aka getByRole('textbox', { name: 'Confirm password Enter the' })\n\nCall log:\n\u001b[2m  - waiting for locator('input[type=password]')\u001b[22m\n"
+    },
+    {
+      "id": "register no save no session",
+      "status": "PASS",
+      "actual": [],
+      "expected": []
+    },
+    {
+      "id": "registration returns single story without auto save",
+      "status": "PASS",
+      "actual": true,
+      "expected": true
+    },
+    {
+      "id": "admin priority and claim flag alone ignored",
+      "status": "PASS",
+      "actual": true,
+      "expected": true
+    },
+    {
+      "id": "unsafe not forwarded https://example.invalid",
+      "status": "PASS",
+      "actual": false,
+      "expected": false
+    },
+    {
+      "id": "unsafe not forwarded //example.invalid",
+      "status": "PASS",
+      "actual": false,
+      "expected": false
+    },
+    {
+      "id": "unsafe not forwarded /review/../../admin",
+      "status": "PASS",
+      "actual": false,
+      "expected": false
+    },
+    {
+      "id": "unsafe not forwarded /review/a/b",
+      "status": "PASS",
+      "actual": false,
+      "expected": false
+    },
+    {
+      "id": "unsafe not forwarded /library%2f..%2fadmin",
+      "status": "PASS",
+      "actual": false,
+      "expected": false
+    },
+    {
+      "id": "unsafe not forwarded /review\\evil",
+      "status": "PASS",
+      "actual": false,
+      "expected": false
+    },
+    {
+      "id": "ordinary login clears old return",
+      "status": "PASS",
+      "actual": false,
+      "expected": false
+    },
+    {
+      "id": "invalid redirect and stale intent cleared",
+      "status": "PASS",
+      "actual": true,
+      "expected": true
+    },
+    {
+      "id": "header home mobile entry unification",
+      "status": "PASS",
+      "actual": true,
+      "expected": true
+    },
+    {
+      "id": "search row focus restored",
+      "status": "PASS",
+      "actual": true,
+      "expected": true
+    },
+    {
+      "id": "search exact scroll restored",
+      "status": "PASS",
+      "actual": true,
+      "expected": true
+    },
+    {
+      "id": "search pagination detail return and resubmit",
+      "status": "ERROR",
+      "error": "Error: expect(locator).toHaveCount(expected) failed\n\nLocator:  locator('.admin-user-result')\nExpected: 1\nReceived: 40\nTimeout:  5000ms\n\nCall log:\n  - Expect \"to.have.count\" with timeout 5000ms\n  - waiting for locator('.admin-user-result')\n    - locator resolved to 0 elements\n    - unexpected value \"0\"\n    13 × locator resolved to 40 elements\n       - unexpected value \"40\"\n"
+    },
+    {
+      "id": "reader history deep old links and backdrop",
+      "status": "PASS",
+      "actual": true,
+      "expected": true
+    },
+    {
+      "id": "reader failed unavailable retry loading close late",
+      "status": "PASS",
+      "actual": true,
+      "expected": true
+    },
+    {
+      "id": "PUT lost response reconciles GET once without replay",
+      "status": "ERROR",
+      "error": "Error: expect(locator).toHaveText(expected) failed\n\nLocator:  locator('.definition-list > div').nth(1).locator('dd')\nExpected: \"0\"\nReceived: \"5\"\nTimeout:  5000ms\n\nCall log:\n  - Expect \"to.have.text\" with timeout 5000ms\n  - waiting for locator('.definition-list > div').nth(1).locator('dd')\n    14 × locator resolved to <dd>5</dd>\n       - unexpected value \"5\"\n"
+    },
+    {
+      "id": "malformed no unlimited",
+      "status": "PASS",
+      "actual": 0,
+      "expected": 0
+    },
+    {
+      "id": "malformed quota GET fails whole detail and retry safe",
+      "status": "PASS",
+      "actual": true,
+      "expected": true
+    },
+    {
+      "id": "history after logout no username",
+      "status": "PASS",
+      "actual": false,
+      "expected": false
+    },
+    {
+      "id": "logout payload no username",
+      "status": "PASS",
+      "actual": false,
+      "expected": false
+    },
+    {
+      "id": "logout removes private admin DOM and payload",
+      "status": "PASS",
+      "actual": true,
+      "expected": true
+    }
+  ]
+}

@@ -1,0 +1,9 @@
+import{chromium,expect,dir,origin,login,ready,recorder}from'./lib.mjs';import{writeFileSync}from'node:fs';import{join}from'node:path';
+const browser=await chromium.launch(),context=await browser.newContext(),out=recorder('modal-accessibility');let evidence;
+try{await login(context,'qa081_diag');const p=await context.newPage();await p.goto(origin+'/account');await ready(p);await p.locator('.settings-grid .card-footer .button-secondary').click();const input=p.locator('dialog input');await input.nth(0).fill('Incorrect081Only!');for(let i=1;i<3;i++)await input.nth(i).fill('Qa081UnusedOnly!');
+ const pending=p.waitForResponse(r=>r.request().method()==='PUT'&&r.url().endsWith('/me/password'));await p.locator('dialog button[type=submit]').click();out.record('wrong current422',(await pending).status(),422);await expect(p.locator('.app-error')).toBeVisible();
+ const client=await context.newCDPSession(p);await client.send('Accessibility.enable');const root=await client.send('DOM.getDocument');const node=await client.send('DOM.querySelector',{nodeId:root.root.nodeId,selector:'.app-error'});const tree=await client.send('Accessibility.getPartialAXTree',{nodeId:node.nodeId,fetchRelatives:false});
+ evidence={method:'Chromium CDP Accessibility.getPartialAXTree for actual .app-error DOM node; not Playwright DOM-derived ariaSnapshot',modal:await p.locator('dialog').evaluate(e=>e.matches(':modal')),alertInDialog:await p.locator('.app-error').evaluate(e=>!!e.closest('dialog')),nodes:tree.nodes.map(n=>({ignored:n.ignored,ignoredReasons:n.ignoredReasons,role:n.role,name:n.name}))};out.record('dialog truly modal',evidence.modal,true);out.record('error exposed to platform AX tree',tree.nodes[0]?.ignored,false);
+}catch(e){out.error('modal AX execution',e);}finally{await context.close();await browser.close();}
+writeFileSync(join(dir,'modal-accessibility-observations.json'),JSON.stringify(evidence,null,2),{flag:'wx'});out.save();
+

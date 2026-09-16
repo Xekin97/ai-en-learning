@@ -1,0 +1,143 @@
+{
+  "date": "2026-09-12",
+  "role": "backend-ethan",
+  "revision": "m001-v5-r9",
+  "validator": "m001-v5-wn31-r2",
+  "authorization": {
+    "user": "可以，先试着改上一版看看",
+    "scope": "Bounded candidate implementation and synthetic developer checks; no deployment, paid calls, legacy compatibility or paragraph planning."
+  },
+  "runtime": {
+    "changed": false,
+    "prompt_version": "m001-v5-r8",
+    "image": "wordweave-local:ten-entry-example-r8-20260912",
+    "health": "healthy",
+    "restarts": 0
+  },
+  "checks": [
+    {
+      "command": "go test -race ./internal/ai ./internal/generation ./internal/generationtrace ./internal/generationevidence ./internal/httpapi ./internal/diagnostics && go vet ./... && go build ./...",
+      "exit_code": 0,
+      "output": "ok  \twordweave/internal/ai\t29.230s\nok  \twordweave/internal/generation\t(cached)\nok  \twordweave/internal/generationtrace\t(cached)\nok  \twordweave/internal/generationevidence\t4.037s\nok  \twordweave/internal/httpapi\t2.326s\nok  \twordweave/internal/diagnostics\t8.323s\n"
+    },
+    {
+      "command": "go test -race -tags=integration ./internal/httpapi -run 'TestContinuationHTTP|TestP0GenerationHTTPMatrix' -count=1",
+      "environment": "isolated temporary PostgreSQL, synthetic credentials and localhost model substitute only",
+      "exit_code": 0,
+      "output": "ok wordweave/internal/httpapi 50.978s"
+    },
+    {
+      "command": "go test -race -tags=integration ./internal/httpapi -run '^TestContinuationHTTP' -count=1",
+      "environment": "same isolated PostgreSQL; final source verification after trace cleanup",
+      "exit_code": 0,
+      "output": "ok  \twordweave/internal/httpapi\t15.451s\n"
+    },
+    {
+      "command": "gofmt -l <16 changed Go files>",
+      "exit_code": 0,
+      "output": ""
+    }
+  ],
+  "coverage": [
+    "Same run and selected model, one initial attempt and at most one append-only continuation; no recursive repair.",
+    "Measured word deficit and missing entries; no repair for wrong mappings/hints/meanings/tags/ownership/collisions, probes or cancellation.",
+    "Fragmented SSE annotations remain hidden; final passage equals all emitted deltas; original meanings/hints retained and whole-passage tags replaced.",
+    "Insufficient/invalid continuation still fails strict validation; HTTP 429, cancellation and disconnect terminate without further calls.",
+    "Six new HTTP cases: success, still short, wrong mapping, upstream 429, explicit cancel, disconnect. One run, one quota settlement, at most one draft.",
+    "Reviewed melancholy->melancholic only; unrelated synonyms and fabricated morphology still rejected.",
+    "Unmarked young/younger/youngest repeats already reconstructed by existing scanner; regression confirms five passage occurrences and two hint occurrences.",
+    "Both private model responses retained with a continuation boundary; single-response replay reports multiple_model_attempts, not successful reproduction."
+  ],
+  "tooling": {
+    "go": "go1.27.0 darwin/arm64",
+    "requested_model_tier": "strong/high (cancellation and quota boundary)",
+    "actual_assistant_model": "unknown; no model switch or subagent claimed",
+    "assistant_tokens": "unknown"
+  },
+  "fixture_corrections": [
+    "New tests corrected synthetic word count 6 to 5 and used distinct target keys for collision coverage.",
+    "Existing HTTP and diagnostics fixtures updated from old array-shaped model targets to the current keyed wire format; production decoder remains strict."
+  ],
+  "cleanup": {
+    "container": "wordweave-r9-test-20260912",
+    "id": "701307e4cbd81bd57da4326704a46486c83bfaa12508cdbdedf3e66bf1410f55",
+    "removed": true,
+    "synthetic_data_only": true,
+    "uat_untouched": true
+  },
+  "real_model_calls": 0,
+  "new_live_success_rate": null,
+  "files": [
+    {
+      "path": "backend/internal/ai/contract.go",
+      "sha256": "d5f1bee8fc8238e87ee133cf10337d8475b21e98ba7aa68d46e98332f550c04d"
+    },
+    {
+      "path": "backend/internal/ai/validator.go",
+      "sha256": "c06385a0b3280df2faae0ccd0adf5e8e0e1e8a8d86a1705015bf2f057fe2f9c6"
+    },
+    {
+      "path": "backend/internal/ai/lexicon.go",
+      "sha256": "ad8353318556e17085f5b88fb7ac7d1a4a51af43b2192f942017554e227da705"
+    },
+    {
+      "path": "backend/internal/ai/openrouter.go",
+      "sha256": "d7c3df5163b7a1c658f52720f842733787646d5691ddd36a6c0158de8b38a229"
+    },
+    {
+      "path": "backend/internal/ai/continuation.go",
+      "sha256": "f8e799cda7b3b39e00b2946017e0aafb0939dc69d07da9a43f18447626f29b43"
+    },
+    {
+      "path": "backend/internal/ai/fingerprint.go",
+      "sha256": "a43dc7b5f458880dcac813ea07ebc25e200d8fc124ea636140e032a07047998e"
+    },
+    {
+      "path": "backend/internal/ai/continuation_test.go",
+      "sha256": "e3e235716adc3bdcb5257f813777c83c93e3ca7828e8986f54eb1d3b2a329884"
+    },
+    {
+      "path": "backend/internal/ai/cr040_test.go",
+      "sha256": "f952a8c8c30b6ca2313728308875d60bf2339f26fd2d3b15e41ff12c176820f3"
+    },
+    {
+      "path": "backend/internal/ai/annotations_test.go",
+      "sha256": "12d84105e550c7d24b4777dd42298cb73fcedf1677b8cb64bf98e51f8c00a5c6"
+    },
+    {
+      "path": "backend/internal/httpapi/generation_handlers.go",
+      "sha256": "eea07ce3f4f80f5424110c366a5ec292c65d2845950ec45206d3a5a67023ea73"
+    },
+    {
+      "path": "backend/internal/httpapi/generation_matrix_integration_test.go",
+      "sha256": "bdee546c7b15863e5a2aa6ffb50084a1af8cc82bf5f47294e432d8352b958908"
+    },
+    {
+      "path": "backend/internal/httpapi/continuation_integration_test.go",
+      "sha256": "fddfda1628d08589856a3e6f481bd3305ef67783f5d47e2f1a55052dcff06e4e"
+    },
+    {
+      "path": "backend/internal/generationtrace/trace.go",
+      "sha256": "e357b184199e0151b215b67f84007314bc2484c10f77ff270debd563b0e3d765"
+    },
+    {
+      "path": "backend/internal/generationevidence/reconstruct.go",
+      "sha256": "940c3671fe44622882b1def7f91320e337af306313d3d0e7e38726940546dbe9"
+    },
+    {
+      "path": "backend/internal/generationevidence/additional_test.go",
+      "sha256": "7aafb006d7fa524eb65056090a469f2dadc06ae5bd6d7e4bd22e8f3c3b0d41c3"
+    },
+    {
+      "path": "backend/internal/diagnostics/commands_test.go",
+      "sha256": "f2236d60a30f94f0770e7da335710ceaee1d95d20a8f182ff88b79c73a9abb50"
+    }
+  ],
+  "remaining": [
+    "No actual provider/schema acceptance or semantic-quality evidence for r9.",
+    "No deployment or release approval inferred.",
+    "Other word-family gaps (safe/safety/safely/safer) remain open.",
+    "Architecture documentation must synchronize the user-approved bounded exception to the previous no-automatic-retry rule.",
+    "No browser/full-site regression or multi-attempt replay platform added."
+  ]
+}

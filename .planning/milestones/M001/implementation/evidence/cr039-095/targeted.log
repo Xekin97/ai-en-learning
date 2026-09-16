@@ -1,0 +1,34 @@
+=== RUN   TestDraftLifecycleWithoutRegistry
+=== RUN   TestDraftLifecycleWithoutRegistry/save_retry_concurrent_and_delete
+=== RUN   TestDraftLifecycleWithoutRegistry/discard_and_save_cannot_resurrect
+=== RUN   TestDraftLifecycleWithoutRegistry/save_versus_discard_serialized
+=== RUN   TestDraftLifecycleWithoutRegistry/expired_pending_and_terminal_tokens
+=== RUN   TestDraftLifecycleWithoutRegistry/active_never_saves
+=== RUN   TestDraftLifecycleWithoutRegistry/provider_failed_never_saves
+=== RUN   TestDraftLifecycleWithoutRegistry/server_failed_never_saves
+=== RUN   TestDraftLifecycleWithoutRegistry/stream_failed_never_saves
+=== RUN   TestDraftLifecycleWithoutRegistry/validation_failed_never_saves
+=== RUN   TestDraftLifecycleWithoutRegistry/user_cancelled_never_saves
+=== RUN   TestDraftLifecycleWithoutRegistry/visitor_claim_after_restart_and_expired_draft
+=== RUN   TestDraftLifecycleWithoutRegistry/cleanup_skips_locked_run_and_later_removes_expired_draft
+--- PASS: TestDraftLifecycleWithoutRegistry (4.82s)
+    --- PASS: TestDraftLifecycleWithoutRegistry/save_retry_concurrent_and_delete (0.04s)
+    --- PASS: TestDraftLifecycleWithoutRegistry/discard_and_save_cannot_resurrect (0.01s)
+    --- PASS: TestDraftLifecycleWithoutRegistry/save_versus_discard_serialized (0.05s)
+    --- PASS: TestDraftLifecycleWithoutRegistry/expired_pending_and_terminal_tokens (0.01s)
+    --- PASS: TestDraftLifecycleWithoutRegistry/active_never_saves (0.00s)
+    --- PASS: TestDraftLifecycleWithoutRegistry/provider_failed_never_saves (0.00s)
+    --- PASS: TestDraftLifecycleWithoutRegistry/server_failed_never_saves (0.00s)
+    --- PASS: TestDraftLifecycleWithoutRegistry/stream_failed_never_saves (0.00s)
+    --- PASS: TestDraftLifecycleWithoutRegistry/validation_failed_never_saves (0.00s)
+    --- PASS: TestDraftLifecycleWithoutRegistry/user_cancelled_never_saves (0.00s)
+    --- PASS: TestDraftLifecycleWithoutRegistry/visitor_claim_after_restart_and_expired_draft (0.02s)
+    --- PASS: TestDraftLifecycleWithoutRegistry/cleanup_skips_locked_run_and_later_removes_expired_draft (0.31s)
+=== RUN   TestDraftProcessHelper
+    draft_process_integration_test.go:26: subprocess helper
+--- SKIP: TestDraftProcessHelper (0.00s)
+=== RUN   TestDraftHTTPAcrossProcessRestart
+    draft_process_integration_test.go:163: same-version process restart: validated draft unchanged; save 201; second restart retry 200; wrong token 404; one batch and unchanged accounting
+--- PASS: TestDraftHTTPAcrossProcessRestart (13.38s)
+PASS
+ok  	wordweave/internal/httpapi	19.227s

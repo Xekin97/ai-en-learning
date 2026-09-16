@@ -1,0 +1,109 @@
+{
+  "date": "2026-09-07T06:28:53.521Z",
+  "agent": "qa-quinn",
+  "result": "PASS",
+  "providerModelID": "deepseek/deepseek-v4-flash-0731",
+  "recoveryProbe": {
+    "startedAt": "2026-09-07T06:28:48.543Z",
+    "completedAt": "2026-09-07T06:28:53.521Z",
+    "timeoutMs": 300000,
+    "attempts": 1,
+    "previousCancelledAttempts": 1,
+    "totalInferenceAttemptsSoFar": 2,
+    "status": 200,
+    "enabled": true
+  },
+  "basicGroup": {
+    "modelAdded": true,
+    "priorModelIDsPreserved": true,
+    "quotaPreserved": true,
+    "maxEntriesPreserved": true,
+    "lengthsPreserved": true
+  },
+  "otherGroupsPreserved": true,
+  "mockModel": {
+    "providerModelID": "provider/integration",
+    "disposition": "disabled_not_deleted"
+  },
+  "modelsAfter": [
+    {
+      "id": "01a06515-4ab4-7bfd-b2e7-92372215f942",
+      "display_name": "UAT deterministic model",
+      "openrouter_model_id": "provider/integration",
+      "enabled": false,
+      "assigned_group_codes": [
+        "visitor",
+        "basic",
+        "pro",
+        "plus"
+      ]
+    },
+    {
+      "id": "01a07a8a-b8d6-739a-ac65-cb37120e3ac4",
+      "display_name": "DeepSeek V4 Flash 0731",
+      "openrouter_model_id": "deepseek/deepseek-v4-flash-0731",
+      "enabled": true,
+      "assigned_group_codes": [
+        "basic"
+      ]
+    }
+  ],
+  "groupsAfter": [
+    {
+      "code": "visitor",
+      "rolling_24h_limit": 5,
+      "max_entries": 5,
+      "allowed_lengths": [
+        "short"
+      ],
+      "model_ids": [
+        "01a06515-4ab4-7bfd-b2e7-92372215f942"
+      ]
+    },
+    {
+      "code": "basic",
+      "rolling_24h_limit": null,
+      "max_entries": 5,
+      "allowed_lengths": [
+        "short",
+        "medium",
+        "long",
+        "xlong"
+      ],
+      "model_ids": [
+        "01a07a8a-b8d6-739a-ac65-cb37120e3ac4",
+        "01a06515-4ab4-7bfd-b2e7-92372215f942"
+      ]
+    },
+    {
+      "code": "pro",
+      "rolling_24h_limit": null,
+      "max_entries": 5,
+      "allowed_lengths": [
+        "short",
+        "medium",
+        "long",
+        "xlong"
+      ],
+      "model_ids": [
+        "01a06515-4ab4-7bfd-b2e7-92372215f942"
+      ]
+    },
+    {
+      "code": "plus",
+      "rolling_24h_limit": null,
+      "max_entries": 5,
+      "allowed_lengths": [
+        "short",
+        "medium",
+        "long",
+        "xlong"
+      ],
+      "model_ids": [
+        "01a06515-4ab4-7bfd-b2e7-92372215f942"
+      ]
+    }
+  ],
+  "automaticRetries": 0,
+  "secretsEmitted": false
+}

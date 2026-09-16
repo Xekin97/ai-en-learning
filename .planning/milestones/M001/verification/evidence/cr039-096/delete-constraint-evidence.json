@@ -1,0 +1,14 @@
+{
+  "date": "2026-09-08T02:47:50.989Z",
+  "postgres_stderr_included": true,
+  "source": "Only ww-qa-cr039-096-db",
+  "lines": [
+    "2026-09-08 02:45:04.204 UTC [560] ERROR:  new row for relation \"visitor_claims\" violates check constraint \"visitor_claims_state_consistent\"",
+    "2026-09-08 02:45:04.204 UTC [560] CONTEXT:  SQL statement \"UPDATE ONLY \"wordweave\".\"visitor_claims\" SET \"consumed_batch_id\" = NULL WHERE $1 OPERATOR(pg_catalog.=) \"consumed_batch_id\"\"",
+    "2026-09-08 02:46:01.622 UTC [819] ERROR:  new row for relation \"visitor_claims\" violates check constraint \"visitor_claims_state_consistent\"",
+    "2026-09-08 02:46:01.622 UTC [819] CONTEXT:  SQL statement \"UPDATE ONLY \"wordweave\".\"visitor_claims\" SET \"consumed_batch_id\" = NULL WHERE $1 OPERATOR(pg_catalog.=) \"consumed_batch_id\"\"",
+    "2026-09-08 02:46:02.779 UTC [866] ERROR:  new row for relation \"visitor_claims\" violates check constraint \"visitor_claims_state_consistent\"",
+    "2026-09-08 02:46:02.779 UTC [866] CONTEXT:  SQL statement \"UPDATE ONLY \"wordweave\".\"visitor_claims\" SET \"consumed_batch_id\" = NULL WHERE $1 OPERATOR(pg_catalog.=) \"consumed_batch_id\"\""
+  ],
+  "original_observation_empty_field_explained": "Initial docker helper captured stdout only; original observation is preserved, this file supplies stderr diagnostics."
+}

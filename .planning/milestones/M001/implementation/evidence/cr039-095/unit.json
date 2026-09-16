@@ -1,0 +1,31 @@
+{
+  "date": "2026-09-08T02:06:32.020Z",
+  "command": [
+    "docker",
+    "run",
+    "--rm",
+    "--network",
+    "none",
+    "-v",
+    "/Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/backend:/src",
+    "-w",
+    "/src",
+    "-v",
+    "wordweave-go-mod:/go/pkg/mod",
+    "-v",
+    "wordweave-go-build:/root/.cache/go-build",
+    "-e",
+    "GOPROXY=off",
+    "-e",
+    "GOSUMDB=off",
+    "golang@sha256:e8c859f5632dcfde7b32d2012b4351728f6437930887c2f6a91ea242459e5514",
+    "go",
+    "test",
+    "-race",
+    "./...",
+    "-count=1"
+  ],
+  "exit_code": 0,
+  "elapsed_ms": 12333,
+  "real_model_calls": 0
+}

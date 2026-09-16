@@ -1,0 +1,53 @@
+{
+  "date": "2026-09-07T02:00:46.550Z",
+  "agent": "qa-quinn",
+  "counts": {
+    "PASS": 6,
+    "FAIL": 1,
+    "ERROR": 0
+  },
+  "checks": [
+    {
+      "id": "wrong current response",
+      "status": "PASS",
+      "actual": 422,
+      "expected": 422
+    },
+    {
+      "id": "error exposed to modal accessibility tree",
+      "status": "PASS",
+      "actual": true,
+      "expected": true
+    },
+    {
+      "id": "cancel after failure restores page access",
+      "status": "PASS",
+      "actual": 0,
+      "expected": 0
+    },
+    {
+      "id": "header fixture created",
+      "status": "PASS",
+      "actual": 201,
+      "expected": 201
+    },
+    {
+      "id": "password204",
+      "status": "PASS",
+      "actual": 204,
+      "expected": 204
+    },
+    {
+      "id": "empty body",
+      "status": "PASS",
+      "actual": 0,
+      "expected": 0
+    },
+    {
+      "id": "private password response cache policy",
+      "status": "FAIL",
+      "actual": null,
+      "expected": "no-store"
+    }
+  ]
+}

@@ -1,0 +1,40 @@
+{
+  "objective": "qa-quinn：用户当前新请求‘我添加了一个gpt-oss的模型，测试一下这个模型’。保持verification质量角色，仅对刚新增模型做两篇真实造文质量测试，不重复全覆盖；这不是延续已耗尽088调用预算，而是新的限定测试请求。你不是唯一工作者，保留其他人的编辑。",
+  "inputs": [
+    ".planning/agt/project.yaml",
+    ".planning/agt/agents.yaml",
+    ".planning/workflow/state.yaml",
+    ".planning/agt/model-routing-v1.lock.json",
+    ".planning/milestones/M001/product/ai-behavior.md",
+    ".planning/milestones/M001/technical/ai-integration.md",
+    ".planning/milestones/M001/technical/api/index.md",
+    ".planning/milestones/M001/verification/ai-quality-088-report.md",
+    ".planning/milestones/M001/verification/ai-quality-088-samples.md",
+    ".planning/milestones/M001/verification/evidence/ai-quality-088/quality-samples.mjs",
+    ".planning/milestones/M001/verification/evidence/ai-quality-088/quality-samples-resume.mjs"
+  ],
+  "write_scope": [
+    ".planning/milestones/M001/verification/evidence/ai-quality-gpt-oss-090",
+    ".planning/milestones/M001/verification/ai-quality-gpt-oss-090-report.md",
+    ".planning/milestones/M001/verification/ai-quality-gpt-oss-090-samples.md",
+    ".planning/milestones/M001/verification/ai-evaluation.md",
+    ".planning/milestones/M001/verification/uat.md",
+    ".planning/milestones/M001/handoffs/verification.md"
+  ],
+  "risk": "high",
+  "prior_attempts": [],
+  "acceptance": [
+    "完整使用agt-verify-milestone及必读引用/模型路由；当前quality/base qa-quinn匹配且用户已明确请求本轮测试，不切阶段、不改state/registry/history或Git。",
+    "root已只读查实时数据库：唯一GPT-oss为id=01a07ab4-dfe9-7fd6-8022-285d685763d0，display_name=GPT-oss，provider_model_id=openai/gpt-oss-safeguard-20b，enabled=true；分配registered（API basic）组，active生成0。必须再以正式API确认精确模型和当前组允许，不替换为普通gpt-oss-20b/120b。",
+    "仅复用现有加密OpenRouter配置，不读取/复制/记录Key原文，不换Key/model、不enable重复probe、不改任何组、部署/容器/数据库schema或生产源码/prompt/validator。遇到用户并发修改或原凭据登录失败不要重置已有账号。",
+    "最多2次真实造文调用，无自动重试/隐式fallback。S1：alleviate,undermine,facilitate,deteriorate,perceive，zh/discussion/medium。S2：sustainable,prevalent,vulnerable,ambiguous,coherent，en/news/long。输入、prompt/validator版本与088同类样本一致。只做已有词库精确查验和API配置选择，不改变5词/长度权益。",
+    "QA客户端等待300000ms，保留实际耗时；不修改产品响应时限。每篇完成即保存安全JSON原文与终态并发简短消息；单篇content_validation_failed不阻止下一不同输入样本，不重发失败输入。真实auth/余额/服务不可用、超时后仍active则停止并说明，不能并发重发。",
+    "可新建一个明确专用账号uat_ai_quality_090并仅在它的Library保存有效两篇；使用内存随机本地密码，不记录/分发，不重置088或任何已有账号。新会话结束正常logout；不要为测试向已有用户库写入或删除资料。用户通过Markdown和admin Users查看样本。",
+    "复用088现有安全采样脚本模式，做最小脚本改动而非从头大量重写；保留旧证据不覆盖。错误只用受控单行摘要，不输出raw Playwright exception（Cookie/CSRF可能在其中）、SSE generation_token、系统prompt或API Key；失败原候选不可见则明确不可评估，不推测具体释义内容。",
+    "按当前用户核心质量范围逐篇人工评阅：词义和搭配、自然度、连贯性、场景、全五词覆盖且不要求正文顺序/词形、释义语言、提示短语、1–3篇章标签、最低词数、无整篇/提示翻译。S2新闻未核验来源不能断言真实或虚构；若出现无根据具名来源须提示仅作AI学习示例。",
+    "与088同配置样本作有限并列观察，不用2次样本宣称模型全面优劣/稳定性，尤其S1旧raw释义不可见不能直接归因旧模型。用户添加的是safeguard版本，不能从名称先判测试失败，按实际响应给结论。",
+    "不跑unit/lint/build、全站UI/权限/复习/认证矩阵、不做全文代码审查。不更改产品需求或修复。输出精炼专项报告、完整可读样本与机器结果；原有QA文件仅加小段当前结果且明确以下是历史，不长篇复述全部旧阶段。",
+    "保留必要数据/模型/组/凭据元数据一致性摘要、实际调用计数及active终态，provider cost/usage未观测则unknown。资料保存按产品额度/计数语义区分，不将quota_refunded称供应商退款。完成交接即停，未授权额外模型调用或发布。"
+  ],
+  "report": ["exact_model", "calls", "sample_results", "raw_samples", "quality_findings", "bounded_comparison", "data_preservation", "limitations", "original_report", "actual_model_and_usage_if_observed"]
+}

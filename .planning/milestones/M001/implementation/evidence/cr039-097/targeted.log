@@ -1,0 +1,41 @@
+=== RUN   TestClaimedBatchDeletionHTTP
+2026/09/08 03:33:21 INFO http_request request_id=req_tZ2LBUHiYYCZSIMJ162VSQ method=GET route=/api/v1/bootstrap status=200 duration_ms=6
+2026/09/08 03:33:22 INFO http_request request_id=req_jtbk0vdUtIKiXl2uEBTD8g method=POST route=/api/v1/auth/login status=200 duration_ms=1339
+2026/09/08 03:33:22 INFO http_request request_id=req_mUAu5nu0iecW3H_2EBlVgw method=POST route=/api/v1/visitor-claims/consume status=200 duration_ms=39
+2026/09/08 03:33:22 INFO http_request request_id=req_OZIumGqpu1X-X4w9N4aqkg method=POST route=/api/v1/visitor-claims/consume status=200 duration_ms=3
+2026/09/08 03:33:22 INFO http_request request_id=req_tcDeV0ioTAmQnFPSpEJX0A method=POST route=/api/v1/me/review-sessions status=201 duration_ms=6
+=== RUN   TestClaimedBatchDeletionHTTP/missing_CSRF_cannot_delete
+2026/09/08 03:33:22 INFO http_request request_id=req_zv5rtlPO5N6t0T2BwJOp2g method=DELETE route=/api/v1/me/batches/{batch_id} status=403 duration_ms=0
+=== RUN   TestClaimedBatchDeletionHTTP/other_account_cannot_delete
+2026/09/08 03:33:22 INFO http_request request_id=req_xQ2AhXVoqATqUwPOYIKg6A method=GET route=/api/v1/bootstrap status=200 duration_ms=0
+2026/09/08 03:33:24 INFO http_request request_id=req_Zgig-lSAUynHu69fer4bAQ method=POST route=/api/v1/auth/register status=201 duration_ms=1610
+2026/09/08 03:33:24 INFO http_request request_id=req_z2cIlUlo4DlU-y5vBSzLrA method=DELETE route=/api/v1/me/batches/{batch_id} status=404 duration_ms=1
+=== RUN   TestClaimedBatchDeletionHTTP/visitor_cannot_delete
+2026/09/08 03:33:24 INFO http_request request_id=req_icwazTyFkuLKhTj8yYh6nA method=GET route=/api/v1/bootstrap status=200 duration_ms=0
+2026/09/08 03:33:24 INFO http_request request_id=req_g0FMFRTHDiGwNiB1rW0Czg method=DELETE route=/api/v1/me/batches/{batch_id} status=401 duration_ms=0
+2026/09/08 03:33:24 INFO http_request request_id=req_2Ijga17yKQKwhNiFFGatpQ method=GET route=/api/v1/me/batches/{batch_id} status=200 duration_ms=3
+2026/09/08 03:33:24 INFO http_request request_id=req_8OUCZ-v8PH_XuSLeeW77mw method=POST route=/api/v1/visitor-claims/consume status=200 duration_ms=1
+2026/09/08 03:33:24 INFO http_request request_id=req_DKN26k_JTSuf0rdrSrCWIg method=DELETE route=/api/v1/me/batches/{batch_id} status=204 duration_ms=2
+2026/09/08 03:33:24 INFO http_request request_id=req_eUuzk0KAi-Fv-RLzu21xVQ method=GET route=/api/v1/me/batches/{batch_id} status=404 duration_ms=0
+2026/09/08 03:33:24 INFO http_request request_id=req_Zb3cGz6dWZXgK8lEZ4zJlw method=POST route=/api/v1/visitor-claims/consume status=404 duration_ms=0
+2026/09/08 03:33:24 INFO http_request request_id=req_kMHmToS1U6PZBhNTABa_LQ method=POST route=/api/v1/visitor-claims/consume status=404 duration_ms=1
+2026/09/08 03:33:24 INFO http_request request_id=req_d3vIUuzGVOSKg86dItRWCQ method=DELETE route=/api/v1/me/batches/{batch_id} status=404 duration_ms=1
+2026/09/08 03:33:24 INFO http_request request_id=req_hMqwaBV3eXq6hAiB_ppmGg method=GET route=/api/v1/me/batches status=200 duration_ms=2
+2026/09/08 03:33:24 INFO http_request request_id=req_H2YYDp1H8ljz6gW93dqfaw method=GET route=/api/v1/me/review-sessions/{session_id} status=404 duration_ms=0
+2026/09/08 03:33:24 INFO http_request request_id=req_Yog7MOgb-h1qh9hbp_hkag method=POST route=/api/v1/me/review-sessions status=404 duration_ms=1
+--- PASS: TestClaimedBatchDeletionHTTP (10.62s)
+    --- PASS: TestClaimedBatchDeletionHTTP/missing_CSRF_cannot_delete (0.00s)
+    --- PASS: TestClaimedBatchDeletionHTTP/other_account_cannot_delete (1.62s)
+    --- PASS: TestClaimedBatchDeletionHTTP/visitor_cannot_delete (0.00s)
+=== RUN   TestClaimedBatchDeletionRollback
+--- PASS: TestClaimedBatchDeletionRollback (0.53s)
+=== RUN   TestClaimedBatchDeletionConcurrency
+=== RUN   TestClaimedBatchDeletionConcurrency/delete_wins_before_blocked_claim_replay
+=== RUN   TestClaimedBatchDeletionConcurrency/concurrent_deletes_and_claim_replays
+--- PASS: TestClaimedBatchDeletionConcurrency (0.59s)
+    --- PASS: TestClaimedBatchDeletionConcurrency/delete_wins_before_blocked_claim_replay (0.05s)
+    --- PASS: TestClaimedBatchDeletionConcurrency/concurrent_deletes_and_claim_replays (0.13s)
+=== RUN   TestClaimedBatchDeletionRetention
+--- PASS: TestClaimedBatchDeletionRetention (0.80s)
+PASS
+ok  	wordweave/internal/httpapi	13.582s

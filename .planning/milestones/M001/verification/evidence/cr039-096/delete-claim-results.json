@@ -1,0 +1,159 @@
+{
+  "date": "2026-09-08T02:46:02.900Z",
+  "counts": {
+    "PASS": 5,
+    "FAIL": 3,
+    "ERROR": 0
+  },
+  "checks": [
+    {
+      "id": "L14/ordinary-claim-delete/single-call",
+      "status": "PASS",
+      "actual": {
+        "before": 27,
+        "after": 28
+      }
+    },
+    {
+      "id": "L14/ordinary-claim-delete/valid",
+      "status": "PASS",
+      "actual": {
+        "terminal": "generation.validated",
+        "http": 200
+      }
+    },
+    {
+      "id": "L14/ordinary-claim-delete/stream-exact",
+      "status": "PASS",
+      "actual": {
+        "equal": true
+      }
+    },
+    {
+      "id": "L14/normal-owned-claim-preconditions",
+      "status": "PASS",
+      "actual": {
+        "saved_status": 200,
+        "before_status": 200,
+        "row": {
+          "claim_status": "consumed",
+          "batch_present": true,
+          "same_owner": true,
+          "drafts": 0
+        }
+      }
+    },
+    {
+      "id": "L14/claimed-batch-delete-204",
+      "status": "FAIL",
+      "actual": {
+        "status": 500,
+        "body": {
+          "type": "https://wordweave.example/problems/internal-error",
+          "title": "Internal error",
+          "status": 500,
+          "code": "internal_error",
+          "detail": "The request could not be completed.",
+          "request_id": "req_P_W7ktbVIK2Gl4aI6ylJ8w"
+        }
+      }
+    },
+    {
+      "id": "L14/deleted-batch-not-readable",
+      "status": "FAIL",
+      "actual": {
+        "status": 200
+      }
+    },
+    {
+      "id": "L14/restart-does-not-block-delete",
+      "status": "FAIL",
+      "actual": {
+        "status": 500,
+        "body": {
+          "type": "https://wordweave.example/problems/internal-error",
+          "title": "Internal error",
+          "status": 500,
+          "code": "internal_error",
+          "detail": "The request could not be completed.",
+          "request_id": "req_4azR8xjOACOfwMrrYmYYOw"
+        }
+      }
+    },
+    {
+      "id": "L14/no-extra-provider-call",
+      "status": "PASS",
+      "actual": {
+        "before": 28,
+        "after": 28
+      }
+    }
+  ],
+  "traces": [
+    {
+      "id": "L14/ordinary-claim-delete",
+      "http": 200,
+      "terminal": "generation.validated",
+      "result": {
+        "passage": "vulnerability. The local team discussed a practical plan for the community. Everyone had time to listen carefully, ask questions, and share useful ideas. A clear record helped residents follow the discussion and compare possible approaches. The meeting ended calmly, with an agreement to gather more information before making a final decision about the project.",
+        "tags": [
+          "Community"
+        ],
+        "targets": [
+          {
+            "entry": "vulnerable",
+            "contextual_meaning": "Easily harmed or affected by danger",
+            "hint_phrase": "vulnerability during a discussion",
+            "hint_blanks": [
+              {
+                "start": 0,
+                "end": 13
+              }
+            ],
+            "occurrences": [
+              {
+                "surface": "vulnerability",
+                "start": 0,
+                "end": 13
+              }
+            ]
+          }
+        ]
+      },
+      "failure": {
+        "run_id": "01a07ee8-7fb0-7818-8109-19437714ca1d",
+        "result": {
+          "passage": "vulnerability. The local team discussed a practical plan for the community. Everyone had time to listen carefully, ask questions, and share useful ideas. A clear record helped residents follow the discussion and compare possible approaches. The meeting ended calmly, with an agreement to gather more information before making a final decision about the project.",
+          "tags": [
+            "Community"
+          ],
+          "targets": [
+            {
+              "entry": "vulnerable",
+              "contextual_meaning": "Easily harmed or affected by danger",
+              "hint_phrase": "vulnerability during a discussion",
+              "hint_blanks": [
+                {
+                  "start": 0,
+                  "end": 13
+                }
+              ],
+              "occurrences": [
+                {
+                  "surface": "vulnerability",
+                  "start": 0,
+                  "end": 13
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "started": {
+        "run_id": "01a07ee8-7fb0-7818-8109-19437714ca1d"
+      },
+      "elapsed_ms": 196,
+      "deltas": "vulnerability. The local team discussed a practical plan for the community. Everyone had time to listen carefully, ask questions, and share useful ideas. A clear record helped residents follow the discussion and compare possible approaches. The meeting ended calmly, with an agreement to gather more information before making a final decision about the project."
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "recorded_at": "2026-09-07T03:43:10Z",
+  "agent": "qa-quinn",
+  "policy": "Every raw failure/error remains preserved; corrected evidence is a separate file and does not rewrite the first result.",
+  "items": [
+    {
+      "raw": "password-webkit-darwin-native-results.json",
+      "result": "40 PASS / 0 FAIL / 2 ERROR",
+      "classification": "qa_method",
+      "cause": "Playwright WebKit Network.getResponseBody cannot read a successful navigation-cleared 204 response body.",
+      "correction": "The browser flow continues to assert success/session/UI behavior; body/header contract is asserted through real proxy API. A unique-account native rerun is password-wk3_20260907z-results.json (56/56)."
+    },
+    {
+      "raw": "password-webkit-darwin-native-recheck-results.json",
+      "result": "0 PASS / 4 FAIL / 2 ERROR",
+      "classification": "qa_fixture",
+      "cause": "The run-label truncation generated usernames already used by the first native run, yielding register 409, login 401, then a dependent timeout.",
+      "correction": "A genuinely unique run label produced password-wk3_20260907z-results.json (56/56); no assertion was weakened."
+    },
+    {
+      "raw": "no-content-proxy-results.json",
+      "result": "63 PASS / 5 FAIL / 0 ERROR",
+      "classification": "qa_request_contract",
+      "cause": "The bodyless batch DELETE omitted the global write-request Content-Type: application/json and correctly received 400 malformed_request; retained DB rows proved no destructive partial effect.",
+      "correction": "The same retained batch/review fixture with the required header passed all 9 targeted assertions in batch-delete-contract-recheck2-results.json."
+    },
+    {
+      "raw": "batch-delete-recheck-results.json and batch-delete-contract-recheck-results.json",
+      "result": "each 1 PASS / 0 FAIL / 1 ERROR",
+      "classification": "qa_schema_diagnostic",
+      "cause": "Two read-only SQL verification queries used guessed table/column names.",
+      "correction": "Information-schema inspection selected learning_batches.owner_id and review_session_batches.session_id; final corrected evidence is 9/9."
+    },
+    {
+      "raw": "auth-regression-chromium-darwin-results.json",
+      "result": "110 PASS / 0 FAIL / 1 ERROR",
+      "classification": "qa_fixture",
+      "cause": "The administrator branch accidentally used the learner fixture password.",
+      "correction": "admin-role-recheck-results.json uses the isolated administrator credential and passes 2/2."
+    },
+    {
+      "raw": "linux-geometry-comparison.json",
+      "result": "0 PASS / 0 FAIL / 1 ERROR",
+      "classification": "qa_method",
+      "cause": "Browser-origin 3300 did not satisfy the stack's CSRF origin 6101 during UI login.",
+      "correction": "The corrected same-context run authenticates through the real API with the approved origin and passes 10/10 in linux-geometry-comparison-recheck.json."
+    },
+    {
+      "raw": "process-deviations.json",
+      "classification": "qa_process_deviation",
+      "cause": "An unavailable image tag started a Docker pull before immediate interruption.",
+      "correction": "No tag was installed. Every effective Linux run used the pre-existing pinned local image ID; cleanup proves all fixed images remain and the unavailable tag is absent."
+    }
+  ],
+  "product_failures_remaining": []
+}

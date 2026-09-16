@@ -1,0 +1,24 @@
+=== RUN   TestQA107CutoverAndCurrentMeaningHTTP
+2026/09/09 11:13:46 INFO http_request request_id=req_yROUDw9M2vTAQGQzc3rhgw method=GET route=/api/v1/bootstrap status=200 duration_ms=1
+2026/09/09 11:13:46 INFO http_request request_id=req_-soc1tdAB1DinUkvvAE2KA method=POST route=/api/v1/auth/login status=200 duration_ms=86
+2026/09/09 11:13:46 INFO http_request request_id=req_hzQx4Ve940gbkQcGu20GuQ method=GET route=/api/v1/bootstrap status=200 duration_ms=0
+2026/09/09 11:13:46 INFO http_request request_id=req_klS7dyDgyZLJ1ajLKrx8tA method=POST route=/api/v1/auth/register status=201 duration_ms=92
+2026/09/09 11:13:46 INFO http_request request_id=req_lKPLHwbgJgPN22sXVf61uQ method=GET route=/api/v1/me/batches status=401 duration_ms=2
+2026/09/09 11:13:46 INFO http_request request_id=req_3ah9ATTcHdQwQBi02cnbMQ method=GET route=/api/v1/admin/* status=401 duration_ms=1
+2026/09/09 11:13:46 INFO http_request request_id=req_p3M0o0UJpZ3GORWLrgEB6Q method=GET route=/api/v1/bootstrap status=200 duration_ms=1
+2026/09/09 11:13:47 INFO http_request request_id=req_5ERbnUWFXjXzFIZweG-18Q method=POST route=/api/v1/auth/login status=200 duration_ms=74
+2026/09/09 11:13:47 INFO http_request request_id=req_l0Htxk7gsnozCJNnErTURw method=GET route=/api/v1/admin/models status=200 duration_ms=2
+    qa107_overlay_test.go:95: QA107-01 PASS old learner/admin sessions invalid; original administrator password and model/credential retained
+2026/09/09 11:13:47 INFO http_request request_id=req_QDwz8Uj0YdUk8eWLUyTQqg method=GET route=/api/v1/bootstrap status=200 duration_ms=0
+2026/09/09 11:13:47 INFO http_request request_id=req_VyqF5SggOC9KjS_jmTeyVg method=POST route=/api/v1/generations/stream status=422 duration_ms=5
+2026/09/09 11:13:47 INFO http_request request_id=req_ojSUFyFif62Es7YeE2JhkQ method=POST route=/api/v1/auth/register status=201 duration_ms=79
+2026/09/09 11:13:47 INFO http_request request_id=req_qOpQFDuc2IG-NNB5XHRiXQ method=POST route=/api/v1/generations/stream status=422 duration_ms=3
+    qa107_overlay_test.go:105: QA107-02 PASS visitor/new learner preflight rejects unassigned model; zero calls and generation events
+2026/09/09 11:13:47 INFO http_request request_id=req_4nDC9B9g6nfQmWzhTiGLEQ method=PUT route=/api/v1/admin/groups/{group_code} status=200 duration_ms=10
+2026/09/09 11:13:47 WARN ai_candidate_validation_failed run_id=01a08428-4694-7739-b01d-8d3201facd0e model_id=01a08428-447a-7166-b9a4-6223e86494a4 prompt_version=m001-v4 validator_version=m001-v4-wn31-r1 category=content_invalid reason=content_validation_failed target_index=-1
+2026/09/09 11:13:47 INFO http_request request_id=req_89XNTP1FS_n2tKHR4rswsg method=POST route=/api/v1/generations/stream status=200 duration_ms=10
+    qa107_overlay_test.go:117: candidate did not validate
+--- FAIL: TestQA107CutoverAndCurrentMeaningHTTP (1.19s)
+FAIL
+FAIL	wordweave/internal/httpapi	1.617s
+FAIL

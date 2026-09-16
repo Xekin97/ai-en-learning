@@ -1,0 +1,10 @@
+{
+  "date": "2026-09-07T06:22:30.498Z",
+  "commands": [
+    "docker inspect <four existing UAT containers>",
+    "docker exec wordweave_uat-postgres-1 pg_dump <private 0600 file>",
+    "docker compose --project-name wordweave_uat -f compose.yaml -f <ai-quality-088>/compose-backend.yaml up -d --no-deps --no-build --pull never backend",
+    "docker exec wordweave_uat-nginx-1 nginx -s reload"
+  ],
+  "sensitiveRuntimeValues": "resolved only in memory and not recorded"
+}

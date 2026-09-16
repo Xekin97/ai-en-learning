@@ -1,0 +1,132 @@
+{
+  "date": "2026-09-07T10:12:09.698Z",
+  "checks": [
+    {
+      "id": "C39-15/same-v3-restart-control/single-call",
+      "status": "PASS",
+      "actual": {
+        "before": 43,
+        "after": 44
+      }
+    },
+    {
+      "id": "C39-15/same-v3-restart-control/valid",
+      "status": "PASS",
+      "actual": {
+        "terminal": "generation.validated",
+        "http": 200
+      }
+    },
+    {
+      "id": "C39-15/same-v3-restart-control/stream-exact",
+      "status": "PASS",
+      "actual": {
+        "equal": true
+      }
+    },
+    {
+      "id": "C39-15/valid-draft-after-same-image-restart",
+      "status": "FAIL",
+      "actual": {
+        "status": 404,
+        "draft_before": {
+          "drafts": 1,
+          "payload_md5": "309914fdf0d59a90edbdcc0b91cb1204",
+          "expires_at": "2026-09-07T10:42:08.550141+00:00"
+        },
+        "draft_after": {
+          "drafts": 1,
+          "payload_md5": "309914fdf0d59a90edbdcc0b91cb1204",
+          "expires_at": "2026-09-07T10:42:08.550141+00:00"
+        }
+      }
+    },
+    {
+      "id": "C39-16/restart-no-provider-call",
+      "status": "PASS",
+      "actual": {
+        "calls_before": 44,
+        "calls_after": 44
+      }
+    },
+    {
+      "id": "C39-15/stored-draft-intact",
+      "status": "PASS",
+      "actual": {
+        "equal": true
+      }
+    }
+  ],
+  "traces": [
+    {
+      "id": "C39-15/same-v3-restart-control",
+      "http": 200,
+      "terminal": "generation.validated",
+      "result": {
+        "passage": "vulnerability. The local team discussed a practical plan for the community. Everyone had time to listen carefully, ask questions, and share useful ideas. A clear record helped residents follow the discussion and compare possible approaches. The meeting ended calmly, with an agreement to gather more information before making a final decision about the project.",
+        "tags": [
+          "Community"
+        ],
+        "targets": [
+          {
+            "entry": "vulnerable",
+            "contextual_meaning": "Easily harmed or affected by danger",
+            "hint_phrase": "vulnerability during a discussion",
+            "hint_blanks": [
+              {
+                "start": 0,
+                "end": 13
+              }
+            ],
+            "occurrences": [
+              {
+                "surface": "vulnerability",
+                "start": 0,
+                "end": 13
+              }
+            ]
+          }
+        ]
+      },
+      "failure": {
+        "run_id": "01a07b5a-9230-7c26-b4f6-1f8a9c381675",
+        "result": {
+          "passage": "vulnerability. The local team discussed a practical plan for the community. Everyone had time to listen carefully, ask questions, and share useful ideas. A clear record helped residents follow the discussion and compare possible approaches. The meeting ended calmly, with an agreement to gather more information before making a final decision about the project.",
+          "tags": [
+            "Community"
+          ],
+          "targets": [
+            {
+              "entry": "vulnerable",
+              "contextual_meaning": "Easily harmed or affected by danger",
+              "hint_phrase": "vulnerability during a discussion",
+              "hint_blanks": [
+                {
+                  "start": 0,
+                  "end": 13
+                }
+              ],
+              "occurrences": [
+                {
+                  "surface": "vulnerability",
+                  "start": 0,
+                  "end": 13
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "started": {
+        "run_id": "01a07b5a-9230-7c26-b4f6-1f8a9c381675"
+      },
+      "elapsed_ms": 197,
+      "deltas": "vulnerability. The local team discussed a practical plan for the community. Everyone had time to listen carefully, ask questions, and share useful ideas. A clear record helped residents follow the discussion and compare possible approaches. The meeting ended calmly, with an agreement to gather more information before making a final decision about the project."
+    }
+  ],
+  "counts": {
+    "PASS": 5,
+    "FAIL": 1,
+    "ERROR": 0
+  }
+}

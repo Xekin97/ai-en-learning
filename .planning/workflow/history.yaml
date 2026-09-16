@@ -1,0 +1,3621 @@
+schema_version: 1
+profile: "consumer-ai-web@1.0.0"
+milestone: "M001"
+
+transitions:
+  - id: "TRANSITION-M001-001"
+    from: null
+    to: "product-planning"
+    active_role: "product/to-c"
+    active_agent: "product-maya"
+    confirmed_by: "user"
+    decision_id: "INIT-PROFILE-001"
+    timestamp: "2026-08-28T11:00:33Z"
+    evidence: ".planning/agt/project.yaml"
+
+  - id: "TRANSITION-M001-002"
+    from: "product-planning"
+    to: "uiux-design"
+    active_role: "uiux/base"
+    active_agent: "designer-tony"
+    confirmed_by: "user"
+    decision_id: "TRANSITION-M001-002"
+    timestamp: "2026-08-29T03:40:36Z"
+    evidence: ".planning/milestones/M001/reviews/product-planning.md"
+
+  - id: "TRANSITION-M001-003"
+    from: "uiux-design"
+    to: "product-planning"
+    active_role: "product/to-c"
+    active_agent: "product-maya"
+    confirmed_by: "user"
+    decision_id: "TRANSITION-M001-003"
+    timestamp: "2026-08-29T06:05:31Z"
+    evidence: ".planning/milestones/M001/reviews/uiux-design.md"
+    change_requests:
+      - "CR-001"
+      - "CR-002"
+
+  - id: "TRANSITION-M001-004"
+    from: "product-planning"
+    to: "uiux-design"
+    active_role: "uiux/base"
+    active_agent: "designer-tony"
+    confirmed_by: "user"
+    decision_id: "TRANSITION-M001-004"
+    timestamp: "2026-08-29T06:23:43Z"
+    evidence: ".planning/milestones/M001/reviews/product-planning-revision.md"
+
+  - id: "TRANSITION-M001-005"
+    from: "uiux-design"
+    to: "product-planning"
+    active_role: "product/to-c"
+    active_agent: "product-maya"
+    confirmed_by: "user"
+    decision_id: "TRANSITION-M001-005"
+    timestamp: "2026-08-29T07:16:10Z"
+    evidence: ".planning/milestones/M001/reviews/uiux-design-brand-revision.md"
+    change_requests:
+      - "CR-003"
+
+  - id: "TRANSITION-M001-006"
+    from: "product-planning"
+    to: "uiux-design"
+    active_role: "uiux/base"
+    active_agent: "designer-tony"
+    confirmed_by: "user"
+    decision_id: "TRANSITION-M001-006"
+    timestamp: "2026-08-29T07:20:20Z"
+    evidence: ".planning/milestones/M001/reviews/product-planning-brand-revision.md"
+    resolved_change_requests:
+      - "CR-003"
+
+  - id: "TRANSITION-M001-007"
+    from: "uiux-design"
+    to: "product-planning"
+    active_role: "product/to-c"
+    active_agent: "product-maya"
+    confirmed_by: "user"
+    decision_id: "TRANSITION-M001-007"
+    timestamp: "2026-08-29T07:49:50Z"
+    evidence: ".planning/milestones/M001/reviews/uiux-design-single-batch-review-revision.md"
+    change_requests:
+      - "CR-004"
+
+  - id: "TRANSITION-M001-008"
+    from: "product-planning"
+    to: "uiux-design"
+    active_role: "uiux/base"
+    active_agent: "designer-tony"
+    confirmed_by: "user"
+    decision_id: "TRANSITION-M001-008"
+    timestamp: "2026-08-29T08:00:35Z"
+    evidence: ".planning/milestones/M001/reviews/product-planning-single-batch-review-revision.md"
+    resolved_change_requests:
+      - "CR-004"
+
+  - id: "TRANSITION-M001-009"
+    from: "uiux-design"
+    to: "technical-design"
+    active_role: "dba/base"
+    active_agent: "dba-diana"
+    confirmed_by: "user"
+    decision_id: "TRANSITION-M001-009"
+    timestamp: "2026-08-29T08:30:43Z"
+    evidence: ".planning/milestones/M001/reviews/uiux-design-final.md"
+
+  - id: "TRANSITION-M001-010"
+    from: "technical-design"
+    to: "technical-design"
+    activation_type: "role-switch"
+    previous_role: "dba/base"
+    previous_agent: "dba-diana"
+    active_role: "backend-architect/base"
+    active_agent: "backend-alex"
+    confirmed_by: "user"
+    decision_id: "TRANSITION-M001-010"
+    timestamp: "2026-08-29T08:52:53Z"
+    evidence: ".planning/milestones/M001/handoffs/database.md"
+
+  - id: "TRANSITION-M001-011"
+    from: "technical-design"
+    to: "technical-design"
+    activation_type: "role-switch"
+    previous_role: "backend-architect/base"
+    previous_agent: "backend-alex"
+    active_role: "frontend-architect/base"
+    active_agent: "frontend-bob"
+    confirmed_by: "user"
+    decision_id: "TRANSITION-M001-011"
+    timestamp: "2026-08-29T09:48:32Z"
+    evidence: ".planning/milestones/M001/handoffs/backend-architecture.md"
+
+  - id: "TRANSITION-M001-012"
+    from: "technical-design"
+    to: "technical-design"
+    activation_type: "role-switch"
+    previous_role: "frontend-architect/base"
+    previous_agent: "frontend-bob"
+    active_role: "backend-architect/base"
+    active_agent: "backend-alex"
+    confirmed_by: "user"
+    decision_id: "TRANSITION-M001-012"
+    timestamp: "2026-08-31T02:21:50Z"
+    evidence: ".planning/milestones/M001/changes/CR-005.md"
+    change_requests:
+      - "CR-005"
+
+  - id: "TRANSITION-M001-013"
+    from: "technical-design"
+    to: "technical-design"
+    activation_type: "role-switch"
+    previous_role: "backend-architect/base"
+    previous_agent: "backend-alex"
+    active_role: "frontend-architect/base"
+    active_agent: "frontend-bob"
+    confirmed_by: "user"
+    decision_id: "TRANSITION-M001-013"
+    timestamp: "2026-08-31T02:33:39Z"
+    evidence: ".planning/milestones/M001/handoffs/backend-architecture.md"
+    resolved_change_requests:
+      - "CR-005"
+
+  - id: "TRANSITION-M001-014"
+    from: "technical-design"
+    to: "implementation"
+    previous_role: "frontend-architect/base"
+    previous_agent: "frontend-bob"
+    active_role: "backend-implementer/base"
+    active_agent: "backend-ethan"
+    confirmed_by: "user"
+    decision_id: "TRANSITION-M001-014"
+    timestamp: "2026-08-31T05:43:38Z"
+    evidence: ".planning/milestones/M001/reviews/technical-design.md"
+
+  - id: "TRANSITION-M001-015"
+    from: "implementation"
+    to: "product-planning"
+    previous_role: "backend-implementer/base"
+    previous_agent: "backend-ethan"
+    active_role: "product/to-c"
+    active_agent: "product-maya"
+    confirmed_by: "user"
+    decision_id: "TRANSITION-M001-015"
+    timestamp: "2026-08-31T09:54:08Z"
+    evidence: ".planning/milestones/M001/reviews/implementation-hint-occurrence-revision.md"
+    change_requests:
+      - "CR-006"
+
+  - id: "TRANSITION-M001-016"
+    from: "product-planning"
+    to: "uiux-design"
+    previous_role: "product/to-c"
+    previous_agent: "product-maya"
+    active_role: "uiux/base"
+    active_agent: "designer-tony"
+    confirmed_by: "user"
+    decision_id: "TRANSITION-M001-016"
+    timestamp: "2026-08-31T10:10:18Z"
+    evidence: ".planning/milestones/M001/reviews/product-planning-hint-occurrences-revision.md"
+    resolved_change_requests:
+      - "CR-006"
+
+  - id: "TRANSITION-M001-017"
+    from: "uiux-design"
+    to: "technical-design"
+    previous_role: "uiux/base"
+    previous_agent: "designer-tony"
+    active_role: "dba/base"
+    active_agent: "dba-diana"
+    confirmed_by: "user"
+    decision_id: "TRANSITION-M001-017"
+    timestamp: "2026-08-31T11:19:06Z"
+    evidence: ".planning/milestones/M001/reviews/uiux-design-hint-occurrences-revision.md"
+    decisions:
+      - "DEC-032"
+
+  - id: "TRANSITION-M001-018"
+    from: "technical-design"
+    to: "technical-design"
+    activation_type: "role-switch"
+    previous_role: "dba/base"
+    previous_agent: "dba-diana"
+    active_role: "backend-architect/base"
+    active_agent: "backend-alex"
+    confirmed_by: "user"
+    decision_id: "TRANSITION-M001-018"
+    timestamp: "2026-08-31T11:51:36Z"
+    evidence: ".planning/milestones/M001/handoffs/database.md"
+    approved_artifacts:
+      - ".planning/milestones/M001/technical/database.md"
+    decisions:
+      - "DEC-032"
+
+  - id: "TRANSITION-M001-019"
+    from: "technical-design"
+    to: "technical-design"
+    activation_type: "role-switch"
+    previous_role: "backend-architect/base"
+    previous_agent: "backend-alex"
+    active_role: "frontend-architect/base"
+    active_agent: "frontend-bob"
+    confirmed_by: "user"
+    decision_id: "TRANSITION-M001-019"
+    timestamp: "2026-09-01T06:34:56Z"
+    evidence: ".planning/milestones/M001/handoffs/backend-architecture.md"
+    approved_artifacts:
+      - ".planning/milestones/M001/technical/backend.md"
+      - ".planning/milestones/M001/technical/ai-integration.md"
+      - ".planning/milestones/M001/technical/api/index.md"
+      - ".planning/milestones/M001/handoffs/backend-architecture.md"
+    decisions:
+      - "DEC-032"
+
+  - id: "TRANSITION-M001-020"
+    from: "technical-design"
+    to: "technical-design"
+    activation_type: "role-switch"
+    previous_role: "frontend-architect/base"
+    previous_agent: "frontend-bob"
+    active_role: "backend-architect/base"
+    active_agent: "backend-alex"
+    confirmed_by: "user"
+    decision_id: "TRANSITION-M001-020"
+    timestamp: "2026-09-01T07:12:22Z"
+    evidence: ".planning/milestones/M001/changes/CR-007.md"
+    change_requests:
+      - "CR-007"
+    decisions:
+      - "DEC-033"
+
+  - id: "TRANSITION-M001-021"
+    from: "technical-design"
+    to: "technical-design"
+    activation_type: "artifact-approval"
+    previous_role: "backend-architect/base"
+    previous_agent: "backend-alex"
+    active_role: "backend-architect/base"
+    active_agent: "backend-alex"
+    confirmed_by: "user"
+    decision_id: "TRANSITION-M001-021"
+    timestamp: "2026-09-01T07:34:22Z"
+    evidence: ".planning/milestones/M001/reviews/backend-deployment-revision.md"
+    approved_artifacts:
+      - ".planning/milestones/M001/technical/deployment.md"
+      - ".planning/milestones/M001/technical/backend.md"
+      - ".planning/milestones/M001/technical/api/index.md"
+      - ".planning/milestones/M001/handoffs/backend-architecture.md"
+    change_requests:
+      - "CR-007"
+    decisions:
+      - "DEC-034"
+
+  - id: "TRANSITION-M001-022"
+    from: "technical-design"
+    to: "technical-design"
+    activation_type: "role-switch"
+    previous_role: "backend-architect/base"
+    previous_agent: "backend-alex"
+    active_role: "frontend-architect/base"
+    active_agent: "frontend-bob"
+    confirmed_by: "user"
+    decision_id: "TRANSITION-M001-022"
+    timestamp: "2026-09-01T07:37:08Z"
+    evidence: ".planning/milestones/M001/reviews/backend-deployment-revision.md"
+    approved_artifacts:
+      - ".planning/milestones/M001/technical/deployment.md"
+      - ".planning/milestones/M001/technical/backend.md"
+      - ".planning/milestones/M001/technical/api/index.md"
+      - ".planning/milestones/M001/handoffs/backend-architecture.md"
+    change_requests:
+      - "CR-007"
+    decisions:
+      - "DEC-033"
+      - "DEC-034"
+
+  - id: "TRANSITION-M001-023"
+    from: "technical-design"
+    to: "implementation"
+    previous_role: "frontend-architect/base"
+    previous_agent: "frontend-bob"
+    active_role: "backend-implementer/base"
+    active_agent: "backend-ethan"
+    confirmed_by: "user"
+    decision_id: "TRANSITION-M001-023"
+    timestamp: "2026-09-01T07:52:32Z"
+    evidence: ".planning/milestones/M001/reviews/technical-design-deployment-revision.md"
+    approved_artifacts:
+      - ".planning/milestones/M001/technical/database.md"
+      - ".planning/milestones/M001/technical/deployment.md"
+      - ".planning/milestones/M001/technical/backend.md"
+      - ".planning/milestones/M001/technical/ai-integration.md"
+      - ".planning/milestones/M001/technical/api/index.md"
+      - ".planning/milestones/M001/technical/frontend.md"
+      - ".planning/milestones/M001/handoffs/database.md"
+      - ".planning/milestones/M001/handoffs/backend-architecture.md"
+      - ".planning/milestones/M001/handoffs/frontend-architecture.md"
+    resolved_change_requests:
+      - "CR-007"
+    decisions:
+      - "DEC-032"
+      - "DEC-033"
+      - "DEC-034"
+
+  - id: "TRANSITION-M001-024"
+    from: "implementation"
+    to: "implementation"
+    activation_type: "role-switch"
+    previous_role: "backend-implementer/base"
+    previous_agent: "backend-ethan"
+    active_role: "frontend-implementer/base"
+    active_agent: "frontend-claire"
+    confirmed_by: "user"
+    decision_id: "TRANSITION-M001-024"
+    timestamp: "2026-09-01T08:38:40Z"
+    evidence: ".planning/milestones/M001/handoffs/backend-implementation.md"
+    approved_artifacts:
+      - ".planning/milestones/M001/implementation/backend-validation.md"
+      - ".planning/milestones/M001/handoffs/backend-implementation.md"
+
+  - id: "TRANSITION-M001-025"
+    from: "implementation"
+    to: "verification"
+    previous_role: "frontend-implementer/base"
+    previous_agent: "frontend-claire"
+    active_role: "quality/base"
+    active_agent: "qa-quinn"
+    confirmed_by: "user"
+    decision_id: "TRANSITION-M001-025"
+    timestamp: "2026-09-01T09:36:28Z"
+    evidence: ".planning/milestones/M001/reviews/implementation.md"
+    approved_artifacts:
+      - ".planning/milestones/M001/implementation/backend-validation.md"
+      - ".planning/milestones/M001/implementation/frontend-validation.md"
+      - ".planning/milestones/M001/handoffs/backend-implementation.md"
+      - ".planning/milestones/M001/handoffs/frontend-implementation.md"
+
+  - id: "TRANSITION-M001-026"
+    from: "verification"
+    to: "implementation"
+    previous_role: "quality/base"
+    previous_agent: "qa-quinn"
+    active_role: "backend-implementer/base"
+    active_agent: "backend-ethan"
+    confirmed_by: "user"
+    decision_id: "TRANSITION-M001-026"
+    timestamp: "2026-09-02T02:03:25Z"
+    evidence: ".planning/milestones/M001/reviews/verification.md"
+    change_requests:
+      - "CR-008"
+      - "CR-009"
+      - "CR-010"
+
+  - id: "TRANSITION-M001-027"
+    from: "implementation"
+    to: "implementation"
+    activation_type: "role-switch"
+    previous_role: "backend-implementer/base"
+    previous_agent: "backend-ethan"
+    active_role: "frontend-implementer/base"
+    active_agent: "frontend-claire"
+    confirmed_by: "user"
+    decision_id: "TRANSITION-M001-027"
+    timestamp: "2026-09-02T02:23:19Z"
+    evidence: ".planning/milestones/M001/reviews/implementation-backend-cr008-revision.md"
+    approved_artifacts:
+      - ".planning/milestones/M001/implementation/backend-validation.md"
+      - ".planning/milestones/M001/handoffs/backend-implementation.md"
+    resolved_change_requests:
+      - "CR-008"
+    change_requests:
+      - "CR-009"
+      - "CR-010"
+
+  - id: "TRANSITION-M001-028"
+    from: "implementation"
+    to: "verification"
+    previous_role: "frontend-implementer/base"
+    previous_agent: "frontend-claire"
+    active_role: "quality/base"
+    active_agent: "qa-quinn"
+    confirmed_by: "user"
+    decision_id: "TRANSITION-M001-028"
+    timestamp: "2026-09-02T03:03:19Z"
+    evidence: ".planning/milestones/M001/reviews/implementation-cr009-cr010-revision.md"
+    approved_artifacts:
+      - ".planning/milestones/M001/implementation/backend-validation.md"
+      - ".planning/milestones/M001/implementation/frontend-validation.md"
+      - ".planning/milestones/M001/handoffs/backend-implementation.md"
+      - ".planning/milestones/M001/handoffs/frontend-implementation.md"
+    resolved_change_requests:
+      - "CR-009"
+      - "CR-010"
+
+  - id: "TRANSITION-M001-029"
+    from: "verification"
+    to: "implementation"
+    previous_role: "quality/base"
+    previous_agent: "qa-quinn"
+    active_role: "frontend-implementer/base"
+    active_agent: "frontend-claire"
+    confirmed_by: "user"
+    decision_id: "TRANSITION-M001-029"
+    timestamp: "2026-09-02T03:40:29Z"
+    evidence: ".planning/milestones/M001/reviews/verification-cr011-cr012-rework.md"
+    change_requests:
+      - "CR-011"
+      - "CR-012"
+
+  - id: "TRANSITION-M001-030"
+    from: "implementation"
+    to: "verification"
+    previous_role: "frontend-implementer/base"
+    previous_agent: "frontend-claire"
+    active_role: "quality/base"
+    active_agent: "qa-quinn"
+    confirmed_by: "user"
+    decision_id: "TRANSITION-M001-030"
+    timestamp: "2026-09-02T04:29:47Z"
+    evidence: ".planning/milestones/M001/reviews/implementation-cr011-cr012-revision.md"
+    approved_artifacts:
+      - ".planning/milestones/M001/implementation/backend-validation.md"
+      - ".planning/milestones/M001/implementation/frontend-validation.md"
+      - ".planning/milestones/M001/handoffs/backend-implementation.md"
+      - ".planning/milestones/M001/handoffs/frontend-implementation.md"
+    resolved_change_requests:
+      - "CR-011"
+      - "CR-012"
+
+  - id: "TRANSITION-M001-031"
+    from: "verification"
+    to: "implementation"
+    previous_role: "quality/base"
+    previous_agent: "qa-quinn"
+    active_role: "frontend-implementer/base"
+    active_agent: "frontend-claire"
+    confirmed_by: "user"
+    decision_id: "TRANSITION-M001-031"
+    timestamp: "2026-09-02T05:34:48Z"
+    evidence: ".planning/milestones/M001/reviews/verification-ui-design-rework.md"
+    change_requests:
+      - "CR-013"
+      - "CR-014"
+
+  - id: "TRANSITION-M001-032"
+    from: "implementation"
+    to: "verification"
+    previous_role: "frontend-implementer/base"
+    previous_agent: "frontend-claire"
+    active_role: "quality/base"
+    active_agent: "qa-quinn"
+    confirmed_by: "user"
+    decision_id: "TRANSITION-M001-032"
+    timestamp: "2026-09-02T06:30:50Z"
+    evidence: ".planning/milestones/M001/reviews/implementation-ui-rework.md"
+    approved_artifacts:
+      - ".planning/milestones/M001/implementation/backend-validation.md"
+      - ".planning/milestones/M001/implementation/frontend-validation.md"
+      - ".planning/milestones/M001/handoffs/backend-implementation.md"
+      - ".planning/milestones/M001/handoffs/frontend-implementation.md"
+    resolved_change_requests:
+      - "CR-013"
+      - "CR-014"
+
+  - id: "TRANSITION-M001-033"
+    from: "verification"
+    to: "product-planning"
+    previous_role: "quality/base"
+    previous_agent: "qa-quinn"
+    active_role: "product/to-c"
+    active_agent: "product-maya"
+    confirmed_by: "user"
+    decision_id: "TRANSITION-M001-033"
+    timestamp: "2026-09-02T07:40:46Z"
+    evidence: ".planning/milestones/M001/reviews/verification-final-uat-rework.md"
+    change_requests:
+      - "CR-015"
+      - "CR-016"
+      - "CR-017"
+      - "CR-018"
+      - "CR-019"
+
+  - id: "TRANSITION-M001-034"
+    from: "product-planning"
+    to: "uiux-design"
+    previous_role: "product/to-c"
+    previous_agent: "product-maya"
+    active_role: "uiux/base"
+    active_agent: "designer-tony"
+    confirmed_by: "user"
+    decision_id: "TRANSITION-M001-034"
+    timestamp: "2026-09-02T08:09:05Z"
+    evidence: ".planning/milestones/M001/reviews/product-planning-cloze-grouping-revision.md"
+    approved_artifacts:
+      - ".planning/milestones/M001/product/overview.md"
+      - ".planning/milestones/M001/product/data-assets.md"
+      - ".planning/milestones/M001/product/abilities.md"
+      - ".planning/milestones/M001/product/pages/index.md"
+      - ".planning/milestones/M001/product/ai-behavior.md"
+      - ".planning/milestones/M001/handoffs/product.md"
+    decisions:
+      - "DEC-035"
+    resolved_change_requests:
+      - "CR-015"
+    change_requests:
+      - "CR-016"
+      - "CR-017"
+      - "CR-018"
+      - "CR-019"
+
+  - id: "TRANSITION-M001-035"
+    from: "uiux-design"
+    to: "technical-design"
+    previous_role: "uiux/base"
+    previous_agent: "designer-tony"
+    active_role: "dba/base"
+    active_agent: "dba-diana"
+    confirmed_by: "user"
+    decision_id: "TRANSITION-M001-035"
+    timestamp: "2026-09-02T08:42:55Z"
+    evidence: ".planning/milestones/M001/reviews/uiux-design-cloze-and-users-revision.md"
+    approved_artifacts:
+      - ".planning/milestones/M001/design/theme.css"
+      - ".planning/milestones/M001/design/prototype/index.html"
+      - ".planning/milestones/M001/design/interactions.md"
+      - ".planning/milestones/M001/design/responsive-accessibility.md"
+      - ".planning/milestones/M001/design/traceability.md"
+      - ".planning/milestones/M001/design/revision-validation.md"
+      - ".planning/milestones/M001/handoffs/uiux.md"
+    decisions:
+      - "DEC-035"
+    resolved_change_requests:
+      - "CR-016"
+      - "CR-019"
+    change_requests:
+      - "CR-017"
+      - "CR-018"
+
+  - id: "TRANSITION-M001-036"
+    from: "technical-design"
+    to: "technical-design"
+    activation_type: "role-switch"
+    previous_role: "dba/base"
+    previous_agent: "dba-diana"
+    active_role: "backend-architect/base"
+    active_agent: "backend-alex"
+    confirmed_by: "user"
+    decision_id: "TRANSITION-M001-036"
+    timestamp: "2026-09-02T08:55:06Z"
+    evidence: ".planning/milestones/M001/handoffs/database.md"
+    approved_artifacts:
+      - ".planning/milestones/M001/technical/database.md"
+      - ".planning/milestones/M001/handoffs/database.md"
+    decisions:
+      - "DEC-035"
+    change_requests:
+      - "CR-017"
+      - "CR-018"
+
+  - id: "TRANSITION-M001-037"
+    from: "technical-design"
+    to: "technical-design"
+    activation_type: "role-switch"
+    previous_role: "backend-architect/base"
+    previous_agent: "backend-alex"
+    active_role: "frontend-architect/base"
+    active_agent: "frontend-bob"
+    confirmed_by: "user"
+    decision_id: "TRANSITION-M001-037"
+    timestamp: "2026-09-02T09:05:45Z"
+    evidence: ".planning/milestones/M001/handoffs/backend-architecture.md"
+    approved_artifacts:
+      - ".planning/milestones/M001/technical/backend.md"
+      - ".planning/milestones/M001/technical/api/index.md"
+      - ".planning/milestones/M001/technical/ai-integration.md"
+      - ".planning/milestones/M001/technical/deployment.md"
+      - ".planning/milestones/M001/handoffs/backend-architecture.md"
+    decisions:
+      - "DEC-035"
+    change_requests:
+      - "CR-017"
+      - "CR-018"
+
+  - id: "TRANSITION-M001-038"
+    from: "technical-design"
+    to: "implementation"
+    previous_role: "frontend-architect/base"
+    previous_agent: "frontend-bob"
+    active_role: "backend-implementer/base"
+    active_agent: "backend-ethan"
+    confirmed_by: "user"
+    decision_id: "TRANSITION-M001-038"
+    timestamp: "2026-09-02T09:25:50Z"
+    evidence: ".planning/milestones/M001/reviews/technical-design-cloze-grouping-revision.md"
+    approved_artifacts:
+      - ".planning/milestones/M001/technical/database.md"
+      - ".planning/milestones/M001/technical/backend.md"
+      - ".planning/milestones/M001/technical/api/index.md"
+      - ".planning/milestones/M001/technical/ai-integration.md"
+      - ".planning/milestones/M001/technical/deployment.md"
+      - ".planning/milestones/M001/technical/frontend.md"
+      - ".planning/milestones/M001/handoffs/database.md"
+      - ".planning/milestones/M001/handoffs/backend-architecture.md"
+      - ".planning/milestones/M001/handoffs/frontend-architecture.md"
+    decisions:
+      - "DEC-035"
+    change_requests:
+      - "CR-017"
+      - "CR-018"
+
+  - id: "TRANSITION-M001-039"
+    from: "implementation"
+    to: "implementation"
+    activation_type: "role-switch"
+    previous_role: "backend-implementer/base"
+    previous_agent: "backend-ethan"
+    active_role: "frontend-implementer/base"
+    active_agent: "frontend-claire"
+    confirmed_by: "user"
+    decision_id: "TRANSITION-M001-039"
+    timestamp: "2026-09-02T10:00:40Z"
+    evidence: ".planning/milestones/M001/reviews/implementation-backend-v13-revision.md"
+    approved_artifacts:
+      - ".planning/milestones/M001/implementation/backend-validation.md"
+      - ".planning/milestones/M001/handoffs/backend-implementation.md"
+    decisions:
+      - "DEC-035"
+    change_requests:
+      - "CR-017"
+      - "CR-018"
+
+  - id: "TRANSITION-M001-040"
+    from: "implementation"
+    to: "verification"
+    previous_role: "frontend-implementer/base"
+    previous_agent: "frontend-claire"
+    active_role: "quality/base"
+    active_agent: "qa-quinn"
+    confirmed_by: "user"
+    decision_id: "TRANSITION-M001-040"
+    timestamp: "2026-09-03T02:08:36Z"
+    evidence: ".planning/milestones/M001/reviews/implementation-frontend-v13-revision.md"
+    approved_artifacts:
+      - ".planning/milestones/M001/implementation/backend-validation.md"
+      - ".planning/milestones/M001/implementation/frontend-validation.md"
+      - ".planning/milestones/M001/handoffs/backend-implementation.md"
+      - ".planning/milestones/M001/handoffs/frontend-implementation.md"
+    decisions:
+      - "DEC-035"
+    resolved_change_requests:
+      - "CR-017"
+      - "CR-018"
+
+  - id: "TRANSITION-M001-041"
+    from: "verification"
+    to: "technical-design"
+    previous_role: "quality/base"
+    previous_agent: "qa-quinn"
+    active_role: "dba/base"
+    active_agent: "dba-diana"
+    confirmed_by: "user"
+    decision_id: "TRANSITION-M001-041"
+    timestamp: "2026-09-03T03:18:13Z"
+    evidence: ".planning/milestones/M001/reviews/verification-page103-contract-rework.md"
+    change_requests:
+      - "CR-020"
+      - "CR-021"
+      - "CR-022"
+
+  - id: "TRANSITION-M001-042"
+    from: "technical-design"
+    to: "technical-design"
+    activation_type: "role-switch"
+    previous_role: "dba/base"
+    previous_agent: "dba-diana"
+    active_role: "backend-architect/base"
+    active_agent: "backend-alex"
+    confirmed_by: "user"
+    decision_id: "TRANSITION-M001-042"
+    timestamp: "2026-09-04T06:02:15Z"
+    evidence: ".planning/milestones/M001/handoffs/database.md"
+    approved_artifacts:
+      - ".planning/milestones/M001/technical/database.md"
+      - ".planning/milestones/M001/handoffs/database.md"
+    change_requests:
+      - "CR-020"
+      - "CR-021"
+      - "CR-022"
+
+  - id: "TRANSITION-M001-043"
+    from: "technical-design"
+    to: "technical-design"
+    activation_type: "role-switch"
+    previous_role: "backend-architect/base"
+    previous_agent: "backend-alex"
+    active_role: "frontend-architect/base"
+    active_agent: "frontend-bob"
+    confirmed_by: "user"
+    decision_id: "TRANSITION-M001-043"
+    timestamp: "2026-09-04T06:12:06Z"
+    evidence: ".planning/milestones/M001/handoffs/backend-architecture.md"
+    approved_artifacts:
+      - ".planning/milestones/M001/technical/backend.md"
+      - ".planning/milestones/M001/technical/api/index.md"
+      - ".planning/milestones/M001/technical/ai-integration.md"
+      - ".planning/milestones/M001/technical/deployment.md"
+      - ".planning/milestones/M001/handoffs/backend-architecture.md"
+    change_requests:
+      - "CR-020"
+      - "CR-021"
+      - "CR-022"
+
+  - id: "TRANSITION-M001-044"
+    from: "technical-design"
+    to: "implementation"
+    previous_role: "frontend-architect/base"
+    previous_agent: "frontend-bob"
+    active_role: "backend-implementer/base"
+    active_agent: "backend-ethan"
+    confirmed_by: "user"
+    decision_id: "TRANSITION-M001-044"
+    timestamp: "2026-09-04T06:29:38Z"
+    evidence: ".planning/milestones/M001/reviews/technical-design-page103-revision.md"
+    approved_artifacts:
+      - ".planning/milestones/M001/technical/database.md"
+      - ".planning/milestones/M001/technical/backend.md"
+      - ".planning/milestones/M001/technical/api/index.md"
+      - ".planning/milestones/M001/technical/ai-integration.md"
+      - ".planning/milestones/M001/technical/deployment.md"
+      - ".planning/milestones/M001/technical/frontend.md"
+      - ".planning/milestones/M001/handoffs/database.md"
+      - ".planning/milestones/M001/handoffs/backend-architecture.md"
+      - ".planning/milestones/M001/handoffs/frontend-architecture.md"
+    change_requests:
+      - "CR-020"
+      - "CR-021"
+      - "CR-022"
+
+  - id: "TRANSITION-M001-045"
+    from: "implementation"
+    to: "implementation"
+    activation_type: "role-switch"
+    previous_role: "backend-implementer/base"
+    previous_agent: "backend-ethan"
+    active_role: "frontend-implementer/base"
+    active_agent: "frontend-claire"
+    confirmed_by: "user"
+    decision_id: "TRANSITION-M001-045"
+    timestamp: "2026-09-04T06:55:16Z"
+    evidence: ".planning/milestones/M001/reviews/implementation-backend-cr021-revision.md"
+    approved_artifacts:
+      - ".planning/milestones/M001/implementation/backend-validation.md"
+      - ".planning/milestones/M001/implementation/page103-query-plan.md"
+      - ".planning/milestones/M001/handoffs/backend-implementation.md"
+    change_requests:
+      - "CR-020"
+      - "CR-021"
+      - "CR-022"
+
+  - id: "TRANSITION-M001-046"
+    from: "implementation"
+    to: "verification"
+    previous_role: "frontend-implementer/base"
+    previous_agent: "frontend-claire"
+    active_role: "quality/base"
+    active_agent: "qa-quinn"
+    confirmed_by: "user"
+    decision_id: "TRANSITION-M001-046"
+    timestamp: "2026-09-04T07:19:19Z"
+    evidence: ".planning/milestones/M001/reviews/implementation-frontend-cr020-cr022-revision.md"
+    approved_artifacts:
+      - ".planning/milestones/M001/implementation/backend-validation.md"
+      - ".planning/milestones/M001/implementation/page103-query-plan.md"
+      - ".planning/milestones/M001/implementation/frontend-validation.md"
+      - ".planning/milestones/M001/handoffs/backend-implementation.md"
+      - ".planning/milestones/M001/handoffs/frontend-implementation.md"
+    change_requests:
+      - "CR-020"
+      - "CR-021"
+      - "CR-022"
+
+  - id: "TRANSITION-M001-047"
+    from: "verification"
+    to: "implementation"
+    previous_role: "quality/base"
+    previous_agent: "qa-quinn"
+    active_role: "frontend-implementer/base"
+    active_agent: "frontend-claire"
+    confirmed_by: "user"
+    decision_id: "TRANSITION-M001-047"
+    timestamp: "2026-09-04T07:34:40Z"
+    evidence: ".planning/milestones/M001/reviews/verification-cr023-rework.md"
+    approved_artifacts:
+      - ".planning/milestones/M001/verification/coverage-matrix.md"
+      - ".planning/milestones/M001/verification/report.md"
+      - ".planning/milestones/M001/verification/ai-evaluation.md"
+      - ".planning/milestones/M001/verification/ui-design-audit.md"
+      - ".planning/milestones/M001/verification/uat.md"
+      - ".planning/milestones/M001/handoffs/verification.md"
+      - ".planning/milestones/M001/verification/evidence/cr020-cr022-retest.md"
+    resolved_change_requests:
+      - "CR-020"
+      - "CR-021"
+    change_requests:
+      - "CR-022"
+      - "CR-023"
+
+  - id: "TRANSITION-M001-048"
+    from: "implementation"
+    to: "verification"
+    previous_role: "frontend-implementer/base"
+    previous_agent: "frontend-claire"
+    active_role: "quality/base"
+    active_agent: "qa-quinn"
+    confirmed_by: "user"
+    decision_id: "TRANSITION-M001-048"
+    timestamp: "2026-09-04T07:53:35Z"
+    evidence: ".planning/milestones/M001/reviews/implementation-frontend-cr023-revision.md"
+    approved_artifacts:
+      - ".planning/milestones/M001/implementation/backend-validation.md"
+      - ".planning/milestones/M001/implementation/page103-query-plan.md"
+      - ".planning/milestones/M001/implementation/frontend-validation.md"
+      - ".planning/milestones/M001/implementation/frontend-cr023-worktree-plan.md"
+      - ".planning/milestones/M001/handoffs/backend-implementation.md"
+      - ".planning/milestones/M001/handoffs/frontend-implementation.md"
+    resolved_change_requests:
+      - "CR-020"
+      - "CR-021"
+    change_requests:
+      - "CR-022"
+      - "CR-023"
+
+  - id: "TRANSITION-M001-049"
+    from: "verification"
+    to: "implementation"
+    previous_role: "quality/base"
+    previous_agent: "qa-quinn"
+    active_role: "frontend-implementer/base"
+    active_agent: "frontend-claire"
+    confirmed_by: "user"
+    decision_id: "TRANSITION-M001-049"
+    timestamp: "2026-09-04T08:08:22Z"
+    evidence: ".planning/milestones/M001/reviews/verification-cr023-return-matrix-rework.md"
+    approved_artifacts:
+      - ".planning/milestones/M001/verification/coverage-matrix.md"
+      - ".planning/milestones/M001/verification/report.md"
+      - ".planning/milestones/M001/verification/ai-evaluation.md"
+      - ".planning/milestones/M001/verification/ui-design-audit.md"
+      - ".planning/milestones/M001/verification/uat.md"
+      - ".planning/milestones/M001/handoffs/verification.md"
+      - ".planning/milestones/M001/verification/evidence/cr020-cr022-retest.md"
+      - ".planning/milestones/M001/verification/evidence/cr023-return-retest.md"
+    resolved_change_requests:
+      - "CR-020"
+      - "CR-021"
+    change_requests:
+      - "CR-022"
+      - "CR-023"
+
+  - id: "TRANSITION-M001-050"
+    from: "implementation"
+    to: "verification"
+    previous_role: "frontend-implementer/base"
+    previous_agent: "frontend-claire"
+    active_role: "quality/base"
+    active_agent: "qa-quinn"
+    confirmed_by: "user"
+    decision_id: "TRANSITION-M001-050"
+    timestamp: "2026-09-04T08:22:12Z"
+    evidence: ".planning/milestones/M001/reviews/implementation-frontend-cr023-second-revision.md"
+    approved_artifacts:
+      - ".planning/milestones/M001/implementation/backend-validation.md"
+      - ".planning/milestones/M001/implementation/page103-query-plan.md"
+      - ".planning/milestones/M001/implementation/frontend-validation.md"
+      - ".planning/milestones/M001/implementation/frontend-cr023-second-worktree-plan.md"
+      - ".planning/milestones/M001/handoffs/backend-implementation.md"
+      - ".planning/milestones/M001/handoffs/frontend-implementation.md"
+    resolved_change_requests:
+      - "CR-020"
+      - "CR-021"
+    change_requests:
+      - "CR-022"
+      - "CR-023"
+
+  - id: "TRANSITION-M001-051"
+    from: "verification"
+    to: "implementation"
+    previous_role: "quality/base"
+    previous_agent: "qa-quinn"
+    active_role: "frontend-implementer/base"
+    active_agent: "frontend-claire"
+    confirmed_by: "user"
+    decision_id: "TRANSITION-M001-051"
+    timestamp: "2026-09-04T09:04:57Z"
+    evidence: ".planning/milestones/M001/reviews/verification-user-uat-regressions-rework.md"
+    approved_artifacts:
+      - ".planning/milestones/M001/verification/coverage-matrix.md"
+      - ".planning/milestones/M001/verification/report.md"
+      - ".planning/milestones/M001/verification/ai-evaluation.md"
+      - ".planning/milestones/M001/verification/uat.md"
+      - ".planning/milestones/M001/handoffs/verification.md"
+      - ".planning/milestones/M001/verification/evidence/user-uat-visual-regressions-2026-09-04.md"
+    change_requests:
+      - "CR-024"
+      - "CR-025"
+      - "CR-026"
+      - "CR-027"
+
+  - id: "TRANSITION-M001-052"
+    from: "implementation"
+    to: "verification"
+    previous_role: "frontend-implementer/base"
+    previous_agent: "frontend-claire"
+    active_role: "quality/base"
+    active_agent: "qa-quinn"
+    confirmed_by: "user"
+    decision_id: "TRANSITION-M001-052"
+    timestamp: "2026-09-04T09:39:55Z"
+    evidence: ".planning/milestones/M001/reviews/implementation-frontend-cr024-cr027-revision.md"
+    approved_artifacts:
+      - ".planning/milestones/M001/implementation/backend-validation.md"
+      - ".planning/milestones/M001/implementation/frontend-validation.md"
+      - ".planning/milestones/M001/implementation/frontend-cr024-cr027-worktree-plan.md"
+      - ".planning/milestones/M001/handoffs/backend-implementation.md"
+      - ".planning/milestones/M001/handoffs/frontend-implementation.md"
+    change_requests:
+      - "CR-024"
+      - "CR-025"
+      - "CR-026"
+      - "CR-027"
+
+  - id: "TRANSITION-M001-053"
+    from: "verification"
+    to: "implementation"
+    previous_role: "quality/base"
+    previous_agent: "qa-quinn"
+    active_role: "frontend-implementer/base"
+    active_agent: "frontend-claire"
+    confirmed_by: "user"
+    decision_id: "TRANSITION-M001-053"
+    timestamp: "2026-09-04T10:22:08Z"
+    evidence: ".planning/milestones/M001/reviews/verification-cr024-residual-rework.md"
+    approved_artifacts:
+      - ".planning/milestones/M001/verification/coverage-matrix.md"
+      - ".planning/milestones/M001/verification/report.md"
+      - ".planning/milestones/M001/verification/ai-evaluation.md"
+      - ".planning/milestones/M001/verification/ui-design-audit.md"
+      - ".planning/milestones/M001/verification/uat.md"
+      - ".planning/milestones/M001/handoffs/verification.md"
+      - ".planning/milestones/M001/verification/evidence/cr024-cr027-retest.md"
+    resolved_change_requests:
+      - "CR-025"
+      - "CR-026"
+      - "CR-027"
+    change_requests:
+      - "CR-024"
+
+  - id: "TRANSITION-M001-054"
+    from: "implementation"
+    to: "verification"
+    previous_role: "frontend-implementer/base"
+    previous_agent: "frontend-claire"
+    active_role: "quality/base"
+    active_agent: "qa-quinn"
+    confirmed_by: "user"
+    decision_id: "TRANSITION-M001-054"
+    timestamp: "2026-09-05T02:31:03Z"
+    evidence: ".planning/milestones/M001/reviews/implementation-frontend-cr024-residual-revision.md"
+    approved_artifacts:
+      - ".planning/milestones/M001/implementation/backend-validation.md"
+      - ".planning/milestones/M001/implementation/frontend-validation.md"
+      - ".planning/milestones/M001/implementation/frontend-cr024-residual-worktree-plan.md"
+      - ".planning/milestones/M001/handoffs/backend-implementation.md"
+      - ".planning/milestones/M001/handoffs/frontend-implementation.md"
+    resolved_change_requests:
+      - "CR-025"
+      - "CR-026"
+      - "CR-027"
+    change_requests:
+      - "CR-024"
+
+  - id: "TRANSITION-M001-055"
+    from: "verification"
+    to: "implementation"
+    previous_role: "quality/base"
+    previous_agent: "qa-quinn"
+    active_role: "frontend-implementer/base"
+    active_agent: "frontend-claire"
+    confirmed_by: "user"
+    authorization: "Standing user authorization: continue development and independent testing until testing finishes"
+    decision_id: "TRANSITION-M001-055"
+    timestamp: "2026-09-05T02:36:02.951Z"
+    evidence: ".planning/milestones/M001/reviews/verification-cr024-dialog-spacing-rework.md"
+    change_requests:
+      - "CR-024"
+
+  - id: "TRANSITION-M001-056"
+    from: "implementation"
+    to: "verification"
+    previous_role: "frontend-implementer/base"
+    previous_agent: "frontend-claire"
+    active_role: "quality/base"
+    active_agent: "qa-quinn"
+    confirmed_by: "user"
+    authorization: "Standing user authorization: continue development and independent testing until testing finishes"
+    decision_id: "TRANSITION-M001-056"
+    timestamp: "2026-09-05T02:39:19Z"
+    evidence: ".planning/milestones/M001/reviews/implementation-frontend-cr024-dialog-spacing-revision.md"
+    approved_artifacts:
+      - ".planning/milestones/M001/implementation/backend-validation.md"
+      - ".planning/milestones/M001/implementation/frontend-validation.md"
+      - ".planning/milestones/M001/handoffs/backend-implementation.md"
+      - ".planning/milestones/M001/handoffs/frontend-implementation.md"
+    change_requests:
+      - "CR-024"
+
+  - id: "TRANSITION-M001-057"
+    from: "verification"
+    to: "implementation"
+    previous_role: "quality/base"
+    previous_agent: "qa-quinn"
+    active_role: "frontend-implementer/base"
+    active_agent: "frontend-claire"
+    confirmed_by: "user"
+    authorization: "Standing user authorization: continue development and independent testing until testing finishes"
+    decision_id: "TRANSITION-M001-057"
+    timestamp: "2026-09-05T02:44:14Z"
+    evidence: ".planning/milestones/M001/reviews/verification-cr028-login-locale-rework.md"
+    resolved_change_requests:
+      - "CR-024"
+    change_requests:
+      - "CR-028"
+
+  - id: "TRANSITION-M001-058"
+    from: "implementation"
+    to: "verification"
+    previous_role: "frontend-implementer/base"
+    previous_agent: "frontend-claire"
+    active_role: "quality/base"
+    active_agent: "qa-quinn"
+    confirmed_by: "user"
+    authorization: "Standing user authorization: continue development and independent testing until testing finishes"
+    decision_id: "TRANSITION-M001-058"
+    timestamp: "2026-09-05T02:45:56Z"
+    evidence: ".planning/milestones/M001/reviews/implementation-frontend-cr028-login-locale-revision.md"
+    approved_artifacts:
+      - ".planning/milestones/M001/implementation/backend-validation.md"
+      - ".planning/milestones/M001/implementation/frontend-validation.md"
+      - ".planning/milestones/M001/handoffs/backend-implementation.md"
+      - ".planning/milestones/M001/handoffs/frontend-implementation.md"
+    change_requests:
+      - "CR-028"
+
+  - id: "TRANSITION-M001-059"
+    from: "verification"
+    to: "uiux-design"
+    previous_role: "quality/base"
+    previous_agent: "qa-quinn"
+    active_role: "uiux/base"
+    active_agent: "designer-tony"
+    confirmed_by: "user"
+    authorization: "用户在明确的有限 UI/UX 返工确认提问后回复：下一步"
+    decision_id: "TRANSITION-M001-059"
+    timestamp: "2026-09-05T03:24:08Z"
+    evidence: ".planning/milestones/M001/reviews/verification-cr031-uiux-rework.md"
+    reviewed_artifacts:
+      - ".planning/milestones/M001/verification/coverage-matrix.md"
+      - ".planning/milestones/M001/verification/report.md"
+      - ".planning/milestones/M001/verification/ai-evaluation.md"
+      - ".planning/milestones/M001/verification/uat.md"
+      - ".planning/milestones/M001/handoffs/verification.md"
+      - ".planning/milestones/M001/verification/ui-design-audit.md"
+      - ".planning/milestones/M001/verification/evidence/uat-detail-regressions-2026-09-05.md"
+    change_requests:
+      - "CR-029"
+      - "CR-030"
+      - "CR-031"
+    revision_scope:
+      - "CR-031"
+
+  - id: "TRANSITION-M001-060"
+    from: "uiux-design"
+    to: "technical-design"
+    previous_role: "uiux/base"
+    previous_agent: "designer-tony"
+    active_role: "frontend-architect/base"
+    active_agent: "frontend-bob"
+    confirmed_by: "user"
+    authorization: "用户批准 CR-031/032 新设计及其最小范围前端技术交接"
+    decision_id: "TRANSITION-M001-060"
+    timestamp: "2026-09-05T05:49:25Z"
+    evidence: ".planning/milestones/M001/reviews/uiux-design-cr031-cr032-revision.md"
+    approved_artifacts:
+      - ".planning/milestones/M001/design/theme.css"
+      - ".planning/milestones/M001/design/prototype/index.html"
+      - ".planning/milestones/M001/design/prototype/app.js"
+      - ".planning/milestones/M001/design/prototype/i18n.js"
+      - ".planning/milestones/M001/design/prototype/reader-fixtures.js"
+      - ".planning/milestones/M001/design/interactions.md"
+      - ".planning/milestones/M001/design/responsive-accessibility.md"
+      - ".planning/milestones/M001/design/traceability.md"
+      - ".planning/milestones/M001/design/cr031-cr032-interaction-contract.md"
+      - ".planning/milestones/M001/design/cr031-cr032-validation.md"
+      - ".planning/milestones/M001/design/evidence/cr031-cr032-results.json"
+      - ".planning/milestones/M001/handoffs/uiux.md"
+    design_approved_change_requests:
+      - "CR-031"
+      - "CR-032"
+    change_requests:
+      - "CR-029"
+      - "CR-030"
+      - "CR-031"
+      - "CR-032"
+    revision_scope:
+      - "frontend-architecture"
+    preserved_approval_records:
+      - "TRANSITION-M001-042"
+      - "TRANSITION-M001-043"
+
+  - id: "TRANSITION-M001-061"
+    from: "technical-design"
+    to: "technical-design"
+    operation: "recover-or-rollback"
+    activation_type: "role-switch"
+    previous_role: "frontend-architect/base"
+    previous_agent: "frontend-bob"
+    active_role: "backend-architect/base"
+    active_agent: "backend-alex"
+    confirmed_by: "user"
+    authorization: "用户批准 CR-029–032 前端方案及 CR-033 最小后端只读额度契约扩展"
+    decision_id: "TRANSITION-M001-061"
+    timestamp: "2026-09-05T06:16:57Z"
+    evidence: ".planning/milestones/M001/reviews/technical-frontend-cr029-cr032-approval.md"
+    approved_artifacts:
+      - ".planning/milestones/M001/technical/frontend-cr029-cr032.md"
+      - ".planning/milestones/M001/technical/frontend.md"
+      - ".planning/milestones/M001/handoffs/frontend-architecture.md"
+    scope_authorized_change_requests:
+      - "CR-033"
+    change_requests:
+      - "CR-029"
+      - "CR-030"
+      - "CR-031"
+      - "CR-032"
+      - "CR-033"
+    revision_scope:
+      - "CR-033-backend-readonly-quota-contract"
+    preserved_approval_records:
+      - "TRANSITION-M001-042"
+      - "TRANSITION-M001-043"
+      - "TRANSITION-M001-060"
+
+  - id: "TRANSITION-M001-062"
+    from: "technical-design"
+    to: "technical-design"
+    operation: "activate-role"
+    activation_type: "role-switch"
+    previous_role: "backend-architect/base"
+    previous_agent: "backend-alex"
+    active_role: "frontend-architect/base"
+    active_agent: "frontend-bob"
+    confirmed_by: "user"
+    authorization: "用户批准 CR-033 后端方案与 API v1.4，并交 frontend-bob 同步字段与验证方案"
+    decision_id: "TRANSITION-M001-062"
+    timestamp: "2026-09-05T06:35:07Z"
+    evidence: ".planning/milestones/M001/reviews/technical-backend-cr033-approval.md"
+    approved_artifacts:
+      - ".planning/milestones/M001/technical/backend-cr033.md"
+      - ".planning/milestones/M001/technical/backend.md"
+      - ".planning/milestones/M001/technical/api/index.md"
+      - ".planning/milestones/M001/handoffs/backend-architecture.md"
+    approved_contract_version: "v1.4"
+    change_requests:
+      - "CR-029"
+      - "CR-030"
+      - "CR-031"
+      - "CR-032"
+      - "CR-033"
+    revision_scope:
+      - "CR-033-frontend-contract-mapping"
+    preserved_approval_records:
+      - "TRANSITION-M001-042"
+      - "TRANSITION-M001-060"
+      - "TRANSITION-M001-061"
+
+  - id: "TRANSITION-M001-063"
+    from: "technical-design"
+    to: "implementation"
+    operation: "transition-stage"
+    previous_role: "frontend-architect/base"
+    previous_agent: "frontend-bob"
+    active_role: "backend-implementer/base"
+    active_agent: "backend-ethan"
+    confirmed_by: "user"
+    authorization: "用户批准 CR-033 前端同步方案并进入 implementation，先后端、再前端、随后独立测试"
+    decision_id: "TRANSITION-M001-063"
+    timestamp: "2026-09-05T06:52:02Z"
+    evidence: ".planning/milestones/M001/reviews/technical-frontend-cr033-approval.md"
+    approved_artifacts:
+      - ".planning/milestones/M001/technical/frontend-cr033.md"
+      - ".planning/milestones/M001/technical/frontend.md"
+      - ".planning/milestones/M001/handoffs/frontend-architecture.md"
+    approved_contract_version: "v1.4"
+    change_requests:
+      - "CR-029"
+      - "CR-030"
+      - "CR-031"
+      - "CR-032"
+      - "CR-033"
+    revision_scope:
+      - "CR-033-backend-implementation"
+      - "CR-029–033-frontend-implementation"
+    preserved_approval_records:
+      - "TRANSITION-M001-042"
+      - "TRANSITION-M001-043"
+      - "TRANSITION-M001-060"
+      - "TRANSITION-M001-061"
+      - "TRANSITION-M001-062"
+
+  - id: "TRANSITION-M001-064"
+    from: "implementation"
+    to: "implementation"
+    operation: "activate-role"
+    activation_type: "role-switch"
+    previous_role: "backend-implementer/base"
+    previous_agent: "backend-ethan"
+    active_role: "frontend-implementer/base"
+    active_agent: "frontend-claire"
+    confirmed_by: "user"
+    authorization: "用户在明确询问后回复下一步，批准 CR-033 后端交付并在 implementation 内交 frontend-claire 继续 CR-029–033"
+    decision_id: "TRANSITION-M001-064"
+    timestamp: "2026-09-05T07:52:28Z"
+    evidence: ".planning/milestones/M001/reviews/implementation-backend-cr033-approval.md"
+    approved_artifacts:
+      - ".planning/milestones/M001/implementation/backend-cr033-validation.md"
+      - ".planning/milestones/M001/implementation/backend-validation.md"
+      - ".planning/milestones/M001/implementation/backend-cr033-worktree-plan.md"
+      - ".planning/milestones/M001/handoffs/backend-implementation.md"
+    approved_contract_version: "v1.4"
+    change_requests:
+      - "CR-029"
+      - "CR-030"
+      - "CR-031"
+      - "CR-032"
+      - "CR-033"
+    revision_scope:
+      - "CR-029–033-frontend-implementation"
+    preserved_approval_records:
+      - "TRANSITION-M001-060"
+      - "TRANSITION-M001-061"
+      - "TRANSITION-M001-062"
+      - "TRANSITION-M001-063"
+
+  - id: "TRANSITION-M001-065"
+    from: "implementation"
+    to: "verification"
+    operation: "transition-stage"
+    previous_role: "frontend-implementer/base"
+    previous_agent: "frontend-claire"
+    active_role: "quality/base"
+    active_agent: "qa-quinn"
+    confirmed_by: "user"
+    authorization: "用户在明确询问是否批准交独立测试后回复下一步，批准 CR-029–033 前端交付并进入 verification"
+    decision_id: "TRANSITION-M001-065"
+    timestamp: "2026-09-05T08:40:47Z"
+    evidence: ".planning/milestones/M001/reviews/implementation-frontend-cr029-cr033-approval.md"
+    change_requests:
+      - "CR-029"
+      - "CR-030"
+      - "CR-031"
+      - "CR-032"
+      - "CR-033"
+    revision_scope:
+      - "CR-029–033-independent-verification"
+    approved_artifacts:
+      - ".planning/milestones/M001/implementation/frontend-cr029-cr033-validation.md"
+      - ".planning/milestones/M001/implementation/frontend-validation.md"
+      - ".planning/milestones/M001/implementation/frontend-cr029-cr033-worktree-plan.md"
+      - ".planning/milestones/M001/handoffs/frontend-implementation.md"
+    approved_contract_version: "v1.4"
+    preserved_approval_records:
+      - "TRANSITION-M001-060"
+      - "TRANSITION-M001-061"
+      - "TRANSITION-M001-062"
+      - "TRANSITION-M001-063"
+      - "TRANSITION-M001-064"
+
+  - id: "TRANSITION-M001-066"
+    from: "verification"
+    to: "uiux-design"
+    operation: "recover-or-rollback"
+    previous_role: "quality/base"
+    previous_agent: "qa-quinn"
+    active_role: "uiux/base"
+    active_agent: "designer-tony"
+    confirmed_by: "user"
+    authorization: "用户在明确询问是否批准有限返回 UI/UX、补齐空态交互和颜色基线说明后回复下一步"
+    decision_id: "TRANSITION-M001-066"
+    timestamp: "2026-09-05T09:46:06Z"
+    evidence: ".planning/milestones/M001/reviews/verification-cr034-uiux-rework.md"
+    change_requests:
+      - "CR-029"
+      - "CR-030"
+      - "CR-031"
+      - "CR-032"
+      - "CR-033"
+      - "CR-034"
+    revision_scope:
+      - "CR-034-review-empty-range-recovery"
+      - "CR-032-existing-color-baseline-clarification"
+    reviewed_artifacts:
+      - ".planning/milestones/M001/verification/coverage-matrix.md"
+      - ".planning/milestones/M001/verification/report.md"
+      - ".planning/milestones/M001/verification/ai-evaluation.md"
+      - ".planning/milestones/M001/verification/uat.md"
+      - ".planning/milestones/M001/handoffs/verification.md"
+      - ".planning/milestones/M001/verification/ui-design-audit.md"
+    preserved_approval_records:
+      - "TRANSITION-M001-060"
+      - "TRANSITION-M001-061"
+      - "TRANSITION-M001-062"
+      - "TRANSITION-M001-063"
+      - "TRANSITION-M001-064"
+      - "TRANSITION-M001-065"
+
+  - id: "TRANSITION-M001-067"
+    from: "uiux-design"
+    to: "technical-design"
+    operation: "transition-stage"
+    previous_role: "uiux/base"
+    previous_agent: "designer-tony"
+    active_role: "frontend-architect/base"
+    active_agent: "frontend-bob"
+    confirmed_by: "user"
+    authorization: "用户在明确询问是否批准本轮设计并交前端做最小技术同步后回复批准"
+    decision_id: "TRANSITION-M001-067"
+    timestamp: "2026-09-06T01:56:25Z"
+    evidence: ".planning/milestones/M001/reviews/uiux-design-cr034-approval.md"
+    change_requests:
+      - "CR-029"
+      - "CR-030"
+      - "CR-031"
+      - "CR-032"
+      - "CR-033"
+      - "CR-034"
+    revision_scope:
+      - "CR-034-frontend-state-render-mapping"
+      - "CR-032-existing-color-baseline-mapping"
+    approved_artifacts:
+      - ".planning/milestones/M001/design/theme.css"
+      - ".planning/milestones/M001/design/prototype/index.html"
+      - ".planning/milestones/M001/design/prototype/app.js"
+      - ".planning/milestones/M001/design/prototype/i18n.js"
+      - ".planning/milestones/M001/design/prototype/review-range.js"
+      - ".planning/milestones/M001/design/interactions.md"
+      - ".planning/milestones/M001/design/responsive-accessibility.md"
+      - ".planning/milestones/M001/design/traceability.md"
+      - ".planning/milestones/M001/design/cr034-design-direction.md"
+      - ".planning/milestones/M001/design/cr034-interaction-contract.md"
+      - ".planning/milestones/M001/design/cr034-validation.md"
+      - ".planning/milestones/M001/handoffs/uiux.md"
+      - ".planning/milestones/M001/design/evidence/cr034-validation.mjs"
+      - ".planning/milestones/M001/design/evidence/cr034-navigation-validation.mjs"
+      - ".planning/milestones/M001/design/evidence/cr034-final/results.json"
+      - ".planning/milestones/M001/design/evidence/cr034-final/navigation-final-results.json"
+      - ".planning/milestones/M001/design/evidence/cr034-final/scope-integrity.json"
+    approved_contract_version: "v1.4"
+    carried_implementation_scope:
+      - "CR-031-reader-retry-copy"
+    preserved_approval_records:
+      - "TRANSITION-M001-042"
+      - "TRANSITION-M001-043"
+      - "TRANSITION-M001-060"
+      - "TRANSITION-M001-061"
+      - "TRANSITION-M001-062"
+      - "TRANSITION-M001-063"
+      - "TRANSITION-M001-064"
+      - "TRANSITION-M001-065"
+
+  - id: "TRANSITION-M001-068"
+    from: "technical-design"
+    to: "implementation"
+    operation: "transition-stage"
+    previous_role: "frontend-architect/base"
+    previous_agent: "frontend-bob"
+    active_role: "frontend-implementer/base"
+    active_agent: "frontend-claire"
+    confirmed_by: "user"
+    authorization: "用户在明确询问是否批准交 frontend-claire 实施、完成后进入独立复验后回复批准"
+    decision_id: "TRANSITION-M001-068"
+    timestamp: "2026-09-06T02:15:09Z"
+    evidence: ".planning/milestones/M001/reviews/technical-frontend-cr034-approval.md"
+    change_requests:
+      - "CR-029"
+      - "CR-030"
+      - "CR-031"
+      - "CR-032"
+      - "CR-033"
+      - "CR-034"
+    revision_scope:
+      - "CR-034-frontend-implementation"
+      - "CR-032-approved-color-baseline-verification"
+      - "CR-031-reader-retry-copy"
+    approved_artifacts:
+      - ".planning/milestones/M001/technical/frontend-cr034.md"
+      - ".planning/milestones/M001/technical/frontend-cr034-validation.md"
+      - ".planning/milestones/M001/technical/frontend.md"
+      - ".planning/milestones/M001/handoffs/frontend-architecture.md"
+    approved_contract_version: "v1.4"
+    preserved_approval_records:
+      - "TRANSITION-M001-042"
+      - "TRANSITION-M001-043"
+      - "TRANSITION-M001-060"
+      - "TRANSITION-M001-061"
+      - "TRANSITION-M001-062"
+      - "TRANSITION-M001-063"
+      - "TRANSITION-M001-064"
+      - "TRANSITION-M001-065"
+      - "TRANSITION-M001-067"
+
+  - id: "TRANSITION-M001-069"
+    from: "implementation"
+    to: "uiux-design"
+    operation: "recover-or-rollback"
+    previous_role: "frontend-implementer/base"
+    previous_agent: "frontend-claire"
+    active_role: "uiux/base"
+    active_agent: "designer-tony"
+    confirmed_by: "user"
+    authorization: "用户在明确询问是否仅返回设计阶段将原型同步到已批准1080px断点再继续独立测试后回复批准"
+    decision_id: "TRANSITION-M001-069"
+    timestamp: "2026-09-06T02:41:27Z"
+    evidence: ".planning/milestones/M001/reviews/implementation-cr034-breakpoint-uiux-rework.md"
+    change_requests:
+      - "CR-029"
+      - "CR-030"
+      - "CR-031"
+      - "CR-032"
+      - "CR-033"
+      - "CR-034"
+    revision_scope:
+      - "CR-034-prototype-1080px-breakpoint-sync"
+      - "CR-034-breakpoint-design-validation"
+    reviewed_artifacts:
+      - ".planning/milestones/M001/implementation/backend-validation.md"
+      - ".planning/milestones/M001/implementation/frontend-validation.md"
+      - ".planning/milestones/M001/handoffs/backend-implementation.md"
+      - ".planning/milestones/M001/handoffs/frontend-implementation.md"
+      - ".planning/milestones/M001/implementation/frontend-cr034-validation.md"
+      - ".planning/milestones/M001/implementation/evidence/cr034/development-command-results.json"
+      - ".planning/milestones/M001/implementation/evidence/cr034/comparison-results.json"
+      - ".planning/milestones/M001/implementation/evidence/cr034/cleanup.json"
+      - ".planning/milestones/M001/changes/CR-034.md"
+      - ".planning/milestones/M001/design/cr034-interaction-contract.md"
+      - ".planning/milestones/M001/design/theme.css"
+      - ".planning/milestones/M001/technical/frontend-cr034.md"
+    retained_contract_version: "v1.4"
+    preserved_approval_records:
+      - "TRANSITION-M001-060"
+      - "TRANSITION-M001-061"
+      - "TRANSITION-M001-062"
+      - "TRANSITION-M001-063"
+      - "TRANSITION-M001-064"
+      - "TRANSITION-M001-065"
+      - "TRANSITION-M001-067"
+      - "TRANSITION-M001-068"
+
+  - id: "TRANSITION-M001-070"
+    from: "uiux-design"
+    to: "technical-design"
+    operation: "transition-stage"
+    previous_role: "uiux/base"
+    previous_agent: "designer-tony"
+    active_role: "frontend-architect/base"
+    active_agent: "frontend-bob"
+    confirmed_by: "user"
+    authorization: "用户在明确询问是否进入技术设计、由frontend-bob仅确认本次断点修订与既有方案衔接后回复确认"
+    decision_id: "TRANSITION-M001-070"
+    timestamp: "2026-09-06T03:30:44Z"
+    evidence: ".planning/milestones/M001/reviews/uiux-cr034-breakpoint-technical-transition.md"
+    design_approval_evidence: ".planning/milestones/M001/reviews/uiux-design-cr034-breakpoint-approval.md"
+    change_requests:
+      - "CR-029"
+      - "CR-030"
+      - "CR-031"
+      - "CR-032"
+      - "CR-033"
+      - "CR-034"
+    revision_scope:
+      - "CR-034-breakpoint-minimal-technical-handoff-confirmation"
+    approved_artifacts:
+      - ".planning/milestones/M001/design/theme.css"
+      - ".planning/milestones/M001/design/prototype/index.html"
+      - ".planning/milestones/M001/design/interactions.md"
+      - ".planning/milestones/M001/design/responsive-accessibility.md"
+      - ".planning/milestones/M001/design/cr034-breakpoint-validation.md"
+      - ".planning/milestones/M001/design/evidence/cr034-breakpoint-validation.mjs"
+      - ".planning/milestones/M001/design/evidence/cr034-breakpoint-069/before/results.json"
+      - ".planning/milestones/M001/design/evidence/cr034-breakpoint-069/after/results.json"
+      - ".planning/milestones/M001/design/evidence/cr034-breakpoint-069/scope-integrity.json"
+      - ".planning/milestones/M001/handoffs/uiux.md"
+    retained_contract_version: "v1.4"
+    preserved_approval_records:
+      - "TRANSITION-M001-042"
+      - "TRANSITION-M001-043"
+      - "TRANSITION-M001-060"
+      - "TRANSITION-M001-061"
+      - "TRANSITION-M001-062"
+      - "TRANSITION-M001-063"
+      - "TRANSITION-M001-064"
+      - "TRANSITION-M001-065"
+      - "TRANSITION-M001-067"
+      - "TRANSITION-M001-068"
+      - "TRANSITION-M001-069"
+
+  - id: "TRANSITION-M001-071"
+    from: "technical-design"
+    to: "implementation"
+    operation: "transition-stage"
+    previous_role: "frontend-architect/base"
+    previous_agent: "frontend-bob"
+    active_role: "frontend-implementer/base"
+    active_agent: "frontend-claire"
+    confirmed_by: "user"
+    authorization: "用户在明确询问是否批准返回实现阶段、由frontend-claire补做实时界面对照再交独立测试后回复批准"
+    decision_id: "TRANSITION-M001-071"
+    timestamp: "2026-09-06T03:54:21Z"
+    evidence: ".planning/milestones/M001/reviews/technical-cr034-breakpoint-revalidation-approval.md"
+    change_requests:
+      - "CR-029"
+      - "CR-030"
+      - "CR-031"
+      - "CR-032"
+      - "CR-033"
+      - "CR-034"
+    revision_scope:
+      - "CR-034-current-production-to-approved-prototype-live-revalidation"
+      - "CR-034-BP01–BP04-development-evidence-and-handoff"
+    approved_artifacts:
+      - ".planning/milestones/M001/technical/frontend-cr034-breakpoint-confirmation.md"
+      - ".planning/milestones/M001/technical/evidence/cr034-breakpoint-070.mjs"
+      - ".planning/milestones/M001/technical/evidence/cr034-breakpoint-070.json"
+      - ".planning/milestones/M001/technical/frontend.md"
+      - ".planning/milestones/M001/handoffs/frontend-architecture.md"
+    retained_contract_version: "v1.4"
+    preserved_approval_records:
+      - "TRANSITION-M001-042"
+      - "TRANSITION-M001-043"
+      - "TRANSITION-M001-060"
+      - "TRANSITION-M001-061"
+      - "TRANSITION-M001-062"
+      - "TRANSITION-M001-063"
+      - "TRANSITION-M001-064"
+      - "TRANSITION-M001-065"
+      - "TRANSITION-M001-067"
+      - "TRANSITION-M001-068"
+      - "TRANSITION-M001-069"
+      - "TRANSITION-M001-070"
+
+  - id: "TRANSITION-M001-072"
+    from: "implementation"
+    to: "verification"
+    operation: "transition-stage"
+    previous_role: "frontend-implementer/base"
+    previous_agent: "frontend-claire"
+    active_role: "quality/base"
+    active_agent: "qa-quinn"
+    confirmed_by: "user"
+    authorization: "用户在明确询问是否批准交给qa-quinn独立复验CR-029–034后回复下一步，批准当前开发交付并进入verification"
+    decision_id: "TRANSITION-M001-072"
+    timestamp: "2026-09-06T05:36:06Z"
+    evidence: ".planning/milestones/M001/reviews/implementation-cr029-cr034-independent-verification-approval.md"
+    change_requests:
+      - "CR-029"
+      - "CR-030"
+      - "CR-031"
+      - "CR-032"
+      - "CR-033"
+      - "CR-034"
+    revision_scope:
+      - "CR-029–034-independent-verification"
+      - "CR-034-current-production-to-approved-prototype-and-real-data-regression"
+    approved_artifacts:
+      - ".planning/milestones/M001/implementation/frontend-cr034-breakpoint-validation.md"
+      - ".planning/milestones/M001/implementation/frontend-validation.md"
+      - ".planning/milestones/M001/handoffs/frontend-implementation.md"
+      - ".planning/milestones/M001/implementation/frontend-cr034-breakpoint-worktree-plan.md"
+      - ".planning/milestones/M001/implementation/evidence/cr034-071/development-command-results.json"
+      - ".planning/milestones/M001/implementation/evidence/cr034-071/comparison-results.json"
+      - ".planning/milestones/M001/implementation/evidence/cr034-071/source-scope-check.json"
+      - ".planning/milestones/M001/implementation/evidence/cr034-071/cleanup.json"
+    approved_contract_version: "v1.4"
+    preserved_approval_records:
+      - "TRANSITION-M001-042"
+      - "TRANSITION-M001-043"
+      - "TRANSITION-M001-060"
+      - "TRANSITION-M001-061"
+      - "TRANSITION-M001-062"
+      - "TRANSITION-M001-063"
+      - "TRANSITION-M001-064"
+      - "TRANSITION-M001-065"
+      - "TRANSITION-M001-067"
+      - "TRANSITION-M001-068"
+      - "TRANSITION-M001-069"
+      - "TRANSITION-M001-070"
+      - "TRANSITION-M001-071"
+
+  - id: "TRANSITION-M001-073"
+    from: "verification"
+    to: "implementation"
+    operation: "recover-or-rollback"
+    previous_role: "quality/base"
+    previous_agent: "qa-quinn"
+    active_role: "frontend-implementer/base"
+    active_agent: "frontend-claire"
+    confirmed_by: "user"
+    authorization: "用户在独立测试明确FAIL、下一步仅前端修正CR030残余后复测且无需返回需求或设计的交接后回复下一步，确认有限返回implementation；不表示测试通过或UAT放行"
+    decision_id: "TRANSITION-M001-073"
+    timestamp: "2026-09-06T06:03:17Z"
+    evidence: ".planning/milestones/M001/reviews/verification-cr030-users-rework-approval.md"
+    change_requests:
+      - "CR-029"
+      - "CR-030"
+      - "CR-031"
+      - "CR-032"
+      - "CR-033"
+      - "CR-034"
+    rework_change_requests:
+      - "CR-030"
+    revision_scope:
+      - "CR030-R072-01-search-failure-copy"
+      - "CR030-R072-02-users-search-responsive-geometry"
+      - "PAGE-103-all-states-and-conditional-shared-admin-shell-regression"
+    reviewed_artifacts:
+      - ".planning/milestones/M001/verification/report.md"
+      - ".planning/milestones/M001/verification/cr029-cr034-072-report.md"
+      - ".planning/milestones/M001/verification/coverage-matrix.md"
+      - ".planning/milestones/M001/verification/cr029-cr034-072-coverage.md"
+      - ".planning/milestones/M001/verification/uat.md"
+      - ".planning/milestones/M001/verification/ai-evaluation.md"
+      - ".planning/milestones/M001/handoffs/verification.md"
+      - ".planning/milestones/M001/changes/CR-030.md"
+      - ".planning/milestones/M001/verification/evidence/cr029-cr034-072/CR030-R072-01.json"
+      - ".planning/milestones/M001/verification/evidence/cr029-cr034-072/users-geometry-confirmation-results.json"
+      - ".planning/milestones/M001/verification/evidence/cr029-cr034-072/users-geometry-observations.json"
+      - ".planning/milestones/M001/verification/evidence/cr029-cr034-072/delivery-validation.json"
+    retained_contract_version: "v1.4"
+    preserved_approval_records:
+      - "TRANSITION-M001-042"
+      - "TRANSITION-M001-043"
+      - "TRANSITION-M001-060"
+      - "TRANSITION-M001-061"
+      - "TRANSITION-M001-062"
+      - "TRANSITION-M001-063"
+      - "TRANSITION-M001-064"
+      - "TRANSITION-M001-065"
+      - "TRANSITION-M001-067"
+      - "TRANSITION-M001-068"
+      - "TRANSITION-M001-069"
+      - "TRANSITION-M001-070"
+      - "TRANSITION-M001-071"
+      - "TRANSITION-M001-072"
+
+  - id: "TRANSITION-M001-074"
+    from: "implementation"
+    to: "verification"
+    operation: "transition-stage"
+    previous_role: "frontend-implementer/base"
+    previous_agent: "frontend-claire"
+    active_role: "quality/base"
+    active_agent: "qa-quinn"
+    confirmed_by: "user"
+    authorization: "用户在开发交付明确下一步交独立复测且6001不更新后回复下一步，批准本轮Users有限返工交付并进入verification；不表示独立QA或UAT通过"
+    decision_id: "TRANSITION-M001-074"
+    timestamp: "2026-09-06T06:26:28Z"
+    evidence: ".planning/milestones/M001/reviews/implementation-cr030-users-reverification-approval.md"
+    change_requests:
+      - "CR-029"
+      - "CR-030"
+      - "CR-031"
+      - "CR-032"
+      - "CR-033"
+      - "CR-034"
+    revision_scope:
+      - "CR030-R072-01-search-error-copy-independent-retest"
+      - "CR030-R072-02-search-empty-loading-responsive-geometry-independent-retest"
+      - "PAGE-103-all-states-real-search-pagination-detail-and-shared-form-regression"
+      - "CR-029–034-retained-regression-and-independent-verification"
+    approved_artifacts:
+      - ".planning/milestones/M001/implementation/frontend-cr030-073-validation.md"
+      - ".planning/milestones/M001/implementation/frontend-validation.md"
+      - ".planning/milestones/M001/handoffs/frontend-implementation.md"
+      - ".planning/milestones/M001/implementation/frontend-cr030-073-worktree-plan.md"
+      - ".planning/milestones/M001/implementation/backend-validation.md"
+      - ".planning/milestones/M001/handoffs/backend-implementation.md"
+      - ".planning/milestones/M001/implementation/evidence/cr030-073/delivery-validation.json"
+      - ".planning/milestones/M001/implementation/evidence/cr030-073/candidate-final.json"
+      - ".planning/milestones/M001/implementation/evidence/cr030-073/quality-commands-final2.json"
+      - ".planning/milestones/M001/implementation/evidence/cr030-073/design-comparison-final-results.json"
+      - ".planning/milestones/M001/implementation/evidence/cr030-073/design-observations-final.json"
+      - ".planning/milestones/M001/implementation/evidence/cr030-073/real-flows-final-results.json"
+      - ".planning/milestones/M001/implementation/evidence/cr030-073/e2e-full-final.json"
+      - ".planning/milestones/M001/implementation/evidence/cr030-073/cleanup.json"
+    approved_contract_version: "v1.4"
+    preserved_approval_records:
+      - "TRANSITION-M001-042"
+      - "TRANSITION-M001-043"
+      - "TRANSITION-M001-060"
+      - "TRANSITION-M001-061"
+      - "TRANSITION-M001-062"
+      - "TRANSITION-M001-063"
+      - "TRANSITION-M001-064"
+      - "TRANSITION-M001-065"
+      - "TRANSITION-M001-067"
+      - "TRANSITION-M001-068"
+      - "TRANSITION-M001-069"
+      - "TRANSITION-M001-070"
+      - "TRANSITION-M001-071"
+      - "TRANSITION-M001-072"
+      - "TRANSITION-M001-073"
+
+  - id: "TRANSITION-M001-075"
+    from: "verification"
+    to: "implementation"
+    operation: "recover-or-rollback"
+    previous_role: "quality/base"
+    previous_agent: "qa-quinn"
+    active_role: "frontend-implementer/base"
+    active_agent: "frontend-claire"
+    confirmed_by: "user"
+    authorization: "用户在独立测试明确仍未通过、已提交前端返工交接且无需重开需求或设计的结论后回复继续，确认有限返回implementation处理CR030-R074-01和CR035；不表示测试通过、UAT或发布放行"
+    decision_id: "TRANSITION-M001-075"
+    timestamp: "2026-09-06T07:56:39Z"
+    evidence: ".planning/milestones/M001/reviews/verification-cr030-cr035-rework-approval.md"
+    change_requests:
+      - "CR-029"
+      - "CR-030"
+      - "CR-031"
+      - "CR-032"
+      - "CR-033"
+      - "CR-034"
+      - "CR-035"
+    rework_change_requests:
+      - "CR-030"
+      - "CR-035"
+    revision_scope:
+      - "CR030-R074-01-32-character-username-detail-responsive-containment"
+      - "CR035-plans-field-label-visible-spacing-and-alignment"
+      - "PAGE-103-search-detail-return-reader-and-PAGE-102-all-plans-empty-multiple-models-regression"
+    reviewed_artifacts:
+      - ".planning/milestones/M001/verification/report.md"
+      - ".planning/milestones/M001/verification/cr030-074-report.md"
+      - ".planning/milestones/M001/verification/coverage-matrix.md"
+      - ".planning/milestones/M001/verification/cr030-074-coverage.md"
+      - ".planning/milestones/M001/verification/ui-design-audit.md"
+      - ".planning/milestones/M001/verification/ai-evaluation.md"
+      - ".planning/milestones/M001/verification/uat.md"
+      - ".planning/milestones/M001/handoffs/verification.md"
+      - ".planning/milestones/M001/changes/CR-030.md"
+      - ".planning/milestones/M001/changes/CR-035.md"
+      - ".planning/milestones/M001/verification/evidence/cr030-074/long-detail-confirmation-results.json"
+      - ".planning/milestones/M001/verification/evidence/cr030-074/long-detail-observations.json"
+      - ".planning/milestones/M001/verification/evidence/cr030-074/plans-gap-confirmation-results.json"
+      - ".planning/milestones/M001/verification/evidence/cr030-074/plans-gap-observations.json"
+      - ".planning/milestones/M001/verification/evidence/cr030-074/delivery-validation.json"
+      - ".planning/milestones/M001/verification/evidence/cr030-074/cleanup.json"
+    retained_contract_version: "v1.4"
+    preserved_approval_records:
+      - "TRANSITION-M001-042"
+      - "TRANSITION-M001-043"
+      - "TRANSITION-M001-060"
+      - "TRANSITION-M001-061"
+      - "TRANSITION-M001-062"
+      - "TRANSITION-M001-063"
+      - "TRANSITION-M001-064"
+      - "TRANSITION-M001-065"
+      - "TRANSITION-M001-067"
+      - "TRANSITION-M001-068"
+      - "TRANSITION-M001-069"
+      - "TRANSITION-M001-070"
+      - "TRANSITION-M001-071"
+      - "TRANSITION-M001-072"
+      - "TRANSITION-M001-073"
+      - "TRANSITION-M001-074"
+
+  - id: "TRANSITION-M001-076"
+    from: "implementation"
+    to: "verification"
+    operation: "transition-stage"
+    previous_role: "frontend-implementer/base"
+    previous_agent: "frontend-claire"
+    active_role: "quality/base"
+    active_agent: "qa-quinn"
+    confirmed_by: "user"
+    authorization: "用户在前端交付明确已准备独立复验交接、尚未放行UAT且6001未改后回复下一步，批准075开发交付并进入verification；不表示独立QA、UAT或发布通过"
+    decision_id: "TRANSITION-M001-076"
+    timestamp: "2026-09-06T08:19:18Z"
+    evidence: ".planning/milestones/M001/reviews/implementation-cr030-cr035-reverification-approval.md"
+    change_requests:
+      - "CR-029"
+      - "CR-030"
+      - "CR-031"
+      - "CR-032"
+      - "CR-033"
+      - "CR-034"
+      - "CR-035"
+    revision_scope:
+      - "CR030-R074-01-long-username-detail-independent-retest"
+      - "CR035-plans-fieldset-label-spacing-and-alignment-independent-retest"
+      - "PAGE-103-real-search-pagination-detail-return-reader-and-PAGE-102-all-plans-empty-multiple-models-save-regression"
+      - "CR-029–035-retained-regression-and-independent-verification"
+    approved_artifacts:
+      - ".planning/milestones/M001/implementation/frontend-cr030-cr035-075-validation.md"
+      - ".planning/milestones/M001/implementation/backend-validation.md"
+      - ".planning/milestones/M001/implementation/frontend-validation.md"
+      - ".planning/milestones/M001/handoffs/backend-implementation.md"
+      - ".planning/milestones/M001/handoffs/frontend-implementation.md"
+      - ".planning/milestones/M001/implementation/frontend-cr030-cr035-075-worktree-plan.md"
+      - ".planning/milestones/M001/implementation/evidence/cr030-cr035-075/delivery-validation.json"
+      - ".planning/milestones/M001/implementation/evidence/cr030-cr035-075/candidate.json"
+      - ".planning/milestones/M001/implementation/evidence/cr030-cr035-075/quality-commands-final.json"
+      - ".planning/milestones/M001/implementation/evidence/cr030-cr035-075/layout-after-results.json"
+      - ".planning/milestones/M001/implementation/evidence/cr030-cr035-075/flows-results.json"
+      - ".planning/milestones/M001/implementation/evidence/cr030-cr035-075/plans-edge-results.json"
+      - ".planning/milestones/M001/implementation/evidence/cr030-cr035-075/e2e-full.json"
+      - ".planning/milestones/M001/implementation/evidence/cr030-cr035-075/cleanup.json"
+      - ".planning/milestones/M001/changes/CR-030.md"
+      - ".planning/milestones/M001/changes/CR-035.md"
+    approved_contract_version: "v1.4"
+    preserved_approval_records:
+      - "TRANSITION-M001-042"
+      - "TRANSITION-M001-043"
+      - "TRANSITION-M001-060"
+      - "TRANSITION-M001-061"
+      - "TRANSITION-M001-062"
+      - "TRANSITION-M001-063"
+      - "TRANSITION-M001-064"
+      - "TRANSITION-M001-065"
+      - "TRANSITION-M001-067"
+      - "TRANSITION-M001-068"
+      - "TRANSITION-M001-069"
+      - "TRANSITION-M001-070"
+      - "TRANSITION-M001-071"
+      - "TRANSITION-M001-072"
+      - "TRANSITION-M001-073"
+      - "TRANSITION-M001-074"
+      - "TRANSITION-M001-075"
+
+  - id: TRANSITION-M001-077
+    from: verification
+    to: implementation
+    operation: recover-or-rollback
+    previous_role: quality/base
+    previous_agent: qa-quinn
+    active_role: frontend-implementer/base
+    active_agent: frontend-claire
+    confirmed_by: user
+    authorization: 用户明确：下一步，所有交接均批准，直到给我UAT。授权按既有范围逐次检查并连续完成有限返工、开发交接、独立复验及通过后的本地UAT更新；不等于预判测试通过、批准用户UAT或生产发布。
+    decision_id: TRANSITION-M001-077
+    timestamp: 2026-09-06T08:39:28.850Z
+    evidence: .planning/milestones/M001/reviews/verification-cr036-continuous-rework-approval.md
+    change_requests:
+      - CR-029
+      - CR-030
+      - CR-031
+      - CR-032
+      - CR-033
+      - CR-034
+      - CR-035
+      - CR-036
+    rework_change_requests:
+      - CR-036
+    revision_scope:
+      - CR036-approved-Plans-non-generating-warning
+      - retained-CR029-035-targeted-regression
+    reviewed_artifacts:
+      - .planning/milestones/M001/verification/cr030-cr035-076-report.md
+      - .planning/milestones/M001/verification/cr030-cr035-076-coverage.md
+      - .planning/milestones/M001/handoffs/verification.md
+      - .planning/milestones/M001/changes/CR-036.md
+      - .planning/milestones/M001/verification/evidence/cr030-cr035-076/delivery-validation.json
+    retained_contract_version: v1.4
+    preserved_approval_records:
+      - TRANSITION-M001-042
+      - TRANSITION-M001-043
+      - TRANSITION-M001-060
+      - TRANSITION-M001-061
+      - TRANSITION-M001-062
+      - TRANSITION-M001-063
+      - TRANSITION-M001-064
+      - TRANSITION-M001-065
+      - TRANSITION-M001-067
+      - TRANSITION-M001-068
+      - TRANSITION-M001-069
+      - TRANSITION-M001-070
+      - TRANSITION-M001-071
+      - TRANSITION-M001-072
+      - TRANSITION-M001-073
+      - TRANSITION-M001-074
+      - TRANSITION-M001-075
+      - TRANSITION-M001-076
+
+  - id: TRANSITION-M001-078
+    from: implementation
+    to: verification
+    operation: transition-stage
+    previous_role: frontend-implementer/base
+    previous_agent: frontend-claire
+    active_role: quality/base
+    active_agent: qa-quinn
+    confirmed_by: user
+    authorization: 依据077记录的用户连续批准，接收077固定开发候选并逐次进入独立验证；不预判QA通过、不更新UAT。
+    decision_id: TRANSITION-M001-078
+    timestamp: 2026-09-06T08:51:35.610Z
+    evidence: .planning/milestones/M001/reviews/implementation-cr036-independent-verification-approval.md
+    change_requests:
+      - CR-029
+      - CR-030
+      - CR-031
+      - CR-032
+      - CR-033
+      - CR-034
+      - CR-035
+      - CR-036
+    revision_scope:
+      - CR036-all-non-generating-states-independent-retest
+      - CR029-035-retained-functional-UI-regression
+    approved_artifacts:
+      - .planning/milestones/M001/implementation/frontend-cr036-077-validation.md
+      - .planning/milestones/M001/implementation/frontend-cr036-077-worktree-plan.md
+      - .planning/milestones/M001/implementation/frontend-validation.md
+      - .planning/milestones/M001/handoffs/frontend-implementation.md
+      - .planning/milestones/M001/implementation/backend-validation.md
+      - .planning/milestones/M001/handoffs/backend-implementation.md
+      - .planning/milestones/M001/implementation/evidence/cr036-077/candidate.json
+      - .planning/milestones/M001/implementation/evidence/cr036-077/quality-commands-final.json
+      - .planning/milestones/M001/implementation/evidence/cr036-077/plans-states-final-results.json
+      - .planning/milestones/M001/implementation/evidence/cr036-077/e2e-full-final.json
+      - .planning/milestones/M001/implementation/evidence/cr036-077/cleanup.json
+      - .planning/milestones/M001/changes/CR-036.md
+    approved_contract_version: v1.4
+    preserved_approval_records:
+      - TRANSITION-M001-042
+      - TRANSITION-M001-043
+      - TRANSITION-M001-060
+      - TRANSITION-M001-061
+      - TRANSITION-M001-062
+      - TRANSITION-M001-063
+      - TRANSITION-M001-064
+      - TRANSITION-M001-065
+      - TRANSITION-M001-067
+      - TRANSITION-M001-068
+      - TRANSITION-M001-069
+      - TRANSITION-M001-070
+      - TRANSITION-M001-071
+      - TRANSITION-M001-072
+      - TRANSITION-M001-073
+      - TRANSITION-M001-074
+      - TRANSITION-M001-075
+      - TRANSITION-M001-076
+      - TRANSITION-M001-077
+
+  - id: TRANSITION-M001-079
+    from: verification
+    to: verification
+    operation: transition-stage
+    decision: remain_in_current_stage
+    previous_role: quality/base
+    previous_agent: qa-quinn
+    active_role: quality/base
+    active_agent: qa-quinn
+    confirmed_by: user
+    authorization: 依据077记录的连续批准接收QA078与UAT079交付；只批准已验功能UAT交接，不代表用户验收或发布通过。
+    decision_id: TRANSITION-M001-079
+    timestamp: 2026-09-06T09:09:49.146Z
+    evidence: .planning/milestones/M001/reviews/verification-local-uat-handoff-approval.md
+    approved_artifacts:
+      - .planning/milestones/M001/verification/cr036-078-report.md
+      - .planning/milestones/M001/verification/cr036-078-coverage.md
+      - .planning/milestones/M001/verification/evidence/cr036-078/delivery-validation.json
+      - .planning/milestones/M001/verification/uat-079-handoff.md
+      - .planning/milestones/M001/verification/evidence/uat-079/deployment.json
+      - .planning/milestones/M001/verification/evidence/uat-079/smoke-final-results.json
+      - .planning/milestones/M001/verification/report.md
+      - .planning/milestones/M001/verification/uat.md
+      - .planning/milestones/M001/handoffs/verification.md
+    resolved_change_requests:
+      - CR-029
+      - CR-030
+      - CR-031
+      - CR-032
+      - CR-033
+      - CR-034
+      - CR-035
+      - CR-036
+    functional_uat: awaiting_user_acceptance
+    release_readiness: blocked
+    next_action: Wait for user UAT feedback; continuous handoff authorization has reached its terminal boundary.
+
+  - id: TRANSITION-M001-080
+    from: verification
+    to: implementation
+    operation: recover-or-rollback
+    previous_role: quality/base
+    previous_agent: qa-quinn
+    active_role: frontend-implementer/base
+    active_agent: frontend-claire
+    confirmed_by: user
+    authorization: 用户对“是否批准仅返回前端实现，修复后再独立复测？”回复“批准”。仅CR037既有设计对齐和随后独立复测；本次只执行返回实现，不提前验收、部署或发布。
+    decision_id: TRANSITION-M001-080
+    timestamp: 2026-09-06T10:09:03.670Z
+    evidence: .planning/milestones/M001/reviews/verification-cr037-rework-approval.md
+    change_requests:
+      - CR-037
+    revision_scope:
+      - CR037-01-auth-intent-DOM-position-and-status-semantics
+      - CR037-02-self-service-password-English-copy
+      - QA-declared-linked-regression-without-reopening-unrelated-scope
+    reviewed_artifacts:
+      - .planning/milestones/M001/verification/coverage-matrix.md
+      - .planning/milestones/M001/verification/report.md
+      - .planning/milestones/M001/verification/ai-evaluation.md
+      - .planning/milestones/M001/verification/uat.md
+      - .planning/milestones/M001/handoffs/verification.md
+      - .planning/milestones/M001/verification/ui-design-audit.md
+      - .planning/milestones/M001/verification/uat-079-feedback.md
+      - .planning/milestones/M001/changes/CR-037.md
+      - .planning/milestones/M001/verification/evidence/uat-079-feedback/results.json
+      - .planning/milestones/M001/verification/evidence/uat-079-feedback/delivery-validation.json
+      - .planning/milestones/M001/implementation/backend-validation.md
+      - .planning/milestones/M001/handoffs/backend-implementation.md
+      - .planning/milestones/M001/reviews/uiux-design-cr031-cr032-revision.md
+    retained_contract_version: v1.4
+    retained_closed_change_requests:
+      - CR-029
+      - CR-030
+      - CR-031
+      - CR-032
+      - CR-033
+      - CR-034
+      - CR-035
+      - CR-036
+    preserved_approval_records:
+      - TRANSITION-M001-060
+      - TRANSITION-M001-061
+      - TRANSITION-M001-062
+      - TRANSITION-M001-063
+      - TRANSITION-M001-078
+      - TRANSITION-M001-079
+
+  - id: TRANSITION-M001-081
+    from: "implementation"
+    to: "verification"
+    operation: "transition-stage"
+    previous_role: "frontend-implementer/base"
+    previous_agent: "frontend-claire"
+    active_role: "quality/base"
+    active_agent: "qa-quinn"
+    confirmed_by: "user"
+    authorization: "用户在080开发交付明确WebKit验证缺口、下一步独立复测且UAT未更新后回复批准；接收有限开发交付并进入独立验证，不代表豁免缺口、QA通过、UAT部署或发布批准。"
+    decision_id: "TRANSITION-M001-081"
+    timestamp: "2026-09-07T01:46:11Z"
+    evidence: ".planning/milestones/M001/reviews/implementation-cr037-independent-verification-approval.md"
+    change_requests:
+      - "CR-037"
+    revision_scope:
+      - "CR037-01-auth-intent-position-status-and-linked-return-regression"
+      - "CR037-02-self-password-copy-and-linked-cancel-focus-shared-copy"
+      - "Complete-unverified-WebKit-password-input-and-session-flow-with-independent-evidence"
+    reviewed_artifacts:
+      - ".planning/milestones/M001/implementation/backend-validation.md"
+      - ".planning/milestones/M001/implementation/frontend-validation.md"
+      - ".planning/milestones/M001/handoffs/backend-implementation.md"
+      - ".planning/milestones/M001/handoffs/frontend-implementation.md"
+      - ".planning/milestones/M001/implementation/frontend-cr037-080-validation.md"
+      - ".planning/milestones/M001/implementation/frontend-cr037-080-worktree-plan.md"
+      - ".planning/milestones/M001/changes/CR-037.md"
+      - ".planning/milestones/M001/reviews/verification-cr037-rework-approval.md"
+      - ".planning/milestones/M001/verification/uat-079-feedback.md"
+      - ".planning/milestones/M001/handoffs/verification.md"
+      - ".planning/milestones/M001/reviews/uiux-design-cr031-cr032-revision.md"
+      - ".planning/milestones/M001/implementation/evidence/cr037-080/candidate.json"
+      - ".planning/milestones/M001/implementation/evidence/cr037-080/quality-commands-final.json"
+      - ".planning/milestones/M001/implementation/evidence/cr037-080/build-final.log"
+      - ".planning/milestones/M001/implementation/evidence/cr037-080/e2e-full-final.json"
+      - ".planning/milestones/M001/implementation/evidence/cr037-080/e2e-command-final.json"
+      - ".planning/milestones/M001/implementation/evidence/cr037-080/browser-chromium-complete-results.json"
+      - ".planning/milestones/M001/implementation/evidence/cr037-080/browser-webkit-visual-results.json"
+      - ".planning/milestones/M001/implementation/evidence/cr037-080/browser-environment-diagnostic.json"
+      - ".planning/milestones/M001/implementation/evidence/cr037-080/browser-final2.log"
+      - ".planning/milestones/M001/implementation/evidence/cr037-080/linux-fallback-status.json"
+      - ".planning/milestones/M001/implementation/evidence/cr037-080/cleanup.json"
+      - ".planning/milestones/M001/implementation/evidence/cr037-080/delivery-validation-final.json"
+    retained_contract_version: "v1.4"
+    retained_closed_change_requests:
+      - "CR-029"
+      - "CR-030"
+      - "CR-031"
+      - "CR-032"
+      - "CR-033"
+      - "CR-034"
+      - "CR-035"
+      - "CR-036"
+    preserved_approval_records:
+      - "TRANSITION-M001-060"
+      - "TRANSITION-M001-061"
+      - "TRANSITION-M001-062"
+      - "TRANSITION-M001-063"
+      - "TRANSITION-M001-078"
+      - "TRANSITION-M001-079"
+      - "TRANSITION-M001-080"
+    verification_gaps_retained:
+      - "macOS WebKit password-input and complete update/session flow NOT VERIFIED"
+      - "Linux WebKit fallback NOT RUN"
+    uat_deployment_approved: false
+    user_uat_accepted: false
+    release_approved: false
+
+  - id: TRANSITION-M001-082
+    from: verification
+    to: implementation
+    operation: recover-or-rollback
+    previous_role: quality/base
+    previous_agent: qa-quinn
+    active_role: backend-implementer/base
+    active_agent: backend-ethan
+    confirmed_by: user
+    authorization: "用户在QA081有限返工建议及模型路由方案后明确说“启用吧，然后继续原先的进度”；接收模型路由并恢复CR037-03/CR038有限实现。本次仅返回实现并激活后端，不续用已耗尽的连续授权，不批准UAT部署或发布。"
+    decision_id: TRANSITION-M001-082
+    timestamp: "2026-09-07T02:38:06Z"
+    evidence: .planning/milestones/M001/reviews/verification-cr037-cr038-rework-approval.md
+    model_routing_adoption: .planning/agt/model-routing-adoption-001.md
+    change_requests:
+      - CR-037
+      - CR-038
+    revision_scope:
+      - CR038-existing-204-no-store-contract-and-affected-consumer-regression
+      - CR037-03-password-error-visible-and-accessible-inside-active-modal
+    implementation_role_sequence:
+      - backend-ethan
+      - frontend-claire
+    reviewed_artifacts:
+      - .planning/milestones/M001/verification/coverage-matrix.md
+      - .planning/milestones/M001/verification/report.md
+      - .planning/milestones/M001/verification/ai-evaluation.md
+      - .planning/milestones/M001/verification/uat.md
+      - .planning/milestones/M001/handoffs/verification.md
+      - .planning/milestones/M001/verification/cr037-081-report.md
+      - .planning/milestones/M001/verification/cr037-081-coverage.md
+      - .planning/milestones/M001/changes/CR-037.md
+      - .planning/milestones/M001/changes/CR-038.md
+      - .planning/milestones/M001/verification/evidence/cr037-081/delivery-validation-final.json
+    retained_contract_version: v1.4
+    retained_closed_change_requests:
+      - CR-029
+      - CR-030
+      - CR-031
+      - CR-032
+      - CR-033
+      - CR-034
+      - CR-035
+      - CR-036
+    qa081_result: fail_rework_required
+    verification_gaps_retained:
+      - "Native macOS WebKit full account flow NOT VERIFIED; Linux WebKit functional flow completed in QA081, not a Safari device certification"
+      - "Real AI NOT VERIFIED"
+    uat_deployment_approved: false
+    user_uat_accepted: false
+    release_approved: false
+
+  - id: TRANSITION-M001-083
+    from: implementation
+    to: implementation
+    operation: record-continuous-authorization
+    previous_role: backend-implementer/base
+    previous_agent: backend-ethan
+    active_role: backend-implementer/base
+    active_agent: backend-ethan
+    confirmed_by: user
+    authorization: "下一步，直到 UAT 为止吧"
+    decision_id: TRANSITION-M001-083
+    timestamp: "2026-09-07T02:41:47Z"
+    evidence: .planning/milestones/M001/reviews/cr037-cr038-continuous-to-uat-approval.md
+    change_requests: [CR-037, CR-038]
+    boundary: Existing-scope implementation, sequential gates, independent verification, local UAT preparation after PASS
+    uat_deployment_approved: conditional_on_independent_functional_pass
+    user_uat_accepted: false
+    release_approved: false
+
+  - id: TRANSITION-M001-084
+    from: implementation
+    to: implementation
+    operation: activate-role
+    previous_role: backend-implementer/base
+    previous_agent: backend-ethan
+    active_role: frontend-implementer/base
+    active_agent: frontend-claire
+    confirmed_by: user
+    authorization: "按083连续推进至UAT及独立Sol High任务批准，接收DEV083并激活前端；不是独立QA或UAT通过。"
+    decision_id: TRANSITION-M001-084
+    timestamp: "2026-09-07T02:55:33Z"
+    evidence: .planning/milestones/M001/reviews/backend-cr038-frontend-cr037-handoff-approval.md
+    change_requests: [CR-037, CR-038]
+    approved_backend_candidate: sha256:642ed57ad0ed6c8a13e4bba1101d8b50188e8ea636791583a6ffb5eaa6917aac
+    next_scope: CR037-03 existing password-modal error visibility, accessibility and linked regression
+    contract_version: v1.4
+    user_uat_accepted: false
+    release_approved: false
+
+  - id: TRANSITION-M001-085
+    from: implementation
+    to: verification
+    operation: transition-stage
+    previous_role: frontend-implementer/base
+    previous_agent: frontend-claire
+    active_role: quality/base
+    active_agent: qa-quinn
+    confirmed_by: user
+    authorization: "按083连续授权接收DEV083/084并进入独立验证；本次不部署UAT。"
+    decision_id: TRANSITION-M001-085
+    timestamp: "2026-09-07T03:23:49Z"
+    evidence: .planning/milestones/M001/reviews/cr037-cr038-independent-verification-approval.md
+    change_requests: [CR-037, CR-038]
+    frontend_candidate: sha256:fd251e7439aad8e058656e2751ed84f40715fec570a872da53542688a6dd6904
+    backend_candidate: sha256:642ed57ad0ed6c8a13e4bba1101d8b50188e8ea636791583a6ffb5eaa6917aac
+    linux_mock_observation: "120/122 original retained; same-platform design equality supplied, independent judgment pending"
+    contract_version: v1.4
+    uat_deployment_approved: false
+    user_uat_accepted: false
+    release_approved: false
+
+  - id: TRANSITION-M001-086
+    from: verification
+    to: verification
+    operation: remain-in-current-stage
+    previous_role: quality/base
+    previous_agent: qa-quinn
+    active_role: quality/base
+    active_agent: qa-quinn
+    confirmed_by: user
+    authorization: "独立QA085功能PASS，按083连续授权准备本地UAT；不代用户验收或发布。"
+    decision_id: TRANSITION-M001-086
+    timestamp: "2026-09-07T03:49:04Z"
+    evidence: .planning/milestones/M001/reviews/cr037-cr038-uat-preparation-approval.md
+    independent_report: .planning/milestones/M001/verification/cr037-cr038-085-report.md
+    resolved_change_requests: [CR-037, CR-038]
+    frontend_candidate: sha256:fd251e7439aad8e058656e2751ed84f40715fec570a872da53542688a6dd6904
+    backend_candidate: sha256:642ed57ad0ed6c8a13e4bba1101d8b50188e8ea636791583a6ffb5eaa6917aac
+    contract_version: v1.4
+    uat_deployment_approved: true
+    constraints: "Local6001 only; existing runtime/data/passwords preserved; no build/pull/migrate/realAI"
+    user_uat_accepted: false
+    release_approved: false
+
+  - id: TRANSITION-M001-087
+    from: verification
+    to: verification
+    operation: remain-in-current-stage
+    previous_role: quality/base
+    previous_agent: qa-quinn
+    active_role: quality/base
+    active_agent: qa-quinn
+    status: awaiting_user_review
+    confirmed_by: user
+    authorization: "按083连续授权接收真实UAT086交付并停止，等待用户验收；不批准发布。"
+    decision_id: TRANSITION-M001-087
+    timestamp: "2026-09-07T04:00:58Z"
+    evidence: .planning/milestones/M001/reviews/verification-uat-086-handoff-approval.md
+    uat_handoff: UAT-M001-086
+    url: http://localhost:6001
+    frontend_candidate: sha256:fd251e7439aad8e058656e2751ed84f40715fec570a872da53542688a6dd6904
+    backend_candidate: sha256:642ed57ad0ed6c8a13e4bba1101d8b50188e8ea636791583a6ffb5eaa6917aac
+    independent_qa: QA085_PASS
+    deployment: PASS
+    smoke: 100_PASS_0_FAIL_0_ERROR
+    data_and_passwords_preserved: true
+    continuous_authorization: exhausted_at_UAT-M001-086
+    user_uat_accepted: false
+    release_approved: false
+
+  - id: TRANSITION-M001-088
+    from: verification
+    to: verification
+    operation: remain-in-current-stage
+    previous_role: quality/base
+    previous_agent: qa-quinn
+    active_role: quality/base
+    active_agent: qa-quinn
+    status: active
+    confirmed_by: user
+    authorization: "UAT测试结果通过；配置先前测试Key/model，仅开展真实造文质量专项，避免重复全覆盖。"
+    decision_id: TRANSITION-M001-088
+    timestamp: "2026-09-07T06:19:30Z"
+    evidence: .planning/milestones/M001/reviews/uat-086-acceptance-ai-quality-authorization.md
+    uat_handoff: UAT-M001-086
+    user_uat_accepted: true
+    real_ai_scope: one_compatibility_probe_and_up_to_four_representative_quality_samples
+    model: deepseek/deepseek-v4-flash-0731
+    production_code_changes_approved: false
+    release_approved: false
+
+  - id: TRANSITION-M001-089
+    from: verification
+    to: verification
+    operation: remain-in-current-stage
+    previous_role: quality/base
+    previous_agent: qa-quinn
+    active_role: quality/base
+    active_agent: qa-quinn
+    status: awaiting_user_review
+    confirmed_by: gatekeeper-owen
+    authorization: "按088用户限定请求接收配置及质量原始结果，不代用户接受AI质量、不新增调用或返工。"
+    decision_id: TRANSITION-M001-089
+    timestamp: "2026-09-07T06:40:40Z"
+    evidence: .planning/milestones/M001/reviews/verification-ai-quality-088-handoff.md
+    original_report: .planning/milestones/M001/verification/ai-quality-088-report.md
+    original_samples: .planning/milestones/M001/verification/ai-quality-088-samples.md
+    configuration: passed
+    quality_verdict: limited_mixed
+    provider_model: deepseek/deepseek-v4-flash-0731
+    inference_attempts: 5
+    samples_attempted: 3
+    samples_validated_saved: 2
+    samples_validation_failed: 1
+    user_uat_accepted: true
+    real_ai_user_accepted: false
+    production_code_changes_approved: false
+    release_approved: false
+
+  - id: TRANSITION-M001-090
+    from: verification
+    to: verification
+    operation: remain-in-current-stage
+    previous_role: quality/base
+    previous_agent: qa-quinn
+    active_role: quality/base
+    active_agent: qa-quinn
+    status: active
+    confirmed_by: user
+    authorization: "测试用户刚新增GPT-oss模型，仅同两组词造文质量专项。"
+    decision_id: TRANSITION-M001-090
+    timestamp: "2026-09-07T07:29:47Z"
+    evidence: .planning/milestones/M001/reviews/ai-quality-gpt-oss-090-authorization.md
+    provider_model: openai/gpt-oss-safeguard-20b
+    maximum_generation_requests: 2
+    compatibility_probes: 0
+    user_uat_accepted: true
+    production_code_changes_approved: false
+    release_approved: false
+
+  - id: TRANSITION-M001-091
+    from: verification
+    to: verification
+    operation: remain-in-current-stage
+    previous_role: quality/base
+    previous_agent: qa-quinn
+    active_role: quality/base
+    active_agent: qa-quinn
+    status: awaiting_user_review
+    confirmed_by: gatekeeper-owen
+    authorization: "接收090用户限定测试结果，不代用户接受AI质量、不追加调用或返工。"
+    decision_id: TRANSITION-M001-091
+    timestamp: "2026-09-07T07:37:56Z"
+    evidence: .planning/milestones/M001/reviews/ai-quality-gpt-oss-090-handoff.md
+    original_report: .planning/milestones/M001/verification/ai-quality-gpt-oss-090-report.md
+    provider_model: openai/gpt-oss-safeguard-20b
+    generation_requests: 2
+    compatibility_probes: 0
+    automatic_retries: 0
+    validated_saved: 1
+    validation_failed: 1
+    quality_verdict: limited_mixed
+    user_uat_accepted: true
+    real_ai_user_accepted: false
+    configuration_changes: false
+    production_code_changes_approved: false
+    release_approved: false
+
+  - id: TRANSITION-M001-092
+    from: verification
+    to: technical-design
+    operation: recover-or-rollback
+    previous_role: quality/base
+    previous_agent: qa-quinn
+    active_role: backend-architect/base
+    active_agent: backend-alex
+    status: active
+    confirmed_by: user
+    authorization: "用户确认随文目标词候选映射、后端独立校验与定位；有限返回后端AI技术设计，具体技术交付尚未批准。"
+    decision_id: TRANSITION-M001-092
+    timestamp: "2026-09-07T08:39:15Z"
+    evidence: .planning/milestones/M001/reviews/ai-mapping-cr039-technical-rollback-approval.md
+    original_change: .planning/milestones/M001/changes/CR-039.md
+    original_handoff: .planning/milestones/M001/handoffs/verification-cr039-intake.md
+    change_requests: [CR-039]
+    next_scope: Backend AI mapping protocol and independent validation design; no product or UI redesign
+    user_uat_accepted: true
+    real_ai_user_accepted: false
+    implementation_started: false
+    additional_real_model_calls_authorized: false
+    release_approved: false
+
+  - id: TRANSITION-M001-093
+    from: technical-design
+    to: implementation
+    operation: transition-stage
+    previous_role: backend-architect/base
+    previous_agent: backend-alex
+    active_role: backend-implementer/base
+    active_agent: backend-ethan
+    status: active
+    confirmed_by: user
+    authorization: "用户确认DEC-036方向A及CR-039技术交付，有限交backend-ethan实施，不跨下一验收门禁。"
+    decision_id: TRANSITION-M001-093
+    timestamp: "2026-09-07T09:10:54Z"
+    evidence: .planning/milestones/M001/reviews/technical-cr039-implementation-approval.md
+    original_plan: .planning/milestones/M001/technical/backend-cr039.md
+    original_handoff: .planning/milestones/M001/handoffs/backend-architecture.md
+    change_requests: [CR-039]
+    approved_decisions: [DEC-036]
+    approved_option: A
+    next_scope: Approved backend AI mapping implementation and targeted developer checks
+    contract_version: v1.4
+    proposed_runtime_prompt_version: m001-v3
+    user_uat_accepted: true
+    real_ai_user_accepted: false
+    implementation_started: false
+    additional_real_model_calls_authorized: false
+    uat_deployment_approved: false
+    release_approved: false
+
+  - id: TRANSITION-M001-094
+    from: implementation
+    to: verification
+    operation: transition-stage
+    previous_role: backend-implementer/base
+    previous_agent: backend-ethan
+    active_role: quality/base
+    active_agent: qa-quinn
+    status: active
+    confirmed_by: user
+    authorization: "用户在开发交付后请求下一步，批准CR-039独立定向验证单次交接；不恢复真实模型预算或UAT部署授权。"
+    decision_id: TRANSITION-M001-094
+    timestamp: "2026-09-07T09:58:21Z"
+    evidence: .planning/milestones/M001/reviews/implementation-cr039-verification-approval.md
+    original_plan: .planning/milestones/M001/technical/backend-cr039.md
+    original_report: .planning/milestones/M001/implementation/backend-cr039-validation.md
+    original_handoff: .planning/milestones/M001/handoffs/backend-implementation.md
+    source_manifest: .planning/milestones/M001/implementation/evidence/cr039/source-manifest.json
+    change_requests: [CR-039]
+    approved_decisions: [DEC-036]
+    next_scope: Independent targeted CR-039 verification C39-01 through C39-18 in isolated synthetic environments
+    backend_candidate: sha256:557782d0cfb1d551d3897abbbe22f74c369e4f309e58c202b54c7137f9e03a5e
+    contract_version: v1.4
+    runtime_prompt_version: m001-v3
+    validator_version: m001-v3-wn31-r1
+    implementation_delivered: true
+    independent_verification_result: not_performed
+    user_uat_accepted: true
+    real_ai_user_accepted: false
+    additional_real_model_calls_authorized: false
+    uat_deployment_approved: false
+    automatic_rework_authorized: false
+    release_approved: false
+
+  - id: TRANSITION-M001-095
+    from: verification
+    to: implementation
+    operation: recover-or-rollback
+    previous_role: quality/base
+    previous_agent: qa-quinn
+    active_role: backend-implementer/base
+    active_agent: backend-ethan
+    status: active
+    confirmed_by: user
+    authorization: "用户在QA094建议单项返工后回复下一步，仅批准QA094-01草稿兼容问题返回后端实现，不自动复测或部署。"
+    decision_id: TRANSITION-M001-095
+    timestamp: "2026-09-08T01:42:57Z"
+    evidence: .planning/milestones/M001/reviews/verification-cr039-095-rework-approval.md
+    original_report: .planning/milestones/M001/verification/cr039-094-report.md
+    original_findings: .planning/milestones/M001/verification/cr039-094-findings.md
+    original_handoff: .planning/milestones/M001/handoffs/verification.md
+    qa_manifest: .planning/milestones/M001/verification/evidence/cr039-094/manifest.json
+    change_requests: [CR-039]
+    blocking_findings: [QA094-01]
+    received_qa_verdict: fail
+    next_scope: QA094-01 and C39-15 scoped backend draft compatibility rework and developer verification
+    rework_backend_baseline: sha256:557782d0cfb1d551d3897abbbe22f74c369e4f309e58c202b54c7137f9e03a5e
+    contract_version: v1.4
+    user_uat_accepted: true
+    real_ai_user_accepted: false
+    rework_started: false
+    technical_boundary_change_requires_confirmation: true
+    additional_real_model_calls_authorized: false
+    uat_deployment_approved: false
+    independent_verification_requires_gate: true
+    continuous_rework_authorized: false
+    release_approved: false
+
+  - id: TRANSITION-M001-096
+    from: implementation
+    to: verification
+    operation: transition-stage
+    previous_role: backend-implementer/base
+    previous_agent: backend-ethan
+    active_role: quality/base
+    active_agent: qa-quinn
+    status: active
+    confirmed_by: user
+    authorization: "用户在095开发交付后回复下一步，仅批准当前版本草稿生命周期与鉴权独立定向复测；USER-COMPAT-001继续生效，不恢复旧版兼容门槛或真实模型调用、UAT部署授权。"
+    decision_id: TRANSITION-M001-096
+    timestamp: "2026-09-08T02:17:41Z"
+    evidence: .planning/milestones/M001/reviews/implementation-cr039-096-verification-approval.md
+    original_report: .planning/milestones/M001/implementation/backend-cr039-095-validation.md
+    original_handoff: .planning/milestones/M001/handoffs/backend-implementation.md
+    source_manifest: .planning/milestones/M001/implementation/evidence/cr039-095/source-manifest.json
+    evidence_manifest: .planning/milestones/M001/implementation/evidence/cr039-095/manifest.json
+    previous_qa_report: .planning/milestones/M001/verification/cr039-094-report.md
+    previous_findings: .planning/milestones/M001/verification/cr039-094-findings.md
+    change_requests: [CR-039]
+    blocking_findings: [QA094-01]
+    scope_decision: USER-COMPAT-001
+    next_scope: Current-version draft lifecycle, same-version restart and associated security and learning-chain independent targeted retest
+    legacy_compatibility_acceptance: out_of_scope_by_user_decision
+    backend_candidate: sha256:2f263a80f844c3489eeca8fdbc0a3091ac95816551319c74da9ae2f3d793b396
+    contract_version: v1.4
+    runtime_prompt_version: m001-v3
+    validator_version: m001-v3-wn31-r1
+    implementation_delivered: true
+    independent_verification_result: not_performed
+    user_uat_accepted: true
+    real_ai_user_accepted: false
+    additional_real_model_calls_authorized: false
+    uat_deployment_approved: false
+    full_site_regression_authorized: false
+    automatic_rework_authorized: false
+    release_approved: false
+
+  - id: TRANSITION-M001-097
+    from: verification
+    to: implementation
+    operation: recover-or-rollback
+    previous_role: quality/base
+    previous_agent: qa-quinn
+    active_role: backend-implementer/base
+    active_agent: backend-ethan
+    status: active
+    confirmed_by: user
+    authorization: "用户在QA096建议仅返工访客承接批次删除路径后回复下一步，批准QA096-01有限返回后端实现；不自动独立复测、改变技术边界或部署。"
+    decision_id: TRANSITION-M001-097
+    timestamp: "2026-09-08T02:57:37Z"
+    evidence: .planning/milestones/M001/reviews/verification-cr039-097-rework-approval.md
+    original_report: .planning/milestones/M001/verification/cr039-096-report.md
+    original_findings: .planning/milestones/M001/verification/cr039-096-findings.md
+    original_handoff: .planning/milestones/M001/handoffs/verification.md
+    qa_manifest: .planning/milestones/M001/verification/evidence/cr039-096/manifest.json
+    change_requests: [CR-039]
+    received_qa_verdict: fail
+    blocking_findings: [QA096-01]
+    resolved_current_version_findings: [QA094-01]
+    historical_QA094_preserved: true
+    scope_decision: USER-COMPAT-001
+    legacy_compatibility_acceptance: out_of_scope_by_user_decision
+    next_scope: QA096-01 current-version claimed-batch deletion and associated authorization, idempotency, accounting and concurrency rework
+    rework_backend_baseline: sha256:2f263a80f844c3489eeca8fdbc0a3091ac95816551319c74da9ae2f3d793b396
+    contract_version: v1.4
+    user_uat_accepted: true
+    real_ai_user_accepted: false
+    received_real_model_calls: 0
+    received_synthetic_provider_calls: 28
+    rework_started: false
+    technical_boundary_change_requires_confirmation: true
+    schema_or_constraint_changes_authorized: false
+    claim_retention_change_requires_confirmation: true
+    additional_real_model_calls_authorized: false
+    uat_deployment_approved: false
+    full_site_regression_authorized: false
+    independent_verification_requires_gate: true
+    continuous_rework_authorized: false
+    release_approved: false
+
+  - id: TRANSITION-M001-098
+    from: implementation
+    to: verification
+    operation: transition-stage
+    previous_role: backend-implementer/base
+    previous_agent: backend-ethan
+    active_role: quality/base
+    active_agent: qa-quinn
+    status: active
+    confirmed_by: user
+    authorization: "用户在097删除修复开发交付建议独立定向复验后回复下一步，仅批准QA096-01及必要相邻链路独立复验；不追加真实模型调用、全站回归或UAT部署。"
+    decision_id: TRANSITION-M001-098
+    timestamp: "2026-09-08T03:46:42Z"
+    evidence: .planning/milestones/M001/reviews/implementation-cr039-098-verification-approval.md
+    original_report: .planning/milestones/M001/implementation/backend-cr039-097-validation.md
+    original_handoff: .planning/milestones/M001/handoffs/backend-implementation.md
+    source_manifest: .planning/milestones/M001/implementation/evidence/cr039-097/source-manifest.json
+    evidence_manifest: .planning/milestones/M001/implementation/evidence/cr039-097/manifest.json
+    previous_qa_report: .planning/milestones/M001/verification/cr039-096-report.md
+    previous_findings: .planning/milestones/M001/verification/cr039-096-findings.md
+    change_requests: [CR-039]
+    blocking_findings: [QA096-01]
+    resolved_current_version_findings: [QA094-01]
+    scope_decisions: [USER-COMPAT-001, USER-CLAIM-DELETE-001]
+    next_scope: Independent targeted QA096-01 verification under the approved owner-delete claim retention exception
+    legacy_compatibility_acceptance: out_of_scope_by_user_decision
+    backend_candidate: sha256:ab12e7dec0a6a8beb55df2ec6a8174d01d288681215c1108cec997e6f99f8eee
+    contract_version: v1.4
+    runtime_prompt_version: m001-v3
+    validator_version: m001-v3-wn31-r1
+    implementation_delivered: true
+    received_developer_verdict: pass
+    independent_verification_result: not_performed
+    user_uat_accepted: true
+    real_ai_user_accepted: false
+    additional_real_model_calls_authorized: false
+    uat_deployment_approved: false
+    full_site_regression_authorized: false
+    automatic_rework_authorized: false
+    release_approved: false
+
+  - id: TRANSITION-M001-099
+    from: verification
+    to: verification
+    operation: remain-in-current-stage
+    previous_role: quality/base
+    previous_agent: qa-quinn
+    active_role: quality/base
+    active_agent: qa-quinn
+    status: active
+    confirmed_by: user
+    authorization: "用户在QA098独立PASS并建议准备新版UAT后回复继续，接收质量交付并批准单次保留数据的UAT准备及有限冒烟；真实模型预算另行确认，不跨入真实调用或发布。"
+    decision_id: TRANSITION-M001-099
+    timestamp: "2026-09-08T06:04:36Z"
+    evidence: .planning/milestones/M001/reviews/verification-cr039-099-uat-preparation-approval.md
+    original_report: .planning/milestones/M001/verification/cr039-098-report.md
+    original_findings: .planning/milestones/M001/verification/cr039-098-findings.md
+    original_handoff: .planning/milestones/M001/handoffs/verification.md
+    qa_manifest: .planning/milestones/M001/verification/evidence/cr039-098/manifest.json
+    qa_closure: .planning/milestones/M001/verification/evidence/cr039-098/closure.json
+    change_requests: [CR-039]
+    received_qa_verdict: pass_scoped_QA096_01_resolved
+    blocking_findings: []
+    resolved_current_version_findings: [QA094-01, QA096-01]
+    historical_QA094_QA096_preserved: true
+    scope_decisions: [USER-COMPAT-001, USER-CLAIM-DELETE-001]
+    next_scope: Preserve existing data and runtime configuration; prepare candidate097 for local UAT with limited non-destructive smoke
+    backend_candidate: sha256:ab12e7dec0a6a8beb55df2ec6a8174d01d288681215c1108cec997e6f99f8eee
+    frontend_unchanged: sha256:fd251e7439aad8e058656e2751ed84f40715fec570a872da53542688a6dd6904
+    contract_version: v1.4
+    prompt_version: m001-v3
+    validator_version: m001-v3-wn31-r1
+    received_real_model_calls: 0
+    received_synthetic_provider_calls: 23
+    existing_functional_uat_accepted: true
+    candidate_uat_accepted: false
+    real_ai_user_accepted: false
+    expected_uat_id: UAT-M001-099
+    uat_preparation_authorized: true
+    uat_deployment_approved: true
+    uat_deployment_started: false
+    migrations_builds_pulls_authorized: false
+    existing_business_data_deletion_authorized: false
+    real_model_configuration_changes_authorized: false
+    additional_real_model_calls_authorized: false
+    future_quality_sample_budget: requires_explicit_confirmation
+    legacy_compatibility_acceptance: out_of_scope_by_user_decision
+    full_site_regression_authorized: false
+    automatic_rework_authorized: false
+    continuous_authorization_restored: false
+    release_approved: false
+
+  - from: verification
+    to: product-planning
+    operation: recover-or-rollback
+    previous_role: quality/base
+    previous_agent: qa-quinn
+    active_role: product/to-c
+    active_agent: product-maya
+    status: active
+    confirmed_by: user
+    authorization: "用户在已展示CR-040有限返回product-maya的单一目标、完成中途AGT规则更新后回复继续；恢复该次有限交接，不扩大为后续技术、实现、模型调用或发布授权。"
+    decision_id: TRANSITION-M001-100
+    timestamp: "2026-09-08T09:33:58Z"
+    evidence: .planning/milestones/M001/reviews/verification-cr040-product-revision-review.md
+    original_request: .planning/milestones/M001/verification/cr040-meaning-only-request.md
+    original_handoff: .planning/milestones/M001/handoffs/verification.md
+    change_requests: [CR-040]
+    other_open_change_requests_preserved: [CR-039]
+    next_scope: Limited product correction of original-input-word definitions independent of passage and derived forms; consolidate owned current documents and preserve frozen history
+    requirement_confirmation: Explicit user correction recorded in CR-040; passage-based sense selection revoked, not merely its explanation tail
+    received_uat_preparation: UAT-M001-099
+    uat_report: .planning/milestones/M001/verification/uat-099-report.md
+    uat_manifest: .planning/milestones/M001/verification/evidence/uat-099/delivery-manifest.json
+    received_uat_preparation_verdict: pass_scoped_preparation_not_user_acceptance
+    candidate_uat_deployed: true
+    candidate_uat_accepted: false
+    prior_functional_uat_accepted: true
+    real_model_quality: not_verified_under_v3
+    scope_decisions: [USER-COMPAT-001, USER-CLAIM-DELETE-001]
+    cr040_implementation_started: false
+    specialist_artifacts_modified: false
+    continuous_authorization_restored: false
+    additional_real_model_calls_authorized: false
+    new_deployment_authorized: false
+    release_approved: false
+
+  - from: product-planning
+    to: technical-design
+    operation: recover-or-rollback
+    previous_role: product/to-c
+    previous_agent: product-maya
+    active_role: backend-architect/base
+    active_agent: backend-alex
+    status: active
+    confirmed_by: user
+    authorization: "用户批准CR-040产品修订及已展示的有限技术同步去向；恢复既有backend-alex技术责任阶段，保留无关UI审批，不跨入实现或真实模型调用。"
+    decision_id: TRANSITION-M001-101
+    timestamp: "2026-09-08T09:49:48Z"
+    evidence: .planning/milestones/M001/reviews/product-cr040-technical-revision-approval.md
+    original_request: .planning/milestones/M001/verification/cr040-meaning-only-request.md
+    original_handoff: .planning/milestones/M001/handoffs/product.md
+    change_requests: [CR-040]
+    other_open_change_requests_preserved: [CR-039]
+    recovery_basis: [TRANSITION-M001-092, TRANSITION-M001-093, TRANSITION-M001-100]
+    product_revision_approved: true
+    acceptance_ids: C40-01 through C40-06
+    next_scope: Limited backend AI/API technical revision; naming and dependent contracts require a scoped proposal
+    existing_ui_approval_preserved: true
+    ui_redesign_authorized: false
+    profile_modified: false
+    specialist_artifacts_modified: false
+    implementation_authorized: false
+    additional_real_model_calls_authorized: false
+    uat_deployment_authorized: false
+    continuous_authorization_restored: false
+    release_approved: false
+
+  - from: technical-design
+    to: technical-design
+    operation: recover-or-rollback
+    previous_role: backend-architect/base
+    previous_agent: backend-alex
+    active_role: dba/base
+    active_agent: dba-diana
+    status: active
+    confirmed_by: user
+    authorization: "用户已同意CR040-NAMING及DBA/前端有限同步，并在后端原始交付与先交DBA的单一下一目标展示后回复继续；接收后端有限技术交付，仅恢复dba-diana处理受影响数据设计，不批准迁移执行、兼容、实现或模型调用。"
+    decision_id: TRANSITION-M001-102
+    timestamp: "2026-09-08T10:18:24Z"
+    evidence: .planning/milestones/M001/reviews/backend-cr040-database-sync-approval.md
+    original_handoff: .planning/milestones/M001/handoffs/backend-architecture.md
+    original_request: .planning/milestones/M001/verification/cr040-meaning-only-request.md
+    change_requests: [CR-040]
+    other_open_change_requests_preserved: [CR-039]
+    recovery_basis: [TRANSITION-M001-041, TRANSITION-M001-101]
+    confirmed_scope: [CR040-NAMING]
+    naming_confirmation_source: .planning/milestones/M001/technical/backend.md#cr040-scope-confirmation
+    received_backend_technical_revision: approved_scoped_for_dba_handoff
+    received_contract_version: v1.5
+    received_prompt_schema_version: m001-v4
+    received_validator_version: m001-v4-wn31-r1
+    next_scope: Limited database design synchronization for CR-040; preserve data and seek explicit approval for any data conversion or compatibility proposal
+    stage_changed: false
+    whole_technical_stage_approved: false
+    frontend_role_activated: false
+    scope_decisions: [USER-COMPAT-001, USER-CLAIM-DELETE-001]
+    specialist_artifacts_modified: false
+    implementation_authorized: false
+    migrations_or_data_operations_authorized: false
+    real_model_calls_authorized: false
+    uat_deployment_authorized: false
+    continuous_authorization_restored: false
+    release_approved: false
+
+  - from: technical-design
+    to: technical-design
+    operation: recover-or-rollback
+    previous_role: dba/base
+    previous_agent: dba-diana
+    active_role: backend-architect/base
+    active_agent: backend-alex
+    status: active
+    confirmed_by: user
+    authorization: "用户已确定CR040-DATA-CUTOVER清理白名单，并在数据库原始交付及后端有限同步的单一目标展示后明确批准；接收DBA技术交付，恢复backend-alex只同步清理、保留与失败处理约定，不授权实际数据操作、实现或模型调用。"
+    decision_id: TRANSITION-M001-103
+    timestamp: "2026-09-09T02:22:54Z"
+    evidence: .planning/milestones/M001/reviews/database-cr040-backend-sync-approval.md
+    original_handoff: .planning/milestones/M001/handoffs/database.md
+    original_request: .planning/milestones/M001/verification/cr040-meaning-only-request.md
+    change_requests: [CR-040]
+    other_open_change_requests_preserved: [CR-039]
+    recovery_basis: [TRANSITION-M001-101, TRANSITION-M001-102]
+    confirmed_scope: [CR040-NAMING, CR040-DATA-CUTOVER]
+    scope_confirmation_source: .planning/milestones/M001/technical/database.md#cr040-data-cutover
+    received_database_technical_revision: approved_scoped_for_backend_sync
+    cleanup_design_approved: true
+    next_scope: Limited backend synchronization of approved local cleanup, preservation and failure-handling design; frontend synchronization remains for a later gate
+    stage_changed: false
+    whole_technical_stage_approved: false
+    frontend_role_activated: false
+    scope_decisions: [USER-COMPAT-001, USER-CLAIM-DELETE-001]
+    specialist_artifacts_modified: false
+    implementation_authorized: false
+    migrations_or_data_operations_authorized: false
+    legacy_compatibility_authorized: false
+    real_model_calls_authorized: false
+    uat_deployment_authorized: false
+    continuous_authorization_restored: false
+    release_approved: false
+
+  - from: technical-design
+    to: technical-design
+    operation: recover-or-rollback
+    previous_agent: backend-alex
+    active_role: frontend-architect/base
+    active_agent: frontend-bob
+    status: active
+    decision_id: TRANSITION-M001-104
+    timestamp: "2026-09-09T02:41:00Z"
+    confirmed_by: user
+    evidence: .planning/milestones/M001/reviews/backend-cr040-frontend-sync-approval.md
+    recovery_basis: [TRANSITION-M001-070, TRANSITION-M001-103]
+    handoff_authorization: USER-HANDOFF-CONTINUOUS-001
+    confirmed_scope: [CR040-NAMING, CR040-DATA-CUTOVER]
+    change_requests: [CR-039, CR-040]
+    backend_cutover_sync_received: true
+    stage_changed: false
+    implementation_authorized_this_gate: false
+    data_operations_authorized: false
+    real_model_calls_authorized: false
+    deployment_authorized: false
+    release_approved: false
+
+  - decision_id: TRANSITION-M001-105
+    milestone: M001
+    from: technical-design
+    to: implementation
+    operation: transition-stage
+    previous_role: frontend-architect/base
+    previous_agent: frontend-bob
+    active_role: backend-implementer/base
+    active_agent: backend-ethan
+    confirmed_by: user
+    timestamp: "2026-09-09T02:49:00Z"
+    evidence: .planning/milestones/M001/reviews/frontend-cr040-implementation-approval.md
+    authorization: USER-HANDOFF-CONTINUOUS-001
+    confirmed_scope: [CR040-NAMING, CR040-DATA-CUTOVER]
+    result: Scoped technical artifacts received; backend implementation and isolated synthetic checks authorized
+    actual_database_operations_authorized: false
+    real_model_calls_authorized: false
+    uat_deployment_authorized: false
+    release_approved: false
+
+  - decision_id: TRANSITION-M001-106
+    milestone: M001
+    from: implementation
+    to: implementation
+    operation: activate-role
+    previous_role: backend-implementer/base
+    previous_agent: backend-ethan
+    active_role: frontend-implementer/base
+    active_agent: frontend-claire
+    confirmed_by: user
+    authorization: USER-HANDOFF-CONTINUOUS-001
+    timestamp: "2026-09-09T03:03:00Z"
+    evidence: .planning/milestones/M001/reviews/backend-cr040-frontend-implementation-handoff.md
+    result: Backend scoped developer artifacts received; frontend implementation activated without stage transition
+    actual_database_operations_authorized: false
+    real_model_calls_authorized: false
+    uat_deployment_authorized: false
+
+  - decision_id: TRANSITION-M001-107
+    milestone: M001
+    from: implementation
+    to: verification
+    operation: transition-stage
+    previous_role: frontend-implementer/base
+    previous_agent: frontend-claire
+    active_role: quality/base
+    active_agent: qa-quinn
+    confirmed_by: user
+    authorization: USER-HANDOFF-CONTINUOUS-001
+    timestamp: "2026-09-09T03:10:40Z"
+    evidence: .planning/milestones/M001/reviews/implementation-cr040-verification-handoff.md
+    result: Both scoped developer deliveries received; quality-role targeted isolated verification authorized
+    actual_database_operations_authorized: false
+    real_model_calls_authorized: false
+    uat_deployment_authorized: false
+    release_approved: false
+
+  - decision_id: TRANSITION-M001-108
+    milestone: M001
+    from: verification
+    to: verification
+    operation: remain-in-current-stage
+    previous_role: quality/base
+    previous_agent: qa-quinn
+    active_role: quality/base
+    active_agent: qa-quinn
+    confirmed_by: user
+    authorization: USER-CR040-UAT-EXECUTION-001
+    timestamp: "2026-09-09T03:56:08Z"
+    evidence: .planning/milestones/M001/reviews/verification-cr040-uat-execution-approval.md
+    result: Scoped QA received; user explicitly permits approved local UAT cleanup and paired deployment with limited smoke
+    actual_database_operations_authorized: true
+    uat_deployment_authorized: true
+    real_model_calls_authorized: false
+    group_model_assignments_authorized: false
+    user_uat_accepted: false
+    release_approved: false
+
+  - decision_id: TRANSITION-M001-109
+    milestone: M001
+    from: verification
+    to: verification
+    operation: remain-in-current-stage
+    previous_role: quality/base
+    previous_agent: qa-quinn
+    active_role: quality/base
+    active_agent: qa-quinn
+    confirmed_by: user
+    authorization: USER-HANDOFF-CONTINUOUS-001
+    timestamp: "2026-09-09T04:05:07Z"
+    evidence: .planning/milestones/M001/reviews/verification-cr040-uat-delivery.md
+    result: UAT108 actual one-time cleanup and paired deployment received; 50 scoped smoke checks passed; user quality testing remains
+    execution_authorization_completed: TRANSITION-M001-108
+    real_model_calls: 0
+    additional_database_operations_authorized: false
+    additional_model_calls_authorized: false
+    candidate_user_accepted: false
+    release_approved: false
+
+  - id: TRANSITION-M001-110
+    from: verification
+    to: implementation
+    active_role: backend-implementer/base
+    active_agent: backend-ethan
+    confirmed_by: user
+    authorization: USER-HANDOFF-CONTINUOUS-001
+    timestamp: "2026-09-09T07:55:00Z"
+    evidence: .planning/milestones/M001/reviews/stream-failure-capture-gates.md
+    result: Scoped UAT failure-candidate diagnostic implementation only
+    real_model_calls_authorized: false
+    uat_deployment_authorized: false
+    release_approved: false
+
+  - id: TRANSITION-M001-111
+    from: implementation
+    to: verification
+    active_role: quality/base
+    active_agent: qa-quinn
+    confirmed_by: user
+    authorization: USER-HANDOFF-CONTINUOUS-001
+    timestamp: "2026-09-09T08:01:04Z"
+    evidence: .planning/milestones/M001/reviews/stream-failure-capture-gates.md
+    result: Scoped diagnostic developer delivery received; no runtime deployment
+    real_model_calls_authorized: false
+    uat_deployment_authorized: false
+    release_approved: false
+
+  - id: TRANSITION-M001-112
+    from: verification
+    to: verification
+    operation: remain_in_current_stage
+    active_role: quality/base
+    active_agent: qa-quinn
+    confirmed_by: user
+    user_response: "行吧，你试试看"
+    authorization: USER-FAILURE-CAPTURE-DEPLOY-112
+    timestamp: "2026-09-09T08:11:51Z"
+    evidence: .planning/milestones/M001/reviews/stream-failure-capture-gates.md
+    result: Explicit permission for local backend diagnostic replacement; scoped runtime verification follows
+    real_model_calls_authorized: false
+    uat_deployment_authorized: true
+    actual_database_changes_authorized: false
+    release_approved: false
+
+  - id: TRANSITION-M001-113
+    from: verification
+    to: implementation
+    active_role: backend-implementer/base
+    active_agent: backend-ethan
+    confirmed_by: user
+    authorization: USER-FAILURE-CAPTURE-SUBJECT-113
+    timestamp: "2026-09-09T08:33:06Z"
+    evidence: .planning/milestones/M001/reviews/stream-failure-capture-gates.md
+    result: Approved subject/model-bound diagnostic rework and bounded local deployment
+    real_model_calls_authorized: false
+    actual_database_changes_authorized: false
+    release_approved: false
+
+  - id: TRANSITION-M001-114
+    from: implementation
+    to: verification
+    active_role: quality/base
+    active_agent: qa-quinn
+    confirmed_by: user
+    authorization: USER-HANDOFF-CONTINUOUS-001
+    timestamp: "2026-09-09T08:39:39Z"
+    evidence: .planning/milestones/M001/reviews/stream-failure-capture-gates.md
+    result: Subject/model diagnostic developer checks received; QA then explicitly authorized local deployment
+    execution_completed_at: "2026-09-09T08:43:20.955Z"
+    execution_authorization: USER-FAILURE-CAPTURE-SUBJECT-113
+    execution_evidence: .planning/milestones/M001/verification/evidence/failure-capture/deployment-114.json
+    execution_result: Scoped QA passed; subject-bound diagnostic deployed with existing configuration preserved; awaiting user reproduction
+    real_model_calls_authorized: false
+    actual_database_changes_authorized: false
+    release_approved: false
+
+  - id: TRANSITION-M001-115
+    from: verification
+    to: technical-design
+    operation: transition-stage
+    previous_role: quality/base
+    previous_agent: qa-quinn
+    active_role: backend-architect/base
+    active_agent: backend-alex
+    confirmed_by: user
+    authorization: USER-INLINE-MAPPING-115 and USER-HANDOFF-CONTINUOUS-001
+    timestamp: "2026-09-09T09:34:48Z"
+    evidence: .planning/milestones/M001/reviews/stream-failure-capture-gates.md
+    requirement_confirmation: .planning/milestones/M001/verification/stream-failure-diagnosis.md#inline-source-annotation
+    result: Confirmed inline source annotation received for limited backend technical revision; annotations excluded from streaming and final display; guarded-pruning hypothesis unadopted
+    implementation_authorized_by_this_gate: false
+    real_model_calls_authorized: false
+    actual_database_changes_authorized: false
+    uat_deployment_authorized: false
+    user_uat_accepted: false
+    release_approved: false
+
+  - id: TRANSITION-M001-116
+    from: technical-design
+    to: implementation
+    operation: transition-stage
+    previous_role: backend-architect/base
+    previous_agent: backend-alex
+    active_role: backend-implementer/base
+    active_agent: backend-ethan
+    confirmed_by: user
+    authorization: USER-INLINE-MAPPING-115 and USER-HANDOFF-CONTINUOUS-001
+    timestamp: "2026-09-09T09:47:32Z"
+    evidence: .planning/milestones/M001/reviews/stream-failure-capture-gates.md
+    source_handoff: .planning/milestones/M001/handoffs/backend-architecture.md
+    result: Scoped inline annotation design received; unchanged public storage/frontend contracts; backend implementation and isolated targeted checks authorized
+    real_model_calls_authorized: false
+    actual_database_changes_authorized: false
+    uat_deployment_authorized: false
+    user_uat_accepted: false
+    release_approved: false
+
+  - id: TRANSITION-M001-117
+    from: implementation
+    to: verification
+    operation: transition-stage
+    previous_role: backend-implementer/base
+    previous_agent: backend-ethan
+    active_role: quality/base
+    active_agent: qa-quinn
+    confirmed_by: user
+    authorization: USER-INLINE-MAPPING-115 and USER-HANDOFF-CONTINUOUS-001
+    timestamp: "2026-09-09T10:06:12Z"
+    evidence: .planning/milestones/M001/reviews/stream-failure-capture-gates.md
+    source_handoff: .planning/milestones/M001/handoffs/backend-implementation.md
+    result: Inline protocol developer delivery received with original failures and source hashes; targeted quality-role checks follow, no deployment or real model calls
+    real_model_calls_authorized: false
+    actual_database_changes_authorized: false
+    uat_deployment_authorized: false
+    user_uat_accepted: false
+    release_approved: false
+
+  - id: TRANSITION-M001-118
+    from: verification
+    to: verification
+    operation: remain-in-current-stage
+    previous_role: quality/base
+    previous_agent: qa-quinn
+    active_role: quality/base
+    active_agent: qa-quinn
+    confirmed_by: user
+    authorization: UAT-INLINE-117-DEPLOY
+    user_response: "允许"
+    timestamp: "2026-09-09T11:01:50Z"
+    evidence: .planning/milestones/M001/reviews/stream-failure-capture-gates.md
+    result: Scoped permission for one local port6001 backend update and no-AI adjacent checks; preserve database, model settings, credentials and frontend
+    real_model_calls_authorized: false
+    actual_database_changes_authorized: false
+    uat_deployment_authorized: true
+    diagnostic_capture_renewal_authorized: false
+    user_uat_accepted: false
+    release_approved: false
+
+  - id: TRANSITION-M001-119
+    from: verification
+    to: implementation
+    operation: transition-stage
+    previous_role: quality/base
+    previous_agent: qa-quinn
+    active_role: backend-implementer/base
+    active_agent: backend-ethan
+    confirmed_by: user
+    authorization: USER-ANNOTATION-CAPTURE-119 and USER-HANDOFF-CONTINUOUS-001
+    timestamp: "2026-09-09T11:53:28Z"
+    evidence: .planning/milestones/M001/reviews/stream-failure-capture-gates.md
+    result: Implement only one-hour single-sample private offending-label and adjacent-word capture for the testing identity and MiniMax; no full candidate or business change
+    real_model_calls_authorized: false
+    actual_database_changes_authorized: false
+    scoped_uat_deployment_after_qa_authorized: true
+    user_uat_accepted: false
+    release_approved: false
+
+  - id: TRANSITION-M001-120
+    from: implementation
+    to: verification
+    operation: transition-stage
+    previous_role: backend-implementer/base
+    previous_agent: backend-ethan
+    active_role: quality/base
+    active_agent: qa-quinn
+    confirmed_by: user
+    authorization: USER-ANNOTATION-CAPTURE-119 and USER-HANDOFF-CONTINUOUS-001
+    timestamp: "2026-09-09T11:58:40Z"
+    evidence: .planning/milestones/M001/reviews/stream-failure-capture-gates.md
+    result: Narrow capture implementation and developer evidence received; targeted QA consumer checks precede scoped authorized deployment
+    real_model_calls_authorized: false
+    actual_database_changes_authorized: false
+    scoped_uat_deployment_after_qa_authorized: true
+    user_uat_accepted: false
+    release_approved: false
+
+  - id: TRANSITION-M001-121
+    from: verification
+    to: implementation
+    operation: transition-stage
+    previous_role: quality/base
+    previous_agent: qa-quinn
+    active_role: backend-implementer/base
+    active_agent: backend-ethan
+    timestamp: "2026-09-10T01:55:12Z"
+    confirmed_by: user
+    authorization: USER-HINT-CAPTURE-121 and USER-HANDOFF-CONTINUOUS-001
+    evidence: .planning/milestones/M001/reviews/stream-failure-capture-gates.md
+    result: Implement only private single-failing-hint capture, one identity/model/sample/hour; no prompt, validator, API, SQL or paid AI changes
+    release_approved: false
+
+  - id: TRANSITION-M001-122
+    from: implementation
+    to: verification
+    operation: transition-stage
+    previous_role: backend-implementer/base
+    previous_agent: backend-ethan
+    active_role: quality/base
+    active_agent: qa-quinn
+    timestamp: "2026-09-10T01:59:41Z"
+    confirmed_by: user
+    authorization: USER-HINT-CAPTURE-121 and USER-HANDOFF-CONTINUOUS-001
+    evidence: .planning/milestones/M001/reviews/stream-failure-capture-gates.md
+    result: Receive narrow hint capture, 16 source hashes, developer checks and image; QA consumer check before authorized scoped deployment
+    release_approved: false
+
+  - id: TRANSITION-M001-123
+    timestamp: "2026-09-10T02:48:28Z"
+    operation: transition-stage
+    from: verification
+    to: implementation
+    previous_role: quality/base
+    previous_agent: qa-quinn
+    active_role: backend-implementer/base
+    active_agent: backend-ethan
+    confirmed_by: user
+    authorization: USER-UNIFIED-CAPTURE-123 and USER-HANDOFF-CONTINUOUS-001
+    evidence: .planning/milestones/M001/reviews/stream-failure-capture-gates.md
+    result: Scoped shared one-shot diagnosis implementation, consumer QA and local backend deployment; no business-rule change or AI calls
+    release_approved: false
+
+  - id: TRANSITION-M001-124
+    timestamp: "2026-09-10T09:03:19Z"
+    from: implementation
+    to: technical-design
+    operation: transition-stage
+    previous_role: backend-implementer/base
+    previous_agent: backend-ethan
+    active_role: backend-architect/base
+    active_agent: backend-alex
+    confirmed_by: user
+    authorization: CR-041 user boundary and USER-HANDOFF-CONTINUOUS-001
+    evidence: .planning/milestones/M001/reviews/stream-failure-capture-gates.md
+    result: Scoped refund-contract repair; P0 failure is retained, not accepted as passing
+
+  - id: TRANSITION-M001-125
+    timestamp: "2026-09-10T09:03:50Z"
+    from: technical-design
+    to: implementation
+    operation: transition-stage
+    previous_role: backend-architect/base
+    previous_agent: backend-alex
+    active_role: backend-implementer/base
+    active_agent: backend-ethan
+    confirmed_by: user
+    authorization: CR-041 user boundary and USER-HANDOFF-CONTINUOUS-001
+    evidence: .planning/milestones/M001/reviews/stream-failure-capture-gates.md
+    result: Receive bounded refund recovery design; no UI, schema migration or model retry
+
+  - id: ACTIVATE-M001-G14-126
+    timestamp: "2026-09-10T09:44:07Z"
+    from: implementation
+    to: implementation
+    operation: activate-role
+    stage_changed: false
+    previous_role: backend-implementer/base
+    previous_agent: backend-ethan
+    active_role: frontend-implementer/base
+    active_agent: frontend-claire
+    confirmed_by: user
+    authorization: USER-HANDOFF-CONTINUOUS-001
+    evidence: .planning/milestones/M001/reviews/stream-failure-capture-gates.md
+    result: Receive scoped backend AI-RACES-125 evidence and activate G14 consumer verification; no whole-stage, QA, deployment or UAT approval
+
+  - id: TRANSITION-M001-127
+    timestamp: "2026-09-10T10:03:46Z"
+    from: implementation
+    to: verification
+    operation: transition-stage
+    previous_role: frontend-implementer/base
+    previous_agent: frontend-claire
+    active_role: quality/base
+    active_agent: qa-quinn
+    confirmed_by: user
+    authorization: USER-HANDOFF-CONTINUOUS-001
+    evidence: .planning/milestones/M001/reviews/stream-failure-capture-gates.md
+    result: Receive scoped backend AI-RACES-125 and frontend AI-CONSUMER-126 developer evidence for independent verification; no model calls, deployment, UAT acceptance or release
+
+  - id: TRANSITION-M001-128
+    timestamp: "2026-09-11T02:03:24Z"
+    from: verification
+    to: implementation
+    operation: transition-stage
+    previous_role: quality/base
+    previous_agent: qa-quinn
+    active_role: frontend-implementer/base
+    active_agent: frontend-claire
+    confirmed_by: user
+    authorization: USER-HANDOFF-CONTINUOUS-001
+    evidence: .planning/milestones/M001/reviews/stream-failure-capture-gates.md
+    specialist_report: .planning/milestones/M001/verification/report.md
+    specialist_handoff: .planning/milestones/M001/handoffs/verification.md
+    open_finding: Q127-01
+    result: Receive failed independent AI-INTEGRATION-127 verification for scoped current-version consumer rework; no QA pass, paid model, deployment, actual data, compatibility, UAT or release approval
+
+  - id: TRANSITION-M001-129
+    timestamp: "2026-09-11T02:25:14Z"
+    from: implementation
+    to: verification
+    operation: recover-or-rollback
+    previous_role: frontend-implementer/base
+    previous_agent: frontend-claire
+    active_role: quality/base
+    active_agent: qa-quinn
+    confirmed_by: user
+    authorization: USER-HANDOFF-CONTINUOUS-001
+    scope_decision: USER-GENERATION-QUALITY-129
+    evidence: .planning/milestones/M001/reviews/stream-failure-capture-gates.md
+    supersedes_action: TRANSITION-M001-128 oversized-result implementation blocker
+    retained_evidence: Q127-01 counterexample remains true and unfixed, but nonblocking
+    result: Return to normal-generation verification with user target 90 percent; below 50 percent is user observation, not measured baseline; no paid calls, deployment, compatibility or UAT approval
+
+  - id: TRANSITION-M001-130
+    timestamp: "2026-09-11T02:48:50Z"
+    from: verification
+    to: technical-design
+    operation: recover-or-rollback
+    previous_role: quality/base
+    previous_agent: qa-quinn
+    active_role: backend-architect/base
+    active_agent: backend-alex
+    confirmed_by: user
+    user_request: "下一步"
+    authorization: USER-HANDOFF-CONTINUOUS-001
+    change_request: CR-042
+    evidence: .planning/milestones/M001/reviews/stream-failure-capture-gates.md
+    input_handoff: .planning/milestones/M001/handoffs/verification.md
+    pending_decision: CR-042-RETENTION
+    result: Reopen only backend generation observability design; dedicated account confirmed, retention remains open; no implementation, capture, deployment, paid calls or release approval
+
+  - id: TRANSITION-M001-131
+    timestamp: "2026-09-11T03:07:10Z"
+    from: technical-design
+    to: implementation
+    operation: transition-stage
+    previous_role: backend-architect/base
+    previous_agent: backend-alex
+    active_role: backend-implementer/base
+    active_agent: backend-ethan
+    confirmed_by: user
+    user_request: "下一步"
+    authorization: USER-HANDOFF-CONTINUOUS-001
+    confirmed_scope: [USER-UAT-ACCOUNT-129, CR-042-RETENTION]
+    change_request: CR-042
+    evidence: .planning/milestones/M001/reviews/stream-failure-capture-gates.md
+    input_handoff: .planning/milestones/M001/handoffs/backend-architecture.md
+    result: Scoped backend observability design received; implement OBS042-A/B/C with isolated synthetic validation; CR039/040/041/042 remain open; no runtime capture, paid models, deployment, actual DB changes or legacy compatibility
+
+  - id: TRANSITION-M001-132
+    timestamp: "2026-09-12T08:30:09Z"
+    from: implementation
+    to: verification
+    operation: transition-stage
+    previous_role: backend-implementer/base
+    previous_agent: backend-ethan
+    active_role: quality/base
+    active_agent: qa-quinn
+    confirmed_by: user
+    user_request: "下一步"
+    authorization: USER-HANDOFF-CONTINUOUS-001
+    confirmed_scope: [USER-MODEL-TUNING-STOP-132]
+    evidence: .planning/milestones/M001/reviews/stream-failure-capture-gates.md
+    input_handoff: .planning/milestones/M001/handoffs/backend-implementation.md
+    result: Receive r10 implementation for scoped independent closeout verification using existing evidence and isolated synthetic cases; no more model tuning or paid calls, full-site retest, UAT writes, deployment, known-risk waiver, milestone completion or release
+
+  - id: TRANSITION-M001-133
+    timestamp: "2026-09-12T08:50:07Z"
+    from: verification
+    to: implementation
+    operation: recover-or-rollback
+    previous_role: quality/base
+    previous_agent: qa-quinn
+    active_role: frontend-implementer/base
+    active_agent: frontend-claire
+    confirmed_by: user
+    user_request: "下一步"
+    authorization: USER-HANDOFF-CONTINUOUS-001
+    confirmed_scope: [USER-FRONTEND-UAT-SYNC-133, USER-MODEL-TUNING-STOP-132]
+    finding: Q132-01
+    evidence: .planning/milestones/M001/reviews/stream-failure-capture-gates.md
+    input_handoff: .planning/milestones/M001/handoffs/verification.md
+    result: Receive scoped QA evidence and route frontend-only local UAT candidate synchronization; no backend or data changes, new model calls, tuning, compatibility, full-site retest, known-limit waiver or release
+
+  - id: TRANSITION-M001-134
+    timestamp: "2026-09-12T09:45:21Z"
+    from: implementation
+    to: verification
+    operation: transition-stage
+    previous_role: frontend-implementer/base
+    previous_agent: frontend-claire
+    active_role: quality/base
+    active_agent: qa-quinn
+    confirmed_by: user
+    user_request: "验收完毕"
+    authorization: USER-HANDOFF-CONTINUOUS-001
+    confirmed_scope: [USER-UAT-ACCEPTANCE-134, USER-MODEL-TUNING-STOP-132]
+    finding: Q132-01
+    evidence: .planning/milestones/M001/reviews/stream-failure-capture-gates.md
+    input_handoff: .planning/milestones/M001/handoffs/frontend-implementation.md
+    result: Record current candidate user UAT acceptance and route evidence-only frontend deployment delta receipt; no repeated UAT, model testing, runtime changes or milestone completion
+    user_uat_accepted: true
+    release_approved: false
+
+  - id: TRANSITION-M001-135
+    timestamp: "2026-09-12T10:03:29Z"
+    from: verification
+    to: technical-design
+    operation: recover-or-rollback
+    previous_role: quality/base
+    previous_agent: qa-quinn
+    active_role: backend-architect/base
+    active_agent: backend-alex
+    confirmed_by: user
+    user_request: "下一步"
+    authorization: USER-HANDOFF-CONTINUOUS-001
+    scope: R10-ARCHITECTURE-SYNC documentation only
+    restored_role_reference: TRANSITION-M001-130
+    evidence: .planning/milestones/M001/reviews/stream-failure-capture-gates.md
+    input_handoff: .planning/milestones/M001/handoffs/verification.md
+    finding_received: Q132-01_resolved
+    user_uat_accepted: true
+    real_model_calls_authorized: false
+    release_approved: false
+    result: Receive FRONTEND-RECEIPT-134; preserve user UAT and route approved r10 documentation synchronization only, without new design, implementation, tests, runtime changes or blanket issue closure
+
+  - id: TRANSITION-M001-136
+    timestamp: "2026-09-16T02:07:34.953267+00:00"
+    from: "technical-design"
+    to: "implementation"
+    previous_role: "backend-architect/base"
+    previous_agent: "backend-alex"
+    active_role: "backend-implementer/base"
+    active_agent: "backend-ethan"
+    confirmed_by: "user"
+    authorization: "USER-M001-CLOSEOUT-20260916"
+    evidence: ".planning/milestones/M001/reviews/stream-failure-capture-gates.md"
+    scope: "接收 r10 文档同步，恢复已验收实现交付"
+    user_uat_accepted: true
+    real_model_calls_authorized: false
+    release_approved: false
+
+  - id: TRANSITION-M001-137
+    timestamp: "2026-09-16T02:07:35.265287+00:00"
+    from: "implementation"
+    to: "verification"
+    previous_role: "backend-implementer/base"
+    previous_agent: "backend-ethan"
+    active_role: "quality/base"
+    active_agent: "qa-quinn"
+    confirmed_by: "user"
+    authorization: "USER-M001-CLOSEOUT-20260916"
+    evidence: ".planning/milestones/M001/reviews/stream-failure-capture-gates.md"
+    scope: "接收既有实现证据，进入文档与变更收尾核对"
+    user_uat_accepted: true
+    real_model_calls_authorized: false
+    release_approved: false
+
+  - id: TRANSITION-M001-138
+    timestamp: "2026-09-16T02:09:06.968504+00:00"
+    from: "verification"
+    to: "milestone-complete"
+    previous_role: "quality/base"
+    previous_agent: "qa-quinn"
+    active_role: null
+    active_agent: null
+    confirmed_by: "user"
+    authorization: "USER-M001-CLOSEOUT-20260916"
+    evidence: ".planning/milestones/M001/reviews/stream-failure-capture-gates.md"
+    scope: "按用户验收与收尾授权完成 M001，保留已知限制"
+    user_uat_accepted: true
+    real_model_calls_authorized: false
+    release_approved: false
+
+scope_decisions:
+  - id: USER-M001-CLOSEOUT-20260916
+    recorded_at: "2026-09-16T02:09:06.968504+00:00"
+    confirmed_by: user
+    user_response: "收尾吧，收尾之后整理 commit 提交两边（agt 和 项目）的代码"
+    scope: Close accepted M001 delivery and organize local Git commits in both repositories
+    record: .planning/milestones/M001/reviews/stream-failure-capture-gates.md
+    known_limitations_waived: false
+    paid_model_calls_authorized: false
+    release_approved: false
+    push_authorized: false
+
+  - id: USER-UAT-ACCEPTANCE-134
+    recorded_at: "2026-09-12T09:45:21Z"
+    confirmed_by: user
+    user_response: "验收完毕"
+    source: User acceptance following delivery of FRONTEND-SYNC-133 at localhost:6001
+    record: .planning/milestones/M001/reviews/stream-failure-capture-gates.md
+    scope: Current local UAT candidate accepted; specific user test cases not supplied
+    candidate_image: sha256:b7ddbbe99c68d687cd101756cd79bcbb82873f52b569ebc12c9a52a15193d730
+    user_uat_accepted: true
+    repeated_uat_required: false
+    known_limitations_waived: false
+    paid_model_calls_authorized: false
+    model_tuning_authorized: false
+    release_approved: false
+  - id: USER-FRONTEND-UAT-SYNC-133
+    recorded_at: "2026-09-12T08:50:07Z"
+    confirmed_by: user
+    user_response: "下一步"
+    source: Presented QA result and next step to synchronize the outdated local UAT frontend with the tested candidate and run scoped smoke checks
+    record: .planning/milestones/M001/reviews/stream-failure-capture-gates.md
+    scope: Q132-01 only; prepare and synchronize the current frontend at localhost:6001, retain previous artifact for rollback, verify changed consumer behavior
+    local_frontend_sync_authorized: true
+    backend_or_database_changes_authorized: false
+    real_model_calls_authorized: false
+    model_tuning_authorized: false
+    new_compatibility_authorized: false
+    full_site_retest_authorized: false
+    user_uat_accepted: false
+    release_approved: false
+
+  - id: USER-MODEL-TUNING-STOP-132
+    recorded_at: "2026-09-12T08:30:09Z"
+    confirmed_by: user
+    user_response: "行，模型调到这里就足够了，这一里程碑还有其他功能要做吗？"
+    followup_response: "下一步"
+    record: .planning/milestones/M001/reviews/stream-failure-capture-gates.md
+    scope: Stop model tuning and proceed to the presented scoped closeout verification; reuse existing evidence and synthetic flows without new paid sampling or unrelated full-site tests
+    does_not_confirm: Known limitations fixed or waived, stable production success rate, current QA or UAT acceptance, milestone completion or release
+
+  - id: CR-042-RETENTION
+    recorded_at: "2026-09-11T03:07:10Z"
+    confirmed_on: "2026-09-11"
+    confirmed_by: user
+    user_response: "采用"
+    record: .planning/milestones/M001/technical/backend.md#cr042-retention
+    received_by: TRANSITION-M001-131
+    account_scope: USER-UAT-ACCOUNT-129
+    maximum_records: 50
+    maximum_retention_hours: 24
+    scope: Only dedicated UAT account generation input, original model output and processing evidence; automatically remove expired or excess records; exclude API keys and login credentials
+    runtime_capture_enabled: false
+    actual_data_or_deployment_authorized: false
+    paid_model_calls_authorized: false
+
+  - id: USER-UAT-ACCOUNT-129
+    timestamp: "2026-09-11T02:48:50Z"
+    confirmed_by: user
+    user_request: "你专门建立一个测试账号吧，就所有 UAT 证据都从这个账号获取"
+    record: .planning/milestones/M001/verification/CR-042-generation-evidence.md
+    evidence: .planning/milestones/M001/verification/evidence/observability-129/dedicated-account.json
+    scope: Dedicated learner account created and authentication verified; all future UAT evidence bound to this account, excluding other accounts and visitors; preserve historical attribution
+    account_id: 01a08e5a-2250-7854-81df-5aeb26e7f461
+    username: wordweave_uat
+    retention_details_confirmed: false
+    content_capture_enabled: false
+    new_real_model_calls_authorized: false
+    deployment_authorized: false
+
+  - id: USER-GENERATION-QUALITY-129
+    timestamp: "2026-09-11T02:25:14Z"
+    confirmed_by: user
+    record: .planning/milestones/M001/reviews/stream-failure-capture-gates.md
+    scope: Retain current reasonable stream buffer; no unbounded-size expansion; normal generation success target at least 90 percent
+    supersedes: Q127-01 oversized-output support as current blocking acceptance criterion
+    measurement_details_confirmed: false
+    real_model_calls_authorized: false
+    actual_data_or_deployment_authorized: false
+
+  - id: USER-ANNOTATION-WINDOW-20260910
+    timestamp: "2026-09-10T01:48:57.654Z"
+    confirmed_by: user
+    recorded_by: gatekeeper-owen
+    stage: verification
+    active_role: quality/base
+    active_agent: qa-quinn
+    stage_changed: false
+    role_changed: false
+    evidence: .planning/milestones/M001/verification/evidence/annotation-capture-120/renew-20260910.json
+    source: .planning/milestones/M001/verification/stream-failure-diagnosis.md
+    authorization: "用户明确要求再给一次测试窗口；同原账号与MiniMax，仅一份错误标注及紧邻词，一小时、读取或到期删除，不保存全文。"
+    expires_at: "2026-09-10T02:48:48.862Z"
+    actual_database_changes_authorized: false
+    real_model_calls_authorized: false
+    full_candidate_capture_authorized: false
+    prompt_or_validator_changes_authorized: false
+    historical_evidence_modified: false
+    release_approved: false
+
+  - id: USER-COMPAT-001
+    timestamp: "2026-09-08T01:54:47Z"
+    confirmed_by: user
+    recorded_by: gatekeeper-owen
+    stage: implementation
+    active_role: backend-implementer/base
+    active_agent: backend-ethan
+    stage_changed: false
+    evidence: .planning/milestones/M001/reviews/first-release-compatibility-policy.md
+    authorization: "用户明确首版不需要旧版兼容，以后任何旧版兼容方案必须显著告知并由用户决定；未请求切换阶段。"
+    supersedes_scope: Legacy compatibility requirements and the proposed v2 compatibility rollback candidate in CR-039 and 095
+    retained_scope: Current-version draft lifecycle and authorization/idempotency safety under 095
+    historical_reports_modified: false
+    real_model_calls_authorized: false
+    uat_deployment_authorized: false
+    release_approved: false
+
+  - id: USER-CLAIM-DELETE-001
+    timestamp: "2026-09-08T03:17:36Z"
+    confirmed_by: user
+    recorded_by: gatekeeper-owen
+    stage: implementation
+    active_role: backend-implementer/base
+    active_agent: backend-ethan
+    stage_changed: false
+    evidence: .planning/milestones/M001/reviews/claimed-batch-delete-retention-exception.md
+    source_proposal: .planning/milestones/M001/implementation/backend-cr039-097-validation.md
+    authorization: "用户确认097方案A：所有者主动删除批次时，同事务删除对应已消费承接记录；删除后重试404，其他记录保留24小时；无需改表，不涉及旧版兼容。"
+    selected_option: A
+    supplements_authorization: TRANSITION-M001-097
+    supersedes_scope: Unconditional 24-hour consumed-claim retention only for explicit owner deletion of its referenced saved batch
+    retained_scope: QA096-01 scoped backend rework, authorization, atomicity, no-resurrection, accounting and concurrency under 097
+    claim_retention_decision_blocker_resolved: true
+    implementation_completed: false
+    schema_or_constraint_changes_authorized: false
+    accounting_or_quota_rollback_authorized: false
+    legacy_compatibility_authorized: false
+    direct_existing_data_cleanup_authorized: false
+    historical_reports_modified: false
+    real_model_calls_authorized: false
+    uat_deployment_authorized: false
+    independent_verification_requires_gate: true
+    continuous_rework_authorized: false
+    release_approved: false

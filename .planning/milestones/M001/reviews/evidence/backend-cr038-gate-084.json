@@ -1,0 +1,145 @@
+{
+  "status": "PASS",
+  "candidate": "sha256:642ed57ad0ed6c8a13e4bba1101d8b50188e8ea636791583a6ffb5eaa6917aac",
+  "commands": [
+    {
+      "name": "red_unit",
+      "exit_code": 1,
+      "result": "expected_red"
+    },
+    {
+      "name": "green_unit",
+      "exit_code": 0,
+      "result": "pass"
+    },
+    {
+      "name": "integration_targeted_attempt_1",
+      "exit_code": 1,
+      "result": "test_fixture_failure"
+    },
+    {
+      "name": "integration_targeted_final",
+      "exit_code": 0,
+      "result": "pass"
+    },
+    {
+      "name": "gofmt_check",
+      "exit_code": 0,
+      "result": "pass_empty_output"
+    },
+    {
+      "name": "go_vet",
+      "exit_code": 0,
+      "result": "pass"
+    },
+    {
+      "name": "go_test_race",
+      "exit_code": 0,
+      "result": "pass"
+    },
+    {
+      "name": "go_test_integration_race",
+      "exit_code": 0,
+      "result": "pass"
+    },
+    {
+      "name": "go_mod_verify",
+      "exit_code": 0,
+      "result": "pass"
+    },
+    {
+      "name": "docker_build",
+      "exit_code": 0,
+      "result": "pass"
+    },
+    {
+      "name": "cleanup",
+      "exit_code": 0,
+      "result": "pass_candidate_retained"
+    },
+    {
+      "name": "delivery_audit_attempt_1",
+      "exit_code": 1,
+      "result": "scan_false_positive"
+    },
+    {
+      "name": "delivery_audit_final",
+      "exit_code": 0,
+      "result": "pass"
+    }
+  ],
+  "uat_before": {
+    "captured_before_dev083": true,
+    "containers": [
+      {
+        "name": "wordweave_uat-backend-1",
+        "image": "sha256:e8c4ee91a7c3265cda8c496ccc8fb485328d95b6c1662eaf2502011ce5d005a5",
+        "created": "2026-09-06T09:02:21.307242131Z",
+        "started_at": "2026-09-06T09:02:21.852434256Z"
+      },
+      {
+        "name": "wordweave_uat-frontend-1",
+        "image": "sha256:8fe04108b523cce73820017069ba0509e7bee03589b0fdc9218a4397770274c0",
+        "created": "2026-09-06T09:02:21.699287589Z",
+        "started_at": "2026-09-06T09:02:27.5862768Z"
+      },
+      {
+        "name": "wordweave_uat-nginx-1",
+        "image": "sha256:5f0efd7fead5e8a290f07e5c025e9204052efb646758e1c6883de0e23a6e085c",
+        "created": "2026-09-04T09:36:37.259905255Z",
+        "started_at": "2026-09-04T09:36:43.099505383Z"
+      },
+      {
+        "name": "wordweave_uat-postgres-1",
+        "image": "sha256:b85269e8c6aa961524542eb4dcca44c4aa1deba2cf507e9e28d5ba8f971aeab9",
+        "created": "2026-09-03T02:24:02.646638386Z",
+        "started_at": "2026-09-03T02:24:03.164602928Z"
+      }
+    ],
+    "sensitive_configuration_retained": false
+  },
+  "uat_after": {
+    "captured_after_dev083_checks": true,
+    "containers": [
+      {
+        "name": "wordweave_uat-backend-1",
+        "image": "sha256:e8c4ee91a7c3265cda8c496ccc8fb485328d95b6c1662eaf2502011ce5d005a5",
+        "created": "2026-09-06T09:02:21.307242131Z",
+        "started_at": "2026-09-06T09:02:21.852434256Z",
+        "status": "running"
+      },
+      {
+        "name": "wordweave_uat-frontend-1",
+        "image": "sha256:8fe04108b523cce73820017069ba0509e7bee03589b0fdc9218a4397770274c0",
+        "created": "2026-09-06T09:02:21.699287589Z",
+        "started_at": "2026-09-06T09:02:27.5862768Z",
+        "status": "running"
+      },
+      {
+        "name": "wordweave_uat-nginx-1",
+        "image": "sha256:5f0efd7fead5e8a290f07e5c025e9204052efb646758e1c6883de0e23a6e085c",
+        "created": "2026-09-04T09:36:37.259905255Z",
+        "started_at": "2026-09-04T09:36:43.099505383Z",
+        "status": "running"
+      },
+      {
+        "name": "wordweave_uat-postgres-1",
+        "image": "sha256:b85269e8c6aa961524542eb4dcca44c4aa1deba2cf507e9e28d5ba8f971aeab9",
+        "created": "2026-09-03T02:24:02.646638386Z",
+        "started_at": "2026-09-03T02:24:03.164602928Z",
+        "status": "running"
+      }
+    ],
+    "identity_comparison": "unchanged",
+    "sensitive_configuration_retained": false
+  },
+  "artifacts": {
+    ".planning/milestones/M001/implementation/backend-cr038-083-validation.md": "94daac3218f20439c3323032000c0b69db2d24b451b79960397e06eef4d6fb6d",
+    ".planning/milestones/M001/implementation/backend-cr038-083-worktree-plan.md": "64102b1ea45749387bc0b4e7dc13893a6cb9d47b78ed360f0091dbba77c45feb",
+    ".planning/milestones/M001/handoffs/backend-implementation.md": "7a41319852c6b8246ba6a8013b26df51901c4d8e56eed2446853387d3bf17e0c",
+    ".planning/milestones/M001/implementation/backend-validation.md": "6741ad3c605b6e6a72c64fb481d11b3ca0e4f61c7b24ac93a43ff67832413193",
+    ".planning/milestones/M001/implementation/evidence/cr038-083/candidate.json": "9b081998d9a9a58d40ebd7a4cc70e14fafe9b19337155a1fe37381d9afabd745",
+    ".planning/milestones/M001/implementation/evidence/cr038-083/commands.json": "c8375714d6a5d19ab55b6469d71236b1c3dccbeb5298588df6c8fae7ef73e7d2",
+    ".planning/milestones/M001/implementation/evidence/cr038-083/cleanup.json": "cb24fb77f7c352b6de7c0917b13c3179ca64604a19d371095381117307a32a5a"
+  }
+}

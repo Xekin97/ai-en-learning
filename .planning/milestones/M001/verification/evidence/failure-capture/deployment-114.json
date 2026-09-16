@@ -1,0 +1,193 @@
+{
+  "gate": "TRANSITION-M001-114",
+  "startedAt": "2026-09-09T08:43:11.441Z",
+  "realModelCalls": 0,
+  "databaseWrites": 0,
+  "userAccepted": false,
+  "releaseApproved": false,
+  "subjectSourceRun": "01a08545-17ee-76ba-a812-9e7086dabb82",
+  "testingIdentityKind": "account",
+  "subjectBindingVerified": true,
+  "expiresAt": "2026-09-09T09:42:05.964Z",
+  "verifiedSourceHashes": 10,
+  "before": {
+    "backend": {
+      "id": "476f8da537365c72cff8dc64edef032e7dadead8d02541866c53b368e73276ac",
+      "name": "/wordweave_uat-backend-1",
+      "image": "sha256:7c1d2b0eb19ba4328292fabad8698f7738f4a62fe277e2f6079e4d133c0f1963",
+      "status": "running",
+      "health": "healthy",
+      "started": "2026-09-09T08:13:10.80962043Z",
+      "networks": [
+        "wordweave_uat_data",
+        "wordweave_uat_edge"
+      ],
+      "mounts": [
+        {
+          "type": "volume",
+          "name": "wordweave-uat-failure-capture-112",
+          "destination": "/uat-capture"
+        }
+      ],
+      "readonly": true
+    },
+    "frontend": {
+      "id": "74d1c89a8648e94c3036ff1c1537ef04f8c21ba522886c3dc9cb1ddce1345485",
+      "name": "/wordweave_uat-frontend-1",
+      "image": "sha256:5903591c881165071c1cba08984cfb835854187f5df21a281640b3aacccf4b27",
+      "status": "running",
+      "health": "healthy",
+      "started": "2026-09-09T04:00:41.569487295Z",
+      "networks": [
+        "wordweave_uat_edge"
+      ],
+      "mounts": [],
+      "readonly": false
+    },
+    "nginx": {
+      "id": "b789bde4e7825b849640cbf63d35b50ae41c1b77cb6b7ece73b3e26e27eabcb1",
+      "name": "/wordweave_uat-nginx-1",
+      "image": "sha256:5f0efd7fead5e8a290f07e5c025e9204052efb646758e1c6883de0e23a6e085c",
+      "status": "running",
+      "health": "healthy",
+      "started": "2026-09-09T04:00:47.530054881Z",
+      "networks": [
+        "wordweave_uat_edge"
+      ],
+      "mounts": [],
+      "readonly": true
+    },
+    "postgres": {
+      "id": "37a6d2fa58c578b1c6b4dbe10028b5ddf0c696fe44fc849a129293a85bbaf839",
+      "name": "/wordweave_uat-postgres-1",
+      "image": "sha256:b85269e8c6aa961524542eb4dcca44c4aa1deba2cf507e9e28d5ba8f971aeab9",
+      "status": "running",
+      "health": "healthy",
+      "started": "2026-09-03T02:24:03.164602928Z",
+      "networks": [
+        "wordweave_uat_data"
+      ],
+      "mounts": [
+        {
+          "type": "volume",
+          "name": "wordweave_uat_wordweave-pg",
+          "destination": "/var/lib/postgresql"
+        }
+      ],
+      "readonly": false
+    }
+  },
+  "activeBefore": 0,
+  "configBefore": {
+    "ai_models": "418ed23ac2af1c11ee0b1e5b0e59f497",
+    "openrouter_credentials": "21679b860491a0903aec8d86b1d96b90",
+    "entitlement_groups": "127ac6dc9b3ca7d167599cb28055f6c4",
+    "group_models": "2463ec9cf08c08784c6cde801629f7c9",
+    "group_lengths": "beb85fc53e263d2d5632011a6dba38ce"
+  },
+  "privatePermissions": [
+    "700 65532 65532",
+    "600 65532 65532"
+  ],
+  "filesystem": "tmpfs",
+  "previousCaptureEntries": [
+    "ticket.json"
+  ],
+  "configAfter": {
+    "ai_models": "418ed23ac2af1c11ee0b1e5b0e59f497",
+    "openrouter_credentials": "21679b860491a0903aec8d86b1d96b90",
+    "entitlement_groups": "127ac6dc9b3ca7d167599cb28055f6c4",
+    "group_models": "2463ec9cf08c08784c6cde801629f7c9",
+    "group_lengths": "beb85fc53e263d2d5632011a6dba38ce"
+  },
+  "routes": [
+    {
+      "path": "/health/live",
+      "status": 200
+    },
+    {
+      "path": "/health/ready",
+      "status": 200
+    },
+    {
+      "path": "/",
+      "status": 200
+    }
+  ],
+  "initialCaptureDirectoryEntries": [
+    "ticket.json"
+  ],
+  "after": {
+    "backend": {
+      "id": "28b0ca2ce546ed957397e484d95e0a19b1664044e3f1a3d1fec94610136272d8",
+      "name": "/wordweave_uat-backend-1",
+      "image": "sha256:b1e8de6a90cac3fe4806359a0a7616445777186970868d39fe4663dee766f249",
+      "status": "running",
+      "health": "healthy",
+      "started": "2026-09-09T08:43:13.435180417Z",
+      "networks": [
+        "wordweave_uat_data",
+        "wordweave_uat_edge"
+      ],
+      "mounts": [
+        {
+          "type": "volume",
+          "name": "wordweave-uat-failure-capture-114",
+          "destination": "/uat-capture"
+        }
+      ],
+      "readonly": true
+    },
+    "frontend": {
+      "id": "74d1c89a8648e94c3036ff1c1537ef04f8c21ba522886c3dc9cb1ddce1345485",
+      "name": "/wordweave_uat-frontend-1",
+      "image": "sha256:5903591c881165071c1cba08984cfb835854187f5df21a281640b3aacccf4b27",
+      "status": "running",
+      "health": "healthy",
+      "started": "2026-09-09T04:00:41.569487295Z",
+      "networks": [
+        "wordweave_uat_edge"
+      ],
+      "mounts": [],
+      "readonly": false
+    },
+    "nginx": {
+      "id": "b789bde4e7825b849640cbf63d35b50ae41c1b77cb6b7ece73b3e26e27eabcb1",
+      "name": "/wordweave_uat-nginx-1",
+      "image": "sha256:5f0efd7fead5e8a290f07e5c025e9204052efb646758e1c6883de0e23a6e085c",
+      "status": "running",
+      "health": "healthy",
+      "started": "2026-09-09T04:00:47.530054881Z",
+      "networks": [
+        "wordweave_uat_edge"
+      ],
+      "mounts": [],
+      "readonly": true
+    },
+    "postgres": {
+      "id": "37a6d2fa58c578b1c6b4dbe10028b5ddf0c696fe44fc849a129293a85bbaf839",
+      "name": "/wordweave_uat-postgres-1",
+      "image": "sha256:b85269e8c6aa961524542eb4dcca44c4aa1deba2cf507e9e28d5ba8f971aeab9",
+      "status": "running",
+      "health": "healthy",
+      "started": "2026-09-03T02:24:03.164602928Z",
+      "networks": [
+        "wordweave_uat_data"
+      ],
+      "mounts": [
+        {
+          "type": "volume",
+          "name": "wordweave_uat_wordweave-pg",
+          "destination": "/var/lib/postgresql"
+        }
+      ],
+      "readonly": false
+    }
+  },
+  "configPreserved": true,
+  "status": "diagnostic_enabled_awaiting_user_reproduction",
+  "captureVolume": "wordweave-uat-failure-capture-114",
+  "currentImage": "sha256:b1e8de6a90cac3fe4806359a0a7616445777186970868d39fe4663dee766f249",
+  "helperRemoved": true,
+  "finishedAt": "2026-09-09T08:43:20.955Z"
+}

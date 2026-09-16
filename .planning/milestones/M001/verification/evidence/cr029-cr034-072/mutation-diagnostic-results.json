@@ -1,0 +1,39 @@
+{
+  "date": "2026-09-06T05:44:52.636Z",
+  "agent": "qa-quinn",
+  "counts": {
+    "PASS": 2,
+    "FAIL": 0,
+    "ERROR": 0
+  },
+  "checks": [
+    {
+      "id": "native PUT actual response",
+      "status": "PASS",
+      "actual": [
+        {
+          "status": 200,
+          "origin": "http://127.0.0.1:6101",
+          "fetchSite": "same-origin",
+          "csrfPresent": true,
+          "cookiePresent": true
+        }
+      ],
+      "expected": [
+        {
+          "status": 200,
+          "origin": "http://127.0.0.1:6101",
+          "fetchSite": "same-origin",
+          "csrfPresent": true,
+          "cookiePresent": true
+        }
+      ]
+    },
+    {
+      "id": "native PUT renders 0",
+      "status": "PASS",
+      "actual": "0",
+      "expected": "0"
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+writeNoContent consumers at DEV083 implementation time
+
+backend/internal/httpapi/identity_handlers.go: logout -> POST /api/v1/auth/logout
+backend/internal/httpapi/identity_handlers.go: changePassword -> PUT /api/v1/me/password
+backend/internal/httpapi/identity_handlers.go: deleteAccount -> DELETE /api/v1/me/account
+backend/internal/httpapi/learning_handlers.go: discardGeneration -> POST /api/v1/generations/{run_id}/discard
+backend/internal/httpapi/learning_handlers.go: deleteBatch -> DELETE /api/v1/me/batches/{batch_id}
+backend/internal/httpapi/admin_handlers.go: adminResetUserPassword -> PUT /api/v1/admin/users/{user_id}/password
+
+Task wording clarification: the approved API has no standalone review-session DELETE route.
+The integration regression therefore creates a single-batch review session, deletes its owning
+learning batch through API-007, and verifies the session is removed by the approved cascade.

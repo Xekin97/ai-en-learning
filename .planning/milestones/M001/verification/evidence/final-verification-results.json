@@ -1,0 +1,27 @@
+{
+  "milestone": "M001",
+  "date": "2026-09-02",
+  "environment": {
+    "entry": "http://localhost:6001",
+    "prototype": "http://localhost:6010/prototype/index.html",
+    "compose_project": "wordweave_uat",
+    "provider_credential": "deterministic local test credential only"
+  },
+  "prior_automated_baseline": {
+    "functional_checks": { "passed": 42, "failed": 0 },
+    "ai_configuration_matrix": { "passed": 48, "failed": 0 },
+    "responsive_page_cases": { "passed": 39, "failed": 0 },
+    "axe_scans": { "scans": 20, "serious_or_critical": 0 },
+    "status": "valid_for_scopes_measured_but_superseded_as_overall_verdict"
+  },
+  "final_user_uat": {
+    "status": "failed",
+    "reported_items_reproduced": true,
+    "evidence": "uat-final-findings.json",
+    "open_change_requests": ["CR-015", "CR-016", "CR-017", "CR-018", "CR-019"]
+  },
+  "verdict": "failed_uat",
+  "recommended_transition": "product-planning",
+  "transition_status": "awaiting_explicit_user_approval",
+  "production_ai_release_gate": "blocked_pending_real_model_m001_v2_evaluation"
+}

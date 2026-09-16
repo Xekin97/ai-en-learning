@@ -1,0 +1,58 @@
+{
+  "objective": "frontend-claire：在后端CR038交付获门检接收后，有限修复 CR037-03：本人 Change password 的失败反馈必须位于当前模态框内且可见、可访问，清理/重试/取消不残留错误。保持现有文案、设计、API和数据→状态→渲染分层。你不是唯一工作者，不回退他人修改，只写write_scope，不能切阶段或更新UAT。",
+  "inputs": [
+    ".planning/workflow/state.yaml",
+    ".planning/agt/agents.yaml",
+    ".planning/agt/project.yaml",
+    ".planning/agt/model-routing-v1.lock.json",
+    ".planning/milestones/M001/reviews/cr037-cr038-continuous-to-uat-approval.md",
+    ".planning/milestones/M001/reviews/backend-cr038-frontend-cr037-handoff-approval.md",
+    ".planning/milestones/M001/changes/CR-037.md",
+    ".planning/milestones/M001/verification/cr037-081-report.md",
+    ".planning/milestones/M001/verification/cr037-081-coverage.md",
+    ".planning/milestones/M001/implementation/backend-cr038-083-validation.md",
+    ".planning/milestones/M001/implementation/evidence/cr038-083/candidate.json",
+    ".planning/milestones/M001/technical/frontend.md",
+    ".planning/milestones/M001/technical/api/index.md",
+    ".planning/milestones/M001/design/prototype/app.js",
+    ".planning/milestones/M001/design/prototype/i18n.js",
+    ".planning/milestones/M001/design/theme.css",
+    ".planning/milestones/M001/design/cr031-cr032-interaction-contract.md",
+    ".planning/milestones/M001/product/pages/index.md"
+  ],
+  "write_scope": [
+    "frontend/app/pages/account.vue",
+    "frontend/app/runtime/stores/account.ts",
+    "frontend/tests/unit/account-password-error.test.ts",
+    "frontend/tests/unit/private-session-state.test.ts",
+    "frontend/tests/unit/auth-card-design.test.ts",
+    "frontend/tests/e2e/cr037-auth-account.spec.ts",
+    "frontend/tests/e2e/mock-backend.mjs",
+    ".planning/milestones/M001/implementation/frontend-cr037-084-worktree-plan.md",
+    ".planning/milestones/M001/implementation/frontend-cr037-084-validation.md",
+    ".planning/milestones/M001/implementation/evidence/cr037-084",
+    ".planning/milestones/M001/implementation/frontend-validation.md",
+    ".planning/milestones/M001/handoffs/frontend-implementation.md"
+  ],
+  "acceptance": [
+    "先完整使用 agt-frontend-implement Skill 与全部引用，确认 implementation / frontend-claire 已激活。已获用户连续执行和独立Sol High授权，不反复请求批准；只做当前前端阶段。",
+    "保留错误当前密码→422时表单字段，反馈通过既有规范化错误模型和AppError在模态框内安全本地化展示，不直接使用原始Problem/DTO/服务器detail，不出现page后方重复或陈旧password错误。",
+    "失败时可纠正后重试；开始新尝试、成功、取消、Escape、再次打开的状态正确；不能清除不相干页面加载/注销错误或把它们误当改密错误；不改密码策略、会话事务、全局AppDialog、已批准文字/设计。",
+    "新增有价值单元/状态和真实浏览器断言：RED→GREEN证据；错误在dialog内、Chromium原生AX非ignored、焦点和键盘可操作；中英、390/1440，无重叠/溢出。",
+    "运行适用format/check、lint、boundaries、typecheck、unit、完整既有Mock E2E与Docker构建，保留命令/退出码/首次失败。使用正确工具链版本，不静默放宽检查。",
+    "真实后端关联浏览器检查使用CR038固定候选和专用ww-dev-084隔离栈/合成账号，端口6101（只在空闲时使用）。覆盖错误/正确改密、当前会话保持、其他会话撤销、旧新密码；Chromium + Linux WebKit功能。原生macOS WebKit若仍有既有系统异常记录NOT VERIFIED，不冒称通过；不要花长时间重复同一环境错误。",
+    "复用QA081/DEV080脚本仅作结构参考，复制到本轮新目录并更换输出位置/前缀/候选；不要改旧证据、断言以掩盖实现问题或复用现有业务账号测试破坏性动作。禁止真实AI和读取历史密钥。",
+    "交付独立报告、源摘要和固定frontend Docker镜像tag wordweave-frontend:cr037-084 的candidate.json，包含所搭配backend ID；总validation和handoff只追加当前增量且旧正文逐字保留。保持CR open，独立QA后才关闭。",
+    "保留UAT6001全部容器/参数/数据/密码/镜像和设计6010。清理本轮有精确标记的临时容器/网络/可重建数据并保留镜像、证据。单工作区无Git提交/重置；不修改state/agents/history。遇write_scope外确需修改先报告主会话。"
+  ],
+  "risk": "high",
+  "prior_attempts": [],
+  "report": [
+    "changed_paths",
+    "commands_and_exit_codes",
+    "evidence_paths",
+    "candidate_images",
+    "unresolved_findings",
+    "actual_model_and_usage_if_observed"
+  ]
+}

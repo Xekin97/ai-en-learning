@@ -1,0 +1,3618 @@
+{
+  "revision": "PROSE-PROMPT-20-20260911 / CR-042",
+  "date": "2026-09-11",
+  "authorization": "那你再测试 20 次",
+  "status": "complete_budget_exhausted",
+  "scope": "Twenty additional fixed-version r6 generation attempts, same five configurations per model in two rounds; alternating MiniMax/GLM; dedicated account; no retries, repair, judge calls or mid-batch changes.",
+  "budget": {
+    "maximum_calls": 20,
+    "used_calls": 20,
+    "remaining_calls": 0,
+    "retries": 0,
+    "repair_or_judge_calls": 0,
+    "extra_model_probes": 0
+  },
+  "account_id": "01a08e5a-2250-7854-81df-5aeb26e7f461",
+  "prompt_version": "m001-v5-r6",
+  "runtime_image": "sha256:1d88e8ce36ad5c687fc03e9251bd09bb3b1eefb75cb1549b518779f83ae25de5",
+  "deployment_performed": false,
+  "application_changes": false,
+  "configuration_changes": false,
+  "full_site_regression": false,
+  "final_health": "healthy",
+  "final_active_runs": 0,
+  "provider": "together",
+  "allow_fallbacks": false,
+  "models": {
+    "minimax/minimax-m3": {
+      "attempts": 10,
+      "valid": 9,
+      "failed": 1,
+      "rounds": [
+        {
+          "round": 1,
+          "valid": 4,
+          "attempts": 5
+        },
+        {
+          "round": 2,
+          "valid": 5,
+          "attempts": 5
+        }
+      ],
+      "combined_with_prior": {
+        "valid": 13,
+        "attempts": 15
+      },
+      "usage_covered_calls": 10,
+      "prompt_tokens": 9244,
+      "completion_tokens": 6426,
+      "duration_range_ms": [
+        6666,
+        26756
+      ]
+    },
+    "z-ai/glm-5.3-flash": {
+      "attempts": 10,
+      "valid": 7,
+      "failed": 3,
+      "rounds": [
+        {
+          "round": 1,
+          "valid": 3,
+          "attempts": 5
+        },
+        {
+          "round": 2,
+          "valid": 4,
+          "attempts": 5
+        }
+      ],
+      "combined_with_prior": {
+        "valid": 12,
+        "attempts": 15
+      },
+      "usage_covered_calls": 10,
+      "prompt_tokens": 7662,
+      "completion_tokens": 31886,
+      "duration_range_ms": [
+        12984,
+        69579
+      ]
+    }
+  },
+  "combined": {
+    "valid": 16,
+    "failed": 4,
+    "attempts": 20,
+    "success_rate": 0.8,
+    "prior_r6": {
+      "valid": 9,
+      "attempts": 10,
+      "success_rate": 0.9
+    },
+    "all_r6": {
+      "valid": 25,
+      "attempts": 30,
+      "success_rate": 0.8333333333333334
+    },
+    "quality_acceptance": "not_claimed",
+    "target_90_percent": "not_demonstrated"
+  },
+  "failure_analysis": [
+    {
+      "case_id": 3,
+      "model": "minimax/minimax-m3",
+      "first_stage": "content_validate",
+      "check": "passage_relations",
+      "reason": "mapping_surface_absent",
+      "excerpt": "enforce(enforce)d",
+      "confirmed_cause": "Annotation inserted before the inflection suffix; the cleaned full token is enforced, while mapped surface is enforce.",
+      "not_a_fix": "No moving/repairing markers was performed."
+    },
+    {
+      "case_id": 4,
+      "model": "z-ai/glm-5.3-flash",
+      "first_stage": "content_validate",
+      "check": "word_count",
+      "reason": "passage_too_short",
+      "words": 67,
+      "minimum": 100,
+      "additional_raw_facts": [
+        "Passage ends with protection.,,",
+        "Hint a young orchard needs care is a full clause"
+      ]
+    },
+    {
+      "case_id": 10,
+      "model": "z-ai/glm-5.3-flash",
+      "first_stage": "content_validate",
+      "check": "passage_content",
+      "reason": "passage_content_invalid",
+      "confirmed_cause": "Trailing whitespace in the model-authored passage.",
+      "additional_raw_facts": [
+        "78/400 words",
+        "All five selected entries absent from passage",
+        "All five targets, definitions and hints present in complete JSON"
+      ],
+      "not_claimed": "Later checks are additional manual observations; validator short-circuited at passage_content. Limit 2000000 is a reported bound, not evidence of oversized output."
+    },
+    {
+      "case_id": 18,
+      "model": "z-ai/glm-5.3-flash",
+      "first_stage": "content_validate",
+      "check": "word_count",
+      "reason": "passage_too_short",
+      "words": 74,
+      "minimum": 200,
+      "additional_raw_facts": [
+        "Only sustainable present in passage; four other selected entries absent",
+        "All five targets present in complete JSON"
+      ]
+    }
+  ],
+  "verified": {
+    "same_configuration_pairs_as_prior": true,
+    "same_image_and_fingerprint_including_prior": true,
+    "all_20_captures_complete_unredacted_untruncated": true,
+    "all_20_parse_as_complete_json": true,
+    "all_20_exact_target_key_sets": true,
+    "all_20_finish_reason_stop": true,
+    "all_20_single_sse_terminal": true,
+    "all_16_validated_results_preview_equal_ordered_and_position_valid_no_annotation_leak": true,
+    "all_16_valid_drafts_match_database_counts": true,
+    "all_4_failures_refunded_no_draft_no_cumulative_count": true,
+    "provider_open_failures": 0,
+    "provider_stream_failures": 0,
+    "candidate_decode_failures": 0,
+    "content_validation_failures": 4,
+    "library_saves": 0,
+    "account_logout_statuses": [
+      204,
+      204,
+      204,
+      204
+    ]
+  },
+  "quality_review": {
+    "reviewer": "current assistant; not independent QA or native-language experts",
+    "read_all_20_full_model_outputs": true,
+    "definitions_and_hints_reviewed": 100,
+    "original_entry_definition_rule": "No passage-role commentary observed in any of the 100 definitions; this is not a claim that every dictionary nuance has expert approval.",
+    "all_20_single_paragraph": true,
+    "headline_join_or_literal_nn_artifact": "Not observed in this batch; prior r6 quality findings not closed.",
+    "remaining_findings": [
+      "MiniMax exceeds soft word targets in all ten samples; no new hard upper limit imposed.",
+      "One GLM hint remains sentence-like; some MiniMax hints end in an unfilled preposition.",
+      "Some repeated inputs produce very similar characters/plots; no diversity quota or new rejection rule imposed.",
+      "Occasional awkward phrasing/causality remains despite content validation success."
+    ],
+    "real_derivation_example": {
+      "case_id": 8,
+      "form": "prevalence",
+      "entry": "prevalent"
+    },
+    "repeated_hint_coverage": false
+  },
+  "cases": [
+    {
+      "case_id": 1,
+      "round": 1,
+      "reference_case_id": 1,
+      "pair_id": 1,
+      "group": "A",
+      "model_id": "01a07fe3-5c48-736a-a86b-1f4dabd7cb87",
+      "provider_model_id": "minimax/minimax-m3",
+      "meaning_language": "zh",
+      "scenario": "story",
+      "length": "short",
+      "entries": [
+        "melancholy",
+        "handicap",
+        "foray",
+        "casino",
+        "upswing"
+      ],
+      "started_at": "2026-09-11T09:11:43.517Z",
+      "status": "generation.validated",
+      "image": "sha256:1d88e8ce36ad5c687fc03e9251bd09bb3b1eefb75cb1549b518779f83ae25de5",
+      "http_status": 200,
+      "run_id": "01a08fbc-b2b1-7945-a29a-983732aaf8d2",
+      "first_delta_ms": 3595,
+      "preview_equals_result": true,
+      "target_order_valid": true,
+      "target_count": 5,
+      "tag_count": 2,
+      "result_sha256": "730dac6837b4ae0d29e0357bd49b4a8b4505ac28b66a0a3f770ca65c2aefb48a",
+      "annotation_leaked": false,
+      "changed_form_occurrences": 0,
+      "repeated_passage_targets": 5,
+      "repeated_hint_targets": 0,
+      "positions_valid": true,
+      "duration_ms": 10452,
+      "passage_chars": 1212,
+      "terminal_count": 1,
+      "evidence_id": "befc5103-25d7-4541-82e1-c8af0b56239b",
+      "request_id": "req_4pQs5iy9N6QVQ-oawGqoGQ",
+      "fingerprint": {
+        "source_sha256": "8ee8c9d65194c554c85643e53427df59c48333bc5eeace2ba67c4e9899effcb8",
+        "binary_sha256": "87096259c7a0e295334cc0ee17f339f75ca71e0db7e55b4ca54b9ee4218e999b",
+        "template_sha256": "c90f55bab75ae8a1582b9694bfd8905fd8153be209ee3b9f971d98520a1904ab",
+        "schema_sha256": "f92bbdb51dbe66b2ac82be863297849e96924e255c730d13b48f8e8e6c8130f4",
+        "validator_sha256": "9be4cf758620a25b2ab22218e1f8bef2b3241b3570f0e8128bd41b30e50a0dc0",
+        "lexicon_sha256": "89e5b41dc8662780e443c10b5ecf81970944fc2b530d5f79372ac482ac744c0b"
+      },
+      "prompt_version": "m001-v5-r6",
+      "minimum_words": 50,
+      "soft_target_words": 60,
+      "expires_at": "2026-09-12T09:11:43.525078342Z",
+      "private_capture_complete": true,
+      "capture_state": {
+        "coalesced_progress": 124,
+        "dropped_records": 0,
+        "dropped_bytes": 0,
+        "truncated": false,
+        "io_failed": false,
+        "redacted": false,
+        "model_ended": true,
+        "unavailable": false
+      },
+      "model_end": {
+        "chunks": 41,
+        "bytes": 2030,
+        "redacted": false,
+        "unavailable": false
+      },
+      "first_failure": null,
+      "confirmed_outcome": "valid",
+      "stages": [
+        {
+          "stage": "request",
+          "state": "ok",
+          "duration_ms": 10446
+        },
+        {
+          "stage": "preflight",
+          "state": "ok",
+          "duration_ms": 20
+        },
+        {
+          "stage": "provider_open",
+          "state": "ok",
+          "duration_ms": 3103
+        },
+        {
+          "stage": "provider_stream",
+          "state": "ok",
+          "duration_ms": 7316
+        },
+        {
+          "stage": "passage_decode",
+          "state": "ok",
+          "duration_ms": 7316
+        },
+        {
+          "stage": "candidate_decode",
+          "state": "ok",
+          "duration_ms": 0
+        },
+        {
+          "stage": "content_validate",
+          "state": "ok",
+          "duration_ms": 1
+        },
+        {
+          "stage": "draft_commit",
+          "state": "ok",
+          "duration_ms": 3
+        },
+        {
+          "stage": "settlement",
+          "state": "not_run",
+          "duration_ms": -1
+        },
+        {
+          "stage": "delivery",
+          "state": "ok",
+          "duration_ms": 7322
+        }
+      ],
+      "json_parse_error": null,
+      "clean_word_count": 209,
+      "paragraph_count": 1,
+      "target_keys": [
+        "casino",
+        "foray",
+        "handicap",
+        "melancholy",
+        "upswing"
+      ],
+      "tags": [
+        "运气",
+        "小镇生活"
+      ],
+      "all_required_keys_present": true,
+      "passage_entries_without_annotations": [],
+      "passage_has_outer_whitespace": false,
+      "finish_reasons": [
+        "stop"
+      ],
+      "usage": {
+        "prompt_tokens": 918,
+        "completion_tokens": 496,
+        "total_tokens": 1414
+      },
+      "review": {
+        "reviewer": "current assistant; not independent language expert or QA",
+        "original_entry_meanings_no_passage_role_tail": true,
+        "notes": [
+          "Original-entry Chinese meanings and relevant passage tags. Complete story but much longer than the short soft target; hints 'a brief foray into' and 'a serious handicap to' leave preposition complements unstated. Gambling-as-financial-recovery framing noted, not a newly imposed content exclusion."
+        ]
+      },
+      "db": {
+        "run_id": "01a08fbc-b2b1-7945-a29a-983732aaf8d2",
+        "account_id": "01a08e5a-2250-7854-81df-5aeb26e7f461",
+        "model": "minimax/minimax-m3",
+        "status": "valid",
+        "quota_charged": true,
+        "counts_toward_cumulative": true,
+        "disposition": "pending",
+        "started_at": "2026-09-11T09:11:43.537609+00:00",
+        "draft_exists": true,
+        "word_count": 209
+      }
+    },
+    {
+      "case_id": 2,
+      "round": 1,
+      "reference_case_id": 2,
+      "pair_id": 1,
+      "group": "A",
+      "model_id": "01a07fe3-f046-7017-97f8-c15539050441",
+      "provider_model_id": "z-ai/glm-5.3-flash",
+      "meaning_language": "zh",
+      "scenario": "story",
+      "length": "short",
+      "entries": [
+        "melancholy",
+        "handicap",
+        "foray",
+        "casino",
+        "upswing"
+      ],
+      "started_at": "2026-09-11T09:11:53.993Z",
+      "status": "generation.validated",
+      "image": "sha256:1d88e8ce36ad5c687fc03e9251bd09bb3b1eefb75cb1549b518779f83ae25de5",
+      "http_status": 200,
+      "run_id": "01a08fbc-db8f-719d-a628-1b3a43b0830f",
+      "first_delta_ms": 11454,
+      "preview_equals_result": true,
+      "target_order_valid": true,
+      "target_count": 5,
+      "tag_count": 3,
+      "result_sha256": "8eabd833c6524cd1003183ffdd17c01be0abe0aea0b7510eb2c106e8939edbc7",
+      "annotation_leaked": false,
+      "changed_form_occurrences": 0,
+      "repeated_passage_targets": 1,
+      "repeated_hint_targets": 0,
+      "positions_valid": true,
+      "duration_ms": 12984,
+      "passage_chars": 407,
+      "terminal_count": 1,
+      "evidence_id": "365f9319-fcf6-4f21-8efa-2501ee80b9f3",
+      "request_id": "req_z7UIdQ7Hxvv28pkDIuM9-Q",
+      "fingerprint": {
+        "source_sha256": "8ee8c9d65194c554c85643e53427df59c48333bc5eeace2ba67c4e9899effcb8",
+        "binary_sha256": "87096259c7a0e295334cc0ee17f339f75ca71e0db7e55b4ca54b9ee4218e999b",
+        "template_sha256": "c90f55bab75ae8a1582b9694bfd8905fd8153be209ee3b9f971d98520a1904ab",
+        "schema_sha256": "f92bbdb51dbe66b2ac82be863297849e96924e255c730d13b48f8e8e6c8130f4",
+        "validator_sha256": "9be4cf758620a25b2ab22218e1f8bef2b3241b3570f0e8128bd41b30e50a0dc0",
+        "lexicon_sha256": "89e5b41dc8662780e443c10b5ecf81970944fc2b530d5f79372ac482ac744c0b"
+      },
+      "prompt_version": "m001-v5-r6",
+      "minimum_words": 50,
+      "soft_target_words": 60,
+      "expires_at": "2026-09-12T09:11:53.996724208Z",
+      "private_capture_complete": true,
+      "capture_state": {
+        "coalesced_progress": 282,
+        "dropped_records": 0,
+        "dropped_bytes": 0,
+        "truncated": false,
+        "io_failed": false,
+        "redacted": false,
+        "model_ended": true,
+        "unavailable": false
+      },
+      "model_end": {
+        "chunks": 93,
+        "bytes": 1352,
+        "redacted": false,
+        "unavailable": false
+      },
+      "first_failure": null,
+      "confirmed_outcome": "valid",
+      "stages": [
+        {
+          "stage": "request",
+          "state": "ok",
+          "duration_ms": 12981
+        },
+        {
+          "stage": "preflight",
+          "state": "ok",
+          "duration_ms": 4
+        },
+        {
+          "stage": "provider_open",
+          "state": "ok",
+          "duration_ms": 758
+        },
+        {
+          "stage": "provider_stream",
+          "state": "ok",
+          "duration_ms": 12213
+        },
+        {
+          "stage": "passage_decode",
+          "state": "ok",
+          "duration_ms": 1527
+        },
+        {
+          "stage": "candidate_decode",
+          "state": "ok",
+          "duration_ms": 1
+        },
+        {
+          "stage": "content_validate",
+          "state": "ok",
+          "duration_ms": 2
+        },
+        {
+          "stage": "draft_commit",
+          "state": "ok",
+          "duration_ms": 3
+        },
+        {
+          "stage": "settlement",
+          "state": "not_run",
+          "duration_ms": -1
+        },
+        {
+          "stage": "delivery",
+          "state": "ok",
+          "duration_ms": 12219
+        }
+      ],
+      "json_parse_error": null,
+      "clean_word_count": 70,
+      "paragraph_count": 1,
+      "target_keys": [
+        "casino",
+        "foray",
+        "handicap",
+        "melancholy",
+        "upswing"
+      ],
+      "tags": [
+        "赌博",
+        "情绪",
+        "转机"
+      ],
+      "all_required_keys_present": true,
+      "passage_entries_without_annotations": [],
+      "passage_has_outer_whitespace": false,
+      "finish_reasons": [
+        "stop"
+      ],
+      "usage": {
+        "prompt_tokens": 756,
+        "completion_tokens": 1514,
+        "total_tokens": 2270
+      },
+      "review": {
+        "reviewer": "current assistant; not independent language expert or QA",
+        "original_entry_meanings_no_passage_role_tail": true,
+        "notes": [
+          "Coherent short story with a conclusion. Chinese original-entry definitions and reusable hints; no obvious spacing artifact."
+        ]
+      },
+      "db": {
+        "run_id": "01a08fbc-db8f-719d-a628-1b3a43b0830f",
+        "account_id": "01a08e5a-2250-7854-81df-5aeb26e7f461",
+        "model": "z-ai/glm-5.3-flash",
+        "status": "valid",
+        "quota_charged": true,
+        "counts_toward_cumulative": true,
+        "disposition": "pending",
+        "started_at": "2026-09-11T09:11:53.999176+00:00",
+        "draft_exists": true,
+        "word_count": 70
+      }
+    },
+    {
+      "case_id": 3,
+      "round": 1,
+      "reference_case_id": 3,
+      "pair_id": 2,
+      "group": "B",
+      "model_id": "01a07fe3-5c48-736a-a86b-1f4dabd7cb87",
+      "provider_model_id": "minimax/minimax-m3",
+      "meaning_language": "zh",
+      "scenario": "discussion",
+      "length": "medium",
+      "entries": [
+        "young",
+        "grape",
+        "weekend",
+        "danger",
+        "enforce"
+      ],
+      "started_at": "2026-09-11T09:12:06.997Z",
+      "status": "generation.failed",
+      "image": "sha256:1d88e8ce36ad5c687fc03e9251bd09bb3b1eefb75cb1549b518779f83ae25de5",
+      "http_status": 200,
+      "run_id": "01a08fbd-0e60-70b4-a103-861e65a5cf90",
+      "first_delta_ms": 3126,
+      "code": "content_validation_failed",
+      "quota_refunded": true,
+      "duration_ms": 9978,
+      "passage_chars": 1798,
+      "terminal_count": 1,
+      "evidence_id": "46afea6c-6808-4e7c-beb6-f6a3f7942512",
+      "request_id": "req_FC2C4OfQ5mjbRapj2Z8fxA",
+      "fingerprint": {
+        "source_sha256": "8ee8c9d65194c554c85643e53427df59c48333bc5eeace2ba67c4e9899effcb8",
+        "binary_sha256": "87096259c7a0e295334cc0ee17f339f75ca71e0db7e55b4ca54b9ee4218e999b",
+        "template_sha256": "c90f55bab75ae8a1582b9694bfd8905fd8153be209ee3b9f971d98520a1904ab",
+        "schema_sha256": "f92bbdb51dbe66b2ac82be863297849e96924e255c730d13b48f8e8e6c8130f4",
+        "validator_sha256": "9be4cf758620a25b2ab22218e1f8bef2b3241b3570f0e8128bd41b30e50a0dc0",
+        "lexicon_sha256": "89e5b41dc8662780e443c10b5ecf81970944fc2b530d5f79372ac482ac744c0b"
+      },
+      "prompt_version": "m001-v5-r6",
+      "minimum_words": 100,
+      "soft_target_words": 120,
+      "expires_at": "2026-09-12T09:12:07.002776798Z",
+      "private_capture_complete": true,
+      "capture_state": {
+        "coalesced_progress": 151,
+        "dropped_records": 0,
+        "dropped_bytes": 0,
+        "truncated": false,
+        "io_failed": false,
+        "redacted": false,
+        "model_ended": true,
+        "unavailable": false
+      },
+      "model_end": {
+        "chunks": 50,
+        "bytes": 2748,
+        "redacted": false,
+        "unavailable": false
+      },
+      "first_failure": {
+        "stage": "content_validate",
+        "state": "failed",
+        "begin_ms": 9966,
+        "end_ms": 9968,
+        "duration_ms": 2,
+        "check": "passage_relations",
+        "detail": {
+          "reason": "mapping_surface_absent",
+          "field": "passage",
+          "target_index": 4,
+          "actual": -1,
+          "limit": -1,
+          "byte_start": -1,
+          "byte_end": -1,
+          "expected_type": "",
+          "actual_type": ""
+        }
+      },
+      "confirmed_outcome": "failed",
+      "stages": [
+        {
+          "stage": "request",
+          "state": "ok",
+          "duration_ms": 9971
+        },
+        {
+          "stage": "preflight",
+          "state": "ok",
+          "duration_ms": 7
+        },
+        {
+          "stage": "provider_open",
+          "state": "ok",
+          "duration_ms": 3110
+        },
+        {
+          "stage": "provider_stream",
+          "state": "ok",
+          "duration_ms": 6847
+        },
+        {
+          "stage": "passage_decode",
+          "state": "ok",
+          "duration_ms": 6847
+        },
+        {
+          "stage": "candidate_decode",
+          "state": "ok",
+          "duration_ms": 1
+        },
+        {
+          "stage": "content_validate",
+          "state": "failed",
+          "duration_ms": 2
+        },
+        {
+          "stage": "draft_commit",
+          "state": "not_run",
+          "duration_ms": -1
+        },
+        {
+          "stage": "settlement",
+          "state": "ok",
+          "duration_ms": 3
+        },
+        {
+          "stage": "delivery",
+          "state": "ok",
+          "duration_ms": 6853
+        }
+      ],
+      "json_parse_error": null,
+      "clean_word_count": 290,
+      "paragraph_count": 1,
+      "target_keys": [
+        "danger",
+        "enforce",
+        "grape",
+        "weekend",
+        "young"
+      ],
+      "tags": [
+        "社区",
+        "安全"
+      ],
+      "all_required_keys_present": true,
+      "passage_entries_without_annotations": [],
+      "passage_has_outer_whitespace": false,
+      "finish_reasons": [
+        "stop"
+      ],
+      "usage": {
+        "prompt_tokens": 915,
+        "completion_tokens": 606,
+        "total_tokens": 1521
+      },
+      "review": {
+        "reviewer": "current assistant; not independent language expert or QA",
+        "original_entry_meanings_no_passage_role_tail": true,
+        "notes": [
+          "First failure precisely matches raw 'enforce(enforce)d': annotation appears before the inflection suffix, so clean text contains 'enforced' but mapping surface 'enforce' is not a complete token. Some plain 'weekends' occurrences are also unannotated; these are additional raw observations, not later validator checks claimed to have run.",
+          "Chinese original-entry meanings and hints are reasonable. Complete discussion but substantially over medium soft target."
+        ]
+      },
+      "db": {
+        "run_id": "01a08fbd-0e60-70b4-a103-861e65a5cf90",
+        "account_id": "01a08e5a-2250-7854-81df-5aeb26e7f461",
+        "model": "minimax/minimax-m3",
+        "status": "validation_failed",
+        "quota_charged": false,
+        "counts_toward_cumulative": false,
+        "disposition": "pending",
+        "started_at": "2026-09-11T09:12:07.008074+00:00",
+        "draft_exists": false,
+        "word_count": null
+      }
+    },
+    {
+      "case_id": 4,
+      "round": 1,
+      "reference_case_id": 4,
+      "pair_id": 2,
+      "group": "B",
+      "model_id": "01a07fe3-f046-7017-97f8-c15539050441",
+      "provider_model_id": "z-ai/glm-5.3-flash",
+      "meaning_language": "zh",
+      "scenario": "discussion",
+      "length": "medium",
+      "entries": [
+        "young",
+        "grape",
+        "weekend",
+        "danger",
+        "enforce"
+      ],
+      "started_at": "2026-09-11T09:12:17.011Z",
+      "status": "generation.failed",
+      "image": "sha256:1d88e8ce36ad5c687fc03e9251bd09bb3b1eefb75cb1549b518779f83ae25de5",
+      "http_status": 200,
+      "run_id": "01a08fbd-357d-78fa-a52b-915527dfb47b",
+      "first_delta_ms": 20698,
+      "code": "content_validation_failed",
+      "quota_refunded": true,
+      "duration_ms": 23069,
+      "passage_chars": 413,
+      "terminal_count": 1,
+      "evidence_id": "88315592-e29b-4410-b4f0-6d7584e6b6d4",
+      "request_id": "req_-1bcxQZjXi61bz3wABDzbg",
+      "fingerprint": {
+        "source_sha256": "8ee8c9d65194c554c85643e53427df59c48333bc5eeace2ba67c4e9899effcb8",
+        "binary_sha256": "87096259c7a0e295334cc0ee17f339f75ca71e0db7e55b4ca54b9ee4218e999b",
+        "template_sha256": "c90f55bab75ae8a1582b9694bfd8905fd8153be209ee3b9f971d98520a1904ab",
+        "schema_sha256": "f92bbdb51dbe66b2ac82be863297849e96924e255c730d13b48f8e8e6c8130f4",
+        "validator_sha256": "9be4cf758620a25b2ab22218e1f8bef2b3241b3570f0e8128bd41b30e50a0dc0",
+        "lexicon_sha256": "89e5b41dc8662780e443c10b5ecf81970944fc2b530d5f79372ac482ac744c0b"
+      },
+      "prompt_version": "m001-v5-r6",
+      "minimum_words": 100,
+      "soft_target_words": 120,
+      "expires_at": "2026-09-12T09:12:17.016733927Z",
+      "private_capture_complete": true,
+      "capture_state": {
+        "coalesced_progress": 276,
+        "dropped_records": 0,
+        "dropped_bytes": 0,
+        "truncated": false,
+        "io_failed": false,
+        "redacted": false,
+        "model_ended": true,
+        "unavailable": false
+      },
+      "model_end": {
+        "chunks": 91,
+        "bytes": 1319,
+        "redacted": false,
+        "unavailable": false
+      },
+      "first_failure": {
+        "stage": "content_validate",
+        "state": "failed",
+        "begin_ms": 23062,
+        "end_ms": 23063,
+        "duration_ms": 1,
+        "check": "word_count",
+        "detail": {
+          "reason": "passage_too_short",
+          "field": "passage",
+          "target_index": -1,
+          "actual": 67,
+          "limit": 100,
+          "byte_start": -1,
+          "byte_end": -1,
+          "expected_type": "",
+          "actual_type": ""
+        }
+      },
+      "confirmed_outcome": "failed",
+      "stages": [
+        {
+          "stage": "request",
+          "state": "ok",
+          "duration_ms": 23065
+        },
+        {
+          "stage": "preflight",
+          "state": "ok",
+          "duration_ms": 6
+        },
+        {
+          "stage": "provider_open",
+          "state": "ok",
+          "duration_ms": 554
+        },
+        {
+          "stage": "provider_stream",
+          "state": "ok",
+          "duration_ms": 22497
+        },
+        {
+          "stage": "passage_decode",
+          "state": "ok",
+          "duration_ms": 2370
+        },
+        {
+          "stage": "candidate_decode",
+          "state": "ok",
+          "duration_ms": 3
+        },
+        {
+          "stage": "content_validate",
+          "state": "failed",
+          "duration_ms": 1
+        },
+        {
+          "stage": "draft_commit",
+          "state": "not_run",
+          "duration_ms": -1
+        },
+        {
+          "stage": "settlement",
+          "state": "ok",
+          "duration_ms": 2
+        },
+        {
+          "stage": "delivery",
+          "state": "ok",
+          "duration_ms": 22504
+        }
+      ],
+      "json_parse_error": null,
+      "clean_word_count": 67,
+      "paragraph_count": 1,
+      "target_keys": [
+        "danger",
+        "enforce",
+        "grape",
+        "weekend",
+        "young"
+      ],
+      "tags": [
+        "社区讨论",
+        "规则执行",
+        "葡萄园"
+      ],
+      "all_required_keys_present": true,
+      "passage_entries_without_annotations": [],
+      "passage_has_outer_whitespace": false,
+      "finish_reasons": [
+        "stop"
+      ],
+      "usage": {
+        "prompt_tokens": 753,
+        "completion_tokens": 2768,
+        "total_tokens": 3521
+      },
+      "review": {
+        "reviewer": "current assistant; not independent language expert or QA",
+        "original_entry_meanings_no_passage_role_tail": true,
+        "notes": [
+          "Production first failure passage_too_short: 67 words versus minimum 100. Raw also ends with 'protection.,,' and makes the weak causal claim that grapes ripen faster when trespassers stop stepping on rows.",
+          "Chinese original-entry meanings match. Hint 'a young orchard needs care' remains a subject-verb clause. These quality defects are separate from the recorded first failure."
+        ]
+      },
+      "db": {
+        "run_id": "01a08fbd-357d-78fa-a52b-915527dfb47b",
+        "account_id": "01a08e5a-2250-7854-81df-5aeb26e7f461",
+        "model": "z-ai/glm-5.3-flash",
+        "status": "validation_failed",
+        "quota_charged": false,
+        "counts_toward_cumulative": false,
+        "disposition": "pending",
+        "started_at": "2026-09-11T09:12:17.021601+00:00",
+        "draft_exists": false,
+        "word_count": null
+      }
+    },
+    {
+      "case_id": 5,
+      "round": 1,
+      "reference_case_id": 5,
+      "pair_id": 3,
+      "group": "C",
+      "model_id": "01a07fe3-5c48-736a-a86b-1f4dabd7cb87",
+      "provider_model_id": "minimax/minimax-m3",
+      "meaning_language": "en",
+      "scenario": "business",
+      "length": "short",
+      "entries": [
+        "alleviate",
+        "undermine",
+        "facilitate",
+        "deteriorate",
+        "perceive"
+      ],
+      "started_at": "2026-09-11T09:12:40.112Z",
+      "status": "generation.validated",
+      "image": "sha256:1d88e8ce36ad5c687fc03e9251bd09bb3b1eefb75cb1549b518779f83ae25de5",
+      "http_status": 200,
+      "run_id": "01a08fbd-8fba-7876-b180-8abc647c828a",
+      "first_delta_ms": 927,
+      "preview_equals_result": true,
+      "target_order_valid": true,
+      "target_count": 5,
+      "tag_count": 2,
+      "result_sha256": "3d2db39cbc49172067df629f4c3bf88ef965b3e4a8f44d6777648cac7f826b6c",
+      "annotation_leaked": false,
+      "changed_form_occurrences": 1,
+      "repeated_passage_targets": 1,
+      "repeated_hint_targets": 0,
+      "positions_valid": true,
+      "duration_ms": 6666,
+      "passage_chars": 1476,
+      "terminal_count": 1,
+      "evidence_id": "df6b050c-fa70-4f74-bb4e-a0661ac641db",
+      "request_id": "req_FG6yMFeUnSi9524QJkKjbA",
+      "fingerprint": {
+        "source_sha256": "8ee8c9d65194c554c85643e53427df59c48333bc5eeace2ba67c4e9899effcb8",
+        "binary_sha256": "87096259c7a0e295334cc0ee17f339f75ca71e0db7e55b4ca54b9ee4218e999b",
+        "template_sha256": "c90f55bab75ae8a1582b9694bfd8905fd8153be209ee3b9f971d98520a1904ab",
+        "schema_sha256": "f92bbdb51dbe66b2ac82be863297849e96924e255c730d13b48f8e8e6c8130f4",
+        "validator_sha256": "9be4cf758620a25b2ab22218e1f8bef2b3241b3570f0e8128bd41b30e50a0dc0",
+        "lexicon_sha256": "89e5b41dc8662780e443c10b5ecf81970944fc2b530d5f79372ac482ac744c0b"
+      },
+      "prompt_version": "m001-v5-r6",
+      "minimum_words": 50,
+      "soft_target_words": 60,
+      "expires_at": "2026-09-12T09:12:40.118033591Z",
+      "private_capture_complete": true,
+      "capture_state": {
+        "coalesced_progress": 94,
+        "dropped_records": 0,
+        "dropped_bytes": 0,
+        "truncated": false,
+        "io_failed": false,
+        "redacted": false,
+        "model_ended": true,
+        "unavailable": false
+      },
+      "model_end": {
+        "chunks": 31,
+        "bytes": 2480,
+        "redacted": false,
+        "unavailable": false
+      },
+      "first_failure": null,
+      "confirmed_outcome": "valid",
+      "stages": [
+        {
+          "stage": "request",
+          "state": "ok",
+          "duration_ms": 6660
+        },
+        {
+          "stage": "preflight",
+          "state": "ok",
+          "duration_ms": 6
+        },
+        {
+          "stage": "provider_open",
+          "state": "ok",
+          "duration_ms": 841
+        },
+        {
+          "stage": "provider_stream",
+          "state": "ok",
+          "duration_ms": 5800
+        },
+        {
+          "stage": "passage_decode",
+          "state": "ok",
+          "duration_ms": 5802
+        },
+        {
+          "stage": "candidate_decode",
+          "state": "ok",
+          "duration_ms": 2
+        },
+        {
+          "stage": "content_validate",
+          "state": "ok",
+          "duration_ms": 2
+        },
+        {
+          "stage": "draft_commit",
+          "state": "ok",
+          "duration_ms": 5
+        },
+        {
+          "stage": "settlement",
+          "state": "not_run",
+          "duration_ms": -1
+        },
+        {
+          "stage": "delivery",
+          "state": "ok",
+          "duration_ms": 5812
+        }
+      ],
+      "json_parse_error": null,
+      "clean_word_count": 224,
+      "paragraph_count": 1,
+      "target_keys": [
+        "alleviate",
+        "deteriorate",
+        "facilitate",
+        "perceive",
+        "undermine"
+      ],
+      "tags": [
+        "business",
+        "management"
+      ],
+      "all_required_keys_present": true,
+      "passage_entries_without_annotations": [],
+      "passage_has_outer_whitespace": false,
+      "finish_reasons": [
+        "stop"
+      ],
+      "usage": {
+        "prompt_tokens": 933,
+        "completion_tokens": 531,
+        "total_tokens": 1464
+      },
+      "review": {
+        "reviewer": "current assistant; not independent language expert or QA",
+        "original_entry_meanings_no_passage_role_tail": true,
+        "notes": [
+          "Complete coherent business narrative and original-entry English definitions. Hints are reusable collocations, but prose greatly exceeds the short soft target."
+        ]
+      },
+      "db": {
+        "run_id": "01a08fbd-8fba-7876-b180-8abc647c828a",
+        "account_id": "01a08e5a-2250-7854-81df-5aeb26e7f461",
+        "model": "minimax/minimax-m3",
+        "status": "valid",
+        "quota_charged": true,
+        "counts_toward_cumulative": true,
+        "disposition": "pending",
+        "started_at": "2026-09-11T09:12:40.122555+00:00",
+        "draft_exists": true,
+        "word_count": 224
+      }
+    },
+    {
+      "case_id": 6,
+      "round": 1,
+      "reference_case_id": 6,
+      "pair_id": 3,
+      "group": "C",
+      "model_id": "01a07fe3-f046-7017-97f8-c15539050441",
+      "provider_model_id": "z-ai/glm-5.3-flash",
+      "meaning_language": "en",
+      "scenario": "business",
+      "length": "short",
+      "entries": [
+        "alleviate",
+        "undermine",
+        "facilitate",
+        "deteriorate",
+        "perceive"
+      ],
+      "started_at": "2026-09-11T09:13:02.544Z",
+      "status": "generation.validated",
+      "image": "sha256:1d88e8ce36ad5c687fc03e9251bd09bb3b1eefb75cb1549b518779f83ae25de5",
+      "http_status": 200,
+      "run_id": "01a08fbd-e768-7ea2-af4e-0e188f902c7e",
+      "first_delta_ms": 20249,
+      "preview_equals_result": true,
+      "target_order_valid": true,
+      "target_count": 5,
+      "tag_count": 3,
+      "result_sha256": "8f292abd002edae586ecf7b8d3804c1d51cf95e7ca4ce37db56622910efa94c7",
+      "annotation_leaked": false,
+      "changed_form_occurrences": 1,
+      "repeated_passage_targets": 0,
+      "repeated_hint_targets": 0,
+      "positions_valid": true,
+      "duration_ms": 23582,
+      "passage_chars": 433,
+      "terminal_count": 1,
+      "evidence_id": "3ad2aa9c-a36b-4f03-873b-5dfc0793f41f",
+      "request_id": "req_d2s0feI7pmFD7ktYLCuSmg",
+      "fingerprint": {
+        "source_sha256": "8ee8c9d65194c554c85643e53427df59c48333bc5eeace2ba67c4e9899effcb8",
+        "binary_sha256": "87096259c7a0e295334cc0ee17f339f75ca71e0db7e55b4ca54b9ee4218e999b",
+        "template_sha256": "c90f55bab75ae8a1582b9694bfd8905fd8153be209ee3b9f971d98520a1904ab",
+        "schema_sha256": "f92bbdb51dbe66b2ac82be863297849e96924e255c730d13b48f8e8e6c8130f4",
+        "validator_sha256": "9be4cf758620a25b2ab22218e1f8bef2b3241b3570f0e8128bd41b30e50a0dc0",
+        "lexicon_sha256": "89e5b41dc8662780e443c10b5ecf81970944fc2b530d5f79372ac482ac744c0b"
+      },
+      "prompt_version": "m001-v5-r6",
+      "minimum_words": 50,
+      "soft_target_words": 60,
+      "expires_at": "2026-09-12T09:13:02.555064254Z",
+      "private_capture_complete": true,
+      "capture_state": {
+        "coalesced_progress": 306,
+        "dropped_records": 0,
+        "dropped_bytes": 0,
+        "truncated": false,
+        "io_failed": false,
+        "redacted": false,
+        "model_ended": true,
+        "unavailable": false
+      },
+      "model_end": {
+        "chunks": 101,
+        "bytes": 1631,
+        "redacted": false,
+        "unavailable": false
+      },
+      "first_failure": null,
+      "confirmed_outcome": "valid",
+      "stages": [
+        {
+          "stage": "request",
+          "state": "ok",
+          "duration_ms": 23575
+        },
+        {
+          "stage": "preflight",
+          "state": "ok",
+          "duration_ms": 14
+        },
+        {
+          "stage": "provider_open",
+          "state": "ok",
+          "duration_ms": 745
+        },
+        {
+          "stage": "provider_stream",
+          "state": "ok",
+          "duration_ms": 22784
+        },
+        {
+          "stage": "passage_decode",
+          "state": "ok",
+          "duration_ms": 3463
+        },
+        {
+          "stage": "candidate_decode",
+          "state": "ok",
+          "duration_ms": 1
+        },
+        {
+          "stage": "content_validate",
+          "state": "ok",
+          "duration_ms": 4
+        },
+        {
+          "stage": "draft_commit",
+          "state": "ok",
+          "duration_ms": 9
+        },
+        {
+          "stage": "settlement",
+          "state": "not_run",
+          "duration_ms": -1
+        },
+        {
+          "stage": "delivery",
+          "state": "ok",
+          "duration_ms": 22810
+        }
+      ],
+      "json_parse_error": null,
+      "clean_word_count": 61,
+      "paragraph_count": 1,
+      "target_keys": [
+        "alleviate",
+        "deteriorate",
+        "facilitate",
+        "perceive",
+        "undermine"
+      ],
+      "tags": [
+        "workplace",
+        "management",
+        "communication"
+      ],
+      "all_required_keys_present": true,
+      "passage_entries_without_annotations": [],
+      "passage_has_outer_whitespace": false,
+      "finish_reasons": [
+        "stop"
+      ],
+      "usage": {
+        "prompt_tokens": 774,
+        "completion_tokens": 2676,
+        "total_tokens": 3450
+      },
+      "review": {
+        "reviewer": "current assistant; not independent language expert or QA",
+        "original_entry_meanings_no_passage_role_tail": true,
+        "notes": [
+          "Complete compact business passage; original-entry English dictionary definitions and reusable hints. No literal nn artifact or sentence-like deteriorate hint in this sample."
+        ]
+      },
+      "db": {
+        "run_id": "01a08fbd-e768-7ea2-af4e-0e188f902c7e",
+        "account_id": "01a08e5a-2250-7854-81df-5aeb26e7f461",
+        "model": "z-ai/glm-5.3-flash",
+        "status": "valid",
+        "quota_charged": true,
+        "counts_toward_cumulative": true,
+        "disposition": "pending",
+        "started_at": "2026-09-11T09:13:02.568941+00:00",
+        "draft_exists": true,
+        "word_count": 61
+      }
+    },
+    {
+      "case_id": 7,
+      "round": 1,
+      "reference_case_id": 7,
+      "pair_id": 4,
+      "group": "D",
+      "model_id": "01a07fe3-5c48-736a-a86b-1f4dabd7cb87",
+      "provider_model_id": "minimax/minimax-m3",
+      "meaning_language": "ja",
+      "scenario": "news",
+      "length": "long",
+      "entries": [
+        "sustainable",
+        "prevalent",
+        "vulnerable",
+        "ambiguous",
+        "coherent"
+      ],
+      "started_at": "2026-09-11T09:13:26.154Z",
+      "status": "generation.validated",
+      "image": "sha256:1d88e8ce36ad5c687fc03e9251bd09bb3b1eefb75cb1549b518779f83ae25de5",
+      "http_status": 200,
+      "run_id": "01a08fbe-4392-710e-b5e5-13516394fe02",
+      "first_delta_ms": 2930,
+      "preview_equals_result": true,
+      "target_order_valid": true,
+      "target_count": 5,
+      "tag_count": 3,
+      "result_sha256": "b6d3085a930c83b089496b439e1dc6053e5b59f369a36984b76e06d158903277",
+      "annotation_leaked": false,
+      "changed_form_occurrences": 0,
+      "repeated_passage_targets": 0,
+      "repeated_hint_targets": 0,
+      "positions_valid": true,
+      "duration_ms": 26756,
+      "passage_chars": 2601,
+      "terminal_count": 1,
+      "evidence_id": "f19fd0f4-1349-496b-a4a1-2aa262248a6b",
+      "request_id": "req_Stg0fK76vlLCSWu6rXVcWw",
+      "fingerprint": {
+        "source_sha256": "8ee8c9d65194c554c85643e53427df59c48333bc5eeace2ba67c4e9899effcb8",
+        "binary_sha256": "87096259c7a0e295334cc0ee17f339f75ca71e0db7e55b4ca54b9ee4218e999b",
+        "template_sha256": "c90f55bab75ae8a1582b9694bfd8905fd8153be209ee3b9f971d98520a1904ab",
+        "schema_sha256": "f92bbdb51dbe66b2ac82be863297849e96924e255c730d13b48f8e8e6c8130f4",
+        "validator_sha256": "9be4cf758620a25b2ab22218e1f8bef2b3241b3570f0e8128bd41b30e50a0dc0",
+        "lexicon_sha256": "89e5b41dc8662780e443c10b5ecf81970944fc2b530d5f79372ac482ac744c0b"
+      },
+      "prompt_version": "m001-v5-r6",
+      "minimum_words": 200,
+      "soft_target_words": 240,
+      "expires_at": "2026-09-12T09:13:26.157946209Z",
+      "private_capture_complete": true,
+      "capture_state": {
+        "coalesced_progress": 184,
+        "dropped_records": 0,
+        "dropped_bytes": 0,
+        "truncated": false,
+        "io_failed": false,
+        "redacted": false,
+        "model_ended": true,
+        "unavailable": false
+      },
+      "model_end": {
+        "chunks": 61,
+        "bytes": 3461,
+        "redacted": false,
+        "unavailable": false
+      },
+      "first_failure": null,
+      "confirmed_outcome": "valid",
+      "stages": [
+        {
+          "stage": "request",
+          "state": "ok",
+          "duration_ms": 26752
+        },
+        {
+          "stage": "preflight",
+          "state": "ok",
+          "duration_ms": 5
+        },
+        {
+          "stage": "provider_open",
+          "state": "ok",
+          "duration_ms": 2723
+        },
+        {
+          "stage": "provider_stream",
+          "state": "ok",
+          "duration_ms": 24009
+        },
+        {
+          "stage": "passage_decode",
+          "state": "ok",
+          "duration_ms": 24011
+        },
+        {
+          "stage": "candidate_decode",
+          "state": "ok",
+          "duration_ms": 2
+        },
+        {
+          "stage": "content_validate",
+          "state": "ok",
+          "duration_ms": 3
+        },
+        {
+          "stage": "draft_commit",
+          "state": "ok",
+          "duration_ms": 5
+        },
+        {
+          "stage": "settlement",
+          "state": "not_run",
+          "duration_ms": -1
+        },
+        {
+          "stage": "delivery",
+          "state": "ok",
+          "duration_ms": 24023
+        }
+      ],
+      "json_parse_error": null,
+      "clean_word_count": 366,
+      "paragraph_count": 1,
+      "target_keys": [
+        "ambiguous",
+        "coherent",
+        "prevalent",
+        "sustainable",
+        "vulnerable"
+      ],
+      "tags": [
+        "気候変動",
+        "公共政策",
+        "科学報道"
+      ],
+      "all_required_keys_present": true,
+      "passage_entries_without_annotations": [],
+      "passage_has_outer_whitespace": false,
+      "finish_reasons": [
+        "stop"
+      ],
+      "usage": {
+        "prompt_tokens": 926,
+        "completion_tokens": 611,
+        "total_tokens": 1537
+      },
+      "review": {
+        "reviewer": "current assistant; not independent language expert or QA",
+        "original_entry_meanings_no_passage_role_tail": true,
+        "notes": [
+          "Untitled coherent news-style body; original-entry Japanese meanings and relevant tags; compact natural hints. Longer than the soft target and all in one paragraph."
+        ]
+      },
+      "db": {
+        "run_id": "01a08fbe-4392-710e-b5e5-13516394fe02",
+        "account_id": "01a08e5a-2250-7854-81df-5aeb26e7f461",
+        "model": "minimax/minimax-m3",
+        "status": "valid",
+        "quota_charged": true,
+        "counts_toward_cumulative": true,
+        "disposition": "pending",
+        "started_at": "2026-09-11T09:13:26.16209+00:00",
+        "draft_exists": true,
+        "word_count": 366
+      }
+    },
+    {
+      "case_id": 8,
+      "round": 1,
+      "reference_case_id": 8,
+      "pair_id": 4,
+      "group": "D",
+      "model_id": "01a07fe3-f046-7017-97f8-c15539050441",
+      "provider_model_id": "z-ai/glm-5.3-flash",
+      "meaning_language": "ja",
+      "scenario": "news",
+      "length": "long",
+      "entries": [
+        "sustainable",
+        "prevalent",
+        "vulnerable",
+        "ambiguous",
+        "coherent"
+      ],
+      "started_at": "2026-09-11T09:13:52.936Z",
+      "status": "generation.validated",
+      "image": "sha256:1d88e8ce36ad5c687fc03e9251bd09bb3b1eefb75cb1549b518779f83ae25de5",
+      "http_status": 200,
+      "run_id": "01a08fbe-ac31-73d6-aede-f7532d4ea13c",
+      "first_delta_ms": 24614,
+      "preview_equals_result": true,
+      "target_order_valid": true,
+      "target_count": 5,
+      "tag_count": 3,
+      "result_sha256": "682ebcdfc8cec947d9760e54dcb70f45775eddc2746df88dded3ad789f433abb",
+      "annotation_leaked": false,
+      "changed_form_occurrences": 1,
+      "repeated_passage_targets": 5,
+      "repeated_hint_targets": 0,
+      "positions_valid": true,
+      "duration_ms": 28739,
+      "passage_chars": 1726,
+      "terminal_count": 1,
+      "evidence_id": "19968eb8-ce64-4a7b-93f7-0cc45406cdf3",
+      "request_id": "req__1r_v7HhPDafMgmBVFEksA",
+      "fingerprint": {
+        "source_sha256": "8ee8c9d65194c554c85643e53427df59c48333bc5eeace2ba67c4e9899effcb8",
+        "binary_sha256": "87096259c7a0e295334cc0ee17f339f75ca71e0db7e55b4ca54b9ee4218e999b",
+        "template_sha256": "c90f55bab75ae8a1582b9694bfd8905fd8153be209ee3b9f971d98520a1904ab",
+        "schema_sha256": "f92bbdb51dbe66b2ac82be863297849e96924e255c730d13b48f8e8e6c8130f4",
+        "validator_sha256": "9be4cf758620a25b2ab22218e1f8bef2b3241b3570f0e8128bd41b30e50a0dc0",
+        "lexicon_sha256": "89e5b41dc8662780e443c10b5ecf81970944fc2b530d5f79372ac482ac744c0b"
+      },
+      "prompt_version": "m001-v5-r6",
+      "minimum_words": 200,
+      "soft_target_words": 240,
+      "expires_at": "2026-09-12T09:13:52.941515513Z",
+      "private_capture_complete": true,
+      "capture_state": {
+        "coalesced_progress": 471,
+        "dropped_records": 0,
+        "dropped_bytes": 0,
+        "truncated": false,
+        "io_failed": false,
+        "redacted": false,
+        "model_ended": true,
+        "unavailable": false
+      },
+      "model_end": {
+        "chunks": 156,
+        "bytes": 2941,
+        "redacted": false,
+        "unavailable": false
+      },
+      "first_failure": null,
+      "confirmed_outcome": "valid",
+      "stages": [
+        {
+          "stage": "request",
+          "state": "ok",
+          "duration_ms": 28735
+        },
+        {
+          "stage": "preflight",
+          "state": "ok",
+          "duration_ms": 4
+        },
+        {
+          "stage": "provider_open",
+          "state": "ok",
+          "duration_ms": 843
+        },
+        {
+          "stage": "provider_stream",
+          "state": "ok",
+          "duration_ms": 27877
+        },
+        {
+          "stage": "passage_decode",
+          "state": "ok",
+          "duration_ms": 4118
+        },
+        {
+          "stage": "candidate_decode",
+          "state": "ok",
+          "duration_ms": 3
+        },
+        {
+          "stage": "content_validate",
+          "state": "ok",
+          "duration_ms": 2
+        },
+        {
+          "stage": "draft_commit",
+          "state": "ok",
+          "duration_ms": 5
+        },
+        {
+          "stage": "settlement",
+          "state": "not_run",
+          "duration_ms": -1
+        },
+        {
+          "stage": "delivery",
+          "state": "ok",
+          "duration_ms": 27887
+        }
+      ],
+      "json_parse_error": null,
+      "clean_word_count": 246,
+      "paragraph_count": 1,
+      "target_keys": [
+        "ambiguous",
+        "coherent",
+        "prevalent",
+        "sustainable",
+        "vulnerable"
+      ],
+      "tags": [
+        "気候変動",
+        "公共政策",
+        "地域のまちづくり"
+      ],
+      "all_required_keys_present": true,
+      "passage_entries_without_annotations": [],
+      "passage_has_outer_whitespace": false,
+      "finish_reasons": [
+        "stop"
+      ],
+      "usage": {
+        "prompt_tokens": 778,
+        "completion_tokens": 3379,
+        "total_tokens": 4157
+      },
+      "review": {
+        "reviewer": "current assistant; not independent language expert or QA",
+        "original_entry_meanings_no_passage_role_tail": true,
+        "notes": [
+          "Coherent news-style body with all targets; original-entry Japanese meanings and reusable hints. Actual prevalence/prevalent derivation is validated; repeated target usage is somewhat dense."
+        ]
+      },
+      "db": {
+        "run_id": "01a08fbe-ac31-73d6-aede-f7532d4ea13c",
+        "account_id": "01a08e5a-2250-7854-81df-5aeb26e7f461",
+        "model": "z-ai/glm-5.3-flash",
+        "status": "valid",
+        "quota_charged": true,
+        "counts_toward_cumulative": true,
+        "disposition": "pending",
+        "started_at": "2026-09-11T09:13:52.945303+00:00",
+        "draft_exists": true,
+        "word_count": 246
+      }
+    },
+    {
+      "case_id": 9,
+      "round": 1,
+      "reference_case_id": 9,
+      "pair_id": 5,
+      "group": "D",
+      "model_id": "01a07fe3-5c48-736a-a86b-1f4dabd7cb87",
+      "provider_model_id": "minimax/minimax-m3",
+      "meaning_language": "en",
+      "scenario": "story",
+      "length": "xlong",
+      "entries": [
+        "sustainable",
+        "prevalent",
+        "vulnerable",
+        "ambiguous",
+        "coherent"
+      ],
+      "started_at": "2026-09-11T09:14:21.699Z",
+      "status": "generation.validated",
+      "image": "sha256:1d88e8ce36ad5c687fc03e9251bd09bb3b1eefb75cb1549b518779f83ae25de5",
+      "http_status": 200,
+      "run_id": "01a08fbf-1c8a-773e-a125-8a0c70b538b3",
+      "first_delta_ms": 2948,
+      "preview_equals_result": true,
+      "target_order_valid": true,
+      "target_count": 5,
+      "tag_count": 2,
+      "result_sha256": "d41ce7216bd19cabe24b922d55d0346de5298d0c1ccdf94461071432a0d6bd9d",
+      "annotation_leaked": false,
+      "changed_form_occurrences": 0,
+      "repeated_passage_targets": 5,
+      "repeated_hint_targets": 0,
+      "positions_valid": true,
+      "duration_ms": 23940,
+      "passage_chars": 3518,
+      "terminal_count": 1,
+      "evidence_id": "262ac019-a4e2-4478-967e-cbf12684cc9c",
+      "request_id": "req_kGlos_06dKPB_ZYX94YrVw",
+      "fingerprint": {
+        "source_sha256": "8ee8c9d65194c554c85643e53427df59c48333bc5eeace2ba67c4e9899effcb8",
+        "binary_sha256": "87096259c7a0e295334cc0ee17f339f75ca71e0db7e55b4ca54b9ee4218e999b",
+        "template_sha256": "c90f55bab75ae8a1582b9694bfd8905fd8153be209ee3b9f971d98520a1904ab",
+        "schema_sha256": "f92bbdb51dbe66b2ac82be863297849e96924e255c730d13b48f8e8e6c8130f4",
+        "validator_sha256": "9be4cf758620a25b2ab22218e1f8bef2b3241b3570f0e8128bd41b30e50a0dc0",
+        "lexicon_sha256": "89e5b41dc8662780e443c10b5ecf81970944fc2b530d5f79372ac482ac744c0b"
+      },
+      "prompt_version": "m001-v5-r6",
+      "minimum_words": 400,
+      "soft_target_words": 480,
+      "expires_at": "2026-09-12T09:14:21.703004346Z",
+      "private_capture_complete": true,
+      "capture_state": {
+        "coalesced_progress": 226,
+        "dropped_records": 0,
+        "dropped_bytes": 0,
+        "truncated": false,
+        "io_failed": false,
+        "redacted": false,
+        "model_ended": true,
+        "unavailable": false
+      },
+      "model_end": {
+        "chunks": 75,
+        "bytes": 4538,
+        "redacted": false,
+        "unavailable": false
+      },
+      "first_failure": null,
+      "confirmed_outcome": "valid",
+      "stages": [
+        {
+          "stage": "request",
+          "state": "ok",
+          "duration_ms": 23937
+        },
+        {
+          "stage": "preflight",
+          "state": "ok",
+          "duration_ms": 4
+        },
+        {
+          "stage": "provider_open",
+          "state": "ok",
+          "duration_ms": 1710
+        },
+        {
+          "stage": "provider_stream",
+          "state": "ok",
+          "duration_ms": 22213
+        },
+        {
+          "stage": "passage_decode",
+          "state": "ok",
+          "duration_ms": 22213
+        },
+        {
+          "stage": "candidate_decode",
+          "state": "ok",
+          "duration_ms": 2
+        },
+        {
+          "stage": "content_validate",
+          "state": "ok",
+          "duration_ms": 1
+        },
+        {
+          "stage": "draft_commit",
+          "state": "ok",
+          "duration_ms": 5
+        },
+        {
+          "stage": "settlement",
+          "state": "not_run",
+          "duration_ms": -1
+        },
+        {
+          "stage": "delivery",
+          "state": "ok",
+          "duration_ms": 22222
+        }
+      ],
+      "json_parse_error": null,
+      "clean_word_count": 594,
+      "paragraph_count": 1,
+      "target_keys": [
+        "ambiguous",
+        "coherent",
+        "prevalent",
+        "sustainable",
+        "vulnerable"
+      ],
+      "tags": [
+        "community",
+        "environment"
+      ],
+      "all_required_keys_present": true,
+      "passage_entries_without_annotations": [],
+      "passage_has_outer_whitespace": false,
+      "finish_reasons": [
+        "stop"
+      ],
+      "usage": {
+        "prompt_tokens": 930,
+        "completion_tokens": 938,
+        "total_tokens": 1868
+      },
+      "review": {
+        "reviewer": "current assistant; not independent language expert or QA",
+        "original_entry_meanings_no_passage_role_tail": true,
+        "notes": [
+          "Complete coherent long story with a natural ending. Original-entry English meanings, relevant passage tags and compact reusable hints; repeated targets valid. One dense paragraph; no heading/nn artifact."
+        ]
+      },
+      "db": {
+        "run_id": "01a08fbf-1c8a-773e-a125-8a0c70b538b3",
+        "account_id": "01a08e5a-2250-7854-81df-5aeb26e7f461",
+        "model": "minimax/minimax-m3",
+        "status": "valid",
+        "quota_charged": true,
+        "counts_toward_cumulative": true,
+        "disposition": "pending",
+        "started_at": "2026-09-11T09:14:21.706482+00:00",
+        "draft_exists": true,
+        "word_count": 594
+      }
+    },
+    {
+      "case_id": 10,
+      "round": 1,
+      "reference_case_id": 10,
+      "pair_id": 5,
+      "group": "D",
+      "model_id": "01a07fe3-f046-7017-97f8-c15539050441",
+      "provider_model_id": "z-ai/glm-5.3-flash",
+      "meaning_language": "en",
+      "scenario": "story",
+      "length": "xlong",
+      "entries": [
+        "sustainable",
+        "prevalent",
+        "vulnerable",
+        "ambiguous",
+        "coherent"
+      ],
+      "started_at": "2026-09-11T09:14:45.659Z",
+      "status": "generation.failed",
+      "image": "sha256:1d88e8ce36ad5c687fc03e9251bd09bb3b1eefb75cb1549b518779f83ae25de5",
+      "http_status": 200,
+      "run_id": "01a08fbf-7a21-7411-b783-ce40e109dfae",
+      "first_delta_ms": 66968,
+      "code": "content_validation_failed",
+      "quota_refunded": true,
+      "duration_ms": 69579,
+      "passage_chars": 437,
+      "terminal_count": 1,
+      "evidence_id": "b0858e70-55ed-4cd9-83cd-927490718b96",
+      "request_id": "req_fdrLMnpHBK3C-PXP2iyTmQ",
+      "fingerprint": {
+        "source_sha256": "8ee8c9d65194c554c85643e53427df59c48333bc5eeace2ba67c4e9899effcb8",
+        "binary_sha256": "87096259c7a0e295334cc0ee17f339f75ca71e0db7e55b4ca54b9ee4218e999b",
+        "template_sha256": "c90f55bab75ae8a1582b9694bfd8905fd8153be209ee3b9f971d98520a1904ab",
+        "schema_sha256": "f92bbdb51dbe66b2ac82be863297849e96924e255c730d13b48f8e8e6c8130f4",
+        "validator_sha256": "9be4cf758620a25b2ab22218e1f8bef2b3241b3570f0e8128bd41b30e50a0dc0",
+        "lexicon_sha256": "89e5b41dc8662780e443c10b5ecf81970944fc2b530d5f79372ac482ac744c0b"
+      },
+      "prompt_version": "m001-v5-r6",
+      "minimum_words": 400,
+      "soft_target_words": 480,
+      "expires_at": "2026-09-12T09:14:45.66253651Z",
+      "private_capture_complete": true,
+      "capture_state": {
+        "coalesced_progress": 306,
+        "dropped_records": 0,
+        "dropped_bytes": 0,
+        "truncated": false,
+        "io_failed": false,
+        "redacted": false,
+        "model_ended": true,
+        "unavailable": false
+      },
+      "model_end": {
+        "chunks": 101,
+        "bytes": 1659,
+        "redacted": false,
+        "unavailable": false
+      },
+      "first_failure": {
+        "stage": "content_validate",
+        "state": "failed",
+        "begin_ms": 69574,
+        "end_ms": 69574,
+        "duration_ms": 0,
+        "check": "passage_content",
+        "detail": {
+          "reason": "passage_content_invalid",
+          "field": "passage",
+          "target_index": -1,
+          "actual": 437,
+          "limit": 2000000,
+          "byte_start": -1,
+          "byte_end": -1,
+          "expected_type": "",
+          "actual_type": ""
+        }
+      },
+      "confirmed_outcome": "failed",
+      "stages": [
+        {
+          "stage": "request",
+          "state": "ok",
+          "duration_ms": 69578
+        },
+        {
+          "stage": "preflight",
+          "state": "ok",
+          "duration_ms": 4
+        },
+        {
+          "stage": "provider_open",
+          "state": "ok",
+          "duration_ms": 1382
+        },
+        {
+          "stage": "provider_stream",
+          "state": "ok",
+          "duration_ms": 68186
+        },
+        {
+          "stage": "passage_decode",
+          "state": "ok",
+          "duration_ms": 2647
+        },
+        {
+          "stage": "candidate_decode",
+          "state": "ok",
+          "duration_ms": 2
+        },
+        {
+          "stage": "content_validate",
+          "state": "failed",
+          "duration_ms": 0
+        },
+        {
+          "stage": "draft_commit",
+          "state": "not_run",
+          "duration_ms": -1
+        },
+        {
+          "stage": "settlement",
+          "state": "ok",
+          "duration_ms": 4
+        },
+        {
+          "stage": "delivery",
+          "state": "ok",
+          "duration_ms": 68192
+        }
+      ],
+      "json_parse_error": null,
+      "clean_word_count": 78,
+      "paragraph_count": 1,
+      "target_keys": [
+        "ambiguous",
+        "coherent",
+        "prevalent",
+        "sustainable",
+        "vulnerable"
+      ],
+      "tags": [
+        "community",
+        "environment",
+        "coastal life"
+      ],
+      "all_required_keys_present": true,
+      "passage_entries_without_annotations": [
+        "sustainable",
+        "prevalent",
+        "vulnerable",
+        "ambiguous",
+        "coherent"
+      ],
+      "passage_has_outer_whitespace": true,
+      "finish_reasons": [
+        "stop"
+      ],
+      "usage": {
+        "prompt_tokens": 770,
+        "completion_tokens": 6140,
+        "total_tokens": 6910
+      },
+      "review": {
+        "reviewer": "current assistant; not independent language expert or QA",
+        "original_entry_meanings_no_passage_role_tail": true,
+        "notes": [
+          "First failure passage_content_invalid is supported by trailing whitespace, not size (437 characters vs limit 2000000). Additional raw facts: only 78/400 words and no selected entry appears in the passage. JSON includes all five meanings/hints and provider finish reason is stop; not a locally truncated JSON response.",
+          "English original-entry definitions and reusable hints are reasonable, but the story ends after an opening setup."
+        ]
+      },
+      "db": {
+        "run_id": "01a08fbf-7a21-7411-b783-ce40e109dfae",
+        "account_id": "01a08e5a-2250-7854-81df-5aeb26e7f461",
+        "model": "z-ai/glm-5.3-flash",
+        "status": "validation_failed",
+        "quota_charged": false,
+        "counts_toward_cumulative": false,
+        "disposition": "pending",
+        "started_at": "2026-09-11T09:14:45.665278+00:00",
+        "draft_exists": false,
+        "word_count": null
+      }
+    },
+    {
+      "case_id": 11,
+      "round": 2,
+      "reference_case_id": 1,
+      "pair_id": 1,
+      "group": "A",
+      "model_id": "01a07fe3-5c48-736a-a86b-1f4dabd7cb87",
+      "provider_model_id": "minimax/minimax-m3",
+      "meaning_language": "zh",
+      "scenario": "story",
+      "length": "short",
+      "entries": [
+        "melancholy",
+        "handicap",
+        "foray",
+        "casino",
+        "upswing"
+      ],
+      "started_at": "2026-09-11T09:16:05.101Z",
+      "status": "generation.validated",
+      "image": "sha256:1d88e8ce36ad5c687fc03e9251bd09bb3b1eefb75cb1549b518779f83ae25de5",
+      "http_status": 200,
+      "run_id": "01a08fc0-b073-7b5e-8446-d69e29176a7d",
+      "first_delta_ms": 2827,
+      "preview_equals_result": true,
+      "target_order_valid": true,
+      "target_count": 5,
+      "tag_count": 2,
+      "result_sha256": "ea277124f3bf36026a88cdaa6f3ef1b28c776c55d31405cc347f7028e74336a8",
+      "annotation_leaked": false,
+      "changed_form_occurrences": 0,
+      "repeated_passage_targets": 1,
+      "repeated_hint_targets": 0,
+      "positions_valid": true,
+      "duration_ms": 7228,
+      "passage_chars": 857,
+      "terminal_count": 1,
+      "evidence_id": "c2b17d26-8de9-438a-983c-b6749937d61b",
+      "request_id": "req_ZESeewUXY8pAbh8ypi0HHQ",
+      "fingerprint": {
+        "source_sha256": "8ee8c9d65194c554c85643e53427df59c48333bc5eeace2ba67c4e9899effcb8",
+        "binary_sha256": "87096259c7a0e295334cc0ee17f339f75ca71e0db7e55b4ca54b9ee4218e999b",
+        "template_sha256": "c90f55bab75ae8a1582b9694bfd8905fd8153be209ee3b9f971d98520a1904ab",
+        "schema_sha256": "f92bbdb51dbe66b2ac82be863297849e96924e255c730d13b48f8e8e6c8130f4",
+        "validator_sha256": "9be4cf758620a25b2ab22218e1f8bef2b3241b3570f0e8128bd41b30e50a0dc0",
+        "lexicon_sha256": "89e5b41dc8662780e443c10b5ecf81970944fc2b530d5f79372ac482ac744c0b"
+      },
+      "prompt_version": "m001-v5-r6",
+      "minimum_words": 50,
+      "soft_target_words": 60,
+      "expires_at": "2026-09-12T09:16:05.10403913Z",
+      "private_capture_complete": true,
+      "capture_state": {
+        "coalesced_progress": 100,
+        "dropped_records": 0,
+        "dropped_bytes": 0,
+        "truncated": false,
+        "io_failed": false,
+        "redacted": false,
+        "model_ended": true,
+        "unavailable": false
+      },
+      "model_end": {
+        "chunks": 33,
+        "bytes": 1674,
+        "redacted": false,
+        "unavailable": false
+      },
+      "first_failure": null,
+      "confirmed_outcome": "valid",
+      "stages": [
+        {
+          "stage": "request",
+          "state": "ok",
+          "duration_ms": 7225
+        },
+        {
+          "stage": "preflight",
+          "state": "ok",
+          "duration_ms": 7
+        },
+        {
+          "stage": "provider_open",
+          "state": "ok",
+          "duration_ms": 2604
+        },
+        {
+          "stage": "provider_stream",
+          "state": "ok",
+          "duration_ms": 4602
+        },
+        {
+          "stage": "passage_decode",
+          "state": "ok",
+          "duration_ms": 4607
+        },
+        {
+          "stage": "candidate_decode",
+          "state": "ok",
+          "duration_ms": 5
+        },
+        {
+          "stage": "content_validate",
+          "state": "ok",
+          "duration_ms": 2
+        },
+        {
+          "stage": "draft_commit",
+          "state": "ok",
+          "duration_ms": 4
+        },
+        {
+          "stage": "settlement",
+          "state": "not_run",
+          "duration_ms": -1
+        },
+        {
+          "stage": "delivery",
+          "state": "ok",
+          "duration_ms": 4614
+        }
+      ],
+      "json_parse_error": null,
+      "clean_word_count": 159,
+      "paragraph_count": 1,
+      "target_keys": [
+        "casino",
+        "foray",
+        "handicap",
+        "melancholy",
+        "upswing"
+      ],
+      "tags": [
+        "情感",
+        "日常生活"
+      ],
+      "all_required_keys_present": true,
+      "passage_entries_without_annotations": [],
+      "passage_has_outer_whitespace": false,
+      "finish_reasons": [
+        "stop"
+      ],
+      "usage": {
+        "prompt_tokens": 918,
+        "completion_tokens": 433,
+        "total_tokens": 1351
+      },
+      "review": {
+        "reviewer": "current assistant; not independent language expert or QA",
+        "original_entry_meanings_no_passage_role_tail": true,
+        "notes": [
+          "Chinese original-entry meanings and compact hints. Story is readable but saying an injury 'forcing her to stand' gives an awkward causal connection; short request again produces a much longer passage."
+        ]
+      },
+      "db": {
+        "run_id": "01a08fc0-b073-7b5e-8446-d69e29176a7d",
+        "account_id": "01a08e5a-2250-7854-81df-5aeb26e7f461",
+        "model": "minimax/minimax-m3",
+        "status": "valid",
+        "quota_charged": true,
+        "counts_toward_cumulative": true,
+        "disposition": "pending",
+        "started_at": "2026-09-11T09:16:05.10774+00:00",
+        "draft_exists": true,
+        "word_count": 159
+      }
+    },
+    {
+      "case_id": 12,
+      "round": 2,
+      "reference_case_id": 2,
+      "pair_id": 1,
+      "group": "A",
+      "model_id": "01a07fe3-f046-7017-97f8-c15539050441",
+      "provider_model_id": "z-ai/glm-5.3-flash",
+      "meaning_language": "zh",
+      "scenario": "story",
+      "length": "short",
+      "entries": [
+        "melancholy",
+        "handicap",
+        "foray",
+        "casino",
+        "upswing"
+      ],
+      "started_at": "2026-09-11T09:16:12.353Z",
+      "status": "generation.validated",
+      "image": "sha256:1d88e8ce36ad5c687fc03e9251bd09bb3b1eefb75cb1549b518779f83ae25de5",
+      "http_status": 200,
+      "run_id": "01a08fc0-ccc7-725c-85ae-badcb3ba0fa0",
+      "first_delta_ms": 23459,
+      "preview_equals_result": true,
+      "target_order_valid": true,
+      "target_count": 5,
+      "tag_count": 2,
+      "result_sha256": "785be02e60cd78312e76505848e83e76d10dfe5d2f2124b2a6e42e3ce5f18042",
+      "annotation_leaked": false,
+      "changed_form_occurrences": 0,
+      "repeated_passage_targets": 1,
+      "repeated_hint_targets": 0,
+      "positions_valid": true,
+      "duration_ms": 25655,
+      "passage_chars": 380,
+      "terminal_count": 1,
+      "evidence_id": "84a7189d-a850-46d4-b525-bf47545cfd62",
+      "request_id": "req_sTaicCJj56ifFBfKrL0Uhg",
+      "fingerprint": {
+        "source_sha256": "8ee8c9d65194c554c85643e53427df59c48333bc5eeace2ba67c4e9899effcb8",
+        "binary_sha256": "87096259c7a0e295334cc0ee17f339f75ca71e0db7e55b4ca54b9ee4218e999b",
+        "template_sha256": "c90f55bab75ae8a1582b9694bfd8905fd8153be209ee3b9f971d98520a1904ab",
+        "schema_sha256": "f92bbdb51dbe66b2ac82be863297849e96924e255c730d13b48f8e8e6c8130f4",
+        "validator_sha256": "9be4cf758620a25b2ab22218e1f8bef2b3241b3570f0e8128bd41b30e50a0dc0",
+        "lexicon_sha256": "89e5b41dc8662780e443c10b5ecf81970944fc2b530d5f79372ac482ac744c0b"
+      },
+      "prompt_version": "m001-v5-r6",
+      "minimum_words": 50,
+      "soft_target_words": 60,
+      "expires_at": "2026-09-12T09:16:12.3566588Z",
+      "private_capture_complete": true,
+      "capture_state": {
+        "coalesced_progress": 282,
+        "dropped_records": 0,
+        "dropped_bytes": 0,
+        "truncated": false,
+        "io_failed": false,
+        "redacted": false,
+        "model_ended": true,
+        "unavailable": false
+      },
+      "model_end": {
+        "chunks": 93,
+        "bytes": 1316,
+        "redacted": false,
+        "unavailable": false
+      },
+      "first_failure": null,
+      "confirmed_outcome": "valid",
+      "stages": [
+        {
+          "stage": "request",
+          "state": "ok",
+          "duration_ms": 25652
+        },
+        {
+          "stage": "preflight",
+          "state": "ok",
+          "duration_ms": 4
+        },
+        {
+          "stage": "provider_open",
+          "state": "ok",
+          "duration_ms": 2007
+        },
+        {
+          "stage": "provider_stream",
+          "state": "ok",
+          "duration_ms": 23632
+        },
+        {
+          "stage": "passage_decode",
+          "state": "ok",
+          "duration_ms": 2189
+        },
+        {
+          "stage": "candidate_decode",
+          "state": "ok",
+          "duration_ms": 1
+        },
+        {
+          "stage": "content_validate",
+          "state": "ok",
+          "duration_ms": 3
+        },
+        {
+          "stage": "draft_commit",
+          "state": "ok",
+          "duration_ms": 4
+        },
+        {
+          "stage": "settlement",
+          "state": "not_run",
+          "duration_ms": -1
+        },
+        {
+          "stage": "delivery",
+          "state": "ok",
+          "duration_ms": 23641
+        }
+      ],
+      "json_parse_error": null,
+      "clean_word_count": 64,
+      "paragraph_count": 1,
+      "target_keys": [
+        "casino",
+        "foray",
+        "handicap",
+        "melancholy",
+        "upswing"
+      ],
+      "tags": [
+        "都市生活",
+        "心理变化"
+      ],
+      "all_required_keys_present": true,
+      "passage_entries_without_annotations": [],
+      "passage_has_outer_whitespace": false,
+      "finish_reasons": [
+        "stop"
+      ],
+      "usage": {
+        "prompt_tokens": 756,
+        "completion_tokens": 2644,
+        "total_tokens": 3400
+      },
+      "review": {
+        "reviewer": "current assistant; not independent language expert or QA",
+        "original_entry_meanings_no_passage_role_tail": true,
+        "notes": [
+          "Readable short story and original-entry Chinese meanings; reusable hints. Plot is strikingly similar to case 2 (Daniel, melancholy, casino, inexperience, winnings), indicating limited diversity on repeated identical inputs; not a hard rejection criterion."
+        ]
+      },
+      "db": {
+        "run_id": "01a08fc0-ccc7-725c-85ae-badcb3ba0fa0",
+        "account_id": "01a08e5a-2250-7854-81df-5aeb26e7f461",
+        "model": "z-ai/glm-5.3-flash",
+        "status": "valid",
+        "quota_charged": true,
+        "counts_toward_cumulative": true,
+        "disposition": "pending",
+        "started_at": "2026-09-11T09:16:12.359176+00:00",
+        "draft_exists": true,
+        "word_count": 64
+      }
+    },
+    {
+      "case_id": 13,
+      "round": 2,
+      "reference_case_id": 3,
+      "pair_id": 2,
+      "group": "B",
+      "model_id": "01a07fe3-5c48-736a-a86b-1f4dabd7cb87",
+      "provider_model_id": "minimax/minimax-m3",
+      "meaning_language": "zh",
+      "scenario": "discussion",
+      "length": "medium",
+      "entries": [
+        "young",
+        "grape",
+        "weekend",
+        "danger",
+        "enforce"
+      ],
+      "started_at": "2026-09-11T09:16:38.028Z",
+      "status": "generation.validated",
+      "image": "sha256:1d88e8ce36ad5c687fc03e9251bd09bb3b1eefb75cb1549b518779f83ae25de5",
+      "http_status": 200,
+      "run_id": "01a08fc1-3112-7018-8009-e5e220030580",
+      "first_delta_ms": 913,
+      "preview_equals_result": true,
+      "target_order_valid": true,
+      "target_count": 5,
+      "tag_count": 2,
+      "result_sha256": "60c86cfe4936a7477f1a20a6ddcce445543eca93c9285eb22a7978e438c57c7a",
+      "annotation_leaked": false,
+      "changed_form_occurrences": 4,
+      "repeated_passage_targets": 5,
+      "repeated_hint_targets": 0,
+      "positions_valid": true,
+      "duration_ms": 7143,
+      "passage_chars": 1505,
+      "terminal_count": 1,
+      "evidence_id": "5b89ed7d-d48b-4ee2-a3a7-9e56419fa01c",
+      "request_id": "req_L1jLebYe3FbtFCdw5Z4qCA",
+      "fingerprint": {
+        "source_sha256": "8ee8c9d65194c554c85643e53427df59c48333bc5eeace2ba67c4e9899effcb8",
+        "binary_sha256": "87096259c7a0e295334cc0ee17f339f75ca71e0db7e55b4ca54b9ee4218e999b",
+        "template_sha256": "c90f55bab75ae8a1582b9694bfd8905fd8153be209ee3b9f971d98520a1904ab",
+        "schema_sha256": "f92bbdb51dbe66b2ac82be863297849e96924e255c730d13b48f8e8e6c8130f4",
+        "validator_sha256": "9be4cf758620a25b2ab22218e1f8bef2b3241b3570f0e8128bd41b30e50a0dc0",
+        "lexicon_sha256": "89e5b41dc8662780e443c10b5ecf81970944fc2b530d5f79372ac482ac744c0b"
+      },
+      "prompt_version": "m001-v5-r6",
+      "minimum_words": 100,
+      "soft_target_words": 120,
+      "expires_at": "2026-09-12T09:16:38.031369798Z",
+      "private_capture_complete": true,
+      "capture_state": {
+        "coalesced_progress": 124,
+        "dropped_records": 0,
+        "dropped_bytes": 0,
+        "truncated": false,
+        "io_failed": false,
+        "redacted": false,
+        "model_ended": true,
+        "unavailable": false
+      },
+      "model_end": {
+        "chunks": 41,
+        "bytes": 2199,
+        "redacted": false,
+        "unavailable": false
+      },
+      "first_failure": null,
+      "confirmed_outcome": "valid",
+      "stages": [
+        {
+          "stage": "request",
+          "state": "ok",
+          "duration_ms": 7139
+        },
+        {
+          "stage": "preflight",
+          "state": "ok",
+          "duration_ms": 4
+        },
+        {
+          "stage": "provider_open",
+          "state": "ok",
+          "duration_ms": 716
+        },
+        {
+          "stage": "provider_stream",
+          "state": "ok",
+          "duration_ms": 6409
+        },
+        {
+          "stage": "passage_decode",
+          "state": "ok",
+          "duration_ms": 6413
+        },
+        {
+          "stage": "candidate_decode",
+          "state": "ok",
+          "duration_ms": 3
+        },
+        {
+          "stage": "content_validate",
+          "state": "ok",
+          "duration_ms": 2
+        },
+        {
+          "stage": "draft_commit",
+          "state": "ok",
+          "duration_ms": 3
+        },
+        {
+          "stage": "settlement",
+          "state": "not_run",
+          "duration_ms": -1
+        },
+        {
+          "stage": "delivery",
+          "state": "ok",
+          "duration_ms": 6419
+        }
+      ],
+      "json_parse_error": null,
+      "clean_word_count": 244,
+      "paragraph_count": 1,
+      "target_keys": [
+        "danger",
+        "enforce",
+        "grape",
+        "weekend",
+        "young"
+      ],
+      "tags": [
+        "社区",
+        "道路安全"
+      ],
+      "all_required_keys_present": true,
+      "passage_entries_without_annotations": [],
+      "passage_has_outer_whitespace": false,
+      "finish_reasons": [
+        "stop"
+      ],
+      "usage": {
+        "prompt_tokens": 915,
+        "completion_tokens": 489,
+        "total_tokens": 1404
+      },
+      "review": {
+        "reviewer": "current assistant; not independent language expert or QA",
+        "original_entry_meanings_no_passage_role_tail": true,
+        "notes": [
+          "Original-entry Chinese definitions, usable hints and full-word enforced(enforce) annotation are valid in this repeat of case 3. Discussion contains a plausible safety debate, but shifts awkwardly to sugar/acid balance at the end and uses less natural phrases such as 'safety in the hillside roads' and 'grape fields'. Much longer than soft target."
+        ]
+      },
+      "db": {
+        "run_id": "01a08fc1-3112-7018-8009-e5e220030580",
+        "account_id": "01a08e5a-2250-7854-81df-5aeb26e7f461",
+        "model": "minimax/minimax-m3",
+        "status": "valid",
+        "quota_charged": true,
+        "counts_toward_cumulative": true,
+        "disposition": "pending",
+        "started_at": "2026-09-11T09:16:38.03406+00:00",
+        "draft_exists": true,
+        "word_count": 244
+      }
+    },
+    {
+      "case_id": 14,
+      "round": 2,
+      "reference_case_id": 4,
+      "pair_id": 2,
+      "group": "B",
+      "model_id": "01a07fe3-f046-7017-97f8-c15539050441",
+      "provider_model_id": "z-ai/glm-5.3-flash",
+      "meaning_language": "zh",
+      "scenario": "discussion",
+      "length": "medium",
+      "entries": [
+        "young",
+        "grape",
+        "weekend",
+        "danger",
+        "enforce"
+      ],
+      "started_at": "2026-09-11T09:16:45.193Z",
+      "status": "generation.validated",
+      "image": "sha256:1d88e8ce36ad5c687fc03e9251bd09bb3b1eefb75cb1549b518779f83ae25de5",
+      "http_status": 200,
+      "run_id": "01a08fc1-4d0f-7980-a11c-28800093898f",
+      "first_delta_ms": 17273,
+      "preview_equals_result": true,
+      "target_order_valid": true,
+      "target_count": 5,
+      "tag_count": 3,
+      "result_sha256": "372fe43874eaff2d7ce84c9da2bddd0c2eb98c2f205dbc473726a714d0d6e465",
+      "annotation_leaked": false,
+      "changed_form_occurrences": 0,
+      "repeated_passage_targets": 2,
+      "repeated_hint_targets": 0,
+      "positions_valid": true,
+      "duration_ms": 19721,
+      "passage_chars": 741,
+      "terminal_count": 1,
+      "evidence_id": "f02b3700-6374-454f-8645-275459ed0afc",
+      "request_id": "req_ZRN7LKMhjjACXV9mzxtHyg",
+      "fingerprint": {
+        "source_sha256": "8ee8c9d65194c554c85643e53427df59c48333bc5eeace2ba67c4e9899effcb8",
+        "binary_sha256": "87096259c7a0e295334cc0ee17f339f75ca71e0db7e55b4ca54b9ee4218e999b",
+        "template_sha256": "c90f55bab75ae8a1582b9694bfd8905fd8153be209ee3b9f971d98520a1904ab",
+        "schema_sha256": "f92bbdb51dbe66b2ac82be863297849e96924e255c730d13b48f8e8e6c8130f4",
+        "validator_sha256": "9be4cf758620a25b2ab22218e1f8bef2b3241b3570f0e8128bd41b30e50a0dc0",
+        "lexicon_sha256": "89e5b41dc8662780e443c10b5ecf81970944fc2b530d5f79372ac482ac744c0b"
+      },
+      "prompt_version": "m001-v5-r6",
+      "minimum_words": 100,
+      "soft_target_words": 120,
+      "expires_at": "2026-09-12T09:16:45.196800343Z",
+      "private_capture_complete": true,
+      "capture_state": {
+        "coalesced_progress": 300,
+        "dropped_records": 0,
+        "dropped_bytes": 0,
+        "truncated": false,
+        "io_failed": false,
+        "redacted": false,
+        "model_ended": true,
+        "unavailable": false
+      },
+      "model_end": {
+        "chunks": 99,
+        "bytes": 1575,
+        "redacted": false,
+        "unavailable": false
+      },
+      "first_failure": null,
+      "confirmed_outcome": "valid",
+      "stages": [
+        {
+          "stage": "request",
+          "state": "ok",
+          "duration_ms": 19718
+        },
+        {
+          "stage": "preflight",
+          "state": "ok",
+          "duration_ms": 4
+        },
+        {
+          "stage": "provider_open",
+          "state": "ok",
+          "duration_ms": 736
+        },
+        {
+          "stage": "provider_stream",
+          "state": "ok",
+          "duration_ms": 18971
+        },
+        {
+          "stage": "passage_decode",
+          "state": "ok",
+          "duration_ms": 2461
+        },
+        {
+          "stage": "candidate_decode",
+          "state": "ok",
+          "duration_ms": 1
+        },
+        {
+          "stage": "content_validate",
+          "state": "ok",
+          "duration_ms": 2
+        },
+        {
+          "stage": "draft_commit",
+          "state": "ok",
+          "duration_ms": 3
+        },
+        {
+          "stage": "settlement",
+          "state": "not_run",
+          "duration_ms": -1
+        },
+        {
+          "stage": "delivery",
+          "state": "ok",
+          "duration_ms": 18978
+        }
+      ],
+      "json_parse_error": null,
+      "clean_word_count": 119,
+      "paragraph_count": 1,
+      "target_keys": [
+        "danger",
+        "enforce",
+        "grape",
+        "weekend",
+        "young"
+      ],
+      "tags": [
+        "社区",
+        "安全",
+        "农事"
+      ],
+      "all_required_keys_present": true,
+      "passage_entries_without_annotations": [],
+      "passage_has_outer_whitespace": false,
+      "finish_reasons": [
+        "stop"
+      ],
+      "usage": {
+        "prompt_tokens": 753,
+        "completion_tokens": 2334,
+        "total_tokens": 3087
+      },
+      "review": {
+        "reviewer": "current assistant; not independent language expert or QA",
+        "original_entry_meanings_no_passage_role_tail": true,
+        "notes": [
+          "Coherent community discussion with a conclusion; original-entry Chinese definitions and natural hints. Repeated medium configuration reaches minimum in this sample, unlike case 4."
+        ]
+      },
+      "db": {
+        "run_id": "01a08fc1-4d0f-7980-a11c-28800093898f",
+        "account_id": "01a08e5a-2250-7854-81df-5aeb26e7f461",
+        "model": "z-ai/glm-5.3-flash",
+        "status": "valid",
+        "quota_charged": true,
+        "counts_toward_cumulative": true,
+        "disposition": "pending",
+        "started_at": "2026-09-11T09:16:45.199617+00:00",
+        "draft_exists": true,
+        "word_count": 119
+      }
+    },
+    {
+      "case_id": 15,
+      "round": 2,
+      "reference_case_id": 5,
+      "pair_id": 3,
+      "group": "C",
+      "model_id": "01a07fe3-5c48-736a-a86b-1f4dabd7cb87",
+      "provider_model_id": "minimax/minimax-m3",
+      "meaning_language": "en",
+      "scenario": "business",
+      "length": "short",
+      "entries": [
+        "alleviate",
+        "undermine",
+        "facilitate",
+        "deteriorate",
+        "perceive"
+      ],
+      "started_at": "2026-09-11T09:17:04.938Z",
+      "status": "generation.validated",
+      "image": "sha256:1d88e8ce36ad5c687fc03e9251bd09bb3b1eefb75cb1549b518779f83ae25de5",
+      "http_status": 200,
+      "run_id": "01a08fc1-9a35-7093-ac4c-e7a4440165c5",
+      "first_delta_ms": 3439,
+      "preview_equals_result": true,
+      "target_order_valid": true,
+      "target_count": 5,
+      "tag_count": 2,
+      "result_sha256": "45245d6ac49ccf066727756cdfb4fde7ddf61297f7f3326b695bcde8991a3a11",
+      "annotation_leaked": false,
+      "changed_form_occurrences": 0,
+      "repeated_passage_targets": 0,
+      "repeated_hint_targets": 0,
+      "positions_valid": true,
+      "duration_ms": 7202,
+      "passage_chars": 719,
+      "terminal_count": 1,
+      "evidence_id": "8672e429-4bfb-4388-a570-76574b3ed1d7",
+      "request_id": "req_xKsJzRcHiF5TFKUKgp6EVg",
+      "fingerprint": {
+        "source_sha256": "8ee8c9d65194c554c85643e53427df59c48333bc5eeace2ba67c4e9899effcb8",
+        "binary_sha256": "87096259c7a0e295334cc0ee17f339f75ca71e0db7e55b4ca54b9ee4218e999b",
+        "template_sha256": "c90f55bab75ae8a1582b9694bfd8905fd8153be209ee3b9f971d98520a1904ab",
+        "schema_sha256": "f92bbdb51dbe66b2ac82be863297849e96924e255c730d13b48f8e8e6c8130f4",
+        "validator_sha256": "9be4cf758620a25b2ab22218e1f8bef2b3241b3570f0e8128bd41b30e50a0dc0",
+        "lexicon_sha256": "89e5b41dc8662780e443c10b5ecf81970944fc2b530d5f79372ac482ac744c0b"
+      },
+      "prompt_version": "m001-v5-r6",
+      "minimum_words": 50,
+      "soft_target_words": 60,
+      "expires_at": "2026-09-12T09:17:04.945518796Z",
+      "private_capture_complete": true,
+      "capture_state": {
+        "coalesced_progress": 76,
+        "dropped_records": 0,
+        "dropped_bytes": 0,
+        "truncated": false,
+        "io_failed": false,
+        "redacted": false,
+        "model_ended": true,
+        "unavailable": false
+      },
+      "model_end": {
+        "chunks": 25,
+        "bytes": 1686,
+        "redacted": false,
+        "unavailable": false
+      },
+      "first_failure": null,
+      "confirmed_outcome": "valid",
+      "stages": [
+        {
+          "stage": "request",
+          "state": "ok",
+          "duration_ms": 7193
+        },
+        {
+          "stage": "preflight",
+          "state": "ok",
+          "duration_ms": 5
+        },
+        {
+          "stage": "provider_open",
+          "state": "ok",
+          "duration_ms": 2563
+        },
+        {
+          "stage": "provider_stream",
+          "state": "ok",
+          "duration_ms": 4610
+        },
+        {
+          "stage": "passage_decode",
+          "state": "ok",
+          "duration_ms": 4615
+        },
+        {
+          "stage": "candidate_decode",
+          "state": "ok",
+          "duration_ms": 6
+        },
+        {
+          "stage": "content_validate",
+          "state": "ok",
+          "duration_ms": 3
+        },
+        {
+          "stage": "draft_commit",
+          "state": "ok",
+          "duration_ms": 4
+        },
+        {
+          "stage": "settlement",
+          "state": "not_run",
+          "duration_ms": -1
+        },
+        {
+          "stage": "delivery",
+          "state": "ok",
+          "duration_ms": 4624
+        }
+      ],
+      "json_parse_error": null,
+      "clean_word_count": 105,
+      "paragraph_count": 1,
+      "target_keys": [
+        "alleviate",
+        "deteriorate",
+        "facilitate",
+        "perceive",
+        "undermine"
+      ],
+      "tags": [
+        "management",
+        "workplace culture"
+      ],
+      "all_required_keys_present": true,
+      "passage_entries_without_annotations": [],
+      "passage_has_outer_whitespace": false,
+      "finish_reasons": [
+        "stop"
+      ],
+      "usage": {
+        "prompt_tokens": 933,
+        "completion_tokens": 387,
+        "total_tokens": 1320
+      },
+      "review": {
+        "reviewer": "current assistant; not independent language expert or QA",
+        "original_entry_meanings_no_passage_role_tail": true,
+        "notes": [
+          "Coherent business advice paragraph and original-entry English definitions. All hints are compact collocations; 'sustainable' is ordinary unrestricted vocabulary here, not an input target. Still above the short soft target."
+        ]
+      },
+      "db": {
+        "run_id": "01a08fc1-9a35-7093-ac4c-e7a4440165c5",
+        "account_id": "01a08e5a-2250-7854-81df-5aeb26e7f461",
+        "model": "minimax/minimax-m3",
+        "status": "valid",
+        "quota_charged": true,
+        "counts_toward_cumulative": true,
+        "disposition": "pending",
+        "started_at": "2026-09-11T09:17:04.949087+00:00",
+        "draft_exists": true,
+        "word_count": 105
+      }
+    },
+    {
+      "case_id": 16,
+      "round": 2,
+      "reference_case_id": 6,
+      "pair_id": 3,
+      "group": "C",
+      "model_id": "01a07fe3-f046-7017-97f8-c15539050441",
+      "provider_model_id": "z-ai/glm-5.3-flash",
+      "meaning_language": "en",
+      "scenario": "business",
+      "length": "short",
+      "entries": [
+        "alleviate",
+        "undermine",
+        "facilitate",
+        "deteriorate",
+        "perceive"
+      ],
+      "started_at": "2026-09-11T09:17:21.737Z",
+      "status": "generation.validated",
+      "image": "sha256:1d88e8ce36ad5c687fc03e9251bd09bb3b1eefb75cb1549b518779f83ae25de5",
+      "http_status": 200,
+      "run_id": "01a08fc1-dbd1-78f1-ae64-33a89148defd",
+      "first_delta_ms": 13739,
+      "preview_equals_result": true,
+      "target_order_valid": true,
+      "target_count": 5,
+      "tag_count": 2,
+      "result_sha256": "fa60981ab23dea324bcfb7dd04bd47ddebf836905ae89037c53fc34a975d22e8",
+      "annotation_leaked": false,
+      "changed_form_occurrences": 0,
+      "repeated_passage_targets": 0,
+      "repeated_hint_targets": 0,
+      "positions_valid": true,
+      "duration_ms": 17223,
+      "passage_chars": 511,
+      "terminal_count": 1,
+      "evidence_id": "5c0dfc3e-4840-4741-bbf9-d4ad9585c3de",
+      "request_id": "req_XfVMMDsfukrgpz3aU7oMmg",
+      "fingerprint": {
+        "source_sha256": "8ee8c9d65194c554c85643e53427df59c48333bc5eeace2ba67c4e9899effcb8",
+        "binary_sha256": "87096259c7a0e295334cc0ee17f339f75ca71e0db7e55b4ca54b9ee4218e999b",
+        "template_sha256": "c90f55bab75ae8a1582b9694bfd8905fd8153be209ee3b9f971d98520a1904ab",
+        "schema_sha256": "f92bbdb51dbe66b2ac82be863297849e96924e255c730d13b48f8e8e6c8130f4",
+        "validator_sha256": "9be4cf758620a25b2ab22218e1f8bef2b3241b3570f0e8128bd41b30e50a0dc0",
+        "lexicon_sha256": "89e5b41dc8662780e443c10b5ecf81970944fc2b530d5f79372ac482ac744c0b"
+      },
+      "prompt_version": "m001-v5-r6",
+      "minimum_words": 50,
+      "soft_target_words": 60,
+      "expires_at": "2026-09-12T09:17:21.742542221Z",
+      "private_capture_complete": true,
+      "capture_state": {
+        "coalesced_progress": 315,
+        "dropped_records": 0,
+        "dropped_bytes": 0,
+        "truncated": false,
+        "io_failed": false,
+        "redacted": false,
+        "model_ended": true,
+        "unavailable": false
+      },
+      "model_end": {
+        "chunks": 104,
+        "bytes": 1693,
+        "redacted": false,
+        "unavailable": false
+      },
+      "first_failure": null,
+      "confirmed_outcome": "valid",
+      "stages": [
+        {
+          "stage": "request",
+          "state": "ok",
+          "duration_ms": 17221
+        },
+        {
+          "stage": "preflight",
+          "state": "ok",
+          "duration_ms": 4
+        },
+        {
+          "stage": "provider_open",
+          "state": "ok",
+          "duration_ms": 958
+        },
+        {
+          "stage": "provider_stream",
+          "state": "ok",
+          "duration_ms": 16249
+        },
+        {
+          "stage": "passage_decode",
+          "state": "ok",
+          "duration_ms": 3479
+        },
+        {
+          "stage": "candidate_decode",
+          "state": "ok",
+          "duration_ms": 2
+        },
+        {
+          "stage": "content_validate",
+          "state": "ok",
+          "duration_ms": 4
+        },
+        {
+          "stage": "draft_commit",
+          "state": "ok",
+          "duration_ms": 2
+        },
+        {
+          "stage": "settlement",
+          "state": "not_run",
+          "duration_ms": -1
+        },
+        {
+          "stage": "delivery",
+          "state": "ok",
+          "duration_ms": 16258
+        }
+      ],
+      "json_parse_error": null,
+      "clean_word_count": 71,
+      "paragraph_count": 1,
+      "target_keys": [
+        "alleviate",
+        "deteriorate",
+        "facilitate",
+        "perceive",
+        "undermine"
+      ],
+      "tags": [
+        "workplace morale",
+        "business communication"
+      ],
+      "all_required_keys_present": true,
+      "passage_entries_without_annotations": [],
+      "passage_has_outer_whitespace": false,
+      "finish_reasons": [
+        "stop"
+      ],
+      "usage": {
+        "prompt_tokens": 774,
+        "completion_tokens": 1664,
+        "total_tokens": 2438
+      },
+      "review": {
+        "reviewer": "current assistant; not independent language expert or QA",
+        "original_entry_meanings_no_passage_role_tail": true,
+        "notes": [
+          "Complete compact business passage, original-entry English definitions and natural short collocations. Repeats the office-morale/open-meetings pattern seen in case 6 and prior r6 samples; lexical setup diversity remains limited. No literal nn artifact."
+        ]
+      },
+      "db": {
+        "run_id": "01a08fc1-dbd1-78f1-ae64-33a89148defd",
+        "account_id": "01a08e5a-2250-7854-81df-5aeb26e7f461",
+        "model": "z-ai/glm-5.3-flash",
+        "status": "valid",
+        "quota_charged": true,
+        "counts_toward_cumulative": true,
+        "disposition": "pending",
+        "started_at": "2026-09-11T09:17:21.745583+00:00",
+        "draft_exists": true,
+        "word_count": 71
+      }
+    },
+    {
+      "case_id": 17,
+      "round": 2,
+      "reference_case_id": 7,
+      "pair_id": 4,
+      "group": "D",
+      "model_id": "01a07fe3-5c48-736a-a86b-1f4dabd7cb87",
+      "provider_model_id": "minimax/minimax-m3",
+      "meaning_language": "ja",
+      "scenario": "news",
+      "length": "long",
+      "entries": [
+        "sustainable",
+        "prevalent",
+        "vulnerable",
+        "ambiguous",
+        "coherent"
+      ],
+      "started_at": "2026-09-11T09:17:38.998Z",
+      "status": "generation.validated",
+      "image": "sha256:1d88e8ce36ad5c687fc03e9251bd09bb3b1eefb75cb1549b518779f83ae25de5",
+      "http_status": 200,
+      "run_id": "01a08fc2-1f3b-7db8-8b4b-6e5d78dc4538",
+      "first_delta_ms": 802,
+      "preview_equals_result": true,
+      "target_order_valid": true,
+      "target_count": 5,
+      "tag_count": 3,
+      "result_sha256": "1eb1e50dbb875af831cc07bcf116c6e0ade4f41a1f2ca767e3642e6ee75cee3d",
+      "annotation_leaked": false,
+      "changed_form_occurrences": 0,
+      "repeated_passage_targets": 1,
+      "repeated_hint_targets": 0,
+      "positions_valid": true,
+      "duration_ms": 11323,
+      "passage_chars": 2485,
+      "terminal_count": 1,
+      "evidence_id": "77440a29-2288-419b-ad7f-7b0f82e89645",
+      "request_id": "req_H_1ZT5lu5v7xb7gfUk5VtA",
+      "fingerprint": {
+        "source_sha256": "8ee8c9d65194c554c85643e53427df59c48333bc5eeace2ba67c4e9899effcb8",
+        "binary_sha256": "87096259c7a0e295334cc0ee17f339f75ca71e0db7e55b4ca54b9ee4218e999b",
+        "template_sha256": "c90f55bab75ae8a1582b9694bfd8905fd8153be209ee3b9f971d98520a1904ab",
+        "schema_sha256": "f92bbdb51dbe66b2ac82be863297849e96924e255c730d13b48f8e8e6c8130f4",
+        "validator_sha256": "9be4cf758620a25b2ab22218e1f8bef2b3241b3570f0e8128bd41b30e50a0dc0",
+        "lexicon_sha256": "89e5b41dc8662780e443c10b5ecf81970944fc2b530d5f79372ac482ac744c0b"
+      },
+      "prompt_version": "m001-v5-r6",
+      "minimum_words": 200,
+      "soft_target_words": 240,
+      "expires_at": "2026-09-12T09:17:39.00136284Z",
+      "private_capture_complete": true,
+      "capture_state": {
+        "coalesced_progress": 187,
+        "dropped_records": 0,
+        "dropped_bytes": 0,
+        "truncated": false,
+        "io_failed": false,
+        "redacted": false,
+        "model_ended": true,
+        "unavailable": false
+      },
+      "model_end": {
+        "chunks": 62,
+        "bytes": 3654,
+        "redacted": false,
+        "unavailable": false
+      },
+      "first_failure": null,
+      "confirmed_outcome": "valid",
+      "stages": [
+        {
+          "stage": "request",
+          "state": "ok",
+          "duration_ms": 11319
+        },
+        {
+          "stage": "preflight",
+          "state": "ok",
+          "duration_ms": 4
+        },
+        {
+          "stage": "provider_open",
+          "state": "ok",
+          "duration_ms": 663
+        },
+        {
+          "stage": "provider_stream",
+          "state": "ok",
+          "duration_ms": 10646
+        },
+        {
+          "stage": "passage_decode",
+          "state": "ok",
+          "duration_ms": 10646
+        },
+        {
+          "stage": "candidate_decode",
+          "state": "ok",
+          "duration_ms": 1
+        },
+        {
+          "stage": "content_validate",
+          "state": "ok",
+          "duration_ms": 2
+        },
+        {
+          "stage": "draft_commit",
+          "state": "ok",
+          "duration_ms": 2
+        },
+        {
+          "stage": "settlement",
+          "state": "not_run",
+          "duration_ms": -1
+        },
+        {
+          "stage": "delivery",
+          "state": "ok",
+          "duration_ms": 10652
+        }
+      ],
+      "json_parse_error": null,
+      "clean_word_count": 378,
+      "paragraph_count": 1,
+      "target_keys": [
+        "ambiguous",
+        "coherent",
+        "prevalent",
+        "sustainable",
+        "vulnerable"
+      ],
+      "tags": [
+        "サステナビリティ",
+        "サプライチェーン",
+        "調査報道"
+      ],
+      "all_required_keys_present": true,
+      "passage_entries_without_annotations": [],
+      "passage_has_outer_whitespace": false,
+      "finish_reasons": [
+        "stop"
+      ],
+      "usage": {
+        "prompt_tokens": 926,
+        "completion_tokens": 699,
+        "total_tokens": 1625
+      },
+      "review": {
+        "reviewer": "current assistant; not independent language expert or QA",
+        "original_entry_meanings_no_passage_role_tail": true,
+        "notes": [
+          "Coherent untitled news-style article on supply chains, different topic from the first news round. Original-entry Japanese meanings, relevant tags and usable hints. Long single paragraph and above the soft target."
+        ]
+      },
+      "db": {
+        "run_id": "01a08fc2-1f3b-7db8-8b4b-6e5d78dc4538",
+        "account_id": "01a08e5a-2250-7854-81df-5aeb26e7f461",
+        "model": "minimax/minimax-m3",
+        "status": "valid",
+        "quota_charged": true,
+        "counts_toward_cumulative": true,
+        "disposition": "pending",
+        "started_at": "2026-09-11T09:17:39.003881+00:00",
+        "draft_exists": true,
+        "word_count": 378
+      }
+    },
+    {
+      "case_id": 18,
+      "round": 2,
+      "reference_case_id": 8,
+      "pair_id": 4,
+      "group": "D",
+      "model_id": "01a07fe3-f046-7017-97f8-c15539050441",
+      "provider_model_id": "z-ai/glm-5.3-flash",
+      "meaning_language": "ja",
+      "scenario": "news",
+      "length": "long",
+      "entries": [
+        "sustainable",
+        "prevalent",
+        "vulnerable",
+        "ambiguous",
+        "coherent"
+      ],
+      "started_at": "2026-09-11T09:17:50.340Z",
+      "status": "generation.failed",
+      "image": "sha256:1d88e8ce36ad5c687fc03e9251bd09bb3b1eefb75cb1549b518779f83ae25de5",
+      "http_status": 200,
+      "run_id": "01a08fc2-4b8a-71d7-ad5a-938dab664b1e",
+      "first_delta_ms": 22364,
+      "code": "content_validation_failed",
+      "quota_refunded": true,
+      "duration_ms": 26034,
+      "passage_chars": 469,
+      "terminal_count": 1,
+      "evidence_id": "1649c288-0a9c-4138-9021-63f033300b13",
+      "request_id": "req_VZB6MURRxkx-eZs9_Tz7aw",
+      "fingerprint": {
+        "source_sha256": "8ee8c9d65194c554c85643e53427df59c48333bc5eeace2ba67c4e9899effcb8",
+        "binary_sha256": "87096259c7a0e295334cc0ee17f339f75ca71e0db7e55b4ca54b9ee4218e999b",
+        "template_sha256": "c90f55bab75ae8a1582b9694bfd8905fd8153be209ee3b9f971d98520a1904ab",
+        "schema_sha256": "f92bbdb51dbe66b2ac82be863297849e96924e255c730d13b48f8e8e6c8130f4",
+        "validator_sha256": "9be4cf758620a25b2ab22218e1f8bef2b3241b3570f0e8128bd41b30e50a0dc0",
+        "lexicon_sha256": "89e5b41dc8662780e443c10b5ecf81970944fc2b530d5f79372ac482ac744c0b"
+      },
+      "prompt_version": "m001-v5-r6",
+      "minimum_words": 200,
+      "soft_target_words": 240,
+      "expires_at": "2026-09-12T09:17:50.34384672Z",
+      "private_capture_complete": true,
+      "capture_state": {
+        "coalesced_progress": 330,
+        "dropped_records": 0,
+        "dropped_bytes": 0,
+        "truncated": false,
+        "io_failed": false,
+        "redacted": false,
+        "model_ended": true,
+        "unavailable": false
+      },
+      "model_end": {
+        "chunks": 109,
+        "bytes": 1538,
+        "redacted": false,
+        "unavailable": false
+      },
+      "first_failure": {
+        "stage": "content_validate",
+        "state": "failed",
+        "begin_ms": 26028,
+        "end_ms": 26028,
+        "duration_ms": 0,
+        "check": "word_count",
+        "detail": {
+          "reason": "passage_too_short",
+          "field": "passage",
+          "target_index": -1,
+          "actual": 74,
+          "limit": 200,
+          "byte_start": -1,
+          "byte_end": -1,
+          "expected_type": "",
+          "actual_type": ""
+        }
+      },
+      "confirmed_outcome": "failed",
+      "stages": [
+        {
+          "stage": "request",
+          "state": "ok",
+          "duration_ms": 26031
+        },
+        {
+          "stage": "preflight",
+          "state": "ok",
+          "duration_ms": 3
+        },
+        {
+          "stage": "provider_open",
+          "state": "ok",
+          "duration_ms": 697
+        },
+        {
+          "stage": "provider_stream",
+          "state": "ok",
+          "duration_ms": 25327
+        },
+        {
+          "stage": "passage_decode",
+          "state": "ok",
+          "duration_ms": 3668
+        },
+        {
+          "stage": "candidate_decode",
+          "state": "ok",
+          "duration_ms": 1
+        },
+        {
+          "stage": "content_validate",
+          "state": "failed",
+          "duration_ms": 0
+        },
+        {
+          "stage": "draft_commit",
+          "state": "not_run",
+          "duration_ms": -1
+        },
+        {
+          "stage": "settlement",
+          "state": "ok",
+          "duration_ms": 3
+        },
+        {
+          "stage": "delivery",
+          "state": "ok",
+          "duration_ms": 25331
+        }
+      ],
+      "json_parse_error": null,
+      "clean_word_count": 74,
+      "paragraph_count": 1,
+      "target_keys": [
+        "ambiguous",
+        "coherent",
+        "prevalent",
+        "sustainable",
+        "vulnerable"
+      ],
+      "tags": [
+        "気候変動と防災",
+        "地域社会",
+        "公共政策"
+      ],
+      "all_required_keys_present": true,
+      "passage_entries_without_annotations": [
+        "prevalent",
+        "vulnerable",
+        "ambiguous",
+        "coherent"
+      ],
+      "passage_has_outer_whitespace": false,
+      "finish_reasons": [
+        "stop"
+      ],
+      "usage": {
+        "prompt_tokens": 778,
+        "completion_tokens": 3046,
+        "total_tokens": 3824
+      },
+      "review": {
+        "reviewer": "current assistant; not independent language expert or QA",
+        "original_entry_meanings_no_passage_role_tail": true,
+        "notes": [
+          "First failure passage_too_short: 74/200 words. Raw passage contains only sustainable and omits ambiguous/coherent/prevalent/vulnerable, while the five target entries are all present in the JSON. Original-entry Japanese meanings and short hints are appropriate."
+        ]
+      },
+      "db": {
+        "run_id": "01a08fc2-4b8a-71d7-ad5a-938dab664b1e",
+        "account_id": "01a08e5a-2250-7854-81df-5aeb26e7f461",
+        "model": "z-ai/glm-5.3-flash",
+        "status": "validation_failed",
+        "quota_charged": false,
+        "counts_toward_cumulative": false,
+        "disposition": "pending",
+        "started_at": "2026-09-11T09:17:50.346136+00:00",
+        "draft_exists": false,
+        "word_count": null
+      }
+    },
+    {
+      "case_id": 19,
+      "round": 2,
+      "reference_case_id": 9,
+      "pair_id": 5,
+      "group": "D",
+      "model_id": "01a07fe3-5c48-736a-a86b-1f4dabd7cb87",
+      "provider_model_id": "minimax/minimax-m3",
+      "meaning_language": "en",
+      "scenario": "story",
+      "length": "xlong",
+      "entries": [
+        "sustainable",
+        "prevalent",
+        "vulnerable",
+        "ambiguous",
+        "coherent"
+      ],
+      "started_at": "2026-09-11T09:18:16.397Z",
+      "status": "generation.validated",
+      "image": "sha256:1d88e8ce36ad5c687fc03e9251bd09bb3b1eefb75cb1549b518779f83ae25de5",
+      "http_status": 200,
+      "run_id": "01a08fc2-b154-7e87-9cf5-98dc1b606d76",
+      "first_delta_ms": 729,
+      "preview_equals_result": true,
+      "target_order_valid": true,
+      "target_count": 5,
+      "tag_count": 3,
+      "result_sha256": "5384b1c2b0ed6715c49d15a443db489b04f23646637b2f379314b7d0dbdf60ab",
+      "annotation_leaked": false,
+      "changed_form_occurrences": 1,
+      "repeated_passage_targets": 3,
+      "repeated_hint_targets": 0,
+      "positions_valid": true,
+      "duration_ms": 17435,
+      "passage_chars": 4948,
+      "terminal_count": 1,
+      "evidence_id": "c6ff533d-c373-4c33-a361-4779c91dbdd9",
+      "request_id": "req_SwfblLnRK-Aamfudl-Kvvw",
+      "fingerprint": {
+        "source_sha256": "8ee8c9d65194c554c85643e53427df59c48333bc5eeace2ba67c4e9899effcb8",
+        "binary_sha256": "87096259c7a0e295334cc0ee17f339f75ca71e0db7e55b4ca54b9ee4218e999b",
+        "template_sha256": "c90f55bab75ae8a1582b9694bfd8905fd8153be209ee3b9f971d98520a1904ab",
+        "schema_sha256": "f92bbdb51dbe66b2ac82be863297849e96924e255c730d13b48f8e8e6c8130f4",
+        "validator_sha256": "9be4cf758620a25b2ab22218e1f8bef2b3241b3570f0e8128bd41b30e50a0dc0",
+        "lexicon_sha256": "89e5b41dc8662780e443c10b5ecf81970944fc2b530d5f79372ac482ac744c0b"
+      },
+      "prompt_version": "m001-v5-r6",
+      "minimum_words": 400,
+      "soft_target_words": 480,
+      "expires_at": "2026-09-12T09:18:16.401442802Z",
+      "private_capture_complete": true,
+      "capture_state": {
+        "coalesced_progress": 331,
+        "dropped_records": 0,
+        "dropped_bytes": 0,
+        "truncated": false,
+        "io_failed": false,
+        "redacted": false,
+        "model_ended": true,
+        "unavailable": false
+      },
+      "model_end": {
+        "chunks": 110,
+        "bytes": 5855,
+        "redacted": false,
+        "unavailable": false
+      },
+      "first_failure": null,
+      "confirmed_outcome": "valid",
+      "stages": [
+        {
+          "stage": "request",
+          "state": "ok",
+          "duration_ms": 17432
+        },
+        {
+          "stage": "preflight",
+          "state": "ok",
+          "duration_ms": 5
+        },
+        {
+          "stage": "provider_open",
+          "state": "ok",
+          "duration_ms": 588
+        },
+        {
+          "stage": "provider_stream",
+          "state": "ok",
+          "duration_ms": 16830
+        },
+        {
+          "stage": "passage_decode",
+          "state": "ok",
+          "duration_ms": 16831
+        },
+        {
+          "stage": "candidate_decode",
+          "state": "ok",
+          "duration_ms": 1
+        },
+        {
+          "stage": "content_validate",
+          "state": "ok",
+          "duration_ms": 3
+        },
+        {
+          "stage": "draft_commit",
+          "state": "ok",
+          "duration_ms": 3
+        },
+        {
+          "stage": "settlement",
+          "state": "not_run",
+          "duration_ms": -1
+        },
+        {
+          "stage": "delivery",
+          "state": "ok",
+          "duration_ms": 16837
+        }
+      ],
+      "json_parse_error": null,
+      "clean_word_count": 879,
+      "paragraph_count": 1,
+      "target_keys": [
+        "ambiguous",
+        "coherent",
+        "prevalent",
+        "sustainable",
+        "vulnerable"
+      ],
+      "tags": [
+        "environment",
+        "journalism",
+        "coastal life"
+      ],
+      "all_required_keys_present": true,
+      "passage_entries_without_annotations": [],
+      "passage_has_outer_whitespace": false,
+      "finish_reasons": [
+        "stop"
+      ],
+      "usage": {
+        "prompt_tokens": 930,
+        "completion_tokens": 1236,
+        "total_tokens": 2166
+      },
+      "review": {
+        "reviewer": "current assistant; not independent language expert or QA",
+        "original_entry_meanings_no_passage_role_tail": true,
+        "notes": [
+          "Complete reflective long story; original-entry English definitions and natural compact hints. Coherent narrative but substantially over the soft target and a single very dense paragraph."
+        ]
+      },
+      "db": {
+        "run_id": "01a08fc2-b154-7e87-9cf5-98dc1b606d76",
+        "account_id": "01a08e5a-2250-7854-81df-5aeb26e7f461",
+        "model": "minimax/minimax-m3",
+        "status": "valid",
+        "quota_charged": true,
+        "counts_toward_cumulative": true,
+        "disposition": "pending",
+        "started_at": "2026-09-11T09:18:16.404933+00:00",
+        "draft_exists": true,
+        "word_count": 879
+      }
+    },
+    {
+      "case_id": 20,
+      "round": 2,
+      "reference_case_id": 10,
+      "pair_id": 5,
+      "group": "D",
+      "model_id": "01a07fe3-f046-7017-97f8-c15539050441",
+      "provider_model_id": "z-ai/glm-5.3-flash",
+      "meaning_language": "en",
+      "scenario": "story",
+      "length": "xlong",
+      "entries": [
+        "sustainable",
+        "prevalent",
+        "vulnerable",
+        "ambiguous",
+        "coherent"
+      ],
+      "started_at": "2026-09-11T09:18:33.855Z",
+      "status": "generation.validated",
+      "image": "sha256:1d88e8ce36ad5c687fc03e9251bd09bb3b1eefb75cb1549b518779f83ae25de5",
+      "http_status": 200,
+      "run_id": "01a08fc2-f58e-7634-925d-5c74df0b9f0e",
+      "first_delta_ms": 44571,
+      "preview_equals_result": true,
+      "target_order_valid": true,
+      "target_count": 5,
+      "tag_count": 3,
+      "result_sha256": "ee4ab508b933eed8c78cc10dbd2188db611b07bb9a513785f17b99db0c4959f8",
+      "annotation_leaked": false,
+      "changed_form_occurrences": 0,
+      "repeated_passage_targets": 4,
+      "repeated_hint_targets": 0,
+      "positions_valid": true,
+      "duration_ms": 55056,
+      "passage_chars": 2961,
+      "terminal_count": 1,
+      "evidence_id": "6a9ec899-d087-4c17-8f06-df9542d3cf11",
+      "request_id": "req_hOJ3hgqpzre6bcW5prf1Ow",
+      "fingerprint": {
+        "source_sha256": "8ee8c9d65194c554c85643e53427df59c48333bc5eeace2ba67c4e9899effcb8",
+        "binary_sha256": "87096259c7a0e295334cc0ee17f339f75ca71e0db7e55b4ca54b9ee4218e999b",
+        "template_sha256": "c90f55bab75ae8a1582b9694bfd8905fd8153be209ee3b9f971d98520a1904ab",
+        "schema_sha256": "f92bbdb51dbe66b2ac82be863297849e96924e255c730d13b48f8e8e6c8130f4",
+        "validator_sha256": "9be4cf758620a25b2ab22218e1f8bef2b3241b3570f0e8128bd41b30e50a0dc0",
+        "lexicon_sha256": "89e5b41dc8662780e443c10b5ecf81970944fc2b530d5f79372ac482ac744c0b"
+      },
+      "prompt_version": "m001-v5-r6",
+      "minimum_words": 400,
+      "soft_target_words": 480,
+      "expires_at": "2026-09-12T09:18:33.864514254Z",
+      "private_capture_complete": true,
+      "capture_state": {
+        "coalesced_progress": 675,
+        "dropped_records": 0,
+        "dropped_bytes": 0,
+        "truncated": false,
+        "io_failed": false,
+        "redacted": false,
+        "model_ended": true,
+        "unavailable": false
+      },
+      "model_end": {
+        "chunks": 224,
+        "bytes": 4185,
+        "redacted": false,
+        "unavailable": false
+      },
+      "first_failure": null,
+      "confirmed_outcome": "valid",
+      "stages": [
+        {
+          "stage": "request",
+          "state": "ok",
+          "duration_ms": 55048
+        },
+        {
+          "stage": "preflight",
+          "state": "ok",
+          "duration_ms": 6
+        },
+        {
+          "stage": "provider_open",
+          "state": "ok",
+          "duration_ms": 602
+        },
+        {
+          "stage": "provider_stream",
+          "state": "ok",
+          "duration_ms": 54427
+        },
+        {
+          "stage": "passage_decode",
+          "state": "ok",
+          "duration_ms": 10675
+        },
+        {
+          "stage": "candidate_decode",
+          "state": "ok",
+          "duration_ms": 3
+        },
+        {
+          "stage": "content_validate",
+          "state": "ok",
+          "duration_ms": 2
+        },
+        {
+          "stage": "draft_commit",
+          "state": "ok",
+          "duration_ms": 4
+        },
+        {
+          "stage": "settlement",
+          "state": "not_run",
+          "duration_ms": -1
+        },
+        {
+          "stage": "delivery",
+          "state": "ok",
+          "duration_ms": 54438
+        }
+      ],
+      "json_parse_error": null,
+      "clean_word_count": 496,
+      "paragraph_count": 1,
+      "target_keys": [
+        "ambiguous",
+        "coherent",
+        "prevalent",
+        "sustainable",
+        "vulnerable"
+      ],
+      "tags": [
+        "environment",
+        "community",
+        "local government"
+      ],
+      "all_required_keys_present": true,
+      "passage_entries_without_annotations": [],
+      "passage_has_outer_whitespace": false,
+      "finish_reasons": [
+        "stop"
+      ],
+      "usage": {
+        "prompt_tokens": 770,
+        "completion_tokens": 5721,
+        "total_tokens": 6491
+      },
+      "review": {
+        "reviewer": "current assistant; not independent language expert or QA",
+        "original_entry_meanings_no_passage_role_tail": true,
+        "notes": [
+          "Complete coherent long story with every target, original-entry English meanings and natural hints. Still one dense paragraph.",
+          "Repeats the coastal-return/council-plan arc seen in prior GLM r6 stories; diversity is a quality observation, not a newly imposed acceptance rule."
+        ]
+      },
+      "db": {
+        "run_id": "01a08fc2-f58e-7634-925d-5c74df0b9f0e",
+        "account_id": "01a08e5a-2250-7854-81df-5aeb26e7f461",
+        "model": "z-ai/glm-5.3-flash",
+        "status": "valid",
+        "quota_charged": true,
+        "counts_toward_cumulative": true,
+        "disposition": "pending",
+        "started_at": "2026-09-11T09:18:33.870416+00:00",
+        "draft_exists": true,
+        "word_count": 496
+      }
+    }
+  ],
+  "ledger": "/tmp/wordweave-prose-20.YzqUy4/calls.json",
+  "evidence_retention": "Existing private backend tmpfs only, approved latest 50 bundles / maximum 24 hours. No restart, new raw export, retention extension or deletion this round. This report stores summaries/metadata/digests and short excerpts, not full raw outputs or credentials.",
+  "limitations": [
+    "Fixed repeated configurations, not a representative random sample; do not infer long-run reliability from 30 attempts.",
+    "This tests unchanged r6, not a new optimization; no causality claim about prompt vs other provider behavior.",
+    "Reported usage lacks reasoning/cache-hit and monetary billing breakdown.",
+    "No independent QA/UAT, full-site regression, permanent library save or review-session test."
+  ],
+  "references": {
+    "prior_r6": "../prose-prompt-10-20260911/results.json",
+    "offline": "../prose-prompt-r6-20260911/verification.json",
+    "pre_test_snapshot": "pre-test.json"
+  }
+}

@@ -1,0 +1,552 @@
+{
+  "date": "2026-09-07T03:34:31.420Z",
+  "agent": "qa-quinn",
+  "counts": {
+    "PASS": 63,
+    "FAIL": 5,
+    "ERROR": 0
+  },
+  "checks": [
+    {
+      "id": "admin login",
+      "status": "PASS",
+      "actual": 200,
+      "expected": 200
+    },
+    {
+      "id": "synthetic credential configure status",
+      "status": "PASS",
+      "actual": 200,
+      "expected": 200
+    },
+    {
+      "id": "synthetic credential configure cache-control",
+      "status": "PASS",
+      "actual": "no-store",
+      "expected": "no-store"
+    },
+    {
+      "id": "credential response does not echo key",
+      "status": "PASS",
+      "actual": false,
+      "expected": false
+    },
+    {
+      "id": "synthetic model create status",
+      "status": "PASS",
+      "actual": 201,
+      "expected": 201
+    },
+    {
+      "id": "synthetic model create cache-control",
+      "status": "PASS",
+      "actual": "no-store",
+      "expected": "no-store"
+    },
+    {
+      "id": "synthetic model enable status",
+      "status": "PASS",
+      "actual": 200,
+      "expected": 200
+    },
+    {
+      "id": "synthetic model enable cache-control",
+      "status": "PASS",
+      "actual": "no-store",
+      "expected": "no-store"
+    },
+    {
+      "id": "basic group synthetic model status",
+      "status": "PASS",
+      "actual": 200,
+      "expected": 200
+    },
+    {
+      "id": "basic group synthetic model cache-control",
+      "status": "PASS",
+      "actual": "no-store",
+      "expected": "no-store"
+    },
+    {
+      "id": "learner register",
+      "status": "PASS",
+      "actual": 201,
+      "expected": 201
+    },
+    {
+      "id": "other learner session",
+      "status": "PASS",
+      "actual": 200,
+      "expected": 200
+    },
+    {
+      "id": "401 unauthenticated password status",
+      "status": "PASS",
+      "actual": 401,
+      "expected": 401
+    },
+    {
+      "id": "401 unauthenticated password cache-control",
+      "status": "PASS",
+      "actual": "no-store",
+      "expected": "no-store"
+    },
+    {
+      "id": "403 missing csrf logout status",
+      "status": "PASS",
+      "actual": 403,
+      "expected": 403
+    },
+    {
+      "id": "403 missing csrf logout cache-control",
+      "status": "PASS",
+      "actual": "no-store",
+      "expected": "no-store"
+    },
+    {
+      "id": "400 malformed logout status",
+      "status": "PASS",
+      "actual": 400,
+      "expected": 400
+    },
+    {
+      "id": "400 malformed logout cache-control",
+      "status": "PASS",
+      "actual": "no-store",
+      "expected": "no-store"
+    },
+    {
+      "id": "422 wrong current password status",
+      "status": "PASS",
+      "actual": 422,
+      "expected": 422
+    },
+    {
+      "id": "422 wrong current password cache-control",
+      "status": "PASS",
+      "actual": "no-store",
+      "expected": "no-store"
+    },
+    {
+      "id": "422 safe normalized code",
+      "status": "PASS",
+      "actual": "validation_failed",
+      "expected": "validation_failed"
+    },
+    {
+      "id": "422 does not echo credentials",
+      "status": "PASS",
+      "actual": false,
+      "expected": false
+    },
+    {
+      "id": "negative requests preserve second session",
+      "status": "PASS",
+      "actual": 200,
+      "expected": 200
+    },
+    {
+      "id": "logout user register",
+      "status": "PASS",
+      "actual": 201,
+      "expected": 201
+    },
+    {
+      "id": "consumer logout status",
+      "status": "PASS",
+      "actual": 204,
+      "expected": 204
+    },
+    {
+      "id": "consumer logout body bytes",
+      "status": "PASS",
+      "actual": 0,
+      "expected": 0
+    },
+    {
+      "id": "consumer logout content-type absent",
+      "status": "PASS",
+      "actual": null,
+      "expected": null
+    },
+    {
+      "id": "consumer logout cache-control",
+      "status": "PASS",
+      "actual": "no-store",
+      "expected": "no-store"
+    },
+    {
+      "id": "logout invalidates current session",
+      "status": "PASS",
+      "actual": 401,
+      "expected": 401
+    },
+    {
+      "id": "consumer self password status",
+      "status": "PASS",
+      "actual": 204,
+      "expected": 204
+    },
+    {
+      "id": "consumer self password body bytes",
+      "status": "PASS",
+      "actual": 0,
+      "expected": 0
+    },
+    {
+      "id": "consumer self password content-type absent",
+      "status": "PASS",
+      "actual": null,
+      "expected": null
+    },
+    {
+      "id": "consumer self password cache-control",
+      "status": "PASS",
+      "actual": "no-store",
+      "expected": "no-store"
+    },
+    {
+      "id": "self password current session retained",
+      "status": "PASS",
+      "actual": 200,
+      "expected": 200
+    },
+    {
+      "id": "self password other session revoked",
+      "status": "PASS",
+      "actual": 401,
+      "expected": 401
+    },
+    {
+      "id": "generation fixture HTTP",
+      "status": "PASS",
+      "actual": 200,
+      "expected": 200
+    },
+    {
+      "id": "generation fixture no-store",
+      "status": "PASS",
+      "actual": "no-store",
+      "expected": "no-store"
+    },
+    {
+      "id": "generation validated event",
+      "status": "PASS",
+      "actual": true,
+      "expected": true
+    },
+    {
+      "id": "consumer generation discard status",
+      "status": "PASS",
+      "actual": 204,
+      "expected": 204
+    },
+    {
+      "id": "consumer generation discard body bytes",
+      "status": "PASS",
+      "actual": 0,
+      "expected": 0
+    },
+    {
+      "id": "consumer generation discard content-type absent",
+      "status": "PASS",
+      "actual": null,
+      "expected": null
+    },
+    {
+      "id": "consumer generation discard cache-control",
+      "status": "PASS",
+      "actual": "no-store",
+      "expected": "no-store"
+    },
+    {
+      "id": "generation fixture HTTP",
+      "status": "PASS",
+      "actual": 200,
+      "expected": 200
+    },
+    {
+      "id": "generation fixture no-store",
+      "status": "PASS",
+      "actual": "no-store",
+      "expected": "no-store"
+    },
+    {
+      "id": "generation validated event",
+      "status": "PASS",
+      "actual": true,
+      "expected": true
+    },
+    {
+      "id": "save synthetic batch status",
+      "status": "PASS",
+      "actual": 201,
+      "expected": 201
+    },
+    {
+      "id": "save synthetic batch cache-control",
+      "status": "PASS",
+      "actual": "no-store",
+      "expected": "no-store"
+    },
+    {
+      "id": "create synthetic review session status",
+      "status": "PASS",
+      "actual": 201,
+      "expected": 201
+    },
+    {
+      "id": "create synthetic review session cache-control",
+      "status": "PASS",
+      "actual": "no-store",
+      "expected": "no-store"
+    },
+    {
+      "id": "consumer batch deletion status",
+      "status": "FAIL",
+      "actual": 400,
+      "expected": 204
+    },
+    {
+      "id": "consumer batch deletion body bytes",
+      "status": "FAIL",
+      "actual": 224,
+      "expected": 0
+    },
+    {
+      "id": "consumer batch deletion content-type absent",
+      "status": "FAIL",
+      "actual": "application/problem+json; charset=utf-8",
+      "expected": null
+    },
+    {
+      "id": "consumer batch deletion cache-control",
+      "status": "PASS",
+      "actual": "no-store",
+      "expected": "no-store"
+    },
+    {
+      "id": "batch delete cascades review session",
+      "status": "FAIL",
+      "actual": 1,
+      "expected": 0
+    },
+    {
+      "id": "deleted batch cannot be read",
+      "status": "FAIL",
+      "actual": 200,
+      "expected": 404
+    },
+    {
+      "id": "consumer admin password reset status",
+      "status": "PASS",
+      "actual": 204,
+      "expected": 204
+    },
+    {
+      "id": "consumer admin password reset body bytes",
+      "status": "PASS",
+      "actual": 0,
+      "expected": 0
+    },
+    {
+      "id": "consumer admin password reset content-type absent",
+      "status": "PASS",
+      "actual": null,
+      "expected": null
+    },
+    {
+      "id": "consumer admin password reset cache-control",
+      "status": "PASS",
+      "actual": "no-store",
+      "expected": "no-store"
+    },
+    {
+      "id": "admin reset invalidates learner current",
+      "status": "PASS",
+      "actual": 401,
+      "expected": 401
+    },
+    {
+      "id": "admin reset new password accepted",
+      "status": "PASS",
+      "actual": 200,
+      "expected": 200
+    },
+    {
+      "id": "delete user register",
+      "status": "PASS",
+      "actual": 201,
+      "expected": 201
+    },
+    {
+      "id": "consumer account deletion status",
+      "status": "PASS",
+      "actual": 204,
+      "expected": 204
+    },
+    {
+      "id": "consumer account deletion body bytes",
+      "status": "PASS",
+      "actual": 0,
+      "expected": 0
+    },
+    {
+      "id": "consumer account deletion content-type absent",
+      "status": "PASS",
+      "actual": null,
+      "expected": null
+    },
+    {
+      "id": "consumer account deletion cache-control",
+      "status": "PASS",
+      "actual": "no-store",
+      "expected": "no-store"
+    },
+    {
+      "id": "deleted account absent",
+      "status": "PASS",
+      "actual": 0,
+      "expected": 0
+    },
+    {
+      "id": "deleted account cannot login",
+      "status": "PASS",
+      "actual": 401,
+      "expected": 401
+    }
+  ],
+  "origin": "http://127.0.0.1:6101",
+  "topology": "fixed candidate backend through real QA085 Nginx",
+  "successfulConsumers": 6,
+  "safeResponses": [
+    {
+      "id": "synthetic credential configure",
+      "status": 200,
+      "bodyBytes": 147,
+      "contentType": "application/json; charset=utf-8",
+      "cacheControl": "no-store",
+      "problemCode": null
+    },
+    {
+      "id": "synthetic model create",
+      "status": 201,
+      "bodyBytes": 341,
+      "contentType": "application/json; charset=utf-8",
+      "cacheControl": "no-store",
+      "problemCode": null
+    },
+    {
+      "id": "synthetic model enable",
+      "status": 200,
+      "bodyBytes": 340,
+      "contentType": "application/json; charset=utf-8",
+      "cacheControl": "no-store",
+      "problemCode": null
+    },
+    {
+      "id": "basic group synthetic model",
+      "status": 200,
+      "bodyBytes": 267,
+      "contentType": "application/json; charset=utf-8",
+      "cacheControl": "no-store",
+      "problemCode": null
+    },
+    {
+      "id": "401 unauthenticated password",
+      "status": 401,
+      "bodyBytes": 243,
+      "contentType": "application/problem+json; charset=utf-8",
+      "cacheControl": "no-store",
+      "problemCode": "authentication_required"
+    },
+    {
+      "id": "403 missing csrf logout",
+      "status": 403,
+      "bodyBytes": 214,
+      "contentType": "application/problem+json; charset=utf-8",
+      "cacheControl": "no-store",
+      "problemCode": "csrf_failed"
+    },
+    {
+      "id": "400 malformed logout",
+      "status": 400,
+      "bodyBytes": 235,
+      "contentType": "application/problem+json; charset=utf-8",
+      "cacheControl": "no-store",
+      "problemCode": "malformed_request"
+    },
+    {
+      "id": "422 wrong current password",
+      "status": 422,
+      "bodyBytes": 232,
+      "contentType": "application/problem+json; charset=utf-8",
+      "cacheControl": "no-store",
+      "problemCode": "validation_failed"
+    },
+    {
+      "id": "consumer logout",
+      "status": 204,
+      "bodyBytes": 0,
+      "contentType": null,
+      "cacheControl": "no-store",
+      "problemCode": null
+    },
+    {
+      "id": "consumer self password",
+      "status": 204,
+      "bodyBytes": 0,
+      "contentType": null,
+      "cacheControl": "no-store",
+      "problemCode": null
+    },
+    {
+      "id": "consumer generation discard",
+      "status": 204,
+      "bodyBytes": 0,
+      "contentType": null,
+      "cacheControl": "no-store",
+      "problemCode": null
+    },
+    {
+      "id": "save synthetic batch",
+      "status": 201,
+      "bodyBytes": 153,
+      "contentType": "application/json; charset=utf-8",
+      "cacheControl": "no-store",
+      "problemCode": null
+    },
+    {
+      "id": "create synthetic review session",
+      "status": 201,
+      "bodyBytes": 421,
+      "contentType": "application/json; charset=utf-8",
+      "cacheControl": "no-store",
+      "problemCode": null
+    },
+    {
+      "id": "consumer batch deletion",
+      "status": 400,
+      "bodyBytes": 224,
+      "contentType": "application/problem+json; charset=utf-8",
+      "cacheControl": "no-store",
+      "problemCode": "malformed_request"
+    },
+    {
+      "id": "consumer admin password reset",
+      "status": 204,
+      "bodyBytes": 0,
+      "contentType": null,
+      "cacheControl": "no-store",
+      "problemCode": null
+    },
+    {
+      "id": "consumer account deletion",
+      "status": 204,
+      "bodyBytes": 0,
+      "contentType": null,
+      "cacheControl": "no-store",
+      "problemCode": null
+    }
+  ]
+}

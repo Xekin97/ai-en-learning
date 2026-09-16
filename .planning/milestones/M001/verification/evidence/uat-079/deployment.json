@@ -1,0 +1,136 @@
+{
+  "date": "2026-09-06T09:02:34.020Z",
+  "before": [
+    {
+      "name": "/wordweave_uat-frontend-1",
+      "id": "13e6cc46f04195ae53c83720a0dc1f52c77ee0cfc5ced27018f88c620c37d4dd",
+      "image": "sha256:68470b6ea1e94dd7e83ed6028e28116bb0ef3abbe2d84a3a67f862f341e29804",
+      "started": "2026-09-05T02:46:24.979151085Z",
+      "health": "healthy",
+      "mounts": [],
+      "networks": [
+        "wordweave_uat_edge"
+      ]
+    },
+    {
+      "name": "/wordweave_uat-backend-1",
+      "id": "a7eb62508b2812119c9381ad52e8747770f2f9beaa29f315fc1b9a40cd5f8aec",
+      "image": "sha256:b704e386cafdf7be1f973e792c08a9726d544a267dc9d75622cee0987284a7ba",
+      "started": "2026-09-04T07:25:43.431115801Z",
+      "health": "healthy",
+      "mounts": [],
+      "networks": [
+        "wordweave_uat_data",
+        "wordweave_uat_edge"
+      ]
+    },
+    {
+      "name": "/wordweave_uat-nginx-1",
+      "id": "b789bde4e7825b849640cbf63d35b50ae41c1b77cb6b7ece73b3e26e27eabcb1",
+      "image": "sha256:5f0efd7fead5e8a290f07e5c025e9204052efb646758e1c6883de0e23a6e085c",
+      "started": "2026-09-04T09:36:43.099505383Z",
+      "health": "healthy",
+      "mounts": [],
+      "networks": [
+        "wordweave_uat_edge"
+      ]
+    },
+    {
+      "name": "/wordweave_uat-postgres-1",
+      "id": "37a6d2fa58c578b1c6b4dbe10028b5ddf0c696fe44fc849a129293a85bbaf839",
+      "image": "sha256:b85269e8c6aa961524542eb4dcca44c4aa1deba2cf507e9e28d5ba8f971aeab9",
+      "started": "2026-09-03T02:24:03.164602928Z",
+      "health": "healthy",
+      "mounts": [
+        {
+          "type": "volume",
+          "name": "wordweave_uat_wordweave-pg",
+          "destination": "/var/lib/postgresql"
+        }
+      ],
+      "networks": [
+        "wordweave_uat_data"
+      ]
+    }
+  ],
+  "after": [
+    {
+      "name": "/wordweave_uat-frontend-1",
+      "id": "7f83e902076f5544a5ec2bc76d3775d552b1ba57d5da06530ef5b0698ef40767",
+      "image": "sha256:8fe04108b523cce73820017069ba0509e7bee03589b0fdc9218a4397770274c0",
+      "started": "2026-09-06T09:02:27.5862768Z",
+      "health": "healthy",
+      "mounts": [],
+      "networks": [
+        "wordweave_uat_edge"
+      ]
+    },
+    {
+      "name": "/wordweave_uat-backend-1",
+      "id": "a6719cbffbfb222894123ddb77c0dbd5c07b90d114efcb670d256f1c50947cde",
+      "image": "sha256:e8c4ee91a7c3265cda8c496ccc8fb485328d95b6c1662eaf2502011ce5d005a5",
+      "started": "2026-09-06T09:02:21.852434256Z",
+      "health": "healthy",
+      "mounts": [],
+      "networks": [
+        "wordweave_uat_data",
+        "wordweave_uat_edge"
+      ]
+    },
+    {
+      "name": "/wordweave_uat-nginx-1",
+      "id": "b789bde4e7825b849640cbf63d35b50ae41c1b77cb6b7ece73b3e26e27eabcb1",
+      "image": "sha256:5f0efd7fead5e8a290f07e5c025e9204052efb646758e1c6883de0e23a6e085c",
+      "started": "2026-09-04T09:36:43.099505383Z",
+      "health": "healthy",
+      "mounts": [],
+      "networks": [
+        "wordweave_uat_edge"
+      ]
+    },
+    {
+      "name": "/wordweave_uat-postgres-1",
+      "id": "37a6d2fa58c578b1c6b4dbe10028b5ddf0c696fe44fc849a129293a85bbaf839",
+      "image": "sha256:b85269e8c6aa961524542eb4dcca44c4aa1deba2cf507e9e28d5ba8f971aeab9",
+      "started": "2026-09-03T02:24:03.164602928Z",
+      "health": "healthy",
+      "mounts": [
+        {
+          "type": "volume",
+          "name": "wordweave_uat_wordweave-pg",
+          "destination": "/var/lib/postgresql"
+        }
+      ],
+      "networks": [
+        "wordweave_uat_data"
+      ]
+    }
+  ],
+  "dataBefore": {
+    "accounts": 589,
+    "batches": 16,
+    "models": 1,
+    "runs": 78,
+    "active_runs": 0,
+    "migration_count": 6,
+    "latest_version": "0006_hint_occurrences_enforce.sql"
+  },
+  "dataAfter": {
+    "accounts": 589,
+    "batches": 16,
+    "models": 1,
+    "runs": 78,
+    "active_runs": 0,
+    "migration_count": 6,
+    "latest_version": "0006_hint_occurrences_enforce.sql"
+  },
+  "dataUnchanged": true,
+  "databaseContainerUnchanged": true,
+  "nginxContainerUnchanged": true,
+  "pairedImages": true,
+  "healthy": true,
+  "runtimeEnvironmentPreserved": true,
+  "backupDirectory": "/var/folders/z9/99ckxr957v901zwwc8jdk8640000gn/T/wordweave-uat-079-ylgI52",
+  "migrationsRun": false,
+  "realAICalls": 0
+}

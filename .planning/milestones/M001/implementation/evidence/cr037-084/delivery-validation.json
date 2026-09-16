@@ -1,0 +1,63 @@
+{
+  "schema_version": 1,
+  "task": "CR037-084",
+  "recorded_at": "2026-09-07T11:23:25+08:00",
+  "status": "ready_for_independent_qa_with_linux_geometry_observation",
+  "implementation": {
+    "changed_product_files": [
+      "frontend/app/pages/account.vue",
+      "frontend/app/runtime/stores/account.ts",
+      "frontend/tests/unit/account-password-error.test.ts",
+      "frontend/tests/e2e/cr037-auth-account.spec.ts"
+    ],
+    "source_hashes_match_candidate": true,
+    "production_candidate": {
+      "tag": "wordweave-frontend:cr037-084",
+      "image_id": "sha256:fd251e7439aad8e058656e2751ed84f40715fec570a872da53542688a6dd6904",
+      "exists_after_cleanup": true
+    },
+    "paired_backend": {
+      "tag": "wordweave-backend:cr038-083",
+      "image_id": "sha256:642ed57ad0ed6c8a13e4bba1101d8b50188e8ea636791583a6ffb5eaa6917aac",
+      "exists_after_cleanup": true
+    }
+  },
+  "verification": {
+    "red": "3_expected_failures_with_196_existing_passes",
+    "targeted_unit": "3_of_3_pass",
+    "targeted_cr037_mock_e2e": "12_of_12_pass",
+    "node24_quality_and_candidate_build": "pass_22_files_199_tests",
+    "fixed_candidate_mock_host_chromium": "122_of_122_pass",
+    "fixed_candidate_mock_linux_chromium": "120_of_122_pass",
+    "linux_geometry_observation": "two_existing_admin_dialog_spacing_assertions_expected_23_observed_24_desktop_25_mobile",
+    "linux_actual_vs_approved_prototype_geometry": "identical_at_both_viewports_with_fonts_loaded",
+    "real_backend_host_chromium": "52_pass_0_fail_0_error",
+    "real_backend_linux_webkit": "48_pass_0_fail_0_error",
+    "real_backend_host_playwright_webkit": "48_pass_0_fail_0_error",
+    "safari_device_or_full_platform_certification": "not_run",
+    "native_chromium_accessibility": "separate_cdp_ax_role_alert_and_not_ignored_assertions_passed",
+    "webkit_accessibility": "dom_semantics_and_behavior_covered_native_ax_not_available_in_playwright",
+    "narrow_error_screenshots": "en-US_and_zh-CN_reviewed_at_390px_in_chromium_and_linux_webkit"
+  },
+  "history": {
+    "all_first_failures_retained": true,
+    "linux_120_of_122_not_overwritten_by_host_pass": true,
+    "raw_linux_traces_and_screenshots_retained": true,
+    "native_webkit_fixture_collision_retained": true
+  },
+  "cleanup": {
+    "temporary_dev084_containers": 0,
+    "temporary_dev084_networks": 0,
+    "temporary_dev084_volumes": 0,
+    "port_6101_released": true,
+    "uat6001_unchanged": true,
+    "synthetic_accounts_removed_with_tmpfs": 6,
+    "real_business_data_touched": false
+  },
+  "workflow": {
+    "change_request_closed_by_implementer": false,
+    "independent_qa": "not_run_by_frontend_implementer",
+    "actual_model": "not_observed",
+    "usage": "not_observed"
+  }
+}

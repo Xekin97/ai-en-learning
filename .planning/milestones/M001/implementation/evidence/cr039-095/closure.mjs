@@ -1,0 +1,34 @@
+import {execFileSync} from 'node:child_process';
+import {readFileSync,writeFileSync,readdirSync} from 'node:fs';
+import {createHash} from 'node:crypto';
+import {fileURLToPath} from 'node:url';
+import {dirname,resolve,join} from 'node:path';
+import {hashes,uat} from '../../../verification/evidence/cr039-094/setup.mjs';
+const dir=dirname(fileURLToPath(import.meta.url)),root=resolve(dir,'../../../../../..');
+const docker=args=>execFileSync('docker',args,{encoding:'utf8',stdio:['ignore','pipe','pipe']}).trim();
+const before=JSON.parse(readFileSync(join(dir,'baseline.json'),'utf8'));
+const current=hashes();
+const files=['internal/generation/token.go','internal/generation/token_test.go','internal/generation/service.go','internal/generation/registry.go','internal/learning/service.go','internal/maintenance/maintenance.go','internal/httpapi/cr039_snapshot_integration_test.go','internal/httpapi/draft_lifecycle_integration_test.go','internal/httpapi/draft_process_integration_test.go'];
+const allowed=new Set(files.map(f=>'backend/'+f));
+const changed=Object.keys(before.hashes).filter(f=>before.hashes[f]!==current[f]);
+if(changed.some(f=>!allowed.has(f)))throw Error('Unexpected protected-file change');
+if(before.uat!==uat())throw Error('UAT changed');
+const qaDir=join(root,'.planning/milestones/M001/verification/evidence/cr039-094');
+const sha=f=>createHash('sha256').update(readFileSync(f)).digest('hex');
+const qa=JSON.parse(readFileSync(join(qaDir,'manifest.json'),'utf8'));
+for(const [f,h] of Object.entries(qa.files))if(sha(join(qaDir,f))!==h)throw Error('QA evidence changed');
+const source={agent:'backend-ethan',authorization:'TRANSITION-M001-095 + USER-COMPAT-001',date:new Date().toISOString(),files:files.map(f=>({path:f,sha256:sha(join(root,'backend',f)),before_sha256:before.hashes['backend/'+f]??null}))};
+writeFileSync(join(dir,'source-manifest.json'),JSON.stringify(source,null,2)+'\n');
+const removed=[];
+for(const name of ['ww-dev-cr039-095-backend','ww-dev-cr039-095-db']){
+  if(docker(['inspect','--format','{{index .Config.Labels "wordweave.dev"}}',name])!=='cr039-095')throw Error('Container ownership mismatch');
+  docker(['rm','-f',name]);removed.push(name);
+}
+if(docker(['network','inspect','--format','{{index .Labels "wordweave.dev"}}','ww-dev-cr039-095'])!=='cr039-095')throw Error('Network ownership mismatch');
+docker(['network','rm','ww-dev-cr039-095']);
+const result={date:new Date().toISOString(),uat_unchanged:before.uat===uat(),protected_baseline_files:Object.keys(before.hashes).length,changed_existing_source_files:changed,new_source_files:files.filter(f=>!before.hashes['backend/'+f]),qa_evidence_unchanged:Object.keys(qa.files).length,removed_containers:removed,removed_network:'ww-dev-cr039-095',removed_data:'Only disposable PostgreSQL tmpfs synthetic fixtures, reproducible from tests',candidate_retained:true,real_model_calls:0,workflow_unchanged:true};
+writeFileSync(join(dir,'closure.json'),JSON.stringify(result,null,2)+'\n');
+const manifest={date:new Date().toISOString(),files:{}};
+for(const f of readdirSync(dir).filter(f=>f!=='manifest.json'))manifest.files[f]=sha(join(dir,f));
+writeFileSync(join(dir,'manifest.json'),JSON.stringify(manifest,null,2)+'\n');
+console.log(JSON.stringify(result));

@@ -1,0 +1,209 @@
+{
+  "date": "2026-09-09T03:59:27.464Z",
+  "stage": "preflight",
+  "realModelCalls": 0,
+  "status": "PASS",
+  "before": {
+    "backend": {
+      "id": "3b49d8ad1fce549dc9d4244d6b262a748a74dcd89339181a8a46d6f508608558",
+      "name": "/wordweave_uat-backend-1",
+      "image": "sha256:ab12e7dec0a6a8beb55df2ec6a8174d01d288681215c1108cec997e6f99f8eee",
+      "status": "running",
+      "health": "healthy",
+      "started": "2026-09-08T07:02:58.729214345Z",
+      "networks": [
+        "wordweave_uat_data",
+        "wordweave_uat_edge"
+      ],
+      "mounts": [],
+      "readonly": true
+    },
+    "frontend": {
+      "id": "c29718b3bea43ab23403ae7cef828968f2c934f6b04128d1f4a61cfb13d82c06",
+      "name": "/wordweave_uat-frontend-1",
+      "image": "sha256:fd251e7439aad8e058656e2751ed84f40715fec570a872da53542688a6dd6904",
+      "status": "running",
+      "health": "healthy",
+      "started": "2026-09-07T03:54:00.102154461Z",
+      "networks": [
+        "wordweave_uat_edge"
+      ],
+      "mounts": [],
+      "readonly": false
+    },
+    "nginx": {
+      "id": "b789bde4e7825b849640cbf63d35b50ae41c1b77cb6b7ece73b3e26e27eabcb1",
+      "name": "/wordweave_uat-nginx-1",
+      "image": "sha256:5f0efd7fead5e8a290f07e5c025e9204052efb646758e1c6883de0e23a6e085c",
+      "status": "running",
+      "health": "healthy",
+      "started": "2026-09-04T09:36:43.099505383Z",
+      "networks": [
+        "wordweave_uat_edge"
+      ],
+      "mounts": [],
+      "readonly": true
+    },
+    "postgres": {
+      "id": "37a6d2fa58c578b1c6b4dbe10028b5ddf0c696fe44fc849a129293a85bbaf839",
+      "name": "/wordweave_uat-postgres-1",
+      "image": "sha256:b85269e8c6aa961524542eb4dcca44c4aa1deba2cf507e9e28d5ba8f971aeab9",
+      "status": "running",
+      "health": "healthy",
+      "started": "2026-09-03T02:24:03.164602928Z",
+      "networks": [
+        "wordweave_uat_data"
+      ],
+      "mounts": [
+        {
+          "type": "volume",
+          "name": "wordweave_uat_wordweave-pg",
+          "destination": "/var/lib/postgresql"
+        }
+      ],
+      "readonly": false
+    }
+  },
+  "identity": {
+    "database": "wordweave",
+    "role": "postgres",
+    "system_id": "7681129149544701995",
+    "version": "180006",
+    "bytes": 25474751,
+    "wal_bytes": 33554432,
+    "active_runs": 0,
+    "bad_key_owner": 0
+  },
+  "countsBefore": {
+    "schema_migrations": 6,
+    "entitlement_groups": 4,
+    "vocabulary_snapshots": 1,
+    "vocabulary_entries": 13860,
+    "ai_models": 6,
+    "accounts": 591,
+    "openrouter_credentials": 1,
+    "visitor_claims": 0,
+    "review_results": 8,
+    "review_session_targets": 50,
+    "review_session_batches": 17,
+    "review_sessions": 15,
+    "passage_occurrences": 162,
+    "hint_occurrences": 105,
+    "batch_targets": 63,
+    "learning_batches": 22,
+    "generation_drafts": 0,
+    "generation_run_entries": 170,
+    "generation_runs": 93,
+    "account_sessions": 598,
+    "visitor_identities": 47731,
+    "group_models": 7,
+    "group_lengths": 13,
+    "admins": 7,
+    "learners": 584
+  },
+  "tables": [
+    "account_sessions",
+    "accounts",
+    "ai_models",
+    "batch_targets",
+    "entitlement_groups",
+    "generation_drafts",
+    "generation_run_entries",
+    "generation_runs",
+    "group_lengths",
+    "group_models",
+    "hint_occurrences",
+    "learning_batches",
+    "openrouter_credentials",
+    "passage_occurrences",
+    "review_results",
+    "review_session_batches",
+    "review_session_targets",
+    "review_sessions",
+    "schema_migrations",
+    "visitor_claims",
+    "visitor_identities",
+    "vocabulary_entries",
+    "vocabulary_snapshots"
+  ],
+  "backup": {
+    "directory": "/var/folders/z9/99ckxr957v901zwwc8jdk8640000gn/T/wordweave-uat108-preserved-WpEYvN",
+    "mode": "700",
+    "files": [
+      {
+        "name": "runtime-private.json",
+        "mode": "600",
+        "bytes": 33035,
+        "sha256": "471226e3ae1ca4834870baafc481ca37908616de752fe07ee99ec7d093374b36"
+      },
+      {
+        "name": "preserved-digests.json",
+        "mode": "600",
+        "bytes": 379,
+        "sha256": "11729476745d59b3c872eb4941c1dfa7f7b0a843cdb5e85eba2b894cea01bcfd"
+      },
+      {
+        "name": "schema.dump",
+        "mode": "600",
+        "bytes": 81909,
+        "sha256": "f8acc91a6bd2a4f5e1ad5e4eeb2bfb04f0389708381ecb88beae5b576d29f502"
+      },
+      {
+        "name": "schema_migrations.csv",
+        "mode": "600",
+        "bytes": 358,
+        "sha256": "460f1bc53316877e8a6613a9c3cdf0670748b3dc367bda9b4ecfe26b29feb38b"
+      },
+      {
+        "name": "entitlement_groups.csv",
+        "mode": "600",
+        "bytes": 217,
+        "sha256": "1bbd54636ea0a50790ec5c07f6be462b295438771d13dc23d1418d7fd83fa0bd"
+      },
+      {
+        "name": "vocabulary_snapshots.csv",
+        "mode": "600",
+        "bytes": 202,
+        "sha256": "8e47641d6cc58f22d4355515eeaf17640f5022ec0e328b865a63712f2adc03c0"
+      },
+      {
+        "name": "vocabulary_entries.csv",
+        "mode": "600",
+        "bytes": 773764,
+        "sha256": "a52acd93458cbb0179278be29b129c88ba0a9e79995d8ae5750b92088685dd3b"
+      },
+      {
+        "name": "ai_models.csv",
+        "mode": "600",
+        "bytes": 987,
+        "sha256": "b828a82265424b8fe5af99e829fabd8de35566535eb4ae7549584664a62f53e0"
+      },
+      {
+        "name": "accounts.csv",
+        "mode": "600",
+        "bytes": 1919,
+        "sha256": "6dcd7281f9c52d9fef676d613f1b7b54f7b75eb7978b0c8cc4a48fe09d369af2"
+      },
+      {
+        "name": "openrouter_credentials.csv",
+        "mode": "600",
+        "bytes": 387,
+        "sha256": "0c70aabbaa6b50987644ccb54eca37362e9c6b6226f7ba6876de86d541917b1a"
+      }
+    ],
+    "scope": "Schema and explicitly retained data only; no learner/session/generation/library/review/claim rows",
+    "restoreVerified": true,
+    "retainedRowsEqual": true,
+    "deletedBusinessRowsExcluded": true
+  },
+  "freeSpace": "Filesystem     1024-blocks     Used Available Capacity Mounted on\n/dev/vda1       1055761844 56332148 945726272       6% /var/lib/postgresql",
+  "candidateImages": {
+    "backend": "sha256:7cb89a2d4628cc568790cf4a556133cc76270f97d3e246aeb3e95374541b936d",
+    "frontend": "sha256:5903591c881165071c1cba08984cfb835854187f5df21a281640b3aacccf4b27"
+  },
+  "lockTimeout": "1s",
+  "statementTimeout": "20s",
+  "timeoutBasis": "Same tested values as QA107; current database approximately 25MB, zero active generation; fail closed on any timeout",
+  "deploymentStarted": false,
+  "recoverySandboxRemoved": true
+}

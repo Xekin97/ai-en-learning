@@ -1,0 +1,70 @@
+=== RUN   TestDraftLifecycleWithoutRegistry
+=== RUN   TestDraftLifecycleWithoutRegistry/save_retry_concurrent_and_delete
+=== RUN   TestDraftLifecycleWithoutRegistry/discard_and_save_cannot_resurrect
+=== RUN   TestDraftLifecycleWithoutRegistry/save_versus_discard_serialized
+=== RUN   TestDraftLifecycleWithoutRegistry/expired_pending_and_terminal_tokens
+=== RUN   TestDraftLifecycleWithoutRegistry/active_never_saves
+=== RUN   TestDraftLifecycleWithoutRegistry/provider_failed_never_saves
+=== RUN   TestDraftLifecycleWithoutRegistry/server_failed_never_saves
+=== RUN   TestDraftLifecycleWithoutRegistry/stream_failed_never_saves
+=== RUN   TestDraftLifecycleWithoutRegistry/validation_failed_never_saves
+=== RUN   TestDraftLifecycleWithoutRegistry/user_cancelled_never_saves
+=== RUN   TestDraftLifecycleWithoutRegistry/visitor_claim_after_restart_and_expired_draft
+=== RUN   TestDraftLifecycleWithoutRegistry/cleanup_skips_locked_run_and_later_removes_expired_draft
+--- PASS: TestDraftLifecycleWithoutRegistry (5.28s)
+    --- PASS: TestDraftLifecycleWithoutRegistry/save_retry_concurrent_and_delete (0.05s)
+    --- PASS: TestDraftLifecycleWithoutRegistry/discard_and_save_cannot_resurrect (0.01s)
+    --- PASS: TestDraftLifecycleWithoutRegistry/save_versus_discard_serialized (0.04s)
+    --- PASS: TestDraftLifecycleWithoutRegistry/expired_pending_and_terminal_tokens (0.01s)
+    --- PASS: TestDraftLifecycleWithoutRegistry/active_never_saves (0.00s)
+    --- PASS: TestDraftLifecycleWithoutRegistry/provider_failed_never_saves (0.00s)
+    --- PASS: TestDraftLifecycleWithoutRegistry/server_failed_never_saves (0.00s)
+    --- PASS: TestDraftLifecycleWithoutRegistry/stream_failed_never_saves (0.00s)
+    --- PASS: TestDraftLifecycleWithoutRegistry/validation_failed_never_saves (0.00s)
+    --- PASS: TestDraftLifecycleWithoutRegistry/user_cancelled_never_saves (0.00s)
+    --- PASS: TestDraftLifecycleWithoutRegistry/visitor_claim_after_restart_and_expired_draft (0.03s)
+    --- PASS: TestDraftLifecycleWithoutRegistry/cleanup_skips_locked_run_and_later_removes_expired_draft (0.31s)
+=== RUN   TestDraftProcessHelper
+    draft_process_integration_test.go:26: subprocess helper
+--- SKIP: TestDraftProcessHelper (0.00s)
+=== RUN   TestDraftHTTPAcrossProcessRestart
+    draft_process_integration_test.go:163: same-version process restart: validated draft unchanged; save 201; second restart retry 200; wrong token 404; one batch and unchanged accounting
+--- PASS: TestDraftHTTPAcrossProcessRestart (13.00s)
+=== RUN   TestNoContentConsumersEnforcePrivateNoStoreResponse
+2026/09/08 03:34:17 INFO http_request request_id=req_UqLyHAizDpZ5qmQ8Wv53Lw method=GET route=/api/v1/bootstrap status=200 duration_ms=1
+2026/09/08 03:34:17 INFO http_request request_id=req_6uGffGf4PjfkMtJxLM2wDQ method=POST route=/api/v1/auth/login status=200 duration_ms=868
+2026/09/08 03:34:17 INFO http_request request_id=req_n1TwQ21pSS5sigu-GyCPpA method=PUT route=/api/v1/admin/openrouter-credential status=200 duration_ms=3
+2026/09/08 03:34:17 INFO http_request request_id=req_D2Z0LLGJHfEvRJMpKEKZfw method=POST route=/api/v1/admin/models status=201 duration_ms=2
+2026/09/08 03:34:17 INFO http_request request_id=req_WvfOx_a25o6G13TGVBzEng method=POST route=/api/v1/admin/models/{model_id}/enable status=200 duration_ms=4
+2026/09/08 03:34:18 INFO http_request request_id=req_0lips6QL5ijnlSyMtv2hWg method=PUT route=/api/v1/admin/groups/{group_code} status=200 duration_ms=4
+2026/09/08 03:34:18 INFO http_request request_id=req_qtH7yW8ob2tKNVBE2FdZ7g method=GET route=/api/v1/bootstrap status=200 duration_ms=0
+2026/09/08 03:34:18 INFO http_request request_id=req_txHQrFWTSGqppZEXOtBxkw method=POST route=/api/v1/auth/register status=201 duration_ms=923
+=== RUN   TestNoContentConsumersEnforcePrivateNoStoreResponse/logout
+2026/09/08 03:34:18 INFO http_request request_id=req_ES0ndt57lfoUt5JONiDycA method=POST route=/api/v1/auth/logout status=204 duration_ms=1
+2026/09/08 03:34:18 INFO http_request request_id=req_KkmYoFHFmf1XE2Rm6WkotQ method=GET route=/api/v1/bootstrap status=200 duration_ms=0
+2026/09/08 03:34:19 INFO http_request request_id=req_djlUuYcq5ji1GwXO2ThhbA method=POST route=/api/v1/auth/login status=200 duration_ms=825
+=== RUN   TestNoContentConsumersEnforcePrivateNoStoreResponse/learner_password_change
+2026/09/08 03:34:21 INFO http_request request_id=req_0r4Ml_bxUe6PStTZL43_XQ method=PUT route=/api/v1/me/password status=204 duration_ms=1699
+=== RUN   TestNoContentConsumersEnforcePrivateNoStoreResponse/generation_discard
+2026/09/08 03:34:21 INFO http_request request_id=req_rYtvLqJpfTxnlfeOxRL4-w method=POST route=/api/v1/generations/stream status=200 duration_ms=8
+2026/09/08 03:34:21 INFO http_request request_id=req_d_VEd-Lub-g_AGIrfROuVg method=POST route=/api/v1/generations/{run_id}/discard status=204 duration_ms=2
+=== RUN   TestNoContentConsumersEnforcePrivateNoStoreResponse/batch_deletion_cascades_its_single-batch_review_session
+2026/09/08 03:34:21 INFO http_request request_id=req_LH3QI45lf217NK4gRbgAZg method=POST route=/api/v1/generations/stream status=200 duration_ms=5
+2026/09/08 03:34:21 INFO http_request request_id=req_B8z96tZ9obASRp-RfXEsng method=POST route=/api/v1/generations/{run_id}/save status=201 duration_ms=9
+2026/09/08 03:34:21 INFO http_request request_id=req_ts3qnae0TMSbOP7KBEuuoQ method=POST route=/api/v1/me/review-sessions status=201 duration_ms=6
+2026/09/08 03:34:21 INFO http_request request_id=req_yXaT0CJDQH_oe71s0MoM3g method=DELETE route=/api/v1/me/batches/{batch_id} status=204 duration_ms=2
+=== RUN   TestNoContentConsumersEnforcePrivateNoStoreResponse/administrator_password_reset
+2026/09/08 03:34:22 INFO http_request request_id=req_vmeUWOnC-xknx0f2BXkrFQ method=PUT route=/api/v1/admin/users/{user_id}/password status=204 duration_ms=797
+2026/09/08 03:34:22 INFO http_request request_id=req_BzC-UWX8Qy07W7-KMfePZw method=GET route=/api/v1/bootstrap status=200 duration_ms=0
+2026/09/08 03:34:23 INFO http_request request_id=req_kNpfl1IgiOeBti2m3QrAeg method=POST route=/api/v1/auth/register status=201 duration_ms=849
+=== RUN   TestNoContentConsumersEnforcePrivateNoStoreResponse/account_deletion
+2026/09/08 03:34:23 INFO http_request request_id=req_Ga7jMmLHhGzaHMomQun5tg method=DELETE route=/api/v1/me/account status=204 duration_ms=799
+--- PASS: TestNoContentConsumersEnforcePrivateNoStoreResponse (8.37s)
+    --- PASS: TestNoContentConsumersEnforcePrivateNoStoreResponse/logout (0.00s)
+    --- PASS: TestNoContentConsumersEnforcePrivateNoStoreResponse/learner_password_change (1.70s)
+    --- PASS: TestNoContentConsumersEnforcePrivateNoStoreResponse/generation_discard (0.01s)
+    --- PASS: TestNoContentConsumersEnforcePrivateNoStoreResponse/batch_deletion_cascades_its_single-batch_review_session (0.03s)
+    --- PASS: TestNoContentConsumersEnforcePrivateNoStoreResponse/administrator_password_reset (0.80s)
+    --- PASS: TestNoContentConsumersEnforcePrivateNoStoreResponse/account_deletion (0.80s)
+PASS
+ok  	wordweave/internal/httpapi	27.707s

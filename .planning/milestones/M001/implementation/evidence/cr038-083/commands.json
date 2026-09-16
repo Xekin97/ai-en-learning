@@ -1,0 +1,24 @@
+{
+  "schema_version": 1,
+  "task": "CR038-083",
+  "commands": [
+    {"name":"red_unit","command":"go test ./internal/httpapi -run ^TestWriteNoContentEnforcesPrivateNoStoreResponse$ -count=1","exit_code":1,"result":"expected_red","log":"red-unit.log"},
+    {"name":"green_unit","command":"go test ./internal/httpapi -run ^TestWriteNoContentEnforcesPrivateNoStoreResponse$ -count=1","exit_code":0,"result":"pass","log":"green-unit.log"},
+    {"name":"integration_targeted_attempt_1","command":"go test -race -tags=integration ./internal/httpapi -run ^TestNoContentConsumersEnforcePrivateNoStoreResponse$ -count=1 -v","exit_code":1,"result":"test_fixture_failure","summary":"synthetic credential did not match the pre-existing fake provider's expected fixture value; no product assertion failed","log":"green-integration-targeted.log"},
+    {"name":"integration_targeted_final","command":"go test -race -tags=integration ./internal/httpapi -run ^TestNoContentConsumersEnforcePrivateNoStoreResponse$ -count=1 -v","exit_code":0,"result":"pass","log":"green-integration-targeted-final.log"},
+    {"name":"gofmt_check","command":"find backend -name *.go -not -path backend/internal/dbgen/* -exec gofmt -l {} +","exit_code":0,"result":"pass_empty_output","log":"gofmt-check.log"},
+    {"name":"go_vet","command":"pinned Go 1.26 container: go vet ./...","exit_code":0,"result":"pass","log":"go-vet.log"},
+    {"name":"go_test_race","command":"pinned Go 1.26 container: go test -race ./...","exit_code":0,"result":"pass","log":"go-test-race.log"},
+    {"name":"go_test_integration_race","command":"pinned Go 1.26 container on ww-dev-083-net: go test -race -tags=integration ./...","exit_code":0,"result":"pass","log":"go-test-integration-race.log"},
+    {"name":"go_mod_verify","command":"pinned Go 1.26 container: go mod verify","exit_code":0,"result":"pass","log":"go-mod-verify.log"},
+    {"name":"docker_build","command":"docker build --progress=plain -t wordweave-backend:cr038-083 backend","exit_code":0,"result":"pass","log":"docker-build.log"},
+    {"name":"cleanup","command":"label-check then remove exact ww-dev-083-postgres and ww-dev-083-net targets","exit_code":0,"result":"pass_candidate_retained","log":"cleanup.log"},
+    {"name":"delivery_audit_attempt_1","command":"validate JSON and broad scan for credential-related tokens","exit_code":1,"result":"scan_false_positive","summary":"the retained PostgreSQL 18 startup warning contains the literal documentation placeholder POSTGRES_PASSWORD=password; no credential value was present","log":"final-audit.log"},
+    {"name":"delivery_audit_final","command":"validate JSON, scan retained reports/evidence for credential values, recount consumers, compare safe UAT identity fields, verify candidate and CR/state","exit_code":0,"result":"pass","log":"final-audit-final.log"}
+  ],
+  "excluded": [
+    "liveintegration/OpenRouter network tests",
+    "production database operations",
+    "UAT6001 deployment or mutation"
+  ]
+}

@@ -1,0 +1,971 @@
+{
+  "revision": "AI-INTEGRATION-127",
+  "role": "quality/base",
+  "agent_name": "qa-quinn",
+  "date": "2026-09-11",
+  "overall": "FAIL: Q127-01 requires implementation rework; not UAT ready",
+  "scope": {
+    "actual_model_calls": 0,
+    "synthetic_provider_calls": 11,
+    "actual_uat_database_operations": 0,
+    "actual_deployment": 0,
+    "production_edits": 0,
+    "real_sensitive_samples_read": 0,
+    "subagents": 0,
+    "commits": 0
+  },
+  "browser_results": [
+    {
+      "mode": "valid",
+      "render": {
+        "characters": 663,
+        "sha256": "8e6b10069d57a91ec0ed9e42d8744f8e1ea429eddfd88154ad205335cf630732",
+        "has_provider_annotation": false
+      },
+      "db_before_recovery": {
+        "batches": 1,
+        "charged": true,
+        "cumulative": true,
+        "disposition": "saved",
+        "drafts": 0,
+        "status": "valid",
+        "username": "qa127_1789091839962"
+      },
+      "provider_calls": 1,
+      "passed": true,
+      "streams": 1,
+      "cancels": 0,
+      "save_requests": 1,
+      "page_errors": [],
+      "transport": [
+        {
+          "status": 200,
+          "body_unavailable_after_client_close": true
+        }
+      ],
+      "elapsed_ms": 8859
+    },
+    {
+      "mode": "invalid",
+      "db_before_recovery": {
+        "batches": 0,
+        "charged": false,
+        "cumulative": false,
+        "disposition": "pending",
+        "drafts": 0,
+        "status": "validation_failed",
+        "username": "qa127_1789091839962"
+      },
+      "provider_calls": 1,
+      "passed": true,
+      "streams": 1,
+      "cancels": 0,
+      "save_requests": 0,
+      "page_errors": [],
+      "transport": [
+        {
+          "status": 200,
+          "body_unavailable_after_client_close": true
+        }
+      ],
+      "elapsed_ms": 1560
+    },
+    {
+      "mode": "open-error",
+      "db_before_recovery": {
+        "batches": 0,
+        "charged": false,
+        "cumulative": false,
+        "disposition": "pending",
+        "drafts": 0,
+        "status": "provider_failed",
+        "username": "qa127_1789091839962"
+      },
+      "provider_calls": 1,
+      "passed": true,
+      "streams": 1,
+      "cancels": 0,
+      "save_requests": 0,
+      "page_errors": [],
+      "transport": [
+        {
+          "status": 503,
+          "event_counts": {},
+          "max_data_bytes": 0,
+          "delta_chars": 0,
+          "delta_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "final_chars": null,
+          "final_sha256": null,
+          "failure": null
+        }
+      ],
+      "elapsed_ms": 1656
+    },
+    {
+      "mode": "cancel",
+      "db_before_recovery": {
+        "batches": 0,
+        "charged": true,
+        "cumulative": true,
+        "disposition": "pending",
+        "drafts": 0,
+        "status": "user_cancelled",
+        "username": "qa127_1789091839962"
+      },
+      "provider_calls": 1,
+      "passed": true,
+      "streams": 1,
+      "cancels": 1,
+      "save_requests": 0,
+      "page_errors": [],
+      "transport": [
+        {
+          "status": 200,
+          "body_unavailable_after_client_close": true
+        }
+      ],
+      "elapsed_ms": 1356
+    },
+    {
+      "mode": "leave",
+      "db_before_recovery": {
+        "batches": 0,
+        "charged": false,
+        "cumulative": false,
+        "disposition": "pending",
+        "drafts": 0,
+        "status": "stream_failed",
+        "username": "qa127_1789091839962"
+      },
+      "provider_calls": 1,
+      "passed": true,
+      "streams": 1,
+      "cancels": 0,
+      "save_requests": 0,
+      "page_errors": [],
+      "transport": [
+        {
+          "status": 200,
+          "body_unavailable_after_client_close": true
+        }
+      ],
+      "elapsed_ms": 1260
+    },
+    {
+      "mode": "slow",
+      "render": {
+        "characters": 663,
+        "sha256": "8e6b10069d57a91ec0ed9e42d8744f8e1ea429eddfd88154ad205335cf630732",
+        "has_provider_annotation": false
+      },
+      "db_before_recovery": {
+        "batches": 0,
+        "charged": true,
+        "cumulative": true,
+        "disposition": "pending",
+        "drafts": 1,
+        "status": "valid",
+        "username": "qa127_1789091839962"
+      },
+      "provider_calls": 1,
+      "passed": true,
+      "streams": 1,
+      "cancels": 0,
+      "save_requests": 0,
+      "page_errors": [],
+      "transport": [
+        {
+          "status": 200,
+          "body_unavailable_after_client_close": true
+        }
+      ],
+      "elapsed_ms": 21642
+    },
+    {
+      "mode": "refund-pending",
+      "db_before_recovery": {
+        "batches": 0,
+        "charged": true,
+        "cumulative": false,
+        "disposition": "pending",
+        "drafts": 0,
+        "status": "active",
+        "username": "qa127_1789091839962"
+      },
+      "db_after_timer": {
+        "batches": 0,
+        "charged": false,
+        "cumulative": false,
+        "disposition": "pending",
+        "drafts": 0,
+        "status": "validation_failed",
+        "username": "qa127_1789091839962"
+      },
+      "provider_calls": 1,
+      "passed": true,
+      "streams": 1,
+      "cancels": 0,
+      "save_requests": 0,
+      "page_errors": [],
+      "transport": [
+        {
+          "status": 200,
+          "body_unavailable_after_client_close": true
+        }
+      ],
+      "elapsed_ms": 5055
+    },
+    {
+      "mode": "large",
+      "visible_error": "The service returned content we could not read. Try again shortly.",
+      "save_visible": false,
+      "db_before_recovery": {
+        "batches": 0,
+        "charged": true,
+        "cumulative": true,
+        "disposition": "pending",
+        "drafts": 1,
+        "status": "valid",
+        "username": "qa127_1789091839962"
+      },
+      "provider_calls": 1,
+      "passed": false,
+      "assertion": "backend accepted and charged valid output must remain saveable\n\nfalse !== true\n",
+      "streams": 1,
+      "cancels": 0,
+      "save_requests": 0,
+      "page_errors": [],
+      "transport": [
+        {
+          "status": 200,
+          "body_unavailable_after_client_close": true
+        }
+      ],
+      "elapsed_ms": 4590
+    },
+    {
+      "summary": true,
+      "passed": 7,
+      "failed": 1,
+      "scope": "real Chromium/Nuxt/Go/PG; isolated synthetic provider; no paid model or actual UAT state",
+      "final_state": {
+        "provider_calls": 8,
+        "runs": [
+          {
+            "batches": 1,
+            "charged": true,
+            "cumulative": true,
+            "disposition": "saved",
+            "drafts": 0,
+            "status": "valid",
+            "username": "qa127_1789091839962"
+          },
+          {
+            "batches": 0,
+            "charged": false,
+            "cumulative": false,
+            "disposition": "pending",
+            "drafts": 0,
+            "status": "validation_failed",
+            "username": "qa127_1789091839962"
+          },
+          {
+            "batches": 0,
+            "charged": false,
+            "cumulative": false,
+            "disposition": "pending",
+            "drafts": 0,
+            "status": "provider_failed",
+            "username": "qa127_1789091839962"
+          },
+          {
+            "batches": 0,
+            "charged": true,
+            "cumulative": true,
+            "disposition": "pending",
+            "drafts": 0,
+            "status": "user_cancelled",
+            "username": "qa127_1789091839962"
+          },
+          {
+            "batches": 0,
+            "charged": false,
+            "cumulative": false,
+            "disposition": "pending",
+            "drafts": 0,
+            "status": "stream_failed",
+            "username": "qa127_1789091839962"
+          },
+          {
+            "batches": 0,
+            "charged": true,
+            "cumulative": true,
+            "disposition": "pending",
+            "drafts": 1,
+            "status": "valid",
+            "username": "qa127_1789091839962"
+          },
+          {
+            "batches": 0,
+            "charged": false,
+            "cumulative": false,
+            "disposition": "pending",
+            "drafts": 0,
+            "status": "validation_failed",
+            "username": "qa127_1789091839962"
+          },
+          {
+            "batches": 0,
+            "charged": true,
+            "cumulative": true,
+            "disposition": "pending",
+            "drafts": 1,
+            "status": "valid",
+            "username": "qa127_1789091839962"
+          }
+        ]
+      }
+    }
+  ],
+  "wire_counterexample": {
+    "chunk_id": "1a73bd",
+    "wall_time_seconds": 0.000001208,
+    "exit_code": 0,
+    "original_token_count": 159,
+    "output": "{\"passed\":true,\"mode\":\"large-wire-reference\",\"node\":\"v22.22.2\",\"http_status\":200,\"events\":287,\"terminal\":\"generation.validated\",\"validated_data_characters\":1166301,\"validated_data_bytes\":1166301,\"clean_passage_characters\":1166027,\"clean_sha256\":\"918e7c78fd4f9f6eca21de5a92d83b9ca77ba6815ba63d06d8b74d6eb1c2c0dd\",\"clean_equals_final\":true,\"span_matches\":true,\"annotated_text_visible\":false,\"frontend_parser_limit\":1048576,\"limit_unit\":\"JS string buffer (ASCII fixture has equal bytes/chars)\",\"frontend_library_errors\":[\"max-buffer-size-exceeded\",\"Error\"],\"frontend_library_validated_seen\":false,\"provider_calls_for_this_reference\":1}\n"
+  },
+  "source_receipts": [
+    {
+      "evidence": ".planning/milestones/M001/implementation/evidence/ai-consumer-126/developer.json",
+      "sha256": "606a12aac5685662e3bdb4c01ab4cb6bc877c162f47a6f4c467b0045af09a63a",
+      "checked": [
+        {
+          "path": "frontend/app/runtime/stores/generation.ts",
+          "sha256": "e6c4541af4f8948dd80f830e07aa7d16a072a27843c91bb02762d68983b50a3c",
+          "actual_sha256": "e6c4541af4f8948dd80f830e07aa7d16a072a27843c91bb02762d68983b50a3c",
+          "matches": true
+        },
+        {
+          "path": "frontend/app/infrastructure/http/repositories/api-repository.ts",
+          "sha256": "7fb7ba63e6066688676e83f5889af4a8f2ed04c2124090cf5c8cb4b712b822d9",
+          "actual_sha256": "7fb7ba63e6066688676e83f5889af4a8f2ed04c2124090cf5c8cb4b712b822d9",
+          "matches": true
+        },
+        {
+          "path": "frontend/app/application/shared/models.ts",
+          "sha256": "1dd10c4db3a1dbb304c0cb7c845b74687172c0615f100797cfd8082c0267e71a",
+          "actual_sha256": "1dd10c4db3a1dbb304c0cb7c845b74687172c0615f100797cfd8082c0267e71a",
+          "matches": true
+        },
+        {
+          "path": "frontend/app/application/generation/reducer.ts",
+          "sha256": "3df229af25fed8cb4bccc8e28b3eb6bdf8cc0e184d27b38c60d7571d870d533e",
+          "actual_sha256": "3df229af25fed8cb4bccc8e28b3eb6bdf8cc0e184d27b38c60d7571d870d533e",
+          "matches": true
+        },
+        {
+          "path": "frontend/tests/unit/generation-lifecycle.test.ts",
+          "sha256": "903fbe9ba6d12a9e62615147ad6d0c39f905d1ab1ae630f88b28221f4fccef45",
+          "actual_sha256": "903fbe9ba6d12a9e62615147ad6d0c39f905d1ab1ae630f88b28221f4fccef45",
+          "matches": true
+        },
+        {
+          "path": "frontend/tests/unit/generation-stream.test.ts",
+          "sha256": "44a51a20314b55e8253a1c8769f858a7aa8aefb37bedf987c8c14126656b6eb9",
+          "actual_sha256": "44a51a20314b55e8253a1c8769f858a7aa8aefb37bedf987c8c14126656b6eb9",
+          "matches": true
+        },
+        {
+          "path": "frontend/tests/unit/generation-refund-contract.test.ts",
+          "sha256": "2f50ffbe8598a761771c3aa2ae546980be887c306d20d1a157b97bb035cbe12a",
+          "actual_sha256": "2f50ffbe8598a761771c3aa2ae546980be887c306d20d1a157b97bb035cbe12a",
+          "matches": true
+        },
+        {
+          "path": "frontend/tests/e2e/generation-stream-backend.mjs",
+          "sha256": "aab603ed82268a1066eb3902295ffaafa64a89dd0abcd91fe2a41c9f2b199ea2",
+          "actual_sha256": "aab603ed82268a1066eb3902295ffaafa64a89dd0abcd91fe2a41c9f2b199ea2",
+          "matches": true
+        },
+        {
+          "path": "frontend/tests/e2e/generation-consumer.mjs",
+          "sha256": "e24379003d336a6c4e6e84e53c9a5c2cb58d33ae272dc02d6846c91dcaa858c4",
+          "actual_sha256": "e24379003d336a6c4e6e84e53c9a5c2cb58d33ae272dc02d6846c91dcaa858c4",
+          "matches": true
+        },
+        {
+          "path": "frontend/app/pages/create.vue",
+          "sha256": "8675b54daa840dcef724c7e11a144b6693f67d17836f25fc4ff440a0641b8aee",
+          "actual_sha256": "8675b54daa840dcef724c7e11a144b6693f67d17836f25fc4ff440a0641b8aee",
+          "matches": true
+        },
+        {
+          "path": "frontend/app/presentation/components/AppError.vue",
+          "sha256": "8ac6bce69445de359b47e707d9fd81668734eaf6e72cc24c991bba9feb7630de",
+          "actual_sha256": "8ac6bce69445de359b47e707d9fd81668734eaf6e72cc24c991bba9feb7630de",
+          "matches": true
+        },
+        {
+          "path": "frontend/package.json",
+          "sha256": "87f255525fda44fdafab63f6cda842e84403fdb51c740dc3e1da5b2d2b76fefa",
+          "actual_sha256": "87f255525fda44fdafab63f6cda842e84403fdb51c740dc3e1da5b2d2b76fefa",
+          "matches": true
+        },
+        {
+          "path": "frontend/pnpm-lock.yaml",
+          "sha256": "30755e9b138d5d5c7adcf9eda4636cbbcbc0f6c505558b2bd94a8eecf7f5872e",
+          "actual_sha256": "30755e9b138d5d5c7adcf9eda4636cbbcbc0f6c505558b2bd94a8eecf7f5872e",
+          "matches": true
+        }
+      ]
+    },
+    {
+      "evidence": ".planning/milestones/M001/implementation/evidence/ai-races-125/developer.json",
+      "sha256": "42a58ce48dbd34957639bda6f4a54891fda6e0da86276454b1b4031f08dd65e6",
+      "checked": [
+        {
+          "path": "backend/internal/generation/service.go",
+          "sha256": "388df203038c7136909dffe71d49a637be50ef312ea838add38850e45c1045d7",
+          "actual_sha256": "388df203038c7136909dffe71d49a637be50ef312ea838add38850e45c1045d7",
+          "matches": true
+        },
+        {
+          "path": "backend/internal/httpapi/generation_races_integration_test.go",
+          "sha256": "c33259f407183845172e7841d695ddb9349dbb17cd681a4d260b94fb73bb8d1b",
+          "actual_sha256": "c33259f407183845172e7841d695ddb9349dbb17cd681a4d260b94fb73bb8d1b",
+          "matches": true
+        },
+        {
+          "path": "backend/internal/httpapi/generation_reservation_integration_test.go",
+          "sha256": "7ddddf913fa0c124fe9d1ce9c23c683d70481e6f5bda85e7a809c0650422379f",
+          "actual_sha256": "7ddddf913fa0c124fe9d1ce9c23c683d70481e6f5bda85e7a809c0650422379f",
+          "matches": true
+        },
+        {
+          "path": "backend/internal/httpapi/generation_diagnostic_test.go",
+          "sha256": "3ce48211f5bdb39cf4ff7365cc3a501e8ec58ce56dcf53dafad5d91a666d2385",
+          "actual_sha256": "3ce48211f5bdb39cf4ff7365cc3a501e8ec58ce56dcf53dafad5d91a666d2385",
+          "matches": true
+        },
+        {
+          "path": "backend/internal/httpapi/stream_boundaries_integration_test.go",
+          "sha256": "73af0e1a77798b77b446900aa6185326c7f008fd003f7b6aa2c052656302314a",
+          "actual_sha256": "73af0e1a77798b77b446900aa6185326c7f008fd003f7b6aa2c052656302314a",
+          "matches": true
+        },
+        {
+          "path": "backend/internal/ai/schema_boundaries_test.go",
+          "sha256": "df5157a5c9dd834c5456a0b2d0e925534a1c4e2bef6b933b8ca5410fa5468ad8",
+          "actual_sha256": "df5157a5c9dd834c5456a0b2d0e925534a1c4e2bef6b933b8ca5410fa5468ad8",
+          "matches": true
+        }
+      ]
+    },
+    {
+      "evidence": ".planning/milestones/M001/implementation/evidence/ai-boundaries-125/developer.json",
+      "sha256": "e63a315aebb76d2b335a67f125a48db2e1375958f59a932fe54b964b1f7a0df1",
+      "checked": [
+        {
+          "path": "backend/internal/ai/openrouter.go",
+          "sha256": "a4723b2daa88d06a7ed1fecf9fa44b13c22bd932d94b864953098cdd9768f878",
+          "bytes": 26212,
+          "actual_sha256": "a4723b2daa88d06a7ed1fecf9fa44b13c22bd932d94b864953098cdd9768f878",
+          "matches": true
+        },
+        {
+          "path": "backend/internal/ai/transport_boundaries_test.go",
+          "sha256": "46d42f88949c33e0c10a3003fdd90eacf0b6d105f2bfe2f101b7210ba024460f",
+          "bytes": 5349,
+          "actual_sha256": "46d42f88949c33e0c10a3003fdd90eacf0b6d105f2bfe2f101b7210ba024460f",
+          "matches": true
+        },
+        {
+          "path": "backend/internal/ai/schema_boundaries_test.go",
+          "sha256": "3286b4dbf241afc0182242d5358f2baa50adb806b0a36c1abed7ce8dad227cc4",
+          "bytes": 4063,
+          "actual_sha256": "df5157a5c9dd834c5456a0b2d0e925534a1c4e2bef6b933b8ca5410fa5468ad8",
+          "matches": false
+        },
+        {
+          "path": "backend/internal/httpapi/stream_boundaries_integration_test.go",
+          "sha256": "db444031e1f86372405a0d9225fda5f5b84c2d8148ed93bf485bff7e602ae5ad",
+          "bytes": 13969,
+          "actual_sha256": "73af0e1a77798b77b446900aa6185326c7f008fd003f7b6aa2c052656302314a",
+          "matches": false
+        },
+        {
+          "path": "backend/internal/ai/diagnostic.go",
+          "sha256": "2b6701bffce196ea9e73813239353f46b9ae88d0ae7f895dbbf5aa2c9d5010dd",
+          "bytes": 2945,
+          "actual_sha256": "2b6701bffce196ea9e73813239353f46b9ae88d0ae7f895dbbf5aa2c9d5010dd",
+          "matches": true
+        },
+        {
+          "path": "backend/internal/httpapi/generation_handlers.go",
+          "sha256": "c4545f8183c6d639113805ddadad95d70e4dc178a0ef69cf6aca644a4592d944",
+          "bytes": 12748,
+          "actual_sha256": "c4545f8183c6d639113805ddadad95d70e4dc178a0ef69cf6aca644a4592d944",
+          "matches": true
+        }
+      ]
+    },
+    {
+      "evidence": ".planning/milestones/M001/implementation/evidence/ai-p0-123/developer.json",
+      "sha256": "ac14076538f00ee558dfb9b650753d3842795666e2dc169dfe3d3b8282745d1e",
+      "checked": [
+        {
+          "path": "backend/internal/ai/diagnostic.go",
+          "sha256": "2b6701bffce196ea9e73813239353f46b9ae88d0ae7f895dbbf5aa2c9d5010dd",
+          "actual_sha256": "2b6701bffce196ea9e73813239353f46b9ae88d0ae7f895dbbf5aa2c9d5010dd",
+          "matches": true
+        },
+        {
+          "path": "backend/internal/ai/diagnostic_test.go",
+          "sha256": "85a07e3e1a1cb7174b8d12cf95faecda8963bf8996a88f0b10128f3f0d741a31",
+          "actual_sha256": "85a07e3e1a1cb7174b8d12cf95faecda8963bf8996a88f0b10128f3f0d741a31",
+          "matches": true
+        },
+        {
+          "path": "backend/internal/ai/protocol_matrix_test.go",
+          "sha256": "e77bcf1333471fb3cf7db7dd70be8148913f8615bacffab189eddede3ba48118",
+          "actual_sha256": "e77bcf1333471fb3cf7db7dd70be8148913f8615bacffab189eddede3ba48118",
+          "matches": true
+        },
+        {
+          "path": "backend/internal/ai/validator.go",
+          "sha256": "b8b7edf01ff227bafec21f5573c80533adab8ea48b3c32ed333e096f4356cad4",
+          "actual_sha256": "b8b7edf01ff227bafec21f5573c80533adab8ea48b3c32ed333e096f4356cad4",
+          "matches": true
+        },
+        {
+          "path": "backend/internal/ai/openrouter.go",
+          "sha256": "0efe28e9bc1600ca75ec5e4ab9eb6082a7530b3523c986f1496bea26dc4c859a",
+          "actual_sha256": "a4723b2daa88d06a7ed1fecf9fa44b13c22bd932d94b864953098cdd9768f878",
+          "matches": false
+        },
+        {
+          "path": "backend/internal/httpapi/generation_diagnostic.go",
+          "sha256": "6f3cbcd222be1c78eb31df6512c031d9e3a5277dd83e5000d49851e03a158590",
+          "actual_sha256": "6f3cbcd222be1c78eb31df6512c031d9e3a5277dd83e5000d49851e03a158590",
+          "matches": true
+        },
+        {
+          "path": "backend/internal/httpapi/generation_handlers.go",
+          "sha256": "4d2e7aa587c30bec2f0e58a5eb915347d10e9a7936164643b99bb11c8fc19730",
+          "actual_sha256": "c4545f8183c6d639113805ddadad95d70e4dc178a0ef69cf6aca644a4592d944",
+          "matches": false
+        },
+        {
+          "path": "backend/internal/httpapi/generation_matrix_integration_test.go",
+          "sha256": "3d5b557277566ccfb5dc9abb151851603d3f41c52e9b93cb605fd6226c193011",
+          "actual_sha256": "3e35f9d29485b735a6951c9e2edc78c0176ecab56c3c2ce11d70590b28723ee8",
+          "matches": false
+        }
+      ]
+    },
+    {
+      "evidence": ".planning/milestones/M001/implementation/evidence/ai-refund-124/developer.json",
+      "sha256": "d5c3b134e1cc5d9c1ba726b53ebf5cb77be635306a6e864d8e74ed3ecd05a82a",
+      "checked": [
+        {
+          "path": "backend/internal/generation/registry.go",
+          "sha256": "74accbbab89f19a1f176d2b028acd6c794d511c93e2730cd62399ad304c5f70f",
+          "actual_sha256": "74accbbab89f19a1f176d2b028acd6c794d511c93e2730cd62399ad304c5f70f",
+          "matches": true
+        },
+        {
+          "path": "backend/internal/generation/settlement.go",
+          "sha256": "d4be59780709d9c2fe4087997d7e835b6270777d6a431cd26e7662997cad90a5",
+          "actual_sha256": "d4be59780709d9c2fe4087997d7e835b6270777d6a431cd26e7662997cad90a5",
+          "matches": true
+        },
+        {
+          "path": "backend/internal/generation/registry_settlement_test.go",
+          "sha256": "95d2cf98ebc532611313f092e23cb1d13c40945e41c2d0dc9823e6874114e51f",
+          "actual_sha256": "95d2cf98ebc532611313f092e23cb1d13c40945e41c2d0dc9823e6874114e51f",
+          "matches": true
+        },
+        {
+          "path": "backend/internal/maintenance/maintenance.go",
+          "sha256": "11a351a8532361074a9ac7d02d5cbccb02c5da4d203355655446f7155c6c1dba",
+          "actual_sha256": "11a351a8532361074a9ac7d02d5cbccb02c5da4d203355655446f7155c6c1dba",
+          "matches": true
+        },
+        {
+          "path": "backend/internal/httpapi/generation_handlers.go",
+          "sha256": "c4545f8183c6d639113805ddadad95d70e4dc178a0ef69cf6aca644a4592d944",
+          "actual_sha256": "c4545f8183c6d639113805ddadad95d70e4dc178a0ef69cf6aca644a4592d944",
+          "matches": true
+        },
+        {
+          "path": "backend/internal/httpapi/generation_matrix_integration_test.go",
+          "sha256": "3e35f9d29485b735a6951c9e2edc78c0176ecab56c3c2ce11d70590b28723ee8",
+          "actual_sha256": "3e35f9d29485b735a6951c9e2edc78c0176ecab56c3c2ce11d70590b28723ee8",
+          "matches": true
+        },
+        {
+          "path": "backend/internal/httpapi/refund_recovery_integration_test.go",
+          "sha256": "23d07998afcb3ec7a6b61f7926803f801a3cfd3da727ac22a4fe56c375254adb",
+          "actual_sha256": "23d07998afcb3ec7a6b61f7926803f801a3cfd3da727ac22a4fe56c375254adb",
+          "matches": true
+        },
+        {
+          "path": "frontend/app/infrastructure/http/schemas/generation.ts",
+          "sha256": "8cf6e5710eb448ac1958768f22d9ece192ebbb570f37f5578d78de39c49849cc",
+          "actual_sha256": "8cf6e5710eb448ac1958768f22d9ece192ebbb570f37f5578d78de39c49849cc",
+          "matches": true
+        },
+        {
+          "path": "frontend/tests/unit/generation-refund-contract.test.ts",
+          "sha256": "e586194926725ab2c5cb7a4eb2f5cdd6ffe98010e1ceacf3fa6452bef3ed23e7",
+          "actual_sha256": "2f50ffbe8598a761771c3aa2ae546980be887c306d20d1a157b97bb035cbe12a",
+          "matches": false
+        }
+      ]
+    }
+  ],
+  "superseded_receipts": [
+    {
+      "path": "backend/internal/ai/schema_boundaries_test.go",
+      "historical": "3286b4dbf241afc0182242d5358f2baa50adb806b0a36c1abed7ce8dad227cc4",
+      "current": "df5157a5c9dd834c5456a0b2d0e925534a1c4e2bef6b933b8ca5410fa5468ad8",
+      "current_receipt_exists": true
+    },
+    {
+      "path": "backend/internal/httpapi/stream_boundaries_integration_test.go",
+      "historical": "db444031e1f86372405a0d9225fda5f5b84c2d8148ed93bf485bff7e602ae5ad",
+      "current": "73af0e1a77798b77b446900aa6185326c7f008fd003f7b6aa2c052656302314a",
+      "current_receipt_exists": true
+    },
+    {
+      "path": "backend/internal/ai/openrouter.go",
+      "historical": "0efe28e9bc1600ca75ec5e4ab9eb6082a7530b3523c986f1496bea26dc4c859a",
+      "current": "a4723b2daa88d06a7ed1fecf9fa44b13c22bd932d94b864953098cdd9768f878",
+      "current_receipt_exists": true
+    },
+    {
+      "path": "backend/internal/httpapi/generation_handlers.go",
+      "historical": "4d2e7aa587c30bec2f0e58a5eb915347d10e9a7936164643b99bb11c8fc19730",
+      "current": "c4545f8183c6d639113805ddadad95d70e4dc178a0ef69cf6aca644a4592d944",
+      "current_receipt_exists": true
+    },
+    {
+      "path": "backend/internal/httpapi/generation_matrix_integration_test.go",
+      "historical": "3d5b557277566ccfb5dc9abb151851603d3f41c52e9b93cb605fd6226c193011",
+      "current": "3e35f9d29485b735a6951c9e2edc78c0176ecab56c3c2ce11d70590b28723ee8",
+      "current_receipt_exists": true
+    },
+    {
+      "path": "frontend/tests/unit/generation-refund-contract.test.ts",
+      "historical": "e586194926725ab2c5cb7a4eb2f5cdd6ffe98010e1ceacf3fa6452bef3ed23e7",
+      "current": "2f50ffbe8598a761771c3aa2ae546980be887c306d20d1a157b97bb035cbe12a",
+      "current_receipt_exists": true
+    }
+  ],
+  "fixture_files": {
+    ".planning/milestones/M001/verification/evidence/ai-integration-127/qa127_browser_test.go": {
+      "sha256": "b083f19b9dd7544a6bdd9b0e80533ff767af08234c888f82e1d6d35263d55605",
+      "bytes": 5905
+    },
+    ".planning/milestones/M001/verification/evidence/ai-integration-127/browser.mjs": {
+      "sha256": "53afc6077aa728ef83209a72bc9b68e3a5157c88333188828bd46cc825b4c146",
+      "bytes": 7938
+    },
+    ".planning/milestones/M001/verification/evidence/ai-integration-127/wire-reference.mjs": {
+      "sha256": "8effbd345b52f36c2a5179e9b20ce11c9fa4e17c25eb143397ebdd613830d097",
+      "bytes": 3282
+    },
+    "frontend/nuxt.config.ts": {
+      "sha256": "79ff48fd004b22e14456d2117552d85c7b7b325259d906c3298f50c56d768a3c",
+      "bytes": 2096
+    }
+  },
+  "environment": {
+    "go_image": "sha256:587c6fae871c9d14eb79352bd3df80670ffb2c297997085aefc39797f3e8af37",
+    "postgres_image": "sha256:b85269e8c6aa961524542eb4dcca44c4aa1deba2cf507e9e28d5ba8f971aeab9",
+    "frontend_image": "f3478a781ce1",
+    "frontend_runtime": {
+      "chunk_id": "ae796c",
+      "wall_time_seconds": 0.036437958,
+      "exit_code": 0,
+      "original_token_count": 119,
+      "output": "{\"node\":\"v24.8.0\",\"files\":[{\"path\":\"package.json\",\"sha256\":\"87f255525fda44fdafab63f6cda842e84403fdb51c740dc3e1da5b2d2b76fefa\"},{\"path\":\"pnpm-lock.yaml\",\"sha256\":\"30755e9b138d5d5c7adcf9eda4636cbbcbc0f6c505558b2bd94a8eecf7f5872e\"},{\"path\":\"nuxt.config.ts\",\"sha256\":\"79ff48fd004b22e14456d2117552d85c7b7b325259d906c3298f50c56d768a3c\"},{\"path\":\"app/infrastructure/http/repositories/api-repository.ts\",\"sha256\":\"7fb7ba63e6066688676e83f5889af4a8f2ed04c2124090cf5c8cb4b712b822d9\"}]}\n"
+    },
+    "browser": "headless Chromium via locally installed Playwright; host Node22; final wire process reported22.22.2, shell node22.23.2; appNode24.8.0",
+    "network": "PG internal-only network. App and QA-control also attached isolated edge network for loopback publication; browser external destinations blocked; provider base pinned in fixture to local httptest server. Not claiming all-process egress sandbox."
+  },
+  "raw_browser_runs": [
+    {
+      "chunk_id": "caa9b2",
+      "wall_time_seconds": 0.672877334,
+      "exit_code": 1,
+      "original_token_count": 237,
+      "output": "node:internal/modules/run_main:123\n    triggerUncaughtException(\n    ^\n\napiRequestContext.get: connect ECONNREFUSED 127.0.0.1:16011\nCall log:\n\u001b[2m  - → GET http://127.0.0.1:16011/api/v1/bootstrap\u001b[22m\n\u001b[2m    - user-agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/151.0.7922.34 Safari/537.36\u001b[22m\n\u001b[2m    - accept: */*\u001b[22m\n\u001b[2m    - accept-encoding: gzip,deflate,br\u001b[22m\n\n    at /Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/.planning/milestones/M001/verification/evidence/ai-integration-127/browser.mjs:40:35 {\n  log: [\n    '  - → GET http://127.0.0.1:16011/api/v1/bootstrap',\n    '    - user-agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/151.0.7922.34 Safari/537.36',\n    '    - accept: */*',\n    '    - accept-encoding: gzip,deflate,br'\n  ],\n  name: 'Error'\n}\n\nNode.js v22.23.2\n"
+    },
+    {
+      "chunk_id": "81021b",
+      "wall_time_seconds": 0.733597084,
+      "exit_code": 1,
+      "original_token_count": 117,
+      "output": "node:internal/modules/run_main:123\n    triggerUncaughtException(\n    ^\n\nAssertionError [ERR_ASSERTION]: real auth register\n\n403 !== 201\n\n    at file:///Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/.planning/milestones/M001/verification/evidence/ai-integration-127/browser.mjs:45:9 {\n  generatedMessage: false,\n  code: 'ERR_ASSERTION',\n  actual: 403,\n  expected: 201,\n  operator: 'strictEqual',\n  diff: 'simple'\n}\n\nNode.js v22.23.2\n"
+    },
+    {
+      "chunk_id": "5f7aef",
+      "wall_time_seconds": 1.001685,
+      "session_id": 83040,
+      "original_token_count": 0,
+      "output": ""
+    },
+    {
+      "chunk_id": "86f134",
+      "wall_time_seconds": 5.001432,
+      "session_id": 83040,
+      "original_token_count": 433,
+      "output": "{\"mode\":\"valid\",\"render\":{\"characters\":663,\"sha256\":\"8e6b10069d57a91ec0ed9e42d8744f8e1ea429eddfd88154ad205335cf630732\",\"has_provider_annotation\":false},\"db_before_recovery\":{\"batches\":1,\"charged\":true,\"cumulative\":true,\"disposition\":\"saved\",\"drafts\":0,\"status\":\"valid\",\"username\":\"qa127_1789091839962\"},\"provider_calls\":1,\"passed\":true,\"streams\":1,\"cancels\":0,\"save_requests\":1,\"page_errors\":[],\"transport\":[{\"status\":200,\"body_unavailable_after_client_close\":true}],\"elapsed_ms\":8859}\n{\"mode\":\"invalid\",\"db_before_recovery\":{\"batches\":0,\"charged\":false,\"cumulative\":false,\"disposition\":\"pending\",\"drafts\":0,\"status\":\"validation_failed\",\"username\":\"qa127_1789091839962\"},\"provider_calls\":1,\"passed\":true,\"streams\":1,\"cancels\":0,\"save_requests\":0,\"page_errors\":[],\"transport\":[{\"status\":200,\"body_unavailable_after_client_close\":true}],\"elapsed_ms\":1560}\n{\"mode\":\"open-error\",\"db_before_recovery\":{\"batches\":0,\"charged\":false,\"cumulative\":false,\"disposition\":\"pending\",\"drafts\":0,\"status\":\"provider_failed\",\"username\":\"qa127_1789091839962\"},\"provider_calls\":1,\"passed\":true,\"streams\":1,\"cancels\":0,\"save_requests\":0,\"page_errors\":[],\"transport\":[{\"status\":503,\"event_counts\":{},\"max_data_bytes\":0,\"delta_chars\":0,\"delta_sha256\":\"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\"final_chars\":null,\"final_sha256\":null,\"failure\":null}],\"elapsed_ms\":1656}\n{\"mode\":\"cancel\",\"db_before_recovery\":{\"batches\":0,\"charged\":true,\"cumulative\":true,\"disposition\":\"pending\",\"drafts\":0,\"status\":\"user_cancelled\",\"username\":\"qa127_1789091839962\"},\"provider_calls\":1,\"passed\":true,\"streams\":1,\"cancels\":1,\"save_requests\":0,\"page_errors\":[],\"transport\":[{\"status\":200,\"body_unavailable_after_client_close\":true}],\"elapsed_ms\":1356}\n"
+    },
+    {
+      "chunk_id": "84d904",
+      "wall_time_seconds": 5.000794792,
+      "session_id": 83040,
+      "original_token_count": 91,
+      "output": "{\"mode\":\"leave\",\"db_before_recovery\":{\"batches\":0,\"charged\":false,\"cumulative\":false,\"disposition\":\"pending\",\"drafts\":0,\"status\":\"stream_failed\",\"username\":\"qa127_1789091839962\"},\"provider_calls\":1,\"passed\":true,\"streams\":1,\"cancels\":0,\"save_requests\":0,\"page_errors\":[],\"transport\":[{\"status\":200,\"body_unavailable_after_client_close\":true}],\"elapsed_ms\":1260}\n"
+    },
+    {
+      "chunk_id": "b40128",
+      "wall_time_seconds": 0.000001833,
+      "exit_code": 1,
+      "original_token_count": 717,
+      "output": "{\"mode\":\"slow\",\"render\":{\"characters\":663,\"sha256\":\"8e6b10069d57a91ec0ed9e42d8744f8e1ea429eddfd88154ad205335cf630732\",\"has_provider_annotation\":false},\"db_before_recovery\":{\"batches\":0,\"charged\":true,\"cumulative\":true,\"disposition\":\"pending\",\"drafts\":1,\"status\":\"valid\",\"username\":\"qa127_1789091839962\"},\"provider_calls\":1,\"passed\":true,\"streams\":1,\"cancels\":0,\"save_requests\":0,\"page_errors\":[],\"transport\":[{\"status\":200,\"body_unavailable_after_client_close\":true}],\"elapsed_ms\":21642}\n{\"mode\":\"refund-pending\",\"db_before_recovery\":{\"batches\":0,\"charged\":true,\"cumulative\":false,\"disposition\":\"pending\",\"drafts\":0,\"status\":\"active\",\"username\":\"qa127_1789091839962\"},\"db_after_timer\":{\"batches\":0,\"charged\":false,\"cumulative\":false,\"disposition\":\"pending\",\"drafts\":0,\"status\":\"validation_failed\",\"username\":\"qa127_1789091839962\"},\"provider_calls\":1,\"passed\":true,\"streams\":1,\"cancels\":0,\"save_requests\":0,\"page_errors\":[],\"transport\":[{\"status\":200,\"body_unavailable_after_client_close\":true}],\"elapsed_ms\":5055}\n{\"mode\":\"large\",\"visible_error\":\"The service returned content we could not read. Try again shortly.\",\"save_visible\":false,\"db_before_recovery\":{\"batches\":0,\"charged\":true,\"cumulative\":true,\"disposition\":\"pending\",\"drafts\":1,\"status\":\"valid\",\"username\":\"qa127_1789091839962\"},\"provider_calls\":1,\"passed\":false,\"assertion\":\"backend accepted and charged valid output must remain saveable\\n\\nfalse !== true\\n\",\"streams\":1,\"cancels\":0,\"save_requests\":0,\"page_errors\":[],\"transport\":[{\"status\":200,\"body_unavailable_after_client_close\":true}],\"elapsed_ms\":4590}\n{\"summary\":true,\"passed\":7,\"failed\":1,\"scope\":\"real Chromium/Nuxt/Go/PG; isolated synthetic provider; no paid model or actual UAT state\",\"final_state\":{\"provider_calls\":8,\"runs\":[{\"batches\":1,\"charged\":true,\"cumulative\":true,\"disposition\":\"saved\",\"drafts\":0,\"status\":\"valid\",\"username\":\"qa127_1789091839962\"},{\"batches\":0,\"charged\":false,\"cumulative\":false,\"disposition\":\"pending\",\"drafts\":0,\"status\":\"validation_failed\",\"username\":\"qa127_1789091839962\"},{\"batches\":0,\"charged\":false,\"cumulative\":false,\"disposition\":\"pending\",\"drafts\":0,\"status\":\"provider_failed\",\"username\":\"qa127_1789091839962\"},{\"batches\":0,\"charged\":true,\"cumulative\":true,\"disposition\":\"pending\",\"drafts\":0,\"status\":\"user_cancelled\",\"username\":\"qa127_1789091839962\"},{\"batches\":0,\"charged\":false,\"cumulative\":false,\"disposition\":\"pending\",\"drafts\":0,\"status\":\"stream_failed\",\"username\":\"qa127_1789091839962\"},{\"batches\":0,\"charged\":true,\"cumulative\":true,\"disposition\":\"pending\",\"drafts\":1,\"status\":\"valid\",\"username\":\"qa127_1789091839962\"},{\"batches\":0,\"charged\":false,\"cumulative\":false,\"disposition\":\"pending\",\"drafts\":0,\"status\":\"validation_failed\",\"username\":\"qa127_1789091839962\"},{\"batches\":0,\"charged\":true,\"cumulative\":true,\"disposition\":\"pending\",\"drafts\":1,\"status\":\"valid\",\"username\":\"qa127_1789091839962\"}]}}\n"
+    }
+  ],
+  "raw_synthetic_backend_log": {
+    "chunk_id": "850ab2",
+    "wall_time_seconds": 0.000005875,
+    "exit_code": 0,
+    "original_token_count": 3279,
+    "output": "=== RUN   TestQA127BrowserBoundary\n    qa127_browser_test.go:123: QA127 ready: isolated HTTP, PG, synthetic provider; control excludes credentials and generated text\n=== RUN   TestQA127BrowserBoundary\n    qa127_browser_test.go:123: QA127 ready: isolated HTTP, PG, synthetic provider; control excludes credentials and generated text\n2026/09/11 01:57:01 INFO http_request request_id=req_4vvyfd63q9QRIDdCNievIw method=GET route=/api/v1/bootstrap status=200 duration_ms=11\n2026/09/11 01:57:07 INFO http_request request_id=req_C1K5VUzpxrdTXuxAp7ZX9Q method=GET route=/api/v1/bootstrap status=200 duration_ms=3\n2026/09/11 01:57:07 INFO http_request request_id=req_DPn7BMa2ch25IveDtTcObA method=POST route=/api/v1/auth/register status=403 duration_ms=4\n2026/09/11 01:57:19 INFO http_request request_id=req_5e5I8zttTbvibXKIxkv_mA method=GET route=/api/v1/bootstrap status=200 duration_ms=3\n2026/09/11 01:57:20 INFO http_request request_id=req_jYe0GEYAO2fSMTkb83ky4A method=POST route=/api/v1/auth/register status=201 duration_ms=241\n2026/09/11 01:57:23 INFO http_request request_id=req_tMMVHgZ0Lx1Qzs2LbyQ5eQ method=GET route=/api/v1/bootstrap status=200 duration_ms=2\n2026/09/11 01:57:24 INFO http_request request_id=req_TxRwVofiLwLBqS4beAUlBg method=GET route=/api/v1/generation-options status=200 duration_ms=5\n2026/09/11 01:57:28 INFO http_request request_id=req_PKPYc8cNbqc3KzEKH7eoVg method=GET route=/api/v1/vocabulary/search status=200 duration_ms=16\n2026/09/11 01:57:28 INFO http_request request_id=req_JEa7196SD35cbY80cvgddg method=GET route=/api/v1/bootstrap status=200 duration_ms=1\n2026/09/11 01:57:28 INFO ai_generation_request_finished request_id=req_XmeNrDMzXGHHN95p0prl9Q run_id=01a08e2f-2283-7604-adfa-8b2cfeb1689c model_id=01a08e2e-a438-7d51-a1ef-2f4517293113 elapsed_ms=17\n2026/09/11 01:57:28 INFO http_request request_id=req_XmeNrDMzXGHHN95p0prl9Q method=POST route=/api/v1/generations/stream status=200 duration_ms=18\n2026/09/11 01:57:28 INFO http_request request_id=req_qb_1SpV_urO7dTQJbiLxnA method=GET route=/api/v1/bootstrap status=200 duration_ms=0\n2026/09/11 01:57:28 INFO http_request request_id=req_0rPFmUXN895fYLK1X_288Q method=POST route=/api/v1/generations/{run_id}/save status=201 duration_ms=11\n2026/09/11 01:57:29 INFO http_request request_id=req_hIbLj0cNI7rA0NrNCMcTcw method=GET route=/api/v1/bootstrap status=200 duration_ms=0\n2026/09/11 01:57:29 INFO http_request request_id=req_6UxIma4fRbBCU4TsU_urOw method=GET route=/api/v1/generation-options status=200 duration_ms=1\n2026/09/11 01:57:30 INFO http_request request_id=req_5bdRAx6KwufLGhdOtu5fTw method=GET route=/api/v1/vocabulary/search status=200 duration_ms=5\n2026/09/11 01:57:30 INFO http_request request_id=req_Yp10cFYVLBPhb6E2ZOyvlA method=GET route=/api/v1/bootstrap status=200 duration_ms=1\n2026/09/11 01:57:30 WARN ai_candidate_validation_failed request_id=req_MuBdAUFrVv24_NoCa9-4vw run_id=01a08e2f-2927-7d53-8e6d-016cf4947a8d model_id=01a08e2e-a438-7d51-a1ef-2f4517293113 prompt_version=m001-v5 validator_version=m001-v5-wn31-r1 phase=validation stage=validation reason=passage_too_short field=passage target_index=-1 actual=2 limit=50 category=content_invalid\n2026/09/11 01:57:30 INFO ai_generation_settlement run_id=01a08e2f-2927-7d53-8e6d-016cf4947a8d stage=settlement outcome=failed quota_refunded=true failure_code=content_validation_failed\n2026/09/11 01:57:30 INFO ai_generation_request_finished request_id=req_MuBdAUFrVv24_NoCa9-4vw run_id=01a08e2f-2927-7d53-8e6d-016cf4947a8d model_id=01a08e2e-a438-7d51-a1ef-2f4517293113 elapsed_ms=8\n2026/09/11 01:57:30 INFO http_request request_id=req_MuBdAUFrVv24_NoCa9-4vw method=POST route=/api/v1/generations/stream status=200 duration_ms=9\n2026/09/11 01:57:30 INFO http_request request_id=req_MMEE10f1Oj5Fncn9UQo4NQ method=GET route=/api/v1/bootstrap status=200 duration_ms=0\n2026/09/11 01:57:30 INFO http_request request_id=req_3dwD0teSdI7-aBfakzM36A method=GET route=/api/v1/generation-options status=200 duration_ms=1\n2026/09/11 01:57:31 INFO http_request request_id=req_z_tXQJOde5paoibSW2lgsA method=GET route=/api/v1/vocabulary/search status=200 duration_ms=5\n2026/09/11 01:57:32 INFO http_request request_id=req_hzW2khwL51QEgmhvJvDS4w method=GET route=/api/v1/bootstrap status=200 duration_ms=0\n2026/09/11 01:57:32 WARN ai_generation_failure request_id=req_2G1hOhMJE6bxNdpV0Slstw run_id=01a08e2f-2f99-761e-8de5-0b99ee582169 model_id=01a08e2e-a438-7d51-a1ef-2f4517293113 prompt_version=m001-v5 validator_version=m001-v5-wn31-r1 phase=provider_open stage=provider_open reason=provider_unavailable field=\"\" target_index=-1 provider_retryable=true\n2026/09/11 01:57:32 INFO ai_generation_settlement run_id=01a08e2f-2f99-761e-8de5-0b99ee582169 stage=settlement outcome=failed quota_refunded=true failure_code=provider_unavailable\n2026/09/11 01:57:32 INFO ai_generation_request_finished request_id=req_2G1hOhMJE6bxNdpV0Slstw run_id=01a08e2f-2f99-761e-8de5-0b99ee582169 model_id=01a08e2e-a438-7d51-a1ef-2f4517293113 elapsed_ms=3\n2026/09/11 01:57:32 INFO http_request request_id=req_2G1hOhMJE6bxNdpV0Slstw method=POST route=/api/v1/generations/stream status=503 duration_ms=3\n2026/09/11 01:57:32 INFO http_request request_id=req_ACw6tFhFHWvGeP1mtwKSBA method=GET route=/api/v1/bootstrap status=200 duration_ms=0\n2026/09/11 01:57:32 INFO http_request request_id=req_BvDutVO1oFCXmCXSnjFicQ method=GET route=/api/v1/generation-options status=200 duration_ms=1\n2026/09/11 01:57:33 INFO http_request request_id=req_hmHabLzXc5EslgwuLZ7oNQ method=GET route=/api/v1/vocabulary/search status=200 duration_ms=5\n2026/09/11 01:57:33 INFO http_request request_id=req_PUD5PifPsV_2lkevSjlCxQ method=GET route=/api/v1/bootstrap status=200 duration_ms=0\n2026/09/11 01:57:33 WARN ai_generation_failure request_id=req_JFEorWLvAuCcj78WXfJD1A run_id=01a08e2f-34bd-75b7-8a05-ee1f37bec231 model_id=01a08e2e-a438-7d51-a1ef-2f4517293113 prompt_version=m001-v5 validator_version=m001-v5-wn31-r1 phase=provider_receive stage=provider_receive reason=context_cancelled field=\"\" target_index=-1\n2026/09/11 01:57:33 INFO ai_generation_settlement run_id=01a08e2f-34bd-75b7-8a05-ee1f37bec231 stage=settlement outcome=cancelled quota_refunded=false failure_code=provider_unavailable\n2026/09/11 01:57:33 INFO ai_generation_request_finished request_id=req_JFEorWLvAuCcj78WXfJD1A run_id=01a08e2f-34bd-75b7-8a05-ee1f37bec231 model_id=01a08e2e-a438-7d51-a1ef-2f4517293113 elapsed_ms=118\n2026/09/11 01:57:33 INFO http_request request_id=req_JFEorWLvAuCcj78WXfJD1A method=POST route=/api/v1/generations/stream status=200 duration_ms=118\n2026/09/11 01:57:33 INFO http_request request_id=req_V66gbncLNv6WV2gvYkIDWQ method=POST route=/api/v1/generations/{run_id}/cancel status=200 duration_ms=2\n2026/09/11 01:57:33 INFO http_request request_id=req_LWhWChJOces1CErrS-OiFA method=GET route=/api/v1/bootstrap status=200 duration_ms=0\n2026/09/11 01:57:33 INFO http_request request_id=req_phwOqD_-L-ErS7d2zUvDTA method=GET route=/api/v1/generation-options status=200 duration_ms=1\n2026/09/11 01:57:34 INFO http_request request_id=req_coZHvmvdUBWoX52OvJjbQg method=GET route=/api/v1/vocabulary/search status=200 duration_ms=5\n2026/09/11 01:57:34 INFO http_request request_id=req_YPWTxSGt4F9D9bFZqsA6mg method=GET route=/api/v1/bootstrap status=200 duration_ms=0\n2026/09/11 01:57:34 INFO ai_generation_settlement run_id=01a08e2f-3957-7ad2-99d6-54b1dc62174c stage=settlement outcome=failed quota_refunded=true failure_code=browser_disconnected\n2026/09/11 01:57:34 INFO ai_generation_request_finished request_id=req_BXTSJxCcK7dxHk05L18UGA run_id=01a08e2f-3957-7ad2-99d6-54b1dc62174c model_id=01a08e2e-a438-7d51-a1ef-2f4517293113 elapsed_ms=120\n2026/09/11 01:57:34 INFO http_request request_id=req_BXTSJxCcK7dxHk05L18UGA method=POST route=/api/v1/generations/stream status=200 duration_ms=121\n2026/09/11 01:57:34 INFO http_request request_id=req_WwA5_bMuMnTHvZVbZRlcVg method=GET route=/api/v1/bootstrap status=200 duration_ms=0\n2026/09/11 01:57:34 INFO http_request request_id=req_HYFYQW2LF4aVQAizO1QPqQ method=GET route=/api/v1/generation-options status=200 duration_ms=1\n2026/09/11 01:57:35 INFO http_request request_id=req_LHwhy0nvkVV8dKuefNopRw method=GET route=/api/v1/vocabulary/search status=200 duration_ms=21\n2026/09/11 01:57:36 INFO http_request request_id=req_Ty2wHNthGK7jOOWvGuh-Ig method=GET route=/api/v1/bootstrap status=200 duration_ms=1\n2026/09/11 01:57:56 INFO ai_generation_request_finished request_id=req_NJKH5ElhQEm1h48yXlJoLg run_id=01a08e2f-3ebc-786e-9489-9746bcd04012 model_id=01a08e2e-a438-7d51-a1ef-2f4517293113 elapsed_ms=20120\n2026/09/11 01:57:56 INFO http_request request_id=req_NJKH5ElhQEm1h48yXlJoLg method=POST route=/api/v1/generations/stream status=200 duration_ms=20121\n2026/09/11 01:57:56 INFO http_request request_id=req_PfnoCvVILy19Lcll4N855Q method=GET route=/api/v1/bootstrap status=200 duration_ms=0\n2026/09/11 01:57:56 INFO http_request request_id=req_cQgaLJjfQG_WdtE1I0rCJQ method=GET route=/api/v1/generation-options status=200 duration_ms=2\n2026/09/11 01:57:57 INFO http_request request_id=req_eY-6koaoLYM_Ia_CgHIZAA method=GET route=/api/v1/vocabulary/search status=200 duration_ms=10\n2026/09/11 01:57:58 INFO http_request request_id=req_X_v8DX6TTBle6bp22mBNiQ method=GET route=/api/v1/bootstrap status=200 duration_ms=0\n2026/09/11 01:57:58 WARN ai_candidate_validation_failed request_id=req_l6YbfhBhsefSoGaNhXPvGA run_id=01a08e2f-9587-734a-bdf5-81be0f3a8127 model_id=01a08e2e-a438-7d51-a1ef-2f4517293113 prompt_version=m001-v5 validator_version=m001-v5-wn31-r1 phase=validation stage=validation reason=passage_too_short field=passage target_index=-1 actual=2 limit=50 category=content_invalid\n2026/09/11 01:57:58 ERROR ai_generation_settlement_failed run_id=01a08e2f-9587-734a-bdf5-81be0f3a8127 stage=settlement reason=database_settlement_failed failure_code=content_validation_failed\n2026/09/11 01:57:58 INFO ai_generation_request_finished request_id=req_l6YbfhBhsefSoGaNhXPvGA run_id=01a08e2f-9587-734a-bdf5-81be0f3a8127 model_id=01a08e2e-a438-7d51-a1ef-2f4517293113 elapsed_ms=16\n2026/09/11 01:57:58 INFO http_request request_id=req_l6YbfhBhsefSoGaNhXPvGA method=POST route=/api/v1/generations/stream status=200 duration_ms=18\n2026/09/11 01:58:01 INFO ai_generation_settlement_recovered run_id=01a08e2f-9587-734a-bdf5-81be0f3a8127 stage=settlement outcome=failed quota_refunded=true\n2026/09/11 01:58:01 INFO http_request request_id=req_v4w8Jp8Zlpqm9JSlQHCTaw method=GET route=/api/v1/bootstrap status=200 duration_ms=0\n2026/09/11 01:58:01 INFO http_request request_id=req_GtUXnIY4slbYNphBycOCag method=GET route=/api/v1/generation-options status=200 duration_ms=1\n2026/09/11 01:58:03 INFO http_request request_id=req_Iusn2lndRFdRZAkj6fJSFg method=GET route=/api/v1/vocabulary/search status=200 duration_ms=6\n2026/09/11 01:58:03 INFO http_request request_id=req_pNJxi9XlrhjYhi1T2TopdA method=GET route=/api/v1/bootstrap status=200 duration_ms=0\n2026/09/11 01:58:06 INFO ai_generation_request_finished request_id=req_gIXHx-2NOIZdMBGvcZG-Uw run_id=01a08e2f-a93c-7ed5-b6ca-a5b09788924e model_id=01a08e2e-a438-7d51-a1ef-2f4517293113 elapsed_ms=2825\n2026/09/11 01:58:06 INFO http_request request_id=req_gIXHx-2NOIZdMBGvcZG-Uw method=POST route=/api/v1/generations/stream status=200 duration_ms=2827\n2026/09/11 01:58:39 INFO http_request request_id=req_9n1Qx-RfsnQ--XqE_FY-gw method=GET route=/api/v1/bootstrap status=200 duration_ms=6\n2026/09/11 01:58:39 INFO http_request request_id=req_dEqQ-I-gDH1LEN1gH0ht-A method=POST route=/api/v1/auth/register status=201 duration_ms=149\n2026/09/11 01:58:41 INFO ai_generation_request_finished request_id=req_6Q9lElbLQIJ72OB2uXzMBw run_id=01a08e30-3826-7294-9d67-22fc447878f3 model_id=01a08e2e-a438-7d51-a1ef-2f4517293113 elapsed_ms=1415\n2026/09/11 01:58:41 INFO http_request request_id=req_6Q9lElbLQIJ72OB2uXzMBw method=POST route=/api/v1/generations/stream status=200 duration_ms=1415\n2026/09/11 01:59:09 INFO http_request request_id=req_M55nVpfkCLCP0JsqGzQwHw method=GET route=/api/v1/bootstrap status=200 duration_ms=3\n2026/09/11 01:59:09 INFO http_request request_id=req_sjZhDuzS2BKgjFWAtN8Iww method=POST route=/api/v1/auth/register status=201 duration_ms=293\n2026/09/11 01:59:10 INFO ai_generation_request_finished request_id=req_Mv2xwa0pDFUk6KavVbxN3g run_id=01a08e30-ac73-726a-bf0a-791bce646c31 model_id=01a08e2e-a438-7d51-a1ef-2f4517293113 elapsed_ms=1259\n2026/09/11 01:59:10 INFO http_request request_id=req_Mv2xwa0pDFUk6KavVbxN3g method=POST route=/api/v1/generations/stream status=200 duration_ms=1260\n2026/09/11 01:59:32 INFO http_request request_id=req_XymItNAZpbOoGT19mk7BXg method=GET route=/api/v1/bootstrap status=200 duration_ms=3\n2026/09/11 01:59:32 INFO http_request request_id=req_cG0Z-eO6GjMakv7r0iEULg method=POST route=/api/v1/auth/register status=201 duration_ms=156\n2026/09/11 01:59:33 INFO ai_generation_request_finished request_id=req_RWGWOG5qO_O1vwHpj55wbQ run_id=01a08e31-04d9-7eb6-86ab-f3c3c03d7e1a model_id=01a08e2e-a438-7d51-a1ef-2f4517293113 elapsed_ms=1381\n2026/09/11 01:59:33 INFO http_request request_id=req_RWGWOG5qO_O1vwHpj55wbQ method=POST route=/api/v1/generations/stream status=200 duration_ms=1382\n"
+  },
+  "backend_harness_exit": {
+    "chunk_id": "330323",
+    "wall_time_seconds": 0.000003709,
+    "exit_code": 0,
+    "original_token_count": 110,
+    "output": "2026/09/11 01:59:33 INFO ai_generation_request_finished request_id=req_RWGWOG5qO_O1vwHpj55wbQ run_id=01a08e31-04d9-7eb6-86ab-f3c3c03d7e1a model_id=01a08e2e-a438-7d51-a1ef-2f4517293113 elapsed_ms=1381\n2026/09/11 01:59:33 INFO http_request request_id=req_RWGWOG5qO_O1vwHpj55wbQ method=POST route=/api/v1/generations/stream status=200 duration_ms=1382\n--- PASS: TestQA127BrowserBoundary (189.35s)\nPASS\nok  \twordweave/internal/httpapi\t189.363s\n"
+  },
+  "method_failures": [
+    {
+      "kind": "fixture-network",
+      "detail": "Internal-only Docker network did not publish usable host ports. Added disposable edge network and restarted two QA containers. Initial browser ECONNREFUSED preserved in raw_browser_runs. Initial harness database remained only inside disposable PG and was removed with its tmpfs."
+    },
+    {
+      "kind": "fixture-auth",
+      "detail": "Programmatic register omitted required Sec-Fetch-Site; 403 prevented provider call. Added same-origin header; no production middleware relaxed."
+    },
+    {
+      "kind": "fixture-wire-projection",
+      "detail": "First reference assertion used validated.passage instead of validated.result.passage. Second used internal passage_occurrences rather than public occurrences. Both assertions corrected against published DTO, not production changes or weaker assertions.",
+      "first_output": {
+        "chunk_id": "b25365",
+        "wall_time_seconds": 0.000001084,
+        "exit_code": 1,
+        "original_token_count": 5144,
+        "output": "Warning: truncated output (original token count: 5144)\nTotal output lines: 20\n\nnode:internal/modules/run_main:123\n    triggerUncaughtException(\n    ^\n\nAssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n+ actual - expected\n\n+ 'Fresh grapes are delicious. Neighbors offer practical ideas and helpful support. Neighbors offer practical ideas and helpful support. Neighbors offer practical ideas and helpful support. Neighbors offer practical ideas and helpful support. Neighbors offer practical ideas and helpful support. Neighbors offer practical ideas and helpful support. Neighbors offer practical ideas and helpful support. Neighbors offer practical ideas and helpful support. Neighbors offer practical ideas and helpful support. Neighbors offer practical ideas and helpful support. Neighbors offer practical ideas and helpful support. Neighbors offer practical ideas and helpful support. Neighbors offer practical ideas and helpful support. Neighbors offer practical ideas and helpful support. Neighbors offer practical ideas and helpful support. Neighbors offer practical ideas and helpful support. Neighbors offer practical ideas and helpful support. Neighbors offer practical ideas and helpful support. Neighbors offer practical ideas and helpful support. Neighbors offer practical ideas and helpful support. Neighbors offer practical ideas and helpful support. Neighbors offer practical ideas and helpful support. Neighbors offer practical ideas and helpful support. Neighbors offer practical ideas and helpful support. Neighbors offer practical ideas and helpful support. Neighbors offer practical ideas and helpful support. Neighbors offer practical ideas and helpful support. Neighbors offer practical ideas and helpful support. Neighbors offer practical ideas and helpful support. Neighbors offer practical ideas and helpful support. Neighbors offer practical ideas and helpful support. Neighbors offer practical ideas and helpful support. Neighbors offer practical ideas and helpful support. Neighbors offer practical ideas and helpful support. Neighbors offer practical ideas and helpful support. Neighbors offer practical ideas and helpful support. Neighbors offer practical ideas and helpful support. Neighbors offer practical ideas and helpful support. Neighbors offer practical ideas and helpful support. Neighbors offer practical ideas and helpful support. Neighbors offer practical ideas and helpful support. Neighbors offer practical ideas and helpful support. Neighbors offer practical ideas and helpful support. Neighbors offer practical ideas and helpful support. Neighbors offer practical ideas and helpful support. Neighbors offer practical ideas and helpful support. Neighbors offer practical ideas and helpful support. Neighbors offer practical ideas and helpful support. Neighbors offer practical ideas and helpful support. Neighbors offer practical ideas and helpful support. Neighbors offer practical ideas and helpful support. Neighbors offer practical ideas and helpful support. Neighbors offer practical ideas and helpful support. Neighbors offer practical ideas and helpful support. Neighbors offer practical ideas and helpful support. Neighbors offer practical ideas and helpful support. Neighbors offer practical ideas and helpful support. Neighbors offer practical ideas and helpful support. Neighbors offer practical ideas and helpful support. Neighbors offer practical ideas and helpful support. Neighbors offer practical ideas and helpful support. Neighbors offer practical ideas and helpful support. Neighbors offer practical ideas and helpful support. Neighbors offer practical ideas and helpful support. Neighbors offer practical ideas and helpful support. Neighbors offer practical ideas and helpful support. Neighbors offer practical ideas and helpful support. Neighbors offer practical ideas and helpful support. Neighbors offer practical ideas and helpful support. Neighbors offer practical ideas and helpful support. Neighbors offer practical ideas and helpful support. Neighbors offer practical ideas and helpful…3144 tokens truncated…port. Neighbors offer practical ideas and helpful support. Neighbors offer practical ideas and helpful support. Neighbors offer practical ideas and helpful support. Neighbors offer practical ideas and helpful support. Neighbors offer practical ideas and helpful support. Neighbors offer practical ideas and helpful support. Neighbors offer practical ideas and helpful support. Neighbors offer practical ideas and helpful support. Neighbors offer practical ideas and helpful support. Neighbors offer practical ideas and helpful support. Neighbors offer practical ideas and helpful support. Neighbors offer practical ideas and helpful support. Neighbors offer practical ideas and helpful support. Neighbors offer practical ideas and helpful support. Neighbors offer practical ideas and helpful support. Neighbors offer practical ideas and helpful support. Neighbors offer practical ideas and helpful support. Neighbors offer practical ideas and helpful support. Neighbors offer practical ideas and helpful support. Neighbors offer practical ideas and helpful support. Neighbors offer practical ideas and helpful support. Neighbors offer practical ideas and helpful support. Neighbors offer practical ideas and helpful support. Neighbors offer practical ideas and helpful support. Neighbors offer practical ideas and helpful support. Neighbors offer practical ideas and helpful support. Neighbors offer practical ideas and helpful support. Neighbors offer practical ideas and helpful support. Neighbors offer practical ideas and helpful support. Neighbors offer practical ideas and helpful support. Neighbors offer practical ideas and helpful support. Neighbors offer practical ideas and helpful support. Neighbors offer practical ideas and helpful support. Neighbors offer practical ideas and helpful support. Neighbors offer practical ideas and helpful support. Neighbors offer practical ideas and helpful support. Neighbors offer practical ideas and helpful support. Neighbors offer practical ideas and helpful support. Neighbors offer practical ideas and helpful support. Neighbors offer practical ideas and helpful support. Neighbors offer practical ideas and helpful support. Neighbors offer practical ideas and helpful support. Neighbors offer practical ideas and helpful support. Neighbors offer practical ideas and helpful support. Neighbors offer practical ideas and helpful support. Neighbors offer practical ideas and helpful support. Neighbors offer practical ideas and helpful support. Neighbors offer practical ideas and helpful support. Neighbors offer practical ideas and helpful support. Neighbors offer practical ideas and helpful support. Neighbors offer practical ideas and helpful support. Neighbors offer practical ideas and helpful support. Neighbors offer practical ideas and helpful support. Neighbors offer practical ideas and helpful support. Neighbors offer practical ideas and helpful support. Neighbors offer practical ideas and helpful support. Neighbors offer practical ideas and helpful support. Neighbors offer practical ideas and helpful support. Neighbors offer practical ideas and helpful support. Neighbors offer practical ideas and helpful support. Neighbors offer practical ideas and helpful support. Neighbors offer practical ideas and helpful support. Neighbors offer practical ideas and helpful support. Neighbors offer practical ideas and helpful support. Neighbors offer practical ideas and helpful support. Neighbors offer practical ideas and helpful support. Neighbors offer practical ideas and helpful support. Neighbors offer practical ideas and helpful support. Neighbors offer practical ideas and helpful support. Neighbors offer practical ideas and helpful support. Neighbors offer practical ideas and helpful support. Neighbors offer practical ideas and helpful support. Neighbors offer practical ideas and helpful support. Neighbor'... 1156027 more characters,\n  expected: undefined,\n  operator: 'strictEqual',\n  diff: 'simple'\n}\n\nNode.js v22.22.2\n"
+      },
+      "second_output": {
+        "chunk_id": "f631ca",
+        "wall_time_seconds": 0.000001583,
+        "exit_code": 1,
+        "original_token_count": 140,
+        "output": "file:///Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/.planning/milestones/M001/verification/evidence/ai-integration-127/wire-reference.mjs:27\n const occurrence=final.targets[0].passage_occurrences[0];\n                                                      ^\n\nTypeError: Cannot read properties of undefined (reading '0')\n    at file:///Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/.planning/milestones/M001/verification/evidence/ai-integration-127/wire-reference.mjs:27:55\n\nNode.js v22.22.2\n"
+      },
+      "note": "First original assertion output was tool-truncated and contains only synthetic repetitive text; not a complete raw wire recording."
+    }
+  ],
+  "limits": [
+    "Browser response.text became unavailable after application's intentional terminal reader cancellation; these failed body reads are not claimed as SSE payload assertions. Independent HTTP reference fully read and checked stream/final equality and spans.",
+    "Large passage is a defensive boundary fixture, not evidence of natural prose quality or real model failure frequency.",
+    "Go test PASS confirms QA server lifetime/cleanup only. Overall QA remains FAIL from actual browser assertion.",
+    "No independent full deployment/NGINX test, 120-second browser test, or real-model semantic evaluation executed.",
+    "Current browser script corrects non-oracle metadata projection (value.result.passage); eight-case execution preceded that one-line correction. Core browser/DB assertions unchanged; no claimed rerun."
+  ],
+  "entrypoint_checks": {
+  "recorded_at": "2026-09-11T02:02:47Z",
+  "checks": {
+    "documents": [
+      {
+        "path": "verification/report.md",
+        "characters": 2649,
+        "bytes": 5053,
+        "sha256": "66ea6764dc4af21617107cefaa5c0306186cfe4495e0ce2a510757088d737129",
+        "previous_characters": 1663
+      },
+      {
+        "path": "verification/coverage-matrix.md",
+        "characters": 1777,
+        "bytes": 3361,
+        "sha256": "60ce0b0bd114853cc1faf90edcc27907f7bea334d31f0efc9b2782c5b47d88c6",
+        "previous_characters": 833
+      },
+      {
+        "path": "verification/ai-evaluation.md",
+        "characters": 557,
+        "bytes": 1131,
+        "sha256": "2457c08700934a2b869a88e1bbd125188756c52e3fee0e2bb413ce847b6c0677",
+        "previous_characters": 734
+      },
+      {
+        "path": "verification/uat.md",
+        "characters": 360,
+        "bytes": 684,
+        "sha256": "0a66ba08326a92f107602479636a750b690ec3765f43a2cc4e737b392460edae",
+        "previous_characters": 764
+      },
+      {
+        "path": "handoffs/verification.md",
+        "characters": 1643,
+        "bytes": 3111,
+        "sha256": "dfd8f36b02caf5d388dff394db516486712cd3171a84caa8cc23fe0f0214ef29",
+        "previous_characters": 1403
+      }
+    ],
+    "links": [
+      {
+        "source": "verification/report.md",
+        "target": "/Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/.planning/milestones/M001/verification/coverage-matrix.md",
+        "exists": true
+      },
+      {
+        "source": "verification/report.md",
+        "target": "/Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/.planning/milestones/M001/verification/ai-evaluation.md",
+        "exists": true
+      },
+      {
+        "source": "verification/report.md",
+        "target": "/Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/.planning/milestones/M001/verification/uat.md",
+        "exists": true
+      },
+      {
+        "source": "verification/report.md",
+        "target": "/Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/.planning/milestones/M001/handoffs/verification.md",
+        "exists": true
+      },
+      {
+        "source": "verification/report.md",
+        "target": "/Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/.planning/milestones/M001/verification/evidence/ai-integration-127/qa.json",
+        "exists": true
+      },
+      {
+        "source": "verification/report.md",
+        "target": "/Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/.planning/milestones/M001/verification/evidence/ai-integration-127/pre-current.json",
+        "exists": true
+      },
+      {
+        "source": "verification/report.md",
+        "target": "/Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/backend/internal/ai/validator.go",
+        "exists": true
+      },
+      {
+        "source": "verification/report.md",
+        "target": "/Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/backend/internal/httpapi/generation_handlers.go",
+        "exists": true
+      },
+      {
+        "source": "verification/report.md",
+        "target": "/Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/frontend/app/infrastructure/http/repositories/api-repository.ts",
+        "exists": true
+      },
+      {
+        "source": "verification/coverage-matrix.md",
+        "target": "/Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/.planning/milestones/M001/verification/report.md",
+        "exists": true
+      },
+      {
+        "source": "verification/coverage-matrix.md",
+        "target": "/Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/.planning/milestones/M001/verification/evidence/ai-integration-127/qa.json",
+        "exists": true
+      },
+      {
+        "source": "verification/ai-evaluation.md",
+        "target": "/Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/.planning/milestones/M001/verification/report.md",
+        "exists": true
+      },
+      {
+        "source": "verification/ai-evaluation.md",
+        "target": "/Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/.planning/milestones/M001/implementation/backend-validation.md",
+        "exists": true
+      },
+      {
+        "source": "verification/uat.md",
+        "target": "/Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/.planning/milestones/M001/verification/report.md",
+        "exists": true
+      },
+      {
+        "source": "handoffs/verification.md",
+        "target": "/Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/.planning/milestones/M001/verification/report.md",
+        "exists": true
+      },
+      {
+        "source": "handoffs/verification.md",
+        "target": "/Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/.planning/milestones/M001/verification/coverage-matrix.md",
+        "exists": true
+      },
+      {
+        "source": "handoffs/verification.md",
+        "target": "/Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/.planning/milestones/M001/verification/evidence/ai-integration-127/qa.json",
+        "exists": true
+      },
+      {
+        "source": "handoffs/verification.md",
+        "target": "/Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/.planning/milestones/M001/verification/evidence/ai-integration-127/qa127_browser_test.go",
+        "exists": true
+      },
+      {
+        "source": "handoffs/verification.md",
+        "target": "/Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/.planning/milestones/M001/verification/evidence/ai-integration-127/browser.mjs",
+        "exists": true
+      },
+      {
+        "source": "handoffs/verification.md",
+        "target": "/Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/.planning/milestones/M001/verification/evidence/ai-integration-127/wire-reference.mjs",
+        "exists": true
+      },
+      {
+        "source": "handoffs/verification.md",
+        "target": "/Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/.planning/milestones/M001/verification/ai-evaluation.md",
+        "exists": true
+      },
+      {
+        "source": "handoffs/verification.md",
+        "target": "/Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/.planning/milestones/M001/verification/uat.md",
+        "exists": true
+      }
+    ],
+    "all_links_exist": true
+  },
+  "context_note": "Current entrypoints 6986 characters versus previous 5397; 5 files retained, matrix/report expanded for new independent findings while stale UAT/capture instructions condensed. Character count only, runtime tokens unknown; substantive source investigation exceeded soft context budget. No fresh-agent handoff experiment authorized/executed."
+},
+  "cleanup": {
+    "stop": {
+      "chunk_id": "af2cb2",
+      "wall_time_seconds": 0.719596792,
+      "exit_code": 0,
+      "original_token_count": 17,
+      "output": "{\"stopping\":true}\n0\nwordweave_test_0cbb5ba073a04b0195c40c77a99ba28f\n"
+    },
+    "remove": {
+      "chunk_id": "352925",
+      "wall_time_seconds": 1.001598417,
+      "session_id": 49098,
+      "original_token_count": 28,
+      "output": "wordweave-qa127-frontend\nwordweave-qa127-pg\nwordweave-qa127-backend\nwordweave-qa127-frontend\nwordweave-qa127-pg\n"
+    },
+    "completed": {
+      "chunk_id": "2a6a1a",
+      "wall_time_seconds": 0.000001709,
+      "exit_code": 0,
+      "original_token_count": 11,
+      "output": "wordweave-qa127-net\nwordweave-qa127-edge\n"
+    },
+    "removed": "Only wordweave-qa127-{backend,frontend,pg} and wordweave-qa127-{net,edge}; synthetic tmpfs data including restart orphan permanently removed; source/evidence/cache volumes and existing UAT untouched."
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "date": "2026-09-08T02:47:50.991Z",
+  "files": {
+    "backend/internal/learning/service.go": "c7c6586e4a0bd21b01c5fd1f36f81b4f6772040c2543490d4749a43a5a56f07c",
+    "backend/db/migrations/0002_core_tables.sql": "8749737c2b92b9387f4b1d1f0bb39ec64b3869dc41c4ce76be6865e9c5f6b585"
+  },
+  "constraints": [
+    {
+      "name": "visitor_claims_consumed_batch_id_fkey",
+      "definition": "FOREIGN KEY (consumed_batch_id) REFERENCES wordweave.learning_batches(id) ON DELETE SET NULL"
+    },
+    {
+      "name": "visitor_claims_state_consistent",
+      "definition": "CHECK ((((status = 'active'::text) AND (consumed_account_id IS NULL) AND (consumed_batch_id IS NULL) AND (consumed_at IS NULL)) OR ((status = 'consumed'::text) AND (consumed_account_id IS NOT NULL) AND (consumed_batch_id IS NOT NULL) AND (consumed_at IS NOT NULL))))"
+    }
+  ],
+  "scope": "Read-only localization of independently reproduced delete failure; not general code review"
+}

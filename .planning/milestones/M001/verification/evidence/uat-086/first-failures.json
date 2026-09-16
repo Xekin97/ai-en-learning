@@ -1,0 +1,15 @@
+{
+  "recorded_at": "2026-09-07T03:57:11Z",
+  "agent": "qa-quinn",
+  "items": [
+    {
+      "raw": "smoke-results.json",
+      "result": "79 PASS / 0 FAIL / 1 ERROR",
+      "classification": "qa_locator_method",
+      "cause": "The Library smoke called single-element toBeVisible on .stat-label, which correctly resolved to six elements and triggered Playwright strict-mode before the remaining learner checks.",
+      "containment": "The first run performed no forbidden mutation; public data, internal password/credential comparisons, and session baseline all returned unchanged.",
+      "correction": "The assertion now requires exactly six .stat-label elements. The complete new run smoke-recheck-results.json passed 100/100 with no product failures and no weakened assertion."
+    }
+  ],
+  "product_failures": []
+}

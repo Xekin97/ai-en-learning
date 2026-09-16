@@ -1,0 +1,80 @@
+{
+  "schema_version": 1,
+  "id": "AGT-MODEL-ROUTING-001",
+  "status": "CONFIRMED",
+  "approved_by": "user",
+  "user_approval": "启用吧，然后继续原先的进度",
+  "recorded_at": "2026-09-07T02:38:06Z",
+  "policy": "codex-balanced@1.0.0",
+  "lock": ".planning/agt/model-routing-v1.lock.json",
+  "lock_sha256": "4ea5e6a62b10e952e9d68eaf58a89094e785cbd16686e5d861cc3b6804798c54",
+  "policy_hash": "c0aec1ae3e02eb8a08e23f3e7650f353ae58facced7a7f3fdeccb5d95ce716a8",
+  "framework_repository": "../agt-coding-v2",
+  "framework_pinned_revision": "b5badf88cd7194400c3d4d0e9395e7c98490dc26",
+  "adoption_type": "explicit-worktree-overlay",
+  "source_hashes": {
+    "core/role-contract.md": "3a0f279fd3750be6533540de94720bdd6b637ba0cbaeca0d60cd614705f454e0",
+    "core/model-routing.md": "3774b52cfd804ef8999aed8f20db4aac1ec6e327806194cdc6533f384359d296",
+    "adapters/codex/README.md": "ba25ac5eb1d66f22a36177e6950cdfb51aa480e174cdd3fa8408a838c6f89220",
+    "adapters/codex/agt-models.mjs": "ccfad945d1babff7b9c94f72d5bfafcffca4f06df4c29bd38b800e8e28f0b2d4",
+    "adapters/codex/model-router.mjs": "1539a2689e21eb051f86dcb3284e967e3d11e395b9a2b501dd8ccb7bc3181d14",
+    "models/codex-balanced.json": "cb0a3fad83b67c0d023e3915b2a7215c98c896469b05f808c9047e5395e3780b"
+  },
+  "profile_reference": "consumer-ai-web@1.0.0",
+  "profile_sha256": "9d9258ebc8cba13f5df2f8289fa81e973e60af9f10e5ca126fd83482aa0c050f",
+  "pre_transition_baseline": {
+    ".planning/agt/project.yaml": {
+      "sha256": "91986f68ea8bcdeb09409e5ca2fbb42d335e1d9f49c301ecec04e53099c4b1c5",
+      "bytes": 2341
+    },
+    ".planning/agt/agents.yaml": {
+      "sha256": "7b3c4b218f6f2d6ec235b5f832ba7b7b1ad5d868072aee7cb18dc12779867d10",
+      "bytes": 2513
+    },
+    ".planning/workflow/state.yaml": {
+      "sha256": "b90218ed7a1d9c52a5de28dc375e36afcea0eb60e4b20edbcb3c69a90b733b87",
+      "bytes": 6195
+    },
+    ".planning/workflow/history.yaml": {
+      "sha256": "24a749ba36ad71def466d770fc92c65722972d60306b8cfa70f7c0b76c867f08",
+      "bytes": 85318
+    }
+  },
+  "validation": {
+    "profile_and_registry": "PASS",
+    "qa081_artifact_hashes": 10,
+    "history_entries_before": 81,
+    "model_discovery": "PASS",
+    "codex_version": "codex-cli 0.153.4",
+    "check_updates": {
+      "issues": [],
+      "policy_changed": false,
+      "codex_version_changed": false,
+      "automatic_rebinding": false
+    },
+    "high_risk_route": {
+      "role": "backend-implementer/base",
+      "task": "coding",
+      "risk": "high",
+      "requested_model": "gpt-5.6-sol",
+      "requested_effort": "high",
+      "actual_model": "not_observed"
+    },
+    "gate_tooling_corrections": [
+      "Read-only Ruby YAML precheck initially rejected historical unquoted timestamp; allowed Time/Date only and rechecked.",
+      "Read-only JSON baseline serialization initially used non-UTF-8 external encoding; reran with -E UTF-8."
+    ],
+    "final_structural_check": "PASS",
+    "history_entries_after": 82,
+    "historical_prefix_preserved": true,
+    "original_manifest_prefix_preserved": true,
+    "qa_artifacts_unchanged": 10,
+    "local_links_checked": 16,
+    "errors": []
+  },
+  "inference_calls": 0,
+  "global_config_modified": false,
+  "uat_deployed": false,
+  "release_approved": false,
+  "official_reference": "https://learn.chatgpt.com/docs/app-server#list-models-modellist"
+}

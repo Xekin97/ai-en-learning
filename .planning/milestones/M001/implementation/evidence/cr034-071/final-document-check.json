@@ -1,0 +1,27 @@
+{
+  "status": "PASS",
+  "documents": 3,
+  "localLinks": 66,
+  "existingSourceFiles": 220,
+  "newProductionFiles": 0,
+  "openChanges": [
+    "CR-029",
+    "CR-030",
+    "CR-031",
+    "CR-032",
+    "CR-033",
+    "CR-034"
+  ],
+  "state": [
+    "implementation",
+    "frontend-claire",
+    "active"
+  ],
+  "transition": "TRANSITION-M001-071",
+  "uatUnchanged": true,
+  "initialKnownFailurePreserved": true,
+  "at": "2026-09-06T04:10:56Z",
+  "checkScript": "ruby -EUTF-8 <<'RUBY'\nrequire 'yaml'; require 'json'; require 'date'; require 'uri'; require 'digest'\nm='.planning/milestones/M001'\ndocs=[m+'/implementation/frontend-cr034-breakpoint-validation.md',m+'/implementation/frontend-validation.md',m+'/handoffs/frontend-implementation.md']\nlinks=0\ndocs.each do |file|\n  meta=YAML.safe_load(File.read(file),permitted_classes:[Date,Time])\n  raise \"frontmatter #{file}\" unless meta.values_at('milestone','stage','role','agent_name','status')==['M001','implementation','frontend-implementer/base','frontend-claire','awaiting_user_review']\n  File.read(file).scan(/\\]\\(([^)]+)\\)/).flatten.each do |link|\n    next if link.match?(%r{\\A(?:https?://|#)})\n    path=File.expand_path(URI::DEFAULT_PARSER.unescape(link.split('#').first),File.dirname(file))\n    raise \"missing #{link}\" unless File.exist?(path)\n    links+=1\n  end\nend\nraise 'plan' unless YAML.safe_load(File.read(m+'/implementation/frontend-cr034-breakpoint-worktree-plan.md'),permitted_classes:[Date,Time])['status']=='completed'\n%w[029 030 031 032 033 034].each{|x| raise \"CR #{x}\" unless YAML.safe_load(File.read(m+\"/changes/CR-#{x}.md\"),permitted_classes:[Date,Time])['status']=='open'}\nstate=YAML.safe_load(File.read('.planning/workflow/state.yaml'))\nraise 'workflow' unless state.values_at('stage','active_agent','status')==['implementation','frontend-claire','active'] && state['last_transition']['decision_id']=='TRANSITION-M001-071'\nbaseline=JSON.parse(File.read(m+'/implementation/evidence/cr034-071/source-baseline.json'))['hashes']\nsources=IO.popen(['rg','--files','frontend','backend','nginx'],&:read).lines.map(&:strip).reject{|x|x.match?(%r{(^|/)\\.env(?:\\.|$)})}\nraise 'new source' unless (sources-baseline.keys).empty?\nscope=JSON.parse(File.read(m+'/implementation/evidence/cr034-071/source-scope-check.json'))\nraise 'scope' unless scope['verdict']=='PASS'\nj=JSON.parse(File.read(m+'/implementation/evidence/cr034-071/development-command-results.json'))\nraise 'job result' unless j['jobs'].all?{|x|x['exit_code']==(x['label']=='interactions' ? 1 : 0)}\ns=JSON.parse(File.read(m+'/implementation/evidence/cr034-071/cleanup.json'))\nraise 'cleanup' unless s['uatUnchanged'] && s['counts'].values_at('generationRuns','credentials')==['0','0']\nputs JSON.generate({status:'PASS',documents:docs.size,localLinks:links,existingSourceFiles:sources.size,newProductionFiles:0,openChanges:(29..34).map{|x|\"CR-0#{x}\"},state:state.values_at('stage','active_agent','status'),transition:state['last_transition']['decision_id'],uatUnchanged:s['uatUnchanged'],initialKnownFailurePreserved:true})\nRUBY",
+  "postCleanupOwnedContainers": "",
+  "postCleanupOwnedNetworks": ""
+}

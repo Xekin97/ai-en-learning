@@ -1,0 +1,6739 @@
+{
+  "revision": "TEN-ENTRY-EXAMPLE-R8-LIVE-20-20260912",
+  "date": "2026-09-12",
+  "authorization": {
+    "user_response": "是",
+    "proposal": "Deploy r8 locally and add twenty model calls, ten MiniMax and ten GLM, same configurations as r7, dedicated account, failures count, no retries, no full-site regression. Prior container's temporary raw evidence will be lost; reports preserved.",
+    "maximum_calls": 20,
+    "approved_on": "2026-09-12",
+    "scope": "Local backend only; no code, config, frontend or validator changes"
+  },
+  "status": "complete_budget_exhausted",
+  "budget": {
+    "maximum": 20,
+    "used": 20,
+    "remaining": 0,
+    "retries": 0,
+    "repair_calls": 0,
+    "judge_calls": 0,
+    "compatibility_probe_calls": 0
+  },
+  "account_id": "01a08e5a-2250-7854-81df-5aeb26e7f461",
+  "account_username": "wordweave_uat",
+  "prompt_version": "m001-v5-r8",
+  "validator_version": "m001-v5-wn31-r1",
+  "runtime_image": "sha256:56a6f59fb322564d4fe36808ee1f374d73de1bfa57b4304fe191752e40459577",
+  "deployment_performed": true,
+  "deployment": {
+    "old_image": "sha256:faa3874184c56407c8f3ce6c9ef7a61744cc0186d4535bf90fcc4fc19db70094",
+    "new_image": "sha256:56a6f59fb322564d4fe36808ee1f374d73de1bfa57b4304fe191752e40459577",
+    "started_at": "2026-09-12T03:06:58.353568919Z",
+    "other_containers_unchanged": true,
+    "environment_unchanged": true,
+    "prior_active_count": 0
+  },
+  "source_hashes_verified_unchanged_since_offline": {
+    "same": true,
+    "source_hashes": {
+      "backend/internal/ai/openrouter.go": "325056ecea0603616b1caea9ccdedbc318e632300815368f7694e3ddc9dbdc67",
+      "backend/internal/ai/contract.go": "3fe50e60b5e8aab0b29d55600a29eda7aa534b54961a26ca9be30603fcad882e",
+      "backend/internal/ai/openrouter_test.go": "9675fa6e5fb3e7c3bd52cec1e5f8a38dea894f04ce94805276341bb89e91878c",
+      "backend/internal/ai/keyed_targets_test.go": "e78998782c4c929a2afe998c1eed2909219315dce1419ca8e861d0249aff3514",
+      "backend/internal/ai/prose_prompt_test.go": "83c294500549a2ca8f7254e72eb705e2fd69f3e536d126fde0d8bb38a99d5e6c",
+      "backend/internal/ai/completion_prompt_test.go": "84bc7831c00e05cbd53c0fb57ef1ed4c21892375a3c134892845802395c14393",
+      "backend/internal/ai/annotations_test.go": "899e38d4f97af9b0aef5768fdff1c475d7212b8b3bbeab7dd1b2596f80159744",
+      "backend/internal/ai/cr040_test.go": "6a838b9c6b90539a34b1745ac8f689a6fb69e1a63d6c03b4ab4dd53d806a6345",
+      "backend/internal/ai/example_coverage_test.go": "838e6701ba60df4809340a11475b5e1b648a4265c2b20e02c10d880a4f4e7afd"
+    }
+  },
+  "application_changes_during_test": false,
+  "configuration_changes": false,
+  "full_site_regression": false,
+  "final_health": "healthy",
+  "final_restarts": 0,
+  "final_active_runs": 0,
+  "provider": "together",
+  "allow_fallbacks": false,
+  "client_wait_ms": 180000,
+  "models": [
+    {
+      "model": "minimax/minimax-m3",
+      "valid": 6,
+      "total": 10,
+      "round1": 2,
+      "round2": 4,
+      "prompt_tokens": 14456,
+      "completion_tokens": 5352,
+      "duration_ms_range": [
+        4772,
+        16640
+      ],
+      "hints_with_changed_forms": 8,
+      "total_hints": 50
+    },
+    {
+      "model": "z-ai/glm-5.3-flash",
+      "valid": 9,
+      "total": 10,
+      "round1": 4,
+      "round2": 5,
+      "prompt_tokens": 12806,
+      "completion_tokens": 22737,
+      "duration_ms_range": [
+        12805,
+        65249
+      ],
+      "hints_with_changed_forms": 7,
+      "total_hints": 50
+    }
+  ],
+  "combined": {
+    "valid": 15,
+    "total": 20,
+    "success_rate": 0.75,
+    "round1": "6/10",
+    "round2": "9/10",
+    "target": 0.9,
+    "target_met": false,
+    "xlong": "1/4",
+    "non_xlong": "14/16"
+  },
+  "same_configuration_previous_r7": {
+    "minimax": "8/10",
+    "glm": "6/10",
+    "combined": "14/20",
+    "evidence": "../completion-prompt-20-20260911/results.json",
+    "prompt_tokens": {
+      "minimax": 11618,
+      "glm": 10052
+    },
+    "causal_improvement_claimed": false
+  },
+  "failure_analysis": [
+    {
+      "case_id": 1,
+      "provider_model_id": "minimax/minimax-m3",
+      "stage": "content_validate",
+      "check": "passage_relations",
+      "reason": "mapping_relation_rejected",
+      "field": "passage",
+      "target_index": 0,
+      "words": 227,
+      "minimum": 50,
+      "missing_passage_entries": [],
+      "note": "melancholic(melancholy) rejected by current one-edge lexical relation policy, not a transport/JSON problem or an unrelated-word label such as undermine(danger)."
+    },
+    {
+      "case_id": 7,
+      "provider_model_id": "minimax/minimax-m3",
+      "stage": "content_validate",
+      "check": "passage_annotation_presence",
+      "reason": "passage_annotation_missing",
+      "field": "passage",
+      "target_index": 4,
+      "words": 527,
+      "minimum": 200,
+      "missing_passage_entries": [
+        "coherent"
+      ],
+      "note": "coherent has a target record but does not occur in the passage."
+    },
+    {
+      "case_id": 9,
+      "provider_model_id": "minimax/minimax-m3",
+      "stage": "content_validate",
+      "check": "word_count",
+      "reason": "passage_too_short",
+      "field": "passage",
+      "target_index": -1,
+      "words": 139,
+      "minimum": 400,
+      "missing_passage_entries": [
+        "prevalent",
+        "vulnerable"
+      ],
+      "note": "Completed JSON switches to tags/targets before passage length and target coverage are met."
+    },
+    {
+      "case_id": 10,
+      "provider_model_id": "z-ai/glm-5.3-flash",
+      "stage": "content_validate",
+      "check": "word_count",
+      "reason": "passage_too_short",
+      "field": "passage",
+      "target_index": -1,
+      "words": 143,
+      "minimum": 400,
+      "missing_passage_entries": [
+        "vulnerable",
+        "coherent"
+      ],
+      "note": "Completed JSON switches to tags/targets before passage length and target coverage are met."
+    },
+    {
+      "case_id": 19,
+      "provider_model_id": "minimax/minimax-m3",
+      "stage": "content_validate",
+      "check": "word_count",
+      "reason": "passage_too_short",
+      "field": "passage",
+      "target_index": -1,
+      "words": 125,
+      "minimum": 400,
+      "missing_passage_entries": [
+        "prevalent",
+        "ambiguous",
+        "coherent"
+      ],
+      "note": "Completed JSON switches to tags/targets before passage length and target coverage are met."
+    }
+  ],
+  "failure_replays": [
+    {
+      "case_id": 1,
+      "exit_code": 0,
+      "result": {
+        "mode": "model",
+        "scope": "model_pipeline",
+        "status": "reproduced",
+        "reason": "model_pipeline_reproduced",
+        "failure": {
+          "stage": "content_validate",
+          "state": "failed",
+          "begin_ms": 0,
+          "end_ms": 0,
+          "duration_ms": 0,
+          "check": "passage_relations",
+          "detail": {
+            "reason": "mapping_relation_rejected",
+            "field": "passage",
+            "target_index": 0,
+            "actual": -1,
+            "limit": -1,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        },
+        "candidate_sha256": "9209934ecd5d520aa52e8db07617cc77b5c8bdfd737c4e3702944a3ddd72215c"
+      }
+    },
+    {
+      "case_id": 7,
+      "exit_code": 0,
+      "result": {
+        "mode": "model",
+        "scope": "model_pipeline",
+        "status": "reproduced",
+        "reason": "model_pipeline_reproduced",
+        "failure": {
+          "stage": "content_validate",
+          "state": "failed",
+          "begin_ms": 0,
+          "end_ms": 0,
+          "duration_ms": 0,
+          "check": "passage_annotation_presence",
+          "detail": {
+            "reason": "passage_annotation_missing",
+            "field": "passage",
+            "target_index": 4,
+            "actual": -1,
+            "limit": -1,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        },
+        "candidate_sha256": "a65f30a64420f5a87a9a4a7f3b52bdb9965668df45c644ef24faacb443eadcde"
+      }
+    },
+    {
+      "case_id": 9,
+      "exit_code": 0,
+      "result": {
+        "mode": "model",
+        "scope": "model_pipeline",
+        "status": "reproduced",
+        "reason": "model_pipeline_reproduced",
+        "failure": {
+          "stage": "content_validate",
+          "state": "failed",
+          "begin_ms": 0,
+          "end_ms": 0,
+          "duration_ms": 0,
+          "check": "word_count",
+          "detail": {
+            "reason": "passage_too_short",
+            "field": "passage",
+            "target_index": -1,
+            "actual": 139,
+            "limit": 400,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        },
+        "candidate_sha256": "ef9179ca945d87422095bc24995bced9f9ee576cb6a3684e36e5d78e9a1d567f"
+      }
+    },
+    {
+      "case_id": 10,
+      "exit_code": 0,
+      "result": {
+        "mode": "model",
+        "scope": "model_pipeline",
+        "status": "reproduced",
+        "reason": "model_pipeline_reproduced",
+        "failure": {
+          "stage": "content_validate",
+          "state": "failed",
+          "begin_ms": 0,
+          "end_ms": 0,
+          "duration_ms": 0,
+          "check": "word_count",
+          "detail": {
+            "reason": "passage_too_short",
+            "field": "passage",
+            "target_index": -1,
+            "actual": 143,
+            "limit": 400,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        },
+        "candidate_sha256": "5c40b51699b1c52d960ffaa99f5d5ed00bfc148bd68c738ceb981d5d03892019"
+      }
+    },
+    {
+      "case_id": 19,
+      "exit_code": 0,
+      "result": {
+        "mode": "model",
+        "scope": "model_pipeline",
+        "status": "reproduced",
+        "reason": "model_pipeline_reproduced",
+        "failure": {
+          "stage": "content_validate",
+          "state": "failed",
+          "begin_ms": 0,
+          "end_ms": 0,
+          "duration_ms": 0,
+          "check": "word_count",
+          "detail": {
+            "reason": "passage_too_short",
+            "field": "passage",
+            "target_index": -1,
+            "actual": 125,
+            "limit": 400,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        },
+        "candidate_sha256": "53c37f6e3ca83af84bf03611c5e4238a2b38933db0b24a8dfc38f77c9fa9ee19"
+      }
+    }
+  ],
+  "relation_asset_check": {
+    "keys": [
+      "version",
+      "lemmas",
+      "edges",
+      "exceptions"
+    ],
+    "lemmas": [
+      {
+        "word": "melancholic",
+        "pos": "a"
+      },
+      {
+        "word": "melancholy",
+        "pos": "a"
+      },
+      {
+        "word": "melancholic",
+        "pos": "n"
+      },
+      {
+        "word": "melancholy",
+        "pos": "n"
+      }
+    ],
+    "edges": [
+      {
+        "from": {
+          "word": "melancholic",
+          "pos": "a"
+        },
+        "to": {
+          "word": "melancholic",
+          "pos": "n"
+        },
+        "id": "a:01365600:02+n:10326262:01"
+      },
+      {
+        "from": {
+          "word": "melancholic",
+          "pos": "a"
+        },
+        "to": {
+          "word": "melancholia",
+          "pos": "n"
+        },
+        "id": "a:01365600:02+n:14415896:01"
+      },
+      {
+        "from": {
+          "word": "melancholic",
+          "pos": "n"
+        },
+        "to": {
+          "word": "melancholic",
+          "pos": "a"
+        },
+        "id": "n:10326262:01+a:01365600:02"
+      },
+      {
+        "from": {
+          "word": "melancholia",
+          "pos": "n"
+        },
+        "to": {
+          "word": "melancholic",
+          "pos": "a"
+        },
+        "id": "n:14415896:01+a:01365600:02"
+      }
+    ],
+    "code": "backend/internal/ai/lexicon.go:Analyze / knownForms",
+    "finding": "Both melancholy and melancholic are known lemmas; asset has no direct edge between them. knownForms permits one word-level derivational edge, and Analyze rejects an independently known form outside that set.",
+    "scope": "Read-only bounded analysis of actual case 1; no validator or lexical asset changes; does not prove all dictionary derivations are covered."
+  },
+  "verified": {
+    "all_captures_complete": true,
+    "all_json_keys_complete": true,
+    "all_finish_stop": true,
+    "single_runtime_fingerprint": true,
+    "valid_preview_matches": true,
+    "valid_target_order": true,
+    "valid_provided_positions": true,
+    "internal_annotations_not_leaked": true,
+    "valid_drafts": 15,
+    "failed_refunded_without_draft": 5,
+    "logout_statuses": [
+      204,
+      204,
+      204,
+      204
+    ],
+    "formal_library_save_tested": false,
+    "review_ui_tested": false
+  },
+  "quality_review": {
+    "scope": "Current assistant read all 20 complete raw outputs, 100 original-entry meanings and 100 hints; not independent QA or native-expert certification.",
+    "original_entry_meanings_no_passage_role_tail": true,
+    "all_twenty_single_paragraph": true,
+    "hints_with_changed_forms": 15,
+    "total_hints": 100,
+    "hints_with_repeated_target": 0,
+    "variation_is_observation_not_mandatory_target": true,
+    "known_form_occurrence_audit": [
+      {
+        "case_id": 13,
+        "entry": "young",
+        "observed_forms": [
+          "young",
+          "youngest",
+          "younger"
+        ],
+        "known_form_occurrences": 5,
+        "annotations": 4
+      }
+    ],
+    "known_form_audit_scope": "Exact selected entries plus forms observed in passage annotations; not exhaustive semantic/derivational discovery.",
+    "successful_content_problems": [
+      {
+        "case_id": 13,
+        "issue": "young man contains one unannotated young: five known-form occurrences, four annotations."
+      },
+      {
+        "case_id": 5,
+        "issue": "Unnatural transitive deteriorate efficiency/customer service."
+      },
+      {
+        "case_id": 6,
+        "issue": "hint relations deteriorated rapidly is a full clause."
+      },
+      {
+        "case_id": 16,
+        "issue": "hint working conditions deteriorate rapidly is a full clause."
+      }
+    ],
+    "further_notes": [
+      "MiniMax often produces long single-paragraph passages relative to the soft target; no hard maximum added.",
+      "A group repeatedly links melancholy/disability with casino activity or winnings; qualitative concern, not a new forbidden-topic rule.",
+      "All original-entry meanings remain independent of passage role, though some lexical definitions are imprecise."
+    ],
+    "quality_pass_rate_inferred": false,
+    "accepted": false
+  },
+  "cases": [
+    {
+      "case_id": 1,
+      "round": 1,
+      "reference_case_id": 1,
+      "pair_id": 1,
+      "group": "A",
+      "model_id": "01a07fe3-5c48-736a-a86b-1f4dabd7cb87",
+      "provider_model_id": "minimax/minimax-m3",
+      "meaning_language": "zh",
+      "scenario": "story",
+      "length": "short",
+      "entries": [
+        "melancholy",
+        "handicap",
+        "foray",
+        "casino",
+        "upswing"
+      ],
+      "started_at": "2026-09-12T03:07:18.959Z",
+      "status": "generation.failed",
+      "image": "sha256:56a6f59fb322564d4fe36808ee1f374d73de1bfa57b4304fe191752e40459577",
+      "http_status": 200,
+      "run_id": "01a09395-6e41-7b1c-8ec4-527aa9481021",
+      "first_delta_ms": 3340,
+      "code": "content_validation_failed",
+      "quota_refunded": true,
+      "duration_ms": 9302,
+      "passage_chars": 1352,
+      "terminal_count": 1,
+      "evidence_id": "bac2e9e7-7bb1-4c16-94e8-dcc3f0168b46",
+      "request_id": "req_4ENdDqEuVe7TzBmZIsOiQw",
+      "fingerprint": {
+        "source_sha256": "f73602b780ff771852d2a4df7f1c961c3d0d567543ab207d6eb43a862cb9e147",
+        "binary_sha256": "53f0dfe0421c3527874affb0c171b336acbe4037177fc3f46274c48569c5fbef",
+        "template_sha256": "81f9ac062f40347525f979fdcb9619395e5a5309ff2078e9e61434676862cde1",
+        "schema_sha256": "255eb22ed0fbce06a4cec83681e5a71d17bb211ff0334e94146b38a2d319292f",
+        "validator_sha256": "e1a582dbb5c52431ac0fe082fefb00e7a5ce7a9cb675fc393e8b3cb9db29b2a2",
+        "lexicon_sha256": "89e5b41dc8662780e443c10b5ecf81970944fc2b530d5f79372ac482ac744c0b"
+      },
+      "prompt_version": "m001-v5-r8",
+      "minimum_words": 50,
+      "soft_target_words": 60,
+      "expires_at": "2026-09-13T03:07:18.965565429Z",
+      "private_capture_complete": true,
+      "capture_state": {
+        "coalesced_progress": 121,
+        "dropped_records": 0,
+        "dropped_bytes": 0,
+        "truncated": false,
+        "io_failed": false,
+        "redacted": false,
+        "model_ended": true,
+        "unavailable": false
+      },
+      "model_end": {
+        "chunks": 40,
+        "bytes": 2235,
+        "redacted": false,
+        "unavailable": false
+      },
+      "first_failure": {
+        "stage": "content_validate",
+        "state": "failed",
+        "begin_ms": 9291,
+        "end_ms": 9292,
+        "duration_ms": 1,
+        "check": "passage_relations",
+        "detail": {
+          "reason": "mapping_relation_rejected",
+          "field": "passage",
+          "target_index": 0,
+          "actual": -1,
+          "limit": -1,
+          "byte_start": -1,
+          "byte_end": -1,
+          "expected_type": "",
+          "actual_type": ""
+        }
+      },
+      "confirmed_outcome": "failed",
+      "stages": [
+        {
+          "stage": "request",
+          "state": "ok",
+          "begin_ms": 0,
+          "end_ms": 9298,
+          "duration_ms": 9298,
+          "check": "body",
+          "detail": {
+            "reason": "",
+            "field": "",
+            "target_index": -1,
+            "actual": -1,
+            "limit": -1,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        },
+        {
+          "stage": "preflight",
+          "state": "ok",
+          "begin_ms": 2,
+          "end_ms": 22,
+          "duration_ms": 20,
+          "check": "transaction_commit",
+          "detail": {
+            "reason": "",
+            "field": "",
+            "target_index": -1,
+            "actual": -1,
+            "limit": -1,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        },
+        {
+          "stage": "provider_open",
+          "state": "ok",
+          "begin_ms": 22,
+          "end_ms": 2908,
+          "duration_ms": 2886,
+          "check": "response_headers",
+          "detail": {
+            "reason": "",
+            "field": "",
+            "target_index": -1,
+            "actual": -1,
+            "limit": -1,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        },
+        {
+          "stage": "provider_stream",
+          "state": "ok",
+          "begin_ms": 2908,
+          "end_ms": 9286,
+          "duration_ms": 6378,
+          "check": "",
+          "detail": {
+            "reason": "",
+            "field": "",
+            "target_index": -1,
+            "actual": -1,
+            "limit": -1,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        },
+        {
+          "stage": "passage_decode",
+          "state": "ok",
+          "begin_ms": 2908,
+          "end_ms": 9290,
+          "duration_ms": 6382,
+          "check": "clean_consistency",
+          "detail": {
+            "reason": "",
+            "field": "",
+            "target_index": -1,
+            "actual": -1,
+            "limit": -1,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        },
+        {
+          "stage": "candidate_decode",
+          "state": "ok",
+          "begin_ms": 9286,
+          "end_ms": 9290,
+          "duration_ms": 4,
+          "check": "hint_size",
+          "detail": {
+            "reason": "",
+            "field": "",
+            "target_index": -1,
+            "actual": -1,
+            "limit": -1,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        },
+        {
+          "stage": "content_validate",
+          "state": "failed",
+          "begin_ms": 9291,
+          "end_ms": 9292,
+          "duration_ms": 1,
+          "check": "passage_relations",
+          "detail": {
+            "reason": "mapping_relation_rejected",
+            "field": "passage",
+            "target_index": 0,
+            "actual": -1,
+            "limit": -1,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        },
+        {
+          "stage": "draft_commit",
+          "state": "not_run",
+          "begin_ms": -1,
+          "end_ms": -1,
+          "duration_ms": -1,
+          "check": "",
+          "detail": {
+            "reason": "",
+            "field": "",
+            "target_index": -1,
+            "actual": -1,
+            "limit": -1,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        },
+        {
+          "stage": "settlement",
+          "state": "ok",
+          "begin_ms": 9292,
+          "end_ms": 9298,
+          "duration_ms": 6,
+          "check": "cas",
+          "detail": {
+            "reason": "",
+            "field": "",
+            "target_index": -1,
+            "actual": -1,
+            "limit": -1,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        },
+        {
+          "stage": "delivery",
+          "state": "ok",
+          "begin_ms": 2908,
+          "end_ms": 9298,
+          "duration_ms": 6390,
+          "check": "",
+          "detail": {
+            "reason": "",
+            "field": "",
+            "target_index": -1,
+            "actual": -1,
+            "limit": -1,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        }
+      ],
+      "json_parse_error": null,
+      "clean_word_count": 227,
+      "paragraph_count": 1,
+      "target_keys": [
+        "casino",
+        "foray",
+        "handicap",
+        "melancholy",
+        "upswing"
+      ],
+      "tags": [
+        "家庭",
+        "城镇生活"
+      ],
+      "all_required_keys_present": true,
+      "passage_entries_without_annotations": [],
+      "passage_has_outer_whitespace": false,
+      "hint_changed_entries": [],
+      "hint_repeated_entries": [],
+      "finish_reasons": [
+        "stop"
+      ],
+      "usage": {
+        "prompt_tokens": 1281,
+        "completion_tokens": 538,
+        "total_tokens": 1819
+      },
+      "review": {
+        "issues": [
+          "合法词族示范 melancholic(melancholy) 被当前关系校验拒绝；需作为关系识别覆盖问题，与完全无关的词错配分开。",
+          "赌场小胜与小镇整体复苏的因果联系较牵强；短篇偏长。"
+        ],
+        "meaning_role_tail": false
+      },
+      "db": {
+        "id": "01a09395-6e41-7b1c-8ec4-527aa9481021",
+        "account_id": "01a08e5a-2250-7854-81df-5aeb26e7f461",
+        "call_status": "validation_failed",
+        "disposition": "pending",
+        "quota_charged": false,
+        "counts_toward_cumulative": false,
+        "failure_code": "content_validation_failed",
+        "has_draft": false
+      }
+    },
+    {
+      "case_id": 2,
+      "round": 1,
+      "reference_case_id": 2,
+      "pair_id": 1,
+      "group": "A",
+      "model_id": "01a07fe3-f046-7017-97f8-c15539050441",
+      "provider_model_id": "z-ai/glm-5.3-flash",
+      "meaning_language": "zh",
+      "scenario": "story",
+      "length": "short",
+      "entries": [
+        "melancholy",
+        "handicap",
+        "foray",
+        "casino",
+        "upswing"
+      ],
+      "started_at": "2026-09-12T03:07:28.288Z",
+      "status": "generation.validated",
+      "image": "sha256:56a6f59fb322564d4fe36808ee1f374d73de1bfa57b4304fe191752e40459577",
+      "http_status": 200,
+      "run_id": "01a09395-92a5-7e5e-a649-1b30bfa7004c",
+      "first_delta_ms": 16440,
+      "preview_equals_result": true,
+      "target_order_valid": true,
+      "target_count": 5,
+      "tag_count": 2,
+      "result_sha256": "98ab76ccce76a8c68a47516a0c23427f197a24f37da3f78e2af87a91ed6b9564",
+      "annotation_leaked": false,
+      "changed_form_occurrences": 0,
+      "repeated_passage_targets": 0,
+      "repeated_hint_targets": 0,
+      "positions_valid": true,
+      "duration_ms": 18909,
+      "passage_chars": 363,
+      "terminal_count": 1,
+      "evidence_id": "f5fbe0e9-ff21-4d50-8bd8-1a640fdf88a6",
+      "request_id": "req_6y61goLK1GIh5fo4-jr1KQ",
+      "fingerprint": {
+        "source_sha256": "f73602b780ff771852d2a4df7f1c961c3d0d567543ab207d6eb43a862cb9e147",
+        "binary_sha256": "53f0dfe0421c3527874affb0c171b336acbe4037177fc3f46274c48569c5fbef",
+        "template_sha256": "81f9ac062f40347525f979fdcb9619395e5a5309ff2078e9e61434676862cde1",
+        "schema_sha256": "255eb22ed0fbce06a4cec83681e5a71d17bb211ff0334e94146b38a2d319292f",
+        "validator_sha256": "e1a582dbb5c52431ac0fe082fefb00e7a5ce7a9cb675fc393e8b3cb9db29b2a2",
+        "lexicon_sha256": "89e5b41dc8662780e443c10b5ecf81970944fc2b530d5f79372ac482ac744c0b"
+      },
+      "prompt_version": "m001-v5-r8",
+      "minimum_words": 50,
+      "soft_target_words": 60,
+      "expires_at": "2026-09-13T03:07:28.290497752Z",
+      "private_capture_complete": true,
+      "capture_state": {
+        "coalesced_progress": 276,
+        "dropped_records": 0,
+        "dropped_bytes": 0,
+        "truncated": false,
+        "io_failed": false,
+        "redacted": false,
+        "model_ended": true,
+        "unavailable": false
+      },
+      "model_end": {
+        "chunks": 91,
+        "bytes": 1318,
+        "redacted": false,
+        "unavailable": false
+      },
+      "first_failure": null,
+      "confirmed_outcome": "valid",
+      "stages": [
+        {
+          "stage": "request",
+          "state": "ok",
+          "begin_ms": 0,
+          "end_ms": 18902,
+          "duration_ms": 18902,
+          "check": "body",
+          "detail": {
+            "reason": "",
+            "field": "",
+            "target_index": -1,
+            "actual": -1,
+            "limit": -1,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        },
+        {
+          "stage": "preflight",
+          "state": "ok",
+          "begin_ms": 1,
+          "end_ms": 5,
+          "duration_ms": 4,
+          "check": "transaction_commit",
+          "detail": {
+            "reason": "",
+            "field": "",
+            "target_index": -1,
+            "actual": -1,
+            "limit": -1,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        },
+        {
+          "stage": "provider_open",
+          "state": "ok",
+          "begin_ms": 5,
+          "end_ms": 1767,
+          "duration_ms": 1762,
+          "check": "response_headers",
+          "detail": {
+            "reason": "",
+            "field": "",
+            "target_index": -1,
+            "actual": -1,
+            "limit": -1,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        },
+        {
+          "stage": "provider_stream",
+          "state": "ok",
+          "begin_ms": 1768,
+          "end_ms": 18892,
+          "duration_ms": 17124,
+          "check": "",
+          "detail": {
+            "reason": "",
+            "field": "",
+            "target_index": -1,
+            "actual": -1,
+            "limit": -1,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        },
+        {
+          "stage": "passage_decode",
+          "state": "ok",
+          "begin_ms": 16434,
+          "end_ms": 18893,
+          "duration_ms": 2459,
+          "check": "clean_consistency",
+          "detail": {
+            "reason": "",
+            "field": "",
+            "target_index": -1,
+            "actual": -1,
+            "limit": -1,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        },
+        {
+          "stage": "candidate_decode",
+          "state": "ok",
+          "begin_ms": 18892,
+          "end_ms": 18893,
+          "duration_ms": 1,
+          "check": "hint_size",
+          "detail": {
+            "reason": "",
+            "field": "",
+            "target_index": -1,
+            "actual": -1,
+            "limit": -1,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        },
+        {
+          "stage": "content_validate",
+          "state": "ok",
+          "begin_ms": 18893,
+          "end_ms": 18895,
+          "duration_ms": 2,
+          "check": "context",
+          "detail": {
+            "reason": "",
+            "field": "",
+            "target_index": -1,
+            "actual": -1,
+            "limit": -1,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        },
+        {
+          "stage": "draft_commit",
+          "state": "ok",
+          "begin_ms": 18895,
+          "end_ms": 18902,
+          "duration_ms": 7,
+          "check": "transaction_commit",
+          "detail": {
+            "reason": "",
+            "field": "",
+            "target_index": -1,
+            "actual": -1,
+            "limit": -1,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        },
+        {
+          "stage": "settlement",
+          "state": "not_run",
+          "begin_ms": -1,
+          "end_ms": -1,
+          "duration_ms": -1,
+          "check": "",
+          "detail": {
+            "reason": "",
+            "field": "",
+            "target_index": -1,
+            "actual": -1,
+            "limit": -1,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        },
+        {
+          "stage": "delivery",
+          "state": "ok",
+          "begin_ms": 1767,
+          "end_ms": 18902,
+          "duration_ms": 17135,
+          "check": "",
+          "detail": {
+            "reason": "",
+            "field": "",
+            "target_index": -1,
+            "actual": -1,
+            "limit": -1,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        }
+      ],
+      "json_parse_error": null,
+      "clean_word_count": 62,
+      "paragraph_count": 1,
+      "target_keys": [
+        "casino",
+        "foray",
+        "handicap",
+        "melancholy",
+        "upswing"
+      ],
+      "tags": [
+        "个人成长",
+        "都市生活"
+      ],
+      "all_required_keys_present": true,
+      "passage_entries_without_annotations": [],
+      "passage_has_outer_whitespace": false,
+      "hint_changed_entries": [],
+      "hint_repeated_entries": [],
+      "finish_reasons": [
+        "stop"
+      ],
+      "usage": {
+        "prompt_tokens": 1104,
+        "completion_tokens": 1756,
+        "total_tokens": 2860
+      },
+      "review": {
+        "issues": [
+          "前文提轮椅，结尾突然 Walking home later，行动方式变化缺少交代；不能据此断言使用轮椅者绝不可能步行。",
+          "仍沿用身体不便/忧郁—赌场赢钱—情绪好转的重复情节。"
+        ],
+        "meaning_role_tail": false
+      },
+      "db": {
+        "id": "01a09395-92a5-7e5e-a649-1b30bfa7004c",
+        "account_id": "01a08e5a-2250-7854-81df-5aeb26e7f461",
+        "call_status": "valid",
+        "disposition": "pending",
+        "quota_charged": true,
+        "counts_toward_cumulative": true,
+        "failure_code": null,
+        "has_draft": true
+      }
+    },
+    {
+      "case_id": 3,
+      "round": 1,
+      "reference_case_id": 3,
+      "pair_id": 2,
+      "group": "B",
+      "model_id": "01a07fe3-5c48-736a-a86b-1f4dabd7cb87",
+      "provider_model_id": "minimax/minimax-m3",
+      "meaning_language": "zh",
+      "scenario": "discussion",
+      "length": "medium",
+      "entries": [
+        "young",
+        "grape",
+        "weekend",
+        "danger",
+        "enforce"
+      ],
+      "started_at": "2026-09-12T03:07:47.222Z",
+      "status": "generation.validated",
+      "image": "sha256:56a6f59fb322564d4fe36808ee1f374d73de1bfa57b4304fe191752e40459577",
+      "http_status": 200,
+      "run_id": "01a09395-dc9e-7bba-9b8f-5353b94a40a2",
+      "first_delta_ms": 3115,
+      "preview_equals_result": true,
+      "target_order_valid": true,
+      "target_count": 5,
+      "tag_count": 2,
+      "result_sha256": "0906d77562e8d07e2b79067bc52d506e8c266af5b5b05f274406d9e061bb90a4",
+      "annotation_leaked": false,
+      "changed_form_occurrences": 1,
+      "repeated_passage_targets": 3,
+      "repeated_hint_targets": 0,
+      "positions_valid": true,
+      "duration_ms": 7673,
+      "passage_chars": 1314,
+      "terminal_count": 1,
+      "evidence_id": "5a8002d4-65c5-4d4e-9a94-eb9368fe7dc7",
+      "request_id": "req_gKShWDoXPhhZwhGDCWnndg",
+      "fingerprint": {
+        "source_sha256": "f73602b780ff771852d2a4df7f1c961c3d0d567543ab207d6eb43a862cb9e147",
+        "binary_sha256": "53f0dfe0421c3527874affb0c171b336acbe4037177fc3f46274c48569c5fbef",
+        "template_sha256": "81f9ac062f40347525f979fdcb9619395e5a5309ff2078e9e61434676862cde1",
+        "schema_sha256": "255eb22ed0fbce06a4cec83681e5a71d17bb211ff0334e94146b38a2d319292f",
+        "validator_sha256": "e1a582dbb5c52431ac0fe082fefb00e7a5ce7a9cb675fc393e8b3cb9db29b2a2",
+        "lexicon_sha256": "89e5b41dc8662780e443c10b5ecf81970944fc2b530d5f79372ac482ac744c0b"
+      },
+      "prompt_version": "m001-v5-r8",
+      "minimum_words": 100,
+      "soft_target_words": 120,
+      "expires_at": "2026-09-13T03:07:47.225800511Z",
+      "private_capture_complete": true,
+      "capture_state": {
+        "coalesced_progress": 118,
+        "dropped_records": 0,
+        "dropped_bytes": 0,
+        "truncated": false,
+        "io_failed": false,
+        "redacted": false,
+        "model_ended": true,
+        "unavailable": false
+      },
+      "model_end": {
+        "chunks": 39,
+        "bytes": 2169,
+        "redacted": false,
+        "unavailable": false
+      },
+      "first_failure": null,
+      "confirmed_outcome": "valid",
+      "stages": [
+        {
+          "stage": "request",
+          "state": "ok",
+          "begin_ms": 0,
+          "end_ms": 7668,
+          "duration_ms": 7668,
+          "check": "body",
+          "detail": {
+            "reason": "",
+            "field": "",
+            "target_index": -1,
+            "actual": -1,
+            "limit": -1,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        },
+        {
+          "stage": "preflight",
+          "state": "ok",
+          "begin_ms": 1,
+          "end_ms": 8,
+          "duration_ms": 7,
+          "check": "transaction_commit",
+          "detail": {
+            "reason": "",
+            "field": "",
+            "target_index": -1,
+            "actual": -1,
+            "limit": -1,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        },
+        {
+          "stage": "provider_open",
+          "state": "ok",
+          "begin_ms": 8,
+          "end_ms": 2631,
+          "duration_ms": 2623,
+          "check": "response_headers",
+          "detail": {
+            "reason": "",
+            "field": "",
+            "target_index": -1,
+            "actual": -1,
+            "limit": -1,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        },
+        {
+          "stage": "provider_stream",
+          "state": "ok",
+          "begin_ms": 2632,
+          "end_ms": 7660,
+          "duration_ms": 5028,
+          "check": "",
+          "detail": {
+            "reason": "",
+            "field": "",
+            "target_index": -1,
+            "actual": -1,
+            "limit": -1,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        },
+        {
+          "stage": "passage_decode",
+          "state": "ok",
+          "begin_ms": 2632,
+          "end_ms": 7662,
+          "duration_ms": 5030,
+          "check": "clean_consistency",
+          "detail": {
+            "reason": "",
+            "field": "",
+            "target_index": -1,
+            "actual": -1,
+            "limit": -1,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        },
+        {
+          "stage": "candidate_decode",
+          "state": "ok",
+          "begin_ms": 7660,
+          "end_ms": 7661,
+          "duration_ms": 1,
+          "check": "hint_size",
+          "detail": {
+            "reason": "",
+            "field": "",
+            "target_index": -1,
+            "actual": -1,
+            "limit": -1,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        },
+        {
+          "stage": "content_validate",
+          "state": "ok",
+          "begin_ms": 7662,
+          "end_ms": 7664,
+          "duration_ms": 2,
+          "check": "context",
+          "detail": {
+            "reason": "",
+            "field": "",
+            "target_index": -1,
+            "actual": -1,
+            "limit": -1,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        },
+        {
+          "stage": "draft_commit",
+          "state": "ok",
+          "begin_ms": 7664,
+          "end_ms": 7668,
+          "duration_ms": 4,
+          "check": "transaction_commit",
+          "detail": {
+            "reason": "",
+            "field": "",
+            "target_index": -1,
+            "actual": -1,
+            "limit": -1,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        },
+        {
+          "stage": "settlement",
+          "state": "not_run",
+          "begin_ms": -1,
+          "end_ms": -1,
+          "duration_ms": -1,
+          "check": "",
+          "detail": {
+            "reason": "",
+            "field": "",
+            "target_index": -1,
+            "actual": -1,
+            "limit": -1,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        },
+        {
+          "stage": "delivery",
+          "state": "ok",
+          "begin_ms": 2631,
+          "end_ms": 7668,
+          "duration_ms": 5037,
+          "check": "",
+          "detail": {
+            "reason": "",
+            "field": "",
+            "target_index": -1,
+            "actual": -1,
+            "limit": -1,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        }
+      ],
+      "json_parse_error": null,
+      "clean_word_count": 204,
+      "paragraph_count": 1,
+      "target_keys": [
+        "danger",
+        "enforce",
+        "grape",
+        "weekend",
+        "young"
+      ],
+      "tags": [
+        "农业",
+        "社区"
+      ],
+      "all_required_keys_present": true,
+      "passage_entries_without_annotations": [],
+      "passage_has_outer_whitespace": false,
+      "hint_changed_entries": [
+        "enforce"
+      ],
+      "hint_repeated_entries": [],
+      "finish_reasons": [
+        "stop"
+      ],
+      "usage": {
+        "prompt_tokens": 1347,
+        "completion_tokens": 482,
+        "total_tokens": 1829
+      },
+      "review": {
+        "issues": [
+          "文本可读；话题由天气灾害转到标签欺诈，所拟灌溉/修剪/收获标准与反欺诈关联较弱。",
+          "中篇超过软目标，单段。"
+        ],
+        "meaning_role_tail": false
+      },
+      "db": {
+        "id": "01a09395-dc9e-7bba-9b8f-5353b94a40a2",
+        "account_id": "01a08e5a-2250-7854-81df-5aeb26e7f461",
+        "call_status": "valid",
+        "disposition": "pending",
+        "quota_charged": true,
+        "counts_toward_cumulative": true,
+        "failure_code": null,
+        "has_draft": true
+      }
+    },
+    {
+      "case_id": 4,
+      "round": 1,
+      "reference_case_id": 4,
+      "pair_id": 2,
+      "group": "B",
+      "model_id": "01a07fe3-f046-7017-97f8-c15539050441",
+      "provider_model_id": "z-ai/glm-5.3-flash",
+      "meaning_language": "zh",
+      "scenario": "discussion",
+      "length": "medium",
+      "entries": [
+        "young",
+        "grape",
+        "weekend",
+        "danger",
+        "enforce"
+      ],
+      "started_at": "2026-09-12T03:07:54.921Z",
+      "status": "generation.validated",
+      "image": "sha256:56a6f59fb322564d4fe36808ee1f374d73de1bfa57b4304fe191752e40459577",
+      "http_status": 200,
+      "run_id": "01a09395-faae-7ac7-9f01-bd5f79781f00",
+      "first_delta_ms": 26089,
+      "preview_equals_result": true,
+      "target_order_valid": true,
+      "target_count": 5,
+      "tag_count": 2,
+      "result_sha256": "19177736c1d13c6acbfb18b9d1597c5cdc6d5abd615398414168ed70be64241c",
+      "annotation_leaked": false,
+      "changed_form_occurrences": 2,
+      "repeated_passage_targets": 5,
+      "repeated_hint_targets": 0,
+      "positions_valid": true,
+      "duration_ms": 30671,
+      "passage_chars": 749,
+      "terminal_count": 1,
+      "evidence_id": "5d241d2a-60d1-4a78-b28c-6e8d29990919",
+      "request_id": "req_TuXeSSyCfGxSC_h2MTzXLw",
+      "fingerprint": {
+        "source_sha256": "f73602b780ff771852d2a4df7f1c961c3d0d567543ab207d6eb43a862cb9e147",
+        "binary_sha256": "53f0dfe0421c3527874affb0c171b336acbe4037177fc3f46274c48569c5fbef",
+        "template_sha256": "81f9ac062f40347525f979fdcb9619395e5a5309ff2078e9e61434676862cde1",
+        "schema_sha256": "255eb22ed0fbce06a4cec83681e5a71d17bb211ff0334e94146b38a2d319292f",
+        "validator_sha256": "e1a582dbb5c52431ac0fe082fefb00e7a5ce7a9cb675fc393e8b3cb9db29b2a2",
+        "lexicon_sha256": "89e5b41dc8662780e443c10b5ecf81970944fc2b530d5f79372ac482ac744c0b"
+      },
+      "prompt_version": "m001-v5-r8",
+      "minimum_words": 100,
+      "soft_target_words": 120,
+      "expires_at": "2026-09-13T03:07:54.923794167Z",
+      "private_capture_complete": true,
+      "capture_state": {
+        "coalesced_progress": 321,
+        "dropped_records": 0,
+        "dropped_bytes": 0,
+        "truncated": false,
+        "io_failed": false,
+        "redacted": false,
+        "model_ended": true,
+        "unavailable": false
+      },
+      "model_end": {
+        "chunks": 106,
+        "bytes": 1663,
+        "redacted": false,
+        "unavailable": false
+      },
+      "first_failure": null,
+      "confirmed_outcome": "valid",
+      "stages": [
+        {
+          "stage": "request",
+          "state": "ok",
+          "begin_ms": 0,
+          "end_ms": 30668,
+          "duration_ms": 30668,
+          "check": "body",
+          "detail": {
+            "reason": "",
+            "field": "",
+            "target_index": -1,
+            "actual": -1,
+            "limit": -1,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        },
+        {
+          "stage": "preflight",
+          "state": "ok",
+          "begin_ms": 1,
+          "end_ms": 4,
+          "duration_ms": 3,
+          "check": "transaction_commit",
+          "detail": {
+            "reason": "",
+            "field": "",
+            "target_index": -1,
+            "actual": -1,
+            "limit": -1,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        },
+        {
+          "stage": "provider_open",
+          "state": "ok",
+          "begin_ms": 4,
+          "end_ms": 599,
+          "duration_ms": 595,
+          "check": "response_headers",
+          "detail": {
+            "reason": "",
+            "field": "",
+            "target_index": -1,
+            "actual": -1,
+            "limit": -1,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        },
+        {
+          "stage": "provider_stream",
+          "state": "ok",
+          "begin_ms": 601,
+          "end_ms": 30662,
+          "duration_ms": 30061,
+          "check": "",
+          "detail": {
+            "reason": "",
+            "field": "",
+            "target_index": -1,
+            "actual": -1,
+            "limit": -1,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        },
+        {
+          "stage": "passage_decode",
+          "state": "ok",
+          "begin_ms": 26028,
+          "end_ms": 30663,
+          "duration_ms": 4635,
+          "check": "clean_consistency",
+          "detail": {
+            "reason": "",
+            "field": "",
+            "target_index": -1,
+            "actual": -1,
+            "limit": -1,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        },
+        {
+          "stage": "candidate_decode",
+          "state": "ok",
+          "begin_ms": 30662,
+          "end_ms": 30663,
+          "duration_ms": 1,
+          "check": "hint_size",
+          "detail": {
+            "reason": "",
+            "field": "",
+            "target_index": -1,
+            "actual": -1,
+            "limit": -1,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        },
+        {
+          "stage": "content_validate",
+          "state": "ok",
+          "begin_ms": 30663,
+          "end_ms": 30664,
+          "duration_ms": 1,
+          "check": "context",
+          "detail": {
+            "reason": "",
+            "field": "",
+            "target_index": -1,
+            "actual": -1,
+            "limit": -1,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        },
+        {
+          "stage": "draft_commit",
+          "state": "ok",
+          "begin_ms": 30664,
+          "end_ms": 30668,
+          "duration_ms": 4,
+          "check": "transaction_commit",
+          "detail": {
+            "reason": "",
+            "field": "",
+            "target_index": -1,
+            "actual": -1,
+            "limit": -1,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        },
+        {
+          "stage": "settlement",
+          "state": "not_run",
+          "begin_ms": -1,
+          "end_ms": -1,
+          "duration_ms": -1,
+          "check": "",
+          "detail": {
+            "reason": "",
+            "field": "",
+            "target_index": -1,
+            "actual": -1,
+            "limit": -1,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        },
+        {
+          "stage": "delivery",
+          "state": "ok",
+          "begin_ms": 599,
+          "end_ms": 30668,
+          "duration_ms": 30069,
+          "check": "",
+          "detail": {
+            "reason": "",
+            "field": "",
+            "target_index": -1,
+            "actual": -1,
+            "limit": -1,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        }
+      ],
+      "json_parse_error": null,
+      "clean_word_count": 120,
+      "paragraph_count": 1,
+      "target_keys": [
+        "danger",
+        "enforce",
+        "grape",
+        "weekend",
+        "young"
+      ],
+      "tags": [
+        "社区讨论",
+        "周末活动"
+      ],
+      "all_required_keys_present": true,
+      "passage_entries_without_annotations": [],
+      "passage_has_outer_whitespace": false,
+      "hint_changed_entries": [
+        "grape",
+        "enforce"
+      ],
+      "hint_repeated_entries": [],
+      "finish_reasons": [
+        "stop"
+      ],
+      "usage": {
+        "prompt_tokens": 1171,
+        "completion_tokens": 2500,
+        "total_tokens": 3671
+      },
+      "review": {
+        "issues": [
+          "讨论事件完整，葡萄复数、规则被执行的 hint 自然；单段。"
+        ],
+        "meaning_role_tail": false
+      },
+      "db": {
+        "id": "01a09395-faae-7ac7-9f01-bd5f79781f00",
+        "account_id": "01a08e5a-2250-7854-81df-5aeb26e7f461",
+        "call_status": "valid",
+        "disposition": "pending",
+        "quota_charged": true,
+        "counts_toward_cumulative": true,
+        "failure_code": null,
+        "has_draft": true
+      }
+    },
+    {
+      "case_id": 5,
+      "round": 1,
+      "reference_case_id": 5,
+      "pair_id": 3,
+      "group": "C",
+      "model_id": "01a07fe3-5c48-736a-a86b-1f4dabd7cb87",
+      "provider_model_id": "minimax/minimax-m3",
+      "meaning_language": "en",
+      "scenario": "business",
+      "length": "short",
+      "entries": [
+        "alleviate",
+        "undermine",
+        "facilitate",
+        "deteriorate",
+        "perceive"
+      ],
+      "started_at": "2026-09-12T03:08:25.612Z",
+      "status": "generation.validated",
+      "image": "sha256:56a6f59fb322564d4fe36808ee1f374d73de1bfa57b4304fe191752e40459577",
+      "http_status": 200,
+      "run_id": "01a09396-7294-777a-8ae0-ffac0c90ba0a",
+      "first_delta_ms": 2922,
+      "preview_equals_result": true,
+      "target_order_valid": true,
+      "target_count": 5,
+      "tag_count": 2,
+      "result_sha256": "6b57f05ba7209e306d302696acc2f45acdd3b378f2b4b70d97cc60a9fbf123bf",
+      "annotation_leaked": false,
+      "changed_form_occurrences": 2,
+      "repeated_passage_targets": 5,
+      "repeated_hint_targets": 0,
+      "positions_valid": true,
+      "duration_ms": 7597,
+      "passage_chars": 1191,
+      "terminal_count": 1,
+      "evidence_id": "f14c84fb-e232-452f-af8f-b7cdb65cf7fb",
+      "request_id": "req_ctqMusQHtbgs7dJSI2YIsQ",
+      "fingerprint": {
+        "source_sha256": "f73602b780ff771852d2a4df7f1c961c3d0d567543ab207d6eb43a862cb9e147",
+        "binary_sha256": "53f0dfe0421c3527874affb0c171b336acbe4037177fc3f46274c48569c5fbef",
+        "template_sha256": "81f9ac062f40347525f979fdcb9619395e5a5309ff2078e9e61434676862cde1",
+        "schema_sha256": "255eb22ed0fbce06a4cec83681e5a71d17bb211ff0334e94146b38a2d319292f",
+        "validator_sha256": "e1a582dbb5c52431ac0fe082fefb00e7a5ce7a9cb675fc393e8b3cb9db29b2a2",
+        "lexicon_sha256": "89e5b41dc8662780e443c10b5ecf81970944fc2b530d5f79372ac482ac744c0b"
+      },
+      "prompt_version": "m001-v5-r8",
+      "minimum_words": 50,
+      "soft_target_words": 60,
+      "expires_at": "2026-09-13T03:08:25.615577334Z",
+      "private_capture_complete": true,
+      "capture_state": {
+        "coalesced_progress": 112,
+        "dropped_records": 0,
+        "dropped_bytes": 0,
+        "truncated": false,
+        "io_failed": false,
+        "redacted": false,
+        "model_ended": true,
+        "unavailable": false
+      },
+      "model_end": {
+        "chunks": 37,
+        "bytes": 2296,
+        "redacted": false,
+        "unavailable": false
+      },
+      "first_failure": null,
+      "confirmed_outcome": "valid",
+      "stages": [
+        {
+          "stage": "request",
+          "state": "ok",
+          "begin_ms": 0,
+          "end_ms": 7592,
+          "duration_ms": 7592,
+          "check": "body",
+          "detail": {
+            "reason": "",
+            "field": "",
+            "target_index": -1,
+            "actual": -1,
+            "limit": -1,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        },
+        {
+          "stage": "preflight",
+          "state": "ok",
+          "begin_ms": 1,
+          "end_ms": 7,
+          "duration_ms": 6,
+          "check": "transaction_commit",
+          "detail": {
+            "reason": "",
+            "field": "",
+            "target_index": -1,
+            "actual": -1,
+            "limit": -1,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        },
+        {
+          "stage": "provider_open",
+          "state": "ok",
+          "begin_ms": 7,
+          "end_ms": 2751,
+          "duration_ms": 2744,
+          "check": "response_headers",
+          "detail": {
+            "reason": "",
+            "field": "",
+            "target_index": -1,
+            "actual": -1,
+            "limit": -1,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        },
+        {
+          "stage": "provider_stream",
+          "state": "ok",
+          "begin_ms": 2752,
+          "end_ms": 7582,
+          "duration_ms": 4830,
+          "check": "",
+          "detail": {
+            "reason": "",
+            "field": "",
+            "target_index": -1,
+            "actual": -1,
+            "limit": -1,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        },
+        {
+          "stage": "passage_decode",
+          "state": "ok",
+          "begin_ms": 2752,
+          "end_ms": 7584,
+          "duration_ms": 4832,
+          "check": "clean_consistency",
+          "detail": {
+            "reason": "",
+            "field": "",
+            "target_index": -1,
+            "actual": -1,
+            "limit": -1,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        },
+        {
+          "stage": "candidate_decode",
+          "state": "ok",
+          "begin_ms": 7582,
+          "end_ms": 7584,
+          "duration_ms": 2,
+          "check": "hint_size",
+          "detail": {
+            "reason": "",
+            "field": "",
+            "target_index": -1,
+            "actual": -1,
+            "limit": -1,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        },
+        {
+          "stage": "content_validate",
+          "state": "ok",
+          "begin_ms": 7584,
+          "end_ms": 7587,
+          "duration_ms": 3,
+          "check": "context",
+          "detail": {
+            "reason": "",
+            "field": "",
+            "target_index": -1,
+            "actual": -1,
+            "limit": -1,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        },
+        {
+          "stage": "draft_commit",
+          "state": "ok",
+          "begin_ms": 7587,
+          "end_ms": 7592,
+          "duration_ms": 5,
+          "check": "transaction_commit",
+          "detail": {
+            "reason": "",
+            "field": "",
+            "target_index": -1,
+            "actual": -1,
+            "limit": -1,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        },
+        {
+          "stage": "settlement",
+          "state": "not_run",
+          "begin_ms": -1,
+          "end_ms": -1,
+          "duration_ms": -1,
+          "check": "",
+          "detail": {
+            "reason": "",
+            "field": "",
+            "target_index": -1,
+            "actual": -1,
+            "limit": -1,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        },
+        {
+          "stage": "delivery",
+          "state": "ok",
+          "begin_ms": 2751,
+          "end_ms": 7592,
+          "duration_ms": 4841,
+          "check": "",
+          "detail": {
+            "reason": "",
+            "field": "",
+            "target_index": -1,
+            "actual": -1,
+            "limit": -1,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        }
+      ],
+      "json_parse_error": null,
+      "clean_word_count": 154,
+      "paragraph_count": 1,
+      "target_keys": [
+        "alleviate",
+        "deteriorate",
+        "facilitate",
+        "perceive",
+        "undermine"
+      ],
+      "tags": [
+        "corporate governance",
+        "organizational change"
+      ],
+      "all_required_keys_present": true,
+      "passage_entries_without_annotations": [],
+      "passage_has_outer_whitespace": false,
+      "hint_changed_entries": [
+        "alleviate",
+        "deteriorate",
+        "perceive"
+      ],
+      "hint_repeated_entries": [],
+      "finish_reasons": [
+        "stop"
+      ],
+      "usage": {
+        "prompt_tokens": 1318,
+        "completion_tokens": 477,
+        "total_tokens": 1795
+      },
+      "review": {
+        "issues": [
+          "两处 deteriorate efficiency / deteriorate customer service 搭配不适合示范，宜用效率/服务作 deteriorate 的主语。",
+          "长串 facilitate organizational restructuring, training programs ..., and clearer communication channels 读法略生硬；短篇偏长。"
+        ],
+        "meaning_role_tail": false
+      },
+      "db": {
+        "id": "01a09396-7294-777a-8ae0-ffac0c90ba0a",
+        "account_id": "01a08e5a-2250-7854-81df-5aeb26e7f461",
+        "call_status": "valid",
+        "disposition": "pending",
+        "quota_charged": true,
+        "counts_toward_cumulative": true,
+        "failure_code": null,
+        "has_draft": true
+      }
+    },
+    {
+      "case_id": 6,
+      "round": 1,
+      "reference_case_id": 6,
+      "pair_id": 3,
+      "group": "C",
+      "model_id": "01a07fe3-f046-7017-97f8-c15539050441",
+      "provider_model_id": "z-ai/glm-5.3-flash",
+      "meaning_language": "en",
+      "scenario": "business",
+      "length": "short",
+      "entries": [
+        "alleviate",
+        "undermine",
+        "facilitate",
+        "deteriorate",
+        "perceive"
+      ],
+      "started_at": "2026-09-12T03:08:49.792Z",
+      "status": "generation.validated",
+      "image": "sha256:56a6f59fb322564d4fe36808ee1f374d73de1bfa57b4304fe191752e40459577",
+      "http_status": 200,
+      "run_id": "01a09396-d10a-77f0-bde0-b14f45d2d247",
+      "first_delta_ms": 17838,
+      "preview_equals_result": true,
+      "target_order_valid": true,
+      "target_count": 5,
+      "tag_count": 2,
+      "result_sha256": "359d65123969da4fd488217652ae381d6f1872e49d6fb90cecbda6cce772428f",
+      "annotation_leaked": false,
+      "changed_form_occurrences": 5,
+      "repeated_passage_targets": 1,
+      "repeated_hint_targets": 0,
+      "positions_valid": true,
+      "duration_ms": 20225,
+      "passage_chars": 453,
+      "terminal_count": 1,
+      "evidence_id": "2e3e7b3d-86bb-4001-93d2-889a995b10ad",
+      "request_id": "req_lfGs1OVEBgE4mAupevvM_Q",
+      "fingerprint": {
+        "source_sha256": "f73602b780ff771852d2a4df7f1c961c3d0d567543ab207d6eb43a862cb9e147",
+        "binary_sha256": "53f0dfe0421c3527874affb0c171b336acbe4037177fc3f46274c48569c5fbef",
+        "template_sha256": "81f9ac062f40347525f979fdcb9619395e5a5309ff2078e9e61434676862cde1",
+        "schema_sha256": "255eb22ed0fbce06a4cec83681e5a71d17bb211ff0334e94146b38a2d319292f",
+        "validator_sha256": "e1a582dbb5c52431ac0fe082fefb00e7a5ce7a9cb675fc393e8b3cb9db29b2a2",
+        "lexicon_sha256": "89e5b41dc8662780e443c10b5ecf81970944fc2b530d5f79372ac482ac744c0b"
+      },
+      "prompt_version": "m001-v5-r8",
+      "minimum_words": 50,
+      "soft_target_words": 60,
+      "expires_at": "2026-09-13T03:08:49.799185929Z",
+      "private_capture_complete": true,
+      "capture_state": {
+        "coalesced_progress": 291,
+        "dropped_records": 0,
+        "dropped_bytes": 0,
+        "truncated": false,
+        "io_failed": false,
+        "redacted": false,
+        "model_ended": true,
+        "unavailable": false
+      },
+      "model_end": {
+        "chunks": 96,
+        "bytes": 1619,
+        "redacted": false,
+        "unavailable": false
+      },
+      "first_failure": null,
+      "confirmed_outcome": "valid",
+      "stages": [
+        {
+          "stage": "request",
+          "state": "ok",
+          "begin_ms": 0,
+          "end_ms": 20221,
+          "duration_ms": 20221,
+          "check": "body",
+          "detail": {
+            "reason": "",
+            "field": "",
+            "target_index": -1,
+            "actual": -1,
+            "limit": -1,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        },
+        {
+          "stage": "preflight",
+          "state": "ok",
+          "begin_ms": 1,
+          "end_ms": 6,
+          "duration_ms": 5,
+          "check": "transaction_commit",
+          "detail": {
+            "reason": "",
+            "field": "",
+            "target_index": -1,
+            "actual": -1,
+            "limit": -1,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        },
+        {
+          "stage": "provider_open",
+          "state": "ok",
+          "begin_ms": 6,
+          "end_ms": 1093,
+          "duration_ms": 1087,
+          "check": "response_headers",
+          "detail": {
+            "reason": "",
+            "field": "",
+            "target_index": -1,
+            "actual": -1,
+            "limit": -1,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        },
+        {
+          "stage": "provider_stream",
+          "state": "ok",
+          "begin_ms": 1094,
+          "end_ms": 20212,
+          "duration_ms": 19118,
+          "check": "",
+          "detail": {
+            "reason": "",
+            "field": "",
+            "target_index": -1,
+            "actual": -1,
+            "limit": -1,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        },
+        {
+          "stage": "passage_decode",
+          "state": "ok",
+          "begin_ms": 17774,
+          "end_ms": 20213,
+          "duration_ms": 2439,
+          "check": "clean_consistency",
+          "detail": {
+            "reason": "",
+            "field": "",
+            "target_index": -1,
+            "actual": -1,
+            "limit": -1,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        },
+        {
+          "stage": "candidate_decode",
+          "state": "ok",
+          "begin_ms": 20212,
+          "end_ms": 20213,
+          "duration_ms": 1,
+          "check": "hint_size",
+          "detail": {
+            "reason": "",
+            "field": "",
+            "target_index": -1,
+            "actual": -1,
+            "limit": -1,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        },
+        {
+          "stage": "content_validate",
+          "state": "ok",
+          "begin_ms": 20214,
+          "end_ms": 20216,
+          "duration_ms": 2,
+          "check": "context",
+          "detail": {
+            "reason": "",
+            "field": "",
+            "target_index": -1,
+            "actual": -1,
+            "limit": -1,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        },
+        {
+          "stage": "draft_commit",
+          "state": "ok",
+          "begin_ms": 20216,
+          "end_ms": 20221,
+          "duration_ms": 5,
+          "check": "transaction_commit",
+          "detail": {
+            "reason": "",
+            "field": "",
+            "target_index": -1,
+            "actual": -1,
+            "limit": -1,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        },
+        {
+          "stage": "settlement",
+          "state": "not_run",
+          "begin_ms": -1,
+          "end_ms": -1,
+          "duration_ms": -1,
+          "check": "",
+          "detail": {
+            "reason": "",
+            "field": "",
+            "target_index": -1,
+            "actual": -1,
+            "limit": -1,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        },
+        {
+          "stage": "delivery",
+          "state": "ok",
+          "begin_ms": 1093,
+          "end_ms": 20221,
+          "duration_ms": 19128,
+          "check": "",
+          "detail": {
+            "reason": "",
+            "field": "",
+            "target_index": -1,
+            "actual": -1,
+            "limit": -1,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        }
+      ],
+      "json_parse_error": null,
+      "clean_word_count": 62,
+      "paragraph_count": 1,
+      "target_keys": [
+        "alleviate",
+        "deteriorate",
+        "facilitate",
+        "perceive",
+        "undermine"
+      ],
+      "tags": [
+        "workplace",
+        "management"
+      ],
+      "all_required_keys_present": true,
+      "passage_entries_without_annotations": [],
+      "passage_has_outer_whitespace": false,
+      "hint_changed_entries": [
+        "deteriorate",
+        "perceive"
+      ],
+      "hint_repeated_entries": [],
+      "finish_reasons": [
+        "stop"
+      ],
+      "usage": {
+        "prompt_tokens": 1152,
+        "completion_tokens": 1471,
+        "total_tokens": 2623
+      },
+      "review": {
+        "issues": [
+          "正文因果连贯，deteriorated 以 morale 作主语自然。",
+          "hint relations deteriorated rapidly 为完整小句而非短语；仅作质量意见，接口未拒绝。"
+        ],
+        "meaning_role_tail": false
+      },
+      "db": {
+        "id": "01a09396-d10a-77f0-bde0-b14f45d2d247",
+        "account_id": "01a08e5a-2250-7854-81df-5aeb26e7f461",
+        "call_status": "valid",
+        "disposition": "pending",
+        "quota_charged": true,
+        "counts_toward_cumulative": true,
+        "failure_code": null,
+        "has_draft": true
+      }
+    },
+    {
+      "case_id": 7,
+      "round": 1,
+      "reference_case_id": 7,
+      "pair_id": 4,
+      "group": "D",
+      "model_id": "01a07fe3-5c48-736a-a86b-1f4dabd7cb87",
+      "provider_model_id": "minimax/minimax-m3",
+      "meaning_language": "ja",
+      "scenario": "news",
+      "length": "long",
+      "entries": [
+        "sustainable",
+        "prevalent",
+        "vulnerable",
+        "ambiguous",
+        "coherent"
+      ],
+      "started_at": "2026-09-12T03:09:10.047Z",
+      "status": "generation.failed",
+      "image": "sha256:56a6f59fb322564d4fe36808ee1f374d73de1bfa57b4304fe191752e40459577",
+      "http_status": 200,
+      "run_id": "01a09397-2028-75a3-9e70-db7eb71e38ea",
+      "first_delta_ms": 858,
+      "code": "content_validation_failed",
+      "quota_refunded": true,
+      "duration_ms": 16640,
+      "passage_chars": 3645,
+      "terminal_count": 1,
+      "evidence_id": "57b0ceec-97fd-489d-9cc1-2b002b922919",
+      "request_id": "req_EwfcHsvt3eZGhpH5luojTg",
+      "fingerprint": {
+        "source_sha256": "f73602b780ff771852d2a4df7f1c961c3d0d567543ab207d6eb43a862cb9e147",
+        "binary_sha256": "53f0dfe0421c3527874affb0c171b336acbe4037177fc3f46274c48569c5fbef",
+        "template_sha256": "81f9ac062f40347525f979fdcb9619395e5a5309ff2078e9e61434676862cde1",
+        "schema_sha256": "255eb22ed0fbce06a4cec83681e5a71d17bb211ff0334e94146b38a2d319292f",
+        "validator_sha256": "e1a582dbb5c52431ac0fe082fefb00e7a5ce7a9cb675fc393e8b3cb9db29b2a2",
+        "lexicon_sha256": "89e5b41dc8662780e443c10b5ecf81970944fc2b530d5f79372ac482ac744c0b"
+      },
+      "prompt_version": "m001-v5-r8",
+      "minimum_words": 200,
+      "soft_target_words": 240,
+      "expires_at": "2026-09-13T03:09:10.051498091Z",
+      "private_capture_complete": true,
+      "capture_state": {
+        "coalesced_progress": 244,
+        "dropped_records": 0,
+        "dropped_bytes": 0,
+        "truncated": false,
+        "io_failed": false,
+        "redacted": false,
+        "model_ended": true,
+        "unavailable": false
+      },
+      "model_end": {
+        "chunks": 81,
+        "bytes": 4738,
+        "redacted": false,
+        "unavailable": false
+      },
+      "first_failure": {
+        "stage": "content_validate",
+        "state": "failed",
+        "begin_ms": 16629,
+        "end_ms": 16631,
+        "duration_ms": 2,
+        "check": "passage_annotation_presence",
+        "detail": {
+          "reason": "passage_annotation_missing",
+          "field": "passage",
+          "target_index": 4,
+          "actual": -1,
+          "limit": -1,
+          "byte_start": -1,
+          "byte_end": -1,
+          "expected_type": "",
+          "actual_type": ""
+        }
+      },
+      "confirmed_outcome": "failed",
+      "stages": [
+        {
+          "stage": "request",
+          "state": "ok",
+          "begin_ms": 0,
+          "end_ms": 16634,
+          "duration_ms": 16634,
+          "check": "body",
+          "detail": {
+            "reason": "",
+            "field": "",
+            "target_index": -1,
+            "actual": -1,
+            "limit": -1,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        },
+        {
+          "stage": "preflight",
+          "state": "ok",
+          "begin_ms": 1,
+          "end_ms": 8,
+          "duration_ms": 7,
+          "check": "transaction_commit",
+          "detail": {
+            "reason": "",
+            "field": "",
+            "target_index": -1,
+            "actual": -1,
+            "limit": -1,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        },
+        {
+          "stage": "provider_open",
+          "state": "ok",
+          "begin_ms": 8,
+          "end_ms": 792,
+          "duration_ms": 784,
+          "check": "response_headers",
+          "detail": {
+            "reason": "",
+            "field": "",
+            "target_index": -1,
+            "actual": -1,
+            "limit": -1,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        },
+        {
+          "stage": "provider_stream",
+          "state": "ok",
+          "begin_ms": 792,
+          "end_ms": 16626,
+          "duration_ms": 15834,
+          "check": "",
+          "detail": {
+            "reason": "",
+            "field": "",
+            "target_index": -1,
+            "actual": -1,
+            "limit": -1,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        },
+        {
+          "stage": "passage_decode",
+          "state": "ok",
+          "begin_ms": 792,
+          "end_ms": 16628,
+          "duration_ms": 15836,
+          "check": "clean_consistency",
+          "detail": {
+            "reason": "",
+            "field": "",
+            "target_index": -1,
+            "actual": -1,
+            "limit": -1,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        },
+        {
+          "stage": "candidate_decode",
+          "state": "ok",
+          "begin_ms": 16626,
+          "end_ms": 16628,
+          "duration_ms": 2,
+          "check": "hint_size",
+          "detail": {
+            "reason": "",
+            "field": "",
+            "target_index": -1,
+            "actual": -1,
+            "limit": -1,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        },
+        {
+          "stage": "content_validate",
+          "state": "failed",
+          "begin_ms": 16629,
+          "end_ms": 16631,
+          "duration_ms": 2,
+          "check": "passage_annotation_presence",
+          "detail": {
+            "reason": "passage_annotation_missing",
+            "field": "passage",
+            "target_index": 4,
+            "actual": -1,
+            "limit": -1,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        },
+        {
+          "stage": "draft_commit",
+          "state": "not_run",
+          "begin_ms": -1,
+          "end_ms": -1,
+          "duration_ms": -1,
+          "check": "",
+          "detail": {
+            "reason": "",
+            "field": "",
+            "target_index": -1,
+            "actual": -1,
+            "limit": -1,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        },
+        {
+          "stage": "settlement",
+          "state": "ok",
+          "begin_ms": 16631,
+          "end_ms": 16633,
+          "duration_ms": 2,
+          "check": "cas",
+          "detail": {
+            "reason": "",
+            "field": "",
+            "target_index": -1,
+            "actual": -1,
+            "limit": -1,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        },
+        {
+          "stage": "delivery",
+          "state": "ok",
+          "begin_ms": 792,
+          "end_ms": 16633,
+          "duration_ms": 15841,
+          "check": "",
+          "detail": {
+            "reason": "",
+            "field": "",
+            "target_index": -1,
+            "actual": -1,
+            "limit": -1,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        }
+      ],
+      "json_parse_error": null,
+      "clean_word_count": 527,
+      "paragraph_count": 1,
+      "target_keys": [
+        "ambiguous",
+        "coherent",
+        "prevalent",
+        "sustainable",
+        "vulnerable"
+      ],
+      "tags": [
+        "公共政策",
+        "気候変動"
+      ],
+      "all_required_keys_present": true,
+      "passage_entries_without_annotations": [
+        "coherent"
+      ],
+      "passage_has_outer_whitespace": false,
+      "hint_changed_entries": [],
+      "hint_repeated_entries": [],
+      "finish_reasons": [
+        "stop"
+      ],
+      "usage": {
+        "prompt_tokens": 1483,
+        "completion_tokens": 862,
+        "total_tokens": 2345
+      },
+      "review": {
+        "issues": [
+          "正文缺 coherent 及其标注，只有 targets 有该词，构成实际漏词。",
+          "长篇显著超软目标、冗长单段；新闻场景基本一致。"
+        ],
+        "meaning_role_tail": false
+      },
+      "db": {
+        "id": "01a09397-2028-75a3-9e70-db7eb71e38ea",
+        "account_id": "01a08e5a-2250-7854-81df-5aeb26e7f461",
+        "call_status": "validation_failed",
+        "disposition": "pending",
+        "quota_charged": false,
+        "counts_toward_cumulative": false,
+        "failure_code": "content_validation_failed",
+        "has_draft": false
+      }
+    },
+    {
+      "case_id": 8,
+      "round": 1,
+      "reference_case_id": 8,
+      "pair_id": 4,
+      "group": "D",
+      "model_id": "01a07fe3-f046-7017-97f8-c15539050441",
+      "provider_model_id": "z-ai/glm-5.3-flash",
+      "meaning_language": "ja",
+      "scenario": "news",
+      "length": "long",
+      "entries": [
+        "sustainable",
+        "prevalent",
+        "vulnerable",
+        "ambiguous",
+        "coherent"
+      ],
+      "started_at": "2026-09-12T03:09:26.714Z",
+      "status": "generation.validated",
+      "image": "sha256:56a6f59fb322564d4fe36808ee1f374d73de1bfa57b4304fe191752e40459577",
+      "http_status": 200,
+      "run_id": "01a09397-6146-795a-948f-7100fc97fae4",
+      "first_delta_ms": 31235,
+      "preview_equals_result": true,
+      "target_order_valid": true,
+      "target_count": 5,
+      "tag_count": 3,
+      "result_sha256": "77fdd10f4eaca27aba4ea6cf08ef911a86bef51a06b314a0d48f86c92b014700",
+      "annotation_leaked": false,
+      "changed_form_occurrences": 0,
+      "repeated_passage_targets": 5,
+      "repeated_hint_targets": 0,
+      "positions_valid": true,
+      "duration_ms": 35573,
+      "passage_chars": 1656,
+      "terminal_count": 1,
+      "evidence_id": "5cbed8c6-71e6-49fb-8256-ab8c111d0b8c",
+      "request_id": "req_0vofnJ7Z-wkfqEjzKg1XPw",
+      "fingerprint": {
+        "source_sha256": "f73602b780ff771852d2a4df7f1c961c3d0d567543ab207d6eb43a862cb9e147",
+        "binary_sha256": "53f0dfe0421c3527874affb0c171b336acbe4037177fc3f46274c48569c5fbef",
+        "template_sha256": "81f9ac062f40347525f979fdcb9619395e5a5309ff2078e9e61434676862cde1",
+        "schema_sha256": "255eb22ed0fbce06a4cec83681e5a71d17bb211ff0334e94146b38a2d319292f",
+        "validator_sha256": "e1a582dbb5c52431ac0fe082fefb00e7a5ce7a9cb675fc393e8b3cb9db29b2a2",
+        "lexicon_sha256": "89e5b41dc8662780e443c10b5ecf81970944fc2b530d5f79372ac482ac744c0b"
+      },
+      "prompt_version": "m001-v5-r8",
+      "minimum_words": 200,
+      "soft_target_words": 240,
+      "expires_at": "2026-09-13T03:09:26.722096085Z",
+      "private_capture_complete": true,
+      "capture_state": {
+        "coalesced_progress": 504,
+        "dropped_records": 0,
+        "dropped_bytes": 0,
+        "truncated": false,
+        "io_failed": false,
+        "redacted": false,
+        "model_ended": true,
+        "unavailable": false
+      },
+      "model_end": {
+        "chunks": 167,
+        "bytes": 2886,
+        "redacted": false,
+        "unavailable": false
+      },
+      "first_failure": null,
+      "confirmed_outcome": "valid",
+      "stages": [
+        {
+          "stage": "request",
+          "state": "ok",
+          "begin_ms": 0,
+          "end_ms": 35564,
+          "duration_ms": 35564,
+          "check": "body",
+          "detail": {
+            "reason": "",
+            "field": "",
+            "target_index": -1,
+            "actual": -1,
+            "limit": -1,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        },
+        {
+          "stage": "preflight",
+          "state": "ok",
+          "begin_ms": 1,
+          "end_ms": 7,
+          "duration_ms": 6,
+          "check": "transaction_commit",
+          "detail": {
+            "reason": "",
+            "field": "",
+            "target_index": -1,
+            "actual": -1,
+            "limit": -1,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        },
+        {
+          "stage": "provider_open",
+          "state": "ok",
+          "begin_ms": 7,
+          "end_ms": 627,
+          "duration_ms": 620,
+          "check": "response_headers",
+          "detail": {
+            "reason": "",
+            "field": "",
+            "target_index": -1,
+            "actual": -1,
+            "limit": -1,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        },
+        {
+          "stage": "provider_stream",
+          "state": "ok",
+          "begin_ms": 627,
+          "end_ms": 35555,
+          "duration_ms": 34928,
+          "check": "",
+          "detail": {
+            "reason": "",
+            "field": "",
+            "target_index": -1,
+            "actual": -1,
+            "limit": -1,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        },
+        {
+          "stage": "passage_decode",
+          "state": "ok",
+          "begin_ms": 31180,
+          "end_ms": 35557,
+          "duration_ms": 4377,
+          "check": "clean_consistency",
+          "detail": {
+            "reason": "",
+            "field": "",
+            "target_index": -1,
+            "actual": -1,
+            "limit": -1,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        },
+        {
+          "stage": "candidate_decode",
+          "state": "ok",
+          "begin_ms": 35555,
+          "end_ms": 35556,
+          "duration_ms": 1,
+          "check": "hint_size",
+          "detail": {
+            "reason": "",
+            "field": "",
+            "target_index": -1,
+            "actual": -1,
+            "limit": -1,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        },
+        {
+          "stage": "content_validate",
+          "state": "ok",
+          "begin_ms": 35557,
+          "end_ms": 35559,
+          "duration_ms": 2,
+          "check": "context",
+          "detail": {
+            "reason": "",
+            "field": "",
+            "target_index": -1,
+            "actual": -1,
+            "limit": -1,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        },
+        {
+          "stage": "draft_commit",
+          "state": "ok",
+          "begin_ms": 35559,
+          "end_ms": 35564,
+          "duration_ms": 5,
+          "check": "transaction_commit",
+          "detail": {
+            "reason": "",
+            "field": "",
+            "target_index": -1,
+            "actual": -1,
+            "limit": -1,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        },
+        {
+          "stage": "settlement",
+          "state": "not_run",
+          "begin_ms": -1,
+          "end_ms": -1,
+          "duration_ms": -1,
+          "check": "",
+          "detail": {
+            "reason": "",
+            "field": "",
+            "target_index": -1,
+            "actual": -1,
+            "limit": -1,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        },
+        {
+          "stage": "delivery",
+          "state": "ok",
+          "begin_ms": 627,
+          "end_ms": 35564,
+          "duration_ms": 34937,
+          "check": "",
+          "detail": {
+            "reason": "",
+            "field": "",
+            "target_index": -1,
+            "actual": -1,
+            "limit": -1,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        }
+      ],
+      "json_parse_error": null,
+      "clean_word_count": 245,
+      "paragraph_count": 1,
+      "target_keys": [
+        "ambiguous",
+        "coherent",
+        "prevalent",
+        "sustainable",
+        "vulnerable"
+      ],
+      "tags": [
+        "気候変動",
+        "都市政策",
+        "防災"
+      ],
+      "all_required_keys_present": true,
+      "passage_entries_without_annotations": [],
+      "passage_has_outer_whitespace": false,
+      "hint_changed_entries": [],
+      "hint_repeated_entries": [],
+      "finish_reasons": [
+        "stop"
+      ],
+      "usage": {
+        "prompt_tokens": 1343,
+        "completion_tokens": 3175,
+        "total_tokens": 4518
+      },
+      "review": {
+        "issues": [
+          "新闻体裁、事件与主题标签基本一致；仍为单段。",
+          "prevalent almost every year 的频率表达略生硬，不影响接口判断。",
+          "vulnerable 释义补充一般 to 搭配，未说明文中作用。"
+        ],
+        "meaning_role_tail": false
+      },
+      "db": {
+        "id": "01a09397-6146-795a-948f-7100fc97fae4",
+        "account_id": "01a08e5a-2250-7854-81df-5aeb26e7f461",
+        "call_status": "valid",
+        "disposition": "pending",
+        "quota_charged": true,
+        "counts_toward_cumulative": true,
+        "failure_code": null,
+        "has_draft": true
+      }
+    },
+    {
+      "case_id": 9,
+      "round": 1,
+      "reference_case_id": 9,
+      "pair_id": 5,
+      "group": "D",
+      "model_id": "01a07fe3-5c48-736a-a86b-1f4dabd7cb87",
+      "provider_model_id": "minimax/minimax-m3",
+      "meaning_language": "en",
+      "scenario": "story",
+      "length": "xlong",
+      "entries": [
+        "sustainable",
+        "prevalent",
+        "vulnerable",
+        "ambiguous",
+        "coherent"
+      ],
+      "started_at": "2026-09-12T03:10:02.310Z",
+      "status": "generation.failed",
+      "image": "sha256:56a6f59fb322564d4fe36808ee1f374d73de1bfa57b4304fe191752e40459577",
+      "http_status": 200,
+      "run_id": "01a09397-ec4d-760d-b72c-c0a65a90bc8b",
+      "first_delta_ms": 1039,
+      "code": "content_validation_failed",
+      "quota_refunded": true,
+      "duration_ms": 5241,
+      "passage_chars": 897,
+      "terminal_count": 1,
+      "evidence_id": "2cd39036-5ef2-4a4d-8427-9ac354a1af3b",
+      "request_id": "req_gNzOSrZ5KncLOJp8wuNLwg",
+      "fingerprint": {
+        "source_sha256": "f73602b780ff771852d2a4df7f1c961c3d0d567543ab207d6eb43a862cb9e147",
+        "binary_sha256": "53f0dfe0421c3527874affb0c171b336acbe4037177fc3f46274c48569c5fbef",
+        "template_sha256": "81f9ac062f40347525f979fdcb9619395e5a5309ff2078e9e61434676862cde1",
+        "schema_sha256": "255eb22ed0fbce06a4cec83681e5a71d17bb211ff0334e94146b38a2d319292f",
+        "validator_sha256": "e1a582dbb5c52431ac0fe082fefb00e7a5ce7a9cb675fc393e8b3cb9db29b2a2",
+        "lexicon_sha256": "89e5b41dc8662780e443c10b5ecf81970944fc2b530d5f79372ac482ac744c0b"
+      },
+      "prompt_version": "m001-v5-r8",
+      "minimum_words": 400,
+      "soft_target_words": 480,
+      "expires_at": "2026-09-13T03:10:02.313861504Z",
+      "private_capture_complete": true,
+      "capture_state": {
+        "coalesced_progress": 103,
+        "dropped_records": 0,
+        "dropped_bytes": 0,
+        "truncated": false,
+        "io_failed": false,
+        "redacted": false,
+        "model_ended": true,
+        "unavailable": false
+      },
+      "model_end": {
+        "chunks": 34,
+        "bytes": 1821,
+        "redacted": false,
+        "unavailable": false
+      },
+      "first_failure": {
+        "stage": "content_validate",
+        "state": "failed",
+        "begin_ms": 5233,
+        "end_ms": 5233,
+        "duration_ms": 0,
+        "check": "word_count",
+        "detail": {
+          "reason": "passage_too_short",
+          "field": "passage",
+          "target_index": -1,
+          "actual": 139,
+          "limit": 400,
+          "byte_start": -1,
+          "byte_end": -1,
+          "expected_type": "",
+          "actual_type": ""
+        }
+      },
+      "confirmed_outcome": "failed",
+      "stages": [
+        {
+          "stage": "request",
+          "state": "ok",
+          "begin_ms": 0,
+          "end_ms": 5236,
+          "duration_ms": 5236,
+          "check": "body",
+          "detail": {
+            "reason": "",
+            "field": "",
+            "target_index": -1,
+            "actual": -1,
+            "limit": -1,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        },
+        {
+          "stage": "preflight",
+          "state": "ok",
+          "begin_ms": 1,
+          "end_ms": 5,
+          "duration_ms": 4,
+          "check": "transaction_commit",
+          "detail": {
+            "reason": "",
+            "field": "",
+            "target_index": -1,
+            "actual": -1,
+            "limit": -1,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        },
+        {
+          "stage": "provider_open",
+          "state": "ok",
+          "begin_ms": 5,
+          "end_ms": 903,
+          "duration_ms": 898,
+          "check": "response_headers",
+          "detail": {
+            "reason": "",
+            "field": "",
+            "target_index": -1,
+            "actual": -1,
+            "limit": -1,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        },
+        {
+          "stage": "provider_stream",
+          "state": "ok",
+          "begin_ms": 904,
+          "end_ms": 5231,
+          "duration_ms": 4327,
+          "check": "",
+          "detail": {
+            "reason": "",
+            "field": "",
+            "target_index": -1,
+            "actual": -1,
+            "limit": -1,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        },
+        {
+          "stage": "passage_decode",
+          "state": "ok",
+          "begin_ms": 908,
+          "end_ms": 5232,
+          "duration_ms": 4324,
+          "check": "clean_consistency",
+          "detail": {
+            "reason": "",
+            "field": "",
+            "target_index": -1,
+            "actual": -1,
+            "limit": -1,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        },
+        {
+          "stage": "candidate_decode",
+          "state": "ok",
+          "begin_ms": 5231,
+          "end_ms": 5232,
+          "duration_ms": 1,
+          "check": "hint_size",
+          "detail": {
+            "reason": "",
+            "field": "",
+            "target_index": -1,
+            "actual": -1,
+            "limit": -1,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        },
+        {
+          "stage": "content_validate",
+          "state": "failed",
+          "begin_ms": 5233,
+          "end_ms": 5233,
+          "duration_ms": 0,
+          "check": "word_count",
+          "detail": {
+            "reason": "passage_too_short",
+            "field": "passage",
+            "target_index": -1,
+            "actual": 139,
+            "limit": 400,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        },
+        {
+          "stage": "draft_commit",
+          "state": "not_run",
+          "begin_ms": -1,
+          "end_ms": -1,
+          "duration_ms": -1,
+          "check": "",
+          "detail": {
+            "reason": "",
+            "field": "",
+            "target_index": -1,
+            "actual": -1,
+            "limit": -1,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        },
+        {
+          "stage": "settlement",
+          "state": "ok",
+          "begin_ms": 5233,
+          "end_ms": 5236,
+          "duration_ms": 3,
+          "check": "cas",
+          "detail": {
+            "reason": "",
+            "field": "",
+            "target_index": -1,
+            "actual": -1,
+            "limit": -1,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        },
+        {
+          "stage": "delivery",
+          "state": "ok",
+          "begin_ms": 903,
+          "end_ms": 5236,
+          "duration_ms": 4333,
+          "check": "",
+          "detail": {
+            "reason": "",
+            "field": "",
+            "target_index": -1,
+            "actual": -1,
+            "limit": -1,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        }
+      ],
+      "json_parse_error": null,
+      "clean_word_count": 139,
+      "paragraph_count": 1,
+      "target_keys": [
+        "ambiguous",
+        "coherent",
+        "prevalent",
+        "sustainable",
+        "vulnerable"
+      ],
+      "tags": [
+        "community",
+        "environment"
+      ],
+      "all_required_keys_present": true,
+      "passage_entries_without_annotations": [
+        "prevalent",
+        "vulnerable"
+      ],
+      "passage_has_outer_whitespace": false,
+      "hint_changed_entries": [],
+      "hint_repeated_entries": [],
+      "finish_reasons": [
+        "stop"
+      ],
+      "usage": {
+        "prompt_tokens": 1799,
+        "completion_tokens": 399,
+        "total_tokens": 2198
+      },
+      "review": {
+        "issues": [
+          "139/400 词；缺 prevalent、vulnerable，正文停留在背景与召集会议。",
+          "JSON 及全部 targets 完整，不是传输被截断。"
+        ],
+        "meaning_role_tail": false
+      },
+      "db": {
+        "id": "01a09397-ec4d-760d-b72c-c0a65a90bc8b",
+        "account_id": "01a08e5a-2250-7854-81df-5aeb26e7f461",
+        "call_status": "validation_failed",
+        "disposition": "pending",
+        "quota_charged": false,
+        "counts_toward_cumulative": false,
+        "failure_code": "content_validation_failed",
+        "has_draft": false
+      }
+    },
+    {
+      "case_id": 10,
+      "round": 1,
+      "reference_case_id": 10,
+      "pair_id": 5,
+      "group": "D",
+      "model_id": "01a07fe3-f046-7017-97f8-c15539050441",
+      "provider_model_id": "z-ai/glm-5.3-flash",
+      "meaning_language": "en",
+      "scenario": "story",
+      "length": "xlong",
+      "entries": [
+        "sustainable",
+        "prevalent",
+        "vulnerable",
+        "ambiguous",
+        "coherent"
+      ],
+      "started_at": "2026-09-12T03:10:07.580Z",
+      "status": "generation.failed",
+      "image": "sha256:56a6f59fb322564d4fe36808ee1f374d73de1bfa57b4304fe191752e40459577",
+      "http_status": 200,
+      "run_id": "01a09398-00e0-7eac-a67f-418e93968632",
+      "first_delta_ms": 52525,
+      "code": "content_validation_failed",
+      "quota_refunded": true,
+      "duration_ms": 65249,
+      "passage_chars": 845,
+      "terminal_count": 1,
+      "evidence_id": "1c6b4fb9-dd07-400f-aecc-3560bf8e63a7",
+      "request_id": "req_z9pUk_BAqIJ2DZaFA8aPug",
+      "fingerprint": {
+        "source_sha256": "f73602b780ff771852d2a4df7f1c961c3d0d567543ab207d6eb43a862cb9e147",
+        "binary_sha256": "53f0dfe0421c3527874affb0c171b336acbe4037177fc3f46274c48569c5fbef",
+        "template_sha256": "81f9ac062f40347525f979fdcb9619395e5a5309ff2078e9e61434676862cde1",
+        "schema_sha256": "255eb22ed0fbce06a4cec83681e5a71d17bb211ff0334e94146b38a2d319292f",
+        "validator_sha256": "e1a582dbb5c52431ac0fe082fefb00e7a5ce7a9cb675fc393e8b3cb9db29b2a2",
+        "lexicon_sha256": "89e5b41dc8662780e443c10b5ecf81970944fc2b530d5f79372ac482ac744c0b"
+      },
+      "prompt_version": "m001-v5-r8",
+      "minimum_words": 400,
+      "soft_target_words": 480,
+      "expires_at": "2026-09-13T03:10:07.582443757Z",
+      "private_capture_complete": true,
+      "capture_state": {
+        "coalesced_progress": 396,
+        "dropped_records": 0,
+        "dropped_bytes": 0,
+        "truncated": false,
+        "io_failed": false,
+        "redacted": false,
+        "model_ended": true,
+        "unavailable": false
+      },
+      "model_end": {
+        "chunks": 131,
+        "bytes": 2065,
+        "redacted": false,
+        "unavailable": false
+      },
+      "first_failure": {
+        "stage": "content_validate",
+        "state": "failed",
+        "begin_ms": 65244,
+        "end_ms": 65244,
+        "duration_ms": 0,
+        "check": "word_count",
+        "detail": {
+          "reason": "passage_too_short",
+          "field": "passage",
+          "target_index": -1,
+          "actual": 143,
+          "limit": 400,
+          "byte_start": -1,
+          "byte_end": -1,
+          "expected_type": "",
+          "actual_type": ""
+        }
+      },
+      "confirmed_outcome": "failed",
+      "stages": [
+        {
+          "stage": "request",
+          "state": "ok",
+          "begin_ms": 0,
+          "end_ms": 65246,
+          "duration_ms": 65246,
+          "check": "body",
+          "detail": {
+            "reason": "",
+            "field": "",
+            "target_index": -1,
+            "actual": -1,
+            "limit": -1,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        },
+        {
+          "stage": "preflight",
+          "state": "ok",
+          "begin_ms": 0,
+          "end_ms": 3,
+          "duration_ms": 3,
+          "check": "transaction_commit",
+          "detail": {
+            "reason": "",
+            "field": "",
+            "target_index": -1,
+            "actual": -1,
+            "limit": -1,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        },
+        {
+          "stage": "provider_open",
+          "state": "ok",
+          "begin_ms": 3,
+          "end_ms": 834,
+          "duration_ms": 831,
+          "check": "response_headers",
+          "detail": {
+            "reason": "",
+            "field": "",
+            "target_index": -1,
+            "actual": -1,
+            "limit": -1,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        },
+        {
+          "stage": "provider_stream",
+          "state": "ok",
+          "begin_ms": 835,
+          "end_ms": 65243,
+          "duration_ms": 64408,
+          "check": "",
+          "detail": {
+            "reason": "",
+            "field": "",
+            "target_index": -1,
+            "actual": -1,
+            "limit": -1,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        },
+        {
+          "stage": "passage_decode",
+          "state": "ok",
+          "begin_ms": 52351,
+          "end_ms": 65244,
+          "duration_ms": 12893,
+          "check": "clean_consistency",
+          "detail": {
+            "reason": "",
+            "field": "",
+            "target_index": -1,
+            "actual": -1,
+            "limit": -1,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        },
+        {
+          "stage": "candidate_decode",
+          "state": "ok",
+          "begin_ms": 65243,
+          "end_ms": 65244,
+          "duration_ms": 1,
+          "check": "hint_size",
+          "detail": {
+            "reason": "",
+            "field": "",
+            "target_index": -1,
+            "actual": -1,
+            "limit": -1,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        },
+        {
+          "stage": "content_validate",
+          "state": "failed",
+          "begin_ms": 65244,
+          "end_ms": 65244,
+          "duration_ms": 0,
+          "check": "word_count",
+          "detail": {
+            "reason": "passage_too_short",
+            "field": "passage",
+            "target_index": -1,
+            "actual": 143,
+            "limit": 400,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        },
+        {
+          "stage": "draft_commit",
+          "state": "not_run",
+          "begin_ms": -1,
+          "end_ms": -1,
+          "duration_ms": -1,
+          "check": "",
+          "detail": {
+            "reason": "",
+            "field": "",
+            "target_index": -1,
+            "actual": -1,
+            "limit": -1,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        },
+        {
+          "stage": "settlement",
+          "state": "ok",
+          "begin_ms": 65244,
+          "end_ms": 65246,
+          "duration_ms": 2,
+          "check": "cas",
+          "detail": {
+            "reason": "",
+            "field": "",
+            "target_index": -1,
+            "actual": -1,
+            "limit": -1,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        },
+        {
+          "stage": "delivery",
+          "state": "ok",
+          "begin_ms": 835,
+          "end_ms": 65246,
+          "duration_ms": 64411,
+          "check": "",
+          "detail": {
+            "reason": "",
+            "field": "",
+            "target_index": -1,
+            "actual": -1,
+            "limit": -1,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        }
+      ],
+      "json_parse_error": null,
+      "clean_word_count": 143,
+      "paragraph_count": 1,
+      "target_keys": [
+        "ambiguous",
+        "coherent",
+        "prevalent",
+        "sustainable",
+        "vulnerable"
+      ],
+      "tags": [
+        "environment",
+        "community"
+      ],
+      "all_required_keys_present": true,
+      "passage_entries_without_annotations": [
+        "vulnerable",
+        "coherent"
+      ],
+      "passage_has_outer_whitespace": false,
+      "hint_changed_entries": [],
+      "hint_repeated_entries": [],
+      "finish_reasons": [
+        "stop"
+      ],
+      "usage": {
+        "prompt_tokens": 1633,
+        "completion_tokens": 3094,
+        "total_tokens": 4727
+      },
+      "review": {
+        "issues": [
+          "143/400 词；正文没有 coherent、vulnerable，故事停在会议背景。",
+          "完整 JSON、finish=stop、目标键齐全；模型主动结束正文后继续生成其余字段。"
+        ],
+        "meaning_role_tail": false
+      },
+      "db": {
+        "id": "01a09398-00e0-7eac-a67f-418e93968632",
+        "account_id": "01a08e5a-2250-7854-81df-5aeb26e7f461",
+        "call_status": "validation_failed",
+        "disposition": "pending",
+        "quota_charged": false,
+        "counts_toward_cumulative": false,
+        "failure_code": "content_validation_failed",
+        "has_draft": false
+      }
+    },
+    {
+      "case_id": 11,
+      "round": 2,
+      "reference_case_id": 1,
+      "pair_id": 1,
+      "group": "A",
+      "model_id": "01a07fe3-5c48-736a-a86b-1f4dabd7cb87",
+      "provider_model_id": "minimax/minimax-m3",
+      "meaning_language": "zh",
+      "scenario": "story",
+      "length": "short",
+      "entries": [
+        "melancholy",
+        "handicap",
+        "foray",
+        "casino",
+        "upswing"
+      ],
+      "started_at": "2026-09-12T03:11:31.610Z",
+      "status": "generation.validated",
+      "image": "sha256:56a6f59fb322564d4fe36808ee1f374d73de1bfa57b4304fe191752e40459577",
+      "http_status": 200,
+      "run_id": "01a09399-4921-7d94-8e99-60fb43835ad5",
+      "first_delta_ms": 940,
+      "preview_equals_result": true,
+      "target_order_valid": true,
+      "target_count": 5,
+      "tag_count": 2,
+      "result_sha256": "50dc43b6bbaffe669ff0039d84f0f489f1811eb6755e1a0511ff392e8b940a25",
+      "annotation_leaked": false,
+      "changed_form_occurrences": 0,
+      "repeated_passage_targets": 5,
+      "repeated_hint_targets": 0,
+      "positions_valid": true,
+      "duration_ms": 8551,
+      "passage_chars": 1239,
+      "terminal_count": 1,
+      "evidence_id": "01586c69-ca2a-4fa4-b176-0fed655a7d2f",
+      "request_id": "req_XwQUHeC2IKThBLQlEVo4sA",
+      "fingerprint": {
+        "source_sha256": "f73602b780ff771852d2a4df7f1c961c3d0d567543ab207d6eb43a862cb9e147",
+        "binary_sha256": "53f0dfe0421c3527874affb0c171b336acbe4037177fc3f46274c48569c5fbef",
+        "template_sha256": "81f9ac062f40347525f979fdcb9619395e5a5309ff2078e9e61434676862cde1",
+        "schema_sha256": "255eb22ed0fbce06a4cec83681e5a71d17bb211ff0334e94146b38a2d319292f",
+        "validator_sha256": "e1a582dbb5c52431ac0fe082fefb00e7a5ce7a9cb675fc393e8b3cb9db29b2a2",
+        "lexicon_sha256": "89e5b41dc8662780e443c10b5ecf81970944fc2b530d5f79372ac482ac744c0b"
+      },
+      "prompt_version": "m001-v5-r8",
+      "minimum_words": 50,
+      "soft_target_words": 60,
+      "expires_at": "2026-09-13T03:11:31.614465212Z",
+      "private_capture_complete": true,
+      "capture_state": {
+        "coalesced_progress": 130,
+        "dropped_records": 0,
+        "dropped_bytes": 0,
+        "truncated": false,
+        "io_failed": false,
+        "redacted": false,
+        "model_ended": true,
+        "unavailable": false
+      },
+      "model_end": {
+        "chunks": 43,
+        "bytes": 2220,
+        "redacted": false,
+        "unavailable": false
+      },
+      "first_failure": null,
+      "confirmed_outcome": "valid",
+      "stages": [
+        {
+          "stage": "request",
+          "state": "ok",
+          "begin_ms": 0,
+          "end_ms": 8545,
+          "duration_ms": 8545,
+          "check": "body",
+          "detail": {
+            "reason": "",
+            "field": "",
+            "target_index": -1,
+            "actual": -1,
+            "limit": -1,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        },
+        {
+          "stage": "preflight",
+          "state": "ok",
+          "begin_ms": 1,
+          "end_ms": 5,
+          "duration_ms": 4,
+          "check": "transaction_commit",
+          "detail": {
+            "reason": "",
+            "field": "",
+            "target_index": -1,
+            "actual": -1,
+            "limit": -1,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        },
+        {
+          "stage": "provider_open",
+          "state": "ok",
+          "begin_ms": 5,
+          "end_ms": 720,
+          "duration_ms": 715,
+          "check": "response_headers",
+          "detail": {
+            "reason": "",
+            "field": "",
+            "target_index": -1,
+            "actual": -1,
+            "limit": -1,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        },
+        {
+          "stage": "provider_stream",
+          "state": "ok",
+          "begin_ms": 720,
+          "end_ms": 8538,
+          "duration_ms": 7818,
+          "check": "",
+          "detail": {
+            "reason": "",
+            "field": "",
+            "target_index": -1,
+            "actual": -1,
+            "limit": -1,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        },
+        {
+          "stage": "passage_decode",
+          "state": "ok",
+          "begin_ms": 721,
+          "end_ms": 8539,
+          "duration_ms": 7818,
+          "check": "clean_consistency",
+          "detail": {
+            "reason": "",
+            "field": "",
+            "target_index": -1,
+            "actual": -1,
+            "limit": -1,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        },
+        {
+          "stage": "candidate_decode",
+          "state": "ok",
+          "begin_ms": 8538,
+          "end_ms": 8539,
+          "duration_ms": 1,
+          "check": "hint_size",
+          "detail": {
+            "reason": "",
+            "field": "",
+            "target_index": -1,
+            "actual": -1,
+            "limit": -1,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        },
+        {
+          "stage": "content_validate",
+          "state": "ok",
+          "begin_ms": 8539,
+          "end_ms": 8541,
+          "duration_ms": 2,
+          "check": "context",
+          "detail": {
+            "reason": "",
+            "field": "",
+            "target_index": -1,
+            "actual": -1,
+            "limit": -1,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        },
+        {
+          "stage": "draft_commit",
+          "state": "ok",
+          "begin_ms": 8542,
+          "end_ms": 8545,
+          "duration_ms": 3,
+          "check": "transaction_commit",
+          "detail": {
+            "reason": "",
+            "field": "",
+            "target_index": -1,
+            "actual": -1,
+            "limit": -1,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        },
+        {
+          "stage": "settlement",
+          "state": "not_run",
+          "begin_ms": -1,
+          "end_ms": -1,
+          "duration_ms": -1,
+          "check": "",
+          "detail": {
+            "reason": "",
+            "field": "",
+            "target_index": -1,
+            "actual": -1,
+            "limit": -1,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        },
+        {
+          "stage": "delivery",
+          "state": "ok",
+          "begin_ms": 720,
+          "end_ms": 8545,
+          "duration_ms": 7825,
+          "check": "",
+          "detail": {
+            "reason": "",
+            "field": "",
+            "target_index": -1,
+            "actual": -1,
+            "limit": -1,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        }
+      ],
+      "json_parse_error": null,
+      "clean_word_count": 216,
+      "paragraph_count": 1,
+      "target_keys": [
+        "casino",
+        "foray",
+        "handicap",
+        "melancholy",
+        "upswing"
+      ],
+      "tags": [
+        "重生",
+        "赌场"
+      ],
+      "all_required_keys_present": true,
+      "passage_entries_without_annotations": [],
+      "passage_has_outer_whitespace": false,
+      "hint_changed_entries": [],
+      "hint_repeated_entries": [],
+      "finish_reasons": [
+        "stop"
+      ],
+      "usage": {
+        "prompt_tokens": 1281,
+        "completion_tokens": 534,
+        "total_tokens": 1815
+      },
+      "review": {
+        "issues": [
+          "故事改为开赌场的事业经历而非赢钱；情节较连贯，但短篇仍明显偏长、单段。",
+          "handicap 释义最后的比赛描述不够精确，宜表达让步/差点安排而非比赛本身。"
+        ],
+        "meaning_role_tail": false
+      },
+      "db": {
+        "id": "01a09399-4921-7d94-8e99-60fb43835ad5",
+        "account_id": "01a08e5a-2250-7854-81df-5aeb26e7f461",
+        "call_status": "valid",
+        "disposition": "pending",
+        "quota_charged": true,
+        "counts_toward_cumulative": true,
+        "failure_code": null,
+        "has_draft": true
+      }
+    },
+    {
+      "case_id": 12,
+      "round": 2,
+      "reference_case_id": 2,
+      "pair_id": 1,
+      "group": "A",
+      "model_id": "01a07fe3-f046-7017-97f8-c15539050441",
+      "provider_model_id": "z-ai/glm-5.3-flash",
+      "meaning_language": "zh",
+      "scenario": "story",
+      "length": "short",
+      "entries": [
+        "melancholy",
+        "handicap",
+        "foray",
+        "casino",
+        "upswing"
+      ],
+      "started_at": "2026-09-12T03:11:40.190Z",
+      "status": "generation.validated",
+      "image": "sha256:56a6f59fb322564d4fe36808ee1f374d73de1bfa57b4304fe191752e40459577",
+      "http_status": 200,
+      "run_id": "01a09399-6aa4-71ed-b68b-3b12412ed624",
+      "first_delta_ms": 8934,
+      "preview_equals_result": true,
+      "target_order_valid": true,
+      "target_count": 5,
+      "tag_count": 2,
+      "result_sha256": "0a9c45232d474ef9788417f32df8ddf4890fc5b4f3ac1097f502471d4dbabcb0",
+      "annotation_leaked": false,
+      "changed_form_occurrences": 0,
+      "repeated_passage_targets": 1,
+      "repeated_hint_targets": 0,
+      "positions_valid": true,
+      "duration_ms": 13393,
+      "passage_chars": 417,
+      "terminal_count": 1,
+      "evidence_id": "1a560ff8-bb3f-489b-aef7-7a2b02f78a2e",
+      "request_id": "req_A8b2LElLqGtIZj45Cz6CEA",
+      "fingerprint": {
+        "source_sha256": "f73602b780ff771852d2a4df7f1c961c3d0d567543ab207d6eb43a862cb9e147",
+        "binary_sha256": "53f0dfe0421c3527874affb0c171b336acbe4037177fc3f46274c48569c5fbef",
+        "template_sha256": "81f9ac062f40347525f979fdcb9619395e5a5309ff2078e9e61434676862cde1",
+        "schema_sha256": "255eb22ed0fbce06a4cec83681e5a71d17bb211ff0334e94146b38a2d319292f",
+        "validator_sha256": "e1a582dbb5c52431ac0fe082fefb00e7a5ce7a9cb675fc393e8b3cb9db29b2a2",
+        "lexicon_sha256": "89e5b41dc8662780e443c10b5ecf81970944fc2b530d5f79372ac482ac744c0b"
+      },
+      "prompt_version": "m001-v5-r8",
+      "minimum_words": 50,
+      "soft_target_words": 60,
+      "expires_at": "2026-09-13T03:11:40.1924303Z",
+      "private_capture_complete": true,
+      "capture_state": {
+        "coalesced_progress": 300,
+        "dropped_records": 0,
+        "dropped_bytes": 0,
+        "truncated": false,
+        "io_failed": false,
+        "redacted": false,
+        "model_ended": true,
+        "unavailable": false
+      },
+      "model_end": {
+        "chunks": 99,
+        "bytes": 1386,
+        "redacted": false,
+        "unavailable": false
+      },
+      "first_failure": null,
+      "confirmed_outcome": "valid",
+      "stages": [
+        {
+          "stage": "request",
+          "state": "ok",
+          "begin_ms": 0,
+          "end_ms": 13389,
+          "duration_ms": 13389,
+          "check": "body",
+          "detail": {
+            "reason": "",
+            "field": "",
+            "target_index": -1,
+            "actual": -1,
+            "limit": -1,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        },
+        {
+          "stage": "preflight",
+          "state": "ok",
+          "begin_ms": 1,
+          "end_ms": 5,
+          "duration_ms": 4,
+          "check": "transaction_commit",
+          "detail": {
+            "reason": "",
+            "field": "",
+            "target_index": -1,
+            "actual": -1,
+            "limit": -1,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        },
+        {
+          "stage": "provider_open",
+          "state": "ok",
+          "begin_ms": 6,
+          "end_ms": 616,
+          "duration_ms": 610,
+          "check": "response_headers",
+          "detail": {
+            "reason": "",
+            "field": "",
+            "target_index": -1,
+            "actual": -1,
+            "limit": -1,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        },
+        {
+          "stage": "provider_stream",
+          "state": "ok",
+          "begin_ms": 616,
+          "end_ms": 13384,
+          "duration_ms": 12768,
+          "check": "",
+          "detail": {
+            "reason": "",
+            "field": "",
+            "target_index": -1,
+            "actual": -1,
+            "limit": -1,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        },
+        {
+          "stage": "passage_decode",
+          "state": "ok",
+          "begin_ms": 8912,
+          "end_ms": 13385,
+          "duration_ms": 4473,
+          "check": "clean_consistency",
+          "detail": {
+            "reason": "",
+            "field": "",
+            "target_index": -1,
+            "actual": -1,
+            "limit": -1,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        },
+        {
+          "stage": "candidate_decode",
+          "state": "ok",
+          "begin_ms": 13384,
+          "end_ms": 13385,
+          "duration_ms": 1,
+          "check": "hint_size",
+          "detail": {
+            "reason": "",
+            "field": "",
+            "target_index": -1,
+            "actual": -1,
+            "limit": -1,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        },
+        {
+          "stage": "content_validate",
+          "state": "ok",
+          "begin_ms": 13385,
+          "end_ms": 13387,
+          "duration_ms": 2,
+          "check": "context",
+          "detail": {
+            "reason": "",
+            "field": "",
+            "target_index": -1,
+            "actual": -1,
+            "limit": -1,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        },
+        {
+          "stage": "draft_commit",
+          "state": "ok",
+          "begin_ms": 13387,
+          "end_ms": 13389,
+          "duration_ms": 2,
+          "check": "transaction_commit",
+          "detail": {
+            "reason": "",
+            "field": "",
+            "target_index": -1,
+            "actual": -1,
+            "limit": -1,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        },
+        {
+          "stage": "settlement",
+          "state": "not_run",
+          "begin_ms": -1,
+          "end_ms": -1,
+          "duration_ms": -1,
+          "check": "",
+          "detail": {
+            "reason": "",
+            "field": "",
+            "target_index": -1,
+            "actual": -1,
+            "limit": -1,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        },
+        {
+          "stage": "delivery",
+          "state": "ok",
+          "begin_ms": 616,
+          "end_ms": 13389,
+          "duration_ms": 12773,
+          "check": "",
+          "detail": {
+            "reason": "",
+            "field": "",
+            "target_index": -1,
+            "actual": -1,
+            "limit": -1,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        }
+      ],
+      "json_parse_error": null,
+      "clean_word_count": 71,
+      "paragraph_count": 1,
+      "target_keys": [
+        "casino",
+        "foray",
+        "handicap",
+        "melancholy",
+        "upswing"
+      ],
+      "tags": [
+        "赌场经历",
+        "情绪转变"
+      ],
+      "all_required_keys_present": true,
+      "passage_entries_without_annotations": [],
+      "passage_has_outer_whitespace": false,
+      "hint_changed_entries": [],
+      "hint_repeated_entries": [],
+      "finish_reasons": [
+        "stop"
+      ],
+      "usage": {
+        "prompt_tokens": 1104,
+        "completion_tokens": 1384,
+        "total_tokens": 2488
+      },
+      "review": {
+        "issues": [
+          "字数与故事规模合适；仍是赌场赢钱消除忧郁的重复模式。",
+          "a first foray into investing 等 hint 自然，均使用原形。"
+        ],
+        "meaning_role_tail": false
+      },
+      "db": {
+        "id": "01a09399-6aa4-71ed-b68b-3b12412ed624",
+        "account_id": "01a08e5a-2250-7854-81df-5aeb26e7f461",
+        "call_status": "valid",
+        "disposition": "pending",
+        "quota_charged": true,
+        "counts_toward_cumulative": true,
+        "failure_code": null,
+        "has_draft": true
+      }
+    },
+    {
+      "case_id": 13,
+      "round": 2,
+      "reference_case_id": 3,
+      "pair_id": 2,
+      "group": "B",
+      "model_id": "01a07fe3-5c48-736a-a86b-1f4dabd7cb87",
+      "provider_model_id": "minimax/minimax-m3",
+      "meaning_language": "zh",
+      "scenario": "discussion",
+      "length": "medium",
+      "entries": [
+        "young",
+        "grape",
+        "weekend",
+        "danger",
+        "enforce"
+      ],
+      "started_at": "2026-09-12T03:11:53.605Z",
+      "status": "generation.validated",
+      "image": "sha256:56a6f59fb322564d4fe36808ee1f374d73de1bfa57b4304fe191752e40459577",
+      "http_status": 200,
+      "run_id": "01a09399-9f0c-7426-a119-505b9cdcbb5c",
+      "first_delta_ms": 962,
+      "preview_equals_result": true,
+      "target_order_valid": true,
+      "target_count": 5,
+      "tag_count": 2,
+      "result_sha256": "ba9e154fb7d3dba3fa5b7f142ac0bfa0ff0bd6c59743a9d4e7d58da952d18414",
+      "annotation_leaked": false,
+      "changed_form_occurrences": 5,
+      "repeated_passage_targets": 5,
+      "repeated_hint_targets": 0,
+      "positions_valid": true,
+      "duration_ms": 11338,
+      "passage_chars": 2056,
+      "terminal_count": 1,
+      "evidence_id": "dda78b6d-412c-4cf1-bb3a-6e879518c38a",
+      "request_id": "req_QQnJJY3l3Ym5gS2hLcgRQw",
+      "fingerprint": {
+        "source_sha256": "f73602b780ff771852d2a4df7f1c961c3d0d567543ab207d6eb43a862cb9e147",
+        "binary_sha256": "53f0dfe0421c3527874affb0c171b336acbe4037177fc3f46274c48569c5fbef",
+        "template_sha256": "81f9ac062f40347525f979fdcb9619395e5a5309ff2078e9e61434676862cde1",
+        "schema_sha256": "255eb22ed0fbce06a4cec83681e5a71d17bb211ff0334e94146b38a2d319292f",
+        "validator_sha256": "e1a582dbb5c52431ac0fe082fefb00e7a5ce7a9cb675fc393e8b3cb9db29b2a2",
+        "lexicon_sha256": "89e5b41dc8662780e443c10b5ecf81970944fc2b530d5f79372ac482ac744c0b"
+      },
+      "prompt_version": "m001-v5-r8",
+      "minimum_words": 100,
+      "soft_target_words": 120,
+      "expires_at": "2026-09-13T03:11:53.608947583Z",
+      "private_capture_complete": true,
+      "capture_state": {
+        "coalesced_progress": 160,
+        "dropped_records": 0,
+        "dropped_bytes": 0,
+        "truncated": false,
+        "io_failed": false,
+        "redacted": false,
+        "model_ended": true,
+        "unavailable": false
+      },
+      "model_end": {
+        "chunks": 53,
+        "bytes": 2951,
+        "redacted": false,
+        "unavailable": false
+      },
+      "first_failure": null,
+      "confirmed_outcome": "valid",
+      "stages": [
+        {
+          "stage": "request",
+          "state": "ok",
+          "begin_ms": 0,
+          "end_ms": 11334,
+          "duration_ms": 11334,
+          "check": "body",
+          "detail": {
+            "reason": "",
+            "field": "",
+            "target_index": -1,
+            "actual": -1,
+            "limit": -1,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        },
+        {
+          "stage": "preflight",
+          "state": "ok",
+          "begin_ms": 0,
+          "end_ms": 4,
+          "duration_ms": 4,
+          "check": "transaction_commit",
+          "detail": {
+            "reason": "",
+            "field": "",
+            "target_index": -1,
+            "actual": -1,
+            "limit": -1,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        },
+        {
+          "stage": "provider_open",
+          "state": "ok",
+          "begin_ms": 4,
+          "end_ms": 662,
+          "duration_ms": 658,
+          "check": "response_headers",
+          "detail": {
+            "reason": "",
+            "field": "",
+            "target_index": -1,
+            "actual": -1,
+            "limit": -1,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        },
+        {
+          "stage": "provider_stream",
+          "state": "ok",
+          "begin_ms": 662,
+          "end_ms": 11326,
+          "duration_ms": 10664,
+          "check": "",
+          "detail": {
+            "reason": "",
+            "field": "",
+            "target_index": -1,
+            "actual": -1,
+            "limit": -1,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        },
+        {
+          "stage": "passage_decode",
+          "state": "ok",
+          "begin_ms": 663,
+          "end_ms": 11327,
+          "duration_ms": 10664,
+          "check": "clean_consistency",
+          "detail": {
+            "reason": "",
+            "field": "",
+            "target_index": -1,
+            "actual": -1,
+            "limit": -1,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        },
+        {
+          "stage": "candidate_decode",
+          "state": "ok",
+          "begin_ms": 11326,
+          "end_ms": 11327,
+          "duration_ms": 1,
+          "check": "hint_size",
+          "detail": {
+            "reason": "",
+            "field": "",
+            "target_index": -1,
+            "actual": -1,
+            "limit": -1,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        },
+        {
+          "stage": "content_validate",
+          "state": "ok",
+          "begin_ms": 11327,
+          "end_ms": 11329,
+          "duration_ms": 2,
+          "check": "context",
+          "detail": {
+            "reason": "",
+            "field": "",
+            "target_index": -1,
+            "actual": -1,
+            "limit": -1,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        },
+        {
+          "stage": "draft_commit",
+          "state": "ok",
+          "begin_ms": 11329,
+          "end_ms": 11333,
+          "duration_ms": 4,
+          "check": "transaction_commit",
+          "detail": {
+            "reason": "",
+            "field": "",
+            "target_index": -1,
+            "actual": -1,
+            "limit": -1,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        },
+        {
+          "stage": "settlement",
+          "state": "not_run",
+          "begin_ms": -1,
+          "end_ms": -1,
+          "duration_ms": -1,
+          "check": "",
+          "detail": {
+            "reason": "",
+            "field": "",
+            "target_index": -1,
+            "actual": -1,
+            "limit": -1,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        },
+        {
+          "stage": "delivery",
+          "state": "ok",
+          "begin_ms": 662,
+          "end_ms": 11333,
+          "duration_ms": 10671,
+          "check": "",
+          "detail": {
+            "reason": "",
+            "field": "",
+            "target_index": -1,
+            "actual": -1,
+            "limit": -1,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        }
+      ],
+      "json_parse_error": null,
+      "clean_word_count": 338,
+      "paragraph_count": 1,
+      "target_keys": [
+        "danger",
+        "enforce",
+        "grape",
+        "weekend",
+        "young"
+      ],
+      "tags": [
+        "农业",
+        "社区"
+      ],
+      "all_required_keys_present": true,
+      "passage_entries_without_annotations": [],
+      "passage_has_outer_whitespace": false,
+      "hint_changed_entries": [
+        "young",
+        "grape",
+        "enforce"
+      ],
+      "hint_repeated_entries": [],
+      "finish_reasons": [
+        "stop"
+      ],
+      "usage": {
+        "prompt_tokens": 1347,
+        "completion_tokens": 648,
+        "total_tokens": 1995
+      },
+      "review": {
+        "issues": [
+          "正文 the young man 的 young 未标注；另有 youngest/younger/young 标注，因此接口通过但有一次目标词漏标。",
+          "enforce a mentorship scheme / a responsibility ... enforce 搭配生硬，结尾有为覆盖目标词而牵强复用的痕迹。",
+          "讨论篇较冗长，单段。"
+        ],
+        "meaning_role_tail": false
+      },
+      "db": {
+        "id": "01a09399-9f0c-7426-a119-505b9cdcbb5c",
+        "account_id": "01a08e5a-2250-7854-81df-5aeb26e7f461",
+        "call_status": "valid",
+        "disposition": "pending",
+        "quota_charged": true,
+        "counts_toward_cumulative": true,
+        "failure_code": null,
+        "has_draft": true
+      }
+    },
+    {
+      "case_id": 14,
+      "round": 2,
+      "reference_case_id": 4,
+      "pair_id": 2,
+      "group": "B",
+      "model_id": "01a07fe3-f046-7017-97f8-c15539050441",
+      "provider_model_id": "z-ai/glm-5.3-flash",
+      "meaning_language": "zh",
+      "scenario": "discussion",
+      "length": "medium",
+      "entries": [
+        "young",
+        "grape",
+        "weekend",
+        "danger",
+        "enforce"
+      ],
+      "started_at": "2026-09-12T03:12:04.966Z",
+      "status": "generation.validated",
+      "image": "sha256:56a6f59fb322564d4fe36808ee1f374d73de1bfa57b4304fe191752e40459577",
+      "http_status": 200,
+      "run_id": "01a09399-cb6b-7ec2-aaa0-2757c871daf4",
+      "first_delta_ms": 23023,
+      "preview_equals_result": true,
+      "target_order_valid": true,
+      "target_count": 5,
+      "tag_count": 3,
+      "result_sha256": "b1c3a533924e272ffd9d5b4d12a061aad93bfde49bbfcbb8d3df6dafa8c155dd",
+      "annotation_leaked": false,
+      "changed_form_occurrences": 4,
+      "repeated_passage_targets": 3,
+      "repeated_hint_targets": 0,
+      "positions_valid": true,
+      "duration_ms": 25874,
+      "passage_chars": 789,
+      "terminal_count": 1,
+      "evidence_id": "ca7de4bc-358b-4956-bb0a-c0bde76f49ef",
+      "request_id": "req_dBcUe9Vd-44vvGVm0X0SgQ",
+      "fingerprint": {
+        "source_sha256": "f73602b780ff771852d2a4df7f1c961c3d0d567543ab207d6eb43a862cb9e147",
+        "binary_sha256": "53f0dfe0421c3527874affb0c171b336acbe4037177fc3f46274c48569c5fbef",
+        "template_sha256": "81f9ac062f40347525f979fdcb9619395e5a5309ff2078e9e61434676862cde1",
+        "schema_sha256": "255eb22ed0fbce06a4cec83681e5a71d17bb211ff0334e94146b38a2d319292f",
+        "validator_sha256": "e1a582dbb5c52431ac0fe082fefb00e7a5ce7a9cb675fc393e8b3cb9db29b2a2",
+        "lexicon_sha256": "89e5b41dc8662780e443c10b5ecf81970944fc2b530d5f79372ac482ac744c0b"
+      },
+      "prompt_version": "m001-v5-r8",
+      "minimum_words": 100,
+      "soft_target_words": 120,
+      "expires_at": "2026-09-13T03:12:04.969073505Z",
+      "private_capture_complete": true,
+      "capture_state": {
+        "coalesced_progress": 342,
+        "dropped_records": 0,
+        "dropped_bytes": 0,
+        "truncated": false,
+        "io_failed": false,
+        "redacted": false,
+        "model_ended": true,
+        "unavailable": false
+      },
+      "model_end": {
+        "chunks": 113,
+        "bytes": 1761,
+        "redacted": false,
+        "unavailable": false
+      },
+      "first_failure": null,
+      "confirmed_outcome": "valid",
+      "stages": [
+        {
+          "stage": "request",
+          "state": "ok",
+          "begin_ms": 0,
+          "end_ms": 25870,
+          "duration_ms": 25870,
+          "check": "body",
+          "detail": {
+            "reason": "",
+            "field": "",
+            "target_index": -1,
+            "actual": -1,
+            "limit": -1,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        },
+        {
+          "stage": "preflight",
+          "state": "ok",
+          "begin_ms": 0,
+          "end_ms": 7,
+          "duration_ms": 7,
+          "check": "transaction_commit",
+          "detail": {
+            "reason": "",
+            "field": "",
+            "target_index": -1,
+            "actual": -1,
+            "limit": -1,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        },
+        {
+          "stage": "provider_open",
+          "state": "ok",
+          "begin_ms": 7,
+          "end_ms": 610,
+          "duration_ms": 603,
+          "check": "response_headers",
+          "detail": {
+            "reason": "",
+            "field": "",
+            "target_index": -1,
+            "actual": -1,
+            "limit": -1,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        },
+        {
+          "stage": "provider_stream",
+          "state": "ok",
+          "begin_ms": 610,
+          "end_ms": 25848,
+          "duration_ms": 25238,
+          "check": "",
+          "detail": {
+            "reason": "",
+            "field": "",
+            "target_index": -1,
+            "actual": -1,
+            "limit": -1,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        },
+        {
+          "stage": "passage_decode",
+          "state": "ok",
+          "begin_ms": 22968,
+          "end_ms": 25860,
+          "duration_ms": 2892,
+          "check": "clean_consistency",
+          "detail": {
+            "reason": "",
+            "field": "",
+            "target_index": -1,
+            "actual": -1,
+            "limit": -1,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        },
+        {
+          "stage": "candidate_decode",
+          "state": "ok",
+          "begin_ms": 25848,
+          "end_ms": 25860,
+          "duration_ms": 12,
+          "check": "hint_size",
+          "detail": {
+            "reason": "",
+            "field": "",
+            "target_index": -1,
+            "actual": -1,
+            "limit": -1,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        },
+        {
+          "stage": "content_validate",
+          "state": "ok",
+          "begin_ms": 25860,
+          "end_ms": 25864,
+          "duration_ms": 4,
+          "check": "context",
+          "detail": {
+            "reason": "",
+            "field": "",
+            "target_index": -1,
+            "actual": -1,
+            "limit": -1,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        },
+        {
+          "stage": "draft_commit",
+          "state": "ok",
+          "begin_ms": 25864,
+          "end_ms": 25870,
+          "duration_ms": 6,
+          "check": "transaction_commit",
+          "detail": {
+            "reason": "",
+            "field": "",
+            "target_index": -1,
+            "actual": -1,
+            "limit": -1,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        },
+        {
+          "stage": "settlement",
+          "state": "not_run",
+          "begin_ms": -1,
+          "end_ms": -1,
+          "duration_ms": -1,
+          "check": "",
+          "detail": {
+            "reason": "",
+            "field": "",
+            "target_index": -1,
+            "actual": -1,
+            "limit": -1,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        },
+        {
+          "stage": "delivery",
+          "state": "ok",
+          "begin_ms": 610,
+          "end_ms": 25870,
+          "duration_ms": 25260,
+          "check": "",
+          "detail": {
+            "reason": "",
+            "field": "",
+            "target_index": -1,
+            "actual": -1,
+            "limit": -1,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        }
+      ],
+      "json_parse_error": null,
+      "clean_word_count": 126,
+      "paragraph_count": 1,
+      "target_keys": [
+        "danger",
+        "enforce",
+        "grape",
+        "weekend",
+        "young"
+      ],
+      "tags": [
+        "农业",
+        "安全",
+        "讨论"
+      ],
+      "all_required_keys_present": true,
+      "passage_entries_without_annotations": [],
+      "passage_has_outer_whitespace": false,
+      "hint_changed_entries": [
+        "young",
+        "grape"
+      ],
+      "hint_repeated_entries": [],
+      "finish_reasons": [
+        "stop"
+      ],
+      "usage": {
+        "prompt_tokens": 1171,
+        "completion_tokens": 2054,
+        "total_tokens": 3225
+      },
+      "review": {
+        "issues": [
+          "周末雇人却要求 check the rows daily，时间安排交代不清；其余讨论场景与 hint 基本自然。"
+        ],
+        "meaning_role_tail": false
+      },
+      "db": {
+        "id": "01a09399-cb6b-7ec2-aaa0-2757c871daf4",
+        "account_id": "01a08e5a-2250-7854-81df-5aeb26e7f461",
+        "call_status": "valid",
+        "disposition": "pending",
+        "quota_charged": true,
+        "counts_toward_cumulative": true,
+        "failure_code": null,
+        "has_draft": true
+      }
+    },
+    {
+      "case_id": 15,
+      "round": 2,
+      "reference_case_id": 5,
+      "pair_id": 3,
+      "group": "C",
+      "model_id": "01a07fe3-5c48-736a-a86b-1f4dabd7cb87",
+      "provider_model_id": "minimax/minimax-m3",
+      "meaning_language": "en",
+      "scenario": "business",
+      "length": "short",
+      "entries": [
+        "alleviate",
+        "undermine",
+        "facilitate",
+        "deteriorate",
+        "perceive"
+      ],
+      "started_at": "2026-09-12T03:12:30.864Z",
+      "status": "generation.validated",
+      "image": "sha256:56a6f59fb322564d4fe36808ee1f374d73de1bfa57b4304fe191752e40459577",
+      "http_status": 200,
+      "run_id": "01a0939a-3098-7635-803f-7e1cdc26ecfd",
+      "first_delta_ms": 1009,
+      "preview_equals_result": true,
+      "target_order_valid": true,
+      "target_count": 5,
+      "tag_count": 2,
+      "result_sha256": "1779538f6dcd74bdeaa944810dbc5fef463d8b02dde5b9ae004e046dcb6ac0e4",
+      "annotation_leaked": false,
+      "changed_form_occurrences": 3,
+      "repeated_passage_targets": 0,
+      "repeated_hint_targets": 0,
+      "positions_valid": true,
+      "duration_ms": 5501,
+      "passage_chars": 1165,
+      "terminal_count": 1,
+      "evidence_id": "6135f72c-9e6d-40a9-88a6-4be885b8619c",
+      "request_id": "req_iwUPfvb5GKTqhU5Ux3Fyeg",
+      "fingerprint": {
+        "source_sha256": "f73602b780ff771852d2a4df7f1c961c3d0d567543ab207d6eb43a862cb9e147",
+        "binary_sha256": "53f0dfe0421c3527874affb0c171b336acbe4037177fc3f46274c48569c5fbef",
+        "template_sha256": "81f9ac062f40347525f979fdcb9619395e5a5309ff2078e9e61434676862cde1",
+        "schema_sha256": "255eb22ed0fbce06a4cec83681e5a71d17bb211ff0334e94146b38a2d319292f",
+        "validator_sha256": "e1a582dbb5c52431ac0fe082fefb00e7a5ce7a9cb675fc393e8b3cb9db29b2a2",
+        "lexicon_sha256": "89e5b41dc8662780e443c10b5ecf81970944fc2b530d5f79372ac482ac744c0b"
+      },
+      "prompt_version": "m001-v5-r8",
+      "minimum_words": 50,
+      "soft_target_words": 60,
+      "expires_at": "2026-09-13T03:12:30.868042295Z",
+      "private_capture_complete": true,
+      "capture_state": {
+        "coalesced_progress": 106,
+        "dropped_records": 0,
+        "dropped_bytes": 0,
+        "truncated": false,
+        "io_failed": false,
+        "redacted": false,
+        "model_ended": true,
+        "unavailable": false
+      },
+      "model_end": {
+        "chunks": 35,
+        "bytes": 2161,
+        "redacted": false,
+        "unavailable": false
+      },
+      "first_failure": null,
+      "confirmed_outcome": "valid",
+      "stages": [
+        {
+          "stage": "request",
+          "state": "ok",
+          "begin_ms": 0,
+          "end_ms": 5496,
+          "duration_ms": 5496,
+          "check": "body",
+          "detail": {
+            "reason": "",
+            "field": "",
+            "target_index": -1,
+            "actual": -1,
+            "limit": -1,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        },
+        {
+          "stage": "preflight",
+          "state": "ok",
+          "begin_ms": 1,
+          "end_ms": 8,
+          "duration_ms": 7,
+          "check": "transaction_commit",
+          "detail": {
+            "reason": "",
+            "field": "",
+            "target_index": -1,
+            "actual": -1,
+            "limit": -1,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        },
+        {
+          "stage": "provider_open",
+          "state": "ok",
+          "begin_ms": 8,
+          "end_ms": 673,
+          "duration_ms": 665,
+          "check": "response_headers",
+          "detail": {
+            "reason": "",
+            "field": "",
+            "target_index": -1,
+            "actual": -1,
+            "limit": -1,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        },
+        {
+          "stage": "provider_stream",
+          "state": "ok",
+          "begin_ms": 673,
+          "end_ms": 5486,
+          "duration_ms": 4813,
+          "check": "",
+          "detail": {
+            "reason": "",
+            "field": "",
+            "target_index": -1,
+            "actual": -1,
+            "limit": -1,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        },
+        {
+          "stage": "passage_decode",
+          "state": "ok",
+          "begin_ms": 681,
+          "end_ms": 5487,
+          "duration_ms": 4806,
+          "check": "clean_consistency",
+          "detail": {
+            "reason": "",
+            "field": "",
+            "target_index": -1,
+            "actual": -1,
+            "limit": -1,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        },
+        {
+          "stage": "candidate_decode",
+          "state": "ok",
+          "begin_ms": 5486,
+          "end_ms": 5487,
+          "duration_ms": 1,
+          "check": "hint_size",
+          "detail": {
+            "reason": "",
+            "field": "",
+            "target_index": -1,
+            "actual": -1,
+            "limit": -1,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        },
+        {
+          "stage": "content_validate",
+          "state": "ok",
+          "begin_ms": 5487,
+          "end_ms": 5490,
+          "duration_ms": 3,
+          "check": "context",
+          "detail": {
+            "reason": "",
+            "field": "",
+            "target_index": -1,
+            "actual": -1,
+            "limit": -1,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        },
+        {
+          "stage": "draft_commit",
+          "state": "ok",
+          "begin_ms": 5490,
+          "end_ms": 5496,
+          "duration_ms": 6,
+          "check": "transaction_commit",
+          "detail": {
+            "reason": "",
+            "field": "",
+            "target_index": -1,
+            "actual": -1,
+            "limit": -1,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        },
+        {
+          "stage": "settlement",
+          "state": "not_run",
+          "begin_ms": -1,
+          "end_ms": -1,
+          "duration_ms": -1,
+          "check": "",
+          "detail": {
+            "reason": "",
+            "field": "",
+            "target_index": -1,
+            "actual": -1,
+            "limit": -1,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        },
+        {
+          "stage": "delivery",
+          "state": "ok",
+          "begin_ms": 673,
+          "end_ms": 5496,
+          "duration_ms": 4823,
+          "check": "",
+          "detail": {
+            "reason": "",
+            "field": "",
+            "target_index": -1,
+            "actual": -1,
+            "limit": -1,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        }
+      ],
+      "json_parse_error": null,
+      "clean_word_count": 171,
+      "paragraph_count": 1,
+      "target_keys": [
+        "alleviate",
+        "deteriorate",
+        "facilitate",
+        "perceive",
+        "undermine"
+      ],
+      "tags": [
+        "business",
+        "change management"
+      ],
+      "all_required_keys_present": true,
+      "passage_entries_without_annotations": [],
+      "passage_has_outer_whitespace": false,
+      "hint_changed_entries": [
+        "perceive"
+      ],
+      "hint_repeated_entries": [],
+      "finish_reasons": [
+        "stop"
+      ],
+      "usage": {
+        "prompt_tokens": 1318,
+        "completion_tokens": 459,
+        "total_tokens": 1777
+      },
+      "review": {
+        "issues": [
+          "职场事件连贯，deteriorated customer trust 等词形语境自然；短篇偏长，单段。"
+        ],
+        "meaning_role_tail": false
+      },
+      "db": {
+        "id": "01a0939a-3098-7635-803f-7e1cdc26ecfd",
+        "account_id": "01a08e5a-2250-7854-81df-5aeb26e7f461",
+        "call_status": "valid",
+        "disposition": "pending",
+        "quota_charged": true,
+        "counts_toward_cumulative": true,
+        "failure_code": null,
+        "has_draft": true
+      }
+    },
+    {
+      "case_id": 16,
+      "round": 2,
+      "reference_case_id": 6,
+      "pair_id": 3,
+      "group": "C",
+      "model_id": "01a07fe3-f046-7017-97f8-c15539050441",
+      "provider_model_id": "z-ai/glm-5.3-flash",
+      "meaning_language": "en",
+      "scenario": "business",
+      "length": "short",
+      "entries": [
+        "alleviate",
+        "undermine",
+        "facilitate",
+        "deteriorate",
+        "perceive"
+      ],
+      "started_at": "2026-09-12T03:13:01.051Z",
+      "status": "generation.validated",
+      "image": "sha256:56a6f59fb322564d4fe36808ee1f374d73de1bfa57b4304fe191752e40459577",
+      "http_status": 200,
+      "run_id": "01a0939a-a689-766d-a04a-4ad97da2ec53",
+      "first_delta_ms": 10141,
+      "preview_equals_result": true,
+      "target_order_valid": true,
+      "target_count": 5,
+      "tag_count": 3,
+      "result_sha256": "17bf2e559b73c921ea683acbc53e91b58e5c6bc1863d7c132743caf997453c64",
+      "annotation_leaked": false,
+      "changed_form_occurrences": 2,
+      "repeated_passage_targets": 0,
+      "repeated_hint_targets": 0,
+      "positions_valid": true,
+      "duration_ms": 12805,
+      "passage_chars": 428,
+      "terminal_count": 1,
+      "evidence_id": "0f866e9f-355c-43b9-a99f-98c834e7ace9",
+      "request_id": "req_QzLYWDPMFLx0D9Kuq60VNQ",
+      "fingerprint": {
+        "source_sha256": "f73602b780ff771852d2a4df7f1c961c3d0d567543ab207d6eb43a862cb9e147",
+        "binary_sha256": "53f0dfe0421c3527874affb0c171b336acbe4037177fc3f46274c48569c5fbef",
+        "template_sha256": "81f9ac062f40347525f979fdcb9619395e5a5309ff2078e9e61434676862cde1",
+        "schema_sha256": "255eb22ed0fbce06a4cec83681e5a71d17bb211ff0334e94146b38a2d319292f",
+        "validator_sha256": "e1a582dbb5c52431ac0fe082fefb00e7a5ce7a9cb675fc393e8b3cb9db29b2a2",
+        "lexicon_sha256": "89e5b41dc8662780e443c10b5ecf81970944fc2b530d5f79372ac482ac744c0b"
+      },
+      "prompt_version": "m001-v5-r8",
+      "minimum_words": 50,
+      "soft_target_words": 60,
+      "expires_at": "2026-09-13T03:13:01.058076545Z",
+      "private_capture_complete": true,
+      "capture_state": {
+        "coalesced_progress": 303,
+        "dropped_records": 0,
+        "dropped_bytes": 0,
+        "truncated": false,
+        "io_failed": false,
+        "redacted": false,
+        "model_ended": true,
+        "unavailable": false
+      },
+      "model_end": {
+        "chunks": 100,
+        "bytes": 1616,
+        "redacted": false,
+        "unavailable": false
+      },
+      "first_failure": null,
+      "confirmed_outcome": "valid",
+      "stages": [
+        {
+          "stage": "request",
+          "state": "ok",
+          "begin_ms": 0,
+          "end_ms": 12799,
+          "duration_ms": 12799,
+          "check": "body",
+          "detail": {
+            "reason": "",
+            "field": "",
+            "target_index": -1,
+            "actual": -1,
+            "limit": -1,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        },
+        {
+          "stage": "preflight",
+          "state": "ok",
+          "begin_ms": 4,
+          "end_ms": 8,
+          "duration_ms": 4,
+          "check": "transaction_commit",
+          "detail": {
+            "reason": "",
+            "field": "",
+            "target_index": -1,
+            "actual": -1,
+            "limit": -1,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        },
+        {
+          "stage": "provider_open",
+          "state": "ok",
+          "begin_ms": 8,
+          "end_ms": 667,
+          "duration_ms": 659,
+          "check": "response_headers",
+          "detail": {
+            "reason": "",
+            "field": "",
+            "target_index": -1,
+            "actual": -1,
+            "limit": -1,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        },
+        {
+          "stage": "provider_stream",
+          "state": "ok",
+          "begin_ms": 667,
+          "end_ms": 12789,
+          "duration_ms": 12122,
+          "check": "",
+          "detail": {
+            "reason": "",
+            "field": "",
+            "target_index": -1,
+            "actual": -1,
+            "limit": -1,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        },
+        {
+          "stage": "passage_decode",
+          "state": "ok",
+          "begin_ms": 10101,
+          "end_ms": 12790,
+          "duration_ms": 2689,
+          "check": "clean_consistency",
+          "detail": {
+            "reason": "",
+            "field": "",
+            "target_index": -1,
+            "actual": -1,
+            "limit": -1,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        },
+        {
+          "stage": "candidate_decode",
+          "state": "ok",
+          "begin_ms": 12789,
+          "end_ms": 12790,
+          "duration_ms": 1,
+          "check": "hint_size",
+          "detail": {
+            "reason": "",
+            "field": "",
+            "target_index": -1,
+            "actual": -1,
+            "limit": -1,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        },
+        {
+          "stage": "content_validate",
+          "state": "ok",
+          "begin_ms": 12791,
+          "end_ms": 12794,
+          "duration_ms": 3,
+          "check": "context",
+          "detail": {
+            "reason": "",
+            "field": "",
+            "target_index": -1,
+            "actual": -1,
+            "limit": -1,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        },
+        {
+          "stage": "draft_commit",
+          "state": "ok",
+          "begin_ms": 12794,
+          "end_ms": 12798,
+          "duration_ms": 4,
+          "check": "transaction_commit",
+          "detail": {
+            "reason": "",
+            "field": "",
+            "target_index": -1,
+            "actual": -1,
+            "limit": -1,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        },
+        {
+          "stage": "settlement",
+          "state": "not_run",
+          "begin_ms": -1,
+          "end_ms": -1,
+          "duration_ms": -1,
+          "check": "",
+          "detail": {
+            "reason": "",
+            "field": "",
+            "target_index": -1,
+            "actual": -1,
+            "limit": -1,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        },
+        {
+          "stage": "delivery",
+          "state": "ok",
+          "begin_ms": 667,
+          "end_ms": 12799,
+          "duration_ms": 12132,
+          "check": "",
+          "detail": {
+            "reason": "",
+            "field": "",
+            "target_index": -1,
+            "actual": -1,
+            "limit": -1,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        }
+      ],
+      "json_parse_error": null,
+      "clean_word_count": 61,
+      "paragraph_count": 1,
+      "target_keys": [
+        "alleviate",
+        "deteriorate",
+        "facilitate",
+        "perceive",
+        "undermine"
+      ],
+      "tags": [
+        "management",
+        "workplace morale",
+        "communication"
+      ],
+      "all_required_keys_present": true,
+      "passage_entries_without_annotations": [],
+      "passage_has_outer_whitespace": false,
+      "hint_changed_entries": [
+        "perceive"
+      ],
+      "hint_repeated_entries": [],
+      "finish_reasons": [
+        "stop"
+      ],
+      "usage": {
+        "prompt_tokens": 1152,
+        "completion_tokens": 1422,
+        "total_tokens": 2574
+      },
+      "review": {
+        "issues": [
+          "正文短小完整，职场场景一致；hint working conditions deteriorate rapidly 是完整小句而非词组。"
+        ],
+        "meaning_role_tail": false
+      },
+      "db": {
+        "id": "01a0939a-a689-766d-a04a-4ad97da2ec53",
+        "account_id": "01a08e5a-2250-7854-81df-5aeb26e7f461",
+        "call_status": "valid",
+        "disposition": "pending",
+        "quota_charged": true,
+        "counts_toward_cumulative": true,
+        "failure_code": null,
+        "has_draft": true
+      }
+    },
+    {
+      "case_id": 17,
+      "round": 2,
+      "reference_case_id": 7,
+      "pair_id": 4,
+      "group": "D",
+      "model_id": "01a07fe3-5c48-736a-a86b-1f4dabd7cb87",
+      "provider_model_id": "minimax/minimax-m3",
+      "meaning_language": "ja",
+      "scenario": "news",
+      "length": "long",
+      "entries": [
+        "sustainable",
+        "prevalent",
+        "vulnerable",
+        "ambiguous",
+        "coherent"
+      ],
+      "started_at": "2026-09-12T03:13:13.882Z",
+      "status": "generation.validated",
+      "image": "sha256:56a6f59fb322564d4fe36808ee1f374d73de1bfa57b4304fe191752e40459577",
+      "http_status": 200,
+      "run_id": "01a0939a-d89f-7f8a-a833-a63036ae9a4e",
+      "first_delta_ms": 1463,
+      "preview_equals_result": true,
+      "target_order_valid": true,
+      "target_count": 5,
+      "tag_count": 2,
+      "result_sha256": "c05a07d2af19870000665e6acc35d7ed3f4467a30cfa8177781e7804ebb79d56",
+      "annotation_leaked": false,
+      "changed_form_occurrences": 0,
+      "repeated_passage_targets": 0,
+      "repeated_hint_targets": 0,
+      "positions_valid": true,
+      "duration_ms": 8710,
+      "passage_chars": 1903,
+      "terminal_count": 1,
+      "evidence_id": "03cd7210-e071-4b50-b53c-efaa6ec86196",
+      "request_id": "req_7K33GZfLxOCwkhBqTyMoRw",
+      "fingerprint": {
+        "source_sha256": "f73602b780ff771852d2a4df7f1c961c3d0d567543ab207d6eb43a862cb9e147",
+        "binary_sha256": "53f0dfe0421c3527874affb0c171b336acbe4037177fc3f46274c48569c5fbef",
+        "template_sha256": "81f9ac062f40347525f979fdcb9619395e5a5309ff2078e9e61434676862cde1",
+        "schema_sha256": "255eb22ed0fbce06a4cec83681e5a71d17bb211ff0334e94146b38a2d319292f",
+        "validator_sha256": "e1a582dbb5c52431ac0fe082fefb00e7a5ce7a9cb675fc393e8b3cb9db29b2a2",
+        "lexicon_sha256": "89e5b41dc8662780e443c10b5ecf81970944fc2b530d5f79372ac482ac744c0b"
+      },
+      "prompt_version": "m001-v5-r8",
+      "minimum_words": 200,
+      "soft_target_words": 240,
+      "expires_at": "2026-09-13T03:13:13.885353343Z",
+      "private_capture_complete": true,
+      "capture_state": {
+        "coalesced_progress": 169,
+        "dropped_records": 0,
+        "dropped_bytes": 0,
+        "truncated": false,
+        "io_failed": false,
+        "redacted": false,
+        "model_ended": true,
+        "unavailable": false
+      },
+      "model_end": {
+        "chunks": 56,
+        "bytes": 2844,
+        "redacted": false,
+        "unavailable": false
+      },
+      "first_failure": null,
+      "confirmed_outcome": "valid",
+      "stages": [
+        {
+          "stage": "request",
+          "state": "ok",
+          "begin_ms": 0,
+          "end_ms": 8706,
+          "duration_ms": 8706,
+          "check": "body",
+          "detail": {
+            "reason": "",
+            "field": "",
+            "target_index": -1,
+            "actual": -1,
+            "limit": -1,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        },
+        {
+          "stage": "preflight",
+          "state": "ok",
+          "begin_ms": 0,
+          "end_ms": 5,
+          "duration_ms": 5,
+          "check": "transaction_commit",
+          "detail": {
+            "reason": "",
+            "field": "",
+            "target_index": -1,
+            "actual": -1,
+            "limit": -1,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        },
+        {
+          "stage": "provider_open",
+          "state": "ok",
+          "begin_ms": 5,
+          "end_ms": 933,
+          "duration_ms": 928,
+          "check": "response_headers",
+          "detail": {
+            "reason": "",
+            "field": "",
+            "target_index": -1,
+            "actual": -1,
+            "limit": -1,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        },
+        {
+          "stage": "provider_stream",
+          "state": "ok",
+          "begin_ms": 935,
+          "end_ms": 8693,
+          "duration_ms": 7758,
+          "check": "",
+          "detail": {
+            "reason": "",
+            "field": "",
+            "target_index": -1,
+            "actual": -1,
+            "limit": -1,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        },
+        {
+          "stage": "passage_decode",
+          "state": "ok",
+          "begin_ms": 936,
+          "end_ms": 8695,
+          "duration_ms": 7759,
+          "check": "clean_consistency",
+          "detail": {
+            "reason": "",
+            "field": "",
+            "target_index": -1,
+            "actual": -1,
+            "limit": -1,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        },
+        {
+          "stage": "candidate_decode",
+          "state": "ok",
+          "begin_ms": 8693,
+          "end_ms": 8694,
+          "duration_ms": 1,
+          "check": "hint_size",
+          "detail": {
+            "reason": "",
+            "field": "",
+            "target_index": -1,
+            "actual": -1,
+            "limit": -1,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        },
+        {
+          "stage": "content_validate",
+          "state": "ok",
+          "begin_ms": 8695,
+          "end_ms": 8698,
+          "duration_ms": 3,
+          "check": "context",
+          "detail": {
+            "reason": "",
+            "field": "",
+            "target_index": -1,
+            "actual": -1,
+            "limit": -1,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        },
+        {
+          "stage": "draft_commit",
+          "state": "ok",
+          "begin_ms": 8698,
+          "end_ms": 8706,
+          "duration_ms": 8,
+          "check": "transaction_commit",
+          "detail": {
+            "reason": "",
+            "field": "",
+            "target_index": -1,
+            "actual": -1,
+            "limit": -1,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        },
+        {
+          "stage": "settlement",
+          "state": "not_run",
+          "begin_ms": -1,
+          "end_ms": -1,
+          "duration_ms": -1,
+          "check": "",
+          "detail": {
+            "reason": "",
+            "field": "",
+            "target_index": -1,
+            "actual": -1,
+            "limit": -1,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        },
+        {
+          "stage": "delivery",
+          "state": "ok",
+          "begin_ms": 933,
+          "end_ms": 8706,
+          "duration_ms": 7773,
+          "check": "",
+          "detail": {
+            "reason": "",
+            "field": "",
+            "target_index": -1,
+            "actual": -1,
+            "limit": -1,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        }
+      ],
+      "json_parse_error": null,
+      "clean_word_count": 279,
+      "paragraph_count": 1,
+      "target_keys": [
+        "ambiguous",
+        "coherent",
+        "prevalent",
+        "sustainable",
+        "vulnerable"
+      ],
+      "tags": [
+        "都市計画",
+        "行政の透明性"
+      ],
+      "all_required_keys_present": true,
+      "passage_entries_without_annotations": [],
+      "passage_has_outer_whitespace": false,
+      "hint_changed_entries": [],
+      "hint_repeated_entries": [],
+      "finish_reasons": [
+        "stop"
+      ],
+      "usage": {
+        "prompt_tokens": 1483,
+        "completion_tokens": 560,
+        "total_tokens": 2043
+      },
+      "review": {
+        "issues": [
+          "都市规划与呼吸疾病简报放在同一篇，最后用行政语言清晰度串联，能解释但场景聚焦较弱；单段偏长。"
+        ],
+        "meaning_role_tail": false
+      },
+      "db": {
+        "id": "01a0939a-d89f-7f8a-a833-a63036ae9a4e",
+        "account_id": "01a08e5a-2250-7854-81df-5aeb26e7f461",
+        "call_status": "valid",
+        "disposition": "pending",
+        "quota_charged": true,
+        "counts_toward_cumulative": true,
+        "failure_code": null,
+        "has_draft": true
+      }
+    },
+    {
+      "case_id": 18,
+      "round": 2,
+      "reference_case_id": 8,
+      "pair_id": 4,
+      "group": "D",
+      "model_id": "01a07fe3-f046-7017-97f8-c15539050441",
+      "provider_model_id": "z-ai/glm-5.3-flash",
+      "meaning_language": "ja",
+      "scenario": "news",
+      "length": "long",
+      "entries": [
+        "sustainable",
+        "prevalent",
+        "vulnerable",
+        "ambiguous",
+        "coherent"
+      ],
+      "started_at": "2026-09-12T03:13:22.618Z",
+      "status": "generation.validated",
+      "image": "sha256:56a6f59fb322564d4fe36808ee1f374d73de1bfa57b4304fe191752e40459577",
+      "http_status": 200,
+      "run_id": "01a0939a-fac1-7be1-a69b-1b45fb099aa6",
+      "first_delta_ms": 42597,
+      "preview_equals_result": true,
+      "target_order_valid": true,
+      "target_count": 5,
+      "tag_count": 2,
+      "result_sha256": "507810df8aeff9262008c9b9aa4b90bd298ea7e2f89af6867c75149bacfbf214",
+      "annotation_leaked": false,
+      "changed_form_occurrences": 0,
+      "repeated_passage_targets": 5,
+      "repeated_hint_targets": 0,
+      "positions_valid": true,
+      "duration_ms": 54646,
+      "passage_chars": 1691,
+      "terminal_count": 1,
+      "evidence_id": "4563d789-8a98-467e-abff-7d41f64b3ffc",
+      "request_id": "req_fzoSBrQzBaygojUsa5qgWw",
+      "fingerprint": {
+        "source_sha256": "f73602b780ff771852d2a4df7f1c961c3d0d567543ab207d6eb43a862cb9e147",
+        "binary_sha256": "53f0dfe0421c3527874affb0c171b336acbe4037177fc3f46274c48569c5fbef",
+        "template_sha256": "81f9ac062f40347525f979fdcb9619395e5a5309ff2078e9e61434676862cde1",
+        "schema_sha256": "255eb22ed0fbce06a4cec83681e5a71d17bb211ff0334e94146b38a2d319292f",
+        "validator_sha256": "e1a582dbb5c52431ac0fe082fefb00e7a5ce7a9cb675fc393e8b3cb9db29b2a2",
+        "lexicon_sha256": "89e5b41dc8662780e443c10b5ecf81970944fc2b530d5f79372ac482ac744c0b"
+      },
+      "prompt_version": "m001-v5-r8",
+      "minimum_words": 200,
+      "soft_target_words": 240,
+      "expires_at": "2026-09-13T03:13:22.621231347Z",
+      "private_capture_complete": true,
+      "capture_state": {
+        "coalesced_progress": 465,
+        "dropped_records": 0,
+        "dropped_bytes": 0,
+        "truncated": false,
+        "io_failed": false,
+        "redacted": false,
+        "model_ended": true,
+        "unavailable": false
+      },
+      "model_end": {
+        "chunks": 154,
+        "bytes": 2857,
+        "redacted": false,
+        "unavailable": false
+      },
+      "first_failure": null,
+      "confirmed_outcome": "valid",
+      "stages": [
+        {
+          "stage": "request",
+          "state": "ok",
+          "begin_ms": 0,
+          "end_ms": 54641,
+          "duration_ms": 54641,
+          "check": "body",
+          "detail": {
+            "reason": "",
+            "field": "",
+            "target_index": -1,
+            "actual": -1,
+            "limit": -1,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        },
+        {
+          "stage": "preflight",
+          "state": "ok",
+          "begin_ms": 1,
+          "end_ms": 6,
+          "duration_ms": 5,
+          "check": "transaction_commit",
+          "detail": {
+            "reason": "",
+            "field": "",
+            "target_index": -1,
+            "actual": -1,
+            "limit": -1,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        },
+        {
+          "stage": "provider_open",
+          "state": "ok",
+          "begin_ms": 6,
+          "end_ms": 1086,
+          "duration_ms": 1080,
+          "check": "response_headers",
+          "detail": {
+            "reason": "",
+            "field": "",
+            "target_index": -1,
+            "actual": -1,
+            "limit": -1,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        },
+        {
+          "stage": "provider_stream",
+          "state": "ok",
+          "begin_ms": 1087,
+          "end_ms": 54629,
+          "duration_ms": 53542,
+          "check": "",
+          "detail": {
+            "reason": "",
+            "field": "",
+            "target_index": -1,
+            "actual": -1,
+            "limit": -1,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        },
+        {
+          "stage": "passage_decode",
+          "state": "ok",
+          "begin_ms": 42592,
+          "end_ms": 54631,
+          "duration_ms": 12039,
+          "check": "clean_consistency",
+          "detail": {
+            "reason": "",
+            "field": "",
+            "target_index": -1,
+            "actual": -1,
+            "limit": -1,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        },
+        {
+          "stage": "candidate_decode",
+          "state": "ok",
+          "begin_ms": 54629,
+          "end_ms": 54630,
+          "duration_ms": 1,
+          "check": "hint_size",
+          "detail": {
+            "reason": "",
+            "field": "",
+            "target_index": -1,
+            "actual": -1,
+            "limit": -1,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        },
+        {
+          "stage": "content_validate",
+          "state": "ok",
+          "begin_ms": 54631,
+          "end_ms": 54634,
+          "duration_ms": 3,
+          "check": "context",
+          "detail": {
+            "reason": "",
+            "field": "",
+            "target_index": -1,
+            "actual": -1,
+            "limit": -1,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        },
+        {
+          "stage": "draft_commit",
+          "state": "ok",
+          "begin_ms": 54634,
+          "end_ms": 54641,
+          "duration_ms": 7,
+          "check": "transaction_commit",
+          "detail": {
+            "reason": "",
+            "field": "",
+            "target_index": -1,
+            "actual": -1,
+            "limit": -1,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        },
+        {
+          "stage": "settlement",
+          "state": "not_run",
+          "begin_ms": -1,
+          "end_ms": -1,
+          "duration_ms": -1,
+          "check": "",
+          "detail": {
+            "reason": "",
+            "field": "",
+            "target_index": -1,
+            "actual": -1,
+            "limit": -1,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        },
+        {
+          "stage": "delivery",
+          "state": "ok",
+          "begin_ms": 1086,
+          "end_ms": 54641,
+          "duration_ms": 53555,
+          "check": "",
+          "detail": {
+            "reason": "",
+            "field": "",
+            "target_index": -1,
+            "actual": -1,
+            "limit": -1,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        }
+      ],
+      "json_parse_error": null,
+      "clean_word_count": 251,
+      "paragraph_count": 1,
+      "target_keys": [
+        "ambiguous",
+        "coherent",
+        "prevalent",
+        "sustainable",
+        "vulnerable"
+      ],
+      "tags": [
+        "環境政策",
+        "防災"
+      ],
+      "all_required_keys_present": true,
+      "passage_entries_without_annotations": [],
+      "passage_has_outer_whitespace": false,
+      "hint_changed_entries": [],
+      "hint_repeated_entries": [],
+      "finish_reasons": [
+        "stop"
+      ],
+      "usage": {
+        "prompt_tokens": 1343,
+        "completion_tokens": 3010,
+        "total_tokens": 4353
+      },
+      "review": {
+        "issues": [
+          "新闻体裁完整，目标词覆盖齐全；有统计数据但属于生成的虚构新闻场景，不当作真实报道。",
+          "单段；末句把措施是否成功归结为风暴出现频率，措辞因果较简化。"
+        ],
+        "meaning_role_tail": false
+      },
+      "db": {
+        "id": "01a0939a-fac1-7be1-a69b-1b45fb099aa6",
+        "account_id": "01a08e5a-2250-7854-81df-5aeb26e7f461",
+        "call_status": "valid",
+        "disposition": "pending",
+        "quota_charged": true,
+        "counts_toward_cumulative": true,
+        "failure_code": null,
+        "has_draft": true
+      }
+    },
+    {
+      "case_id": 19,
+      "round": 2,
+      "reference_case_id": 9,
+      "pair_id": 5,
+      "group": "D",
+      "model_id": "01a07fe3-5c48-736a-a86b-1f4dabd7cb87",
+      "provider_model_id": "minimax/minimax-m3",
+      "meaning_language": "en",
+      "scenario": "story",
+      "length": "xlong",
+      "entries": [
+        "sustainable",
+        "prevalent",
+        "vulnerable",
+        "ambiguous",
+        "coherent"
+      ],
+      "started_at": "2026-09-12T03:14:17.293Z",
+      "status": "generation.failed",
+      "image": "sha256:56a6f59fb322564d4fe36808ee1f374d73de1bfa57b4304fe191752e40459577",
+      "http_status": 200,
+      "run_id": "01a0939b-d05b-7ce2-8771-0da52db945c0",
+      "first_delta_ms": 764,
+      "code": "content_validation_failed",
+      "quota_refunded": true,
+      "duration_ms": 4772,
+      "passage_chars": 761,
+      "terminal_count": 1,
+      "evidence_id": "bd464887-a401-489b-8717-1b768bb4bd5f",
+      "request_id": "req_6jlrhd4psmS9IGhO33u6_g",
+      "fingerprint": {
+        "source_sha256": "f73602b780ff771852d2a4df7f1c961c3d0d567543ab207d6eb43a862cb9e147",
+        "binary_sha256": "53f0dfe0421c3527874affb0c171b336acbe4037177fc3f46274c48569c5fbef",
+        "template_sha256": "81f9ac062f40347525f979fdcb9619395e5a5309ff2078e9e61434676862cde1",
+        "schema_sha256": "255eb22ed0fbce06a4cec83681e5a71d17bb211ff0334e94146b38a2d319292f",
+        "validator_sha256": "e1a582dbb5c52431ac0fe082fefb00e7a5ce7a9cb675fc393e8b3cb9db29b2a2",
+        "lexicon_sha256": "89e5b41dc8662780e443c10b5ecf81970944fc2b530d5f79372ac482ac744c0b"
+      },
+      "prompt_version": "m001-v5-r8",
+      "minimum_words": 400,
+      "soft_target_words": 480,
+      "expires_at": "2026-09-13T03:14:17.300281886Z",
+      "private_capture_complete": true,
+      "capture_state": {
+        "coalesced_progress": 103,
+        "dropped_records": 0,
+        "dropped_bytes": 0,
+        "truncated": false,
+        "io_failed": false,
+        "redacted": false,
+        "model_ended": true,
+        "unavailable": false
+      },
+      "model_end": {
+        "chunks": 34,
+        "bytes": 1772,
+        "redacted": false,
+        "unavailable": false
+      },
+      "first_failure": {
+        "stage": "content_validate",
+        "state": "failed",
+        "begin_ms": 4759,
+        "end_ms": 4759,
+        "duration_ms": 0,
+        "check": "word_count",
+        "detail": {
+          "reason": "passage_too_short",
+          "field": "passage",
+          "target_index": -1,
+          "actual": 125,
+          "limit": 400,
+          "byte_start": -1,
+          "byte_end": -1,
+          "expected_type": "",
+          "actual_type": ""
+        }
+      },
+      "confirmed_outcome": "failed",
+      "stages": [
+        {
+          "stage": "request",
+          "state": "ok",
+          "begin_ms": 0,
+          "end_ms": 4764,
+          "duration_ms": 4764,
+          "check": "body",
+          "detail": {
+            "reason": "",
+            "field": "",
+            "target_index": -1,
+            "actual": -1,
+            "limit": -1,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        },
+        {
+          "stage": "preflight",
+          "state": "ok",
+          "begin_ms": 3,
+          "end_ms": 9,
+          "duration_ms": 6,
+          "check": "transaction_commit",
+          "detail": {
+            "reason": "",
+            "field": "",
+            "target_index": -1,
+            "actual": -1,
+            "limit": -1,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        },
+        {
+          "stage": "provider_open",
+          "state": "ok",
+          "begin_ms": 9,
+          "end_ms": 649,
+          "duration_ms": 640,
+          "check": "response_headers",
+          "detail": {
+            "reason": "",
+            "field": "",
+            "target_index": -1,
+            "actual": -1,
+            "limit": -1,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        },
+        {
+          "stage": "provider_stream",
+          "state": "ok",
+          "begin_ms": 649,
+          "end_ms": 4754,
+          "duration_ms": 4105,
+          "check": "",
+          "detail": {
+            "reason": "",
+            "field": "",
+            "target_index": -1,
+            "actual": -1,
+            "limit": -1,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        },
+        {
+          "stage": "passage_decode",
+          "state": "ok",
+          "begin_ms": 649,
+          "end_ms": 4757,
+          "duration_ms": 4108,
+          "check": "clean_consistency",
+          "detail": {
+            "reason": "",
+            "field": "",
+            "target_index": -1,
+            "actual": -1,
+            "limit": -1,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        },
+        {
+          "stage": "candidate_decode",
+          "state": "ok",
+          "begin_ms": 4754,
+          "end_ms": 4757,
+          "duration_ms": 3,
+          "check": "hint_size",
+          "detail": {
+            "reason": "",
+            "field": "",
+            "target_index": -1,
+            "actual": -1,
+            "limit": -1,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        },
+        {
+          "stage": "content_validate",
+          "state": "failed",
+          "begin_ms": 4759,
+          "end_ms": 4759,
+          "duration_ms": 0,
+          "check": "word_count",
+          "detail": {
+            "reason": "passage_too_short",
+            "field": "passage",
+            "target_index": -1,
+            "actual": 125,
+            "limit": 400,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        },
+        {
+          "stage": "draft_commit",
+          "state": "not_run",
+          "begin_ms": -1,
+          "end_ms": -1,
+          "duration_ms": -1,
+          "check": "",
+          "detail": {
+            "reason": "",
+            "field": "",
+            "target_index": -1,
+            "actual": -1,
+            "limit": -1,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        },
+        {
+          "stage": "settlement",
+          "state": "ok",
+          "begin_ms": 4759,
+          "end_ms": 4764,
+          "duration_ms": 5,
+          "check": "cas",
+          "detail": {
+            "reason": "",
+            "field": "",
+            "target_index": -1,
+            "actual": -1,
+            "limit": -1,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        },
+        {
+          "stage": "delivery",
+          "state": "ok",
+          "begin_ms": 649,
+          "end_ms": 4764,
+          "duration_ms": 4115,
+          "check": "",
+          "detail": {
+            "reason": "",
+            "field": "",
+            "target_index": -1,
+            "actual": -1,
+            "limit": -1,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        }
+      ],
+      "json_parse_error": null,
+      "clean_word_count": 125,
+      "paragraph_count": 1,
+      "target_keys": [
+        "ambiguous",
+        "coherent",
+        "prevalent",
+        "sustainable",
+        "vulnerable"
+      ],
+      "tags": [
+        "community",
+        "resilience"
+      ],
+      "all_required_keys_present": true,
+      "passage_entries_without_annotations": [
+        "prevalent",
+        "ambiguous",
+        "coherent"
+      ],
+      "passage_has_outer_whitespace": false,
+      "hint_changed_entries": [],
+      "hint_repeated_entries": [],
+      "finish_reasons": [
+        "stop"
+      ],
+      "usage": {
+        "prompt_tokens": 1799,
+        "completion_tokens": 393,
+        "total_tokens": 2192
+      },
+      "review": {
+        "issues": [
+          "125/400 词；正文漏 ambiguous、coherent、prevalent，停在洪灾背景。",
+          "JSON 完整且 finish=stop，非本地截断。"
+        ],
+        "meaning_role_tail": false
+      },
+      "db": {
+        "id": "01a0939b-d05b-7ce2-8771-0da52db945c0",
+        "account_id": "01a08e5a-2250-7854-81df-5aeb26e7f461",
+        "call_status": "validation_failed",
+        "disposition": "pending",
+        "quota_charged": false,
+        "counts_toward_cumulative": false,
+        "failure_code": "content_validation_failed",
+        "has_draft": false
+      }
+    },
+    {
+      "case_id": 20,
+      "round": 2,
+      "reference_case_id": 10,
+      "pair_id": 5,
+      "group": "D",
+      "model_id": "01a07fe3-f046-7017-97f8-c15539050441",
+      "provider_model_id": "z-ai/glm-5.3-flash",
+      "meaning_language": "en",
+      "scenario": "story",
+      "length": "xlong",
+      "entries": [
+        "sustainable",
+        "prevalent",
+        "vulnerable",
+        "ambiguous",
+        "coherent"
+      ],
+      "started_at": "2026-09-12T03:14:22.086Z",
+      "status": "generation.validated",
+      "image": "sha256:56a6f59fb322564d4fe36808ee1f374d73de1bfa57b4304fe191752e40459577",
+      "http_status": 200,
+      "run_id": "01a0939b-e30d-7a73-9bcb-801119224b83",
+      "first_delta_ms": 21908,
+      "preview_equals_result": true,
+      "target_order_valid": true,
+      "target_count": 5,
+      "tag_count": 2,
+      "result_sha256": "d9ecfb80456629c721f12abd3e0e8cae6baafe4a19e219a5148caec3292c7de0",
+      "annotation_leaked": false,
+      "changed_form_occurrences": 0,
+      "repeated_passage_targets": 4,
+      "repeated_hint_targets": 0,
+      "positions_valid": true,
+      "duration_ms": 27942,
+      "passage_chars": 3104,
+      "terminal_count": 1,
+      "evidence_id": "4cc2b42e-e0f2-4353-a2ae-69bf2a484287",
+      "request_id": "req_fcAVhpKay3pvdQac6CTKbA",
+      "fingerprint": {
+        "source_sha256": "f73602b780ff771852d2a4df7f1c961c3d0d567543ab207d6eb43a862cb9e147",
+        "binary_sha256": "53f0dfe0421c3527874affb0c171b336acbe4037177fc3f46274c48569c5fbef",
+        "template_sha256": "81f9ac062f40347525f979fdcb9619395e5a5309ff2078e9e61434676862cde1",
+        "schema_sha256": "255eb22ed0fbce06a4cec83681e5a71d17bb211ff0334e94146b38a2d319292f",
+        "validator_sha256": "e1a582dbb5c52431ac0fe082fefb00e7a5ce7a9cb675fc393e8b3cb9db29b2a2",
+        "lexicon_sha256": "89e5b41dc8662780e443c10b5ecf81970944fc2b530d5f79372ac482ac744c0b"
+      },
+      "prompt_version": "m001-v5-r8",
+      "minimum_words": 400,
+      "soft_target_words": 480,
+      "expires_at": "2026-09-13T03:14:22.091115805Z",
+      "private_capture_complete": true,
+      "capture_state": {
+        "coalesced_progress": 762,
+        "dropped_records": 0,
+        "dropped_bytes": 0,
+        "truncated": false,
+        "io_failed": false,
+        "redacted": false,
+        "model_ended": true,
+        "unavailable": false
+      },
+      "model_end": {
+        "chunks": 253,
+        "bytes": 4402,
+        "redacted": false,
+        "unavailable": false
+      },
+      "first_failure": null,
+      "confirmed_outcome": "valid",
+      "stages": [
+        {
+          "stage": "request",
+          "state": "ok",
+          "begin_ms": 0,
+          "end_ms": 27935,
+          "duration_ms": 27935,
+          "check": "body",
+          "detail": {
+            "reason": "",
+            "field": "",
+            "target_index": -1,
+            "actual": -1,
+            "limit": -1,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        },
+        {
+          "stage": "preflight",
+          "state": "ok",
+          "begin_ms": 0,
+          "end_ms": 5,
+          "duration_ms": 5,
+          "check": "transaction_commit",
+          "detail": {
+            "reason": "",
+            "field": "",
+            "target_index": -1,
+            "actual": -1,
+            "limit": -1,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        },
+        {
+          "stage": "provider_open",
+          "state": "ok",
+          "begin_ms": 5,
+          "end_ms": 652,
+          "duration_ms": 647,
+          "check": "response_headers",
+          "detail": {
+            "reason": "",
+            "field": "",
+            "target_index": -1,
+            "actual": -1,
+            "limit": -1,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        },
+        {
+          "stage": "provider_stream",
+          "state": "ok",
+          "begin_ms": 652,
+          "end_ms": 27921,
+          "duration_ms": 27269,
+          "check": "",
+          "detail": {
+            "reason": "",
+            "field": "",
+            "target_index": -1,
+            "actual": -1,
+            "limit": -1,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        },
+        {
+          "stage": "passage_decode",
+          "state": "ok",
+          "begin_ms": 21869,
+          "end_ms": 27925,
+          "duration_ms": 6056,
+          "check": "clean_consistency",
+          "detail": {
+            "reason": "",
+            "field": "",
+            "target_index": -1,
+            "actual": -1,
+            "limit": -1,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        },
+        {
+          "stage": "candidate_decode",
+          "state": "ok",
+          "begin_ms": 27921,
+          "end_ms": 27924,
+          "duration_ms": 3,
+          "check": "hint_size",
+          "detail": {
+            "reason": "",
+            "field": "",
+            "target_index": -1,
+            "actual": -1,
+            "limit": -1,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        },
+        {
+          "stage": "content_validate",
+          "state": "ok",
+          "begin_ms": 27925,
+          "end_ms": 27930,
+          "duration_ms": 5,
+          "check": "context",
+          "detail": {
+            "reason": "",
+            "field": "",
+            "target_index": -1,
+            "actual": -1,
+            "limit": -1,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        },
+        {
+          "stage": "draft_commit",
+          "state": "ok",
+          "begin_ms": 27930,
+          "end_ms": 27935,
+          "duration_ms": 5,
+          "check": "transaction_commit",
+          "detail": {
+            "reason": "",
+            "field": "",
+            "target_index": -1,
+            "actual": -1,
+            "limit": -1,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        },
+        {
+          "stage": "settlement",
+          "state": "not_run",
+          "begin_ms": -1,
+          "end_ms": -1,
+          "duration_ms": -1,
+          "check": "",
+          "detail": {
+            "reason": "",
+            "field": "",
+            "target_index": -1,
+            "actual": -1,
+            "limit": -1,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        },
+        {
+          "stage": "delivery",
+          "state": "ok",
+          "begin_ms": 652,
+          "end_ms": 27935,
+          "duration_ms": 27283,
+          "check": "",
+          "detail": {
+            "reason": "",
+            "field": "",
+            "target_index": -1,
+            "actual": -1,
+            "limit": -1,
+            "byte_start": -1,
+            "byte_end": -1,
+            "expected_type": "",
+            "actual_type": ""
+          }
+        }
+      ],
+      "json_parse_error": null,
+      "clean_word_count": 521,
+      "paragraph_count": 1,
+      "target_keys": [
+        "ambiguous",
+        "coherent",
+        "prevalent",
+        "sustainable",
+        "vulnerable"
+      ],
+      "tags": [
+        "environment",
+        "community"
+      ],
+      "all_required_keys_present": true,
+      "passage_entries_without_annotations": [],
+      "passage_has_outer_whitespace": false,
+      "hint_changed_entries": [],
+      "hint_repeated_entries": [],
+      "finish_reasons": [
+        "stop"
+      ],
+      "usage": {
+        "prompt_tokens": 1633,
+        "completion_tokens": 2871,
+        "total_tokens": 4504
+      },
+      "review": {
+        "issues": [
+          "完整故事，有人物引入、行动、结果，叙事顺序较清楚；无先前 Priya 先指代后介绍问题。",
+          "仍为单段，环境治理效果在虚构故事中略理想化；不视为真实技术效果证据。"
+        ],
+        "meaning_role_tail": false
+      },
+      "db": {
+        "id": "01a0939b-e30d-7a73-9bcb-801119224b83",
+        "account_id": "01a08e5a-2250-7854-81df-5aeb26e7f461",
+        "call_status": "valid",
+        "disposition": "pending",
+        "quota_charged": true,
+        "counts_toward_cumulative": true,
+        "failure_code": null,
+        "has_draft": true
+      }
+    }
+  ],
+  "ledger": "/tmp/wordweave-r8-20.9Vjjep/calls.json",
+  "evidence_retention": {
+    "previous_container_bundles_removed": 20,
+    "previous_raw_recoverable_from_old_container": false,
+    "previous_reports_preserved": true,
+    "current_private_bundles": 20,
+    "policy": "Dedicated account only, private container tmpfs, maximum 50 bundles / 24 hours, no long-term complete raw export",
+    "earliest_expiry": "2026-09-13T03:07:18.965565429Z",
+    "latest_expiry": "2026-09-13T03:14:22.091115805Z",
+    "raw_copied_to_planning": false,
+    "short_review_snippets_only": true
+  },
+  "limitations": [
+    "Twenty stochastic samples are not a randomized controlled comparison or a long-term success guarantee.",
+    "75% refers to API generation validation success, not language-learning quality acceptance.",
+    "All errors are content validation failures, not evidence that every failure is model fault.",
+    "No cache/billing/reasoning token breakdown; do not infer actual cost or cache hit rates.",
+    "Validator package fingerprint covers AI source including prompts; its change alone is not a change to validation behavior.",
+    "Assistant exact token usage unknown; commands executed through tools, no subagent/model-switch claim."
+  ],
+  "references": {
+    "offline": "../ten-entry-example-r8-20260911/verification.json",
+    "example": "../ten-entry-example-r8-20260911/example-zh-short.json",
+    "before": "pre-test.json",
+    "prior_r7": "../completion-prompt-20-20260911/results.json"
+  }
+}

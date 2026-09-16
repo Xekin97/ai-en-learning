@@ -1,0 +1,94 @@
+{
+  "revision": "PROSE-PROMPT-R6-20260911 / CR-042",
+  "date": "2026-09-11",
+  "authorization": "用户：再优化一版吧；实现和离线检查，不续用上一轮已耗尽的模型调用预算。",
+  "status": "offline_passed_live_unmeasured",
+  "prompt_version": "m001-v5-r6",
+  "runtime_prompt_version": "m001-v5-r5",
+  "paid_model_calls": 0,
+  "deployment_performed": false,
+  "retries_or_repair_calls": 0,
+  "changed_files": {
+    "backend/internal/ai/annotations_test.go": "72b43cb24f72c14fb35625b568dce796ec29d7aab2fae1233d5d15036ef915c9",
+    "backend/internal/ai/openrouter.go": "efeb8f3ed0c8b919683d3913baec51800c52d36f74977020b2d65e441e973592",
+    "backend/internal/ai/contract.go": "38961897cf154254cc549b59f8ce028bbbd4844a964ff324ade36b8d18328e0e",
+    "backend/internal/ai/openrouter_test.go": "a716282ba1af948f20b1c79022840eb174fd57f3e63792e0696fdf998c333fe6",
+    "backend/internal/ai/keyed_targets_test.go": "9f02ab488da6b4308ce60e89220196a7ccdda7a64f0df0d3177d8f5321b17210",
+    "backend/internal/ai/cr040_test.go": "729d8541ca81a09ecfe1c21464b429f272788e7a545cb3eeeee7abbacfdfcdec",
+    "backend/internal/ai/prose_prompt_test.go": "b101ee8dab556f08443422f3110e30e1a12c94edfa4138461e95f7e2e53af0f9"
+  },
+  "unchanged_checks": {
+    "provider_stream_and_strict_decode_unchanged": true,
+    "user_parameters_unchanged": true,
+    "error_handling_unchanged": true,
+    "validator_unchanged": true
+  },
+  "basis": {
+    "evidence": "../keyed-targets-10-20260911/results.json",
+    "cases": [
+      8,
+      10
+    ],
+    "additional_quality_notes": [
+      3,
+      5,
+      6,
+      9
+    ]
+  },
+  "changes": [
+    "Replace open-ended word-target guidance with near-target natural completion after minimum length and all entries are covered.",
+    "Ask for untitled prose with explicit JSON-escaped paragraph separators and no outer whitespace.",
+    "Replace the young example entry with deteriorate to teach a verb collocation; retain three entries, matching-language meanings/tags, derivation, repeats and different passage/input order.",
+    "Keep provider routing, reasoning/token controls, strict schema shape, validator and public DTO unchanged."
+  ],
+  "commands": [
+    {
+      "command": "GOTOOLCHAIN=go1.26.0 go test -race ./internal/ai ./internal/httpapi",
+      "exit_code": 0
+    },
+    {
+      "command": "GOTOOLCHAIN=go1.26.0 go test -tags=uatdiagnostics ./internal/ai ./internal/httpapi ./cmd/wordweave ./cmd/wordweave-admin",
+      "exit_code": 0
+    },
+    {
+      "command": "GOTOOLCHAIN=go1.26.0 go vet ./internal/ai ./internal/httpapi",
+      "exit_code": 0
+    },
+    {
+      "command": "GOTOOLCHAIN=go1.26.0 go build -o /tmp/wordweave-prose-r6.HagSRB/ ./cmd/wordweave ./cmd/wordweave-admin",
+      "exit_code": 0
+    },
+    {
+      "command": "GOTOOLCHAIN=go1.26.0 go test ./internal/ai -run 'Test(Prose|PromptExample|KeyedSchema)' -v",
+      "exit_code": 0
+    }
+  ],
+  "verified": [
+    "Three language examples: 60 clean words each, two paragraphs, original-entry definitions and compact verb hint.",
+    "All 48 language/minimum/scenario combinations preserve guidance; all three model IDs in tests keep inference controls absent.",
+    "Every-byte streaming checks preserve paragraph breaks and remove only inline annotations, public targets follow input order.",
+    "Synthetic title/body join still fails mapping_surface_absent; outer whitespace, 157/400-word shortage and omitted target fail in sequence; corrected complete control passes."
+  ],
+  "initial_development_failures_resolved": [
+    "Version guard still expected r5; updated to r6.",
+    "Draft example had 57 clean words, below its 60-word soft target; extended to exactly 60 without relaxing assertions."
+  ],
+  "not_verified": [
+    "Live model response quality or success rate for r6",
+    "Actual reasoning-token/cost effect",
+    "Independent QA/UAT, full-site regression or production deployment"
+  ],
+  "runtime": {
+    "image": "sha256:a68d717dd88d0d8f4898a11dc3a5ba33bfca8c26e72cad23aaf1822e8e25e44b",
+    "health": "healthy",
+    "restarted": false,
+    "prior_sample": "MiniMax 5/5; GLM 3/5; combined 8/10 applies only to r5."
+  },
+  "sources": [
+    {
+      "url": "https://developers.openai.com/api/docs/guides/prompt-engineering",
+      "use": "General clear-instruction and representative-example guidance only; not a claim about MiniMax/GLM adherence."
+    }
+  ]
+}

@@ -1,0 +1,693 @@
+{
+  "date": "2026-09-09",
+  "role": "frontend-claire",
+  "revision": "CR-040",
+  "status": "developer_pass",
+  "candidate": {
+    "tag": "wordweave-frontend:cr040-dev",
+    "image": "sha256:5903591c881165071c1cba08984cfb835854187f5df21a281640b3aacccf4b27",
+    "node": "24.8.0",
+    "pnpm": "10.33.0"
+  },
+  "initial_failure": {
+    "command": "docker build --tag wordweave-frontend:cr040-dev .",
+    "exit_code": 1,
+    "stage": "unit tests",
+    "passed": 207,
+    "failed": 1,
+    "reason": "New test expected next.kind='advanced', but the established application model uses outcome='advanced'. Meaning value was correct. Production mapper/schema had no failure.",
+    "typecheck": "PASS",
+    "lint": "PASS",
+    "boundaries": "PASS (118 modules, 89 dependencies)"
+  },
+  "correction": "New test assertions aligned with existing outcome discriminant and visible generation target segments; production semantics unchanged.",
+  "checks": {
+    "typecheck": "PASS",
+    "lint": "PASS",
+    "boundaries": "PASS (118 modules, 89 dependencies)",
+    "unit": {
+      "files": 23,
+      "passed": 208,
+      "failed": 0
+    },
+    "build": "PASS",
+    "format": "PASS (13 changed/current files)",
+    "browser": {
+      "result": "PASS",
+      "checks": [
+        {
+          "locale": "en-US",
+          "case": "library SSR/hydration current meaning",
+          "result": "PASS"
+        },
+        {
+          "locale": "en-US",
+          "case": "review spelling meaning",
+          "result": "PASS"
+        },
+        {
+          "locale": "en-US",
+          "case": "admin read-only reader meaning",
+          "result": "PASS"
+        },
+        {
+          "locale": "zh-CN",
+          "case": "library SSR/hydration current meaning",
+          "result": "PASS"
+        },
+        {
+          "locale": "zh-CN",
+          "case": "review spelling meaning",
+          "result": "PASS"
+        },
+        {
+          "locale": "zh-CN",
+          "case": "admin read-only reader meaning",
+          "result": "PASS"
+        },
+        {
+          "locale": "en-US",
+          "case": "generation SSE current meaning",
+          "result": "PASS"
+        }
+      ],
+      "real_model_calls": 0,
+      "mode": "production frontend plus synthetic contract mock"
+    }
+  },
+  "commands": [
+    {
+      "command": "docker build --tag wordweave-frontend:cr040-dev .",
+      "exit_code": 0,
+      "output": "#0 building with \"desktop-linux\" instance using docker driver\n\n#1 [internal] load build definition from Dockerfile\n#1 transferring dockerfile: 1.03kB done\n#1 DONE 0.0s\n\n#2 [internal] load metadata for docker.io/library/node:24.8.0-alpine3.22@sha256:3e843c608bb5232f39ecb2b25e41214b958b0795914707374c8acc28487dea17\n#2 DONE 0.0s\n\n#3 [internal] load .dockerignore\n#3 transferring context: 155B done\n#3 DONE 0.0s\n\n#4 [build 1/7] FROM docker.io/library/node:24.8.0-alpine3.22@sha256:3e843c608bb5232f39ecb2b25e41214b958b0795914707374c8acc28487dea17\n#4 DONE 0.0s\n\n#5 [internal] load build context\n#5 transferring context: 25.66kB 0.0s done\n#5 DONE 0.0s\n\n#6 [build 2/7] WORKDIR /app\n#6 CACHED\n\n#7 [build 3/7] RUN corepack enable && corepack prepare pnpm@10.33.0 --activate\n#7 CACHED\n\n#8 [build 4/7] COPY package.json pnpm-lock.yaml ./\n#8 CACHED\n\n#9 [build 5/7] RUN pnpm install --frozen-lockfile\n#9 CACHED\n\n#10 [build 6/7] COPY . .\n#10 DONE 0.2s\n\n#11 [build 7/7] RUN pnpm typecheck && pnpm lint && pnpm lint:boundaries && pnpm test && pnpm build\n#11 0.569 \n#11 0.569 > wordweave-frontend@0.1.0 typecheck /app\n#11 0.569 > nuxt typecheck\n#11 0.569 \n#11 7.521 \n#11 7.521 > wordweave-frontend@0.1.0 lint /app\n#11 7.521 > eslint .\n#11 7.521 \n#11 12.11 \n#11 12.11 > wordweave-frontend@0.1.0 lint:boundaries /app\n#11 12.11 > depcruise app --config dependency-cruiser.cjs\n#11 12.11 \n#11 13.66 \n#11 13.66 ✔ no dependency violations found (118 modules, 89 dependencies cruised)\n#11 13.66 \n#11 13.90 \n#11 13.90 > wordweave-frontend@0.1.0 test /app\n#11 13.90 > vitest run\n#11 13.90 \n#11 14.32 \n#11 14.32 \u001b[1m\u001b[30m\u001b[46m RUN \u001b[49m\u001b[39m\u001b[22m \u001b[36mv4.1.11 \u001b[39m\u001b[90m/app\u001b[39m\n#11 14.32 \n#11 15.52  \u001b[32m✓\u001b[39m tests/unit/admin-user-search.test.ts \u001b[2m(\u001b[22m\u001b[2m8 tests\u001b[22m\u001b[2m)\u001b[22m\u001b[32m 21\u001b[2mms\u001b[22m\u001b[39m\n#11 16.12  \u001b[32m✓\u001b[39m tests/unit/review-range-setup.test.ts \u001b[2m(\u001b[22m\u001b[2m47 tests\u001b[22m\u001b[2m)\u001b[22m\u001b[32m 52\u001b[2mms\u001b[22m\u001b[39m\n#11 16.15  \u001b[32m✓\u001b[39m tests/unit/private-session-state.test.ts \u001b[2m(\u001b[22m\u001b[2m5 tests\u001b[22m\u001b[2m)\u001b[22m\u001b[32m 10\u001b[2mms\u001b[22m\u001b[39m\n#11 16.17  \u001b[32m✓\u001b[39m tests/unit/entry-meaning-contract.test.ts \u001b[2m(\u001b[22m\u001b[2m9 tests\u001b[22m\u001b[2m)\u001b[22m\u001b[32m 29\u001b[2mms\u001b[22m\u001b[39m\n#11 16.39  \u001b[32m✓\u001b[39m tests/unit/strict-contracts.test.ts \u001b[2m(\u001b[22m\u001b[2m6 tests\u001b[22m\u001b[2m)\u001b[22m\u001b[32m 17\u001b[2mms\u001b[22m\u001b[39m\n#11 16.42  \u001b[32m✓\u001b[39m tests/unit/admin-detail-state.test.ts \u001b[2m(\u001b[22m\u001b[2m15 tests\u001b[22m\u001b[2m)\u001b[22m\u001b[32m 37\u001b[2mms\u001b[22m\u001b[39m\n#11 16.42  \u001b[32m✓\u001b[39m tests/unit/passage-cloze-presenter.test.ts \u001b[2m(\u001b[22m\u001b[2m4 tests\u001b[22m\u001b[2m)\u001b[22m\u001b[32m 19\u001b[2mms\u001b[22m\u001b[39m\n#11 16.50  \u001b[32m✓\u001b[39m tests/unit/review-setup-presenter.test.ts \u001b[2m(\u001b[22m\u001b[2m4 tests\u001b[22m\u001b[2m)\u001b[22m\u001b[32m 95\u001b[2mms\u001b[22m\u001b[39m\n#11 16.50  \u001b[32m✓\u001b[39m tests/unit/admin-quota-contract.test.ts \u001b[2m(\u001b[22m\u001b[2m26 tests\u001b[22m\u001b[2m)\u001b[22m\u001b[32m 45\u001b[2mms\u001b[22m\u001b[39m\n#11 16.69  \u001b[32m✓\u001b[39m tests/unit/auth-card-design.test.ts \u001b[2m(\u001b[22m\u001b[2m22 tests\u001b[22m\u001b[2m)\u001b[22m\u001b[32m 292\u001b[2mms\u001b[22m\u001b[39m\n#11 17.09  \u001b[32m✓\u001b[39m tests/unit/auth-reader-presenters.test.ts \u001b[2m(\u001b[22m\u001b[2m8 tests\u001b[22m\u001b[2m)\u001b[22m\u001b[32m 17\u001b[2mms\u001b[22m\u001b[39m\n#11 17.15  \u001b[32m✓\u001b[39m tests/unit/account-password-error.test.ts \u001b[2m(\u001b[22m\u001b[2m3 tests\u001b[22m\u001b[2m)\u001b[22m\u001b[32m 12\u001b[2mms\u001b[22m\u001b[39m\n#11 17.20  \u001b[32m✓\u001b[39m tests/unit/admin-plan-policy.test.ts \u001b[2m(\u001b[22m\u001b[2m14 tests\u001b[22m\u001b[2m)\u001b[22m\u001b[32m 9\u001b[2mms\u001b[22m\u001b[39m\n#11 17.24  \u001b[32m✓\u001b[39m tests/unit/review-summary-presenter.test.ts \u001b[2m(\u001b[22m\u001b[2m4 tests\u001b[22m\u001b[2m)\u001b[22m\u001b[32m 4\u001b[2mms\u001b[22m\u001b[39m\n#11 17.25  \u001b[32m✓\u001b[39m tests/unit/span-mapper.test.ts \u001b[2m(\u001b[22m\u001b[2m3 tests\u001b[22m\u001b[2m)\u001b[22m\u001b[32m 4\u001b[2mms\u001b[22m\u001b[39m\n#11 17.27  \u001b[32m✓\u001b[39m tests/unit/generation-reducer.test.ts \u001b[2m(\u001b[22m\u001b[2m2 tests\u001b[22m\u001b[2m)\u001b[22m\u001b[32m 7\u001b[2mms\u001b[22m\u001b[39m\n#11 17.38  \u001b[32m✓\u001b[39m tests/unit/admin-user-position.test.ts \u001b[2m(\u001b[22m\u001b[2m2 tests\u001b[22m\u001b[2m)\u001b[22m\u001b[32m 9\u001b[2mms\u001b[22m\u001b[39m\n#11 17.39  \u001b[32m✓\u001b[39m tests/unit/library-page-presenter.test.ts \u001b[2m(\u001b[22m\u001b[2m3 tests\u001b[22m\u001b[2m)\u001b[22m\u001b[32m 3\u001b[2mms\u001b[22m\u001b[39m\n#11 17.40  \u001b[32m✓\u001b[39m tests/unit/admin-layout-content.test.ts \u001b[2m(\u001b[22m\u001b[2m3 tests\u001b[22m\u001b[2m)\u001b[22m\u001b[32m 11\u001b[2mms\u001b[22m\u001b[39m\n#11 17.54  \u001b[32m✓\u001b[39m tests/unit/token-vault.test.ts \u001b[2m(\u001b[22m\u001b[2m2 tests\u001b[22m\u001b[2m)\u001b[22m\u001b[32m 3\u001b[2mms\u001b[22m\u001b[39m\n#11 17.56  \u001b[32m✓\u001b[39m tests/unit/return-intent.test.ts \u001b[2m(\u001b[22m\u001b[2m13 tests\u001b[22m\u001b[2m)\u001b[22m\u001b[32m 4\u001b[2mms\u001b[22m\u001b[39m\n#11 17.58  \u001b[32m✓\u001b[39m tests/unit/generation-selection.test.ts \u001b[2m(\u001b[22m\u001b[2m3 tests\u001b[22m\u001b[2m)\u001b[22m\u001b[32m 2\u001b[2mms\u001b[22m\u001b[39m\n#11 17.59  \u001b[32m✓\u001b[39m tests/unit/admin-approved-copy.test.ts \u001b[2m(\u001b[22m\u001b[2m2 tests\u001b[22m\u001b[2m)\u001b[22m\u001b[32m 2\u001b[2mms\u001b[22m\u001b[39m\n#11 17.60 \n#11 17.60 \u001b[2m Test Files \u001b[22m \u001b[1m\u001b[32m23 passed\u001b[39m\u001b[22m\u001b[90m (23)\u001b[39m\n#11 17.60 \u001b[2m      Tests \u001b[22m \u001b[1m\u001b[32m208 passed\u001b[39m\u001b[22m\u001b[90m (208)\u001b[39m\n#11 17.60 \u001b[2m   Start at \u001b[22m 03:06:29\n#11 17.60 \u001b[2m   Duration \u001b[22m 3.27s\u001b[2m (transform 6.78s, setup 0ms, import 11.37s, tests 703ms, environment 10.17s)\u001b[22m\n#11 17.60 \n#11 17.92 \n#11 17.92 > wordweave-frontend@0.1.0 build /app\n#11 17.92 > nuxt build\n#11 17.92 \n#11 18.03 ┌  Building Nuxt for production...\n#11 18.20 │\n#11 18.20 ●  Nuxt 4.5.2 (with Nitro 2.13.4, Vite 8.2.2 and Vue 3.5.42)\n#11 18.86 │\n#11 18.86 ●  Nitro preset: node-server\n#11 20.05 ℹ Building client...\n#11 20.11 ℹ vite v8.2.2 building client environment for production...\n#11 20.16 transforming...\nWarning: truncated output (original token count: 5625)\nTotal output lines: 245\n\n#11 25.10 ✓ 458 modules transformed.\n#11 25.27 rendering chunks...\n#11 25.38 computing gzip size...\n#11 25.39 ℹ node_modules/.cache/nuxt/.nuxt/dist/client/manifest.json                  15.95 kB │ gzip:  1.73 kB\n#11 25.39 node_modules/.cache/nuxt/.nuxt/dist/client/_nuxt/error-500.BCwb1ls_.css    1.90 kB │ gzip:  0.72 kB\n#11 25.39 node_modules/.cache/nuxt/.nuxt/dist/client/_nuxt/error-404.DtX14caB.css    2.42 kB │ gzip:  0.85 kB\n#11 25.39 node_modules/.cache/nuxt/.nuxt/dist/client/_nuxt/entry.CEzDe9vQ.css       57.83 kB │ gzip: 11.37 kB\n#11 25.39 node_modules/.cache/nuxt/.nuxt/dist/client/_nuxt/CNs_Ozdc.js               0.02 kB │ gzip:  0.04 kB\n#11 25.39 node_modules/.cache/nuxt/.nuxt/dist/client/_nuxt/BDNMzG2s.js               0.08 kB │ gzip:  0.09 kB\n#11 25.39 node_modules/.cache/nuxt/.nuxt/dist/client/_nuxt/S5_MK9-o.js               0.10 kB │ gzip:  0.10 kB\n#11 25.39 node_modules/.cache/nuxt/.nuxt/dist/client/_nuxt/tCkLUWL1.js               0.10 kB │ gzip:  0.10 kB\n#11 25.39 node_modules/.cache/nuxt/.nuxt/dist/client/_nuxt/DIYIsLm9.js               0.23 kB │ gzip:  0.19 kB\n#11 25.39 node_modules/.cache/nuxt/.nuxt/dist/client/_nuxt/Bt_zpNgQ.js               0.24 kB │ gzip:  0.19 kB\n#11 25.39 node_modules/.cache/nuxt/.nuxt/dist/client/_nuxt/BERFr0du.js               0.28 kB │ gzip:  0.22 kB\n#11 25.39 node_modules/.cache/nuxt/.nuxt/dist/client/_nuxt/5GuO1-aO.js               0.52 kB │ gzip:  0.34 kB\n#11 25.39 node_modules/.cache/nuxt/.nuxt/dist/client/_nuxt/-1Kx9Afa.js               0.53 kB │ gzip:  0.28 kB\n#11 25.39 node_modules/.cache/nuxt/.nuxt/dist/client/_nuxt/BDYDzGT2.js               0.57 kB │ gzip:  0.40 kB\n#11 25.39 node_modules/.cache/nuxt/.nuxt/dist/client/_nuxt/Cf92AYbD.js               0.94 kB │ gzip:  0.56 kB\n#11 25.39 node_modules/.cache/nuxt/.nuxt/dist/client/_nuxt/BeHUuxLI.js               1.12 kB │ gzip:  0.60 kB\n#11 25.39 node_modules/.cache/nuxt/.nuxt/dist/client/_nuxt/DCWT57rh.js               1.16 kB │ gzip:  0.62 kB\n#11 25.39 node_modules/.cache/nuxt/.nuxt/dist/client/_nuxt/5-iaFy1v.js               1.42 kB │ gzip:  0.81 kB\n#11 25.39 node_modules/.cache/nuxt/.nuxt/dist/client/_nuxt/DRgoZ4a1.js               1.99 kB │ gzip:  0.76 kB\n#11 25.39 node_modules/.cache/nuxt/.nuxt/dist/client/_nuxt/DmOJ-VTW.js               2.26 kB │ gzip:  0.98 kB\n#11 25.39 node_modules/.cache/nuxt/.nuxt/dist/client/_nuxt/l1sNY-Nk.js               2.88 kB │ gzip:  1.25 kB\n#11 25.39 node_modules/.cache/nuxt/.nuxt/dist/client/_nuxt/BqskFqFP.js               2.92 kB │ gzip:  0.92 kB\n#11 25.39 node_modules/.cache/nuxt/.nuxt/dist/client/_nuxt/DA1bTKku.js               3.09 kB │ gzip:  1.13 kB\n#11 25.39 node_modules/.cache/nuxt/.nuxt/dist/client/_nuxt/C84e44Jr.js               3.18 kB │ gzip:  1.31 kB\n#11 25.39 node_modules/.cache/nuxt/.nuxt/dist/client/_nuxt/kfNnKW0M.js               3.31 kB │ gzip:  1.51 kB\n#11 25.39 node_modules/.cache/nuxt/.nuxt/dist/client/_nuxt/ZFMDAfrj.js               3.40 kB …4125 tokens truncated…js (23.7 kB) (6.05 kB gzip)\n#11 35.79   ├─ .output/server/chunks/build/review-B5ScTS69.mjs.map (20.4 kB) (4.59 kB gzip)\n#11 35.79   ├─ .output/server/chunks/build/use-display-formatters-CC0sSAvc.mjs (915 B) (428 B gzip)\n#11 35.79   ├─ .output/server/chunks/build/use-display-formatters-CC0sSAvc.mjs.map (1.1 kB) (434 B gzip)\n#11 35.79   ├─ .output/server/chunks/build/use-localized-head-kCfEfn-y.mjs (316 B) (236 B gzip)\n#11 35.79   ├─ .output/server/chunks/build/use-localized-head-kCfEfn-y.mjs.map (299 B) (209 B gzip)\n#11 35.79   ├─ .output/server/chunks/build/users-DGoxw4e3.mjs (12.4 kB) (3.63 kB gzip)\n#11 35.79   ├─ .output/server/chunks/build/users-DGoxw4e3.mjs.map (8.57 kB) (2.27 kB gzip)\n#11 35.79   ├─ .output/server/chunks/nitro/nitro.mjs (213 kB) (53.6 kB gzip)\n#11 35.79   ├─ .output/server/chunks/nitro/nitro.mjs.map (10.7 kB) (1.43 kB gzip)\n#11 35.79   ├─ .output/server/chunks/raw/32f854db.mjs (16.5 kB) (5.98 kB gzip)\n#11 35.79   ├─ .output/server/chunks/raw/32f854db.mjs.map (76 B) (89 B gzip)\n#11 35.79   ├─ .output/server/chunks/raw/5111540e.mjs (16.6 kB) (5.24 kB gzip)\n#11 35.79   ├─ .output/server/chunks/raw/5111540e.mjs.map (76 B) (89 B gzip)\n#11 35.79   ├─ .output/server/chunks/routes/renderer.mjs (15.4 kB) (5.35 kB gzip)\n#11 35.79   ├─ .output/server/chunks/routes/renderer.mjs.map (2.07 kB) (428 B gzip)\n#11 35.79   ├─ .output/server/chunks/virtual/_virtual_spa-template.mjs (94 B) (100 B gzip)\n#11 35.79   ├─ .output/server/chunks/virtual/_virtual_spa-template.mjs.map (88 B) (97 B gzip)\n#11 35.79   ├─ .output/server/chunks/virtual/entry.mjs (384 kB) (93.2 kB gzip)\n#11 35.79   ├─ .output/server/chunks/virtual/entry.mjs.map (20.3 kB) (2.93 kB gzip)\n#11 35.79   ├─ .output/server/chunks/virtual/precomputed.mjs (34.3 kB) (2.89 kB gzip)\n#11 35.79   ├─ .output/server/chunks/virtual/precomputed.mjs.map (181 B) (150 B gzip)\n#11 35.79   ├─ .output/server/chunks/virtual/styles.mjs (690 B) (327 B gzip)\n#11 35.79   ├─ .output/server/chunks/virtual/styles.mjs.map (164 B) (142 B gzip)\n#11 35.79   ├─ .output/server/index.mjs (374 B) (215 B gzip)\n#11 35.79   └─ .output/server/package.json (1.27 kB) (497 B gzip)\n#11 35.79 Σ Total size: 4.2 MB (1.03 MB gzip)\n#11 35.79 [nitro] ✔ You can preview this build using node .output/server/index.mjs\n#11 35.79 │\n#11 35.79 └  ✨ Build complete!\n#11 DONE 36.3s\n\n#12 [runtime 3/4] RUN addgroup -S wordweave && adduser -S -G wordweave -u 10001 wordweave\n#12 CACHED\n\n#13 [runtime 4/4] COPY --from=build --chown=wordweave:wordweave /app/.output ./.output\n#13 DONE 0.1s\n\n#14 exporting to image\n#14 exporting layers\n#14 exporting layers 0.1s done\n#14 writing image sha256:5903591c881165071c1cba08984cfb835854187f5df21a281640b3aacccf4b27 done\n#14 naming to docker.io/library/wordweave-frontend:cr040-dev done\n#14 DONE 0.1s\n\nView build details: docker-desktop://dashboard/build/desktop-linux/desktop-linux/rto7vwk7x49mjqqibv21aertx\n",
+      "output_is_partial": true,
+      "note": "Build tool truncated asset-size output; complete test totals, final success and image ID were observed."
+    },
+    {
+      "command": "CR040_FRONTEND_ORIGIN=http://127.0.0.1:64413 node .planning/milestones/M001/implementation/evidence/cr040/frontend-browser.mjs",
+      "exit_code": 0
+    }
+  ],
+  "diff": {
+    "changed": [
+      "frontend/app/application/shared/models.ts",
+      "frontend/app/infrastructure/http/mappers/index.ts",
+      "frontend/app/infrastructure/http/schemas/common.ts",
+      "frontend/app/infrastructure/http/schemas/generation.ts",
+      "frontend/app/infrastructure/http/schemas/learning.ts",
+      "frontend/app/infrastructure/http/schemas/review.ts",
+      "frontend/app/pages/create.vue",
+      "frontend/app/pages/library/[batchId].vue",
+      "frontend/app/pages/review/[sessionId].vue",
+      "frontend/app/presentation/admin/admin-user-detail-presenter.ts",
+      "frontend/tests/e2e/mock-backend.mjs",
+      "frontend/tests/unit/strict-contracts.test.ts"
+    ],
+    "vue": [
+      {
+        "path": "frontend/app/pages/create.vue",
+        "only_field_rename": true
+      },
+      {
+        "path": "frontend/app/pages/library/[batchId].vue",
+        "only_field_rename": true
+      },
+      {
+        "path": "frontend/app/pages/review/[sessionId].vue",
+        "only_field_rename": true
+      }
+    ]
+  },
+  "sources": [
+    {
+      "path": "frontend/.dockerignore",
+      "sha256": "82233243266574ef6dd8a7608444d35835b1a6684b36b942408cf9691d74d5c6"
+    },
+    {
+      "path": "frontend/.prettierignore",
+      "sha256": "38a58c28356aa40c39e329ee2784fb299df8574b3def4c248090231b7b7a576b"
+    },
+    {
+      "path": "frontend/Dockerfile",
+      "sha256": "9e01d3a443c3e0038aab46c45292d2fb652b5ace7b22519c2400cd8955bcb187"
+    },
+    {
+      "path": "frontend/README.md",
+      "sha256": "391111cb7423c67d4de28bb3225034b01dc3ab389ef61487893f7efa8995c032"
+    },
+    {
+      "path": "frontend/app/app.vue",
+      "sha256": "7ca9a3f2fc1fa5b5cc8fd5cd77cdf23a8e034916a43b9e69537be88a7d07def9"
+    },
+    {
+      "path": "frontend/app/application/admin/plan-policy.ts",
+      "sha256": "3ff0b5e67434c2e62c9e5137e9b6d31415c72a0a12affa7d2b325f58723b1b91"
+    },
+    {
+      "path": "frontend/app/application/admin/user-detail.ts",
+      "sha256": "4fa981a28f37a9cc81d417bd416a7695c88d49828f37967fc1d8d9a509e32ab4"
+    },
+    {
+      "path": "frontend/app/application/admin/user-search.ts",
+      "sha256": "5a864e054cc1269775fcb432aed8b8e70e59a3229d79ea28d6d0c337ff9213b5"
+    },
+    {
+      "path": "frontend/app/application/auth/return-intent.ts",
+      "sha256": "406889f397d3a3237e43d0436637f87df6f6c85288e2cf0577ce32a0711978b9"
+    },
+    {
+      "path": "frontend/app/application/generation/reducer.ts",
+      "sha256": "091d36464a931d83d0682f42ec4a90a6e1cacc4354b85e482092920576d2a770"
+    },
+    {
+      "path": "frontend/app/application/generation/selection.ts",
+      "sha256": "78b21ee2ba605b349031565e9414bbc6c1539df03312434f9a803d27c9cf91be"
+    },
+    {
+      "path": "frontend/app/application/review/range-setup.ts",
+      "sha256": "d1b02550eb0c004952c72931a7cc8f47373303de51468c35a615edaa6160c80e"
+    },
+    {
+      "path": "frontend/app/application/review/topology.ts",
+      "sha256": "f9d203887da304c7d788f4bdb127a2a5cb21160a8e110b937167be1386d884c4"
+    },
+    {
+      "path": "frontend/app/application/shared/failure.ts",
+      "sha256": "8a5a841e35d862e4bde915c6f73281579a11316055a5c32b34928f834e291aad"
+    },
+    {
+      "path": "frontend/app/application/shared/models.ts",
+      "sha256": "4918f4183276df2b10576b5092c8a937f39778dd8398a0fbe95bfff6ae7be78b"
+    },
+    {
+      "path": "frontend/app/application/shared/ports.ts",
+      "sha256": "5a91f7eb9dbf1fb7b2575a5449498e829f59cad3d4590875a4de8ef3523b8e0a"
+    },
+    {
+      "path": "frontend/app/assets/css/application.css",
+      "sha256": "c55af5a1e57d0f099745edfd28dce70b9c9d6185ceae3427a30e0ffec0bc3509"
+    },
+    {
+      "path": "frontend/app/assets/css/theme.css",
+      "sha256": "71a76e41dfb3d4772b56ff5ee9633e01ead6e5beff3d54ae8f2790a01cd2af89"
+    },
+    {
+      "path": "frontend/app/composables/use-application-locale.ts",
+      "sha256": "31d5922c1d594ce4ab5dff77e8fb3dd7e7e97dbfe82c35cd43f243cd9f615042"
+    },
+    {
+      "path": "frontend/app/composables/use-display-formatters.ts",
+      "sha256": "f7b7aa576472c94eeacf041082fed6961c489c0340581ec7c76da995525c469a"
+    },
+    {
+      "path": "frontend/app/composables/use-localized-head.ts",
+      "sha256": "868fa449176665f06ed3eff19f82c2ee5caac1739e3b5f27586fc1e41b94f51a"
+    },
+    {
+      "path": "frontend/app/infrastructure/http/mappers/index.ts",
+      "sha256": "93b7e0386f953a71c4073824ba5a7270c4e4f825b917f80a62eb17ce9a16416e"
+    },
+    {
+      "path": "frontend/app/infrastructure/http/mappers/problem-mapper.ts",
+      "sha256": "a79999327d8a1adad6bfaceca0ec706854ddd1be59170cedeaa7f7d47420c14d"
+    },
+    {
+      "path": "frontend/app/infrastructure/http/mappers/span-mapper.ts",
+      "sha256": "9be41a370a3c67964c32bee2008e4b7deae5488e3af498401d82fbad6c88afe9"
+    },
+    {
+      "path": "frontend/app/infrastructure/http/repositories/api-repository.ts",
+      "sha256": "dc720e49b57b1dda8d310c44eda83e8dd1217ea50b50609de3eaf5977881a1d7"
+    },
+    {
+      "path": "frontend/app/infrastructure/http/schemas/admin.ts",
+      "sha256": "089b5c5255984886fd4c010f27d080cd59cec28f40ec2ca0fdd8247aab73ac90"
+    },
+    {
+      "path": "frontend/app/infrastructure/http/schemas/common.ts",
+      "sha256": "6ada05cd36b90ce4ae79375121e0e719bf869eb0050aa77ec7dfc732952e8f07"
+    },
+    {
+      "path": "frontend/app/infrastructure/http/schemas/generation.ts",
+      "sha256": "a1bce97047106e322411d54d88a89651e096b3c1b99c05670be67933e9c0e356"
+    },
+    {
+      "path": "frontend/app/infrastructure/http/schemas/learning.ts",
+      "sha256": "c1742ccf0e4a6f13f3baa062b931acbbd9003f581d5dc2604aba2adb82204a57"
+    },
+    {
+      "path": "frontend/app/infrastructure/http/schemas/review.ts",
+      "sha256": "c8f34f844400a75adf943d4eea910ce2dd935c0953b31ce505070f63e09403ec"
+    },
+    {
+      "path": "frontend/app/infrastructure/http/schemas/session.ts",
+      "sha256": "e83d7eb7d8f35f02c6f49355222d4590bcfbe125ff255fe97ca4994c41f7a60f"
+    },
+    {
+      "path": "frontend/app/infrastructure/http/transports/transport.ts",
+      "sha256": "6f3c433efdbc98a0c02031326aec806bc7751c504e8bfbe52746955f357d8627"
+    },
+    {
+      "path": "frontend/app/layouts/admin.vue",
+      "sha256": "0d6952d43c5371ee578dcf2a429826b792d966a8e5b89171b8847a1bad6c0397"
+    },
+    {
+      "path": "frontend/app/layouts/default.vue",
+      "sha256": "9e0f796b6c06bbd1b9ab8c05db16afd0b3874c733572adec595c3a9f759f16d5"
+    },
+    {
+      "path": "frontend/app/middleware/admin.ts",
+      "sha256": "cfbbdb81b4ba6dfd2937437bfd4a28dde524b8425210e26c500940e238ca2638"
+    },
+    {
+      "path": "frontend/app/middleware/guest.ts",
+      "sha256": "945bd01a854b16b978608b6ad65390929642cf7ce6920e3bbc0acf4bcd440e19"
+    },
+    {
+      "path": "frontend/app/middleware/learner.ts",
+      "sha256": "39ab2ed5e77ebad5cf563130f41ba78983ab429958c732a6565296fb5f1bdc9e"
+    },
+    {
+      "path": "frontend/app/pages/account.vue",
+      "sha256": "baa32328bcd00f7309f70fa8bc834581046c11e000bbba1fc46fc719b6633583"
+    },
+    {
+      "path": "frontend/app/pages/admin/models.vue",
+      "sha256": "6e586d92b87dac15acf1cf65983521f7e56fb47f0ad25fb9300989fab82b0dc2"
+    },
+    {
+      "path": "frontend/app/pages/admin/plans.vue",
+      "sha256": "9cb240f50b7229abb35c94f1cd7caba12217a41cc2ab0aba5d2334c4ebde90d4"
+    },
+    {
+      "path": "frontend/app/pages/admin/users/[userId]/batches/[batchId].vue",
+      "sha256": "78865898dabd4a9ed60d19270643631e5a1b89a595cd85bab2d5321bdf07a9da"
+    },
+    {
+      "path": "frontend/app/pages/admin/users/[userId]/index.vue",
+      "sha256": "0ea648175de3807a30078a155d8152f61b854c3de7d16c17a295b361f87bcc43"
+    },
+    {
+      "path": "frontend/app/pages/admin/users/index.vue",
+      "sha256": "31a2cc2a14f174448f24f207bae890d343bd2b70630925f6275dfa66d5a97525"
+    },
+    {
+      "path": "frontend/app/pages/create.vue",
+      "sha256": "8675b54daa840dcef724c7e11a144b6693f67d17836f25fc4ff440a0641b8aee"
+    },
+    {
+      "path": "frontend/app/pages/index.vue",
+      "sha256": "a87d609df53f3a482e002db75ab1aff86d0afeeef8d2766cc1510dc5f6d1625d"
+    },
+    {
+      "path": "frontend/app/pages/library/[batchId].vue",
+      "sha256": "5caf79f868d5aae58d355b3140563ea45d1e0a04c40f42b12f9853ec23a5ae3c"
+    },
+    {
+      "path": "frontend/app/pages/library/index.vue",
+      "sha256": "a0d359109412323508c21936dcbf913619d3081b54899fddd8ba5c948458f1af"
+    },
+    {
+      "path": "frontend/app/pages/login.vue",
+      "sha256": "cdeee1dc6471f452989abad10c9b3b36999ddb43b4f6da6d29bea9a6276e79a4"
+    },
+    {
+      "path": "frontend/app/pages/register.vue",
+      "sha256": "c8278a0bde5e5b01864c58d62a7ca32c895769e2caadd1a7012c387622b2ffe7"
+    },
+    {
+      "path": "frontend/app/pages/review/[sessionId].vue",
+      "sha256": "094efbb67c6c0a794f30543202446beec6f453e21d426245db1cf3109b38945a"
+    },
+    {
+      "path": "frontend/app/pages/review/index.vue",
+      "sha256": "d4c1f43b252267bf08a63c0d35ac367f4db968ddfcab0f626cb3c39c6b643c78"
+    },
+    {
+      "path": "frontend/app/plugins/application-ports.client.ts",
+      "sha256": "8a4c90975016c44386c3dff5233c7319d74274b2744da970d0e0548007cb58c8"
+    },
+    {
+      "path": "frontend/app/plugins/application-ports.server.ts",
+      "sha256": "3bd84e07c17cf07920bf3de470abdcd4f1400ab9a9fa803c92d80cb540f481dd"
+    },
+    {
+      "path": "frontend/app/presentation/admin/admin-plan-presenter.ts",
+      "sha256": "28bc8d282948d6b87cc9af49056ad4589fcc3fdb9a2f32c00f17dd496b611e8b"
+    },
+    {
+      "path": "frontend/app/presentation/admin/admin-user-detail-presenter.ts",
+      "sha256": "50e50ea00f67c70f72bf10085d77e63e2b867aefd5286ad6131e34e23cab8c92"
+    },
+    {
+      "path": "frontend/app/presentation/admin/admin-user-search-presenter.ts",
+      "sha256": "ea06055f5808ee75a2fb78db700c9dce11b96d91d95a425dd554a8670ec942ea"
+    },
+    {
+      "path": "frontend/app/presentation/auth/auth-gate-presenter.ts",
+      "sha256": "1ddfa8f0ff604d45bc1346f21da6620c81f0dfdec55d71f8f763e5f7c8d4641c"
+    },
+    {
+      "path": "frontend/app/presentation/components/AdminBatchReaderDialog.vue",
+      "sha256": "f14146899947a503ab0d7ece98d743cce94136509742a3142a70bdbbfd608d24"
+    },
+    {
+      "path": "frontend/app/presentation/components/AdminUserSearchForm.vue",
+      "sha256": "26b284afcc3e5848af03759c3d9e459f82f1c1eda736a47fb86fa92099bab074"
+    },
+    {
+      "path": "frontend/app/presentation/components/AppDialog.vue",
+      "sha256": "dc59f35c2a951d305a92599133ff1cc57c520336abc18056effe756d00f55047"
+    },
+    {
+      "path": "frontend/app/presentation/components/AppError.vue",
+      "sha256": "8ac6bce69445de359b47e707d9fd81668734eaf6e72cc24c991bba9feb7630de"
+    },
+    {
+      "path": "frontend/app/presentation/components/AppHeader.vue",
+      "sha256": "b1aae3cd7352d305a0b9b35e2b8073610e618aa77923176ad365c237ad472260"
+    },
+    {
+      "path": "frontend/app/presentation/components/AppIcon.vue",
+      "sha256": "28e413dc0a378ca05935ab459fe9adb77c5badb04f567b0d59203496e40d3347"
+    },
+    {
+      "path": "frontend/app/presentation/components/AuthGate.vue",
+      "sha256": "7300a42cc5a908c02b69587cfa39b4861159c5d5a034bf9a126f6a6ec783f22b"
+    },
+    {
+      "path": "frontend/app/presentation/components/BrandMark.vue",
+      "sha256": "e41a0f9938450fcfead7d37f10b386415544d2994bc33d6062f47e729758de5a"
+    },
+    {
+      "path": "frontend/app/presentation/components/LearnerPageBoundary.vue",
+      "sha256": "e897bd9a4b43bd34fdf537b76c5162640a8c26df8e9238640d4f8f54d361351e"
+    },
+    {
+      "path": "frontend/app/presentation/components/LocaleSwitch.vue",
+      "sha256": "aadeb140d0a4ce0181b71b865951a028c06c3155e970e03eff6ca2559d8dead7"
+    },
+    {
+      "path": "frontend/app/presentation/components/review/PassageClozeQuestion.vue",
+      "sha256": "78ee275096d53264bef16357d787d129939cd55a84270e836d06e97aac8ca796"
+    },
+    {
+      "path": "frontend/app/presentation/components/review/ReviewRangeSetup.vue",
+      "sha256": "fdfd1c5f7ade930ee92e991c6dc6b42b4e29a45097960978f93cb5df0822652f"
+    },
+    {
+      "path": "frontend/app/presentation/controllers/admin-user-detail.ts",
+      "sha256": "e55c445fb683505f82ce3f40110e1da84582eb97e835d5ed6fc859931ca160d9"
+    },
+    {
+      "path": "frontend/app/presentation/controllers/admin-user-search.ts",
+      "sha256": "dc28c9279cabff516000d1845a3e77fbf39be3229adaa94714867440680925b0"
+    },
+    {
+      "path": "frontend/app/presentation/controllers/learner-access.ts",
+      "sha256": "7419de0664abd5bcd4f52b5e7b369ecdff60fc3383155df982d96b5793376e5f"
+    },
+    {
+      "path": "frontend/app/presentation/controllers/review-setup.ts",
+      "sha256": "920fe2d745dbc851bba49d0f61d7d270f0899911b97564c86dc1a6866e8d7c86"
+    },
+    {
+      "path": "frontend/app/presentation/library/library-page-presenter.ts",
+      "sha256": "cf569176ac959538a432be2b109bd9a030d55dc1c3f3dfccdf1f2d52c43e714d"
+    },
+    {
+      "path": "frontend/app/presentation/review/cloze-group-style-registry.ts",
+      "sha256": "1c2cc0071e412f27eafd0a7256c8aa173f0b9cb5ef0ebf92b2fdebe3b5fed657"
+    },
+    {
+      "path": "frontend/app/presentation/review/passage-cloze-presenter.ts",
+      "sha256": "8ae9ed1a029aaf394301d1113a378f3ae7e74040eeeba85231c20f56334ef7b0"
+    },
+    {
+      "path": "frontend/app/presentation/review/review-setup-presenter.ts",
+      "sha256": "307a49c5dac10e5215d396e230cca66de05dd5d46c36bd44c6d3aaa419437639"
+    },
+    {
+      "path": "frontend/app/presentation/review/review-summary-presenter.ts",
+      "sha256": "5596bc3bc893810a34826aa0032a0e20b0aa8c00e48ec52fd1bd4cd9f82ae0ca"
+    },
+    {
+      "path": "frontend/app/runtime/loaders/page-loader.ts",
+      "sha256": "c277a9c174bd5f28ea7b7081450d7f8899990d21eacd76f94bc56dc5f9e5a1d8"
+    },
+    {
+      "path": "frontend/app/runtime/session/admin-navigation.ts",
+      "sha256": "510afbb58c99b9f59ca99228ebf355e933d6130f6d43c5c49594beced85e9120"
+    },
+    {
+      "path": "frontend/app/runtime/session/private-state.ts",
+      "sha256": "a405cd95b94f1d7ab7e19cca7cb487b2c86c9e7b8411f380e37ca6095b582882"
+    },
+    {
+      "path": "frontend/app/runtime/session/token-vault.ts",
+      "sha256": "e7b79d2be50a67c382b11c9c3789c6557db162952e7670bdeb1c7b5222a26544"
+    },
+    {
+      "path": "frontend/app/runtime/stores/account.ts",
+      "sha256": "6e913bffd238eb24708857f8f1840788f6d38f854a9f1cac54f126555ed6a6c3"
+    },
+    {
+      "path": "frontend/app/runtime/stores/admin-user-detail.ts",
+      "sha256": "9ec285da02f75417a1d37844d5a24d399fed5f9a2816726c6872460791222368"
+    },
+    {
+      "path": "frontend/app/runtime/stores/admin.ts",
+      "sha256": "0b2d8e24d6804fe6ac0b45a67832e361c0c277b14fa1c1a75fa7972824fe19d5"
+    },
+    {
+      "path": "frontend/app/runtime/stores/generation.ts",
+      "sha256": "02afcdede8c6f8cdfd3f112160942451f4a5707a990445c6553fb01279424bfd"
+    },
+    {
+      "path": "frontend/app/runtime/stores/library.ts",
+      "sha256": "a0a7c47b10a1a09861b8397a171ebf970d168649aa42e09882c2e5963d9417ba"
+    },
+    {
+      "path": "frontend/app/runtime/stores/private-state.ts",
+      "sha256": "71b5d1583280be70b13dd421c4dd2d9de6ea96de19d97996ab0162bdc9cb45ca"
+    },
+    {
+      "path": "frontend/app/runtime/stores/review-setup.ts",
+      "sha256": "e27ed4a1a203edf5e6afb03c4149b2b497561b9523b0c1fb229d4f1ca3d73264"
+    },
+    {
+      "path": "frontend/app/runtime/stores/review.ts",
+      "sha256": "58624f4d2bfa5a37475170d29f954f91270167798a959217c5a9f88a561675a6"
+    },
+    {
+      "path": "frontend/app/runtime/stores/session.ts",
+      "sha256": "7eb3f621a7e4673588481b75d266cd5a55d51a40ad6163151a38491af12c0844"
+    },
+    {
+      "path": "frontend/app/types/nuxt.d.ts",
+      "sha256": "115eb9e6b809fff6dd956591c5d6557686beb4c9ba03ddb9f89d363d16d57379"
+    },
+    {
+      "path": "frontend/dependency-cruiser.cjs",
+      "sha256": "a69ee7d8d3f20bf747672a63a7344615feec0873c80fd7d73e6335291cdd2241"
+    },
+    {
+      "path": "frontend/eslint.config.mjs",
+      "sha256": "6196401e8dc1b5089a07ec6c0c07d7fa4a769c9a42470ea97e19d36d997057f1"
+    },
+    {
+      "path": "frontend/i18n/locales/en-US.json",
+      "sha256": "2076001f06b228a4629c9052d761fba75b176ab61470fdb18ea51fea16c0995e"
+    },
+    {
+      "path": "frontend/i18n/locales/zh-CN.json",
+      "sha256": "454b570fbf82bba01480715d6d6ffebdb1cc0bfbfe9df022d30016473401eccd"
+    },
+    {
+      "path": "frontend/nuxt.config.ts",
+      "sha256": "79ff48fd004b22e14456d2117552d85c7b7b325259d906c3298f50c56d768a3c"
+    },
+    {
+      "path": "frontend/package.json",
+      "sha256": "87f255525fda44fdafab63f6cda842e84403fdb51c740dc3e1da5b2d2b76fefa"
+    },
+    {
+      "path": "frontend/playwright.config.ts",
+      "sha256": "6bee8fa79e8be84ab39cc0613a03437cf287cea939defab59891e474e22e36a9"
+    },
+    {
+      "path": "frontend/pnpm-lock.yaml",
+      "sha256": "30755e9b138d5d5c7adcf9eda4636cbbcbc0f6c505558b2bd94a8eecf7f5872e"
+    },
+    {
+      "path": "frontend/tests/contracts/v1.4/group-limited.json",
+      "sha256": "0aa1c6b5a6c6b350bf95e5f26f2679e362be928d9620858a538cfe3cecf9148b"
+    },
+    {
+      "path": "frontend/tests/contracts/v1.4/group-unlimited.json",
+      "sha256": "a67d08d7868961bbfc1731da80c01b1a2075ca1970c0f1568bd6d93a482661f3"
+    },
+    {
+      "path": "frontend/tests/contracts/v1.4/group-zero.json",
+      "sha256": "fa421c99039775748218204651520983d8da195049df089a3454ef83d4e0c99b"
+    },
+    {
+      "path": "frontend/tests/contracts/v1.4/manifest.json",
+      "sha256": "40d0b9fab2c76bc239caf6c91dc527857a49abde4298aa05ae4471d0c2ce7d9a"
+    },
+    {
+      "path": "frontend/tests/contracts/v1.4/user-admin.json",
+      "sha256": "a0cde5a5bb116453be060b6b56ea0710d864f5ccd8eb235f206b3dfe3d42cb29"
+    },
+    {
+      "path": "frontend/tests/contracts/v1.4/user-limited.json",
+      "sha256": "85563f1d9ce1671e24e8c02bc3805e4d4867c7c37cdf969b704fb90e949d9326"
+    },
+    {
+      "path": "frontend/tests/contracts/v1.4/user-unlimited.json",
+      "sha256": "104b47974f391ead75ee43a262bc5b404d931daef47852356db7f84f559c9ab6"
+    },
+    {
+      "path": "frontend/tests/contracts/v1.4/user-zero.json",
+      "sha256": "94018a8d690f340cdab8d8b70ba5b766f62a8aa0c163f0d16a61f980c76edf6b"
+    },
+    {
+      "path": "frontend/tests/e2e/application-smoke.spec.ts",
+      "sha256": "30843ab169d72e59c15090e79d48bcfefd6f28389a17263b61a2411ff72c7fbc"
+    },
+    {
+      "path": "frontend/tests/e2e/cr029-cr033.spec.ts",
+      "sha256": "6c96cacd244eeef5bf5747464d47fcae3dac16fb8c794acd8bc11b0aa7470747"
+    },
+    {
+      "path": "frontend/tests/e2e/cr030-073.spec.ts",
+      "sha256": "09c7a691582bdf716fbf0f11a3d1af943cf6ff583c0c023ad916141be58c8cb1"
+    },
+    {
+      "path": "frontend/tests/e2e/cr030-cr035-075.spec.ts",
+      "sha256": "2447d37143fb2c388b494e84ad8642d14ff480ecd021e55a95d0740b47151cee"
+    },
+    {
+      "path": "frontend/tests/e2e/cr034.spec.ts",
+      "sha256": "77636ddd902bd1591741fda158d5e2afba7e0d40f4c3c21e80c7c200f04e462b"
+    },
+    {
+      "path": "frontend/tests/e2e/cr037-auth-account.spec.ts",
+      "sha256": "f561c81cf2bbd4a9478009841d447ee3dde7052687b7b3807c1c5ce108468c94"
+    },
+    {
+      "path": "frontend/tests/e2e/mock-backend.mjs",
+      "sha256": "8cc162df7e8639e3247810896706032201266769d4d2cd585c4542092f5cf5f8"
+    },
+    {
+      "path": "frontend/tests/integration/cr033-paired-smoke.mjs",
+      "sha256": "45526f2025b8eacfbda5e7ddb47d5c1441861b04ba090af1f45914e8e5a8d96d"
+    },
+    {
+      "path": "frontend/tests/unit/account-password-error.test.ts",
+      "sha256": "1ed6595371aa16dd04499122234f90ec171665590a5049b0599e9ecf5ea24822"
+    },
+    {
+      "path": "frontend/tests/unit/admin-approved-copy.test.ts",
+      "sha256": "7277cf7d614454e64e2e06c7f0cf02001a5ee941b654eacc669c1c0949327be8"
+    },
+    {
+      "path": "frontend/tests/unit/admin-detail-state.test.ts",
+      "sha256": "032582b382f21a3e9a2a60506c2ed6b89a9afdf0b3d6122266a62b3d913d72b0"
+    },
+    {
+      "path": "frontend/tests/unit/admin-layout-content.test.ts",
+      "sha256": "1928dc30a2245cd4c45e73e832718ee8ca85de740a88a24cb82f057dc02827eb"
+    },
+    {
+      "path": "frontend/tests/unit/admin-plan-policy.test.ts",
+      "sha256": "c75a231d9cb94c6a9df3008536510e7dffcd9887c7fd6623a3c41d6807e1f3cd"
+    },
+    {
+      "path": "frontend/tests/unit/admin-quota-contract.test.ts",
+      "sha256": "bbdc3d118c5f832102cf4ac0794b341fede91cf324691bd98a493deb1b50aa80"
+    },
+    {
+      "path": "frontend/tests/unit/admin-user-position.test.ts",
+      "sha256": "ec1d496b485486732830072cc60df67cdbd057198d325bdae7ef8faabec94594"
+    },
+    {
+      "path": "frontend/tests/unit/admin-user-search.test.ts",
+      "sha256": "f2e2e07521c5a8a1afb8a3269cc5bd797ca1b0c4254218b15deb6cd305503eb8"
+    },
+    {
+      "path": "frontend/tests/unit/auth-card-design.test.ts",
+      "sha256": "e4b2351737edb075e29fb8e21d2f020a0b13b2febd29f66ab76ce17228ad1370"
+    },
+    {
+      "path": "frontend/tests/unit/auth-reader-presenters.test.ts",
+      "sha256": "777667fefb87cf25aa84cf54a77e28a4bd842f1721a8c97fe2ee15c305e78147"
+    },
+    {
+      "path": "frontend/tests/unit/entry-meaning-contract.test.ts",
+      "sha256": "c3221e26467720829cb032178cf652a7e48ad4be3e7c651eff183dda44436eee"
+    },
+    {
+      "path": "frontend/tests/unit/generation-reducer.test.ts",
+      "sha256": "53961986e59e92937e493b6d6e700fc94182ebaded10bd06eb585854d7f986d1"
+    },
+    {
+      "path": "frontend/tests/unit/generation-selection.test.ts",
+      "sha256": "c4f6869e07194bba80a9718001d578712c9f083dcd7afed7c57a5eb80b76cca0"
+    },
+    {
+      "path": "frontend/tests/unit/library-page-presenter.test.ts",
+      "sha256": "3163c5bb22b34b8dc8c548da3f49a16459756a5940e01697f9e56c677dced943"
+    },
+    {
+      "path": "frontend/tests/unit/passage-cloze-presenter.test.ts",
+      "sha256": "f5cf5a21f1ffd0075a8a133c5fcd9eecd6662bd08e4ceeb28ab2742aa36a4a5c"
+    },
+    {
+      "path": "frontend/tests/unit/private-session-state.test.ts",
+      "sha256": "f685ea839c2035ab0f0a2dea0eb3742a1bd6395ee4f278aa6c993ed7fcd39cf5"
+    },
+    {
+      "path": "frontend/tests/unit/return-intent.test.ts",
+      "sha256": "1b46a2ab0210ee1d6fd55bf63df1757cb87b02021c7a54a1fcd9a2f666a85faa"
+    },
+    {
+      "path": "frontend/tests/unit/review-range-setup.test.ts",
+      "sha256": "a27336140ddc59828cae778c64c256d06cfc8e7944482446a6725cf117dc7b84"
+    },
+    {
+      "path": "frontend/tests/unit/review-setup-presenter.test.ts",
+      "sha256": "ac2ba94fccfdd6b205eae32238e46b19c661d2cd2a2f600eb6f3816356211588"
+    },
+    {
+      "path": "frontend/tests/unit/review-summary-presenter.test.ts",
+      "sha256": "b729c1a7731d3b57b0de668cbbc1065b3799a1ce0da678a91a82f690e508cdac"
+    },
+    {
+      "path": "frontend/tests/unit/span-mapper.test.ts",
+      "sha256": "b8d5067fcd94078952150e3d3f0b2fffb9ba3ac0b35a92aaa973cd2931f14455"
+    },
+    {
+      "path": "frontend/tests/unit/strict-contracts.test.ts",
+      "sha256": "87fac382e4b292cb282d6bc6506c7fa155d4e593eda6666648b2cb534c538fea"
+    },
+    {
+      "path": "frontend/tests/unit/token-vault.test.ts",
+      "sha256": "918dc3e86f6c740fc268e37326c1dcd91ca0f34efa7450ed92a2e39d11455546"
+    },
+    {
+      "path": "frontend/tsconfig.json",
+      "sha256": "8274261c35abb8281479d5c4ac5647047d1ac203a08040a72ce137a036ef5af7"
+    },
+    {
+      "path": "frontend/vitest.config.ts",
+      "sha256": "5035c7e4aedc840606f02ba4c7cacb92eb13862249032d6a26bd8d3f1c07811c"
+    }
+  ],
+  "limits": [
+    "Synthetic mock backend, not actual model quality",
+    "No UAT deployment or actual database operation",
+    "No full-site visual regression",
+    "No CSS, locale, layout, dependency or authentication implementation change"
+  ]
+}

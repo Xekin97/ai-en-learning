@@ -1,0 +1,75 @@
+{
+  "date": "2026-09-07T07:35:26Z",
+  "agent": "qa-quinn",
+  "model": {
+    "id": "01a07ab4-dfe9-7fd6-8022-285d685763d0",
+    "display_name": "GPT-oss",
+    "provider_model_id": "openai/gpt-oss-safeguard-20b"
+  },
+  "verdict": "LIMITED_MIXED",
+  "sample_count": 2,
+  "samples": [
+    {
+      "id": "AQ090-S1",
+      "terminal": "generation.validated",
+      "quality_verdict": "PASS_WITH_RESERVATIONS",
+      "word_count": 118,
+      "minimum_words": 100,
+      "strengths": [
+        "Coherent workplace discussion with all five requested entries represented and Chinese contextual meanings present.",
+        "Meanings and hint phrases are concise and broadly usable; three Chinese tags and the medium minimum are satisfied."
+      ],
+      "reservations": [
+        "eventually deteriorate team cohesion uses deteriorate transitively and is awkward for a vocabulary-learning model; team cohesion could deteriorate would be more idiomatic.",
+        "perceive each other's concerns and Employees should perceive changes are grammatical but stilted compared with recognize or notice in these contexts.",
+        "The passage repeats the verb argued, deteriorate is glossed only as 变差, and the tag 词汇 is generic rather than topical."
+      ],
+      "rubric": {
+        "grammar_and_naturalness": "PASS_WITH_RESERVATIONS",
+        "coherence_and_scenario": "PASS",
+        "all_five_targets": "PASS",
+        "meaning_language_and_quality": "PASS_WITH_RESERVATION",
+        "hints": "PASS_WITH_RESERVATION",
+        "tags": "PASS_WITH_RESERVATION",
+        "minimum_words": "PASS",
+        "no_full_or_hint_translation": "PASS"
+      }
+    },
+    {
+      "id": "AQ090-S2",
+      "terminal": "generation.failed",
+      "quality_verdict": "STRUCTURAL_FAIL_PASSAGE_ONLY_MIXED",
+      "observable_passage_word_count_approx": 233,
+      "minimum_words": 200,
+      "strengths": [
+        "The visible passage is coherent, remains in a news-style environmental-policy scenario, and exceeds the long minimum.",
+        "sustainable, prevalent, ambiguous, and coherent are used intelligibly."
+      ],
+      "failures_and_reservations": [
+        "The deterministic validator rejected zero-based target 2, vulnerable, as not covered; the passage supplied the noun derivative vulnerability, which the current allowed-form rules did not accept.",
+        "The full candidate meanings, hints, tags, and target metadata were not exposed, so those dimensions cannot be evaluated.",
+        "The World Environmental Forum event in Geneva is a named claim not fact-checked in this bounded test; the passage is only an AI-generated learning example, not verified news.",
+        "The summit's main agenda highlighted is slightly awkward wording."
+      ],
+      "rubric": {
+        "grammar_and_naturalness": "PASS_WITH_RESERVATION_FOR_VISIBLE_PASSAGE",
+        "coherence_and_scenario": "PASS_FOR_VISIBLE_PASSAGE",
+        "all_five_targets": "FAIL_CURRENT_ALLOWED_FORM_COVERAGE",
+        "meaning_language_and_quality": "NOT_EVALUABLE",
+        "hints": "NOT_EVALUABLE",
+        "tags": "NOT_EVALUABLE",
+        "minimum_words": "PASS_FOR_VISIBLE_PASSAGE",
+        "no_full_or_hint_translation": "NOT_EVALUABLE"
+      }
+    }
+  ],
+  "bounded_comparison_to_088": {
+    "same_s1": "GPT-oss safeguard produced a structurally valid Chinese-resource batch where the QA088 DeepSeek candidate failed validation, but its English teaching prose has more noticeable collocation issues. The hidden QA088 S1 meanings prevent a target-resource quality comparison.",
+    "same_s2": "GPT-oss safeguard failed target coverage where the QA088 DeepSeek sample validated and saved. Both visible news passages contain named real-world-style claims that were not fact-checked and must remain learning examples.",
+    "latency_observation_only": "The two GPT-oss requests completed in 2.980s and 4.077s versus the matching QA088 requests in 32.1s and 80.472s; two samples do not establish stable latency or quality superiority."
+  },
+  "provider_usage": "unknown",
+  "provider_cost": "unknown",
+  "upstream_actual_model": "not_observed",
+  "qa_agent_actual_model_and_usage": "not_observed"
+}

@@ -1,0 +1,414 @@
+{
+  "date": "2026-09-08T07:04:13.579Z",
+  "agent": "qa-quinn",
+  "origin": "http://localhost:6001",
+  "scope": "Single-viewport non-destructive deployment smoke, not full-site regression or real-model quality",
+  "counts": {
+    "PASS": 36,
+    "FAIL": 1,
+    "ERROR": 0
+  },
+  "checks": [
+    {
+      "id": "Deployment data baseline retained",
+      "status": "PASS",
+      "actual": true,
+      "expected": true
+    },
+    {
+      "id": "/health/live proxy status",
+      "status": "PASS",
+      "actual": 200,
+      "expected": 200
+    },
+    {
+      "id": "/health/ready proxy status",
+      "status": "PASS",
+      "actual": 200,
+      "expected": 200
+    },
+    {
+      "id": "/ proxy status",
+      "status": "PASS",
+      "actual": 200,
+      "expected": 200
+    },
+    {
+      "id": "Home server-rendered brand",
+      "status": "PASS",
+      "actual": true,
+      "expected": true
+    },
+    {
+      "id": "/ HTTP/render/app errors/overflow",
+      "status": "PASS",
+      "actual": [
+        200,
+        0,
+        true
+      ],
+      "expected": [
+        200,
+        0,
+        true
+      ]
+    },
+    {
+      "id": "/create HTTP/render/app errors/overflow",
+      "status": "PASS",
+      "actual": [
+        200,
+        0,
+        true
+      ],
+      "expected": [
+        200,
+        0,
+        true
+      ]
+    },
+    {
+      "id": "Frozen lexicon search",
+      "status": "PASS",
+      "actual": true,
+      "expected": true
+    },
+    {
+      "id": "Guest generation options readable",
+      "status": "PASS",
+      "actual": true,
+      "expected": true
+    },
+    {
+      "id": "/review HTTP/render/app errors/overflow",
+      "status": "PASS",
+      "actual": [
+        200,
+        0,
+        true
+      ],
+      "expected": [
+        200,
+        0,
+        true
+      ]
+    },
+    {
+      "id": "/review guest stays on intended route",
+      "status": "PASS",
+      "actual": "/review",
+      "expected": "/review"
+    },
+    {
+      "id": "/review sign-in intent visible",
+      "status": "PASS",
+      "actual": true,
+      "expected": true
+    },
+    {
+      "id": "/library HTTP/render/app errors/overflow",
+      "status": "PASS",
+      "actual": [
+        200,
+        0,
+        true
+      ],
+      "expected": [
+        200,
+        0,
+        true
+      ]
+    },
+    {
+      "id": "/library guest stays on intended route",
+      "status": "PASS",
+      "actual": "/library",
+      "expected": "/library"
+    },
+    {
+      "id": "/library sign-in intent visible",
+      "status": "PASS",
+      "actual": true,
+      "expected": true
+    },
+    {
+      "id": "Administrator original credentials accepted",
+      "status": "PASS",
+      "actual": 200,
+      "expected": 200
+    },
+    {
+      "id": "/admin/models HTTP/render/app errors/overflow",
+      "status": "PASS",
+      "actual": [
+        200,
+        0,
+        true
+      ],
+      "expected": [
+        200,
+        0,
+        true
+      ]
+    },
+    {
+      "id": "All preserved model rows visible",
+      "status": "PASS",
+      "actual": 3,
+      "expected": 3
+    },
+    {
+      "id": "Admin read-only user lookup",
+      "status": "PASS",
+      "actual": true,
+      "expected": true
+    },
+    {
+      "id": "Own temporary login session logout",
+      "status": "PASS",
+      "actual": [
+        204,
+        0,
+        null,
+        "no-store"
+      ],
+      "expected": [
+        204,
+        0,
+        null,
+        "no-store"
+      ]
+    },
+    {
+      "id": "Learner original credentials accepted",
+      "status": "PASS",
+      "actual": 200,
+      "expected": 200
+    },
+    {
+      "id": "/library HTTP/render/app errors/overflow",
+      "status": "PASS",
+      "actual": [
+        200,
+        0,
+        true
+      ],
+      "expected": [
+        200,
+        0,
+        true
+      ]
+    },
+    {
+      "id": "/create HTTP/render/app errors/overflow",
+      "status": "PASS",
+      "actual": [
+        200,
+        0,
+        true
+      ],
+      "expected": [
+        200,
+        0,
+        true
+      ]
+    },
+    {
+      "id": "Learner sees existing enabled real models",
+      "status": "PASS",
+      "actual": [
+        "01a07a8a-b8d6-739a-ac65-cb37120e3ac4",
+        "01a07ab4-dfe9-7fd6-8022-285d685763d0"
+      ],
+      "expected": [
+        "01a07a8a-b8d6-739a-ac65-cb37120e3ac4",
+        "01a07ab4-dfe9-7fd6-8022-285d685763d0"
+      ]
+    },
+    {
+      "id": "Learner permitted to generate without submitting",
+      "status": "PASS",
+      "actual": true,
+      "expected": true
+    },
+    {
+      "id": "Live vocabulary dropdown rendered",
+      "status": "FAIL",
+      "actual": false,
+      "expected": true
+    },
+    {
+      "id": "Own temporary login session logout",
+      "status": "PASS",
+      "actual": [
+        204,
+        0,
+        null,
+        "no-store"
+      ],
+      "expected": [
+        204,
+        0,
+        null,
+        "no-store"
+      ]
+    },
+    {
+      "id": "No browser runtime errors",
+      "status": "PASS",
+      "actual": [],
+      "expected": []
+    },
+    {
+      "id": "No unexpected mutation attempts",
+      "status": "PASS",
+      "actual": [],
+      "expected": []
+    },
+    {
+      "id": "No generation/probe requests",
+      "status": "PASS",
+      "actual": [],
+      "expected": []
+    },
+    {
+      "id": "All scoped public data preserved",
+      "status": "PASS",
+      "actual": true,
+      "expected": true
+    },
+    {
+      "id": "Preserved password and provider credential material",
+      "status": "PASS",
+      "actual": true,
+      "expected": true
+    },
+    {
+      "id": "Original sessions retained; own new sessions removed",
+      "status": "PASS",
+      "actual": true,
+      "expected": true
+    },
+    {
+      "id": "No real generation or model configuration change",
+      "status": "PASS",
+      "actual": true,
+      "expected": true
+    },
+    {
+      "id": "Candidate pair remains deployed",
+      "status": "PASS",
+      "actual": [
+        "sha256:fd251e7439aad8e058656e2751ed84f40715fec570a872da53542688a6dd6904",
+        "sha256:ab12e7dec0a6a8beb55df2ec6a8174d01d288681215c1108cec997e6f99f8eee"
+      ],
+      "expected": [
+        "sha256:fd251e7439aad8e058656e2751ed84f40715fec570a872da53542688a6dd6904",
+        "sha256:ab12e7dec0a6a8beb55df2ec6a8174d01d288681215c1108cec997e6f99f8eee"
+      ]
+    },
+    {
+      "id": "All services healthy",
+      "status": "PASS",
+      "actual": [
+        "healthy",
+        "healthy",
+        "healthy",
+        "healthy"
+      ],
+      "expected": [
+        "healthy",
+        "healthy",
+        "healthy",
+        "healthy"
+      ]
+    },
+    {
+      "id": "Non-backend containers unchanged",
+      "status": "PASS",
+      "actual": true,
+      "expected": true
+    }
+  ],
+  "requestSummary": {
+    "browserAPIRequests": 9,
+    "forbiddenMutationAttempts": 0,
+    "realModelCalls": 0,
+    "newLoginSessions": 2,
+    "remainingNewLoginSessions": 0
+  },
+  "dataBefore": {
+    "counts": {
+      "accounts": 591,
+      "sessions": 598,
+      "batches": 22,
+      "models": 3,
+      "runs": 90,
+      "active_runs": 0,
+      "drafts": 0,
+      "claims": 0,
+      "migration_count": 6,
+      "latest_migration": "0006_hint_occurrences_enforce.sql"
+    },
+    "digests": {
+      "accounts": "e890a6caa0d9b98ab5cb30bc602d19ae",
+      "learning_batches": "46345fcbb9248da966e03520a2443d94",
+      "batch_targets": "6ae71a42975f9e968b785caec4175159",
+      "passage_occurrences": "1b5c10133ddcffdea5afedb0293444f3",
+      "hint_occurrences": "d09144d397b764e3c60eee0a012aba9a",
+      "review_sessions": "3a7583cd905ba14711b7e494a0410db9",
+      "review_session_batches": "bddbd569cb09eafaeda8d7b5af6bba4d",
+      "review_session_targets": "a06bb3256bf51c44379ea0c92d12116a",
+      "review_results": "d30085d2fcc6467be695d257152a1cb6",
+      "generation_runs": "c69088cf65705063922bc149817f6557",
+      "generation_run_entries": "0c415f4f0c32e0889f923418ba8b915b",
+      "generation_drafts": "d41d8cd98f00b204e9800998ecf8427e",
+      "visitor_claims": "d41d8cd98f00b204e9800998ecf8427e",
+      "ai_models": "69ef2a623d0187774429cb3b7b5c6545",
+      "entitlement_groups": "25bcf452b7d330adbb688088744d7e2a",
+      "group_models": "9056775aa35dd059ab57c34ed894ff8c",
+      "group_lengths": "1789aa52ef82ac42f00bc3ae2405d235",
+      "schema_migrations": "b2f44ff20b8bcbd8822d41a2c2837f42",
+      "vocabulary_entries": "eaf53ac8daa0f2939848ed2a77d8ee63",
+      "vocabulary_snapshots": "2ad8380a60afc7b04964142b2714ff79"
+    }
+  },
+  "dataAfter": {
+    "counts": {
+      "accounts": 591,
+      "sessions": 598,
+      "batches": 22,
+      "models": 3,
+      "runs": 90,
+      "active_runs": 0,
+      "drafts": 0,
+      "claims": 0,
+      "migration_count": 6,
+      "latest_migration": "0006_hint_occurrences_enforce.sql"
+    },
+    "digests": {
+      "accounts": "e890a6caa0d9b98ab5cb30bc602d19ae",
+      "learning_batches": "46345fcbb9248da966e03520a2443d94",
+      "batch_targets": "6ae71a42975f9e968b785caec4175159",
+      "passage_occurrences": "1b5c10133ddcffdea5afedb0293444f3",
+      "hint_occurrences": "d09144d397b764e3c60eee0a012aba9a",
+      "review_sessions": "3a7583cd905ba14711b7e494a0410db9",
+      "review_session_batches": "bddbd569cb09eafaeda8d7b5af6bba4d",
+      "review_session_targets": "a06bb3256bf51c44379ea0c92d12116a",
+      "review_results": "d30085d2fcc6467be695d257152a1cb6",
+      "generation_runs": "c69088cf65705063922bc149817f6557",
+      "generation_run_entries": "0c415f4f0c32e0889f923418ba8b915b",
+      "generation_drafts": "d41d8cd98f00b204e9800998ecf8427e",
+      "visitor_claims": "d41d8cd98f00b204e9800998ecf8427e",
+      "ai_models": "69ef2a623d0187774429cb3b7b5c6545",
+      "entitlement_groups": "25bcf452b7d330adbb688088744d7e2a",
+      "group_models": "9056775aa35dd059ab57c34ed894ff8c",
+      "group_lengths": "1789aa52ef82ac42f00bc3ae2405d235",
+      "schema_migrations": "b2f44ff20b8bcbd8822d41a2c2837f42",
+      "vocabulary_entries": "eaf53ac8daa0f2939848ed2a77d8ee63",
+      "vocabulary_snapshots": "2ad8380a60afc7b04964142b2714ff79"
+    }
+  },
+  "actualModel": "not_observed",
+  "usage": "not_observed"
+}

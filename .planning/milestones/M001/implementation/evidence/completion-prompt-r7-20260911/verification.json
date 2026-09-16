@@ -1,0 +1,253 @@
+{
+  "schema_version": 1,
+  "revision": "COMPLETION-PROMPT-R7-20260911",
+  "date": "2026-09-11",
+  "authorization": {
+    "user_response": "那在加强一下提示词吧",
+    "scope": "Prompt, length-matched examples, schema descriptions, version and related offline tests only",
+    "real_model_calls": 0,
+    "new_paid_budget": 0,
+    "deployment_performed": false
+  },
+  "result": "offline_passed_live_unmeasured",
+  "prompt_version": "m001-v5-r7",
+  "validator_version": "m001-v5-wn31-r1",
+  "rationale": {
+    "live_baseline_evidence": "../prose-prompt-20-20260911/results.json",
+    "observed_failures": [
+      "case 3 MiniMax: enforce(enforce)d label splits inflection",
+      "case 4 GLM: 67/100 passage words",
+      "case 10 GLM: trailing space first failure; separately 78/400 words and all passage targets missing",
+      "case 18 GLM: 74/200 words and four passage targets missing"
+    ],
+    "hypothesis": "The fixed short example may encourage an opening-sized passage at larger requested lengths. This causal explanation is unproven; r7 has not been sampled.",
+    "reference": {
+      "url": "https://developers.openai.com/api/docs/guides/prompt-engineering",
+      "use": "General example-pattern consistency only. Not evidence of MiniMax/GLM adherence, provider cache hits or lower cost."
+    }
+  },
+  "changes": [
+    "Explicit whole-word-before-parenthesis annotation guidance for passage and hints, with correct inflected examples",
+    "Require complete coverage, minimum prose words and natural ending before closing passage; tags/meanings/hints excluded from count",
+    "Select one length-matched example with valid paragraphs, inflection, derivation, repeated targets and original-entry meanings",
+    "Keep stable English rules before language/length-selected example; update descriptions without changing schema constraints"
+  ],
+  "example_matrix": [
+    {
+      "language": "zh",
+      "minimum": 50,
+      "words": 62,
+      "paragraphs": 2
+    },
+    {
+      "language": "zh",
+      "minimum": 100,
+      "words": 122,
+      "paragraphs": 3
+    },
+    {
+      "language": "zh",
+      "minimum": 200,
+      "words": 240,
+      "paragraphs": 4
+    },
+    {
+      "language": "zh",
+      "minimum": 400,
+      "words": 480,
+      "paragraphs": 6
+    },
+    {
+      "language": "en",
+      "minimum": 50,
+      "words": 62,
+      "paragraphs": 2
+    },
+    {
+      "language": "en",
+      "minimum": 100,
+      "words": 122,
+      "paragraphs": 3
+    },
+    {
+      "language": "en",
+      "minimum": 200,
+      "words": 240,
+      "paragraphs": 4
+    },
+    {
+      "language": "en",
+      "minimum": 400,
+      "words": 480,
+      "paragraphs": 6
+    },
+    {
+      "language": "ja",
+      "minimum": 50,
+      "words": 62,
+      "paragraphs": 2
+    },
+    {
+      "language": "ja",
+      "minimum": 100,
+      "words": 122,
+      "paragraphs": 3
+    },
+    {
+      "language": "ja",
+      "minimum": 200,
+      "words": 240,
+      "paragraphs": 4
+    },
+    {
+      "language": "ja",
+      "minimum": 400,
+      "words": 480,
+      "paragraphs": 6
+    }
+  ],
+  "tradeoff": "One example per request; longest prose example grows from the r6 60-word example to 480 words. Input tokens can increase for long requests. No measured cache/cost or success-rate claim.",
+  "unchanged_scope": {
+    "runtime_transport_decoder_request_prefix_unchanged": true,
+    "user_prompt_and_meaning_instruction_unchanged": true,
+    "schema_constraints_except_description_lines_unchanged": true,
+    "runtime_error_mapping_and_suffix_unchanged": true,
+    "contract_only_prompt_version_changed": true
+  },
+  "additional_unchanged": [
+    "validator implementation and version",
+    "public API and frontend",
+    "timeouts and buffering",
+    "Together-only model routing and no fallback",
+    "inference parameters",
+    "original-entry dictionary meanings",
+    "database and credentials",
+    "existing raw-evidence retention policy"
+  ],
+  "checks": [
+    {
+      "command": "GOTOOLCHAIN=go1.26.0 go test ./internal/ai -run 'Test(Completion|Prose|SystemPrompt|PromptExample|KeyedSchema|CR040EntryMeaning)' -v",
+      "chunk_id": "8d37b0",
+      "wall_time_seconds": 0.000007,
+      "exit_code": 0,
+      "original_token_count": 1682,
+      "output": "=== RUN   TestCompletionExamplesMatchRequestedLength\n=== RUN   TestCompletionExamplesMatchRequestedLength/zh/50\n    completion_prompt_test.go:67: 62 clean words; 2 paragraphs; full-word inflection; one complete example\n=== RUN   TestCompletionExamplesMatchRequestedLength/zh/100\n    completion_prompt_test.go:67: 122 clean words; 3 paragraphs; full-word inflection; one complete example\n=== RUN   TestCompletionExamplesMatchRequestedLength/zh/200\n    completion_prompt_test.go:67: 240 clean words; 4 paragraphs; full-word inflection; one complete example\n=== RUN   TestCompletionExamplesMatchRequestedLength/zh/400\n    completion_prompt_test.go:67: 480 clean words; 6 paragraphs; full-word inflection; one complete example\n=== RUN   TestCompletionExamplesMatchRequestedLength/en/50\n    completion_prompt_test.go:67: 62 clean words; 2 paragraphs; full-word inflection; one complete example\n=== RUN   TestCompletionExamplesMatchRequestedLength/en/100\n    completion_prompt_test.go:67: 122 clean words; 3 paragraphs; full-word inflection; one complete example\n=== RUN   TestCompletionExamplesMatchRequestedLength/en/200\n    completion_prompt_test.go:67: 240 clean words; 4 paragraphs; full-word inflection; one complete example\n=== RUN   TestCompletionExamplesMatchRequestedLength/en/400\n    completion_prompt_test.go:67: 480 clean words; 6 paragraphs; full-word inflection; one complete example\n=== RUN   TestCompletionExamplesMatchRequestedLength/ja/50\n    completion_prompt_test.go:67: 62 clean words; 2 paragraphs; full-word inflection; one complete example\n=== RUN   TestCompletionExamplesMatchRequestedLength/ja/100\n    completion_prompt_test.go:67: 122 clean words; 3 paragraphs; full-word inflection; one complete example\n=== RUN   TestCompletionExamplesMatchRequestedLength/ja/200\n    completion_prompt_test.go:67: 240 clean words; 4 paragraphs; full-word inflection; one complete example\n=== RUN   TestCompletionExamplesMatchRequestedLength/ja/400\n    completion_prompt_test.go:67: 480 clean words; 6 paragraphs; full-word inflection; one complete example\n--- PASS: TestCompletionExamplesMatchRequestedLength (0.43s)\n    --- PASS: TestCompletionExamplesMatchRequestedLength/zh/50 (0.00s)\n    --- PASS: TestCompletionExamplesMatchRequestedLength/zh/100 (0.00s)\n    --- PASS: TestCompletionExamplesMatchRequestedLength/zh/200 (0.01s)\n    --- PASS: TestCompletionExamplesMatchRequestedLength/zh/400 (0.04s)\n    --- PASS: TestCompletionExamplesMatchRequestedLength/en/50 (0.00s)\n    --- PASS: TestCompletionExamplesMatchRequestedLength/en/100 (0.00s)\n    --- PASS: TestCompletionExamplesMatchRequestedLength/en/200 (0.01s)\n    --- PASS: TestCompletionExamplesMatchRequestedLength/en/400 (0.03s)\n    --- PASS: TestCompletionExamplesMatchRequestedLength/ja/50 (0.00s)\n    --- PASS: TestCompletionExamplesMatchRequestedLength/ja/100 (0.00s)\n    --- PASS: TestCompletionExamplesMatchRequestedLength/ja/200 (0.01s)\n    --- PASS: TestCompletionExamplesMatchRequestedLength/ja/400 (0.04s)\n=== RUN   TestCompletionPromptKeepsWholeWordAndCoverageRules\n--- PASS: TestCompletionPromptKeepsWholeWordAndCoverageRules (0.00s)\n=== RUN   TestCompletionPromptKnownFailuresRemainRejected\n=== RUN   TestCompletionPromptKnownFailuresRemainRejected/label_inside_inflection\n=== RUN   TestCompletionPromptKnownFailuresRemainRejected/label_inside_inflection/passage\n=== RUN   TestCompletionPromptKnownFailuresRemainRejected/label_inside_inflection/hint\n=== RUN   TestCompletionPromptKnownFailuresRemainRejected/short_67_of_100\n=== RUN   TestCompletionPromptKnownFailuresRemainRejected/short_78_of_400\n=== RUN   TestCompletionPromptKnownFailuresRemainRejected/short_74_of_200\n--- PASS: TestCompletionPromptKnownFailuresRemainRejected (0.00s)\n    --- PASS: TestCompletionPromptKnownFailuresRemainRejected/label_inside_inflection (0.00s)\n        --- PASS: TestCompletionPromptKnownFailuresRemainRejected/label_inside_inflection/passage (0.00s)\n        --- PASS: TestCompletionPromptKnownFailuresRemainRejected/label_inside_inflection/hint (0.00s)\n    --- PASS: TestCompletionPromptKnownFailuresRemainRejected/short_67_of_100 (0.00s)\n    --- PASS: TestCompletionPromptKnownFailuresRemainRejected/short_78_of_400 (0.00s)\n    --- PASS: TestCompletionPromptKnownFailuresRemainRejected/short_74_of_200 (0.00s)\n=== RUN   TestCR040EntryMeaningPromptAcrossConfigurations\n--- PASS: TestCR040EntryMeaningPromptAcrossConfigurations (0.00s)\n=== RUN   TestKeyedSchemaAndExamplesMatchEveryLanguage\n=== RUN   TestKeyedSchemaAndExamplesMatchEveryLanguage/zh\n=== RUN   TestKeyedSchemaAndExamplesMatchEveryLanguage/en\n=== RUN   TestKeyedSchemaAndExamplesMatchEveryLanguage/ja\n--- PASS: TestKeyedSchemaAndExamplesMatchEveryLanguage (0.01s)\n    --- PASS: TestKeyedSchemaAndExamplesMatchEveryLanguage/zh (0.00s)\n    --- PASS: TestKeyedSchemaAndExamplesMatchEveryLanguage/en (0.00s)\n    --- PASS: TestKeyedSchemaAndExamplesMatchEveryLanguage/ja (0.00s)\n=== RUN   TestSystemPromptPreservesLearningContractAndStableRules\n=== PAUSE TestSystemPromptPreservesLearningContractAndStableRules\n=== RUN   TestPromptExamplePassesProductionValidationAndStreaming\n=== PAUSE TestPromptExamplePassesProductionValidationAndStreaming\n=== RUN   TestProsePromptGuidanceAcrossConfigurations\n--- PASS: TestProsePromptGuidanceAcrossConfigurations (0.00s)\n=== RUN   TestProseExampleShowsParagraphsAndVerbCollocation\n    prose_prompt_test.go:77: zh: 62 clean words, 2 paragraphs, verb collocation and ordered public targets\n    prose_prompt_test.go:77: en: 62 clean words, 2 paragraphs, verb collocation and ordered public targets\n    prose_prompt_test.go:77: ja: 62 clean words, 2 paragraphs, verb collocation and ordered public targets\n--- PASS: TestProseExampleShowsParagraphsAndVerbCollocation (0.00s)\n=== RUN   TestProsePromptKnownFailuresRemainRejected\n=== RUN   TestProsePromptKnownFailuresRemainRejected/joined_title_and_body\n=== RUN   TestProsePromptKnownFailuresRemainRejected/unfinished_long_passage_has_multiple_failures\n--- PASS: TestProsePromptKnownFailuresRemainRejected (0.00s)\n    --- PASS: TestProsePromptKnownFailuresRemainRejected/joined_title_and_body (0.00s)\n    --- PASS: TestProsePromptKnownFailuresRemainRejected/unfinished_long_passage_has_multiple_failures (0.00s)\n=== CONT  TestSystemPromptPreservesLearningContractAndStableRules\n=== CONT  TestPromptExamplePassesProductionValidationAndStreaming\n--- PASS: TestSystemPromptPreservesLearningContractAndStableRules (0.00s)\n=== NAME  TestPromptExamplePassesProductionValidationAndStreaming\n    openrouter_test.go:167: complete example: 62 clean words, 3 ordered targets, repeated and derived forms validated\n--- PASS: TestPromptExamplePassesProductionValidationAndStreaming (0.02s)\nPASS\nok  \twordweave/internal/ai\t1.166s\n"
+    },
+    {
+      "command": "GOTOOLCHAIN=go1.26.0 go test -race ./internal/ai ./internal/httpapi",
+      "chunk_id": "2640a0",
+      "wall_time_seconds": 1.001466833,
+      "original_token_count": 0,
+      "output": "ok  \twordweave/internal/ai\t19.912s\nok  \twordweave/internal/httpapi\t1.568s\n",
+      "exit_code": 0
+    },
+    {
+      "command": "GOTOOLCHAIN=go1.26.0 go test -tags=uatdiagnostics ./internal/ai ./internal/httpapi ./cmd/wordweave ./cmd/wordweave-admin",
+      "chunk_id": "ae2e51",
+      "wall_time_seconds": 1.001490959,
+      "original_token_count": 0,
+      "output": "ok  \twordweave/internal/ai\t3.752s\nok  \twordweave/internal/httpapi\t0.602s\n?   \twordweave/cmd/wordweave\t[no test files]\nok  \twordweave/cmd/wordweave-admin\t0.345s\n",
+      "exit_code": 0
+    },
+    {
+      "command": "GOTOOLCHAIN=go1.26.0 go vet ./internal/ai ./internal/httpapi",
+      "chunk_id": "270f28",
+      "wall_time_seconds": 1.00268525,
+      "original_token_count": 0,
+      "output": "",
+      "exit_code": 0
+    },
+    {
+      "command": "GOTOOLCHAIN=go1.26.0 go build -o /tmp/wordweave-completion-r7.Dv2vGN/ ./cmd/wordweave ./cmd/wordweave-admin",
+      "chunk_id": "3fc42b",
+      "wall_time_seconds": 1.001310334,
+      "original_token_count": 0,
+      "output": "",
+      "exit_code": 0
+    }
+  ],
+  "source_hashes": {
+    "backend/internal/ai/openrouter.go": {
+      "before_sha256": "efeb8f3ed0c8b919683d3913baec51800c52d36f74977020b2d65e441e973592",
+      "after_sha256": "efd85f6722e493ff3a5fe5705644eb92312d9c2457d41b71ebe7a316fb67220f"
+    },
+    "backend/internal/ai/contract.go": {
+      "before_sha256": "38961897cf154254cc549b59f8ce028bbbd4844a964ff324ade36b8d18328e0e",
+      "after_sha256": "1dd65e794f24b52e7dcd6102ae27ea9c3fb554ef73e60bf113709c4ef78609ef"
+    },
+    "backend/internal/ai/openrouter_test.go": {
+      "before_sha256": "a716282ba1af948f20b1c79022840eb174fd57f3e63792e0696fdf998c333fe6",
+      "after_sha256": "21f02819a43a5dcdaddff370671c1c502be16be0580c9b83539abebe3bf6df32"
+    },
+    "backend/internal/ai/keyed_targets_test.go": {
+      "before_sha256": "9f02ab488da6b4308ce60e89220196a7ccdda7a64f0df0d3177d8f5321b17210",
+      "after_sha256": "09f1be38214f4563bea4bd75a6ce4b13e6a70deb912d6196b6b9321e62501bec"
+    },
+    "backend/internal/ai/prose_prompt_test.go": {
+      "before_sha256": "b101ee8dab556f08443422f3110e30e1a12c94edfa4138461e95f7e2e53af0f9",
+      "after_sha256": "7d516fb2b2bd77ca999652271303e8c0bdb7be92ee1ade03abd4701cf1968d5b"
+    },
+    "backend/internal/ai/annotations_test.go": {
+      "before_sha256": "72b43cb24f72c14fb35625b568dce796ec29d7aab2fae1233d5d15036ef915c9",
+      "after_sha256": "5d10acc12f05a7d0d947054e690392b735d3df17a7eadf1f25a08b61be792ac6"
+    },
+    "backend/internal/ai/cr040_test.go": {
+      "before_sha256": "729d8541ca81a09ecfe1c21464b429f272788e7a545cb3eeeee7abbacfdfcdec",
+      "after_sha256": "11ee49b8cbd2778c49891959d96c637cc18243e9bde1851493849eb7a66102d0"
+    },
+    "backend/internal/ai/completion_prompt_test.go": {
+      "before_sha256": null,
+      "after_sha256": "85682f795623df705caa1c70d39a5075d3802d2d8060a0388eee39421f4716a2"
+    }
+  },
+  "test_coverage": [
+    "12 language/length examples decoded, production validated and streamed byte-by-byte",
+    "Complete vs split inflection positive/negative controls in passage and hint",
+    "67/100, 78/400, 74/200 word shortages still rejected; whitespace rejection retained",
+    "Existing 48 scenario/language/length guidance matrix and no extra inference controls",
+    "Original-entry meaning rules, repeated/derived targets and ordered annotation-free output"
+  ],
+  "runtime": {
+    "prompt_version": "m001-v5-r6",
+    "image": "sha256:1d88e8ce36ad5c687fc03e9251bd09bb3b1eefb75cb1549b518779f83ae25de5",
+    "status": "running",
+    "health": "healthy",
+    "restarts": 0,
+    "checked_at": "2026-09-11T09:53:58Z",
+    "changed": false
+  },
+  "live_baseline": {
+    "version": "m001-v5-r6",
+    "latest_batch": {
+      "calls": 20,
+      "valid": 16
+    },
+    "cumulative": {
+      "calls": 30,
+      "valid": 25
+    },
+    "not_r7_results": true
+  },
+  "exclusions": [
+    "No paid model calls",
+    "No independent QA/UAT or whole-site regression",
+    "No deployment/restart or database mutation",
+    "No legacy compatibility or new monitoring",
+    "No claim that prompt assertions prove model compliance"
+  ],
+  "open_items": [
+    "CR-039",
+    "CR-040",
+    "CR-041",
+    "CR-042",
+    "Live success-rate and language-quality validation",
+    "Internal keyed-target architecture examples remain unsynchronized"
+  ],
+  "document_retention": {
+    "pre_change_snapshot": "pre-change.json",
+    "current_report": "../../backend-validation.md",
+    "handoff": "../../../handoffs/backend-implementation.md",
+    "prior_live_evidence_preserved": true,
+    "raw_generation_exported": false
+  }
+}

@@ -1,0 +1,2679 @@
+{
+  "date": "2026-09-08T02:43:36.809Z",
+  "agent": "qa-quinn",
+  "real_model_calls": 0,
+  "counts": {
+    "PASS": 109,
+    "FAIL": 2,
+    "ERROR": 1
+  },
+  "checks": [
+    {
+      "id": "SETUP/resume-before-learning",
+      "status": "PASS",
+      "actual": {}
+    },
+    {
+      "id": "L01/restart-save/single-call",
+      "status": "PASS",
+      "actual": {
+        "before": 2,
+        "after": 3
+      }
+    },
+    {
+      "id": "L01/restart-save/valid",
+      "status": "PASS",
+      "actual": {
+        "terminal": "generation.validated",
+        "http": 200
+      }
+    },
+    {
+      "id": "L01/restart-save/stream-exact",
+      "status": "PASS",
+      "actual": {
+        "equal": true
+      }
+    },
+    {
+      "id": "L01/restart-real-process",
+      "status": "PASS",
+      "actual": {
+        "before": "sha256:2f263a80f844c3489eeca8fdbc0a3091ac95816551319c74da9ae2f3d793b396 2026-09-08T02:40:52.541280512Z",
+        "after": "sha256:2f263a80f844c3489eeca8fdbc0a3091ac95816551319c74da9ae2f3d793b396 2026-09-08T02:43:24.201097762Z"
+      }
+    },
+    {
+      "id": "L01/snapshot-unchanged",
+      "status": "PASS",
+      "actual": {
+        "before": {
+          "payload_md5": "73d1c814b42e7f834e985e160bb32fa2",
+          "expires_at": "2026-09-08T03:13:23.858375+00:00",
+          "token_hash_md5": "7353ddebe6e81d0fbd3636b01f347ae3"
+        },
+        "after": {
+          "payload_md5": "73d1c814b42e7f834e985e160bb32fa2",
+          "expires_at": "2026-09-08T03:13:23.858375+00:00",
+          "token_hash_md5": "7353ddebe6e81d0fbd3636b01f347ae3"
+        }
+      }
+    },
+    {
+      "id": "L02/wrong-owner/save",
+      "status": "PASS",
+      "actual": {
+        "status": 404
+      }
+    },
+    {
+      "id": "L02/wrong-owner/discard",
+      "status": "PASS",
+      "actual": {
+        "status": 404
+      }
+    },
+    {
+      "id": "L02/missing-token/save",
+      "status": "PASS",
+      "actual": {
+        "status": 404
+      }
+    },
+    {
+      "id": "L02/missing-token/discard",
+      "status": "PASS",
+      "actual": {
+        "status": 404
+      }
+    },
+    {
+      "id": "L02/tampered-token/save",
+      "status": "PASS",
+      "actual": {
+        "status": 404
+      }
+    },
+    {
+      "id": "L02/tampered-token/discard",
+      "status": "PASS",
+      "actual": {
+        "status": 404
+      }
+    },
+    {
+      "id": "L02/bad-format/save",
+      "status": "PASS",
+      "actual": {
+        "status": 404
+      }
+    },
+    {
+      "id": "L02/bad-format/discard",
+      "status": "PASS",
+      "actual": {
+        "status": 404
+      }
+    },
+    {
+      "id": "L02/rejected-no-mutation",
+      "status": "PASS",
+      "actual": {
+        "status": "valid",
+        "disposition": "pending",
+        "charged": true,
+        "counted": true,
+        "drafts": 1,
+        "batches": 0
+      }
+    },
+    {
+      "id": "L01/save-201",
+      "status": "PASS",
+      "actual": {
+        "status": 201,
+        "batch": "01a07ee6-1dc1-72d8-8613-98291cb85693"
+      }
+    },
+    {
+      "id": "L01/retry-after-second-restart",
+      "status": "PASS",
+      "actual": {
+        "status": 200,
+        "same": true,
+        "restart": {
+          "before": "sha256:2f263a80f844c3489eeca8fdbc0a3091ac95816551319c74da9ae2f3d793b396 2026-09-08T02:43:24.201097762Z",
+          "after": "sha256:2f263a80f844c3489eeca8fdbc0a3091ac95816551319c74da9ae2f3d793b396 2026-09-08T02:43:25.469347013Z"
+        }
+      }
+    },
+    {
+      "id": "L01/single-atomic-batch",
+      "status": "PASS",
+      "actual": {
+        "status": "valid",
+        "disposition": "saved",
+        "charged": true,
+        "counted": true,
+        "drafts": 0,
+        "batches": 1
+      }
+    },
+    {
+      "id": "L01/no-call-no-count-repeat",
+      "status": "PASS",
+      "actual": {
+        "calls": 3,
+        "summary": {
+          "generation_count": 1,
+          "unique_learned_entries": 1,
+          "participating_batches": 1,
+          "paused_batches": 0,
+          "successful_review_count": 0,
+          "batches_ever_reviewed_successfully": 0
+        }
+      }
+    },
+    {
+      "id": "L02/saved-wrong-owner",
+      "status": "PASS",
+      "actual": {
+        "status": 404
+      }
+    },
+    {
+      "id": "L02/saved-missing-token",
+      "status": "PASS",
+      "actual": {
+        "status": 404
+      }
+    },
+    {
+      "id": "L02/saved-tampered",
+      "status": "PASS",
+      "actual": {
+        "status": 404
+      }
+    },
+    {
+      "id": "L03/exact-saved-resource",
+      "status": "PASS",
+      "actual": {
+        "status": 200
+      }
+    },
+    {
+      "id": "L03/search-owned-batch",
+      "status": "PASS",
+      "actual": {
+        "status": 200
+      }
+    },
+    {
+      "id": "L03/other-cannot-read",
+      "status": "PASS",
+      "actual": {}
+    },
+    {
+      "id": "L03/two-stage-derived-review/hint-all-vulnerable",
+      "status": "PASS",
+      "actual": {
+        "actual": [
+          {
+            "kind": "blank",
+            "length_hint": 8
+          },
+          {
+            "kind": "text",
+            "text": " in "
+          },
+          {
+            "kind": "blank",
+            "length_hint": 8
+          },
+          {
+            "kind": "text",
+            "text": " communities with "
+          },
+          {
+            "kind": "blank",
+            "length_hint": 8
+          }
+        ],
+        "expected_blank_count": 3
+      }
+    },
+    {
+      "id": "L03/two-stage-derived-review/spelling-safe-vulnerable",
+      "status": "PASS",
+      "actual": [
+        "contextual_meaning",
+        "hint",
+        "item_id",
+        "stage"
+      ]
+    },
+    {
+      "id": "L03/two-stage-derived-review/original-required-vulnerable",
+      "status": "PASS",
+      "actual": "retry"
+    },
+    {
+      "id": "L03/two-stage-derived-review/all-gaps-groups",
+      "status": "PASS",
+      "actual": {
+        "gaps": 4,
+        "expected": 4,
+        "groups": 1
+      }
+    },
+    {
+      "id": "L03/two-stage-derived-review/cloze-exact",
+      "status": "PASS",
+      "actual": {
+        "equal": true
+      }
+    },
+    {
+      "id": "L03/two-stage-derived-review/retry-no-answer",
+      "status": "PASS",
+      "actual": {
+        "outcome": "retry",
+        "item_stable": true
+      }
+    },
+    {
+      "id": "L03/two-stage-derived-review/complete-on-surface",
+      "status": "PASS",
+      "actual": {
+        "outcome": "session_completed",
+        "batch_result": {
+          "batch_id": "01a07ee6-1dc1-72d8-8613-98291cb85693",
+          "successful": true,
+          "error_count": 5,
+          "skip_count": 0
+        },
+        "session_progress": {
+          "completed_batches": 1,
+          "total_batches": 1,
+          "successful_batches": 1,
+          "unsuccessful_batches": 0
+        },
+        "next_batch": null,
+        "session_summary": {
+          "total_batches": 1,
+          "successful_batches": 1,
+          "unsuccessful_batches": 0,
+          "skipped_batches": 0
+        }
+      }
+    },
+    {
+      "id": "L03/two-stage-derived-review/action-idempotent",
+      "status": "PASS",
+      "actual": {
+        "same": true
+      }
+    },
+    {
+      "id": "L03/discard-saved-no-deletion",
+      "status": "PASS",
+      "actual": {
+        "status": "valid",
+        "disposition": "saved",
+        "charged": true,
+        "counted": true,
+        "drafts": 0,
+        "batches": 1
+      }
+    },
+    {
+      "id": "L03/delete-batch",
+      "status": "PASS",
+      "actual": {
+        "status": 204
+      }
+    },
+    {
+      "id": "L03/delete-no-resurrection",
+      "status": "PASS",
+      "actual": {
+        "status": "valid",
+        "disposition": "saved",
+        "charged": true,
+        "counted": true,
+        "drafts": 0,
+        "batches": 0
+      }
+    },
+    {
+      "id": "L04/discard/single-call",
+      "status": "PASS",
+      "actual": {
+        "before": 3,
+        "after": 4
+      }
+    },
+    {
+      "id": "L04/discard/valid",
+      "status": "PASS",
+      "actual": {
+        "terminal": "generation.validated",
+        "http": 200
+      }
+    },
+    {
+      "id": "L04/discard/stream-exact",
+      "status": "PASS",
+      "actual": {
+        "equal": true
+      }
+    },
+    {
+      "id": "L04/discard-restart-idempotent",
+      "status": "PASS",
+      "actual": {
+        "status": "valid",
+        "disposition": "abandoned",
+        "charged": true,
+        "counted": true,
+        "drafts": 0,
+        "batches": 0
+      }
+    },
+    {
+      "id": "L04/discard-cannot-save",
+      "status": "PASS",
+      "actual": {
+        "status": "valid",
+        "disposition": "abandoned",
+        "charged": true,
+        "counted": true,
+        "drafts": 0,
+        "batches": 0
+      }
+    },
+    {
+      "id": "L05/expiry/single-call",
+      "status": "PASS",
+      "actual": {
+        "before": 4,
+        "after": 5
+      }
+    },
+    {
+      "id": "L05/expiry/valid",
+      "status": "PASS",
+      "actual": {
+        "terminal": "generation.validated",
+        "http": 200
+      }
+    },
+    {
+      "id": "L05/expiry/stream-exact",
+      "status": "PASS",
+      "actual": {
+        "equal": true
+      }
+    },
+    {
+      "id": "L05/expired-save",
+      "status": "PASS",
+      "actual": {
+        "status": 410
+      }
+    },
+    {
+      "id": "L05/expired-discard",
+      "status": "PASS",
+      "actual": {
+        "status": 410
+      }
+    },
+    {
+      "id": "L05/expiry-no-batch",
+      "status": "PASS",
+      "actual": {
+        "status": "valid",
+        "disposition": "pending",
+        "charged": true,
+        "counted": true,
+        "drafts": 1,
+        "batches": 0
+      }
+    },
+    {
+      "id": "L05/terminal/single-call",
+      "status": "PASS",
+      "actual": {
+        "before": 5,
+        "after": 6
+      }
+    },
+    {
+      "id": "L05/terminal/valid",
+      "status": "PASS",
+      "actual": {
+        "terminal": "generation.validated",
+        "http": 200
+      }
+    },
+    {
+      "id": "L05/terminal/stream-exact",
+      "status": "PASS",
+      "actual": {
+        "equal": true
+      }
+    },
+    {
+      "id": "L05/terminal-expiry",
+      "status": "PASS",
+      "actual": {
+        "status": "valid",
+        "disposition": "saved",
+        "charged": true,
+        "counted": true,
+        "drafts": 0,
+        "batches": 1
+      }
+    },
+    {
+      "id": "L06/concurrent-save/single-call",
+      "status": "PASS",
+      "actual": {
+        "before": 6,
+        "after": 7
+      }
+    },
+    {
+      "id": "L06/concurrent-save/valid",
+      "status": "PASS",
+      "actual": {
+        "terminal": "generation.validated",
+        "http": 200
+      }
+    },
+    {
+      "id": "L06/concurrent-save/stream-exact",
+      "status": "PASS",
+      "actual": {
+        "equal": true
+      }
+    },
+    {
+      "id": "L06/cross-run/single-call",
+      "status": "PASS",
+      "actual": {
+        "before": 7,
+        "after": 8
+      }
+    },
+    {
+      "id": "L06/cross-run/valid",
+      "status": "PASS",
+      "actual": {
+        "terminal": "generation.validated",
+        "http": 200
+      }
+    },
+    {
+      "id": "L06/cross-run/stream-exact",
+      "status": "PASS",
+      "actual": {
+        "equal": true
+      }
+    },
+    {
+      "id": "L02/cross-run-token",
+      "status": "PASS",
+      "actual": {
+        "status": "valid",
+        "disposition": "pending",
+        "charged": true,
+        "counted": true,
+        "drafts": 1,
+        "batches": 0
+      }
+    },
+    {
+      "id": "L06/eight-save-single-batch",
+      "status": "PASS",
+      "actual": {
+        "statuses": [
+          201,
+          200,
+          200,
+          200,
+          200,
+          200,
+          200,
+          200
+        ],
+        "state": {
+          "status": "valid",
+          "disposition": "saved",
+          "charged": true,
+          "counted": true,
+          "drafts": 0,
+          "batches": 1
+        }
+      }
+    },
+    {
+      "id": "L06/save-discard-0/single-call",
+      "status": "PASS",
+      "actual": {
+        "before": 8,
+        "after": 9
+      }
+    },
+    {
+      "id": "L06/save-discard-0/valid",
+      "status": "PASS",
+      "actual": {
+        "terminal": "generation.validated",
+        "http": 200
+      }
+    },
+    {
+      "id": "L06/save-discard-0/stream-exact",
+      "status": "PASS",
+      "actual": {
+        "equal": true
+      }
+    },
+    {
+      "id": "L06/save-discard-atomic-0",
+      "status": "PASS",
+      "actual": {
+        "statuses": [
+          201,
+          204
+        ],
+        "state": {
+          "status": "valid",
+          "disposition": "saved",
+          "charged": true,
+          "counted": true,
+          "drafts": 0,
+          "batches": 1
+        }
+      }
+    },
+    {
+      "id": "L06/save-discard-1/single-call",
+      "status": "PASS",
+      "actual": {
+        "before": 9,
+        "after": 10
+      }
+    },
+    {
+      "id": "L06/save-discard-1/valid",
+      "status": "PASS",
+      "actual": {
+        "terminal": "generation.validated",
+        "http": 200
+      }
+    },
+    {
+      "id": "L06/save-discard-1/stream-exact",
+      "status": "PASS",
+      "actual": {
+        "equal": true
+      }
+    },
+    {
+      "id": "L06/save-discard-atomic-1",
+      "status": "PASS",
+      "actual": {
+        "statuses": [
+          404,
+          204
+        ],
+        "state": {
+          "status": "valid",
+          "disposition": "abandoned",
+          "charged": true,
+          "counted": true,
+          "drafts": 0,
+          "batches": 0
+        }
+      }
+    },
+    {
+      "id": "L06/save-discard-2/single-call",
+      "status": "PASS",
+      "actual": {
+        "before": 10,
+        "after": 11
+      }
+    },
+    {
+      "id": "L06/save-discard-2/valid",
+      "status": "PASS",
+      "actual": {
+        "terminal": "generation.validated",
+        "http": 200
+      }
+    },
+    {
+      "id": "L06/save-discard-2/stream-exact",
+      "status": "PASS",
+      "actual": {
+        "equal": true
+      }
+    },
+    {
+      "id": "L06/save-discard-atomic-2",
+      "status": "PASS",
+      "actual": {
+        "statuses": [
+          404,
+          204
+        ],
+        "state": {
+          "status": "valid",
+          "disposition": "abandoned",
+          "charged": true,
+          "counted": true,
+          "drafts": 0,
+          "batches": 0
+        }
+      }
+    },
+    {
+      "id": "L06/save-discard-3/single-call",
+      "status": "PASS",
+      "actual": {
+        "before": 11,
+        "after": 12
+      }
+    },
+    {
+      "id": "L06/save-discard-3/valid",
+      "status": "PASS",
+      "actual": {
+        "terminal": "generation.validated",
+        "http": 200
+      }
+    },
+    {
+      "id": "L06/save-discard-3/stream-exact",
+      "status": "PASS",
+      "actual": {
+        "equal": true
+      }
+    },
+    {
+      "id": "L06/save-discard-atomic-3",
+      "status": "PASS",
+      "actual": {
+        "statuses": [
+          404,
+          204
+        ],
+        "state": {
+          "status": "valid",
+          "disposition": "abandoned",
+          "charged": true,
+          "counted": true,
+          "drafts": 0,
+          "batches": 0
+        }
+      }
+    },
+    {
+      "id": "L07/invalid/single-call",
+      "status": "PASS",
+      "actual": {
+        "before": 12,
+        "after": 13
+      }
+    },
+    {
+      "id": "L07/invalid/rejected",
+      "status": "PASS",
+      "actual": {
+        "terminal": "generation.failed",
+        "failure": {
+          "code": "content_validation_failed",
+          "quota_refunded": true,
+          "retryable": true,
+          "request_id": "req_yTOrZuWZ-AbRRHi-B0nY0A"
+        }
+      }
+    },
+    {
+      "id": "L07/invalid/atomic-refund",
+      "status": "PASS",
+      "actual": {
+        "status": "validation_failed",
+        "charged": false,
+        "counted": false,
+        "drafts": 0
+      }
+    },
+    {
+      "id": "L07/invalid/unsaveable",
+      "status": "PASS",
+      "actual": {
+        "status": 404
+      }
+    },
+    {
+      "id": "L07/provider-failed/single-call",
+      "status": "PASS",
+      "actual": {
+        "before": 13,
+        "after": 14
+      }
+    },
+    {
+      "id": "L07/provider-failed/rejected",
+      "status": "FAIL",
+      "actual": {}
+    },
+    {
+      "id": "L07/cancel/active-unsaveable",
+      "status": "PASS",
+      "actual": {
+        "status": "active",
+        "disposition": "pending",
+        "charged": true,
+        "counted": false,
+        "drafts": 0,
+        "batches": 0
+      }
+    },
+    {
+      "id": "L07/cancel/cancel-accepted",
+      "status": "PASS",
+      "actual": {
+        "status": 200
+      }
+    },
+    {
+      "id": "L07/cancel/terminal-unsaveable",
+      "status": "PASS",
+      "actual": {
+        "status": "user_cancelled",
+        "disposition": "pending",
+        "charged": true,
+        "counted": true,
+        "drafts": 0,
+        "batches": 0
+      }
+    },
+    {
+      "id": "L07/cancel/accounting",
+      "status": "PASS",
+      "actual": {
+        "status": "user_cancelled",
+        "disposition": "pending",
+        "charged": true,
+        "counted": true,
+        "drafts": 0,
+        "batches": 0
+      }
+    },
+    {
+      "id": "L08/claim-restart/single-call",
+      "status": "PASS",
+      "actual": {
+        "before": 15,
+        "after": 16
+      }
+    },
+    {
+      "id": "L08/claim-restart/valid",
+      "status": "PASS",
+      "actual": {
+        "terminal": "generation.validated",
+        "http": 200
+      }
+    },
+    {
+      "id": "L08/claim-restart/stream-exact",
+      "status": "PASS",
+      "actual": {
+        "equal": true
+      }
+    },
+    {
+      "id": "L08/guest-snapshot-intact",
+      "status": "PASS",
+      "actual": {}
+    },
+    {
+      "id": "L08/wrong-visitor",
+      "status": "PASS",
+      "actual": {}
+    },
+    {
+      "id": "L08/wrong-token",
+      "status": "PASS",
+      "actual": {}
+    },
+    {
+      "id": "L08/guest-cannot-direct-save",
+      "status": "FAIL",
+      "actual": {}
+    },
+    {
+      "id": "L08/claim-wrong-token",
+      "status": "PASS",
+      "actual": {}
+    },
+    {
+      "id": "L08/claim-restart-idempotent",
+      "status": "PASS",
+      "actual": {
+        "statuses": [
+          200,
+          200
+        ],
+        "state": {
+          "status": "valid",
+          "disposition": "saved",
+          "charged": true,
+          "counted": true,
+          "drafts": 0,
+          "batches": 1
+        }
+      }
+    },
+    {
+      "id": "L08/claim-accounting",
+      "status": "PASS",
+      "actual": {
+        "summary": {
+          "generation_count": 1,
+          "unique_learned_entries": 1,
+          "participating_batches": 1,
+          "paused_batches": 0,
+          "successful_review_count": 0,
+          "batches_ever_reviewed_successfully": 0
+        },
+        "calls": 16
+      }
+    },
+    {
+      "id": "L08/claim-cannot-rebind",
+      "status": "PASS",
+      "actual": {}
+    },
+    {
+      "id": "L08/claimed-two-stage-review/hint-all-vulnerable",
+      "status": "PASS",
+      "actual": {
+        "actual": [
+          {
+            "kind": "blank",
+            "length_hint": 8
+          },
+          {
+            "kind": "text",
+            "text": " in "
+          },
+          {
+            "kind": "blank",
+            "length_hint": 8
+          },
+          {
+            "kind": "text",
+            "text": " communities with "
+          },
+          {
+            "kind": "blank",
+            "length_hint": 8
+          }
+        ],
+        "expected_blank_count": 3
+      }
+    },
+    {
+      "id": "L08/claimed-two-stage-review/spelling-safe-vulnerable",
+      "status": "PASS",
+      "actual": [
+        "contextual_meaning",
+        "hint",
+        "item_id",
+        "stage"
+      ]
+    },
+    {
+      "id": "L08/claimed-two-stage-review/original-required-vulnerable",
+      "status": "PASS",
+      "actual": "retry"
+    },
+    {
+      "id": "L08/claimed-two-stage-review/all-gaps-groups",
+      "status": "PASS",
+      "actual": {
+        "gaps": 4,
+        "expected": 4,
+        "groups": 1
+      }
+    },
+    {
+      "id": "L08/claimed-two-stage-review/cloze-exact",
+      "status": "PASS",
+      "actual": {
+        "equal": true
+      }
+    },
+    {
+      "id": "L08/claimed-two-stage-review/retry-no-answer",
+      "status": "PASS",
+      "actual": {
+        "outcome": "retry",
+        "item_stable": true
+      }
+    },
+    {
+      "id": "L08/claimed-two-stage-review/complete-on-surface",
+      "status": "PASS",
+      "actual": {
+        "outcome": "session_completed",
+        "batch_result": {
+          "batch_id": "01a07ee6-43f0-795c-9385-a547eb330949",
+          "successful": true,
+          "error_count": 5,
+          "skip_count": 0
+        },
+        "session_progress": {
+          "completed_batches": 1,
+          "total_batches": 1,
+          "successful_batches": 1,
+          "unsuccessful_batches": 0
+        },
+        "next_batch": null,
+        "session_summary": {
+          "total_batches": 1,
+          "successful_batches": 1,
+          "unsuccessful_batches": 0,
+          "skipped_batches": 0
+        }
+      }
+    },
+    {
+      "id": "L08/claimed-two-stage-review/action-idempotent",
+      "status": "PASS",
+      "actual": {
+        "same": true
+      }
+    },
+    {
+      "id": "L09/claim-draft-expired/single-call",
+      "status": "PASS",
+      "actual": {
+        "before": 16,
+        "after": 17
+      }
+    },
+    {
+      "id": "L09/claim-draft-expired/valid",
+      "status": "PASS",
+      "actual": {
+        "terminal": "generation.validated",
+        "http": 200
+      }
+    },
+    {
+      "id": "L09/claim-draft-expired/stream-exact",
+      "status": "PASS",
+      "actual": {
+        "equal": true
+      }
+    },
+    {
+      "id": "L09/claim-valid-draft-expired",
+      "status": "PASS",
+      "actual": {
+        "status": 410,
+        "state": {
+          "status": "valid",
+          "disposition": "pending",
+          "charged": true,
+          "counted": true,
+          "drafts": 1,
+          "batches": 0
+        }
+      }
+    },
+    {
+      "id": "L09/claim-expired/single-call",
+      "status": "PASS",
+      "actual": {
+        "before": 17,
+        "after": 18
+      }
+    },
+    {
+      "id": "L09/claim-expired/valid",
+      "status": "PASS",
+      "actual": {
+        "terminal": "generation.validated",
+        "http": 200
+      }
+    },
+    {
+      "id": "L09/claim-expired/stream-exact",
+      "status": "PASS",
+      "actual": {
+        "equal": true
+      }
+    },
+    {
+      "id": "harness-completion",
+      "status": "ERROR",
+      "error": "Error: Command failed: docker exec -i ww-qa-cr039-096-db psql -U postgres -d qa096 -XAt -v ON_ERROR_STOP=1\nERROR:  new row for relation \"visitor_claims\" violates check constraint \"visitor_claims_expiry_after_create\"\nDETAIL:  Failing row contains (01a07ee6-4a91-7d2d-aa2f-61adf16ef085, 01a07ee6-49c1-760e-8980-cdc166331539, 01a07ee6-3bb5-76f3-84e1-cd36466ec8e4, \\xda5d6621b8080e20e9a23071ad37198f92f5baaa732ce8c84d46fbf5e9e427..., active, null, null, 2026-09-08 02:43:35.801577+00, null, 2026-09-08 02:43:36.721167+00).\n",
+      "stack": "Error: Command failed: docker exec -i ww-qa-cr039-096-db psql -U postgres -d qa096 -XAt -v ON_ERROR_STOP=1\nERROR:  new row for relation \"visitor_claims\" violates check constraint \"visitor_claims_expiry_after_create\"\nDETAIL:  Failing row contains (01a07ee6-4a91-7d2d-aa2f-61adf16ef085, 01a07ee6-49c1-760e-8980-cdc166331539, 01a07ee6-3bb5-76f3-84e1-cd36466ec8e4, \\xda5d6621b8080e20e9a23071ad37198f92f5baaa732ce8c84d46fbf5e9e427..., active, null, null, 2026-09-08 02:43:35.801577+00, null, 2026-09-08 02:43:36.721167+00).\n\n    at genericNodeError (node:internal/errors:983:15)\n    at wrappedFn (node:internal/errors:537:14)\n    at checkExecSyncError (node:child_process:916:11)\n    at execFileSync (node:child_process:952:15)\n    at docker (file:///Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/.planning/milestones/M001/verification/evidence/cr039-096/setup.mjs:11:35)\n    at sql (file:///Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/.planning/milestones/M001/verification/evidence/cr039-096/setup.mjs:12:21)\n    at run (file:///Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/.planning/milestones/M001/verification/evidence/cr039-096/suite.mjs:83:121)\n    at async file:///Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/.planning/milestones/M001/verification/evidence/cr039-096/suite.mjs:90:5"
+    }
+  ],
+  "traces": [
+    {
+      "id": "L01/restart-save",
+      "http": 200,
+      "terminal": "generation.validated",
+      "result": {
+        "passage": "Vulnerability and vulnerable communities face vulnerabilities.vulnerability. The local team discussed a practical plan for the community. Everyone had time to listen carefully, ask questions, and share useful ideas. A clear record helped residents follow the discussion and compare possible approaches. The meeting ended calmly, with an agreement to gather more information before making a final decision about the project.",
+        "tags": [
+          "Community"
+        ],
+        "targets": [
+          {
+            "entry": "vulnerable",
+            "contextual_meaning": "Easily harmed or affected by danger",
+            "hint_phrase": "vulnerability in vulnerable communities with vulnerabilities",
+            "hint_blanks": [
+              {
+                "start": 0,
+                "end": 13
+              },
+              {
+                "start": 17,
+                "end": 27
+              },
+              {
+                "start": 45,
+                "end": 60
+              }
+            ],
+            "occurrences": [
+              {
+                "surface": "Vulnerability",
+                "start": 0,
+                "end": 13
+              },
+              {
+                "surface": "vulnerable",
+                "start": 18,
+                "end": 28
+              },
+              {
+                "surface": "vulnerabilities",
+                "start": 46,
+                "end": 61
+              },
+              {
+                "surface": "vulnerability",
+                "start": 62,
+                "end": 75
+              }
+            ]
+          }
+        ]
+      },
+      "failure": {
+        "run_id": "01a07ee6-1787-7571-9ecf-c076027bade9",
+        "result": {
+          "passage": "Vulnerability and vulnerable communities face vulnerabilities.vulnerability. The local team discussed a practical plan for the community. Everyone had time to listen carefully, ask questions, and share useful ideas. A clear record helped residents follow the discussion and compare possible approaches. The meeting ended calmly, with an agreement to gather more information before making a final decision about the project.",
+          "tags": [
+            "Community"
+          ],
+          "targets": [
+            {
+              "entry": "vulnerable",
+              "contextual_meaning": "Easily harmed or affected by danger",
+              "hint_phrase": "vulnerability in vulnerable communities with vulnerabilities",
+              "hint_blanks": [
+                {
+                  "start": 0,
+                  "end": 13
+                },
+                {
+                  "start": 17,
+                  "end": 27
+                },
+                {
+                  "start": 45,
+                  "end": 60
+                }
+              ],
+              "occurrences": [
+                {
+                  "surface": "Vulnerability",
+                  "start": 0,
+                  "end": 13
+                },
+                {
+                  "surface": "vulnerable",
+                  "start": 18,
+                  "end": 28
+                },
+                {
+                  "surface": "vulnerabilities",
+                  "start": 46,
+                  "end": 61
+                },
+                {
+                  "surface": "vulnerability",
+                  "start": 62,
+                  "end": 75
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "started": {
+        "run_id": "01a07ee6-1787-7571-9ecf-c076027bade9"
+      },
+      "elapsed_ms": 214,
+      "deltas": "Vulnerability and vulnerable communities face vulnerabilities.vulnerability. The local team discussed a practical plan for the community. Everyone had time to listen carefully, ask questions, and share useful ideas. A clear record helped residents follow the discussion and compare possible approaches. The meeting ended calmly, with an agreement to gather more information before making a final decision about the project."
+    },
+    {
+      "id": "L03/two-stage-derived-review",
+      "session_id": "01a07ee6-222b-7690-91cb-7915d8091d8c",
+      "passage_item": {
+        "item_id": "itm_4f_9WxRChNcKitBsH7eQvg",
+        "passage_segments": [
+          {
+            "blank_id": "blank_m8BnmunlnKt5ZFRfxECGsA",
+            "group_key": "grp_PwdqMajNo_bPLtfpHWcp7w",
+            "kind": "blank"
+          },
+          {
+            "kind": "text",
+            "text": " and "
+          },
+          {
+            "blank_id": "blank_7aNz1aI-GZhSANT4BV8odw",
+            "group_key": "grp_PwdqMajNo_bPLtfpHWcp7w",
+            "kind": "blank"
+          },
+          {
+            "kind": "text",
+            "text": " communities face "
+          },
+          {
+            "blank_id": "blank_QrEFlSZnw9b93E49heQreQ",
+            "group_key": "grp_PwdqMajNo_bPLtfpHWcp7w",
+            "kind": "blank"
+          },
+          {
+            "kind": "text",
+            "text": "."
+          },
+          {
+            "blank_id": "blank_pHTH6nqzExnfvSAHUMHvyA",
+            "group_key": "grp_PwdqMajNo_bPLtfpHWcp7w",
+            "kind": "blank"
+          },
+          {
+            "kind": "text",
+            "text": ". The local team discussed a practical plan for the community. Everyone had time to listen carefully, ask questions, and share useful ideas. A clear record helped residents follow the discussion and compare possible approaches. The meeting ended calmly, with an agreement to gather more information before making a final decision about the project."
+          }
+        ],
+        "stage": "passage_cloze"
+      },
+      "completion": {
+        "outcome": "session_completed",
+        "batch_result": {
+          "batch_id": "01a07ee6-1dc1-72d8-8613-98291cb85693",
+          "successful": true,
+          "error_count": 5,
+          "skip_count": 0
+        },
+        "session_progress": {
+          "completed_batches": 1,
+          "total_batches": 1,
+          "successful_batches": 1,
+          "unsuccessful_batches": 0
+        },
+        "next_batch": null,
+        "session_summary": {
+          "total_batches": 1,
+          "successful_batches": 1,
+          "unsuccessful_batches": 0,
+          "skipped_batches": 0
+        }
+      }
+    },
+    {
+      "id": "L04/discard",
+      "http": 200,
+      "terminal": "generation.validated",
+      "result": {
+        "passage": "Vulnerability and vulnerable communities face vulnerabilities.vulnerability. The local team discussed a practical plan for the community. Everyone had time to listen carefully, ask questions, and share useful ideas. A clear record helped residents follow the discussion and compare possible approaches. The meeting ended calmly, with an agreement to gather more information before making a final decision about the project.",
+        "tags": [
+          "Community"
+        ],
+        "targets": [
+          {
+            "entry": "vulnerable",
+            "contextual_meaning": "Easily harmed or affected by danger",
+            "hint_phrase": "vulnerability in vulnerable communities with vulnerabilities",
+            "hint_blanks": [
+              {
+                "start": 0,
+                "end": 13
+              },
+              {
+                "start": 17,
+                "end": 27
+              },
+              {
+                "start": 45,
+                "end": 60
+              }
+            ],
+            "occurrences": [
+              {
+                "surface": "Vulnerability",
+                "start": 0,
+                "end": 13
+              },
+              {
+                "surface": "vulnerable",
+                "start": 18,
+                "end": 28
+              },
+              {
+                "surface": "vulnerabilities",
+                "start": 46,
+                "end": 61
+              },
+              {
+                "surface": "vulnerability",
+                "start": 62,
+                "end": 75
+              }
+            ]
+          }
+        ]
+      },
+      "failure": {
+        "run_id": "01a07ee6-26b0-76b8-a947-f11eb8773d3c",
+        "result": {
+          "passage": "Vulnerability and vulnerable communities face vulnerabilities.vulnerability. The local team discussed a practical plan for the community. Everyone had time to listen carefully, ask questions, and share useful ideas. A clear record helped residents follow the discussion and compare possible approaches. The meeting ended calmly, with an agreement to gather more information before making a final decision about the project.",
+          "tags": [
+            "Community"
+          ],
+          "targets": [
+            {
+              "entry": "vulnerable",
+              "contextual_meaning": "Easily harmed or affected by danger",
+              "hint_phrase": "vulnerability in vulnerable communities with vulnerabilities",
+              "hint_blanks": [
+                {
+                  "start": 0,
+                  "end": 13
+                },
+                {
+                  "start": 17,
+                  "end": 27
+                },
+                {
+                  "start": 45,
+                  "end": 60
+                }
+              ],
+              "occurrences": [
+                {
+                  "surface": "Vulnerability",
+                  "start": 0,
+                  "end": 13
+                },
+                {
+                  "surface": "vulnerable",
+                  "start": 18,
+                  "end": 28
+                },
+                {
+                  "surface": "vulnerabilities",
+                  "start": 46,
+                  "end": 61
+                },
+                {
+                  "surface": "vulnerability",
+                  "start": 62,
+                  "end": 75
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "started": {
+        "run_id": "01a07ee6-26b0-76b8-a947-f11eb8773d3c"
+      },
+      "elapsed_ms": 212,
+      "deltas": "Vulnerability and vulnerable communities face vulnerabilities.vulnerability. The local team discussed a practical plan for the community. Everyone had time to listen carefully, ask questions, and share useful ideas. A clear record helped residents follow the discussion and compare possible approaches. The meeting ended calmly, with an agreement to gather more information before making a final decision about the project."
+    },
+    {
+      "id": "L05/expiry",
+      "http": 200,
+      "terminal": "generation.validated",
+      "result": {
+        "passage": "Vulnerability and vulnerable communities face vulnerabilities.vulnerability. The local team discussed a practical plan for the community. Everyone had time to listen carefully, ask questions, and share useful ideas. A clear record helped residents follow the discussion and compare possible approaches. The meeting ended calmly, with an agreement to gather more information before making a final decision about the project.",
+        "tags": [
+          "Community"
+        ],
+        "targets": [
+          {
+            "entry": "vulnerable",
+            "contextual_meaning": "Easily harmed or affected by danger",
+            "hint_phrase": "vulnerability in vulnerable communities with vulnerabilities",
+            "hint_blanks": [
+              {
+                "start": 0,
+                "end": 13
+              },
+              {
+                "start": 17,
+                "end": 27
+              },
+              {
+                "start": 45,
+                "end": 60
+              }
+            ],
+            "occurrences": [
+              {
+                "surface": "Vulnerability",
+                "start": 0,
+                "end": 13
+              },
+              {
+                "surface": "vulnerable",
+                "start": 18,
+                "end": 28
+              },
+              {
+                "surface": "vulnerabilities",
+                "start": 46,
+                "end": 61
+              },
+              {
+                "surface": "vulnerability",
+                "start": 62,
+                "end": 75
+              }
+            ]
+          }
+        ]
+      },
+      "failure": {
+        "run_id": "01a07ee6-2f63-7d2b-a006-1aa6e148aeeb",
+        "result": {
+          "passage": "Vulnerability and vulnerable communities face vulnerabilities.vulnerability. The local team discussed a practical plan for the community. Everyone had time to listen carefully, ask questions, and share useful ideas. A clear record helped residents follow the discussion and compare possible approaches. The meeting ended calmly, with an agreement to gather more information before making a final decision about the project.",
+          "tags": [
+            "Community"
+          ],
+          "targets": [
+            {
+              "entry": "vulnerable",
+              "contextual_meaning": "Easily harmed or affected by danger",
+              "hint_phrase": "vulnerability in vulnerable communities with vulnerabilities",
+              "hint_blanks": [
+                {
+                  "start": 0,
+                  "end": 13
+                },
+                {
+                  "start": 17,
+                  "end": 27
+                },
+                {
+                  "start": 45,
+                  "end": 60
+                }
+              ],
+              "occurrences": [
+                {
+                  "surface": "Vulnerability",
+                  "start": 0,
+                  "end": 13
+                },
+                {
+                  "surface": "vulnerable",
+                  "start": 18,
+                  "end": 28
+                },
+                {
+                  "surface": "vulnerabilities",
+                  "start": 46,
+                  "end": 61
+                },
+                {
+                  "surface": "vulnerability",
+                  "start": 62,
+                  "end": 75
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "started": {
+        "run_id": "01a07ee6-2f63-7d2b-a006-1aa6e148aeeb"
+      },
+      "elapsed_ms": 218,
+      "deltas": "Vulnerability and vulnerable communities face vulnerabilities.vulnerability. The local team discussed a practical plan for the community. Everyone had time to listen carefully, ask questions, and share useful ideas. A clear record helped residents follow the discussion and compare possible approaches. The meeting ended calmly, with an agreement to gather more information before making a final decision about the project."
+    },
+    {
+      "id": "L05/terminal",
+      "http": 200,
+      "terminal": "generation.validated",
+      "result": {
+        "passage": "Vulnerability and vulnerable communities face vulnerabilities.vulnerability. The local team discussed a practical plan for the community. Everyone had time to listen carefully, ask questions, and share useful ideas. A clear record helped residents follow the discussion and compare possible approaches. The meeting ended calmly, with an agreement to gather more information before making a final decision about the project.",
+        "tags": [
+          "Community"
+        ],
+        "targets": [
+          {
+            "entry": "vulnerable",
+            "contextual_meaning": "Easily harmed or affected by danger",
+            "hint_phrase": "vulnerability in vulnerable communities with vulnerabilities",
+            "hint_blanks": [
+              {
+                "start": 0,
+                "end": 13
+              },
+              {
+                "start": 17,
+                "end": 27
+              },
+              {
+                "start": 45,
+                "end": 60
+              }
+            ],
+            "occurrences": [
+              {
+                "surface": "Vulnerability",
+                "start": 0,
+                "end": 13
+              },
+              {
+                "surface": "vulnerable",
+                "start": 18,
+                "end": 28
+              },
+              {
+                "surface": "vulnerabilities",
+                "start": 46,
+                "end": 61
+              },
+              {
+                "surface": "vulnerability",
+                "start": 62,
+                "end": 75
+              }
+            ]
+          }
+        ]
+      },
+      "failure": {
+        "run_id": "01a07ee6-311e-7259-a785-1df2ab8f6c00",
+        "result": {
+          "passage": "Vulnerability and vulnerable communities face vulnerabilities.vulnerability. The local team discussed a practical plan for the community. Everyone had time to listen carefully, ask questions, and share useful ideas. A clear record helped residents follow the discussion and compare possible approaches. The meeting ended calmly, with an agreement to gather more information before making a final decision about the project.",
+          "tags": [
+            "Community"
+          ],
+          "targets": [
+            {
+              "entry": "vulnerable",
+              "contextual_meaning": "Easily harmed or affected by danger",
+              "hint_phrase": "vulnerability in vulnerable communities with vulnerabilities",
+              "hint_blanks": [
+                {
+                  "start": 0,
+                  "end": 13
+                },
+                {
+                  "start": 17,
+                  "end": 27
+                },
+                {
+                  "start": 45,
+                  "end": 60
+                }
+              ],
+              "occurrences": [
+                {
+                  "surface": "Vulnerability",
+                  "start": 0,
+                  "end": 13
+                },
+                {
+                  "surface": "vulnerable",
+                  "start": 18,
+                  "end": 28
+                },
+                {
+                  "surface": "vulnerabilities",
+                  "start": 46,
+                  "end": 61
+                },
+                {
+                  "surface": "vulnerability",
+                  "start": 62,
+                  "end": 75
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "started": {
+        "run_id": "01a07ee6-311e-7259-a785-1df2ab8f6c00"
+      },
+      "elapsed_ms": 209,
+      "deltas": "Vulnerability and vulnerable communities face vulnerabilities.vulnerability. The local team discussed a practical plan for the community. Everyone had time to listen carefully, ask questions, and share useful ideas. A clear record helped residents follow the discussion and compare possible approaches. The meeting ended calmly, with an agreement to gather more information before making a final decision about the project."
+    },
+    {
+      "id": "L06/concurrent-save",
+      "http": 200,
+      "terminal": "generation.validated",
+      "result": {
+        "passage": "Vulnerability and vulnerable communities face vulnerabilities.vulnerability. The local team discussed a practical plan for the community. Everyone had time to listen carefully, ask questions, and share useful ideas. A clear record helped residents follow the discussion and compare possible approaches. The meeting ended calmly, with an agreement to gather more information before making a final decision about the project.",
+        "tags": [
+          "Community"
+        ],
+        "targets": [
+          {
+            "entry": "vulnerable",
+            "contextual_meaning": "Easily harmed or affected by danger",
+            "hint_phrase": "vulnerability in vulnerable communities with vulnerabilities",
+            "hint_blanks": [
+              {
+                "start": 0,
+                "end": 13
+              },
+              {
+                "start": 17,
+                "end": 27
+              },
+              {
+                "start": 45,
+                "end": 60
+              }
+            ],
+            "occurrences": [
+              {
+                "surface": "Vulnerability",
+                "start": 0,
+                "end": 13
+              },
+              {
+                "surface": "vulnerable",
+                "start": 18,
+                "end": 28
+              },
+              {
+                "surface": "vulnerabilities",
+                "start": 46,
+                "end": 61
+              },
+              {
+                "surface": "vulnerability",
+                "start": 62,
+                "end": 75
+              }
+            ]
+          }
+        ]
+      },
+      "failure": {
+        "run_id": "01a07ee6-329c-7065-ad7c-d6566473c423",
+        "result": {
+          "passage": "Vulnerability and vulnerable communities face vulnerabilities.vulnerability. The local team discussed a practical plan for the community. Everyone had time to listen carefully, ask questions, and share useful ideas. A clear record helped residents follow the discussion and compare possible approaches. The meeting ended calmly, with an agreement to gather more information before making a final decision about the project.",
+          "tags": [
+            "Community"
+          ],
+          "targets": [
+            {
+              "entry": "vulnerable",
+              "contextual_meaning": "Easily harmed or affected by danger",
+              "hint_phrase": "vulnerability in vulnerable communities with vulnerabilities",
+              "hint_blanks": [
+                {
+                  "start": 0,
+                  "end": 13
+                },
+                {
+                  "start": 17,
+                  "end": 27
+                },
+                {
+                  "start": 45,
+                  "end": 60
+                }
+              ],
+              "occurrences": [
+                {
+                  "surface": "Vulnerability",
+                  "start": 0,
+                  "end": 13
+                },
+                {
+                  "surface": "vulnerable",
+                  "start": 18,
+                  "end": 28
+                },
+                {
+                  "surface": "vulnerabilities",
+                  "start": 46,
+                  "end": 61
+                },
+                {
+                  "surface": "vulnerability",
+                  "start": 62,
+                  "end": 75
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "started": {
+        "run_id": "01a07ee6-329c-7065-ad7c-d6566473c423"
+      },
+      "elapsed_ms": 209,
+      "deltas": "Vulnerability and vulnerable communities face vulnerabilities.vulnerability. The local team discussed a practical plan for the community. Everyone had time to listen carefully, ask questions, and share useful ideas. A clear record helped residents follow the discussion and compare possible approaches. The meeting ended calmly, with an agreement to gather more information before making a final decision about the project."
+    },
+    {
+      "id": "L06/cross-run",
+      "http": 200,
+      "terminal": "generation.validated",
+      "result": {
+        "passage": "Vulnerability and vulnerable communities face vulnerabilities.vulnerability. The local team discussed a practical plan for the community. Everyone had time to listen carefully, ask questions, and share useful ideas. A clear record helped residents follow the discussion and compare possible approaches. The meeting ended calmly, with an agreement to gather more information before making a final decision about the project.",
+        "tags": [
+          "Community"
+        ],
+        "targets": [
+          {
+            "entry": "vulnerable",
+            "contextual_meaning": "Easily harmed or affected by danger",
+            "hint_phrase": "vulnerability in vulnerable communities with vulnerabilities",
+            "hint_blanks": [
+              {
+                "start": 0,
+                "end": 13
+              },
+              {
+                "start": 17,
+                "end": 27
+              },
+              {
+                "start": 45,
+                "end": 60
+              }
+            ],
+            "occurrences": [
+              {
+                "surface": "Vulnerability",
+                "start": 0,
+                "end": 13
+              },
+              {
+                "surface": "vulnerable",
+                "start": 18,
+                "end": 28
+              },
+              {
+                "surface": "vulnerabilities",
+                "start": 46,
+                "end": 61
+              },
+              {
+                "surface": "vulnerability",
+                "start": 62,
+                "end": 75
+              }
+            ]
+          }
+        ]
+      },
+      "failure": {
+        "run_id": "01a07ee6-3372-7d9d-9bbb-18a182d8f52a",
+        "result": {
+          "passage": "Vulnerability and vulnerable communities face vulnerabilities.vulnerability. The local team discussed a practical plan for the community. Everyone had time to listen carefully, ask questions, and share useful ideas. A clear record helped residents follow the discussion and compare possible approaches. The meeting ended calmly, with an agreement to gather more information before making a final decision about the project.",
+          "tags": [
+            "Community"
+          ],
+          "targets": [
+            {
+              "entry": "vulnerable",
+              "contextual_meaning": "Easily harmed or affected by danger",
+              "hint_phrase": "vulnerability in vulnerable communities with vulnerabilities",
+              "hint_blanks": [
+                {
+                  "start": 0,
+                  "end": 13
+                },
+                {
+                  "start": 17,
+                  "end": 27
+                },
+                {
+                  "start": 45,
+                  "end": 60
+                }
+              ],
+              "occurrences": [
+                {
+                  "surface": "Vulnerability",
+                  "start": 0,
+                  "end": 13
+                },
+                {
+                  "surface": "vulnerable",
+                  "start": 18,
+                  "end": 28
+                },
+                {
+                  "surface": "vulnerabilities",
+                  "start": 46,
+                  "end": 61
+                },
+                {
+                  "surface": "vulnerability",
+                  "start": 62,
+                  "end": 75
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "started": {
+        "run_id": "01a07ee6-3372-7d9d-9bbb-18a182d8f52a"
+      },
+      "elapsed_ms": 217,
+      "deltas": "Vulnerability and vulnerable communities face vulnerabilities.vulnerability. The local team discussed a practical plan for the community. Everyone had time to listen carefully, ask questions, and share useful ideas. A clear record helped residents follow the discussion and compare possible approaches. The meeting ended calmly, with an agreement to gather more information before making a final decision about the project."
+    },
+    {
+      "id": "L06/save-discard-0",
+      "http": 200,
+      "terminal": "generation.validated",
+      "result": {
+        "passage": "Vulnerability and vulnerable communities face vulnerabilities.vulnerability. The local team discussed a practical plan for the community. Everyone had time to listen carefully, ask questions, and share useful ideas. A clear record helped residents follow the discussion and compare possible approaches. The meeting ended calmly, with an agreement to gather more information before making a final decision about the project.",
+        "tags": [
+          "Community"
+        ],
+        "targets": [
+          {
+            "entry": "vulnerable",
+            "contextual_meaning": "Easily harmed or affected by danger",
+            "hint_phrase": "vulnerability in vulnerable communities with vulnerabilities",
+            "hint_blanks": [
+              {
+                "start": 0,
+                "end": 13
+              },
+              {
+                "start": 17,
+                "end": 27
+              },
+              {
+                "start": 45,
+                "end": 60
+              }
+            ],
+            "occurrences": [
+              {
+                "surface": "Vulnerability",
+                "start": 0,
+                "end": 13
+              },
+              {
+                "surface": "vulnerable",
+                "start": 18,
+                "end": 28
+              },
+              {
+                "surface": "vulnerabilities",
+                "start": 46,
+                "end": 61
+              },
+              {
+                "surface": "vulnerability",
+                "start": 62,
+                "end": 75
+              }
+            ]
+          }
+        ]
+      },
+      "failure": {
+        "run_id": "01a07ee6-355d-79dc-a5b4-bfa64a9206e5",
+        "result": {
+          "passage": "Vulnerability and vulnerable communities face vulnerabilities.vulnerability. The local team discussed a practical plan for the community. Everyone had time to listen carefully, ask questions, and share useful ideas. A clear record helped residents follow the discussion and compare possible approaches. The meeting ended calmly, with an agreement to gather more information before making a final decision about the project.",
+          "tags": [
+            "Community"
+          ],
+          "targets": [
+            {
+              "entry": "vulnerable",
+              "contextual_meaning": "Easily harmed or affected by danger",
+              "hint_phrase": "vulnerability in vulnerable communities with vulnerabilities",
+              "hint_blanks": [
+                {
+                  "start": 0,
+                  "end": 13
+                },
+                {
+                  "start": 17,
+                  "end": 27
+                },
+                {
+                  "start": 45,
+                  "end": 60
+                }
+              ],
+              "occurrences": [
+                {
+                  "surface": "Vulnerability",
+                  "start": 0,
+                  "end": 13
+                },
+                {
+                  "surface": "vulnerable",
+                  "start": 18,
+                  "end": 28
+                },
+                {
+                  "surface": "vulnerabilities",
+                  "start": 46,
+                  "end": 61
+                },
+                {
+                  "surface": "vulnerability",
+                  "start": 62,
+                  "end": 75
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "started": {
+        "run_id": "01a07ee6-355d-79dc-a5b4-bfa64a9206e5"
+      },
+      "elapsed_ms": 212,
+      "deltas": "Vulnerability and vulnerable communities face vulnerabilities.vulnerability. The local team discussed a practical plan for the community. Everyone had time to listen carefully, ask questions, and share useful ideas. A clear record helped residents follow the discussion and compare possible approaches. The meeting ended calmly, with an agreement to gather more information before making a final decision about the project."
+    },
+    {
+      "id": "L06/save-discard-1",
+      "http": 200,
+      "terminal": "generation.validated",
+      "result": {
+        "passage": "Vulnerability and vulnerable communities face vulnerabilities.vulnerability. The local team discussed a practical plan for the community. Everyone had time to listen carefully, ask questions, and share useful ideas. A clear record helped residents follow the discussion and compare possible approaches. The meeting ended calmly, with an agreement to gather more information before making a final decision about the project.",
+        "tags": [
+          "Community"
+        ],
+        "targets": [
+          {
+            "entry": "vulnerable",
+            "contextual_meaning": "Easily harmed or affected by danger",
+            "hint_phrase": "vulnerability in vulnerable communities with vulnerabilities",
+            "hint_blanks": [
+              {
+                "start": 0,
+                "end": 13
+              },
+              {
+                "start": 17,
+                "end": 27
+              },
+              {
+                "start": 45,
+                "end": 60
+              }
+            ],
+            "occurrences": [
+              {
+                "surface": "Vulnerability",
+                "start": 0,
+                "end": 13
+              },
+              {
+                "surface": "vulnerable",
+                "start": 18,
+                "end": 28
+              },
+              {
+                "surface": "vulnerabilities",
+                "start": 46,
+                "end": 61
+              },
+              {
+                "surface": "vulnerability",
+                "start": 62,
+                "end": 75
+              }
+            ]
+          }
+        ]
+      },
+      "failure": {
+        "run_id": "01a07ee6-368c-74bc-8b0f-d4b14af24c20",
+        "result": {
+          "passage": "Vulnerability and vulnerable communities face vulnerabilities.vulnerability. The local team discussed a practical plan for the community. Everyone had time to listen carefully, ask questions, and share useful ideas. A clear record helped residents follow the discussion and compare possible approaches. The meeting ended calmly, with an agreement to gather more information before making a final decision about the project.",
+          "tags": [
+            "Community"
+          ],
+          "targets": [
+            {
+              "entry": "vulnerable",
+              "contextual_meaning": "Easily harmed or affected by danger",
+              "hint_phrase": "vulnerability in vulnerable communities with vulnerabilities",
+              "hint_blanks": [
+                {
+                  "start": 0,
+                  "end": 13
+                },
+                {
+                  "start": 17,
+                  "end": 27
+                },
+                {
+                  "start": 45,
+                  "end": 60
+                }
+              ],
+              "occurrences": [
+                {
+                  "surface": "Vulnerability",
+                  "start": 0,
+                  "end": 13
+                },
+                {
+                  "surface": "vulnerable",
+                  "start": 18,
+                  "end": 28
+                },
+                {
+                  "surface": "vulnerabilities",
+                  "start": 46,
+                  "end": 61
+                },
+                {
+                  "surface": "vulnerability",
+                  "start": 62,
+                  "end": 75
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "started": {
+        "run_id": "01a07ee6-368c-74bc-8b0f-d4b14af24c20"
+      },
+      "elapsed_ms": 212,
+      "deltas": "Vulnerability and vulnerable communities face vulnerabilities.vulnerability. The local team discussed a practical plan for the community. Everyone had time to listen carefully, ask questions, and share useful ideas. A clear record helped residents follow the discussion and compare possible approaches. The meeting ended calmly, with an agreement to gather more information before making a final decision about the project."
+    },
+    {
+      "id": "L06/save-discard-2",
+      "http": 200,
+      "terminal": "generation.validated",
+      "result": {
+        "passage": "Vulnerability and vulnerable communities face vulnerabilities.vulnerability. The local team discussed a practical plan for the community. Everyone had time to listen carefully, ask questions, and share useful ideas. A clear record helped residents follow the discussion and compare possible approaches. The meeting ended calmly, with an agreement to gather more information before making a final decision about the project.",
+        "tags": [
+          "Community"
+        ],
+        "targets": [
+          {
+            "entry": "vulnerable",
+            "contextual_meaning": "Easily harmed or affected by danger",
+            "hint_phrase": "vulnerability in vulnerable communities with vulnerabilities",
+            "hint_blanks": [
+              {
+                "start": 0,
+                "end": 13
+              },
+              {
+                "start": 17,
+                "end": 27
+              },
+              {
+                "start": 45,
+                "end": 60
+              }
+            ],
+            "occurrences": [
+              {
+                "surface": "Vulnerability",
+                "start": 0,
+                "end": 13
+              },
+              {
+                "surface": "vulnerable",
+                "start": 18,
+                "end": 28
+              },
+              {
+                "surface": "vulnerabilities",
+                "start": 46,
+                "end": 61
+              },
+              {
+                "surface": "vulnerability",
+                "start": 62,
+                "end": 75
+              }
+            ]
+          }
+        ]
+      },
+      "failure": {
+        "run_id": "01a07ee6-37af-7a21-be74-bf77ce56ba7a",
+        "result": {
+          "passage": "Vulnerability and vulnerable communities face vulnerabilities.vulnerability. The local team discussed a practical plan for the community. Everyone had time to listen carefully, ask questions, and share useful ideas. A clear record helped residents follow the discussion and compare possible approaches. The meeting ended calmly, with an agreement to gather more information before making a final decision about the project.",
+          "tags": [
+            "Community"
+          ],
+          "targets": [
+            {
+              "entry": "vulnerable",
+              "contextual_meaning": "Easily harmed or affected by danger",
+              "hint_phrase": "vulnerability in vulnerable communities with vulnerabilities",
+              "hint_blanks": [
+                {
+                  "start": 0,
+                  "end": 13
+                },
+                {
+                  "start": 17,
+                  "end": 27
+                },
+                {
+                  "start": 45,
+                  "end": 60
+                }
+              ],
+              "occurrences": [
+                {
+                  "surface": "Vulnerability",
+                  "start": 0,
+                  "end": 13
+                },
+                {
+                  "surface": "vulnerable",
+                  "start": 18,
+                  "end": 28
+                },
+                {
+                  "surface": "vulnerabilities",
+                  "start": 46,
+                  "end": 61
+                },
+                {
+                  "surface": "vulnerability",
+                  "start": 62,
+                  "end": 75
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "started": {
+        "run_id": "01a07ee6-37af-7a21-be74-bf77ce56ba7a"
+      },
+      "elapsed_ms": 207,
+      "deltas": "Vulnerability and vulnerable communities face vulnerabilities.vulnerability. The local team discussed a practical plan for the community. Everyone had time to listen carefully, ask questions, and share useful ideas. A clear record helped residents follow the discussion and compare possible approaches. The meeting ended calmly, with an agreement to gather more information before making a final decision about the project."
+    },
+    {
+      "id": "L06/save-discard-3",
+      "http": 200,
+      "terminal": "generation.validated",
+      "result": {
+        "passage": "Vulnerability and vulnerable communities face vulnerabilities.vulnerability. The local team discussed a practical plan for the community. Everyone had time to listen carefully, ask questions, and share useful ideas. A clear record helped residents follow the discussion and compare possible approaches. The meeting ended calmly, with an agreement to gather more information before making a final decision about the project.",
+        "tags": [
+          "Community"
+        ],
+        "targets": [
+          {
+            "entry": "vulnerable",
+            "contextual_meaning": "Easily harmed or affected by danger",
+            "hint_phrase": "vulnerability in vulnerable communities with vulnerabilities",
+            "hint_blanks": [
+              {
+                "start": 0,
+                "end": 13
+              },
+              {
+                "start": 17,
+                "end": 27
+              },
+              {
+                "start": 45,
+                "end": 60
+              }
+            ],
+            "occurrences": [
+              {
+                "surface": "Vulnerability",
+                "start": 0,
+                "end": 13
+              },
+              {
+                "surface": "vulnerable",
+                "start": 18,
+                "end": 28
+              },
+              {
+                "surface": "vulnerabilities",
+                "start": 46,
+                "end": 61
+              },
+              {
+                "surface": "vulnerability",
+                "start": 62,
+                "end": 75
+              }
+            ]
+          }
+        ]
+      },
+      "failure": {
+        "run_id": "01a07ee6-38d6-7632-af9b-55924363741e",
+        "result": {
+          "passage": "Vulnerability and vulnerable communities face vulnerabilities.vulnerability. The local team discussed a practical plan for the community. Everyone had time to listen carefully, ask questions, and share useful ideas. A clear record helped residents follow the discussion and compare possible approaches. The meeting ended calmly, with an agreement to gather more information before making a final decision about the project.",
+          "tags": [
+            "Community"
+          ],
+          "targets": [
+            {
+              "entry": "vulnerable",
+              "contextual_meaning": "Easily harmed or affected by danger",
+              "hint_phrase": "vulnerability in vulnerable communities with vulnerabilities",
+              "hint_blanks": [
+                {
+                  "start": 0,
+                  "end": 13
+                },
+                {
+                  "start": 17,
+                  "end": 27
+                },
+                {
+                  "start": 45,
+                  "end": 60
+                }
+              ],
+              "occurrences": [
+                {
+                  "surface": "Vulnerability",
+                  "start": 0,
+                  "end": 13
+                },
+                {
+                  "surface": "vulnerable",
+                  "start": 18,
+                  "end": 28
+                },
+                {
+                  "surface": "vulnerabilities",
+                  "start": 46,
+                  "end": 61
+                },
+                {
+                  "surface": "vulnerability",
+                  "start": 62,
+                  "end": 75
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "started": {
+        "run_id": "01a07ee6-38d6-7632-af9b-55924363741e"
+      },
+      "elapsed_ms": 209,
+      "deltas": "Vulnerability and vulnerable communities face vulnerabilities.vulnerability. The local team discussed a practical plan for the community. Everyone had time to listen carefully, ask questions, and share useful ideas. A clear record helped residents follow the discussion and compare possible approaches. The meeting ended calmly, with an agreement to gather more information before making a final decision about the project."
+    },
+    {
+      "id": "L07/invalid",
+      "http": 200,
+      "terminal": "generation.failed",
+      "failure": {
+        "code": "content_validation_failed",
+        "quota_refunded": true,
+        "retryable": true,
+        "request_id": "req_yTOrZuWZ-AbRRHi-B0nY0A"
+      },
+      "started": {
+        "run_id": "01a07ee6-3a00-77cb-b669-0c998a93e59a"
+      },
+      "elapsed_ms": 170,
+      "deltas": "banana. The local team discussed a practical plan for the community. Everyone had time to listen carefully, ask questions, and share useful ideas. A clear record helped residents follow the discussion and compare possible approaches. The meeting ended calmly, with an agreement to gather more information before making a final decision about the project."
+    },
+    {
+      "id": "L07/provider-failed",
+      "http": 503,
+      "elapsed_ms": 10,
+      "deltas": ""
+    },
+    {
+      "id": "L08/claim-restart",
+      "http": 200,
+      "terminal": "generation.validated",
+      "result": {
+        "passage": "Vulnerability and vulnerable communities face vulnerabilities.vulnerability. The local team discussed a practical plan for the community. Everyone had time to listen carefully, ask questions, and share useful ideas. A clear record helped residents follow the discussion and compare possible approaches. The meeting ended calmly, with an agreement to gather more information before making a final decision about the project.",
+        "tags": [
+          "Community"
+        ],
+        "targets": [
+          {
+            "entry": "vulnerable",
+            "contextual_meaning": "Easily harmed or affected by danger",
+            "hint_phrase": "vulnerability in vulnerable communities with vulnerabilities",
+            "hint_blanks": [
+              {
+                "start": 0,
+                "end": 13
+              },
+              {
+                "start": 17,
+                "end": 27
+              },
+              {
+                "start": 45,
+                "end": 60
+              }
+            ],
+            "occurrences": [
+              {
+                "surface": "Vulnerability",
+                "start": 0,
+                "end": 13
+              },
+              {
+                "surface": "vulnerable",
+                "start": 18,
+                "end": 28
+              },
+              {
+                "surface": "vulnerabilities",
+                "start": 46,
+                "end": 61
+              },
+              {
+                "surface": "vulnerability",
+                "start": 62,
+                "end": 75
+              }
+            ]
+          }
+        ]
+      },
+      "failure": {
+        "run_id": "01a07ee6-3c2a-72bd-907f-fed70564fb09",
+        "result": {
+          "passage": "Vulnerability and vulnerable communities face vulnerabilities.vulnerability. The local team discussed a practical plan for the community. Everyone had time to listen carefully, ask questions, and share useful ideas. A clear record helped residents follow the discussion and compare possible approaches. The meeting ended calmly, with an agreement to gather more information before making a final decision about the project.",
+          "tags": [
+            "Community"
+          ],
+          "targets": [
+            {
+              "entry": "vulnerable",
+              "contextual_meaning": "Easily harmed or affected by danger",
+              "hint_phrase": "vulnerability in vulnerable communities with vulnerabilities",
+              "hint_blanks": [
+                {
+                  "start": 0,
+                  "end": 13
+                },
+                {
+                  "start": 17,
+                  "end": 27
+                },
+                {
+                  "start": 45,
+                  "end": 60
+                }
+              ],
+              "occurrences": [
+                {
+                  "surface": "Vulnerability",
+                  "start": 0,
+                  "end": 13
+                },
+                {
+                  "surface": "vulnerable",
+                  "start": 18,
+                  "end": 28
+                },
+                {
+                  "surface": "vulnerabilities",
+                  "start": 46,
+                  "end": 61
+                },
+                {
+                  "surface": "vulnerability",
+                  "start": 62,
+                  "end": 75
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "started": {
+        "run_id": "01a07ee6-3c2a-72bd-907f-fed70564fb09"
+      },
+      "elapsed_ms": 228,
+      "deltas": "Vulnerability and vulnerable communities face vulnerabilities.vulnerability. The local team discussed a practical plan for the community. Everyone had time to listen carefully, ask questions, and share useful ideas. A clear record helped residents follow the discussion and compare possible approaches. The meeting ended calmly, with an agreement to gather more information before making a final decision about the project."
+    },
+    {
+      "id": "L08/claimed-two-stage-review",
+      "session_id": "01a07ee6-47d4-7883-8ee0-ae8612813b94",
+      "passage_item": {
+        "item_id": "itm_tlKL-4LSiO5h3zfcXy13cQ",
+        "passage_segments": [
+          {
+            "blank_id": "blank_6VFw5abfzdm9rFZiENBLKQ",
+            "group_key": "grp_v9LWK2Krxkh0r18iA94WpA",
+            "kind": "blank"
+          },
+          {
+            "kind": "text",
+            "text": " and "
+          },
+          {
+            "blank_id": "blank_RGdyE6jLNdM6BgMGgkR7YQ",
+            "group_key": "grp_v9LWK2Krxkh0r18iA94WpA",
+            "kind": "blank"
+          },
+          {
+            "kind": "text",
+            "text": " communities face "
+          },
+          {
+            "blank_id": "blank_QAJWA9VxMhorcEtzK_wQkw",
+            "group_key": "grp_v9LWK2Krxkh0r18iA94WpA",
+            "kind": "blank"
+          },
+          {
+            "kind": "text",
+            "text": "."
+          },
+          {
+            "blank_id": "blank_CkwVIjJPsss0WSH06b6jdQ",
+            "group_key": "grp_v9LWK2Krxkh0r18iA94WpA",
+            "kind": "blank"
+          },
+          {
+            "kind": "text",
+            "text": ". The local team discussed a practical plan for the community. Everyone had time to listen carefully, ask questions, and share useful ideas. A clear record helped residents follow the discussion and compare possible approaches. The meeting ended calmly, with an agreement to gather more information before making a final decision about the project."
+          }
+        ],
+        "stage": "passage_cloze"
+      },
+      "completion": {
+        "outcome": "session_completed",
+        "batch_result": {
+          "batch_id": "01a07ee6-43f0-795c-9385-a547eb330949",
+          "successful": true,
+          "error_count": 5,
+          "skip_count": 0
+        },
+        "session_progress": {
+          "completed_batches": 1,
+          "total_batches": 1,
+          "successful_batches": 1,
+          "unsuccessful_batches": 0
+        },
+        "next_batch": null,
+        "session_summary": {
+          "total_batches": 1,
+          "successful_batches": 1,
+          "unsuccessful_batches": 0,
+          "skipped_batches": 0
+        }
+      }
+    },
+    {
+      "id": "L09/claim-draft-expired",
+      "http": 200,
+      "terminal": "generation.validated",
+      "result": {
+        "passage": "Vulnerability and vulnerable communities face vulnerabilities.vulnerability. The local team discussed a practical plan for the community. Everyone had time to listen carefully, ask questions, and share useful ideas. A clear record helped residents follow the discussion and compare possible approaches. The meeting ended calmly, with an agreement to gather more information before making a final decision about the project.",
+        "tags": [
+          "Community"
+        ],
+        "targets": [
+          {
+            "entry": "vulnerable",
+            "contextual_meaning": "Easily harmed or affected by danger",
+            "hint_phrase": "vulnerability in vulnerable communities with vulnerabilities",
+            "hint_blanks": [
+              {
+                "start": 0,
+                "end": 13
+              },
+              {
+                "start": 17,
+                "end": 27
+              },
+              {
+                "start": 45,
+                "end": 60
+              }
+            ],
+            "occurrences": [
+              {
+                "surface": "Vulnerability",
+                "start": 0,
+                "end": 13
+              },
+              {
+                "surface": "vulnerable",
+                "start": 18,
+                "end": 28
+              },
+              {
+                "surface": "vulnerabilities",
+                "start": 46,
+                "end": 61
+              },
+              {
+                "surface": "vulnerability",
+                "start": 62,
+                "end": 75
+              }
+            ]
+          }
+        ]
+      },
+      "failure": {
+        "run_id": "01a07ee6-47f1-7659-bc6e-1c2ad1970887",
+        "result": {
+          "passage": "Vulnerability and vulnerable communities face vulnerabilities.vulnerability. The local team discussed a practical plan for the community. Everyone had time to listen carefully, ask questions, and share useful ideas. A clear record helped residents follow the discussion and compare possible approaches. The meeting ended calmly, with an agreement to gather more information before making a final decision about the project.",
+          "tags": [
+            "Community"
+          ],
+          "targets": [
+            {
+              "entry": "vulnerable",
+              "contextual_meaning": "Easily harmed or affected by danger",
+              "hint_phrase": "vulnerability in vulnerable communities with vulnerabilities",
+              "hint_blanks": [
+                {
+                  "start": 0,
+                  "end": 13
+                },
+                {
+                  "start": 17,
+                  "end": 27
+                },
+                {
+                  "start": 45,
+                  "end": 60
+                }
+              ],
+              "occurrences": [
+                {
+                  "surface": "Vulnerability",
+                  "start": 0,
+                  "end": 13
+                },
+                {
+                  "surface": "vulnerable",
+                  "start": 18,
+                  "end": 28
+                },
+                {
+                  "surface": "vulnerabilities",
+                  "start": 46,
+                  "end": 61
+                },
+                {
+                  "surface": "vulnerability",
+                  "start": 62,
+                  "end": 75
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "started": {
+        "run_id": "01a07ee6-47f1-7659-bc6e-1c2ad1970887"
+      },
+      "elapsed_ms": 212,
+      "deltas": "Vulnerability and vulnerable communities face vulnerabilities.vulnerability. The local team discussed a practical plan for the community. Everyone had time to listen carefully, ask questions, and share useful ideas. A clear record helped residents follow the discussion and compare possible approaches. The meeting ended calmly, with an agreement to gather more information before making a final decision about the project."
+    },
+    {
+      "id": "L09/claim-expired",
+      "http": 200,
+      "terminal": "generation.validated",
+      "result": {
+        "passage": "Vulnerability and vulnerable communities face vulnerabilities.vulnerability. The local team discussed a practical plan for the community. Everyone had time to listen carefully, ask questions, and share useful ideas. A clear record helped residents follow the discussion and compare possible approaches. The meeting ended calmly, with an agreement to gather more information before making a final decision about the project.",
+        "tags": [
+          "Community"
+        ],
+        "targets": [
+          {
+            "entry": "vulnerable",
+            "contextual_meaning": "Easily harmed or affected by danger",
+            "hint_phrase": "vulnerability in vulnerable communities with vulnerabilities",
+            "hint_blanks": [
+              {
+                "start": 0,
+                "end": 13
+              },
+              {
+                "start": 17,
+                "end": 27
+              },
+              {
+                "start": 45,
+                "end": 60
+              }
+            ],
+            "occurrences": [
+              {
+                "surface": "Vulnerability",
+                "start": 0,
+                "end": 13
+              },
+              {
+                "surface": "vulnerable",
+                "start": 18,
+                "end": 28
+              },
+              {
+                "surface": "vulnerabilities",
+                "start": 46,
+                "end": 61
+              },
+              {
+                "surface": "vulnerability",
+                "start": 62,
+                "end": 75
+              }
+            ]
+          }
+        ]
+      },
+      "failure": {
+        "run_id": "01a07ee6-49c1-760e-8980-cdc166331539",
+        "result": {
+          "passage": "Vulnerability and vulnerable communities face vulnerabilities.vulnerability. The local team discussed a practical plan for the community. Everyone had time to listen carefully, ask questions, and share useful ideas. A clear record helped residents follow the discussion and compare possible approaches. The meeting ended calmly, with an agreement to gather more information before making a final decision about the project.",
+          "tags": [
+            "Community"
+          ],
+          "targets": [
+            {
+              "entry": "vulnerable",
+              "contextual_meaning": "Easily harmed or affected by danger",
+              "hint_phrase": "vulnerability in vulnerable communities with vulnerabilities",
+              "hint_blanks": [
+                {
+                  "start": 0,
+                  "end": 13
+                },
+                {
+                  "start": 17,
+                  "end": 27
+                },
+                {
+                  "start": 45,
+                  "end": 60
+                }
+              ],
+              "occurrences": [
+                {
+                  "surface": "Vulnerability",
+                  "start": 0,
+                  "end": 13
+                },
+                {
+                  "surface": "vulnerable",
+                  "start": 18,
+                  "end": 28
+                },
+                {
+                  "surface": "vulnerabilities",
+                  "start": 46,
+                  "end": 61
+                },
+                {
+                  "surface": "vulnerability",
+                  "start": 62,
+                  "end": 75
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "started": {
+        "run_id": "01a07ee6-49c1-760e-8980-cdc166331539"
+      },
+      "elapsed_ms": 210,
+      "deltas": "Vulnerability and vulnerable communities face vulnerabilities.vulnerability. The local team discussed a practical plan for the community. Everyone had time to listen carefully, ask questions, and share useful ideas. A clear record helped residents follow the discussion and compare possible approaches. The meeting ended calmly, with an agreement to gather more information before making a final decision about the project."
+    }
+  ]
+}

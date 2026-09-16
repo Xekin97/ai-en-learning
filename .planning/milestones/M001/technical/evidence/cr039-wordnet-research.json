@@ -1,0 +1,36 @@
+{
+  "date": "2026-09-07",
+  "agent": "backend-alex",
+  "purpose": "Read-only feasibility research, not production validation or a full vocabulary audit",
+  "source": "https://wordnetcode.princeton.edu/wn3.1.dict.tar.gz",
+  "archive_bytes": 16358468,
+  "archive_sha256": "3f7d8be8ef6ecc7167d39b10d66954ec734280b5bdcd57f7d9eafe429d11c22a",
+  "method": "Downloaded the public archive once with curl; decompressed and parsed data.* in memory with Node. Resolved lexical pointers using source and target word indices, not synset membership. No archive extraction or installation on disk.",
+  "source_entries_found": ["alleviate", "undermine", "facilitate", "deteriorate", "perceive", "sustainable", "prevalent", "vulnerable", "ambiguous", "coherent"],
+  "vulnerable_derivation_edges": [
+    {"source_pos": "a", "source_offset": "02334251", "symbol": "+", "target": "vulnerability", "target_pos": "n", "target_offset": "14567533", "word_indices": "0101"},
+    {"source_pos": "a", "source_offset": "02371734", "symbol": "+", "target": "vulnerability", "target_pos": "n", "target_offset": "14567533", "word_indices": "0101"},
+    {"source_pos": "a", "source_offset": "02533434", "symbol": "+", "target": "vulnerability", "target_pos": "n", "target_offset": "05050025", "word_indices": "0101"}
+  ],
+  "other_observed_direct_pairs": [
+    ["alleviate", "alleviation"],
+    ["facilitate", "facilitation"],
+    ["deteriorate", "deterioration"],
+    ["perceive", "perception"],
+    ["sustainable", "sustainability"],
+    ["prevalent", "prevalence"],
+    ["ambiguous", "ambiguity"],
+    ["coherent", "coherence"]
+  ],
+  "limitations": [
+    "Finding ten source entries is not an audit of all 13860 frozen input entries or all English forms.",
+    "No outgoing + or backslash pointer was observed for undermine in this probe; absence of a pointer does not prove absence of valid English derivatives.",
+    "WordNet morphological normalization can accept malformed words; it is not sufficient on its own as a spelling validator.",
+    "A lexical derivation edge does not establish that a generated passage uses the correct sense or has a correct contextual meaning.",
+    "No standalone LICENSE entry was observed in the dictionary archive listing; implementation must retain the embedded index/data copyright and license notices and package attribution.",
+    "The official download landing pages returned tool errors; the official archive endpoint and reference manual were accessible."
+  ],
+  "real_model_calls": 0,
+  "production_changes": false,
+  "uat_deployment_changes": false
+}

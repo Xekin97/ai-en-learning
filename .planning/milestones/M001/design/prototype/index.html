@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#f4efe5" />
+    <meta
+      name="description"
+      content="词涟 M001 UI/UX 交互原型"
+    />
+    <title>词涟 — M001 交互原型</title>
+    <link rel="stylesheet" href="../theme.css" />
+  </head>
+  <body>
+    <a class="skip-link" href="#app-main">跳到主要内容</a>
+
+    <details class="prototype-tools">
+      <summary class="prototype-trigger" aria-label="原型面板">
+        <span class="prototype-dot" aria-hidden="true"></span>
+        <span>原型面板</span>
+      </summary>
+      <aside class="prototype-panel" aria-label="原型控制器">
+        <div class="prototype-label" id="prototype-brand-label">M001 · 词涟</div>
+        <div class="prototype-controls">
+          <div class="prototype-control">
+            <label for="prototype-page">页面</label>
+            <select id="prototype-page" aria-label="切换原型页面"></select>
+          </div>
+          <div class="prototype-control">
+            <label for="prototype-state">状态</label>
+            <select id="prototype-state" aria-label="切换页面状态"></select>
+          </div>
+          <div class="prototype-control">
+            <span id="prototype-role-label">身份</span>
+            <div class="prototype-role" role="group" aria-labelledby="prototype-role-label">
+              <button type="button" data-prototype-role="visitor" aria-pressed="true">访客</button>
+              <button type="button" data-prototype-role="learner" aria-pressed="false">学习者</button>
+              <button type="button" data-prototype-role="admin" aria-pressed="false">管理员</button>
+            </div>
+          </div>
+          <div class="prototype-control">
+            <label for="prototype-locale-save">账号语言保存</label>
+            <select id="prototype-locale-save" aria-label="模拟账号语言偏好保存结果">
+              <option value="ok">正常</option>
+              <option value="fail">模拟失败</option>
+            </select>
+          </div>
+          <button type="button" class="prototype-reset" data-action="reset-locale-preferences">
+            清除语言偏好
+          </button>
+        </div>
+      </aside>
+    </details>
+
+    <div id="app-header"></div>
+    <main id="app-main" class="page-main" tabindex="-1">
+      <div class="container page-section" aria-live="polite">正在载入原型…</div>
+    </main>
+
+    <dialog id="app-dialog" aria-labelledby="dialog-title">
+      <div id="dialog-content"></div>
+    </dialog>
+
+    <div id="toast-region" class="toast-region" aria-live="polite" aria-atomic="true"></div>
+
+    <noscript>
+      <div class="container page-section">
+        <div class="notice notice-danger">
+          此交互原型需要 JavaScript。启用 JavaScript 后即可查看全部 12 个页面与状态。
+        </div>
+      </div>
+    </noscript>
+
+    <script src="./i18n.js" defer></script>
+    <script src="./reader-fixtures.js" defer></script>
+    <script src="./review-range.js" defer></script>
+    <script src="./app.js" defer></script>
+  </body>
+</html>

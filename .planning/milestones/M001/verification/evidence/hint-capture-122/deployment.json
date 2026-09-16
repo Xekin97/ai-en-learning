@@ -1,0 +1,369 @@
+{
+  "gate": "TRANSITION-M001-122",
+  "authorization": "USER-HINT-CAPTURE-121",
+  "startedAt": "2026-09-10T02:01:20.333Z",
+  "realModelCalls": 0,
+  "explicitDatabaseWrites": 0,
+  "migrations": 0,
+  "dataCleanup": 0,
+  "userAccepted": false,
+  "releaseApproved": false,
+  "sourceFiles": [
+    {
+      "path": "backend/internal/ai/annotation_diagnostic_uat.go",
+      "sha256": "078a8298c16157679a5dc042610801b7f80c2b5d297027c0975b14c8a3d75fe5"
+    },
+    {
+      "path": "backend/internal/ai/annotation_diagnostic_uat_test.go",
+      "sha256": "4c6c3632ac66c8631009660034ff9e2c787f0017e7ab69cb6889fa9b69bfb9dc"
+    },
+    {
+      "path": "backend/internal/httpapi/failure_capture_uat.go",
+      "sha256": "d8c3d0790bad30853e74b83f35a0104977c070f9d0d5c05413e9a423d8c3a0e6"
+    },
+    {
+      "path": "backend/internal/httpapi/annotation_capture_uat_test.go",
+      "sha256": "4ceb66e519b34cbdadeb3ed2be7bc2a3820293816765525cc8fef0ca70d9f280"
+    },
+    {
+      "path": "backend/internal/httpapi/failure_capture_disabled_test.go",
+      "sha256": "0ffbfae12b3a0fa2c47ebc5c9ee5570c10075af9e28339434dd18ecbc888ed45"
+    },
+    {
+      "path": "backend/internal/httpapi/failure_capture_integration_test.go",
+      "sha256": "61966f4037035c885fd25ed79923310fcbd5663e1fe17fde9141996305421fa0"
+    },
+    {
+      "path": "backend/internal/httpapi/failure_capture.go",
+      "sha256": "a9b07339ff521adb1d68c1b69e9506cbe32b371123db5b8d1186025edbd27470"
+    },
+    {
+      "path": "backend/internal/httpapi/failure_capture_disabled.go",
+      "sha256": "c7542b2e3b67142497db6716c5371a5e56f281038b89d6d33c2ceaf460a8f385"
+    },
+    {
+      "path": "backend/internal/httpapi/generation_handlers.go",
+      "sha256": "31c455af35f0933bf4330034aefdd3faa5c3df17ce4add59f62eb43133fddc2f"
+    },
+    {
+      "path": "backend/internal/httpapi/server.go",
+      "sha256": "7694f8c582c123fef5c1a1300db8eb3eb1a5373a60146c36a31eca5c59bc9c6e"
+    },
+    {
+      "path": "backend/cmd/wordweave/main.go",
+      "sha256": "dae2a198ab5618dc7126838a5505bf0323e82b76524df8d37bc5fe1757e726af"
+    },
+    {
+      "path": "backend/Dockerfile.uat-diagnostics",
+      "sha256": "db0e3bac139a7f1f64adef5c2e66ab239c90ee62fcd6a2c77ec66173e003cff9"
+    },
+    {
+      "path": "backend/internal/httpapi/hint_capture_uat_test.go",
+      "sha256": "64330ba8c5f9a3a2c78322d613e23350233b4470dd7ffdd246778cb7c4864fce"
+    },
+    {
+      "path": "backend/internal/ai/annotations.go",
+      "sha256": "2215e1b25310cf1cb28a15d78fea518687105725a8a1da6a622f87fe8fedabf2"
+    },
+    {
+      "path": "backend/internal/ai/validator.go",
+      "sha256": "a2e873308618d5b3694adecafb49ca76688253c86258d7c79296d51ec0bc1598"
+    },
+    {
+      "path": "backend/internal/ai/openrouter.go",
+      "sha256": "5e8d77e2f41bb1c686275f050bfc2fa329f7f9b4e1c18bffa100f7f1b183251f"
+    }
+  ],
+  "before": {
+    "backend": {
+      "id": "e87ec6d4ed95dd152cb1e7247c2e6bd738a40fc1d9bddff28b47ea6ffa2e0971",
+      "name": "/wordweave_uat-backend-1",
+      "image": "sha256:7d16e9027ad44134352b5f9022e8d7e13fd5449b94491373c801683cf85ff95c",
+      "status": "running",
+      "health": "healthy",
+      "started": "2026-09-10T01:48:50.190527589Z",
+      "networks": [
+        "wordweave_uat_data",
+        "wordweave_uat_edge"
+      ],
+      "mounts": [
+        {
+          "type": "volume",
+          "name": "wordweave-uat-annotation-capture-120-renew-20260910",
+          "destination": "/uat-annotation"
+        }
+      ],
+      "readonly": true
+    },
+    "frontend": {
+      "id": "74d1c89a8648e94c3036ff1c1537ef04f8c21ba522886c3dc9cb1ddce1345485",
+      "name": "/wordweave_uat-frontend-1",
+      "image": "sha256:5903591c881165071c1cba08984cfb835854187f5df21a281640b3aacccf4b27",
+      "status": "running",
+      "health": "healthy",
+      "started": "2026-09-09T04:00:41.569487295Z",
+      "networks": [
+        "wordweave_uat_edge"
+      ],
+      "mounts": [],
+      "readonly": false
+    },
+    "nginx": {
+      "id": "b789bde4e7825b849640cbf63d35b50ae41c1b77cb6b7ece73b3e26e27eabcb1",
+      "name": "/wordweave_uat-nginx-1",
+      "image": "sha256:5f0efd7fead5e8a290f07e5c025e9204052efb646758e1c6883de0e23a6e085c",
+      "status": "running",
+      "health": "healthy",
+      "started": "2026-09-09T04:00:47.530054881Z",
+      "networks": [
+        "wordweave_uat_edge"
+      ],
+      "mounts": [],
+      "readonly": true
+    },
+    "postgres": {
+      "id": "37a6d2fa58c578b1c6b4dbe10028b5ddf0c696fe44fc849a129293a85bbaf839",
+      "name": "/wordweave_uat-postgres-1",
+      "image": "sha256:b85269e8c6aa961524542eb4dcca44c4aa1deba2cf507e9e28d5ba8f971aeab9",
+      "status": "running",
+      "health": "healthy",
+      "started": "2026-09-03T02:24:03.164602928Z",
+      "networks": [
+        "wordweave_uat_data"
+      ],
+      "mounts": [
+        {
+          "type": "volume",
+          "name": "wordweave_uat_wordweave-pg",
+          "destination": "/var/lib/postgresql"
+        }
+      ],
+      "readonly": false
+    }
+  },
+  "activeBefore": 0,
+  "protectedBefore": {
+    "ai_models": "418ed23ac2af1c11ee0b1e5b0e59f497",
+    "openrouter_credentials": "21679b860491a0903aec8d86b1d96b90",
+    "entitlement_groups": "127ac6dc9b3ca7d167599cb28055f6c4",
+    "group_models": "2463ec9cf08c08784c6cde801629f7c9",
+    "group_lengths": "beb85fc53e263d2d5632011a6dba38ce",
+    "schema_migrations": "df9d35c6ebc9aaded9a4d48eb48a12c6",
+    "accounts": "56ce2e3e6f171ec05a082f4b6d577219",
+    "learning_batches": "400ba5600a97174f4a454dcd1fb873c8",
+    "batch_targets": "8c265df08a2d143f3febd0f40c94b811",
+    "passage_occurrences": "d1afb1ac29c3beec2e449d2518b3d85b",
+    "hint_occurrences": "414482b3f08dcbbacaf6385aa13a7b6e",
+    "review_results": "d41d8cd98f00b204e9800998ecf8427e",
+    "review_session_targets": "d41d8cd98f00b204e9800998ecf8427e",
+    "review_session_batches": "d41d8cd98f00b204e9800998ecf8427e",
+    "review_sessions": "d41d8cd98f00b204e9800998ecf8427e"
+  },
+  "expiresAt": "2026-09-10T03:01:21.076Z",
+  "testingIdentityKind": "account",
+  "subjectBindingVerified": true,
+  "oldWindowExpired": false,
+  "previousExpiresAt": "2026-09-10T02:48:48.862Z",
+  "oldEntries": [
+    "ticket.json"
+  ],
+  "oldSampleAbsent": true,
+  "permissions": [
+    "700 65532 65532",
+    "600 65532 65532"
+  ],
+  "protectedAfter": {
+    "ai_models": "418ed23ac2af1c11ee0b1e5b0e59f497",
+    "openrouter_credentials": "21679b860491a0903aec8d86b1d96b90",
+    "entitlement_groups": "127ac6dc9b3ca7d167599cb28055f6c4",
+    "group_models": "2463ec9cf08c08784c6cde801629f7c9",
+    "group_lengths": "beb85fc53e263d2d5632011a6dba38ce",
+    "schema_migrations": "df9d35c6ebc9aaded9a4d48eb48a12c6",
+    "accounts": "56ce2e3e6f171ec05a082f4b6d577219",
+    "learning_batches": "400ba5600a97174f4a454dcd1fb873c8",
+    "batch_targets": "8c265df08a2d143f3febd0f40c94b811",
+    "passage_occurrences": "d1afb1ac29c3beec2e449d2518b3d85b",
+    "hint_occurrences": "414482b3f08dcbbacaf6385aa13a7b6e",
+    "review_results": "d41d8cd98f00b204e9800998ecf8427e",
+    "review_session_targets": "d41d8cd98f00b204e9800998ecf8427e",
+    "review_session_batches": "d41d8cd98f00b204e9800998ecf8427e",
+    "review_sessions": "d41d8cd98f00b204e9800998ecf8427e"
+  },
+  "activeAfter": 0,
+  "nginxAction": "syntax_check_and_reload_only",
+  "routes": [
+    {
+      "path": "/health/live",
+      "status": 200,
+      "expectedStatus": 200
+    },
+    {
+      "path": "/health/ready",
+      "status": 200,
+      "expectedStatus": 200
+    },
+    {
+      "path": "/",
+      "status": 200,
+      "expectedStatus": 200
+    },
+    {
+      "path": "/api/v1/me/account",
+      "status": 401,
+      "expectedStatus": 401
+    }
+  ],
+  "protectedAfterRoutes": {
+    "ai_models": "418ed23ac2af1c11ee0b1e5b0e59f497",
+    "openrouter_credentials": "21679b860491a0903aec8d86b1d96b90",
+    "entitlement_groups": "127ac6dc9b3ca7d167599cb28055f6c4",
+    "group_models": "2463ec9cf08c08784c6cde801629f7c9",
+    "group_lengths": "beb85fc53e263d2d5632011a6dba38ce",
+    "schema_migrations": "df9d35c6ebc9aaded9a4d48eb48a12c6",
+    "accounts": "56ce2e3e6f171ec05a082f4b6d577219",
+    "learning_batches": "400ba5600a97174f4a454dcd1fb873c8",
+    "batch_targets": "8c265df08a2d143f3febd0f40c94b811",
+    "passage_occurrences": "d1afb1ac29c3beec2e449d2518b3d85b",
+    "hint_occurrences": "414482b3f08dcbbacaf6385aa13a7b6e",
+    "review_results": "d41d8cd98f00b204e9800998ecf8427e",
+    "review_session_targets": "d41d8cd98f00b204e9800998ecf8427e",
+    "review_session_batches": "d41d8cd98f00b204e9800998ecf8427e",
+    "review_sessions": "d41d8cd98f00b204e9800998ecf8427e"
+  },
+  "after": {
+    "backend": {
+      "id": "43316c50fcb8c346b4e2bb4485ba316255ecda7834f16fb2506b60c4e4775e91",
+      "name": "/wordweave_uat-backend-1",
+      "image": "sha256:ee5d52d2e5cd6bb609c050a837e90252c5a35dc4c53d8062e02d868dd6139edb",
+      "status": "running",
+      "health": "healthy",
+      "started": "2026-09-10T02:01:22.075727965Z",
+      "networks": [
+        "wordweave_uat_data",
+        "wordweave_uat_edge"
+      ],
+      "mounts": [
+        {
+          "type": "volume",
+          "name": "wordweave-uat-hint-capture-122",
+          "destination": "/uat-hint"
+        }
+      ],
+      "readonly": true
+    },
+    "frontend": {
+      "id": "74d1c89a8648e94c3036ff1c1537ef04f8c21ba522886c3dc9cb1ddce1345485",
+      "name": "/wordweave_uat-frontend-1",
+      "image": "sha256:5903591c881165071c1cba08984cfb835854187f5df21a281640b3aacccf4b27",
+      "status": "running",
+      "health": "healthy",
+      "started": "2026-09-09T04:00:41.569487295Z",
+      "networks": [
+        "wordweave_uat_edge"
+      ],
+      "mounts": [],
+      "readonly": false
+    },
+    "nginx": {
+      "id": "b789bde4e7825b849640cbf63d35b50ae41c1b77cb6b7ece73b3e26e27eabcb1",
+      "name": "/wordweave_uat-nginx-1",
+      "image": "sha256:5f0efd7fead5e8a290f07e5c025e9204052efb646758e1c6883de0e23a6e085c",
+      "status": "running",
+      "health": "healthy",
+      "started": "2026-09-09T04:00:47.530054881Z",
+      "networks": [
+        "wordweave_uat_edge"
+      ],
+      "mounts": [],
+      "readonly": true
+    },
+    "postgres": {
+      "id": "37a6d2fa58c578b1c6b4dbe10028b5ddf0c696fe44fc849a129293a85bbaf839",
+      "name": "/wordweave_uat-postgres-1",
+      "image": "sha256:b85269e8c6aa961524542eb4dcca44c4aa1deba2cf507e9e28d5ba8f971aeab9",
+      "status": "running",
+      "health": "healthy",
+      "started": "2026-09-03T02:24:03.164602928Z",
+      "networks": [
+        "wordweave_uat_data"
+      ],
+      "mounts": [
+        {
+          "type": "volume",
+          "name": "wordweave_uat_wordweave-pg",
+          "destination": "/var/lib/postgresql"
+        }
+      ],
+      "readonly": false
+    }
+  },
+  "configPreserved": true,
+  "protectedRowsPreserved": true,
+  "captureEnabled": true,
+  "fullCandidateCapture": false,
+  "currentImage": "sha256:ee5d52d2e5cd6bb609c050a837e90252c5a35dc4c53d8062e02d868dd6139edb",
+  "captureVolume": "wordweave-uat-hint-capture-122",
+  "initialEntries": [
+    "ticket.json"
+  ],
+  "samplePresentAtDeployment": false,
+  "status": "single_hint_capture_enabled_awaiting_user_reproduction",
+  "helperRemoved": true,
+  "hostTicketRemoved": true,
+  "finishedAt": "2026-09-10T02:01:29.510Z",
+  "previousCurrentDocuments": [
+    {
+      "path": ".planning/milestones/M001/verification/report.md",
+      "text": "---\nmilestone: M001\nstage: verification\nrole: quality/base\nagent_name: qa-quinn\nstatus: new_hint_annotation_failure_diagnosed_raw_hint_unavailable\ndate: 2026-09-10\nverification_round: TRANSITION-M001-120\nrelease_readiness: blocked\n---\n# 当前结果：新失败已定位到提示标注检查\n\n最新run 01a08902已定位为首词melancholy的hint_annotation_missing（非上一种正文错误），3.306秒失败、未扣额度、无草稿。[当前诊断及取证边界](./stream-failure-diagnosis.md)为唯一结论入口。当前采集只针对旧错误，目录仅ticket.json，本次未采样、未读取或删除内容，名额仍可用。实际hint内容未知；扩大到失败hint采集仅为建议，尚待明确授权，未修改程序或配置。下文为已完成窗口准备及既有证据，不代表本次真实生成通过。\n\n当前窗口已按用户“再给我一次测试窗口吧”（USER-ANNOTATION-WINDOW-20260910）续开：[续开原件](./evidence/annotation-capture-120/renew-20260910.json)。2026-09-10T01:48:50Z启用，至02:48:48.862Z（北京时间10:48:48）；同一账号/MiniMax、同一错误、一份最小样本。旧窗口已过期且无残留样本，新票据已启用，来源12份/配置/15表/4路由检查PASS。沿用已验证镜像，不重跑既有测试、不代调用模型；原当前六份文件完整冻结于续开原件。\n\n真实run 01a085f3为MiniMax/v5正文annotation_source_unknown：约8秒失败、未扣产品额度、无草稿，具体错误标签未保留；尚未完整归因或修复。[唯一范围及当前诊断](./stream-failure-diagnosis.md) / [真实原件](./evidence/inline-mapping-118/real-run-01a085f3.json)。\n\n用户“那你查一下吧”承接已展示有限方案，USER-ANNOTATION-CAPTURE-119获准；119开发、120定向QA及局部部署完成，不需要再次审批同一执行范围。\n\n| 检查 | 结果 |\n| --- | --- |\n| 开发诊断/权限/并发/重启单份/期限与race | PASS；[开发原件](../implementation/evidence/annotation-capture-119/developer.json) |\n| 开发HTTP10场景（含3个最小取证场景） | PASS3.412秒，退款/无草稿和写盘失败边界保留 |\n| QA双访客、绑定成功、绑定失败，共3次模拟调用 | PASS0.528秒；只有绑定失败生成source_label/adjacent_word，正文等均不记录；[QA原件](./evidence/annotation-capture-120/qa.json) |\n| 实际6001部署、12份来源、配置与15表摘要、4路由 | PASS；[部署原件](./evidence/annotation-capture-120/deployment.json) |\n\n首次QA夹具误用guest而非合同visitor，外键阻止且没有提供方调用；改正后通过，原失败/测试源码保留，不属于产品返工。未机械重跑全站UI或已通过开发测试。\n\n当前镜像7d16e902，只启用UAT_ANNOTATION_CAPTURE_DIR，不启用全文模式；私有tmpfs0700/票据0600，只绑定原失败run的测试身份与MiniMax。最多下一次annotation_source_unknown的一份错误标签及紧邻词，截止2026-09-10T02:48:48.862Z（北京时间10:48:48）；读取/到期删除，空claimed文件防止同票据再采。部署时只有ticket.json，没有样本。\n\n真实模型调用0，未修改prompt/校验/API/SQL/前端或模型凭据。前端/nginx/PG容器保持，Nginx仅reload；15表摘要未变，无直接清库/迁移，正常访问产生访客等生命周期数据不属于全库零写入承诺。隔离测试PG、初始化容器、宿主临时票据已清理；运行票据只留私有tmpfs。\n\n下一步由用户在[6001](http://localhost:6001)用同一测试身份选择MiniMax生成，失败后提供run_id；不代调用模型。CR039/040、真实语义质量与当前用户接受/发布仍open。旧116–118成功与01a085f3失败保持原件；本次更新前六份入口已冻结在120部署证据previousCurrentDocuments。\n",
+      "sha256": "9bafd8d251dacf229e56f7e3cc129bacab4c011db9224926c4d0994116f6cee8"
+    },
+    {
+      "path": ".planning/milestones/M001/verification/coverage-matrix.md",
+      "text": "---\nmilestone: M001\nstage: verification\nrole: quality/base\nagent_name: qa-quinn\nstatus: new_hint_annotation_failure_diagnosed_raw_hint_unavailable\ndate: 2026-09-10\nverification_round: TRANSITION-M001-120\n---\n# 当前覆盖：错误标注最小取证\n\n最新run 01a08902已定位为首词melancholy的hint_annotation_missing（非上一种正文错误），3.306秒失败、未扣额度、无草稿。[当前诊断及取证边界](./stream-failure-diagnosis.md)为唯一结论入口。当前采集只针对旧错误，目录仅ticket.json，本次未采样、未读取或删除内容，名额仍可用。实际hint内容未知；扩大到失败hint采集仅为建议，尚待明确授权，未修改程序或配置。下文为已完成窗口准备及既有证据，不代表本次真实生成通过。\n\n当前窗口已按用户“再给我一次测试窗口吧”（USER-ANNOTATION-WINDOW-20260910）续开：[续开原件](./evidence/annotation-capture-120/renew-20260910.json)。2026-09-10T01:48:50Z启用，至02:48:48.862Z（北京时间10:48:48）；同一账号/MiniMax、同一错误、一份最小样本。旧窗口已过期且无残留样本，新票据已启用，来源12份/配置/15表/4路由检查PASS。沿用已验证镜像，不重跑既有测试、不代调用模型；原当前六份文件完整冻结于续开原件。\n\n| 追踪 | 验证及边界 |\n| --- | --- |\n| CAP-008/009、API-005 | 诊断只在既有失败结算之后投影，不改prompt或validator；开发10 HTTP场景PASS，QA双访客+成功/失败3次消费者调用PASS |\n| DATA-010/011 | 失败仍退产品额度、无草稿/正式资源；成功正常计数/草稿。其他身份、模型、原因、探针不采 |\n| 诊断隐私/资源 | 两内容字段、固定元数据；无全文/hint/释义/标签/令牌/凭据入样本或日志。并发/重启单份，0700/0600、符号链接拒绝、期限清理PASS |\n| 实际部署 | 12源摘要、应用配置、15表保护摘要、4路由PASS；6001后端7d16e902，前端/PG未更换 |\n| 真实模型根因与质量 | 尚无新样本。旧run只能确定正文来源标注未匹配输入，具体内容与根因OPEN |\n\n[开发](../implementation/evidence/annotation-capture-119/developer.json)、[QA](./evidence/annotation-capture-120/qa.json)、[实际部署](./evidence/annotation-capture-120/deployment.json)。初次QA夹具guest外键失败保留，修正visitor后通过；不是产品故障。开发/QA数量不合计，未重跑全站UI/性能或已接受功能。此前CR039/040覆盖保存在120部署证据previousCurrentDocuments及各原始证据中。\n",
+      "sha256": "4bdbb2d450a602b03991072127e4fce0a49a4050fd6dfa2d3aebe9b4a6898d1b"
+    },
+    {
+      "path": ".planning/milestones/M001/verification/ai-evaluation.md",
+      "text": "---\nmilestone: M001\nstage: verification\nrole: quality/base\nagent_name: qa-quinn\nstatus: new_hint_annotation_failure_diagnosed_raw_hint_unavailable\ndate: 2026-09-10\nverification_round: TRANSITION-M001-120\nreal_model_quality: not_verified\n---\n# AI质量：提示标注新失败\n\n最新run 01a08902已定位为首词melancholy的hint_annotation_missing（非上一种正文错误），3.306秒失败、未扣额度、无草稿。[当前诊断及取证边界](./stream-failure-diagnosis.md)为唯一结论入口。当前采集只针对旧错误，目录仅ticket.json，本次未采样、未读取或删除内容，名额仍可用。实际hint内容未知；扩大到失败hint采集仅为建议，尚待明确授权，未修改程序或配置。下文为已完成窗口准备及既有证据，不代表本次真实生成通过。\n\n当前窗口已按用户“再给我一次测试窗口吧”（USER-ANNOTATION-WINDOW-20260910）续开：[续开原件](./evidence/annotation-capture-120/renew-20260910.json)。2026-09-10T01:48:50Z启用，至02:48:48.862Z（北京时间10:48:48）；同一账号/MiniMax、同一错误、一份最小样本。旧窗口已过期且无残留样本，新票据已启用，来源12份/配置/15表/4路由检查PASS。沿用已验证镜像，不重跑既有测试、不代调用模型；原当前六份文件完整冻结于续开原件。\n\n[01a085f3原件](./evidence/inline-mapping-118/real-run-01a085f3.json)确认MiniMax/minimax-m3、v5、zh/discussion/short，在正文标注归属检查返回annotation_source_unknown；输入melancholy/handicap/foray/casino/upswing，8.012148秒后失败、退额度、无草稿。没有具体标签，不能认定大小写/错拼/额外标注或解析实现中的哪一种。\n\n本轮[最小取证](./stream-failure-diagnosis.md)已受控启用。prompt m001-v5和validator m001-v5-wn31-r1不变；旧数组不兼容，独立词法、全部目标/重复位置、原词释义和复习规则不放宽。只采错误source与紧邻词，不使用采集替代语义评阅或自动改写输出。\n\n合成检查和实际部署PASS只证明诊断隔离与结算安全，不证明MiniMax遵循格式、释义/短语合格或失败率改善。代理真实调用0，无自动probe/retry/fallback；下一次由用户手动生成。截止2026-09-10北京时间10:48:48，一份/读后删除。当前无样本，旧全文无法恢复。\n\n此前三语言语义待评标准仍适用：只解释输入原词，与文章/派生/场景无关；自然英文提示；短文标签；所有目标自然覆盖。历史AI评估完整冻结于[120部署原件](./evidence/annotation-capture-120/deployment.json)previousCurrentDocuments，旧模型样本不当作v5通过。\n",
+      "sha256": "f64b8e17e41a20a63d149f0a5c8521c77fc36254aee5fc69344e45c38f13deb2"
+    },
+    {
+      "path": ".planning/milestones/M001/verification/uat.md",
+      "text": "---\nmilestone: M001\nstage: verification\nrole: quality/base\nagent_name: qa-quinn\nstatus: new_hint_annotation_failure_diagnosed_raw_hint_unavailable\ndate: 2026-09-10\nverification_round: TRANSITION-M001-120\ncandidate_deployed: true\nruntime_baseline_deployed: UAT-M001-120-ANNOTATION-DIAGNOSTIC\nuser_accepted_current_candidate: false\n---\n# 当前UAT反馈与仍有效的取证窗口\n\n最新run 01a08902已定位为首词melancholy的hint_annotation_missing（非上一种正文错误），3.306秒失败、未扣额度、无草稿。[当前诊断及取证边界](./stream-failure-diagnosis.md)为唯一结论入口。当前采集只针对旧错误，目录仅ticket.json，本次未采样、未读取或删除内容，名额仍可用。实际hint内容未知；扩大到失败hint采集仅为建议，尚待明确授权，未修改程序或配置。下文为已完成窗口准备及既有证据，不代表本次真实生成通过。\n\n当前窗口已按用户“再给我一次测试窗口吧”（USER-ANNOTATION-WINDOW-20260910）续开：[续开原件](./evidence/annotation-capture-120/renew-20260910.json)。2026-09-10T01:48:50Z启用，至02:48:48.862Z（北京时间10:48:48）；同一账号/MiniMax、同一错误、一份最小样本。旧窗口已过期且无残留样本，新票据已启用，来源12份/配置/15表/4路由检查PASS。沿用已验证镜像，不重跑既有测试、不代调用模型；原当前六份文件完整冻结于续开原件。\n\n入口：[http://localhost:6001](http://localhost:6001)。沿原测试身份选择MiniMax再生成；词组可沿melancholy/handicap/foray/casino/upswing，也可其他合法配置。若失败，只需提供run_id，不需generation_token。\n\n本窗口截止2026-09-10T02:48:48.862Z（北京时间今天10:48:48）。最多捕获下一次annotation_source_unknown的错误括号原词和紧邻词，不保存整篇，读取或到期删除。其他身份/模型、成功或其他失败不采；不用清缓存或重新配置模型。部署时未有样本。\n\n浏览器EventStream依然只收到去标注的正文，不会显示括号。这是已确认展示设计，不代表上游没有标注。\n\n[部署与检查](./evidence/annotation-capture-120/deployment.json)PASS；数据、模型/组配置与凭据保留，前端未变，Nginx只reload。没有代理模型调用，没有调整造文/校验规则，因此不是宣称故障已经修复。当前只需有限复现，不重测全站UI。\n",
+      "sha256": "cdc82afd50056c67aa58119e745e618d5e568876232e4b549b3692a63d8f7158"
+    },
+    {
+      "path": ".planning/milestones/M001/verification/stream-failure-diagnosis.md",
+      "text": "---\nmilestone: M001\nstage: verification\nrole: quality/base\nagent_name: qa-quinn\ndate: 2026-09-10\nstatus: new_hint_annotation_failure_diagnosed_raw_hint_unavailable\nverification_round: TRANSITION-M001-120\n---\n\n# UAT 流式生成末尾失败：当前诊断\n\n## 最新反馈：首项提示未解析到标注（01a08902）\n\n[脱敏运行证据](./evidence/annotation-capture-120/real-run-01a08902.json)：MiniMax/minimax-m3，zh/discussion/short，输入melancholy、handicap、foray、casino、upswing；2026-09-10T01:50:27Z终结，耗时3.306156秒，validation_failed/content_validation_failed，quota_charged=false、累计false、草稿0。同一授权账号和模型、同一120续开镜像。\n\nCONFIRMED：内部错误hint_annotation_missing、target_index=0，即melancholy的hint_phrase解析后没有任何原词标注。不是此前的正文annotation_source_unknown，也不是超时。此分支出现在完整结构解码之后、首项提示的实际词形扫描之前；不能把“没解析出标注”等同“短语没含该词”，也不能把尚未执行的后续校验判为通过。原116 parser/validator/provider三份摘要均匹配，提示及schema描述已经要求正文和每个hint使用紧邻ASCII括号标注，不能声称从未规定。\n\nOPEN：没有原始hint，无法区分完全漏标、空格/括号格式不符或具体解析偏差。只确认失败位置和条件，不推定实际短语，更不声称正文与所有词已完全合格。\n\n取证边界：当前票据只接受annotation_source_unknown，本run不匹配。01:52:28Z只读确认目录只有ticket.json，没有annotation.json或claimed；没有内容可读或删除，样本名额未消费，原窗口仍至02:48:48.862Z。未使用或保存用户附带令牌，没有新AI调用、部署、代码、校验或数据修改。\n\nCONFIRMED（USER-HINT-CAPTURE-121）：用户对“临时采集失败词对应的这一条提示短语，仍不保存文章，最多一份、一小时、读取后删除”明确回复“允许”。仅原账号/MiniMax下一次hint_annotation_missing的失败目标hint；不采正文、其他hint、释义、标签、凭据或令牌，不写普通日志，不改变prompt/validator/SQL/API或付费调用。沿既有诊断设施定向实现/验证并临时更新6001后端，开始时换为提示专用窗口，不并开两个采集模式；新窗口部署起最多一小时。普通交接沿已有连续授权，范围冲突才再确认；CR039同一问题追踪，CR040不变。旧八份当前文档冻结于[修订前原件](./evidence/hint-capture-121/pre-current.json)。\n\n## 当前窗口续开（2026-09-10）\n\nCONFIRMED（USER-ANNOTATION-WINDOW-20260910）：用户“再给我一次测试窗口吧”明确续开上次同范围的一小时窗口。只绑定原run测试身份与MiniMax、只采下一次annotation_source_unknown的一份错误标签及紧邻词，读取/到期删除、不保存全文、不代调用模型、不改变业务规则。qa-quinn沿已验证120镜像更换私有tmpfs票据并定向检查；无阶段切换或实现返工，不重跑既有开发/全站测试。新窗口时间以本节执行回执为准，旧119/120审批及证据保持原件。\n\n[续开执行回执](./evidence/annotation-capture-120/renew-20260910.json)：2026-09-10T01:48:50Z启用，截止2026-09-10T02:48:48.862Z（北京时间今天10:48:48）。使用同一7d16e902镜像及同一账号/模型绑定，切换新私有tmpfs票据；旧窗口已过期且没有残留样本，新目录只有ticket.json。12份来源、权限、配置、15表与4路由PASS；前端/Nginx/PG容器未替换，Nginx只reload；初始化容器/宿主票据已清理。没有真实模型调用或业务修改，无阶段迁移，仍待用户复现后提供run_id。下文9月9日窗口为历史，不再使用旧截止时间。\n\n## 最近真实反馈与9月9日窗口记录：MiniMax正文标注归属失败（01a085f3）\n\n[本轮脱敏证据](./evidence/inline-mapping-118/real-run-01a085f3.json)：2026-09-09T11:35:16Z，MiniMax / minimax/minimax-m3，zh/discussion/short，输入melancholy、handicap、foray、casino、upswing。8.012148秒后content_validation_failed；quota_charged=false、累计计数false、草稿0。当前后端90f23b57及日志均为m001-v5 / m001-v5-wn31-r1，118运行实例未更换。\n\nCONFIRMED：内部原因annotation_source_unknown、target_index=-1。validator先解析正文，再由groupAnnotations按本次输入精确查找括号内source；至少一项解析出的source不是这五个输入之一。这个位置早于hint与词法关系验证，-1不代表第一个单词。不是超时、旧协议未部署，亦不能沿用旧seed/read提示数组多报的根因。\n\nOPEN：具体错误标签和紧邻实际词没有保留，无法确认是大小写/拼写变化、给额外词加了标注、普通括注被识别，还是解析实现偏差；这些只是候选解释，不是本run的观察。当前提示已要求exact selected original entry；不能说完全没写该限制，亦不能没有原始标记就断言应放宽。原句其余部分、提示与释义是否合格也尚未证明。\n\nCONFIRMED（USER-ANNOTATION-CAPTURE-119）：在明确提出“当前测试身份和MiniMax、下一次失败的错误标注及紧邻词、不存全文、最多一小时、读取后删除、临时后端更新、不代调用模型”后，用户先询问浏览器看不到括号是否正常，得到后端先去标注的解释后回复“那你查一下吧”。本次承接该已展示方案，仅针对本run对应测试身份和模型的下一次annotation_source_unknown，私有临时记录错误source与紧邻词，不记整篇/提示/释义/标签、密钥或令牌，不进入普通日志，最多一小时一份、读取/到期删除。\n\n本次确认范围为隔离诊断能力及定向验证后更新6001后端，不改变提示词、校验、API、SQL、模型/组配置或退款，不新增收费调用。旧请求全文无法恢复，启用后由用户生成；其他模型/身份、成功、其他错误不消费样本。单份上限覆盖并发和同票据重启，取证文件使用私有tmpfs与0700/0600。原118诊断不覆盖当前授权；完整旧样本采集模式保持关闭，不增加旧协议兼容。CAP-008/009、API-005、DATA-010/011的失败无草稿/退款规则不变。\n\n119–120已顺序完成backend-ethan有限取证实现及qa-quinn消费者验证/部署；普通门禁沿USER-HANDOFF-CONTINUOUS-001，实际临时部署由本次已展示范围授权。不再询问同一方案批准，遇到范围冲突才暂停。原当前六份文件在[evidence快照](./evidence/annotation-capture-119/pre-current.json)，已有真实失败原件不改。\n\n最初诊断只读日志/账本与16份来源，未使用或记录generation_token。随后119有限实现与120[消费者验证](./evidence/annotation-capture-120/qa.json)、[实际部署](./evidence/annotation-capture-120/deployment.json)完成：6001临时后端7d16e902启用最小投影，最多一份，截止2026-09-09T13:02:39.438Z（北京时间21:02:39）；部署时目录只有ticket.json，尚无标注样本。私有0700/0600 tmpfs，不采全文，空claimed文件防止读后重启再采。代理真实调用0、无迁移/清库，配置及15表摘要保持，前端未变。\n\n当前待用户同一测试身份选择MiniMax复现；成功/其他身份模型/其他错误不消费样本。诊断改善不代表根因已完整确定或业务修复，本次仍不改变prompt/validator或放宽规则。旧诊断/开发/测试及更新前文档完整冻结于120原件，首次QA夹具错误保留，普通接收已完成而真实质量仍未验收。\n\n\n<a id=\"inline-source-annotation\"></a>\n\n## 当前确认：原词就地标注，后端提取（USER-INLINE-MAPPING-115）\n\nCONFIRMED，2026-09-09：用户提出“那就这样改吧，调整提示词限制，无论是短文还是 hint，生成时都应显示为 xxxxx grapes(grape) xxx. 其中 grape 是原词，grapes 是符合句子或者短语语义的词，后端再进行提取”；随后对“标注仅供后端解析，流式预览和最终展示均不显示括号标注”的澄清回复“是”。\n\n| 已确认范围 | 对实现和验收的约束 |\n| --- | --- |\n| 正文与提示就地标注 | 模型输出如 `She bought grapes(grape).`、`fresh grapes(grape)`；后端取得实际形式 `grapes` 与输入原词 `grape` 的对应关系，不再要求模型分别维护 passage_forms / hint_forms 数组 |\n| 标注不面向用户 | 流式预览与最终正文/提示仅显示 `She bought grapes.`、`fresh grapes`；不能先显示括号再在完成时隐藏 |\n| 沿用独立校验 | 标注仍是不可信候选关系，不替代本地词形关系验证；全部目标覆盖、全部合法重复位置扫描、跨目标冲突检查不放宽 |\n| 复习与释义不变 | 阶段一仍答原始词条、阶段二仍答实际形式；位置必须对应清理后的正文/提示。entry_meaning只解释输入原词，与文章、场景、实际词形及派生无关 |\n| 替换而非兼容 | 不实施下文“剔除多报数组”假设，也不增加旧数组协议双读、自动重试、备用模型或第二次模型调用；沿USER-COMPAT-001 |\n\n## 当前落实与定向复核（116–117）\n\n已由backend-alex完成[技术修订](../technical/backend-cr039.md)，backend-ethan完成[开发交付](../implementation/backend-validation.md)，117接收后qa-quinn完成[消费者侧复核](./evidence/inline-mapping-117/qa.json)。prompt m001-v5 / validator m001-v5-wn31-r1；标注与普通括注区分、跨块缓冲、clean rune位置、版本/schema/探针一致切换均已实施。公开API、SQL、前端和复习格式不变；未增加旧数组兼容。\n\nQA三语言的HTTP生成→保存→详情→两阶段复习通过；正文与hint中未逐次标注的已知重复词形仍全量挖空，同源空位保持匿名分组。两项错误hint标注均只有失败终态、退款且无草稿。结果仅覆盖合成提供方与隔离数据库，不能推出真实模型的语义质量或失败率。开发的逐块/边界/并发等证据单独接收，不与QA数量累计；未重跑全站UI。\n\n开发另在慢下游测试中发现流式尾段竞争：541/546字符，末5字符被完成事件越过；改为同步交付delta后10轮及race通过。此为独立确定性缺陷，不冒充下文真实content_validation_failed的根因。\n\n追踪：CR-039，CAP-008/009/018/019、API-005–008、DATA-010–015；CR-040原词释义保护不变。无新实质需求选择或返工冲突；普通交接已沿USER-HANDOFF-CONTINUOUS-001完成。\n\n用户“允许”批准UAT-INLINE-117-DEPLOY，118于11:04:25Z完成[本地后端更新](./evidence/inline-mapping-118/deployment.json)：6001当前运行普通v5镜像90f23b57，4路由/权限检查、配置与15表摘要保留PASS，前端/nginx/PG容器未替换，Nginx仅reload。首次检查脚本误用了不存在的/me路由并触发恢复；正确/account路由复验通过，[原始方法失败](./evidence/inline-mapping-118/attempt-1.json)保留，不是产品返工。\n\n代理真实模型调用0，无直接数据修改/迁移/清库；正常访问可产生访客等生命周期数据，不能声称全库零写入。114样本已分析删除，采集挂载和环境已移除，不续期。既有功能验收保留，当前真实质量、CR039/040与发布仍未验收；现交用户测试造文质量。\n\n当前入口复用[报告](./report.md)、[覆盖](./coverage-matrix.md)、[AI评估](./ai-evaluation.md)、[UAT](./uat.md)和[交接](../handoffs/verification.md)。115时六份原文保留在[117证据](./evidence/inline-mapping-117/qa.json)的previousCurrentDocuments；更早原件在[修订前快照](./archive/pre-inline-mapping-115.json)。下文24项旧假设检查仍未采用，不算新协议通过证据。\n\n## 已完成诊断：真实失败的离线归因\n\n用户提供run 01a0855e-2c7e-7059-bd88-1460b7ea4d1f，2026-09-09T08:52:29Z已命中114临时采集。GLM / zh / discussion / short，输入minus、deep、land、seed、read、message；原正文62词，下限50。耗时约13.06秒，content_validation_failed、quota_charged=false、累计计数false、草稿0。[脱敏证据与原件回放结果](./evidence/failure-capture/real-run-01a0855e.json)。\n\n| 对象 | 模型声明 | 对应提示中实际情况 | 结果 |\n| --- | --- | --- | --- |\n| seed的hint_forms | seed、seeds | seed两处，seeds零处 | mapping_surface_absent，target_index=3 |\n| read的hint_forms | read、reading | read一处，reading零处 | 前项修正后mapping_surface_absent，target_index=4 |\n\n这两个额外词形都出现在正文，而且本地词法验证器均判定关系known；问题是被声明到没有使用它们的提示里，不是派生未收录或超时。完整候选已解码，当前适配器按字段直接解码，没有将正文/提示数组互换的转换层。能确认上游候选违反分段映射契约，但不推测模型内部是否实际复制了正文数组。\n\n### 可重复的因果对照\n\n使用同版本词法资产/校验器、网络禁用的隔离Go运行器；只读原私有文件，摘要匹配；没有新增模型调用/DB访问或生产源码修改。\n\n1. 原候选原样回放：seed的mapping_surface_absent，与运行日志及采集一致。\n2. 仅在内存把seed.hint_forms改为单项seed：转为read的mapping_surface_absent。\n3. 再仅把read.hint_forms改为单项read：整批确定性校验通过，正文/标签/释义/提示内容完全未改。seed提示2处/正文2处，read提示1处/正文2处，全部位置仍被扫描。\n\n因此本条失败根因为模型多报提示映射，服务端按既有“任何错误声明整批失败”规则拦截；不是已证实的校验实现误判。其他旧run的mapping_relation_unknown仍缺原候选，不能拿本条归因替代。确定性通过不等于整篇语义质量通过。\n\n<a id=\"mapping-pruning-boundary\"></a>\n\n### 历史检查：有限剔除边界（未采用，已由就地标注方案取代）\n\n以下为当时的假设及检查记录，全部建议仅代表历史，不再是待用户决定或待实现的当前方案；原始结果不改。\n\n用户本轮“下一步检查”只授权检查，不代表批准放宽规则。QA在不挂载真实样本、无网络、生产源码只读的隔离环境中，以合成数据验证假设；[24项原始输出与源摘要](./evidence/failure-capture/policy-boundary-check.json)全部符合预期。测试辅助逻辑仅在QA overlay内，不是候选生产实现或新正式验收标准。\n\n| 情况 | 建议处理与检查结果 |\n| --- | --- |\n| 关系已验证、但在其对应正文/提示中未出现的多报词形；该段还保留有效声明 | 仅从映射剔除，不改文字；正文/提示各自处理，合成正例通过 |\n| 已出现的实际词形、大小写变体、重复或模型漏列但服务器可识别的形式 | 全量独立扫描保留，Unicode位置及当前快照往返通过 |\n| 未知或无关词形、错误拼写 | 不因“没出现”而静默过滤；无论出现与否都保留拒绝边界 |\n| 原始数组缺失/空/null/超限/非法字符串，或者剔除后没有任何有效声明 | 继续失败；即使扫描能找到别的原词，也暂不自动补造空数组 |\n| 正文或提示缺目标、只在别的提示出现、仅在别词内部命中 | 继续失败，不跨段借用覆盖 |\n| 不同目标争用同一正文位置、取消、目标数量或身份不匹配 | 保留原拒绝/取消边界，不靠数组过滤绕过 |\n\n关键反例：只按“字符串不出现”删除，会把seed的无关banana声明一起藏掉，得到本不该通过的结果。因此建议先验证关系，只处理“关系known但对应段不存在”的冗余项；不是把所有错误映射当噪声。\n\n5个正例保留正文/标签/原词释义/提示字符串，seed正文3处/提示2处、read正文2处/提示1处均被扫描；其中4个在现有规则失败、在假设规则通过。其他17个表内反例拒绝，另有取消和不安全过滤反证，共24项。只证明列出的边界与当前快照形状；没有运行修改后的真实HTTP、保存/复习E2E、并发发布或性能验收。\n\n### 历史假设的影响检查与当时待确认差异（不再待批准）\n\n- 现有代码已独立计算最终occurrences；保存和复习读这些可信位置，不直接读取passage_forms/hint_forms。从当前依赖看，此有限改动不需要公开API、数据库或UI形状改变；本轮没有改动它们。\n- 原词释义仍只解释输入词条；正文内容、目标顺序自由、自然词形、全部已知重复位置、同词分组及两阶段作答规则不变。词法资料未覆盖的unknown不会被此方案放行，也不能保证解决旧young失败或整体失败率。\n- 如果之后采用此规则而使一批结果有效，会按正常成功计次，不再退还该次产品额度；本轮没有写账本或新增模型费用。\n- 与当前[CR039 §3.1/§5](../technical/backend-cr039.md)、[AI方案§5.3](../technical/ai-integration.md)及C39-09的“错误声明整批失败”存在明确差异，必须由用户确认。推荐仅返回backend-alex作受影响技术修订，随后开发与定向测试；不重开无关产品/UI，不引入旧版兼容、静默重试或在线二次校验。\n- 当前源码的提示词已经要求仅列对应段实际形式，不能把问题归为完全漏写这条要求。hint_phrase及两类数组的schema属性没有各自语义描述/例子；可评估补强分段语义和自然搭配示例，但未经真实质量测试不能承诺降低失败率。\n- 提示资源偏词典式解释，不是产品所需的英文提示短语，是另一项质量观察；建议按既有短语需求改善生成约束，不改entry_meaning，不用“含冒号/means就拒绝”等未经确认的语义正则充当校验。\n\n### 暂存清理\n\n08:56:23Z已删除私有tmpfs内failure.json，目录只剩ticket.json；原文未存入仓库或普通日志，无法从仓库恢复。保留摘要、有限字段缺陷与回放输出；本次单份名额已消费，不要求继续复现、不续期或重启后端。原114期限仍至09:42:05.964Z。两项诊断方法错误（临时执行目录noexec、最初日志筛选按文本而非JSON）已纠正，未改变产品或污染实际失败结论。\n\n## 历史已确认事实（完整候选缺失的旧run）\n\n用户提供的 run 01a08514-75a4-733f-8350-a24cca79dafd 使用 z-ai/glm-5.3-flash，输入 young / grape / weekend / danger / enforce，zh / story / short。服务端12.45秒后记录 mapping_surface_absent、target_index=1（grape），额度退还，无草稿。\n\n用户贴出的正文包含全部目标，enforce 使用 enforced；这不是缺词或超时的证据。完整候选的提示、释义、候选数组未保留，不能把推测的 grapes 声明写成事实，也不能判断整个批次合格。\n\n浏览器仅接收 passage.delta；完整校验后才返回 generation.validated。失败只返回 generation.failed，因此浏览器缺少提示短语不是用户漏贴，也不代表上游没有生成。\n\n## 用户确认与范围\n\n### 历史批准：测试身份与模型绑定（113，114样本已消费并删除）\n\n2026-09-09用户“允许”明确批准：修改临时诊断，仅绑定当前测试身份和GLM模型；不再以词组、场景、释义语言或篇幅过滤；最多下一份校验失败，启用起不超过一小时，读取后/到期删除，不记录密钥、登录令牌或其他用户内容。先用模拟提供方验证不同配置、其他身份、成功请求及限量清理，再短暂替换6001后端。前端、数据库、模型分配、业务校验不变；代理真实模型调用0。此批准取代前次“不用了”时未采用的扩展建议，原112证据仍属历史。\n\nCAP-008/009、API-005及DATA-010/011的无效结果不入正式资源规则不变。返工目标是采集过滤，不是直接放宽词法规则；现有两个失败类型的归因仍待实际候选。普通交接沿USER-HANDOFF-CONTINUOUS-001，无需重复审批；实际执行已由本次用户单独批准。\n\n### 历史授权（110–112，具体过滤由113取代）\n\n2026-09-09：在解释需要在后端失败位置暂存候选后，用户回复“继续”。采用紧邻建议：仅本地UAT、受控失败暂存、排除凭据/账号信息、排查后删除。不包含更改校验、提示词、业务规则、API、数据库、自动重试或代理收费调用。\n\n沿 [CR-039 §7](../technical/backend-cr039.md#7-错误和可观测性)已有临时捕获授权例外实施，不改普通日志禁令。仅下一份匹配同模型与上述完整输入配置的校验失败；一小时捕获/保留上限，最多一份；普通构建不带捕获实现；私有tmpfs目录0700、文件0600，过期或结束删除。期限/容量为本次诊断的保守执行上限，不是新产品保留规则。\n\n## 定向验收与交接\n\nCAP-008/009、API-005；DATA-010/011不得新增无效草稿或正式资源。\n\n- 默认构建禁用；显式调试构建、loopback origin、私有配置和有效期限共同启用。\n- 不匹配身份/模型、成功、取消、供应商失败不采集；并发最多一份；过期不采集并删除暂存。\n- 完整候选包含 passage/tags/targets及两类forms，以及允许的生成配置，可供离线重放；无请求头、generation_token、账号或凭据。\n- 磁盘失败不改变原校验结论、退款和失败事件；不向日志/前端增加内容。\n- 用合成候选及隔离HTTP/数据库验证，不调用真实模型，不重跑无关全站覆盖。\n\n110交 backend-ethan 做此有限诊断实现，普通交接沿 USER-HANDOFF-CONTINUOUS-001；111检查完成时实际部署仍待明确授权。112用户回复“行吧，你试试看”后，按已说明的短暂后端替换范围单独授权执行，不复用已耗尽108部署或模型预算。\n\n## 历史结果（110–112，原始失败证据保持）\n\n110开发交付和111接收完成，定向QA复核PASS。112已将6001后端替换为已审查诊断镜像并通过tmpfs/权限/配置保留及3路由检查；2026-09-09T08:13:10Z启用、09:10:51Z截止，最多一份匹配失败，参见[当前报告](./report.md)和[实际证据](./evidence/failure-capture/deployment-112.json)。真实模型调用0，待用户复现；QA合成metadata不等于丢失的真实候选，也不代表问题已修复。\n\n### 用户再次复现：诊断范围未命中\n\n2026-09-09T08:22:58Z只读核查：[证据](./evidence/failure-capture/scope-miss-20260909.json)。run 01a08540-c3d7-772a-8586-e2b78cec9555使用同一GLM模型、zh/story/short，但输入变为weekend/test/switch/learn/grape/number。约8.68秒后mapping_surface_absent，target_index=0对应weekend；quota_charged=false，草稿0。\n\n后端诊断镜像健康且未重启，票据未过期；私有目录只有ticket.json。failure_capture_uat.go的Record使用slices.Equal精确比较输入列表，因此本次在保存前被过滤，而不是读到样本后解析失败。首次docker cp读取返回非零；随后只读挂载列目录、运行配置及账本/日志核对确认文件不存在。没有候选可以离线重放或删除；没有发起新模型调用。\n\nCONFIRMED：本次诊断没有覆盖用户改换词组的复现，捕获条件过窄是当前排查阻碍；原映射故障仍未确定具体surface及正文/提示位置，不能归责模型或匹配器。112部署检查PASS不代表本次真实样本已捕获。\n\n此前建议取消固定词组限制；用户随后明确“不用了，我用上一次的词组，又复现了”，因此本轮不采纳扩展建议，不改过滤条件、票据或期限，不再把该建议记为待批准。\n\n### 原五词再次复现：成功故事与失败讨论\n\n2026-09-09T08:27:04Z只读核查：[原件](./evidence/failure-capture/scenario-miss-20260909.json)。两次输入均为原五词、同模型、zh/short：\n\n- run 01a08544-b5ea-7826-b266-0d592fc38aff，story，08:24:46Z完成，valid，有一份草稿；成功结果不属于失败采集范围，未读取其学习内容。\n- run 01a08545-17ee-76ba-a812-9e7086dabb82，discussion，08:24:58Z失败，mapping_relation_unknown、target_index=0（young），约5.62秒；额度退还、草稿0。\n\n本轮词组已匹配，但failure_capture_uat.go还精确比较Scenario，票据仅story，discussion在记录前被过滤。私有目录仍仅ticket.json，后端健康且未重启；没有完整候选、没有可删除的失败样本，也没有代理模型调用。\n\n可以确定失败发生在已解码候选的词法关系校验，而非超时或流传输中断。validator.go先判断候选形式是否属于young的已知关系集，不属于且词法分析为空时返回mapping_relation_unknown；因此不能把本次说成mapping_surface_absent，也不能直接断言英语派生错误。仍缺实际声明形式及其正文/提示归属，模型错报、词法覆盖不足或实现问题的进一步归因尚未完成。\n\n诊断设置对场景也过度绑定是第二个真实覆盖缺口。当时遵循用户不扩展的选择，仅报告事实，未改票据或部署；随后113用户明确“允许”新范围，已由114完成部署。上述原件与当时结论保留，不再作为当前采集条件。\n",
+      "sha256": "40296f5e16d54296ec68d56796b772da566a4eb56aaac1f25b732968a078bacf"
+    },
+    {
+      "path": ".planning/milestones/M001/handoffs/verification.md",
+      "text": "---\nmilestone: M001\nstage: verification\nrole: quality/base\nagent_name: qa-quinn\nstatus: new_hint_annotation_failure_diagnosed_raw_hint_unavailable\ndate: 2026-09-10\nverification_round: TRANSITION-M001-120\n---\n# 当前交接：提示标注新失败与取证边界\n\n本轮已获USER-HINT-CAPTURE-121明确“允许”；以[当前诊断](../verification/stream-failure-diagnosis.md)的有限hint取证范围交backend-ethan实施，定向验证后由qa-quinn启用。下文未获准描述为121确认前历史，现已撤销其待批准状态；原件冻结于hint-capture-121/pre-current.json。无新业务需求、旧协议兼容或收费调用授权。\n\n最新run 01a08902已定位为首词melancholy的hint_annotation_missing（非上一种正文错误），3.306秒失败、未扣额度、无草稿。[当前诊断及取证边界](../verification/stream-failure-diagnosis.md)为唯一结论入口。当前采集只针对旧错误，目录仅ticket.json，本次未采样、未读取或删除内容，名额仍可用。实际hint内容未知；扩大到失败hint采集仅为建议，尚待明确授权，未修改程序或配置。下文为已完成窗口准备及既有证据，不代表本次真实生成通过。\n\n当前窗口已按用户“再给我一次测试窗口吧”（USER-ANNOTATION-WINDOW-20260910）续开：[续开原件](../verification/evidence/annotation-capture-120/renew-20260910.json)。2026-09-10T01:48:50Z启用，至02:48:48.862Z（北京时间10:48:48）；同一账号/MiniMax、同一错误、一份最小样本。旧窗口已过期且无残留样本，新票据已启用，来源12份/配置/15表/4路由检查PASS。沿用已验证镜像，不重跑既有测试、不代调用模型；原当前六份文件完整冻结于续开原件。\n\n- 当前范围：[USER-ANNOTATION-CAPTURE-119及真实诊断](../verification/stream-failure-diagnosis.md)；用户“那你查一下吧”承接已展示单份错误标注/紧邻词、无全文、一小时、读后删除、局部部署方案。\n- [119开发原件](../implementation/evidence/annotation-capture-119/developer.json)、[120消费者QA](../verification/evidence/annotation-capture-120/qa.json)、[实际部署](../verification/evidence/annotation-capture-120/deployment.json)PASS。首次QA guest夹具失败保留，修正visitor后通过；无产品返工。\n- 6001后端7d16e902，原测试身份+MiniMax、annotation_source_unknown限定，截止2026-09-10T02:48:48.862Z（北京时间10:48:48）；普通全文采集关闭，私有tmpfs单份投影、到期删除与重启消费标记。部署时仅ticket.json。\n- 12份来源与15表摘要/环境配置/4路由通过，前端/nginx/PG未替换，代理模型0、无迁移清库。临时测试PG和初始化容器/宿主票据清理完成。QA主会话顺序执行，无独立子代理或模型切换声明。\n- 当前唯一入口：[报告](../verification/report.md)、[覆盖](../verification/coverage-matrix.md)、[AI质量](../verification/ai-evaluation.md)、[UAT](../verification/uat.md)；更新前六份完整冻结在120部署证据，旧失败/审批不覆盖。\n- 下一步用户在同一身份用MiniMax生成并提供run_id后，qa-quinn读取最小样本、分析并立即删除；不自动续期、不擅自多模型付费测试。若没有样本，不能从旧run恢复全文或伪造根因。\n- CR039/040、真实语义质量、用户接受和发布仍open；本轮只改善可诊断性，没有改变prompt/validator、API/DB或引入兼容分支。普通交接无需重复批准，当前已停在需用户复现的位置。\n",
+      "sha256": "5463f3be43c327e915107b08b386fa8639319fb68c73d089e7ea194148b093f9"
+    }
+  ],
+  "qaFiles": [
+    {
+      "path": ".planning/milestones/M001/verification/evidence/hint-capture-122/qa_capture_test.go",
+      "sha256": "12ae9621430562a16bc95352387635cb9d47736405dac672170e4bb0d021fd73"
+    },
+    {
+      "path": ".planning/milestones/M001/verification/evidence/hint-capture-122/overlay.json",
+      "sha256": "4f8177561bbeca52f750ae23636ed274534880f4b8f896d5c225a627c0cda39d"
+    },
+    {
+      "path": ".planning/milestones/M001/verification/evidence/hint-capture-122/deploy.mjs",
+      "sha256": "abdaa2243ff882d88a97f0c1e009d621b5b19fb45df653da682db1d71302f274"
+    }
+  ],
+  "cleanup": {
+    "chunk_id": "2256d5",
+    "wall_time_seconds": 0.126489292,
+    "exit_code": 0,
+    "original_token_count": 38,
+    "output": "{\"isolatedTestDatabaseRemoved\":true,\"testDatabasesRemaining\":0,\"recoverability\":\"Disposable synthetic tmpfs data only; no UAT data or volume removed\"}\n"
+  },
+  "runtimeDataNote": "No explicit business writes, migrations or cleanup; normal health/HTTP visitors may cause lifecycle writes.",
+  "captureReadPlan": "Read only hint.json for the matching run; delete immediately afterward, leave empty hint.claimed to prevent same-ticket resampling. Automatic expiry also deletes sample."
+}

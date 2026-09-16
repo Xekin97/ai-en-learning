@@ -1,0 +1,47 @@
+{
+  "objective": "backend-ethan：按 TRANSITION-M001-082/083 修复 CR038。为既有204响应补齐 Cache-Control: no-store；保持204空体、无Content-Type，不改变API/密码/会话/数据库。你不是唯一工作者，不回退他人修改。本任务只做后端实现与开发验证，不切换工作流、不修改前端、不部署UAT，不派生更多代理。",
+  "inputs": [
+    ".planning/workflow/state.yaml",
+    ".planning/agt/agents.yaml",
+    ".planning/agt/project.yaml",
+    ".planning/agt/model-routing-v1.lock.json",
+    ".planning/milestones/M001/reviews/verification-cr037-cr038-rework-approval.md",
+    ".planning/milestones/M001/reviews/cr037-cr038-continuous-to-uat-approval.md",
+    ".planning/milestones/M001/changes/CR-038.md",
+    ".planning/milestones/M001/verification/cr037-081-report.md",
+    ".planning/milestones/M001/technical/api/index.md",
+    ".planning/milestones/M001/technical/backend.md",
+    ".planning/milestones/M001/technical/database.md",
+    ".planning/milestones/M001/product/abilities.md"
+  ],
+  "write_scope": [
+    "backend/internal/httpapi/response.go",
+    "backend/internal/httpapi/response_test.go",
+    "backend/internal/httpapi/response_no_content_integration_test.go",
+    ".planning/milestones/M001/implementation/backend-cr038-083-worktree-plan.md",
+    ".planning/milestones/M001/implementation/backend-cr038-083-validation.md",
+    ".planning/milestones/M001/implementation/evidence/cr038-083",
+    ".planning/milestones/M001/implementation/backend-validation.md",
+    ".planning/milestones/M001/handoffs/backend-implementation.md"
+  ],
+  "acceptance": [
+    "按 agt-backend-implement 完整读取SKILL及所有必需契约，确认唯一活动backend-ethan后开始；读取原始批准输入并记录CAP004/PAGE009/API003/DATA003/004追踪。",
+    "先加不通过的204缓存测试并保留RED证据，再最小修改共享helper，覆盖预设Content-Type和Cache-Control移除/覆盖，以及204无体、无Content-Type、no-store。",
+    "梳理所有writeNoContent消费者，补目标集成用例或同效HTTP级回归，涵盖退出、自助改密、注销、学习批次删除、复习会话删除、管理员重置密码。所有破坏性操作仅使用本任务新建专用tmpfs PostgreSQL和合成数据。",
+    "运行后端适用gofmt检查、go vet、go test -race ./...、-tags=integration相关全套及Docker构建；禁止使用现有业务数据库。OpenRouter live tests不得开启，不读取历史凭据/真实模型，不真实生成。不得降级测试断言以通过。",
+    "用专用prefix ww-dev-083，输出脚本/命令/退出码/失败/通过日志并保存candidate.json固定backend镜像ID，tag wordweave-backend:cr038-083。Docker资源操作需精确检查目标；保持wordweave_uat-*全部容器、配置、数据、密码、镜像不变。清理本任务临时资源并保留证据。",
+    "记录单工作区计划：项目工作区大部分未跟踪且有既有修改，窄共享helper无需并行worktree，不提交或重置Git。允许写入清单外文件一律不改；缺少必要边界时向主会话报告。",
+    "交付独立validation报告、backend-validation和backend handoff当前增量（旧正文逐字保留），CR保持open由后续QA关闭，不自行改state/agents/history。报告不含密码、Cookie、真实密钥或原始环境秘密。",
+    "不要自称独立QA PASS或已交UAT。actual_model与usage仅依据运行时证据，缺失写not_observed。"
+  ],
+  "risk": "high",
+  "prior_attempts": [],
+  "report": [
+    "changed_paths",
+    "commands_and_exit_codes",
+    "evidence_paths",
+    "candidate_image",
+    "remaining_risks",
+    "actual_model_and_usage_if_observed"
+  ]
+}

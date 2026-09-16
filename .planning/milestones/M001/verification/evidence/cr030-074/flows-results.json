@@ -1,0 +1,142 @@
+{
+  "date": "2026-09-06T07:01:53.883Z",
+  "agent": "qa-quinn",
+  "counts": {
+    "PASS": 21,
+    "FAIL": 0,
+    "ERROR": 1
+  },
+  "checks": [
+    {
+      "id": "login error fits form",
+      "status": "PASS",
+      "actual": true,
+      "expected": true
+    },
+    {
+      "id": "intent retained during locale",
+      "status": "PASS",
+      "actual": "/review",
+      "expected": "/review"
+    },
+    {
+      "id": "login register intent errors locale refresh return",
+      "status": "ERROR",
+      "error": "Error: expect(locator).toHaveValue(expected) failed\n\nLocator:  locator('.locale-switch select')\nExpected: \"en-US\"\nReceived: \"zh-CN\"\nTimeout:  5000ms\n\nCall log:\n  - Expect \"to.have.value\" with timeout 5000ms\n  - waiting for locator('.locale-switch select')\n    14 × locator resolved to <select value=\"zh-CN\" aria-label=\"界面语言\">…</select>\n       - unexpected value \"zh-CN\"\n"
+    },
+    {
+      "id": "register no save no session",
+      "status": "PASS",
+      "actual": [],
+      "expected": []
+    },
+    {
+      "id": "registration returns single story without auto save",
+      "status": "PASS",
+      "actual": true,
+      "expected": true
+    },
+    {
+      "id": "admin priority and claim flag alone ignored",
+      "status": "PASS",
+      "actual": true,
+      "expected": true
+    },
+    {
+      "id": "unsafe not forwarded https://example.invalid",
+      "status": "PASS",
+      "actual": false,
+      "expected": false
+    },
+    {
+      "id": "unsafe not forwarded //example.invalid",
+      "status": "PASS",
+      "actual": false,
+      "expected": false
+    },
+    {
+      "id": "unsafe not forwarded /review/../../admin",
+      "status": "PASS",
+      "actual": false,
+      "expected": false
+    },
+    {
+      "id": "unsafe not forwarded /review/a/b",
+      "status": "PASS",
+      "actual": false,
+      "expected": false
+    },
+    {
+      "id": "unsafe not forwarded /library%2f..%2fadmin",
+      "status": "PASS",
+      "actual": false,
+      "expected": false
+    },
+    {
+      "id": "unsafe not forwarded /review\\evil",
+      "status": "PASS",
+      "actual": false,
+      "expected": false
+    },
+    {
+      "id": "ordinary login clears old return",
+      "status": "PASS",
+      "actual": false,
+      "expected": false
+    },
+    {
+      "id": "invalid redirect and stale intent cleared",
+      "status": "PASS",
+      "actual": true,
+      "expected": true
+    },
+    {
+      "id": "header home mobile entry unification",
+      "status": "PASS",
+      "actual": true,
+      "expected": true
+    },
+    {
+      "id": "search row focus restored",
+      "status": "PASS",
+      "actual": true,
+      "expected": true
+    },
+    {
+      "id": "search exact scroll restored",
+      "status": "PASS",
+      "actual": true,
+      "expected": true
+    },
+    {
+      "id": "search pagination detail return and resubmit",
+      "status": "PASS",
+      "actual": true,
+      "expected": true
+    },
+    {
+      "id": "reader history deep old links and backdrop",
+      "status": "PASS",
+      "actual": true,
+      "expected": true
+    },
+    {
+      "id": "reader failed unavailable retry loading close late",
+      "status": "PASS",
+      "actual": true,
+      "expected": true
+    },
+    {
+      "id": "malformed no unlimited",
+      "status": "PASS",
+      "actual": 0,
+      "expected": 0
+    },
+    {
+      "id": "malformed quota GET fails whole detail and retry safe",
+      "status": "PASS",
+      "actual": true,
+      "expected": true
+    }
+  ]
+}

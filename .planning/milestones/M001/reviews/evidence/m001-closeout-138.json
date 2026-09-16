@@ -1,0 +1,308 @@
+{
+  "revision": "M001-CLOSEOUT-136-138",
+  "recorded_at": "2026-09-16T02:07:30.078484+00:00",
+  "authorization": {
+    "id": "USER-M001-CLOSEOUT-20260916",
+    "user_instruction": "收尾吧，收尾之后整理 commit 提交两边（agt 和 项目）的代码",
+    "scope": "Close current accepted milestone, preserve known limitations, organize and commit both local repositories",
+    "production_release": false,
+    "push": false
+  },
+  "profile_hash_verified": true,
+  "required_artifacts_checked": 28,
+  "source_checks": {
+    "QA132": {
+      "manifest": ".planning/milestones/M001/verification/evidence/closeout-132/qa.json",
+      "count": 28,
+      "mismatches": []
+    },
+    "FRONTEND-SYNC-133": {
+      "manifest": ".planning/milestones/M001/implementation/evidence/frontend-sync-133/before.json",
+      "count": 340,
+      "mismatches": []
+    }
+  },
+  "scope": {
+    "application_source_changes": 0,
+    "new_application_tests": 0,
+    "paid_model_calls": 0,
+    "runtime_or_database_changes": 0,
+    "prior_QA_and_UAT_reused": true
+  },
+  "prior_documents": ".planning/milestones/M001/technical/archive/pre-m001-closeout-136.json",
+  "transitions": [
+    {
+      "id": "TRANSITION-M001-136",
+      "timestamp": "2026-09-16T02:07:34.953267+00:00",
+      "from": "technical-design",
+      "to": "implementation",
+      "previous_role": "backend-architect/base",
+      "previous_agent": "backend-alex",
+      "active_role": "backend-implementer/base",
+      "active_agent": "backend-ethan",
+      "confirmed_by": "user",
+      "authorization": "USER-M001-CLOSEOUT-20260916",
+      "evidence": ".planning/milestones/M001/reviews/stream-failure-capture-gates.md",
+      "scope": "接收 r10 文档同步，恢复已验收实现交付",
+      "user_uat_accepted": true,
+      "real_model_calls_authorized": false,
+      "release_approved": false
+    },
+    {
+      "id": "TRANSITION-M001-137",
+      "timestamp": "2026-09-16T02:07:35.265287+00:00",
+      "from": "implementation",
+      "to": "verification",
+      "previous_role": "backend-implementer/base",
+      "previous_agent": "backend-ethan",
+      "active_role": "quality/base",
+      "active_agent": "qa-quinn",
+      "confirmed_by": "user",
+      "authorization": "USER-M001-CLOSEOUT-20260916",
+      "evidence": ".planning/milestones/M001/reviews/stream-failure-capture-gates.md",
+      "scope": "接收既有实现证据，进入文档与变更收尾核对",
+      "user_uat_accepted": true,
+      "real_model_calls_authorized": false,
+      "release_approved": false
+    },
+    {
+      "id": "TRANSITION-M001-138",
+      "timestamp": "2026-09-16T02:09:06.968504+00:00",
+      "from": "verification",
+      "to": "milestone-complete",
+      "previous_role": "quality/base",
+      "previous_agent": "qa-quinn",
+      "active_role": null,
+      "active_agent": null,
+      "confirmed_by": "user",
+      "authorization": "USER-M001-CLOSEOUT-20260916",
+      "evidence": ".planning/milestones/M001/reviews/stream-failure-capture-gates.md",
+      "scope": "按用户验收与收尾授权完成 M001，保留已知限制",
+      "user_uat_accepted": true,
+      "real_model_calls_authorized": false,
+      "release_approved": false
+    }
+  ],
+  "known_limitations": [
+    {
+      "id": "CR039-L1",
+      "status": "open",
+      "source": ".planning/milestones/M001/changes/CR-039.md",
+      "issue": "safe derivations rejected; safer unverified"
+    },
+    {
+      "id": "CR042-L1",
+      "status": "open",
+      "source": ".planning/milestones/M001/verification/CR-042-generation-evidence.md",
+      "issue": "Unknown annotation feedback precision and multi-response replay limitations"
+    },
+    {
+      "id": "AI-QUALITY-90",
+      "status": "unverified",
+      "source": ".planning/milestones/M001/verification/ai-evaluation.md",
+      "issue": "Stable long-term success at least 90 percent not proven; model tuning stopped"
+    }
+  ],
+  "documentation_checks": {
+    "snapshot_integrity": true,
+    "missing_local_links": [],
+    "changed_inputs": [
+      ".planning/milestones/M001/technical/backend.md",
+      ".planning/milestones/M001/technical/ai-integration.md",
+      ".planning/milestones/M001/handoffs/backend-architecture.md",
+      ".planning/milestones/M001/verification/report.md",
+      ".planning/milestones/M001/verification/coverage-matrix.md",
+      ".planning/milestones/M001/verification/ai-evaluation.md",
+      ".planning/milestones/M001/verification/uat.md",
+      ".planning/milestones/M001/handoffs/verification.md",
+      ".planning/milestones/M001/changes/CR-039.md",
+      ".planning/milestones/M001/changes/CR-041.md",
+      ".planning/milestones/M001/verification/cr040-meaning-only-request.md",
+      ".planning/milestones/M001/verification/CR-042-generation-evidence.md",
+      ".planning/workflow/state.yaml",
+      ".planning/agt/agents.yaml"
+    ],
+    "static_file_sizes": [
+      {
+        "path": ".planning/milestones/M001/technical/backend.md",
+        "before_characters": 44578,
+        "after_characters": 44758,
+        "before_bytes": 84119,
+        "after_bytes": 84382
+      },
+      {
+        "path": ".planning/milestones/M001/technical/ai-integration.md",
+        "before_characters": 11895,
+        "after_characters": 13582,
+        "before_bytes": 24188,
+        "after_bytes": 27752
+      },
+      {
+        "path": ".planning/milestones/M001/handoffs/backend-architecture.md",
+        "before_characters": 3215,
+        "after_characters": 1379,
+        "before_bytes": 6119,
+        "after_bytes": 2448
+      },
+      {
+        "path": ".planning/milestones/M001/verification/report.md",
+        "before_characters": 2141,
+        "after_characters": 3194,
+        "before_bytes": 4025,
+        "after_bytes": 6018
+      },
+      {
+        "path": ".planning/milestones/M001/verification/coverage-matrix.md",
+        "before_characters": 2045,
+        "after_characters": 2222,
+        "before_bytes": 3485,
+        "after_bytes": 3804
+      },
+      {
+        "path": ".planning/milestones/M001/verification/ai-evaluation.md",
+        "before_characters": 1936,
+        "after_characters": 2070,
+        "before_bytes": 3492,
+        "after_bytes": 3798
+      },
+      {
+        "path": ".planning/milestones/M001/verification/uat.md",
+        "before_characters": 893,
+        "after_characters": 919,
+        "before_bytes": 1595,
+        "after_bytes": 1661
+      },
+      {
+        "path": ".planning/milestones/M001/handoffs/verification.md",
+        "before_characters": 1632,
+        "after_characters": 1311,
+        "before_bytes": 3006,
+        "after_bytes": 2271
+      },
+      {
+        "path": ".planning/milestones/M001/changes/CR-039.md",
+        "before_characters": 2833,
+        "after_characters": 3498,
+        "before_bytes": 5781,
+        "after_bytes": 6974
+      },
+      {
+        "path": ".planning/milestones/M001/changes/CR-041.md",
+        "before_characters": 1082,
+        "after_characters": 1580,
+        "before_bytes": 1928,
+        "after_bytes": 2884
+      },
+      {
+        "path": ".planning/milestones/M001/verification/cr040-meaning-only-request.md",
+        "before_characters": 3060,
+        "after_characters": 3606,
+        "before_bytes": 6750,
+        "after_bytes": 7748
+      },
+      {
+        "path": ".planning/milestones/M001/verification/CR-042-generation-evidence.md",
+        "before_characters": 1448,
+        "after_characters": 1967,
+        "before_bytes": 2922,
+        "after_bytes": 3983
+      },
+      {
+        "path": ".planning/workflow/state.yaml",
+        "before_characters": 81372,
+        "after_characters": 81315,
+        "before_bytes": 82004,
+        "after_bytes": 81987
+      },
+      {
+        "path": ".planning/agt/agents.yaml",
+        "before_characters": 2413,
+        "after_characters": 2437,
+        "before_bytes": 2509,
+        "after_bytes": 2533
+      }
+    ],
+    "tokens": "unknown",
+    "runtime_cumulative_input": "not_observed",
+    "independent_new_session_test": "not_executed_same_session_only",
+    "budget_note": "Measured whole-file characters/bytes only; actual reads used sections and evidence excerpts. Large existing state kept intact to avoid changing consumers; no token-budget compliance claim."
+  },
+  "formal_dispositions": {
+    "CR-039": {
+      "status": "closed",
+      "scope": "accepted M001 delivery",
+      "record": ".planning/milestones/M001/changes/CR-039.md",
+      "closed_by": "TRANSITION-M001-138"
+    },
+    "CR-040": {
+      "status": "closed",
+      "scope": "accepted M001 delivery",
+      "record": ".planning/milestones/M001/verification/cr040-meaning-only-request.md",
+      "closed_by": "TRANSITION-M001-138"
+    },
+    "CR-041": {
+      "status": "closed",
+      "scope": "accepted M001 delivery",
+      "record": ".planning/milestones/M001/changes/CR-041.md",
+      "closed_by": "TRANSITION-M001-138"
+    },
+    "CR-042": {
+      "status": "closed",
+      "scope": "accepted M001 delivery",
+      "record": ".planning/milestones/M001/verification/CR-042-generation-evidence.md",
+      "closed_by": "TRANSITION-M001-138"
+    }
+  },
+  "result": "M001 complete; user-accepted delivery; known limitations retained; no production release",
+  "final_checks": {
+    "workflow_consistent": true,
+    "profile_transitions_valid": true,
+    "active_specialists": 0,
+    "open_change_requests": 0,
+    "retained_open_items": 3,
+    "changed_existing_files": [
+      ".gitignore",
+      ".planning/agt/agents.yaml",
+      ".planning/agt/project.yaml",
+      ".planning/milestones/M001/changes/CR-039.md",
+      ".planning/milestones/M001/changes/CR-041.md",
+      ".planning/milestones/M001/handoffs/backend-architecture.md",
+      ".planning/milestones/M001/handoffs/verification.md",
+      ".planning/milestones/M001/reviews/stream-failure-capture-gates.md",
+      ".planning/milestones/M001/technical/ai-integration.md",
+      ".planning/milestones/M001/technical/backend.md",
+      ".planning/milestones/M001/verification/CR-042-generation-evidence.md",
+      ".planning/milestones/M001/verification/ai-evaluation.md",
+      ".planning/milestones/M001/verification/coverage-matrix.md",
+      ".planning/milestones/M001/verification/cr040-meaning-only-request.md",
+      ".planning/milestones/M001/verification/report.md",
+      ".planning/milestones/M001/verification/uat.md",
+      ".planning/workflow/history.yaml",
+      ".planning/workflow/state.yaml",
+      "README.md"
+    ],
+    "application_source_unchanged": true,
+    "historical_evidence_unchanged": true,
+    "local_links_checked": 330,
+    "missing_local_links": [],
+    "frozen_snapshot_integrity": true,
+    "new_tests": 0,
+    "verification_note": "First audit assumed every historical transition used id; older entries use decision_id. Read-only audit corrected to preserve both existing schemas; no historical transition rewritten."
+  },
+  "delivery_commits": {
+    "application": "387c775534844ff0b8ca9857523dc39c1d8ee87a",
+    "agt_framework": "42acf7579d08a7d17d597709ccb57bebcad0dc96",
+    "original_profile_and_agt_lock_unchanged": true,
+    "scope": "Source snapshot at closeout; does not migrate the existing Profile or rewrite the model-routing adoption record"
+  },
+  "commit_hygiene": {
+    "local_env_and_variants_ignored": true,
+    "configuration_examples_included": true,
+    "high_confidence_credential_patterns_found": 0,
+    "archive_members_scanned": 80,
+    "known_environment_value_match": "Only the intentionally public local development master key in backend/Makefile; no live provider credential match",
+    "third_party_license_and_migration_bytes_preserved": true,
+    "existing_whitespace": "Preserved WordNet license whitespace and preexisting final blank lines in migration/config/edge files to retain original hashes; other application staged whitespace check passed",
+    "framework_validation": "42 Node tests passed; Profile validation passed; staged whitespace check passed"
+  }
+}

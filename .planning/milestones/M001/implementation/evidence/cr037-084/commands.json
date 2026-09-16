@@ -1,0 +1,18 @@
+{
+  "schema_version": 1,
+  "commands": [
+    { "name": "red_unit", "exit": 1, "evidence": "red-unit.log" },
+    { "name": "targeted_unit_green", "command": "pnpm exec vitest run tests/unit/account-password-error.test.ts", "exit": 0, "result": "3/3 pass" },
+    { "name": "targeted_mock_e2e", "command": "pnpm exec playwright test tests/e2e/cr037-auth-account.spec.ts", "exit": 0, "result": "12/12 pass" },
+    { "name": "candidate_build_attempt_1", "exit": 1, "result": "typecheck pass; new-test lint fail", "evidence": "build-attempts.json" },
+    { "name": "candidate_build_final", "command": "docker build --progress=plain -t wordweave-frontend:cr037-084 frontend", "exit": 0, "result": "typecheck, lint, boundaries, 199 unit, Nuxt build pass", "evidence": "build-attempts.json" },
+    { "name": "node24_format_check", "command": "Node 24.8.0 fixed image: prettier --check four changed frontend files", "exit": 0 },
+    { "name": "fixed_candidate_mock_linux", "exit": 1, "result": "120 pass / 2 existing cross-platform geometry failures; CR037 12/12 pass", "evidence": "mock-e2e-results.json" },
+    { "name": "fixed_candidate_mock_macos", "exit": 0, "result": "122/122 pass", "evidence": "mock-e2e-results.json" },
+    { "name": "real_chromium", "command": "DEV084_ENGINE=chromium password-browser.mjs", "exit": 0, "result": "52/52 pass", "evidence": "password-chromium-darwin-results.json" },
+    { "name": "real_linux_webkit", "command": "Playwright fixed Linux image, DEV084_ENGINE=webkit password-browser.mjs", "exit": 0, "result": "48/48 pass", "evidence": "password-webkit-linux-results.json" },
+    { "name": "real_native_webkit_fixture_attempt", "exit": 1, "result": "duplicate synthetic usernames caused 409; assertions not reached", "evidence": "password-webkit-darwin-results.json" },
+    { "name": "real_native_webkit_final", "command": "DEV084_ENGINE=webkit DEV084_RUN=webkit-darwin-native password-browser.mjs", "exit": 0, "result": "48/48 pass", "evidence": "password-webkit-darwin-native-results.json" },
+    { "name": "linux_geometry_comparison", "exit": 0, "result": "fonts loaded; actual and approved prototype equal: [20,20,16,24] desktop, [20,20,16,25] mobile", "evidence": "linux-geometry-comparison.json" }
+  ]
+}

@@ -1,0 +1,29 @@
+=== RUN   TestClaimedBatchDeletionHTTP
+2026/09/08 03:32:50 INFO http_request request_id=req_oo8CimLlDUXhmhRVv5lTFg method=GET route=/api/v1/bootstrap status=200 duration_ms=1
+2026/09/08 03:32:51 INFO http_request request_id=req_Y2pSQMQHkUODcrJoNcOtPA method=POST route=/api/v1/auth/login status=200 duration_ms=993
+2026/09/08 03:32:51 INFO http_request request_id=req_g2bnMNvZ8CgIYlqqHLllKg method=POST route=/api/v1/visitor-claims/consume status=200 duration_ms=8
+2026/09/08 03:32:51 INFO http_request request_id=req_hGwUTGd8bXyiiUE9J0ZmqA method=POST route=/api/v1/visitor-claims/consume status=200 duration_ms=1
+2026/09/08 03:32:51 INFO http_request request_id=req_iTly5hboKiWJsjKUWLL__A method=POST route=/api/v1/me/review-sessions status=201 duration_ms=3
+=== RUN   TestClaimedBatchDeletionHTTP/missing_CSRF_cannot_delete
+2026/09/08 03:32:51 INFO http_request request_id=req_1wlnJhOKf8IhElqEOfpGaw method=DELETE route=/api/v1/me/batches/{batch_id} status=403 duration_ms=0
+=== RUN   TestClaimedBatchDeletionHTTP/other_account_cannot_delete
+2026/09/08 03:32:51 INFO http_request request_id=req_MY6JhuVD9fjdTQPoQHwoEQ method=GET route=/api/v1/bootstrap status=200 duration_ms=0
+2026/09/08 03:32:52 INFO http_request request_id=req_eUvMCcwPJWcMMhbuoNZ4lw method=POST route=/api/v1/auth/register status=201 duration_ms=981
+2026/09/08 03:32:52 INFO http_request request_id=req_kXoyCb7T55cHxyeYmeQdXw method=DELETE route=/api/v1/me/batches/{batch_id} status=404 duration_ms=1
+=== RUN   TestClaimedBatchDeletionHTTP/visitor_cannot_delete
+2026/09/08 03:32:52 INFO http_request request_id=req_LNXiQveZFz6ZV3WuaWe73w method=GET route=/api/v1/bootstrap status=200 duration_ms=0
+2026/09/08 03:32:52 INFO http_request request_id=req_xijSFBBtaIQ4d8yVipKYEA method=DELETE route=/api/v1/me/batches/{batch_id} status=401 duration_ms=0
+2026/09/08 03:32:52 INFO http_request request_id=req_tCOKOCyuaCM4hwDBOd82_w method=GET route=/api/v1/me/batches/{batch_id} status=200 duration_ms=2
+2026/09/08 03:32:52 INFO http_request request_id=req_8xl1GPDiPeJmoK_q3iShxg method=POST route=/api/v1/visitor-claims/consume status=200 duration_ms=0
+2026/09/08 03:32:52 INFO http_request request_id=req_KY3C7bC2ZuoFFWVolgFjpA method=DELETE route=/api/v1/me/batches/{batch_id} status=500 duration_ms=1
+=== NAME  TestClaimedBatchDeletionHTTP
+    claimed_batch_delete_integration_test.go:178: status=500, want=204 body="{\"type\":\"https://wordweave.example/problems/internal-error\",\"title\":\"Internal error\",\"status\":500,\"code\":\"internal_error\",\"detail\":\"The request could not be completed.\",\"request_id\":\"req_KY3C7bC2ZuoFFWVolgFjpA\"}\n"
+--- FAIL: TestClaimedBatchDeletionHTTP (7.50s)
+    --- PASS: TestClaimedBatchDeletionHTTP/missing_CSRF_cannot_delete (0.00s)
+    --- PASS: TestClaimedBatchDeletionHTTP/other_account_cannot_delete (0.98s)
+    --- PASS: TestClaimedBatchDeletionHTTP/visitor_cannot_delete (0.00s)
+FAIL
+FAIL	wordweave/internal/httpapi	7.537s
+FAIL
+
+

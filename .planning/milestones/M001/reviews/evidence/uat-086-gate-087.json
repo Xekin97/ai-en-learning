@@ -1,0 +1,217 @@
+{
+  "status": "PASS_FOR_FUNCTIONAL_UAT_HANDOFF",
+  "at": "2026-09-07T04:00:58.344Z",
+  "independent_qa": "QA085_PASS",
+  "deployment": "PASS",
+  "smoke": {
+    "PASS": 100,
+    "FAIL": 0,
+    "ERROR": 0
+  },
+  "first_smoke_preserved": {
+    "PASS": 79,
+    "FAIL": 0,
+    "ERROR": 1
+  },
+  "artifacts": {
+    ".planning/milestones/M001/verification/uat-086-handoff.md": "e1985fc123d5787b5945071488357a61743413205df9f2f4f5929f4912b78f9b",
+    ".planning/milestones/M001/verification/evidence/uat-086/deployment.json": "649374a0e152fbec34a93dabbf527577b04fe1e7425cbd7d45a5fea3ef020ad4",
+    ".planning/milestones/M001/verification/evidence/uat-086/smoke-results.json": "605a2ba59079534e659aede6cf9caf0f9465b784d075e682ea7589d8cae57a1e",
+    ".planning/milestones/M001/verification/evidence/uat-086/smoke-recheck-results.json": "f1ae28ae0f02e49c2daac27791726f407995190372dca19e32fd8e4050474459",
+    ".planning/milestones/M001/verification/evidence/uat-086/manual-visual-review.json": "fdcb98b052bc888feb9079a91cd0db7ddfbc69f420a52c3925e11e9fd276d5b7",
+    ".planning/milestones/M001/verification/evidence/uat-086/delivery-validation.json": "c35768a5919bcdd59f7e9bc0d70773c890c42117a048255082e707253ec84a87",
+    ".planning/milestones/M001/verification/uat.md": "24fc13e914a68496e98b39d41dc50944b30e50905cf5d6b0df1491a21ef16830",
+    ".planning/milestones/M001/handoffs/verification.md": "13ec01107cb3bb1900dd3a20af277dc3305a15a879855f3e8d7163cb06cc8f4f"
+  },
+  "preserved_qa_artifacts": [
+    {
+      "path": ".planning/milestones/M001/verification/cr037-cr038-085-report.md",
+      "match": true
+    },
+    {
+      "path": ".planning/milestones/M001/verification/cr037-cr038-085-coverage.md",
+      "match": true
+    },
+    {
+      "path": ".planning/milestones/M001/verification/coverage-matrix.md",
+      "match": true
+    },
+    {
+      "path": ".planning/milestones/M001/verification/report.md",
+      "match": true
+    },
+    {
+      "path": ".planning/milestones/M001/verification/ui-design-audit.md",
+      "match": true
+    },
+    {
+      "path": ".planning/milestones/M001/verification/ai-evaluation.md",
+      "match": true
+    },
+    {
+      "path": ".planning/milestones/M001/changes/CR-037.md",
+      "match": true
+    },
+    {
+      "path": ".planning/milestones/M001/changes/CR-038.md",
+      "match": true
+    },
+    {
+      "path": ".planning/milestones/M001/verification/evidence/cr037-cr038-085/result-summary.json",
+      "match": true
+    },
+    {
+      "path": ".planning/milestones/M001/verification/evidence/cr037-cr038-085/first-failures.json",
+      "match": true
+    },
+    {
+      "path": ".planning/milestones/M001/verification/evidence/cr037-cr038-085/delivery-validation.json",
+      "match": true
+    },
+    {
+      "path": ".planning/milestones/M001/verification/evidence/cr037-cr038-085/cleanup.json",
+      "match": true
+    }
+  ],
+  "candidate_source_checks": [
+    {
+      "path": "frontend/app/pages/account.vue",
+      "match": true
+    },
+    {
+      "path": "frontend/app/runtime/stores/account.ts",
+      "match": true
+    },
+    {
+      "path": "frontend/tests/unit/account-password-error.test.ts",
+      "match": true
+    },
+    {
+      "path": "frontend/tests/e2e/cr037-auth-account.spec.ts",
+      "match": true
+    },
+    {
+      "path": "backend/internal/httpapi/response.go",
+      "match": true
+    },
+    {
+      "path": "backend/internal/httpapi/response_test.go",
+      "match": true
+    },
+    {
+      "path": "backend/internal/httpapi/response_no_content_integration_test.go",
+      "match": true
+    }
+  ],
+  "containers": [
+    {
+      "name": "/wordweave_uat-frontend-1",
+      "id": "c29718b3bea43ab23403ae7cef828968f2c934f6b04128d1f4a61cfb13d82c06",
+      "image": "sha256:fd251e7439aad8e058656e2751ed84f40715fec570a872da53542688a6dd6904",
+      "health": "healthy",
+      "running": true,
+      "matches_deployment": true
+    },
+    {
+      "name": "/wordweave_uat-backend-1",
+      "id": "e1edf901fc0a17433b0caa4f213d4fdd1cd5579d53457290bb15c07d8de690b4",
+      "image": "sha256:642ed57ad0ed6c8a13e4bba1101d8b50188e8ea636791583a6ffb5eaa6917aac",
+      "health": "healthy",
+      "running": true,
+      "matches_deployment": true
+    },
+    {
+      "name": "/wordweave_uat-nginx-1",
+      "id": "b789bde4e7825b849640cbf63d35b50ae41c1b77cb6b7ece73b3e26e27eabcb1",
+      "image": "sha256:5f0efd7fead5e8a290f07e5c025e9204052efb646758e1c6883de0e23a6e085c",
+      "health": "healthy",
+      "running": true,
+      "matches_deployment": true
+    },
+    {
+      "name": "/wordweave_uat-postgres-1",
+      "id": "37a6d2fa58c578b1c6b4dbe10028b5ddf0c696fe44fc849a129293a85bbaf839",
+      "image": "sha256:b85269e8c6aa961524542eb4dcca44c4aa1deba2cf507e9e28d5ba8f971aeab9",
+      "health": "healthy",
+      "running": true,
+      "matches_deployment": true
+    }
+  ],
+  "urls": [
+    {
+      "url": "http://localhost:6001/",
+      "status": "200"
+    },
+    {
+      "url": "http://localhost:6010/",
+      "status": "200"
+    }
+  ],
+  "controls": {
+    ".planning/workflow/history.yaml": {
+      "bytes": 91442,
+      "sha256": "b3d3f816a6d7bf8be7f4a819b22566250f9f5a9970032be8321478e7030e30c1"
+    },
+    ".planning/workflow/state.yaml": {
+      "bytes": 5289,
+      "sha256": "50176cf1ca17dd7a351804f33532a1b2f70b4e5340e057f4e1df0de356b62ada"
+    },
+    ".planning/agt/agents.yaml": {
+      "bytes": 2509,
+      "sha256": "86470e63858e367c98d8edcc60f245aa46e669381d52c3f3d32f159b4c5ffc9b"
+    }
+  },
+  "credentials_unchanged": [
+    "uat_admin",
+    "uat_learner"
+  ],
+  "password_hashes_emitted": false,
+  "user_uat_accepted": false,
+  "release_approved": false,
+  "method_limit": [
+    "The Chinese presentation check intercepted the locale PUT to preserve the existing UAT preference; it is not evidence of backend locale persistence.",
+    "Functional UAT is awaiting the user; real AI, real-device Safari/assistive technology, public performance, and release readiness remain outside this handoff."
+  ],
+  "control_unchanged_since_086": true,
+  "backup_metadata": {
+    "path": "/var/folders/z9/99ckxr957v901zwwc8jdk8640000gn/T/wordweave-uat-086-eudPWJ",
+    "directory_mode": "700",
+    "private_files": [
+      {
+        "name": "rollback-compose.yaml",
+        "mode": "600",
+        "bytes": 199
+      },
+      {
+        "name": "runtime-private.json",
+        "mode": "600",
+        "bytes": 44010
+      },
+      {
+        "name": "wordweave.dump",
+        "mode": "600",
+        "bytes": 2516828
+      }
+    ],
+    "old_images_exist": true,
+    "contents_not_read": true
+  },
+  "source_scope_check": {
+    "compared_existing_source_files": 231,
+    "baseline": ".planning/milestones/M001/verification/evidence/cr037-081/baseline.json",
+    "changed_existing": [
+      "frontend/app/runtime/stores/account.ts",
+      "frontend/tests/e2e/cr037-auth-account.spec.ts",
+      "backend/internal/httpapi/response_test.go",
+      "backend/internal/httpapi/response.go",
+      "frontend/app/pages/account.vue"
+    ],
+    "new_visible_source_files": [
+      "frontend/tests/unit/account-password-error.test.ts",
+      "backend/internal/httpapi/response_no_content_integration_test.go"
+    ],
+    "unexpected_changes": [],
+    "note": "Read-only source hash comparison; no semantic code review or developer test rerun."
+  }
+}
+

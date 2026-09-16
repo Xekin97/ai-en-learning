@@ -1,0 +1,15 @@
+import {spawnSync} from 'node:child_process';
+import {readFileSync} from 'node:fs';
+import {join} from 'node:path';
+import {dir,prefix,docker,sql,output,hash,root} from './setup.mjs';
+const r=spawnSync('docker',['logs',prefix+'-db'],{encoding:'utf8',maxBuffer:16*1024*1024});if(r.status!==0)throw Error('QA DB log read');
+// PostgreSQL writes its diagnostics on stderr; no failing rows/token hashes are retained.
+const lines=(r.stdout+'\n'+r.stderr).split('\n').filter(x=>x.includes('violates check constraint "visitor_claims_state_consistent"')||x.includes('UPDATE ONLY "wordweave"."visitor_claims" SET "consumed_batch_id" = NULL'));
+output('delete-constraint-evidence.json',{date:new Date().toISOString(),postgres_stderr_included:true,source:'Only ww-qa-cr039-096-db',lines,original_observation_empty_field_explained:'Initial docker helper captured stdout only; original observation is preserved, this file supplies stderr diagnostics.'});
+const selected=['backend/internal/learning/service.go','backend/db/migrations/0002_core_tables.sql'];
+output('bounded-source-evidence.json',{date:new Date().toISOString(),files:Object.fromEntries(selected.map(p=>[p,hash(join(root,p))])),constraints:JSON.parse(sql("SELECT json_agg(json_build_object('name',conname,'definition',pg_get_constraintdef(oid))) FROM pg_constraint WHERE conrelid='wordweave.visitor_claims'::regclass AND (conname='visitor_claims_state_consistent' OR conname LIKE '%consumed_batch%');")),scope:'Read-only localization of independently reproduced delete failure; not general code review'});
+const logs=docker(['logs',prefix+'-backend']);
+output('log-summary.json',{date:new Date().toISOString(),http500:logs.split('\n').filter(x=>x.includes('"status":500')).map(x=>JSON.parse(x)),synthetic_api_key_logged:logs.includes('qa096-synthetic-never-real'),candidate_metadata_logged:/passage_forms|hint_forms|source_entry|RelationProof/.test(logs),postgres_state_constraint_errors:lines.filter(x=>x.includes('ERROR:')).length,real_model_calls:0});
+const rows={};for(const name of ['api-results-initial-fixture-error.json','api-results.json','supplement-results.json','concurrency-results.json','delete-claim-results.json']){const d=JSON.parse(readFileSync(join(dir,name)));rows[name]={date:d.date,counts:d.counts};}
+output('result-summary.json',{date:new Date().toISOString(),rows,product_findings:['QA096-01'],test_method_corrections:['Probe fixture omitted required repeated/inflected hint, corrected before lifecycle checks','Guest save expected 403 but contract requires 401 authentication_required; corrected in L08R','Provider HTTP failure was incorrectly treated as SSE failure; L07R checks 503 generation_unavailable and DB refund','Expiry fixture initially violated expires_at > created_at; L09R moves both timestamps'],historical_raw_results_preserved:true,no_full_suite_rerun:true,real_model_calls:0,requested_model:'gpt-5.6-sol',requested_effort:'high',actual_model:'not_observed',usage:'not_observed'});
+console.log(JSON.stringify({constraint_errors:lines.filter(x=>x.includes('ERROR:')).length,rows}));

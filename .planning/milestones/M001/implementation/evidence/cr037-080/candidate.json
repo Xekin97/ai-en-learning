@@ -1,0 +1,134 @@
+{
+  "date": "2026-09-06T10:30:21.544Z",
+  "agent": "frontend-claire",
+  "status": "implemented_with_explicit_browser_validation_gap_pending_independent_qa",
+  "frontend": "sha256:170b8f2c58a2792b21cfe71244f80f263beb825a55fb84d5c2c0dec72adb0e3b",
+  "backend": "sha256:e8c4ee91a7c3265cda8c496ccc8fb485328d95b6c1662eaf2502011ce5d005a5",
+  "sourceFiles": [
+    {
+      "path": "frontend/app/pages/login.vue",
+      "sha256": "cdeee1dc6471f452989abad10c9b3b36999ddb43b4f6da6d29bea9a6276e79a4"
+    },
+    {
+      "path": "frontend/app/pages/register.vue",
+      "sha256": "c8278a0bde5e5b01864c58d62a7ca32c895769e2caadd1a7012c387622b2ffe7"
+    },
+    {
+      "path": "frontend/app/pages/account.vue",
+      "sha256": "f499d52b0ee79f3aa9b3ec3bcf7be5a111be5fb3f49d89b62f0361aa96adec35"
+    },
+    {
+      "path": "frontend/i18n/locales/en-US.json",
+      "sha256": "2076001f06b228a4629c9052d761fba75b176ab61470fdb18ea51fea16c0995e"
+    },
+    {
+      "path": "frontend/tests/unit/auth-card-design.test.ts",
+      "sha256": "e4b2351737edb075e29fb8e21d2f020a0b13b2febd29f66ab76ce17228ad1370"
+    },
+    {
+      "path": "frontend/tests/e2e/cr037-auth-account.spec.ts",
+      "sha256": "09edbf4f051e7da5c95179bcc84958e3bd8cd0da11ee481f70259c720ca01646"
+    }
+  ],
+  "modifiedExistingFiles": [
+    ".planning/milestones/M001/implementation/frontend-cr037-080-worktree-plan.md",
+    "frontend/i18n/locales/en-US.json",
+    "frontend/app/pages/account.vue",
+    "frontend/app/pages/login.vue",
+    "frontend/app/pages/register.vue"
+  ],
+  "quality": [
+    {
+      "name": "format",
+      "cmd": "pnpm",
+      "args": [
+        "--dir",
+        "frontend",
+        "format:check"
+      ],
+      "status": 0,
+      "seconds": 1.755
+    },
+    {
+      "name": "build",
+      "cmd": "docker",
+      "args": [
+        "build",
+        "--progress=plain",
+        "--tag",
+        "wordweave-frontend:cr037-080",
+        "frontend"
+      ],
+      "status": 0,
+      "seconds": 42.8
+    }
+  ],
+  "unit": {
+    "files": 21,
+    "tests": 196,
+    "newRegression": 22
+  },
+  "browser": {
+    "status": "PARTIAL_BROWSER_COVERAGE",
+    "chromiumComplete": {
+      "PASS": 85,
+      "FAIL": 0,
+      "ERROR": 0
+    },
+    "webkitVisual": {
+      "PASS": 55,
+      "FAIL": 0,
+      "ERROR": 0
+    },
+    "unverified": [
+      "macOS WebKit password-input and complete update/session flow: native process exception; Linux fallback NOT_RUN"
+    ]
+  },
+  "e2e": {
+    "startTime": "2026-09-06T10:20:43.451Z",
+    "duration": 211597.753,
+    "expected": 122,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "retainedInitialFailures": {
+    "unit": {
+      "total": 22,
+      "failed": 11
+    },
+    "browser": {
+      "PASS": 79,
+      "FAIL": 0,
+      "ERROR": 2
+    },
+    "e2e": {
+      "startTime": "2026-09-06T10:15:50.573Z",
+      "duration": 260599.245,
+      "expected": 115,
+      "skipped": 0,
+      "unexpected": 7,
+      "flaky": 0
+    },
+    "macNativeRuns": [
+      {
+        "PASS": 126,
+        "FAIL": 0,
+        "ERROR": 1
+      },
+      {
+        "PASS": 129,
+        "FAIL": 0,
+        "ERROR": 2
+      },
+      {
+        "PASS": 38,
+        "FAIL": 0,
+        "ERROR": 1
+      }
+    ]
+  },
+  "linuxFallback": "NOT_RUN",
+  "noUatDeployment": true,
+  "noRealAiCalls": true
+}

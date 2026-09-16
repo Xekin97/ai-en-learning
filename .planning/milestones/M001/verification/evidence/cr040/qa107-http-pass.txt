@@ -1,0 +1,47 @@
+=== RUN   TestQA107CutoverAndCurrentMeaningHTTP
+2026/09/09 11:16:19 INFO http_request request_id=req_PXGPpwcbTDtovSojg67Fkw method=GET route=/api/v1/bootstrap status=200 duration_ms=1
+2026/09/09 11:16:19 INFO http_request request_id=req_aXqw9tqKn_RpkHHAZ-V39w method=POST route=/api/v1/auth/login status=200 duration_ms=87
+2026/09/09 11:16:19 INFO http_request request_id=req_VIObu1i0VpnsYSLFCFWWTQ method=GET route=/api/v1/bootstrap status=200 duration_ms=0
+2026/09/09 11:16:19 INFO http_request request_id=req_fCs7p0vYr7hpBvFD-ZRvFQ method=POST route=/api/v1/auth/register status=201 duration_ms=85
+2026/09/09 11:16:20 INFO http_request request_id=req_tDB31KlVX5Hg2AOQMezIoA method=GET route=/api/v1/me/batches status=401 duration_ms=2
+2026/09/09 11:16:20 INFO http_request request_id=req_SDvVfn6urLyPsCwFmJ869A method=GET route=/api/v1/admin/* status=401 duration_ms=1
+2026/09/09 11:16:20 INFO http_request request_id=req_lABccnNoxiFx9aNfGQeVIg method=GET route=/api/v1/bootstrap status=200 duration_ms=1
+2026/09/09 11:16:20 INFO http_request request_id=req_mvoDQEfnUl84Y_7WLhANfw method=POST route=/api/v1/auth/login status=200 duration_ms=76
+2026/09/09 11:16:20 INFO http_request request_id=req_pv-eNVbS7YRGQ9lIgdXvBg method=GET route=/api/v1/admin/models status=200 duration_ms=3
+    qa107_overlay_test.go:161: QA107-01 PASS old learner/admin sessions invalid; original administrator password and model/credential retained
+2026/09/09 11:16:20 INFO http_request request_id=req_aaC4Ex6RUatp0sHliQV5Fg method=GET route=/api/v1/bootstrap status=200 duration_ms=0
+2026/09/09 11:16:20 INFO http_request request_id=req_rE0aO6h_fkvNDbCsEhGgzw method=POST route=/api/v1/generations/stream status=422 duration_ms=5
+2026/09/09 11:16:20 INFO http_request request_id=req_uoczuk44GXY9UcSB0MdF5w method=POST route=/api/v1/auth/register status=201 duration_ms=76
+2026/09/09 11:16:20 INFO http_request request_id=req_nDbwe5OouYVGwl5v-0NnAg method=POST route=/api/v1/generations/stream status=422 duration_ms=3
+    qa107_overlay_test.go:175: QA107-02 PASS visitor/new learner preflight rejects unassigned model; zero calls and generation events
+2026/09/09 11:16:20 INFO http_request request_id=req_k_z5rD-BehiXFyizIU6C0g method=PUT route=/api/v1/admin/groups/{group_code} status=200 duration_ms=9
+2026/09/09 11:16:20 INFO http_request request_id=req_x442MFt6Y2HGsIYL8GfPLw method=POST route=/api/v1/generations/stream status=200 duration_ms=12
+2026/09/09 11:16:20 INFO http_request request_id=req_lP-BMusIXTWicocjk9MuYQ method=POST route=/api/v1/generations/{run_id}/save status=201 duration_ms=16
+2026/09/09 11:16:20 INFO http_request request_id=req_G89qCzLEKQwWhxhkrsJoWw method=GET route=/api/v1/me/batches/{batch_id} status=200 duration_ms=6
+2026/09/09 11:16:20 INFO http_request request_id=req_7C_XFkJFEEAPei4IAYTXmA method=GET route=/api/v1/admin/users/{user_id}/batches/{batch_id} status=200 duration_ms=4
+2026/09/09 11:16:20 INFO http_request request_id=req_ZpqDUED_hvXzZi1Ypmz-wA method=POST route=/api/v1/me/review-sessions status=201 duration_ms=11
+2026/09/09 11:16:20 INFO http_request request_id=req_g68thAoaJpVmysv7TevgxQ method=POST route=/api/v1/me/review-sessions/{session_id}/attempts status=201 duration_ms=5
+2026/09/09 11:16:20 INFO http_request request_id=req_ExLdlQgLcoDxEORFZmDMEA method=POST route=/api/v1/me/review-attempts/{attempt_id}/actions status=200 duration_ms=0
+2026/09/09 11:16:20 INFO http_request request_id=req_Nb-8VbLyve9zskMEvfEXFQ method=POST route=/api/v1/me/review-attempts/{attempt_id}/actions status=200 duration_ms=0
+    qa107_overlay_test.go:243: QA107-03/zh PASS one synthetic call -> SSE -> saved learner/admin detail -> both spelling items; original definitions unchanged
+2026/09/09 11:16:20 INFO http_request request_id=req_nX4-6ypHXd-5KyEHPXL1fw method=POST route=/api/v1/generations/stream status=200 duration_ms=6
+2026/09/09 11:16:20 INFO http_request request_id=req_yxb5CFUKCaMQs5RA4bno4A method=POST route=/api/v1/generations/{run_id}/save status=201 duration_ms=10
+2026/09/09 11:16:20 INFO http_request request_id=req_PNbnAYKDlLIsboB6RXfiqw method=GET route=/api/v1/me/batches/{batch_id} status=200 duration_ms=3
+2026/09/09 11:16:20 INFO http_request request_id=req_S613vCs8dE8mYVhoUJJsuA method=GET route=/api/v1/admin/users/{user_id}/batches/{batch_id} status=200 duration_ms=4
+2026/09/09 11:16:20 INFO http_request request_id=req_PMZo1LUiecDZvy7PyHGUzw method=POST route=/api/v1/me/review-sessions status=201 duration_ms=6
+2026/09/09 11:16:20 INFO http_request request_id=req_yF9LxxdJuz9MMio-cmsDTg method=POST route=/api/v1/me/review-sessions/{session_id}/attempts status=201 duration_ms=4
+2026/09/09 11:16:20 INFO http_request request_id=req_89MqmCdyAUfSzjnC6oJalQ method=POST route=/api/v1/me/review-attempts/{attempt_id}/actions status=200 duration_ms=0
+2026/09/09 11:16:20 INFO http_request request_id=req_reaHd_IGdCyMlbF_KnDWVA method=POST route=/api/v1/me/review-attempts/{attempt_id}/actions status=200 duration_ms=0
+    qa107_overlay_test.go:243: QA107-03/en PASS one synthetic call -> SSE -> saved learner/admin detail -> both spelling items; original definitions unchanged
+2026/09/09 11:16:20 INFO http_request request_id=req_ssgnNgkXIIzCs3x1D01laQ method=POST route=/api/v1/generations/stream status=200 duration_ms=8
+2026/09/09 11:16:20 INFO http_request request_id=req_tSurHUpNUK5QmO8xNilP3Q method=POST route=/api/v1/generations/{run_id}/save status=201 duration_ms=10
+2026/09/09 11:16:20 INFO http_request request_id=req_Msip_SQ2Bo1wJ4ghV4IC5A method=GET route=/api/v1/me/batches/{batch_id} status=200 duration_ms=3
+2026/09/09 11:16:20 INFO http_request request_id=req_amQeZNUixC0ub4NJ1PJ4WA method=GET route=/api/v1/admin/users/{user_id}/batches/{batch_id} status=200 duration_ms=4
+2026/09/09 11:16:20 INFO http_request request_id=req_tGZWDGAh1Qor3ASK3hVtPw method=POST route=/api/v1/me/review-sessions status=201 duration_ms=6
+2026/09/09 11:16:20 INFO http_request request_id=req_mV11vCbxUpEpzR98oe_uWg method=POST route=/api/v1/me/review-sessions/{session_id}/attempts status=201 duration_ms=4
+2026/09/09 11:16:20 INFO http_request request_id=req_OAuqxnx5GrPi1bovbx37LA method=POST route=/api/v1/me/review-attempts/{attempt_id}/actions status=200 duration_ms=0
+2026/09/09 11:16:20 INFO http_request request_id=req_0a9ZW84ul15TGs_ENwxp8w method=POST route=/api/v1/me/review-attempts/{attempt_id}/actions status=200 duration_ms=0
+    qa107_overlay_test.go:243: QA107-03/ja PASS one synthetic call -> SSE -> saved learner/admin detail -> both spelling items; original definitions unchanged
+--- PASS: TestQA107CutoverAndCurrentMeaningHTTP (1.36s)
+PASS
+ok  	wordweave/internal/httpapi	1.700s

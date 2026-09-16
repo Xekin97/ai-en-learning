@@ -1,0 +1,178 @@
+{
+  "date": "2026-09-06T05:42:55.834Z",
+  "agent": "qa-quinn",
+  "counts": {
+    "PASS": 26,
+    "FAIL": 1,
+    "ERROR": 1
+  },
+  "checks": [
+    {
+      "id": "login error fits form",
+      "status": "PASS",
+      "actual": true,
+      "expected": true
+    },
+    {
+      "id": "intent retained during locale",
+      "status": "PASS",
+      "actual": "/review",
+      "expected": "/review"
+    },
+    {
+      "id": "login no auto session",
+      "status": "PASS",
+      "actual": 0,
+      "expected": 0
+    },
+    {
+      "id": "login register intent errors locale refresh return",
+      "status": "PASS",
+      "actual": true,
+      "expected": true
+    },
+    {
+      "id": "register no save no session",
+      "status": "PASS",
+      "actual": [],
+      "expected": []
+    },
+    {
+      "id": "registration returns single story without auto save",
+      "status": "PASS",
+      "actual": true,
+      "expected": true
+    },
+    {
+      "id": "admin priority and claim flag alone ignored",
+      "status": "PASS",
+      "actual": true,
+      "expected": true
+    },
+    {
+      "id": "unsafe not forwarded https://example.invalid",
+      "status": "PASS",
+      "actual": false,
+      "expected": false
+    },
+    {
+      "id": "unsafe not forwarded //example.invalid",
+      "status": "PASS",
+      "actual": false,
+      "expected": false
+    },
+    {
+      "id": "unsafe not forwarded /review/../../admin",
+      "status": "PASS",
+      "actual": false,
+      "expected": false
+    },
+    {
+      "id": "unsafe not forwarded /review/a/b",
+      "status": "PASS",
+      "actual": false,
+      "expected": false
+    },
+    {
+      "id": "unsafe not forwarded /library%2f..%2fadmin",
+      "status": "PASS",
+      "actual": false,
+      "expected": false
+    },
+    {
+      "id": "unsafe not forwarded /review\\evil",
+      "status": "PASS",
+      "actual": false,
+      "expected": false
+    },
+    {
+      "id": "ordinary login clears old return",
+      "status": "PASS",
+      "actual": false,
+      "expected": false
+    },
+    {
+      "id": "invalid redirect and stale intent cleared",
+      "status": "PASS",
+      "actual": true,
+      "expected": true
+    },
+    {
+      "id": "header home mobile entry unification",
+      "status": "PASS",
+      "actual": true,
+      "expected": true
+    },
+    {
+      "id": "search row focus restored",
+      "status": "PASS",
+      "actual": true,
+      "expected": true
+    },
+    {
+      "id": "search exact scroll restored",
+      "status": "PASS",
+      "actual": true,
+      "expected": true
+    },
+    {
+      "id": "search pagination detail return and resubmit",
+      "status": "PASS",
+      "actual": true,
+      "expected": true
+    },
+    {
+      "id": "reader history deep old links and backdrop",
+      "status": "PASS",
+      "actual": true,
+      "expected": true
+    },
+    {
+      "id": "reader failed unavailable retry loading close late",
+      "status": "PASS",
+      "actual": true,
+      "expected": true
+    },
+    {
+      "id": "intercepted PUT committed before dropped response",
+      "status": "FAIL",
+      "actual": 403,
+      "expected": 200
+    },
+    {
+      "id": "PUT lost response reconciles GET once without replay",
+      "status": "ERROR",
+      "error": "Error: expect(locator).toHaveText(expected) failed\n\nLocator:  locator('.definition-list > div').nth(1).locator('dd')\nExpected: \"0\"\nReceived: \"5\"\nTimeout:  5000ms\n\nCall log:\n  - Expect \"to.have.text\" with timeout 5000ms\n  - waiting for locator('.definition-list > div').nth(1).locator('dd')\n    14 × locator resolved to <dd>5</dd>\n       - unexpected value \"5\"\n"
+    },
+    {
+      "id": "malformed no unlimited",
+      "status": "PASS",
+      "actual": 0,
+      "expected": 0
+    },
+    {
+      "id": "malformed quota GET fails whole detail and retry safe",
+      "status": "PASS",
+      "actual": true,
+      "expected": true
+    },
+    {
+      "id": "history after logout no username",
+      "status": "PASS",
+      "actual": false,
+      "expected": false
+    },
+    {
+      "id": "logout payload no username",
+      "status": "PASS",
+      "actual": false,
+      "expected": false
+    },
+    {
+      "id": "logout removes private admin DOM and payload",
+      "status": "PASS",
+      "actual": true,
+      "expected": true
+    }
+  ]
+}
