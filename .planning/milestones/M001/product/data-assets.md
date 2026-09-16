@@ -3,14 +3,17 @@ milestone: M001
 stage: product-planning
 role: product/to-c
 agent_name: product-maya
-status: awaiting_user_review
+status: accepted_m001_baseline
 date: 2026-09-08
 revision: CR-040
+maintenance: M001-AGENT-CONTEXT-001
 ---
 
 # M001 数据资产契约
 
-本轮仅同步 CR-040 原词释义，待审阅范围与历史版本见[当前修订入口](./overview.md#cr040-revision)。不新增数据资产、存储结构或既有数据改写任务。
+> 当前效力：本文为 M001 已交付契约；正式完成状态、遗留事项和下一步见[当前交接](../handoffs/verification.md)。历史修订段中的“待实现/待审阅”仅表示当时步骤，后续接收与替代关系见[历史索引](../handoffs/archive.md)。本次只同步状态与检索入口，未新增业务批准。
+
+CR-040 原词释义已交付，当前效力与历史替代关系见[基线入口](./overview.md#cr040-revision)。不新增数据资产、存储结构或既有数据改写任务。
 
 ## 1. 数据总则
 

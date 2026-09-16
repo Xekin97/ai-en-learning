@@ -3,22 +3,25 @@ milestone: M001
 stage: product-planning
 role: product/to-c
 agent_name: product-maya
-status: awaiting_user_review
+status: accepted_m001_baseline
 date: 2026-09-08
 revision: CR-040
+maintenance: M001-AGENT-CONTEXT-001
 ---
 
 # 词涟 — M001 产品概览
 
+> 当前效力：本文为 M001 已交付契约；正式完成状态、遗留事项和下一步见[当前交接](../handoffs/verification.md)。历史修订段中的“待实现/待审阅”仅表示当时步骤，后续接收与替代关系见[历史索引](../handoffs/archive.md)。本次只同步状态与检索入口，未新增业务批准。
+
 <a id="cr040-revision"></a>
 
-## 当前有限修订：CR-040
+## 当前基线：CR-040 已交付
 
-- `CONFIRMED`：2026-09-08 用户明确“释义仅仅只针对用户输入的单词，和生成的文章、派生都无关”，不需要文中作用提示；[原始反馈与澄清](../verification/cr040-meaning-only-request.md)。[TRANSITION-M001-100](../reviews/verification-cr040-product-revision-review.md)仅授权 product-maya 修订相关产品正文。
-- 当前释义语义以 [AI 行为 §3.3](./ai-behavior.md#original-entry-meaning) 为唯一真源，定向验收为 [C40-01 至 C40-06](./ai-behavior.md#cr040-acceptance)。本轮文档仍为 `awaiting_user_review`，不表示实现或验收完成。
-- 撤销旧的“按文章语境选义”解释；`DEC-009` 用户决定第 3 项及 `DEC-032` 前提中的“情境释义”不再适用于本项。其余长度、提示全挖空、原词/实际词形两阶段答案规则不变，CR-039 映射能力不回退。旧决策原件保留，不静默覆盖。
-- 本轮不重做 UI，不变更代码、数据库或已有数据，不增加服务/模型调用，不批准旧版兼容。实际字段命名及受影响技术契约交后续责任角色明确；适用 [USER-COMPAT-001](../reviews/first-release-compatibility-policy.md)。
-- 当前主文档路径、DATA/CAP/PAGE 编号保持；修订前六份文档的完整内容和摘要保存在一份[冻结快照](./archive/pre-cr040.json)中。历史审批和测试基线引用的是其中 `original_path` 对应的原始内容，不能用修订后的正文回写历史摘要；其他角色已批准产物保持原件。
+- `CONFIRMED`：原词释义独立于文章/派生词，唯一产品定义见 [AI 行为 §3.3](./ai-behavior.md#original-entry-meaning)，定向验收见 [C40-01–06](./ai-behavior.md#cr040-acceptance)。[原始澄清](../verification/cr040-meaning-only-request.md)保留，实施/QA/UAT 已由 138 接收。
+- DEC-009 第 3 项和 DEC-032 前提的旧情境释义口径被替代；其他长度、提示全挖空、原词/实际词形两阶段规则保留。公开字段已统一为 `entry_meaning`，详见 [API v1.5](../technical/api/index.md#cr040-entry-meaning)。
+- 后续 r10 有限纠正/续写见 [AI 技术真源](../technical/ai-integration.md#r10-corrections)，不能从早期“无额外调用”推导当前仍只有一次上游请求；也不能扩展为词典服务或语义修复服务。
+- 当前已交付范围及仍未验证的质量目标见[报告](../verification/report.md)。不重做 UI、不新增兼容；未来兼容沿 [USER-COMPAT-001](../reviews/first-release-compatibility-policy.md)。
+- 原批准文本可从[历史索引](../handoffs/archive.md)恢复；本次归档不修改既有用户数据。
 
 ## 1. 产品定义
 

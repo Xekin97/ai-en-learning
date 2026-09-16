@@ -3,16 +3,19 @@ milestone: M001
 stage: technical-design
 role: frontend-architect/base
 agent_name: frontend-bob
-status: awaiting_gate_review
+status: accepted_m001_baseline
 date: 2026-09-09
 revision: CR-040
 decisions: [DEC-019, DEC-020, DEC-021, DEC-022, DEC-023, DEC-024, DEC-027, DEC-028, DEC-029, DEC-030, DEC-031, DEC-032, DEC-033, DEC-034, DEC-035]
-open_change_requests: [CR-039, CR-040]
+open_change_requests: []
 confirmed_scope: [CR040-NAMING, CR040-DATA-CUTOVER]
 open_questions: []
+maintenance: M001-AGENT-CONTEXT-001
 ---
 
 # M001 前端技术设计
+
+> 当前效力：本文为 M001 已交付契约；正式完成状态、遗留事项和下一步见[当前交接](../handoffs/verification.md)。历史修订段中的“待实现/待审阅”仅表示当时步骤，后续接收与替代关系见[历史索引](../handoffs/archive.md)。本次只同步状态与检索入口，未新增业务批准。
 
 <a id="cr040-frontend"></a>
 ## 当前修订：CR-040 原词释义链路
@@ -780,6 +783,6 @@ passage_segments DTO（blank_id + group_key）
 - API v1.5 的精确 DTO、entry_meaning、复数 `hint_blanks`、passage `group_key`、用户详情 generation_quota、schema/mapper、SSR 安全快照和 raw fixture 设计完整；旧单数字段、缺失/非法分组及错误额度分支不能通过 schema；
 - 同源分组只通过 DTO mapper 进入本地关系模型，再由 client-only style registry 变为 view model；组件、SSR、action、URL、日志和持久化均不接触 raw key；
 - `frontend/` 能在不读取仓库其他目录的情况下独立 install、test、build、构建镜像、运行和 TCP 探活；
-- 真实 Nginx/Compose 拓扑下页面、API、Cookie、SSR 与 POST SSE 合同通过；`CR-020/021/022` 已明确归属实现阶段并继续阻塞最终里程碑，而不阻塞本技术设计审批。
+- 真实 Nginx/Compose 拓扑下页面、API、Cookie、SSR 与 POST SSE 合同通过；CR-020/021/022 后续实现与验收见[覆盖索引](../verification/coverage-matrix.md)，不再作为待执行的旧阶段阻塞。
 
-当前交付为 CR-040 有限同步，待守门器按 [USER-HANDOFF-CONTINUOUS-001](../reviews/backend-cr040-frontend-sync-approval.md)独立检查后顺序交接，不重复索取常规批准。专业角色不自行切阶段。CR-039/040 保持 open；没有实现、实际清理/迁移、模型调用、UAT 更新或发布结论。详见[当前前端交接](../handoffs/frontend-architecture.md)。
+CR-040 有限同步已由后续 gate 接收、实施并定向验证，M001 已由 138 关闭；不再沿历史 USER-HANDOFF-CONTINUOUS-001 重复交接。当前开放项与正式状态见[当前前端交接](../handoffs/frontend-architecture.md)和[报告](../verification/report.md)，生产发布仍未批准。

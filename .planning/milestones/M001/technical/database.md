@@ -3,29 +3,32 @@ milestone: M001
 stage: technical-design
 role: dba/base
 agent_name: dba-diana
-status: awaiting_user_review
+status: accepted_m001_baseline
 date: 2026-09-09
 revision: CR-040
 decisions: [DEC-025, DEC-032, DEC-035]
 confirmed_scope: [CR040-NAMING, CR040-DATA-CUTOVER]
-open_change_requests: [CR-039, CR-040]
+open_change_requests: []
 open_questions: []
-pending_role_sync: [backend-alex, frontend-bob]
+pending_role_sync: []
+maintenance: M001-AGENT-CONTEXT-001
 ---
 
 # M001 数据库设计
 
-> 当前为 [102 有限 DBA 修订](../reviews/backend-cr040-database-sync-approval.md) 的待审交付。2026-09-09 用户已确认清理白名单；以下技术切换与恢复安排供审阅，不代表已清库或获得执行授权。原批准版本保存在[修订前快照](./archive/pre-cr040-database.json)。
+> 当前效力：本文为 M001 已交付契约；正式完成状态、遗留事项和下一步见[当前交接](../handoffs/verification.md)。历史修订段中的“待实现/待审阅”仅表示当时步骤，后续接收与替代关系见[历史索引](../handoffs/archive.md)。本次只同步状态与检索入口，未新增业务批准。
+
+> CR-040 结构与一次性本地切换已交付，证据见[QA107](../verification/evidence/cr040/manifest.json)和[后端开发](../implementation/evidence/cr040/backend-developer.json)。以下保留操作边界及恢复原因，不是待执行任务；原批准设计见[快照](./archive/pre-cr040-database.json)。
 
 <a id="cr040-data-cutover"></a>
-## 当前修订：CR-040 数据切换
+## 已交付基线：CR-040 数据切换
 
 ### 确认闭环与替代关系
 
 - **CR040-DATA-CUTOVER / CONFIRMED，2026-09-09**：用户先提出“数据库除了模型数据之外目前全部清理”，随后对已展示的“保留模型、密钥、管理员、词库及结构；重置组别并清空模型分配；清空其他账号、全部会话和业务数据”明确回复“确定”。这是清理范围确认，不再重复询问；实际数据库操作须另经执行授权。
 - [CR040-NAMING](./backend.md#cr040-scope-confirmation) 已确认使用 `entry_meaning`；释义仅针对输入原词和目标语言，以[产品 §3.3](../product/ai-behavior.md#original-entry-meaning)为真源。不增加双字段、旧 reader、JSON 转换或旧客户端支持，遵循 [USER-COMPAT-001](../reviews/first-release-compatibility-policy.md)。
 - 此前“保留并转换旧草稿／等待旧草稿自然到期”不再是本环境的切换方案。本次是一次性本地测试数据清理，不新增产品重置入口，不改变正常账号注销、配额、批次删除及[已批准 claim 删除例外](../reviews/claimed-batch-delete-retention-exception.md)。
-- 用户自行清理浏览器缓存；服务端会话、生成中的进程状态与数据库清理由各自操作负责，不能互相代替完成证据。运行数据库实例、数据量、锁等待和恢复条件尚未实测。
+- 用户自行清理浏览器缓存；服务端会话、生成中的进程状态与数据库清理由各自操作负责，不能互相代替完成证据。历史实例检查见交付证据；任何新操作须重新核对实际实例、数据量、锁与恢复条件，不沿用旧时点判断。
 
 ### 已确认的对象白名单
 
@@ -42,12 +45,12 @@ pending_role_sync: [backend-alex, frontend-bob]
 
 ### 目标结构与迁移边界
 
-技术方案为 **PROPOSED，待本次交付审阅**；已确认的白名单和命名不再作为未决项。
+以下已由 CR-040 实施和定向验证接续；白名单和命名无待决项，一次性操作不进入后续启动流程。
 
 1. `batch_targets.contextual_meaning` 改为 `entry_meaning`，仍是 `text NOT NULL`，现有 `batch_targets_text_nonempty` 仍要求其非空；无语义审核、文本截尾、新长度限制或新索引。所有者复合外键、目标唯一性、输入顺序、全部 occurrence 和匿名分组规则不变；存量 hint 影子列的历史处置不在本轮扩展。
-2. 当前 [Migrate](../../../../backend/internal/platform/postgres/migrate.go) 按文件名跳过已执行脚本，因此保留 `0001–0006` 原文，新增结构迁移 `0007_entry_meaning.sql`（计划路径，尚未创建）。它只断言目标结构/无旧草稿等前置条件并改列，**不包含清理账号、模型分配或学习数据的 DML**。新空库走同一迁移链；不是为旧运行版本提供兼容。若实施时编号/实际结构不同，停止核对，不能覆盖已存在迁移或猜测双列来源。
-3. 新版 schema 必须仅有新释义列，类型、非空约束及约束表达式正确；迁移记录和实际结构同时核验。现有 Verify 仅检查账本、词表、组集合和 occurrence，不能代替新增的列形状断言。
-4. 草稿在本次切换清空；此后仅写当前 `targets[].entry_meaning`。新草稿的保存/claim、重启读取、复习与管理员投影沿同一字符串，不重译或按文章选义。API v1.5、prompt/schema v4 等版本以[后端真源](./backend.md#cr040-scope-confirmation)为准，DBA 不另定 API。
+2. 当前 [Migrate](../../../../backend/internal/platform/postgres/migrate.go) 按文件名跳过已执行脚本，因此保留 `0001–0006` 原文，新增结构迁移 [`0007_entry_meaning.sql`](../../../../backend/db/migrations/0007_entry_meaning.sql)（已实施）。它只断言目标结构/无旧草稿等前置条件并改列，**不包含清理账号、模型分配或学习数据的 DML**。新空库走同一迁移链；不是为旧运行版本提供兼容。若实施时编号/实际结构不同，停止核对，不能覆盖已存在迁移或猜测双列来源。
+3. 新版 schema 必须仅有新释义列，类型、非空约束及约束表达式正确；迁移记录和实际结构同时核验。Verify 与迁移的当前列形状检查以 backend/internal/platform/postgres 为准；对账不能只看迁移账本。
+4. 草稿在本次切换清空；此后仅写当前 `targets[].entry_meaning`。新草稿的保存/claim、重启读取、复习与管理员投影沿同一字符串，不重译或按文章选义。API v1.5 与当前 prompt/schema/validator 版本以[AI 真源](./ai-integration.md)为准，DBA 不另定 API。
 
 列改名不会自行改写 JSON，且 ALTER TABLE 的默认锁级别是 ACCESS EXCLUSIVE；维护窗口不能承诺无锁或无等待。[PostgreSQL ALTER TABLE](https://www.postgresql.org/docs/18/sql-altertable.html)
 
@@ -59,7 +62,7 @@ pending_role_sync: [backend-alex, frontend-bob]
 1. **核对并停止写入**：执行角色先核实确切本地实例/数据库、PG 版本、迁移账本与表集合，核对管理员存在、凭据引用和保留集；记录各清理表行数、库/WAL 可用空间和经演练确定的超时。停止所有本项目写入者，包括旧后端、生成结束回调、维护定时任务及客户端重试入口；不影响其他项目或数据库。不能只停 Nginx 而留下后台写入。
 2. **单事务保护**：使用受控维护连接，不提升常驻 app 权限；按固定对象顺序锁定本轮涉及的表，锁超时失败即停止，不强杀未知会话。事务内保存保留行的临时对账基准，不把密码哈希、token、密文、nonce 或正文输出到终端/日志。核对与删除之间不得让新账号或生成混入。
 3. **按依赖删除与重置**：先清 `visitor_claims`，避免 consumed claim 的 SET NULL 与状态 CHECK 冲突；再依次清 `review_results → review_session_targets → review_session_batches → review_sessions`，`passage_occurrences/hint_occurrences → batch_targets → learning_batches`，`generation_drafts/generation_run_entries → generation_runs`，`account_sessions → visitor_identities → learner accounts`。最后清模型分配、重置组策略和长度。使用显式对象与条件，不用全库 TRUNCATE CASCADE、删卷、禁用触发器或清空迁移账本。
-4. **约束检查后改结构**：原有完整性触发器为延迟检查；所有关联删除完成后执行 `SET CONSTRAINTS ALL IMMEDIATE`，再做结构迁移，不能在子表刚清空而父批次仍在时提前强制检查。只运行同一份 `0007` 正文，在当前事务追加账本记录并核验全部后置条件；不得先提交清理，也不得调用另开事务的 Migrate 来假装原子化。后端需抽出可接收同一 tx 的迁移应用/验证边界，保留普通迁移独立行为，验证查询不能改用 pool 读取未提交状态。
+4. **约束检查后改结构**：原有完整性触发器为延迟检查；所有关联删除完成后执行 `SET CONSTRAINTS ALL IMMEDIATE`，再做结构迁移，不能在子表刚清空而父批次仍在时提前强制检查。只运行同一份 `0007` 正文，在当前事务追加账本记录并核验全部后置条件；不得先提交清理，也不得调用另开事务的 Migrate 来假装原子化。后端使用可接收同一 tx 的迁移应用/验证边界，保留普通迁移独立行为，验证查询不能改用 pool 读取未提交状态。
 5. **提交与重新开放**：确认所有删除目标为零、保留行逐字段一致、组策略/长度准确、新列和账本一致后才提交。配套新后端、Nuxt SSR/浏览器产物启用前完成 readiness 核验，旧内存 attempt 和生成状态不迁入新进程。管理员重新登录并分配模型属于清理后的显式配置操作，不在清理事务中偷偷回填。准备完成前不开放造文。
 
 `SET CONSTRAINTS` 可在事务中提前检查已挂起的可延迟约束；当前完整性函数发现父批次不存在时直接返回，因此删除顺序和检查时点必须联合测试。[PostgreSQL SET CONSTRAINTS](https://www.postgresql.org/docs/18/sql-set-constraints.html)、[0006 完整性实现](../../../../backend/db/migrations/0006_hint_occurrences_enforce.sql)
@@ -81,7 +84,7 @@ pending_role_sync: [backend-alex, frontend-bob]
 <a id="cr040-database-validation"></a>
 ### 定向验证与追踪
 
-本表是后续测试设计，不是当前测试结果；只覆盖本次变更，不重跑全站视觉或无关业务。
+本表保留 DB40 验收要求；实际结果及覆盖范围见 QA107 manifest 与 CR040 后端开发证据，不从测试计划推断全部场景通过。
 
 | 验证点 | 应有证据 |
 | --- | --- |
@@ -97,8 +100,8 @@ pending_role_sync: [backend-alex, frontend-bob]
 
 - 当前真源为本节及[当前 DBA 交接](../handoffs/database.md)。沿用 CR040-DATA-CUTOVER 和既有路径，合并已失效的建议；旧批准两份原文继续冻结，不新建问答、计划或整理报告。
 - 下一步建议由 backend-alex 有限同步 [后端跨角色事项及发布边界](./backend.md#cr040-rollout)：将“保留全部历史、不得清草稿/组权限”的旧前提替换为本次一次性例外，接入同事务切换与拒绝重跑要求；正常产品删除/计量规则、API 投影与 AI 语义不变。随后 frontend-bob 完成既定字段消费同步。DBA 不改其冻结原件，也不直接激活下一角色。
-- 本轮仅静态核对源码、上游与官方数据库机制；未连接实际数据库、读取密钥、导出/删除数据、执行迁移/测试、调用模型、部署 UAT 或改写流程状态。新方案待审，CR-039/040 保持 open。
-- 下方为未重开的历史基线，其旧保留/兼容/回滚文字不覆盖上述已确认范围或本次待审方案；范围外结构不作顺带整理。
+- 102 DBA 设计轮仅做静态核对；后续实施、QA107 与最终收尾已接续，当前 CR039/040 交付关闭，保留限制见[报告](../verification/report.md)。设计自检不冒充后续应用测试。
+- 下方为未重开的历史基线，其旧保留/兼容/回滚文字不覆盖上述已确认范围或 CR040 已交付切换边界；范围外结构不作顺带整理。
 
 ## 1. 结论与边界
 
@@ -130,7 +133,7 @@ pending_role_sync: [backend-alex, frontend-bob]
 | `FACT` | DATA-001 源文件为 144,527 字节、13,860 个非空唯一字符串，SHA-256 为 `de75e77fdff529b4e6726730c80c11415abbce215ec7852a6c4a670b061dea75` |
 | `FACT` | 短文只设词数下限，不设上限；数据库不得人为增加产品未批准的最大文本长度 |
 | `FACT` | `accounts.username` 只允许 3–32 个 ASCII 字母、数字或下划线，现有 `accounts_username_lower_unique_idx` 已保证 `lower(username)` 全局唯一；用户名注册后不可修改 |
-| `FACT` | 当前 PAGE-103 仓储查询使用 `lower(username) LIKE '%' || lower(query) || '%'`，并只按 `(lower(username), id)` 做 keyset 分页，尚未表达 CR-021 要求的精确匹配层级 |
+| `FACT` | 当前 PAGE-103 查询在 backend/internal/admin/service.go 中按 `(match_tier, normalized_username, id)` 分页，使用 CASE 将精确匹配置前；更大规模查询性能仍需按实际负载验证 |
 | `FACT` | 用户规模、并发、地区、部署平台、可用性和成本目标均未确定 |
 | `INFERRED` | M001 先按单应用、单写主库、普通公众 Web 负载设计；不基于未知增长预分区或分片 |
 | `INFERRED` | 使用连接池且严格限制连接数；具体池大小由部署实例和压测确定，不在本文硬编码 |
@@ -339,7 +342,7 @@ erDiagram
 
 #### `batch_targets`
 
-权威目标列：`id`、`owner_id`、`batch_id`、`vocabulary_entry_id`、`source_entry_snapshot`、`input_order`、`entry_meaning`、`hint_phrase`。CR-040 的目标命名与清理范围已确认；当前实现仍为旧列名，切换设计见[CR040-DATA-CUTOVER](#cr040-data-cutover)，尚未实施。
+权威目标列：`id`、`owner_id`、`batch_id`、`vocabulary_entry_id`、`source_entry_snapshot`、`input_order`、`entry_meaning`、`hint_phrase`。CR-040 的目标命名与清理范围已确认；当前实现已采用 entry_meaning；切换边界见[CR040-DATA-CUTOVER](#cr040-data-cutover)，不得重复清理。
 
 约束：同一批次词条唯一、输入顺序唯一、文本非空；复合外键 `(owner_id,batch_id)` 防止跨账号目标资源。已执行的 `0002_core_tables.sql` 中 `hint_surface/hint_start/hint_end` 是旧单位置兼容列；`DEC-032` 生效后它们不再是提示挖空真源，只在迁移兼容窗口保存第一处提示位置，待旧应用回滚窗口关闭后由后续 contract 迁移删除。
 
@@ -671,7 +674,7 @@ PostgreSQL 官方提供 SQL dump、文件级备份和连续归档/PITR 三类机
 
 CR-021 的静态数据验收还必须覆盖 limit 边界和至少三页：精确项只能出现在第一项，随后结果严格按 `(lower(username),id)` 递增；逐页拼接后不得重复或遗漏静态数据集中的匹配账号。cursor 的 tier、用户名或 ID 缺失/非法，以及绑定到不同查询的 cursor，必须在进入 SQL 前失败。
 
-仓库已提供 PostgreSQL 18 容器与集成测试入口，但本轮处于技术设计角色，没有把尚未实现的 `0005/0006` 当作可执行结果。DDL、回填断言、权限、延期触发器和并发测试必须由实现阶段在隔离数据库中执行并记录证据。
+仓库已提供 PostgreSQL 18 容器、0001–0007 迁移和集成测试入口。DDL、权限、延期触发器、并发及恢复的实测范围见[当前覆盖](../verification/coverage-matrix.md)；本节仍是验收要求，未覆盖项不能仅凭迁移文件存在而算通过。
 
 ## 15. 已知风险与演进触发条件
 

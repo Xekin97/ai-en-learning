@@ -1,0 +1,695 @@
+{
+  "id": "M001-AGENT-CONTEXT-001",
+  "authorization": {
+    "id": "USER-M001-AGENT-CONTEXT-20260916",
+    "user_instruction": "嗯，先这样整理吧",
+    "purpose": "Retain knowledge useful to later development agents; consolidate current baseline, verification routes and reusable failures",
+    "maintenance_only": true,
+    "earlier_git_instruction": "收尾吧，收尾之后整理 commit 提交两边（agt 和 项目）的代码",
+    "earlier_push_instruction": "两个项目的 git 地址不同，你应该清楚吧？清楚的话就推送吧"
+  },
+  "baseline": {
+    "repository": "git@github.com:Xekin97/ai-en-learning.git",
+    "documents_commit": "521de847183088dc8f3d69112d94f4977a90d06b",
+    "application_commit": "387c775534844ff0b8ca9857523dc39c1d8ee87a",
+    "framework_delivery_commit": "42acf7579d08a7d17d597709ccb57bebcad0dc96",
+    "profile_lock_changed": false
+  },
+  "result": "static_checks_pass_independent_handoff_not_executed",
+  "scope": {
+    "application_changes": 0,
+    "application_tests_run": 0,
+    "paid_model_calls": 0,
+    "runtime_or_database_operations": 0,
+    "milestone_transitions": 0,
+    "historical_originals_deleted_or_moved": 0
+  },
+  "prior_documents": [
+    {
+      "original_path": ".planning/agt/project.yaml",
+      "saved_commit": "521de847183088dc8f3d69112d94f4977a90d06b",
+      "saved_path": ".planning/agt/project.yaml",
+      "original_sha256": "2bc6c7a1d8660352b593bd1f9f64d1c5a2feb23d7135e98c7eb9ba8701dd5e38",
+      "current_sha256": "948d6d9efc245a73dddbbd53d4ad67b1fc5e32feb2cc3a2b8abf087fce006f68"
+    },
+    {
+      "original_path": ".planning/milestones/M001/design/interactions.md",
+      "saved_commit": "521de847183088dc8f3d69112d94f4977a90d06b",
+      "saved_path": ".planning/milestones/M001/design/interactions.md",
+      "original_sha256": "ba3fdcfdb3397e5e3c421fee61f99cec877c920e3aa032d1053ace7e7e428f5d",
+      "current_sha256": "00665fa7011543e52033a51de2bfdd409c982eea968ccc687b5f1294fce37868"
+    },
+    {
+      "original_path": ".planning/milestones/M001/design/responsive-accessibility.md",
+      "saved_commit": "521de847183088dc8f3d69112d94f4977a90d06b",
+      "saved_path": ".planning/milestones/M001/design/responsive-accessibility.md",
+      "original_sha256": "021f962fe8e3ab54262117e65045965ad225f669d75ec93557669bd6d693dcdf",
+      "current_sha256": "d8353862f0b31c4de2b1165fd85d0fd823e280b51d6d102fc3e063790ef1bc97"
+    },
+    {
+      "original_path": ".planning/milestones/M001/design/traceability.md",
+      "saved_commit": "521de847183088dc8f3d69112d94f4977a90d06b",
+      "saved_path": ".planning/milestones/M001/design/traceability.md",
+      "original_sha256": "a0868179faacb87c1b1973762d97257faf50f8c3da01b27d3f19cd0759779f27",
+      "current_sha256": "191a186c667fa79c7bed781977199804f96ea43c8048da5f2487691b743a6d03"
+    },
+    {
+      "original_path": ".planning/milestones/M001/handoffs/backend-architecture.md",
+      "saved_commit": "521de847183088dc8f3d69112d94f4977a90d06b",
+      "saved_path": ".planning/milestones/M001/handoffs/backend-architecture.md",
+      "original_sha256": "2c12ad363c514e7a32c4163ea3e0cbe1b33340c29feed9e3074e4d0b6f5125bf",
+      "current_sha256": "d9a89dc27fc42a91955e763130972e4e4ec816908767a6ea4ea024a9149c41ec"
+    },
+    {
+      "original_path": ".planning/milestones/M001/handoffs/backend-implementation.md",
+      "saved_commit": "521de847183088dc8f3d69112d94f4977a90d06b",
+      "saved_path": ".planning/milestones/M001/handoffs/backend-implementation.md",
+      "original_sha256": "ea979a36b097a9d8b1851a3968d579b9933f4ebbae76981009adb29ca1371dd4",
+      "current_sha256": "186f25276203b584a02ed7f61b07ed8c602d6f6de074ded754d70fe871fb5a28"
+    },
+    {
+      "original_path": ".planning/milestones/M001/handoffs/database.md",
+      "saved_commit": "521de847183088dc8f3d69112d94f4977a90d06b",
+      "saved_path": ".planning/milestones/M001/handoffs/database.md",
+      "original_sha256": "f12309d926a266490dd9154ea50fe8ed72050fa7ead8949991d3ed6ad93ae666",
+      "current_sha256": "080ba1ae83b1d79b83b70cc275bf8e78590bfc88656d39ca4f0bc3c9a96c78df"
+    },
+    {
+      "original_path": ".planning/milestones/M001/handoffs/frontend-architecture.md",
+      "saved_commit": "521de847183088dc8f3d69112d94f4977a90d06b",
+      "saved_path": ".planning/milestones/M001/handoffs/frontend-architecture.md",
+      "original_sha256": "7b3c6bdcbe071d21f0f7d058ec74344a6a94963260127d5f92d166db21e511eb",
+      "current_sha256": "4a2b2777e81b930e9403f63969d1fb12e816e450d88200fd0177643844b1bbf8"
+    },
+    {
+      "original_path": ".planning/milestones/M001/handoffs/frontend-implementation.md",
+      "saved_commit": "521de847183088dc8f3d69112d94f4977a90d06b",
+      "saved_path": ".planning/milestones/M001/handoffs/frontend-implementation.md",
+      "original_sha256": "54426cd4fb651c0d12e749384b5016f9a737f5cda2c4b7e13ad011e0ba3aefeb",
+      "current_sha256": "501cf6e5d8b20740c58b2fd819bdd79549299e0e0fc6d50b7201187cdf8ec000"
+    },
+    {
+      "original_path": ".planning/milestones/M001/handoffs/product.md",
+      "saved_commit": "521de847183088dc8f3d69112d94f4977a90d06b",
+      "saved_path": ".planning/milestones/M001/handoffs/product.md",
+      "original_sha256": "bc5dda7e290844e39e3b4f9de47d430284e2074f21ab16c0c3b722299bea71e4",
+      "current_sha256": "eec6e9b3f43b685ccb6c07e1031fdf080ae79e740fff528ac539770d8abf3c27"
+    },
+    {
+      "original_path": ".planning/milestones/M001/handoffs/uiux.md",
+      "saved_commit": "521de847183088dc8f3d69112d94f4977a90d06b",
+      "saved_path": ".planning/milestones/M001/handoffs/uiux.md",
+      "original_sha256": "20a70ef84635dd9cd5473d42adb67a5b30a1847f1f2a0aeae1d79b0d06be7b1b",
+      "current_sha256": "55142dde4f98a404683569883a1c08b64bf1253ca86b70ca12f167b4a2336ab7"
+    },
+    {
+      "original_path": ".planning/milestones/M001/handoffs/verification.md",
+      "saved_commit": "521de847183088dc8f3d69112d94f4977a90d06b",
+      "saved_path": ".planning/milestones/M001/handoffs/verification.md",
+      "original_sha256": "1e7a612db57681c8d02707308c9b046c132a6328413add0bce0978346ed65516",
+      "current_sha256": "d9e968983c3085953b022a1d365a838fc90425037edb1ef85e62e30f97a5be25"
+    },
+    {
+      "original_path": ".planning/milestones/M001/implementation/backend-validation.md",
+      "saved_commit": "521de847183088dc8f3d69112d94f4977a90d06b",
+      "saved_path": ".planning/milestones/M001/implementation/backend-validation.md",
+      "original_sha256": "8aa8ac7437bf318d9bda90cba517b5f51496f8fb43dff1a56414dc6b851606d1",
+      "current_sha256": "edd6126f7f29a23cb2fbf6ce80871376dce8ea7a246a9005eb615f4f4478fa17"
+    },
+    {
+      "original_path": ".planning/milestones/M001/implementation/frontend-validation.md",
+      "saved_commit": "521de847183088dc8f3d69112d94f4977a90d06b",
+      "saved_path": ".planning/milestones/M001/implementation/frontend-validation.md",
+      "original_sha256": "44cbb52704d1620b8c8a71d14c3348855b10537446db27b40bd3daf49f7970e4",
+      "current_sha256": "3ea70258d4dac1805d1b048ec47ca24e3bb13f1928ef691d32aeb5592e1c92c8"
+    },
+    {
+      "original_path": ".planning/milestones/M001/product/abilities.md",
+      "saved_commit": "521de847183088dc8f3d69112d94f4977a90d06b",
+      "saved_path": ".planning/milestones/M001/product/abilities.md",
+      "original_sha256": "647527c458c941873302c71dd96e94ea63276fe3a499377917799de7602e9007",
+      "current_sha256": "5b7225f07d88d1d4a044661126f70d4de7bb18bf4cef5898e9ad761ba807247f"
+    },
+    {
+      "original_path": ".planning/milestones/M001/product/ai-behavior.md",
+      "saved_commit": "521de847183088dc8f3d69112d94f4977a90d06b",
+      "saved_path": ".planning/milestones/M001/product/ai-behavior.md",
+      "original_sha256": "acc026758e92a5d5b4d6986d322fd51a44ed5d9a6431d0875a96e11828dcd9e3",
+      "current_sha256": "a1080cb0faf320195fcc33b117ed185a1e1fa005fdb1b82467e8fdb71f3f7ed7"
+    },
+    {
+      "original_path": ".planning/milestones/M001/product/data-assets.md",
+      "saved_commit": "521de847183088dc8f3d69112d94f4977a90d06b",
+      "saved_path": ".planning/milestones/M001/product/data-assets.md",
+      "original_sha256": "4cd8510110210e68b3c35a24c31cb4f64520a2fe4193048f59bc3a745cb9e989",
+      "current_sha256": "8517d6cfe0d1719fa9c39630adb235e69e74685c5185e31754fc5dfbba315a7a"
+    },
+    {
+      "original_path": ".planning/milestones/M001/product/overview.md",
+      "saved_commit": "521de847183088dc8f3d69112d94f4977a90d06b",
+      "saved_path": ".planning/milestones/M001/product/overview.md",
+      "original_sha256": "cf3732999e2d8495c46b274fc563b227faa87f79d4a4d9094cf03a8a278ca7c0",
+      "current_sha256": "3423afa6e6b5662993e256787565232d42e0f440a722c36a852c054fb58c16c3"
+    },
+    {
+      "original_path": ".planning/milestones/M001/product/pages/index.md",
+      "saved_commit": "521de847183088dc8f3d69112d94f4977a90d06b",
+      "saved_path": ".planning/milestones/M001/product/pages/index.md",
+      "original_sha256": "fd2f218e8965e3a8b1420a813cdf7f029120a950632f7000fcfeecea063aeec7",
+      "current_sha256": "540ed02978c4c5e83c602a1d297be51052c7c6a87a7a1010435676f320ad9374"
+    },
+    {
+      "original_path": ".planning/milestones/M001/technical/ai-integration.md",
+      "saved_commit": "521de847183088dc8f3d69112d94f4977a90d06b",
+      "saved_path": ".planning/milestones/M001/technical/ai-integration.md",
+      "original_sha256": "2f93569c144f5d01f40fd4381d16af0eab5c81be1ab656f8ab39003664953705",
+      "current_sha256": "cce8a2add0295f6525406a04bbd87f338c529dcf2470f6d6361de5e3d87c5844"
+    },
+    {
+      "original_path": ".planning/milestones/M001/technical/api/index.md",
+      "saved_commit": "521de847183088dc8f3d69112d94f4977a90d06b",
+      "saved_path": ".planning/milestones/M001/technical/api/index.md",
+      "original_sha256": "753d04187032ef1b7a729d31b80d8018f40156773b181d689c060e0b6eae5555",
+      "current_sha256": "633064f93898f5c3e528020d3d855d3c30ea3ecc9fe1e69cb15c79101b0afdeb"
+    },
+    {
+      "original_path": ".planning/milestones/M001/technical/backend.md",
+      "saved_commit": "521de847183088dc8f3d69112d94f4977a90d06b",
+      "saved_path": ".planning/milestones/M001/technical/backend.md",
+      "original_sha256": "ff71197a206242315ed21d75ac8eb86ffbf2cd3ecd608bfd35b2487e1f3a881e",
+      "current_sha256": "fd241a13cbde37bd8f7482a7ed3b51b99502d177abbb223c8c91e90e2b4b21fa"
+    },
+    {
+      "original_path": ".planning/milestones/M001/technical/database.md",
+      "saved_commit": "521de847183088dc8f3d69112d94f4977a90d06b",
+      "saved_path": ".planning/milestones/M001/technical/database.md",
+      "original_sha256": "40553fb885787094fb3b88e5250d5923b5c5f65a31f835f31e51fb0f0a2b8398",
+      "current_sha256": "d5508017ff741858716b59c4be60ef0377f1901f67e62cbb0499b70fcbfd9ca1"
+    },
+    {
+      "original_path": ".planning/milestones/M001/technical/frontend.md",
+      "saved_commit": "521de847183088dc8f3d69112d94f4977a90d06b",
+      "saved_path": ".planning/milestones/M001/technical/frontend.md",
+      "original_sha256": "f8b92bc155848a72f9f224f947a5e0f13330fef53d2bad8f51566aaac08d11f3",
+      "current_sha256": "cd1875f4d60e141b4bbb8d5c044018c256ee0ecd874baddd1077804eb5ebaa05"
+    },
+    {
+      "original_path": ".planning/milestones/M001/verification/ai-evaluation.md",
+      "saved_commit": "521de847183088dc8f3d69112d94f4977a90d06b",
+      "saved_path": ".planning/milestones/M001/verification/ai-evaluation.md",
+      "original_sha256": "6e8e65859b9c5e4e0b7dc677c5798a5c64c94c0490e309c35cb95c163840a0ea",
+      "current_sha256": "3b590556f01a244688e1f1cd7e6930a74a0eec7dfb5250abc5106cefa827fdfd"
+    },
+    {
+      "original_path": ".planning/milestones/M001/verification/coverage-matrix.md",
+      "saved_commit": "521de847183088dc8f3d69112d94f4977a90d06b",
+      "saved_path": ".planning/milestones/M001/verification/coverage-matrix.md",
+      "original_sha256": "176df622a6ab3a0b4c9c49f2d397c1e1e69bd2acf387aa0e5ff93f9b64bdaf29",
+      "current_sha256": "45d563ace5d8a906ab35727e309d6a26b4160dc5babd1af2d6b21809e0eb744e"
+    },
+    {
+      "original_path": ".planning/milestones/M001/verification/report.md",
+      "saved_commit": "521de847183088dc8f3d69112d94f4977a90d06b",
+      "saved_path": ".planning/milestones/M001/verification/report.md",
+      "original_sha256": "1b51b0522890075a251282f237508297eabb05c00f950d7713d44567f0066793",
+      "current_sha256": "699e631c2addc658ebeb86cb240342f3289d3680f89160fc6a18a6d3b06f1694"
+    },
+    {
+      "original_path": ".planning/milestones/M001/verification/uat.md",
+      "saved_commit": "521de847183088dc8f3d69112d94f4977a90d06b",
+      "saved_path": ".planning/milestones/M001/verification/uat.md",
+      "original_sha256": "713e185da54f8a994b7e85bd53eb1402a8c8d5f95e5a17bda72cdf3e8079c728",
+      "current_sha256": "13d8dc12fbec9df2c0dc4db51669ff1070790ef54def5371bbba482e6e04654d"
+    },
+    {
+      "original_path": ".planning/workflow/state.yaml",
+      "saved_commit": "521de847183088dc8f3d69112d94f4977a90d06b",
+      "saved_path": ".planning/workflow/state.yaml",
+      "original_sha256": "f8bbc506b6705be157d77784c43fc759c1e5f91e0a435e8b70b582ad027a1c81",
+      "current_sha256": "7fba19d66672c96df7647b0692a2703775b93ed523cf1ed0b1836e335038a2e6"
+    },
+    {
+      "original_path": "README.md",
+      "saved_commit": "521de847183088dc8f3d69112d94f4977a90d06b",
+      "saved_path": "README.md",
+      "original_sha256": "eb3681745fd2aa7869d9afc5483e4a760566dac3af94dabadd375f36d4968fba",
+      "current_sha256": "b9b73092687f9a20e6d22c666355d323c43043659a4b2c18a2a0cbb6268e82f5"
+    }
+  ],
+  "removed_state_fields": [
+    {
+      "key": "closeout_verification",
+      "saved_commit": "521de847183088dc8f3d69112d94f4977a90d06b",
+      "saved_path": ".planning/workflow/state.yaml",
+      "current_lookup": ".planning/milestones/M001/handoffs/archive.md",
+      "disposition": "historical_detail_retrievable_by_key; current control and effective policy references retained"
+    },
+    {
+      "key": "frontend_candidate_sync",
+      "saved_commit": "521de847183088dc8f3d69112d94f4977a90d06b",
+      "saved_path": ".planning/workflow/state.yaml",
+      "current_lookup": ".planning/milestones/M001/handoffs/archive.md",
+      "disposition": "historical_detail_retrievable_by_key; current control and effective policy references retained"
+    },
+    {
+      "key": "r10_architecture_document_sync",
+      "saved_commit": "521de847183088dc8f3d69112d94f4977a90d06b",
+      "saved_path": ".planning/workflow/state.yaml",
+      "current_lookup": ".planning/milestones/M001/handoffs/archive.md",
+      "disposition": "historical_detail_retrievable_by_key; current control and effective policy references retained"
+    },
+    {
+      "key": "generation_observability_rework",
+      "saved_commit": "521de847183088dc8f3d69112d94f4977a90d06b",
+      "saved_path": ".planning/workflow/state.yaml",
+      "current_lookup": ".planning/milestones/M001/handoffs/archive.md",
+      "disposition": "historical_detail_retrievable_by_key; current control and effective policy references retained"
+    },
+    {
+      "key": "verification_rework",
+      "saved_commit": "521de847183088dc8f3d69112d94f4977a90d06b",
+      "saved_path": ".planning/workflow/state.yaml",
+      "current_lookup": ".planning/milestones/M001/handoffs/archive.md",
+      "disposition": "historical_detail_retrievable_by_key; current control and effective policy references retained"
+    },
+    {
+      "key": "unified_capture_authorization",
+      "saved_commit": "521de847183088dc8f3d69112d94f4977a90d06b",
+      "saved_path": ".planning/workflow/state.yaml",
+      "current_lookup": ".planning/milestones/M001/handoffs/archive.md",
+      "disposition": "historical_detail_retrievable_by_key; current control and effective policy references retained"
+    },
+    {
+      "key": "hint_capture_authorization",
+      "saved_commit": "521de847183088dc8f3d69112d94f4977a90d06b",
+      "saved_path": ".planning/workflow/state.yaml",
+      "current_lookup": ".planning/milestones/M001/handoffs/archive.md",
+      "disposition": "historical_detail_retrievable_by_key; current control and effective policy references retained"
+    },
+    {
+      "key": "annotation_capture_authorization",
+      "saved_commit": "521de847183088dc8f3d69112d94f4977a90d06b",
+      "saved_path": ".planning/workflow/state.yaml",
+      "current_lookup": ".planning/milestones/M001/handoffs/archive.md",
+      "disposition": "historical_detail_retrievable_by_key; current control and effective policy references retained"
+    },
+    {
+      "key": "inline_mapping_revision_authorization",
+      "saved_commit": "521de847183088dc8f3d69112d94f4977a90d06b",
+      "saved_path": ".planning/workflow/state.yaml",
+      "current_lookup": ".planning/milestones/M001/handoffs/archive.md",
+      "disposition": "historical_detail_retrievable_by_key; current control and effective policy references retained"
+    },
+    {
+      "key": "inline_mapping_implementation_authorization",
+      "saved_commit": "521de847183088dc8f3d69112d94f4977a90d06b",
+      "saved_path": ".planning/workflow/state.yaml",
+      "current_lookup": ".planning/milestones/M001/handoffs/archive.md",
+      "disposition": "historical_detail_retrievable_by_key; current control and effective policy references retained"
+    },
+    {
+      "key": "inline_mapping_verification_authorization",
+      "saved_commit": "521de847183088dc8f3d69112d94f4977a90d06b",
+      "saved_path": ".planning/workflow/state.yaml",
+      "current_lookup": ".planning/milestones/M001/handoffs/archive.md",
+      "disposition": "historical_detail_retrievable_by_key; current control and effective policy references retained"
+    },
+    {
+      "key": "inline_mapping_uat_execution_request",
+      "saved_commit": "521de847183088dc8f3d69112d94f4977a90d06b",
+      "saved_path": ".planning/workflow/state.yaml",
+      "current_lookup": ".planning/milestones/M001/handoffs/archive.md",
+      "disposition": "historical_detail_retrievable_by_key; current control and effective policy references retained"
+    },
+    {
+      "key": "failure_capture_revision_authorization",
+      "saved_commit": "521de847183088dc8f3d69112d94f4977a90d06b",
+      "saved_path": ".planning/workflow/state.yaml",
+      "current_lookup": ".planning/milestones/M001/handoffs/archive.md",
+      "disposition": "historical_detail_retrievable_by_key; current control and effective policy references retained"
+    },
+    {
+      "key": "failure_capture_authorization",
+      "saved_commit": "521de847183088dc8f3d69112d94f4977a90d06b",
+      "saved_path": ".planning/workflow/state.yaml",
+      "current_lookup": ".planning/milestones/M001/handoffs/archive.md",
+      "disposition": "historical_detail_retrievable_by_key; current control and effective policy references retained"
+    },
+    {
+      "key": "continuous_authorization",
+      "saved_commit": "521de847183088dc8f3d69112d94f4977a90d06b",
+      "saved_path": ".planning/workflow/state.yaml",
+      "current_lookup": ".planning/milestones/M001/handoffs/archive.md",
+      "disposition": "historical_detail_retrievable_by_key; current control and effective policy references retained"
+    },
+    {
+      "key": "uat",
+      "saved_commit": "521de847183088dc8f3d69112d94f4977a90d06b",
+      "saved_path": ".planning/workflow/state.yaml",
+      "current_lookup": ".planning/milestones/M001/handoffs/archive.md",
+      "disposition": "historical_detail_retrievable_by_key; current control and effective policy references retained"
+    },
+    {
+      "key": "rework_authorization",
+      "saved_commit": "521de847183088dc8f3d69112d94f4977a90d06b",
+      "saved_path": ".planning/workflow/state.yaml",
+      "current_lookup": ".planning/milestones/M001/handoffs/archive.md",
+      "disposition": "historical_detail_retrievable_by_key; current control and effective policy references retained"
+    },
+    {
+      "key": "verification_handoff",
+      "saved_commit": "521de847183088dc8f3d69112d94f4977a90d06b",
+      "saved_path": ".planning/workflow/state.yaml",
+      "current_lookup": ".planning/milestones/M001/handoffs/archive.md",
+      "disposition": "historical_detail_retrievable_by_key; current control and effective policy references retained"
+    },
+    {
+      "key": "ai_quality_authorization",
+      "saved_commit": "521de847183088dc8f3d69112d94f4977a90d06b",
+      "saved_path": ".planning/workflow/state.yaml",
+      "current_lookup": ".planning/milestones/M001/handoffs/archive.md",
+      "disposition": "historical_detail_retrievable_by_key; current control and effective policy references retained"
+    },
+    {
+      "key": "gpt_oss_quality_authorization",
+      "saved_commit": "521de847183088dc8f3d69112d94f4977a90d06b",
+      "saved_path": ".planning/workflow/state.yaml",
+      "current_lookup": ".planning/milestones/M001/handoffs/archive.md",
+      "disposition": "historical_detail_retrievable_by_key; current control and effective policy references retained"
+    },
+    {
+      "key": "ai_mapping_change",
+      "saved_commit": "521de847183088dc8f3d69112d94f4977a90d06b",
+      "saved_path": ".planning/workflow/state.yaml",
+      "current_lookup": ".planning/milestones/M001/handoffs/archive.md",
+      "disposition": "historical_detail_retrievable_by_key; current control and effective policy references retained"
+    },
+    {
+      "key": "ai_mapping_implementation_authorization",
+      "saved_commit": "521de847183088dc8f3d69112d94f4977a90d06b",
+      "saved_path": ".planning/workflow/state.yaml",
+      "current_lookup": ".planning/milestones/M001/handoffs/archive.md",
+      "disposition": "historical_detail_retrievable_by_key; current control and effective policy references retained"
+    },
+    {
+      "key": "ai_mapping_previous_verification_authorization",
+      "saved_commit": "521de847183088dc8f3d69112d94f4977a90d06b",
+      "saved_path": ".planning/workflow/state.yaml",
+      "current_lookup": ".planning/milestones/M001/handoffs/archive.md",
+      "disposition": "historical_detail_retrievable_by_key; current control and effective policy references retained"
+    },
+    {
+      "key": "ai_mapping_previous_verification_handoff",
+      "saved_commit": "521de847183088dc8f3d69112d94f4977a90d06b",
+      "saved_path": ".planning/workflow/state.yaml",
+      "current_lookup": ".planning/milestones/M001/handoffs/archive.md",
+      "disposition": "historical_detail_retrievable_by_key; current control and effective policy references retained"
+    },
+    {
+      "key": "ai_mapping_previous_rework_authorization",
+      "saved_commit": "521de847183088dc8f3d69112d94f4977a90d06b",
+      "saved_path": ".planning/workflow/state.yaml",
+      "current_lookup": ".planning/milestones/M001/handoffs/archive.md",
+      "disposition": "historical_detail_retrievable_by_key; current control and effective policy references retained"
+    },
+    {
+      "key": "ai_mapping_verification_096_authorization",
+      "saved_commit": "521de847183088dc8f3d69112d94f4977a90d06b",
+      "saved_path": ".planning/workflow/state.yaml",
+      "current_lookup": ".planning/milestones/M001/handoffs/archive.md",
+      "disposition": "historical_detail_retrievable_by_key; current control and effective policy references retained"
+    },
+    {
+      "key": "ai_mapping_verification_096_handoff",
+      "saved_commit": "521de847183088dc8f3d69112d94f4977a90d06b",
+      "saved_path": ".planning/workflow/state.yaml",
+      "current_lookup": ".planning/milestones/M001/handoffs/archive.md",
+      "disposition": "historical_detail_retrievable_by_key; current control and effective policy references retained"
+    },
+    {
+      "key": "ai_mapping_rework_authorization",
+      "saved_commit": "521de847183088dc8f3d69112d94f4977a90d06b",
+      "saved_path": ".planning/workflow/state.yaml",
+      "current_lookup": ".planning/milestones/M001/handoffs/archive.md",
+      "disposition": "historical_detail_retrievable_by_key; current control and effective policy references retained"
+    },
+    {
+      "key": "ai_mapping_verification_authorization",
+      "saved_commit": "521de847183088dc8f3d69112d94f4977a90d06b",
+      "saved_path": ".planning/workflow/state.yaml",
+      "current_lookup": ".planning/milestones/M001/handoffs/archive.md",
+      "disposition": "historical_detail_retrievable_by_key; current control and effective policy references retained"
+    },
+    {
+      "key": "ai_mapping_verification_handoff",
+      "saved_commit": "521de847183088dc8f3d69112d94f4977a90d06b",
+      "saved_path": ".planning/workflow/state.yaml",
+      "current_lookup": ".planning/milestones/M001/handoffs/archive.md",
+      "disposition": "historical_detail_retrievable_by_key; current control and effective policy references retained"
+    },
+    {
+      "key": "ai_mapping_uat_preparation_authorization",
+      "saved_commit": "521de847183088dc8f3d69112d94f4977a90d06b",
+      "saved_path": ".planning/workflow/state.yaml",
+      "current_lookup": ".planning/milestones/M001/handoffs/archive.md",
+      "disposition": "historical_detail_retrievable_by_key; current control and effective policy references retained"
+    },
+    {
+      "key": "meaning_revision_authorization",
+      "saved_commit": "521de847183088dc8f3d69112d94f4977a90d06b",
+      "saved_path": ".planning/workflow/state.yaml",
+      "current_lookup": ".planning/milestones/M001/handoffs/archive.md",
+      "disposition": "historical_detail_retrievable_by_key; current control and effective policy references retained"
+    },
+    {
+      "key": "meaning_technical_revision_authorization",
+      "saved_commit": "521de847183088dc8f3d69112d94f4977a90d06b",
+      "saved_path": ".planning/workflow/state.yaml",
+      "current_lookup": ".planning/milestones/M001/handoffs/archive.md",
+      "disposition": "historical_detail_retrievable_by_key; current control and effective policy references retained"
+    },
+    {
+      "key": "meaning_database_revision_authorization",
+      "saved_commit": "521de847183088dc8f3d69112d94f4977a90d06b",
+      "saved_path": ".planning/workflow/state.yaml",
+      "current_lookup": ".planning/milestones/M001/handoffs/archive.md",
+      "disposition": "historical_detail_retrievable_by_key; current control and effective policy references retained"
+    },
+    {
+      "key": "meaning_backend_cutover_sync_authorization",
+      "saved_commit": "521de847183088dc8f3d69112d94f4977a90d06b",
+      "saved_path": ".planning/workflow/state.yaml",
+      "current_lookup": ".planning/milestones/M001/handoffs/archive.md",
+      "disposition": "historical_detail_retrievable_by_key; current control and effective policy references retained"
+    },
+    {
+      "key": "handoff_authorization",
+      "saved_commit": "521de847183088dc8f3d69112d94f4977a90d06b",
+      "saved_path": ".planning/workflow/state.yaml",
+      "current_lookup": ".planning/milestones/M001/handoffs/archive.md",
+      "disposition": "historical_detail_retrievable_by_key; current control and effective policy references retained"
+    },
+    {
+      "key": "meaning_frontend_revision_authorization",
+      "saved_commit": "521de847183088dc8f3d69112d94f4977a90d06b",
+      "saved_path": ".planning/workflow/state.yaml",
+      "current_lookup": ".planning/milestones/M001/handoffs/archive.md",
+      "disposition": "historical_detail_retrievable_by_key; current control and effective policy references retained"
+    },
+    {
+      "key": "meaning_backend_implementation_authorization",
+      "saved_commit": "521de847183088dc8f3d69112d94f4977a90d06b",
+      "saved_path": ".planning/workflow/state.yaml",
+      "current_lookup": ".planning/milestones/M001/handoffs/archive.md",
+      "disposition": "historical_detail_retrievable_by_key; current control and effective policy references retained"
+    },
+    {
+      "key": "meaning_frontend_implementation_authorization",
+      "saved_commit": "521de847183088dc8f3d69112d94f4977a90d06b",
+      "saved_path": ".planning/workflow/state.yaml",
+      "current_lookup": ".planning/milestones/M001/handoffs/archive.md",
+      "disposition": "historical_detail_retrievable_by_key; current control and effective policy references retained"
+    },
+    {
+      "key": "meaning_verification_authorization",
+      "saved_commit": "521de847183088dc8f3d69112d94f4977a90d06b",
+      "saved_path": ".planning/workflow/state.yaml",
+      "current_lookup": ".planning/milestones/M001/handoffs/archive.md",
+      "disposition": "historical_detail_retrievable_by_key; current control and effective policy references retained"
+    },
+    {
+      "key": "cr040_uat_execution_authorization",
+      "saved_commit": "521de847183088dc8f3d69112d94f4977a90d06b",
+      "saved_path": ".planning/workflow/state.yaml",
+      "current_lookup": ".planning/milestones/M001/handoffs/archive.md",
+      "disposition": "historical_detail_retrievable_by_key; current control and effective policy references retained"
+    }
+  ],
+  "checks": {
+    "yaml_and_frontmatter_files": 29,
+    "profile_sha256_matches": true,
+    "required_artifacts": 28,
+    "local_links_checked": 389,
+    "incoming_links_checked": 783,
+    "new_link_errors": [],
+    "preexisting_link_errors": [],
+    "source_checks": [
+      {
+        "id": "qa",
+        "manifest": ".planning/milestones/M001/verification/evidence/closeout-132/qa.json",
+        "checked_files": 28,
+        "mismatches": []
+      },
+      {
+        "id": "frontend",
+        "manifest": ".planning/milestones/M001/implementation/evidence/frontend-sync-133/before.json",
+        "checked_files": 340,
+        "mismatches": []
+      },
+      {
+        "id": "r10",
+        "manifest": ".planning/milestones/M001/implementation/evidence/corrections-r10-20260912/verification.json",
+        "checked_files": 15,
+        "mismatches": []
+      },
+      {
+        "id": "consumer",
+        "manifest": ".planning/milestones/M001/implementation/evidence/ai-consumer-126/developer.json",
+        "checked_files": 13,
+        "mismatches": []
+      }
+    ],
+    "frozen_history_evidence_and_decisions_unchanged": true,
+    "repeated_static_check_identical_evidence": true,
+    "terminal_state_adapter": "Ruby loader and readActiveState read current state/registry successfully; expected inactive-workflow rejection, no model launch",
+    "framework": {
+      "node_test_command": "node --test tests/*.test.mjs",
+      "passed": 42,
+      "failed": 0,
+      "profile_command": "bash validators/validate-profile.sh profiles/consumer-ai-web/PROFILE.yaml",
+      "profile_result": "valid consumer-ai-web@1.0.0",
+      "diff_check": "passed in both repositories"
+    },
+    "methods": [
+      "Parse changed YAML/frontmatter and compare control state fields to documents_commit; check all locked Profile artifact paths and SHA-256.",
+      "Resolve Markdown links and explicit/heading anchors in changed documents; check inbound links from existing planning Markdown.",
+      "Compare each listed source manifest against current files with SHA-256; preserve application, immutable history, decisions and original evidence by empty git diff.",
+      "Restore every prior_document through git show documents_commit:path and record its SHA-256; frozen evidence must use the original version.",
+      "Count each listed UTF-8 file once before/after; independently repeat the static checks without timestamps or new snapshots."
+    ]
+  },
+  "measurements": {
+    "method": "Same explicit file sets, UTF-8 bytes and Unicode code points; full files counted once",
+    "tokens": "unknown",
+    "runtime_input": "not_observed",
+    "framework_code_and_tool_output": "excluded_from_planning_comparison",
+    "task_scope": "Entry sets only; applicable contracts and code remain on-demand, not a total task cost estimate",
+    "sets": {
+      "planning_startup": {
+        "files": [
+          ".planning/agt/project.yaml",
+          ".planning/agt/agents.yaml",
+          ".planning/workflow/state.yaml",
+          ".planning/milestones/M001/handoffs/verification.md"
+        ],
+        "before": {
+          "files": 4,
+          "utf8_bytes": 90663,
+          "unicode_code_points": 88327,
+          "lines": 1643
+        },
+        "after": {
+          "files": 4,
+          "utf8_bytes": 12735,
+          "unicode_code_points": 10671,
+          "lines": 294
+        }
+      },
+      "backend_task_entries": {
+        "files": [
+          ".planning/agt/project.yaml",
+          ".planning/agt/agents.yaml",
+          ".planning/workflow/state.yaml",
+          ".planning/milestones/M001/handoffs/verification.md",
+          ".planning/milestones/M001/handoffs/backend-architecture.md",
+          ".planning/milestones/M001/handoffs/backend-implementation.md",
+          ".planning/milestones/M001/implementation/backend-validation.md",
+          ".planning/milestones/M001/verification/report.md"
+        ],
+        "before": {
+          "files": 8,
+          "utf8_bytes": 108104,
+          "unicode_code_points": 97747,
+          "lines": 1832
+        },
+        "after": {
+          "files": 8,
+          "utf8_bytes": 25031,
+          "unicode_code_points": 17865,
+          "lines": 432
+        }
+      },
+      "ui_task_entries": {
+        "files": [
+          ".planning/agt/project.yaml",
+          ".planning/agt/agents.yaml",
+          ".planning/workflow/state.yaml",
+          ".planning/milestones/M001/handoffs/verification.md",
+          ".planning/milestones/M001/handoffs/uiux.md",
+          ".planning/milestones/M001/design/cr034-interaction-contract.md"
+        ],
+        "before": {
+          "files": 6,
+          "utf8_bytes": 123661,
+          "unicode_code_points": 105041,
+          "lines": 1924
+        },
+        "after": {
+          "files": 6,
+          "utf8_bytes": 26691,
+          "unicode_code_points": 17657,
+          "lines": 458
+        }
+      }
+    }
+  },
+  "handoff_test": {
+    "id": "CTX-M001-01",
+    "status": "not_executed",
+    "reason": "No independent read-only session run; no subagent or paid inference started for documentation maintenance",
+    "static_trace_only": [
+      {
+        "question": "当前阶段与下一步",
+        "source": ".planning/milestones/M001/handoffs/verification.md",
+        "expected": "M001 complete; M002 not started; no active role; define M002 scope when requested"
+      },
+      {
+        "question": "不可破坏的约束与有效替代",
+        "source": ".planning/milestones/M001/handoffs/archive.md",
+        "expected": "CR040, r10, USER-COMPAT-001, USER-CLAIM-DELETE-001; old task states not current"
+      },
+      {
+        "question": "未验证事项及完成条件",
+        "source": ".planning/milestones/M001/verification/report.md",
+        "expected": "CR039-L1, CR042-L1, AI-QUALITY-90, CTX-M001-01"
+      },
+      {
+        "question": "实现与验证入口",
+        "source": ".planning/milestones/M001/verification/coverage-matrix.md",
+        "expected": "task-specific code/tests; distinguish mocks, real models, QA and UAT"
+      },
+      {
+        "question": "恢复原文与失败历史",
+        "source": ".planning/milestones/M001/handoffs/archive.md",
+        "expected": "git show full commit:path and stable-ID lookup; private content expiry remains enforced"
+      }
+    ],
+    "acceptance": "A fresh read-only session receives only task/framework entry/project path, answers stage/next action/completion/constraints/unknowns/provenance with sources and records actual reading scope; no expired task resurrection"
+  },
+  "research_use": {
+    "agent_continuity": "https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents",
+    "context_retrieval": "https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents",
+    "incremental_memory": "https://arxiv.org/abs/2510.04618",
+    "not_claimed": "External research does not establish measured gains for this project; product model evaluations are not development-agent evaluations"
+  }
+}

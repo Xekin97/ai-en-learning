@@ -3,10 +3,10 @@ milestone: M001
 stage: technical-design
 role: backend-architect/base
 agent_name: backend-alex
-status: ready_for_scoped_gate
+status: accepted_m001_baseline
 date: 2026-09-16
 current_change: R10-ARCHITECTURE-SYNC
-current_change_status: ready_for_scoped_gate
+current_change_status: accepted_m001_baseline
 confirmed_scope: [USER-INLINE-MAPPING-115, USER-UAT-ACCOUNT-129, CR-042-RETENTION]
 decisions:
   - DEC-026
@@ -15,9 +15,12 @@ decisions:
   - DEC-032
   - DEC-035
   - DEC-036
+maintenance: M001-AGENT-CONTEXT-001
 ---
 
 # M001 AI 集成设计
+
+> 当前效力：本文为 M001 已交付契约；正式完成状态、遗留事项和下一步见[当前交接](../handoffs/verification.md)。历史修订段中的“待实现/待审阅”仅表示当时步骤，后续接收与替代关系见[历史索引](../handoffs/archive.md)。本次只同步状态与检索入口，未新增业务批准。
 
 > r10 已实施并经 QA132 定向验证，当前候选已通过用户 UAT；本轮仅补齐已批准的[有限纠正／续写说明](#r10-corrections)。CR042 的采集与留存规则沿[后端 §10](./backend.md#generation-evidence-042)，实施与验收以[当前 QA 报告](../verification/report.md)为准。同步前原文已[冻结](./archive/pre-m001-closeout-136.json)，原词释义、公开 API、数据库与前端表现不变。
 
@@ -200,7 +203,7 @@ OpenRouter SSE 可以把 JSON 字符串任意切块。增量解析器必须：
 - 所有 offset 来自去标注后干净文字的 rune 扫描，surface 为精确干净文字子串；使用 Unicode code point、0 基半开区间。匹配折叠不能改变 offset 坐标源；位置最终复算，排序和非重叠要求不变。
 - 本地资源能验证词法关系，不保证全英语覆盖或句中词义正确；unknown 关系仍失败并返还产品额度，不增加第二次在线 AI 校验。
 
-当前模板/逻辑schema为m001-v5，validator为m001-v5-wn31-r1；词法资产与关系算法不变。更新来源元数据不等于真实质量已验证。ValidatedBatch形状仍为当前entry_meaning与occurrence结构，不新增旧数组reader、转换、双读或数据清理；不重校验已验证资源。
+当前逻辑 schema 为 m001-v5，PromptVersion 为 m001-v5-r10，ValidatorVersion 为 m001-v5-wn31-r2（与 backend/internal/ai/contract.go 一致）；词法资产与关系算法不变。更新来源元数据不等于真实质量已验证。ValidatedBatch形状仍为当前entry_meaning与occurrence结构，不新增旧数组reader、转换、双读或数据清理；不重校验已验证资源。
 
 ### 5.4 原子发布
 

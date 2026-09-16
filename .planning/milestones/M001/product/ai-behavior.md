@@ -3,14 +3,17 @@ milestone: M001
 stage: product-planning
 role: product/to-c
 agent_name: product-maya
-status: awaiting_user_review
+status: accepted_m001_baseline
 date: 2026-09-08
 revision: CR-040
+maintenance: M001-AGENT-CONTEXT-001
 ---
 
 # M001 AI 行为契约
 
-本轮仅修订原词释义，状态为待审阅；确认来源、历史优先级与修订前快照见[当前修订入口](./overview.md#cr040-revision)。其他已批准规则不重开。
+> 当前效力：本文为 M001 已交付契约；正式完成状态、遗留事项和下一步见[当前交接](../handoffs/verification.md)。历史修订段中的“待实现/待审阅”仅表示当时步骤，后续接收与替代关系见[历史索引](../handoffs/archive.md)。本次只同步状态与检索入口，未新增业务批准。
+
+CR-040 原词释义已交付；确认来源与替代关系见[当前基线](./overview.md#cr040-revision)。r10 有限纠正/续写以[AI 集成](../technical/ai-integration.md#r10-corrections)为准，其他产品语义不变。
 
 ## 1. 目标与边界
 
@@ -104,7 +107,7 @@ DATA-018 界面语言不属于 AI 输入字段。切换 `zh-CN` / `en-US` 不得
 
 ### 3.4 产品语义结构示例
 
-以下示例只表达字段含义，不是对具体传输格式或键名的技术锁定。`entry_meaning` 只是“原词释义”的示意名；现有 `contextual_meaning` 的实际命名、传输和存储影响须由后续技术修订明确，本产品修订不批准 API 改名或旧版兼容方案：
+以下示例表达产品语义；当前技术契约已统一为 `entry_meaning`，准确传输/存储约束见 [API v1.5](../technical/api/index.md#cr040-entry-meaning)。旧 `contextual_meaning` 字段不再使用，不新增旧版兼容：
 
 ```json
 {

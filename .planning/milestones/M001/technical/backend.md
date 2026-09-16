@@ -3,17 +3,20 @@ milestone: M001
 stage: technical-design
 role: backend-architect/base
 agent_name: backend-alex
-status: ready_for_scoped_gate
+status: accepted_m001_baseline
 date: 2026-09-16
 revision: R10-ARCHITECTURE-SYNC
 decisions: [DEC-025, DEC-026, DEC-027, DEC-028, DEC-029, DEC-030, DEC-031, DEC-032, DEC-033, DEC-034, DEC-035, DEC-036]
-open_change_requests: [CR-039, CR-040, CR-041, CR-042]
+open_change_requests: []
 confirmed_scope: [USER-INLINE-MAPPING-115, USER-UAT-ACCOUNT-129, CR-042-RETENTION]
 open_questions: []
 pending_role_sync: []
+maintenance: M001-AGENT-CONTEXT-001
 ---
 
 # M001 后端总体架构
+
+> 当前效力：本文为 M001 已交付契约；正式完成状态、遗留事项和下一步见[当前交接](../handoffs/verification.md)。历史修订段中的“待实现/待审阅”仅表示当时步骤，后续接收与替代关系见[历史索引](../handoffs/archive.md)。本次只同步状态与检索入口，未新增业务批准。
 
 > 当前交付已完成 r10 实施、QA132、前端同步及用户 UAT，证据见[当前 QA 报告](../verification/report.md)。本次 R10-ARCHITECTURE-SYNC 只同步已批准行为；有限纠正／续写的唯一规则见 [AI §3.1.1](./ai-integration.md#r10-corrections)。原文已[冻结](./archive/pre-m001-closeout-136.json)。以下 CR039/040 的历史设计与执行步骤保留追踪，不再代表待实施任务或再次清库授权；已知限制见[当前交接](../handoffs/backend-architecture.md)。
 
@@ -55,16 +58,16 @@ pending_role_sync: []
 
 1. **DBA → 后端**：103 已完成数据库交付接收；本节以下将其接入维护入口、迁移器、同事务校验及启动顺序。不再要求 DBA 重复确认旧草稿转换或清理范围。
 2. **前端**：同步 generation/learning/review strict schema、HTTP mapper、application models、create/library/review、管理员只读 presenter 及对应 mock/fixture；复习 action 返回的下一道 spelling item 不能遗漏。沿现有认证失效路径处理已清除会话，不新增旧数据恢复分支；不重做 UI/文案，不允许 API raw DTO 直接渲染。
-3. **实施/验证**：本次后端交付与前端有限同步接收后，再进入实施门禁。清理执行、配套部署和真实模型质量取证各自遵守执行范围，不能由“技术方案已批准”推导已执行或允许产生费用。
+3. **实施/验证**：本次后端/前端已接收并完成实施与验证，当前结果见[报告](../verification/report.md)。清理执行、配套部署和真实模型质量取证各自遵守执行范围，不能由“技术方案已批准”推导已执行或允许产生费用。
 
 <a id="cr040-rollout"></a>
 ### 本地切换、失败与数据安全
 
-仅本次已确认本地切换采用 [DBA 操作顺序](./database.md#cr040-cleanup-procedure)；日常部署仍运行正常 schema 迁移，不附带清理。以下为后端接入设计，尚未实现。
+仅本次已确认本地切换采用 [DBA 操作顺序](./database.md#cr040-cleanup-procedure)；日常部署仍运行正常 schema 迁移，不附带清理。以下接入已实施并经 CR040 定向验证；这里保留执行边界，后续任务不得自动重复这次清理。
 
 | 后端位置 | 接入职责与边界 |
 | --- | --- |
-| [wordweave-admin](../../../../backend/cmd/wordweave-admin/main.go) | 设计独立、显式调用的一次性离线维护入口；现状只有 migrate/verify/create-admin，不能宣称入口已存在。使用经核实的本地目标和受控维护连接，禁止沿用普通 app 身份后再扩大其常驻权限；不初始化 AI 调用、密钥探针、HTTP handler 或后台清理任务。 |
+| [wordweave-admin](../../../../backend/cmd/wordweave-admin/main.go) | 已实现独立、显式调用的 `cutover-entry-meaning` 离线维护入口；其存在不是新的清理授权。使用经核实的本地目标和受控维护连接，禁止沿用普通 app 身份后再扩大其常驻权限；不初始化 AI 调用、密钥探针、HTTP handler 或后台清理任务。 |
 | [postgres 迁移器](../../../../backend/internal/platform/postgres/migrate.go) | 将现有 applyMigration 的执行正文/记账边界提取为可接受调用方 tx 的内部函数，函数不自行 Begin/Commit；普通 Migrate 仍由原包装器逐迁移管理事务。本地维护入口自己持有唯一 tx，清理后执行 DBA 指定的同一份结构迁移并记账，不嵌套调用另开事务的 Migrate。正常迁移文件不夹带业务删除。 |
 | postgres 验证 | 从 Verify 提取只依赖 Query/QueryRow 的只读校验边界，普通路径传 pool，本地切换传同一 tx；在既有账本、词表、组和 occurrence 检查之外核验新释义列/约束。清理零行、保留集相等和组重置检查只放在一次性维护校验，不能放进日常 readiness，使后续正常注册/学习被误判。 |
 | [服务启动/停止](../../../../backend/cmd/wordweave/main.go)及 [maintenance](../../../../backend/internal/maintenance/maintenance.go) | 先关闭流量入口并停止本项目全部写入者，确认 HTTP、生成回调、清理定时任务和相关连接结束；“已发停止信号”或 readiness=false 不等于已停写。完成停止后才建立本次对账基准和数据库事务，清理不能与退出结算并发。 |
@@ -637,7 +640,7 @@ OpenRouter API Key 不从普通环境变量作为运行真源；由管理员经 
 
 ### 11.3 发布与回滚
 
-CR-040 的当前发布边界见[本轮本地切换与数据安全](#cr040-rollout)：DBA 已由 103 接收，后端本次同步待审，前端切换设计与实际执行授权尚未完成。以下六步仅保留多 occurrence 的历史来源，不在本轮重演迁移或建立兼容窗口；不能用历史单端回滚规则覆盖本次已确认的一次性本地切换。
+CR-040 的当前发布边界见[本轮本地切换与数据安全](#cr040-rollout)：DBA 已由 103 接收，后端/前端同步与配套切换均已由后续实施、QA 和 138 收尾接收。以下六步仅保留多 occurrence 的历史来源，不在本轮重演迁移或建立兼容窗口；不能用历史单端回滚规则覆盖本次已确认的一次性本地切换。
 
 1. 从同一 Git commit 独立构建并验证 backend/frontend/edge 镜像；在真实 Compose/Nginx 拓扑运行 API v1.3、Cookie/Origin、SSR 与 POST SSE smoke。
 2. 在隔离 PostgreSQL 18 上运行迁移、种子与并发测试。生产备份后由 backend 镜像的一次性 migrate job 运行 `0005_hint_occurrences_expand.sql`。

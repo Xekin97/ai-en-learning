@@ -1,60 +1,44 @@
 ---
 milestone: M001
-stage: verification
 role: quality/base
 agent_name: qa-quinn
-status: verified_ready_for_milestone_closeout
-date: 2026-09-16
-verification_round: M001-CLOSEOUT-137
+status: milestone_complete_with_retained_limitations
+maintenance: M001-AGENT-CONTEXT-001
 ---
 
-# 部署差量通过，用户 UAT 已接受
+# M001 当前完成边界与开放项
 
-按 [TRANSITION-M001-134 / USER-UAT-ACCEPTANCE-134](../reviews/stream-failure-capture-gates.md)接收 FRONTEND-SYNC-133。**Q132-01 已验证解决；用户“验收完毕”已登记，不再安排重复 UAT。** r10 技术说明已由 136 接收；本轮 137 完成文档和证据收尾，交 138 正式办理 M001 完成。生产发布不在本次范围。
+M001 已于 2026-09-16 由 TRANSITION-M001-138 关闭；USER-UAT-ACCEPTANCE-134 已接受当前本地候选。应用基线 `387c775534844ff0b8ca9857523dc39c1d8ee87a`；[原始收尾证据](../reviews/evidence/m001-closeout-138.json)、[门禁原文](../reviews/stream-failure-capture-gates.md)、[正式状态](../../../workflow/state.yaml)。生产发布未批准，M002 尚未开始。
 
-[本次核对与旧稿快照](./evidence/frontend-sync-134.json)、[前端原始交付](../implementation/evidence/frontend-sync-133/developer.json)、[既有独立 QA132](./evidence/closeout-132/qa.json)、[逐场景原件](./evidence/closeout-132/browser-results.json)。
+## 已交付范围与证据
 
-## 本次差量核对
-
-| 验收关联 | 方法 | 结果 |
+| 范围 | 当前结论 | 证据和适用限制 |
 | --- | --- | --- |
-| Q132-01 / PAGE-004 / API-005 | 只读核对实际容器镜像和公开 JS 摘要 | 前端 b7ddbbe99c68…；CWwqOgzc.js 与受测产物一致，PASS |
-| API-005/006 / CR-041 | 审阅生产镜像测试的夹具、断言和原始结果 | 成功可保存、退款 true/false 均正常失败可重试、同一文案且零 pageerror，3/3；复用开发证据，不冒充新增浏览器测试 |
-| 当前版本与既有覆盖 | 比对 FRONTEND-SYNC-133 的 340 项源码、QA132 的 28 项来源和 8 份前端正文/证据摘要 | 全部匹配，既有行为证据可复用 |
-| 部署范围 | 只读容器投影与133运行记录对比 | 前后端、DB、Nginx 的ID/镜像/启动时间一致；无新增重启 |
-| 用户验收 | 原话“验收完毕”，已由134登记 | 当前本地候选 UAT 接受；用户未提供逐项用例，不虚构覆盖 |
+| CR-039 映射、位置、流式与保存/复习 | 本轮交付关闭，CR039-L1 保留 | [QA132](./evidence/closeout-132/qa.json)、既有 CR039/098 及用户 UAT；不是所有英语派生形式保证 |
+| CR-040 独立原词释义 | 已交付关闭 | [QA107](./evidence/cr040/manifest.json)、[AI 评阅](./ai-evaluation.md)；结构正确不保证所有义项质量 |
+| CR-041 退款真实性与恢复 | 已交付关闭 | QA132 故障恢复 + [133 开发证据](../implementation/evidence/frontend-sync-133/developer.json) + [134 接收](./evidence/frontend-sync-134.json) |
+| CR-042 阶段/内容取证 | 本轮交付关闭，CR042-L1 保留 | QA132 独立合成链路及版本匹配的开发专项；单回复 replay 范围不扩大 |
+| Q132-01 实际前端版本差量 | 已解决 | 133 部署、134 对镜像与公开资源的独立核对，用户 UAT 接受 |
+| R10-ARCHITECTURE-SYNC | 已完成 | 136 接收 [AI 契约](../technical/ai-integration.md#r10-corrections)，138 正式关闭 |
 
-本轮只执行文件/摘要核对、容器只读查询及一次静态 JS GET；真实模型调用、生成/保存请求、登录、SQL、部署、代码修改和新增测试均为 0。未读取私有生成原文，不续长留存。
+[覆盖索引](./coverage-matrix.md)按功能列有效结果、命令和历史来源。QA132 的 8 条独立浏览器→Nuxt→Go→PG 合成场景为成功保存、两次纠正、续写、纠正耗尽、取消、离开退款、JSON 无效及退款恢复。首轮观察方法修正后重跑同组，合计 16 次合成生成/30 次本地模拟调用；不能把重跑算为额外 8 个不同验收项。
 
-## 复用的独立结果与边界
-
-QA132 的 8 条浏览器→Nuxt→Go→PG 合成场景继续有效：成功保存、两次纠正、长度续写、纠正耗尽、主动取消、离开退款、JSON 无效及退款恢复。其首轮观察方法不足后重跑同组，合计16次合成生成/30次本地模拟调用；本轮没有重跑或重新计为新增通过。
-
-当时每 run 单终态/单计量、预览与最终正文一致、解析失败可定位、普通日志不含受检秘密/文本等结论沿原件；TTL、容量和竞态专项仍是开发证据复用，不冒称全分支重新独立测试。QA132 对真实失败三份回复的归因与 Luna 五份内容评阅见 [AI评测](./ai-evaluation.md)。小样本不是稳定 ≥90% 的证明。
+138 收尾匹配 QA132 的 28 项来源及 133 的 340 项源码；本次文档整理再次做静态摘要核对，结果见[整理证据](../reviews/evidence/m001-agent-context-001.json)。没有新增应用测试、模型调用、私有原文读取、部署或数据操作，也没有重新探测本地运行环境。
 
 <a id="剩余事项与责任"></a>
-
 ## 收尾核对与保留事项
 
-2026-09-16，按用户“收尾吧，收尾之后整理 commit 提交两边（agt 和 项目）的代码”执行当前已接受候选的文档收尾。R10-ARCHITECTURE-SYNC 已完成：[AI 真源](../technical/ai-integration.md#r10-corrections)、[后端交接](../handoffs/backend-architecture.md)。QA132 的 28 项来源及 FRONTEND-SYNC-133 的 340 项源码摘要全部匹配，复用既有应用证据；本轮没有新测试、模型调用、私有原文读取、部署或数据操作。
+| ID / 状态 | 已知事实与原因 | 后续动作与完成条件（需纳入明确任务） |
+| --- | --- | --- |
+| CR039-L1 / OPEN | safe→safety/safely 被现有词法规则拒绝；safer 尚未核实；[CR-039](../changes/CR-039.md#retained-limitations) | 先用既有版本/固定输入离线复现，明确期望关系，再做有限词法修订与正反例回归；必须保持拒绝无关映射和位置不重叠，不能只放宽校验 |
+| CR042-L1 / OPEN | 未知标注反馈定位不精确；单回复 replay 不能直接回放多回复整包；[CR-042](./CR-042-generation-evidence.md#retained-limitations) | 若选为任务，分别界定反馈修复与回放范围；验证错误位置可定位、对应回复可辨、严格校验/单计量/隐私留存不变。整包 replay 尚未获扩展授权 |
+| AI-QUALITY-90 / UNVERIFIED | 已确认正常生成长期 ≥90% 目标；r10 小样本不能证明稳定达标；[AI 评测](./ai-evaluation.md) | 恢复评估前明确模型/配置、代表性样本、成功口径、统计判断与预算，再按冻结口径测量；当前用户已停止调优，不自动收费采样 |
+| CTX-M001-01 / UNVERIFIED（开发流程） | 整理后新会话接续效果未实测；与上述产品问题分开 | 只给接手者任务、基座入口、产品路径，让其只读回答当前阶段、下一动作/完成条件、约束、未知项、来源；检查是否误用旧待办，记录实际读取范围。静态检查不算独立通过 |
 
-| 项目 | 处置与证据 |
-| --- | --- |
-| CR-039 目标映射、定位、流式展示与保存／复习 | 已交付范围定向验证及用户 UAT 接受；建议限定关闭本轮变更，词法覆盖限制另保留 CR039-L1 |
-| CR-040 独立原词释义 | entry_meaning 全链及既有 CR040／QA132 定向证据已接收；建议关闭本轮变更，不能解释为所有词义的语义保证 |
-| CR-041 退款真实性与恢复 | QA132 故障恢复与 133/134 true/false 消费／部署证据通过；建议关闭 |
-| CR-042 阶段／内容证据链 | 既有专项及 QA132 通过、技术说明已同步；建议关闭该交付范围，保留下述质量／工具限制 |
-| Q132-01 前端部署差量 | 已解决，134 已独立接收；不要求再次 UAT |
+Q127-01 保持用户已接受的非阻断风险，不增加缓冲容量。UAT/里程碑完成不表示上述限制修复或质量目标豁免。CTX-M001-01 不重开产品验收，也不额外阻塞无关已授权工作。
 
-用户是在上述已知限制已展示、模型调优已停止、UAT 已接受的上下文中要求收尾。本次关闭当前交付，不把限制改写为已修复，也不撤销原质量目标：
+## 使用证据的规则
 
-- **CR039-L1 / OPEN**：safe→safety/safely 被拒，safer 尚未核实。来源与复现沿 [CR-039](../changes/CR-039.md#retained-limitations)。下次明确要求改善词形覆盖时，先基于已存失败证据做有限关系校验修订与定向回归。
-- **CR042-L1 / OPEN**：未知标注反馈定位精度不足，现有单回复 replay 不支持整包多回复。详见 [CR-042](./CR-042-generation-evidence.md#retained-limitations)；没有新的工具扩展或模型调用任务。
-- **AI-QUALITY-90 / UNVERIFIED**：长期正常生成 ≥90% 目标保留，小样本不足以证明稳定达标。若用户以后恢复质量评估，先明确样本口径和预算；当前不自动调优或收费采样。
-- Q127-01 沿既有用户决定保持非阻断风险，不增加缓冲容量。
+当前源码匹配不意味着历史环境始终存在；镜像、端口、/tmp 文件、运行容器与私有诊断内容必须区分历史记录和实时事实。原文最长 24 小时，不通过归档延长留存，不能承诺重放所有真实历史样本。
 
-[本轮静态核对](../reviews/evidence/m001-closeout-138.json)与[收尾前完整原稿](../technical/archive/pre-m001-closeout-136.json)保留可恢复证据。未发现新的实现或需求冲突，当前文档项已完成，可按用户明确收尾授权办理阶段结束。
-
-## 当前入口与整理
-
-本报告与[QA交接](../handoffs/verification.md)为当前入口；137只更新本轮收尾及遗留项，先前134核对的事实和原件保持。六份 QA132 正文及各自摘要完整保存在本轮证据的 prior_documents。更早 OBS-129 原稿仍在[QA132快照](./evidence/closeout-132/previous-qa.json)。旧审批/失败/测试证据不变；QA只更新自己的当前入口和问题处置建议；正式阶段及关闭状态由守门办理。字节计量、文件引用与保护项检查见本轮证据；没有新会话交接试验，actual_model / tokens unknown。
+历史 QA094/096 红例及被取消的兼容验收保持原事实。后续 PASS 只替代相同事项的当前处置，原文和授权按[历史索引](../handoffs/archive.md)追溯。当前有效需求与实现若出现冲突，保留差异并处理，不以总结改写需求。

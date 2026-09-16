@@ -1,46 +1,46 @@
 ---
 milestone: M001
-stage: implementation
 role: frontend-implementer/base
 agent_name: frontend-claire
-status: deployed_scoped_smoke_pass_ready_for_qa_receipt
-date: 2026-09-12
-revision: FRONTEND-SYNC-133 / Q132-01
+status: delivered_qa_received_user_accepted
+maintenance: M001-AGENT-CONTEXT-001
 ---
 
-# 前端已同步至本地 UAT
+# 前端：当前验证基线与回归入口
 
-Q132-01 的旧前端已替换为当前已验收代码的生产镜像，http://localhost:6001 可访问；线上关键 bundle 与测试镜像摘要相同。**部署和开发定向冒烟通过，等待独立 QA 接收差量，不等于用户 UAT 或里程碑完成。**
+FRONTEND-SYNC-133 已由 134 独立接收，用户 UAT 接受，138 完成 M001。Q132-01 已解决，不再等待 QA/部署。应用提交 `387c775534844ff0b8ca9857523dc39c1d8ee87a`；当时前端镜像 b7ddbbe99c68…、关键公开 JS 为 CWwqOgzc.js；这些是历史交付标识，不是当前运行环境探测。
 
-[原始证据](./evidence/frontend-sync-133/developer.json)、[运行核对](./evidence/frontend-sync-133/runtime-check.json)、[构建输出](./evidence/frontend-sync-133/build.log)、[浏览器结果](./evidence/frontend-sync-133/smoke-results.json)。
+## 最新适用证据
 
-## 确认范围与实施
+| 范围 | 既有结果/原件 | 边界 |
+| --- | --- | --- |
+| 生产 Dockerfile 质量链 | [133 developer.json](./evidence/frontend-sync-133/developer.json)：typecheck、lint、依赖边界、263 单测、Nuxt build 通过 | 构建通过不表示全站浏览器已重测 |
+| 生成异步状态/取消/身份隔离 | [consumer-126](./evidence/ai-consumer-126/developer.json)：71 项定向、9 项浏览器开发检查 | 失败首轮保留在原件；不将其改为通过 |
+| 生产镜像消费 | [133 smoke](./evidence/frontend-sync-133/smoke-results.json)：成功保存、退款 true、退款 false，3/3 | 合成 API/SSR 数据源，不是真实模型调用 |
+| 实际交付一致性 | [134 独立接收](../verification/evidence/frontend-sync-134.json)：镜像/公开资源与候选匹配 | 未来部署变动后需重新核对，不能仅凭源码推断线上版本 |
+| 跨端与用户验收 | [QA132](../verification/evidence/closeout-132/qa.json)、[UAT](../verification/uat.md) | 用户未提供逐项用例，不补造覆盖 |
 
-依据 [TRANSITION-M001-133](../reviews/stream-failure-capture-gates.md)、[QA交接](../handoffs/verification.md)和 API-005/006，处理已确认的前端版本差异，没有新增需求或待定语义。PAGE-004 / CAP-008/009/010 / CR-041 的终态消费保持原设计。
+## 执行与回归入口
 
-本轮生产源码、UI、文案、样式、依赖和锁文件均未改。之前 consumer-126 的状态/取消竞争、身份隔离、严格 SSE 解析与 DTO→mapper→store→渲染分层沿用；原 71 项定向与 9 项浏览器开发证据见[consumer-126](./evidence/ai-consumer-126/developer.json)，随后 QA132 的 8 项跨端验证见[QA原件](../verification/evidence/closeout-132/qa.json)，无需重复整套流程。
+从项目根目录运行，Node 24、pnpm 10.33.0，版本以 frontend/package.json 和锁文件为准：
 
-单工作区串行：冻结源文件和旧镜像→原 Dockerfile 构建→同一生产镜像定向浏览器验证→仅替换前端→核对线上资源。共享候选与部署目标不适合并行，不建 worktree 或子代理、不提交 Git。frontend-claire 只维护本报告、交接和本轮证据；不改后端说明或 QA 原件。
+```sh
+corepack pnpm --dir frontend install --frozen-lockfile
+corepack pnpm --dir frontend typecheck
+corepack pnpm --dir frontend lint
+corepack pnpm --dir frontend lint:boundaries
+corepack pnpm --dir frontend exec vitest run tests/unit/generation-lifecycle.test.ts tests/unit/generation-stream.test.ts tests/unit/generation-refund-contract.test.ts
+```
 
-## 验证结果
+按任务替换定向用例；需要完整单测/构建时使用 `corepack pnpm --dir frontend test` / `build`。环境启动见 [frontend README](../../../../frontend/README.md)，默认开发端口与已交付 UAT 的 6001 分开。
 
-| 检查 | 结果 |
-| --- | --- |
-| 原生产 Dockerfile 质量链 | typecheck、lint、依赖边界、263 项单测及 Nuxt build 全部通过；正常构建内置检查，不是全站 UI/UAT 重测 |
-| 生产镜像成功路径 | Chromium 合成生成成功、正文/资源可见、点击保存完成既有跳转 |
-| 退款 true / false | 两条终态均正确结束、无保存入口、可重试，错误文案完全相同，零 pageerror |
-| 实际部署 | Compose 只执行 frontend，带 --no-deps / --no-build；前端 healthy，后端/DB 容器ID、镜像、启动时间不变 |
-| 入口与资源 | /、/create、/health/live、关键 JS 均 200；HTML no-store；线上 CWwqOgzc.js 与候选 SHA-256 一致 |
-| 影响范围 | 340 项前后端/Nginx源码、7 项保护输入摘要不变；无真实模型调用、测试账号、学习内容或模型配置变更 |
+- 原词释义：tests/unit/entry-meaning-contract.test.ts；管理配额：admin-quota-contract.test.ts；API 其余部分按 [API v1.5](../technical/api/index.md)选择。
+- 日期/恢复/匿名组：review-*、passage-cloze-presenter；视觉变化按[设计交接](../handoffs/uiux.md)选语言、状态与断点。
+- 浏览器：`corepack pnpm --dir frontend test:e2e`。playwright.config.ts 会启动 3300 Nuxt 与 38080 mock backend，测试在准备好的隔离开发环境执行；默认会复用现有端口服务，先核对服务身份。它不连接真实 OpenRouter/SQL。
+- tests/integration/cr033-paired-smoke.mjs 会创建账号、修改组策略，只用于按 README 准备的可丢弃 6101 栈，不能对 UAT 运行。
 
-浏览器消费测试使用生产镜像和纯合成接口/SSR 数据源，不是 dev server；部署后核对线上资源和只读入口，没有在 UAT 注入数据库故障。没有 SQL 或业务 mutation；服务常规 SSR/健康 GET 不被冒称“数据库零活动”。仅有非阻断的构建插件耗时提示。部署命令返回时工具结果序列化曾报错，命令本身继续执行并最终退出 0，原输出保留。
+## 有效约束与后续
 
-## 产物、回退与遗留
+DTO → mapper → 应用状态 → presenter/渲染；身份变化清私有状态；失败终态的 quota_refunded 是布尔事实，不再要求恒为 true。公开契约整体为 v1.5，保留的 v1.4 fixture 只覆盖管理员配额子契约，不能据其目录名倒退版本。
 
-新镜像 b7ddbbe99c68…，原前端 5903591c8811… 以 wordweave-frontend:rollback-q132-20260912 保留。[新候选覆盖](./evidence/frontend-sync-133/compose-frontend.yaml)与[回退覆盖](./evidence/frontend-sync-133/compose-rollback.yaml)都只用于 frontend 命令，不能拿它们做整栈 up/down。回退未执行，会重新带回 Q132-01，不代表旧版兼容。
-
-临时预览容器和合成接口进程已清理；合成内存数据不可恢复，源代码、构建/测试证据及回退镜像保留。Nginx 配置未改，仅通过检查后重载；UAT 后端和数据库未重启。
-
-旧前端两份正文完整保存在[before.json](./evidence/frontend-sync-133/before.json)，本轮就地更新入口，未覆盖旧测试/失败记录。当前 QA 报告描述的是部署前时点，由 QA 后续接收本差量，不由前端代改。实际 token/模型未知，未声称切模；新会话交接测试未执行。
-
-下一步只需 QA 核对这次已部署产物与证据，不重测全站、不自动调用模型。后端有限纠正技术说明交 backend-alex；safe 派生和纠正反馈精度仍 OPEN，CR039/040/041/042 不由前端关闭。
+旧 frontend-only Compose 覆盖和回退镜像保留在原件；回退会重新带回 Q132-01，不能当作当前兼容保证。本次无应用测试/部署，源码和原证据不变；开放项统一见[报告](../verification/report.md#收尾核对与保留事项)。

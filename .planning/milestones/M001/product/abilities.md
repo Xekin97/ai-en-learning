@@ -3,18 +3,21 @@ milestone: M001
 stage: product-planning
 role: product/to-c
 agent_name: product-maya
-status: awaiting_user_review
+status: accepted_m001_baseline
 date: 2026-09-08
 revision: CR-040
+maintenance: M001-AGENT-CONTEXT-001
 ---
 
 # M001 产品能力清单
+
+> 当前效力：本文为 M001 已交付契约；正式完成状态、遗留事项和下一步见[当前交接](../handoffs/verification.md)。历史修订段中的“待实现/待审阅”仅表示当时步骤，后续接收与替代关系见[历史索引](../handoffs/archive.md)。本次只同步状态与检索入口，未新增业务批准。
 
 ## 1. 能力约束
 
 能力描述规定用户可观察的触发、输入、结果、失败和权限，不指定前后端实现。所有生成入口只提交显式列出的结构化字段；任何额外字段或自由文本均不是 M001 产品能力。
 
-本轮只同步 CR-040，范围和历史版本见[当前修订入口](./overview.md#cr040-revision)。生成、查看与复习使用的释义统一引用 [AI 行为 §3.3](./ai-behavior.md#original-entry-meaning)，不在各能力中另设不同释义规则。
+CR-040 已交付，范围和历史替代关系见[当前基线](./overview.md#cr040-revision)。生成、查看与复习使用的释义统一引用 [AI 行为 §3.3](./ai-behavior.md#original-entry-meaning)，不在各能力中另设不同释义规则。
 
 ## 2. 访客与学习者能力
 

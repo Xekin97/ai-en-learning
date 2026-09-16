@@ -1,5 +1,7 @@
 # WordWeave
 
+Agent continuation starts at [workflow state](.planning/workflow/state.yaml) and the [current M001 handoff](.planning/milestones/M001/handoffs/verification.md). Read task-specific contracts and verification routes from that handoff; retrieve historical experiments by ID through its archive index. M002 has not started.
+
 M001 was accepted in local UAT on 2026-09-12 and closed on 2026-09-16. The delivered UAT entry is `http://localhost:6001`; the development stack below defaults to port 3000. See the [delivery report](.planning/milestones/M001/verification/report.md), [retained limitations](.planning/milestones/M001/verification/report.md#收尾核对与保留事项), and [workflow state](.planning/workflow/state.yaml). Milestone closeout does not approve a production release.
 
 WordWeave is a single repository with independently built backend, frontend, and edge applications.

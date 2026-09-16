@@ -3,12 +3,15 @@ milestone: M001
 stage: uiux-design
 role: uiux/base
 agent_name: designer-tony
-status: awaiting_user_review
+status: accepted_m001_baseline
 date: 2026-09-06
 decisions: [DEC-019, DEC-020, DEC-021, DEC-022, DEC-023, DEC-024, DEC-032, DEC-035]
+maintenance: M001-AGENT-CONTEXT-001
 ---
 
 # M001 响应式、设计系统与可访问性规范
+
+> 当前效力：本文为 M001 已交付契约；正式完成状态、遗留事项和下一步见[当前交接](../handoffs/verification.md)。历史修订段中的“待实现/待审阅”仅表示当时步骤，后续接收与替代关系见[历史索引](../handoffs/archive.md)。本次只同步状态与检索入口，未新增业务批准。
 
 ## 第069轮：PAGE-007原型断点同步（待审阅）
 

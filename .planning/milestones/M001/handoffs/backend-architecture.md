@@ -1,31 +1,26 @@
 ---
 milestone: M001
-stage: technical-design
 role: backend-architect/base
 agent_name: backend-alex
-status: ready_for_scoped_gate
-date: 2026-09-16
-revision: R10-ARCHITECTURE-SYNC
+status: delivered_baseline
+maintenance: M001-AGENT-CONTEXT-001
 ---
 
-# backend-alex：r10 技术说明已同步
+# M001 后端与 AI 契约基线
 
-## 输入与确认
+M001 已由 TRANSITION-M001-138 关闭；正式状态见[当前交接](./verification.md)和 workflow。以下是已交付知识入口，不是重新激活该角色或待批准的交接。
 
-按 [135 门禁](../reviews/stream-failure-capture-gates.md)、[当前 QA 交接](./verification.md)、USER-UAT-ACCEPTANCE-134 与用户本次“收尾吧，收尾之后整理 commit 提交两边（agt 和 项目）的代码”完成已批准文档任务。没有新需求、语义变更或待确认方案；停止调优继续有效。
+## 当前真源
 
-## 原始产物与证据
+- [后端方案](../technical/backend.md)：模块、事务、计量、安全、观测；[API v1.5](../technical/api/index.md)：公开协议仍在 `/api/v1` 路径。
+- [AI 集成 r10](../technical/ai-integration.md#r10-corrections)：初次调用后纠正/续写共享最多两次额度；同 run/模型，最终严格校验，单终态/单业务计量。纠正可改标注但保留已发出的净正文，不再次发送正文；续写只能追加，保留释义/hint，按契约更新标签。
+- `entry_meaning` 是唯一释义字段。旧 candidate `passage_forms`/`hint_forms` 及 v4 无二次调用说明属于历史设计；当前候选/标注规则以 AI 集成和代码为准。普通网络错误没有通用重试或模型切换。
+- [CR042](../technical/backend.md#generation-evidence-042)：普通日志与私有原文通道隔离；专用账号诊断最多 50 请求、24 小时、每份 1 MiB。普通构建不能开启，replay 不覆盖 DB/退款/浏览器，也不能整包回放多回复。
 
-[AI §3.1.1](../technical/ai-integration.md#r10-corrections)集中维护有限纠正／续写规则，[后端说明](../technical/backend.md)引用该真源并更新已交付状态。核对 continuation.go、生成服务与 [QA132](../verification/evidence/closeout-132/qa.json)，明确最多两次共享追加调用、严格终验、干净流保持、单 run／单次业务计量、取消和退款边界。不是增加功能、重跑测试或申请模型费用。
+## 修改入口与判断
 
-追踪 CAP-008/009/010、PAGE-004、API-005/006、DATA-010/011/012/013 与 CR-039/040/041/042。QA132 的 28 项源码摘要已与当前文件核对一致；实现、运行环境、数据库、公开 API 和其他专业设计保持原件。有限静态核对不冒充新独立应用验收。
+backend/internal/ai 负责候选、标注、关系校验、纠正/续写；internal/generation 负责 run/结算；internal/httpapi 负责 HTTP/SSE；internal/generationtrace、generationevidence、diagnostics 负责诊断。执行/测试见[后端交接](./backend-implementation.md)。
 
-## 文档整理与遗留
+R10-ARCHITECTURE-SYNC 已由 136 接收，138 完成关闭，不再等待 gate。CR039-L1、CR042-L1、AI-QUALITY-90 见[报告](../verification/report.md#收尾核对与保留事项)。
 
-三份当前技术文档就地更新，旧正文与摘要见[收尾前快照](../technical/archive/pre-m001-closeout-136.json)，更早审批／失败／测试证据不改。修正旧“无二次调用”“未实施”的当前含义；历史切换设计保留历史标题与来源，不重复触发清库或已完成实施。文件引用与保护项检查进入[收尾证据](../reviews/evidence/m001-closeout-138.json)。实际 tokens unknown；没有改变入口结构，独立新会话交接测试未执行。
-
-已知限制仍见[AI评测](../verification/ai-evaluation.md)：CR039-L1 safe 派生、CR042-L1 未知标注反馈精度、AI-QUALITY-90 长期成功率证据不足。其状态不因 UAT 接受或文档同步而变成已修复；用户已停止调优，后续变更需新的明确任务。
-
-## 下一步
-
-R10-ARCHITECTURE-SYNC 已完成，交 gatekeeper-owen 接收，并复用已验收实现/QA/UAT办理 M001 收尾。开放 CR 按现有证据限定关闭，已知限制继续可见；本交接不自行切换阶段或批准发布。
+旧交接原文与审批关系见[历史索引](./archive.md)。

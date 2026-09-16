@@ -3,15 +3,18 @@ milestone: M001
 stage: technical-design
 role: backend-architect/base
 agent_name: backend-alex
-status: awaiting_user_review
+status: accepted_m001_baseline
 date: 2026-09-08
 contract_version: v1.5
 revision: CR-040
 confirmed_scope: [CR040-NAMING]
 decisions: [DEC-025, DEC-026, DEC-027, DEC-028, DEC-029, DEC-030, DEC-031, DEC-032, DEC-033, DEC-034, DEC-035]
+maintenance: M001-AGENT-CONTEXT-001
 ---
 
 # M001 HTTP API 契约
+
+> 当前效力：本文为 M001 已交付契约；正式完成状态、遗留事项和下一步见[当前交接](../../handoffs/verification.md)。历史修订段中的“待实现/待审阅”仅表示当时步骤，后续接收与替代关系见[历史索引](../../handoffs/archive.md)。本次只同步状态与检索入口，未新增业务批准。
 
 > v1.5 是 CR-040 的待审合同修订，范围依据 [101 产品批准](../../reviews/product-cr040-technical-revision-approval.md)和用户已同意的 [CR040-NAMING](../backend.md#cr040-scope-confirmation)。只替换释义键及语义，不新增路由、请求字段或旧格式兼容。DBA/前端尚待有限同步；文档更新不代表代码、存量数据或部署已完成。修订前原文见[技术快照](../archive/pre-cr040-design.json)。
 
