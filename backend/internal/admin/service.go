@@ -3,8 +3,6 @@ package admin
 import (
 	"context"
 	"errors"
-	"fmt"
-	"log/slog"
 	"strings"
 	"time"
 	"unicode/utf8"
@@ -18,6 +16,7 @@ import (
 	"wordweave/internal/ai"
 	"wordweave/internal/identity"
 	"wordweave/internal/learning"
+	"wordweave/internal/platform/business"
 	"wordweave/internal/platform/security"
 )
 
@@ -32,344 +31,62 @@ var (
 type Service struct {
 	pool        *pgxpool.Pool
 	credentials *ai.CredentialStore
-	openrouter  *ai.OpenRouter
+	provider    ai.Provider
 	learning    *learning.Service
+	key         []byte
+	signer      security.CursorSigner
 }
 
-func NewService(pool *pgxpool.Pool, credentials *ai.CredentialStore, openrouter *ai.OpenRouter, learningService *learning.Service) *Service {
-	return &Service{pool: pool, credentials: credentials, openrouter: openrouter, learning: learningService}
+func NewService(pool *pgxpool.Pool, credentials *ai.CredentialStore, provider ai.Provider, learningService *learning.Service, key []byte) *Service {
+	return &Service{pool: pool, credentials: credentials, provider: provider, learning: learningService, key: append([]byte(nil), key...), signer: security.NewCursorSigner(key)}
 }
 
-func (service *Service) CredentialStatus(ctx context.Context) (ai.CredentialStatus, error) {
-	return service.credentials.Status(ctx)
+func (service *Service) CredentialStatus(ctx context.Context) (ai.CredentialStatus, string, error) {
+	tx, err := service.pool.Begin(ctx)
+	if err != nil {
+		return ai.CredentialStatus{}, "", err
+	}
+	defer tx.Rollback(ctx)
+	c, err := business.LockConfiguration(ctx, tx, false)
+	if err != nil {
+		return ai.CredentialStatus{}, "", err
+	}
+	status, err := service.credentials.Status(ctx)
+	return status, service.revision(c), err
 }
 
-func (service *Service) PutCredential(ctx context.Context, actor identity.Actor, apiKey string, confirmed bool) (ai.CredentialStatus, error) {
+func (service *Service) PutCredential(ctx context.Context, actor identity.Actor, apiKey string, confirmed bool, expected string) (ai.CredentialStatus, string, error) {
 	if !confirmed || strings.TrimSpace(apiKey) == "" {
-		return ai.CredentialStatus{}, ErrValidation
+		return ai.CredentialStatus{}, "", ErrValidation
 	}
-	if err := service.openrouter.ValidateAPIKey(ctx, apiKey); err != nil {
-		return ai.CredentialStatus{}, err
-	}
-	if err := service.credentials.Put(ctx, actor.ID, apiKey); err != nil {
-		return ai.CredentialStatus{}, err
-	}
-	return service.credentials.Status(ctx)
-}
-
-type Model struct {
-	ID                 uuid.UUID
-	DisplayName        string
-	Description        *string
-	OpenRouterModelID  string
-	Enabled            bool
-	AssignedGroupCodes []string
-	CreatedAt          time.Time
-	UpdatedAt          time.Time
-}
-
-type ModelCursor struct {
-	CreatedAt time.Time `json:"created_at"`
-	ID        uuid.UUID `json:"id"`
-}
-
-func (service *Service) ListModels(ctx context.Context, cursor *ModelCursor, limit int) ([]Model, bool, error) {
-	if limit < 1 || limit > 100 {
-		return nil, false, ErrValidation
-	}
-	var cursorTime any
-	var cursorID any
-	if cursor != nil {
-		cursorTime, cursorID = cursor.CreatedAt, cursor.ID
-	}
-	rows, err := service.pool.Query(ctx, `
-		SELECT model.id,model.display_name,model.description,model.provider_model_id,
-			model.enabled,model.created_at,model.updated_at,
-			coalesce(array_agg(assignment.group_code ORDER BY CASE assignment.group_code
-				WHEN 'visitor' THEN 1 WHEN 'registered' THEN 2 WHEN 'pro' THEN 3 WHEN 'plus' THEN 4 END)
-				FILTER (WHERE assignment.group_code IS NOT NULL),ARRAY[]::text[])
-		FROM wordweave.ai_models model
-		LEFT JOIN wordweave.group_models assignment ON assignment.model_id=model.id
-		WHERE ($1::timestamptz IS NULL OR (model.created_at,model.id)>($1,$2))
-		GROUP BY model.id ORDER BY model.created_at,model.id LIMIT $3`, cursorTime, cursorID, limit+1)
+	tx, err := service.pool.Begin(ctx)
 	if err != nil {
-		return nil, false, err
+		return ai.CredentialStatus{}, "", err
 	}
-	defer rows.Close()
-	items := make([]Model, 0, limit+1)
-	for rows.Next() {
-		var item Model
-		var description pgtype.Text
-		var groups []string
-		if err := rows.Scan(&item.ID, &item.DisplayName, &description, &item.OpenRouterModelID,
-			&item.Enabled, &item.CreatedAt, &item.UpdatedAt, &groups); err != nil {
-			return nil, false, err
-		}
-		if description.Valid {
-			value := description.String
-			item.Description = &value
-		}
-		for _, group := range groups {
-			item.AssignedGroupCodes = append(item.AssignedGroupCodes, publicGroupCode(group))
-		}
-		items = append(items, item)
-	}
-	hasMore := len(items) > limit
-	if hasMore {
-		items = items[:limit]
-	}
-	return items, hasMore, rows.Err()
-}
-
-func (service *Service) CreateModel(ctx context.Context, displayName string, description *string, providerModelID string) (Model, error) {
-	if !validModelFields(displayName, description, providerModelID) {
-		return Model{}, ErrValidation
-	}
-	description = trimmedOptional(description)
-	var id uuid.UUID
-	err := service.pool.QueryRow(ctx, `
-		INSERT INTO wordweave.ai_models(display_name,description,provider_model_id,enabled)
-		VALUES ($1,$2,$3,false) RETURNING id`, strings.TrimSpace(displayName), description, strings.TrimSpace(providerModelID)).Scan(&id)
+	c, err := business.LockConfiguration(ctx, tx, false)
+	_ = tx.Rollback(ctx)
 	if err != nil {
-		return Model{}, mapWriteError(err)
+		return ai.CredentialStatus{}, "", err
 	}
-	return service.GetModel(ctx, id)
-}
-
-type ModelPatch struct {
-	DisplayNameSet       bool
-	DisplayName          string
-	DescriptionSet       bool
-	Description          *string
-	OpenRouterModelIDSet bool
-	OpenRouterModelID    string
-}
-
-func (service *Service) PatchModel(ctx context.Context, id uuid.UUID, patch ModelPatch) (Model, error) {
-	if !patch.DisplayNameSet && !patch.DescriptionSet && !patch.OpenRouterModelIDSet {
-		return Model{}, ErrValidation
+	if err = service.requireRevision(c, expected); err != nil {
+		return ai.CredentialStatus{}, "", err
 	}
-	if (patch.DisplayNameSet && strings.TrimSpace(patch.DisplayName) == "") ||
-		(patch.DescriptionSet && patch.Description != nil && strings.TrimSpace(*patch.Description) == "") ||
-		(patch.OpenRouterModelIDSet && strings.TrimSpace(patch.OpenRouterModelID) == "") {
-		return Model{}, ErrValidation
-	}
-	if patch.DescriptionSet {
-		patch.Description = trimmedOptional(patch.Description)
-	}
-	if (patch.DisplayNameSet && utf8.RuneCountInString(strings.TrimSpace(patch.DisplayName)) > 200) ||
-		(patch.DescriptionSet && patch.Description != nil && utf8.RuneCountInString(*patch.Description) > 1000) ||
-		(patch.OpenRouterModelIDSet && utf8.RuneCountInString(strings.TrimSpace(patch.OpenRouterModelID)) > 500) {
-		return Model{}, ErrValidation
-	}
-	result, err := service.pool.Exec(ctx, `
-		UPDATE wordweave.ai_models SET
-			display_name=CASE WHEN $2 THEN $3 ELSE display_name END,
-			description=CASE WHEN $4 THEN $5 ELSE description END,
-			provider_model_id=CASE WHEN $6 THEN $7 ELSE provider_model_id END,
-			enabled=CASE WHEN $6 THEN false ELSE enabled END
-		WHERE id=$1`, id, patch.DisplayNameSet, strings.TrimSpace(patch.DisplayName),
-		patch.DescriptionSet, patch.Description, patch.OpenRouterModelIDSet, strings.TrimSpace(patch.OpenRouterModelID))
-	if err != nil {
-		return Model{}, mapWriteError(err)
-	}
-	if result.RowsAffected() != 1 {
-		return Model{}, ErrNotFound
-	}
-	return service.GetModel(ctx, id)
-}
-
-func (service *Service) SetModelEnabled(ctx context.Context, id uuid.UUID, enabled bool) (Model, error) {
-	model, err := service.GetModel(ctx, id)
-	if err != nil {
-		return Model{}, err
-	}
-	if enabled {
-		if err := service.openrouter.CheckCompatibility(ctx, model.OpenRouterModelID); err != nil {
-			slog.WarnContext(ctx, "ai_model_compatibility_failed",
-				"model_id", id.String(),
-				"prompt_version", ai.PromptVersion,
-				"validator_version", ai.ValidatorVersion,
-				"reason", err.Error(),
-			)
-			_, _ = service.pool.Exec(ctx, `UPDATE wordweave.ai_models SET enabled=false WHERE id=$1`, id)
-			return Model{}, fmt.Errorf("%w: %v", ErrModelIncompatible, err)
-		}
-	}
-	if _, err := service.pool.Exec(ctx, `UPDATE wordweave.ai_models SET enabled=$2 WHERE id=$1`, id, enabled); err != nil {
-		return Model{}, err
-	}
-	return service.GetModel(ctx, id)
-}
-
-func (service *Service) GetModel(ctx context.Context, id uuid.UUID) (Model, error) {
-	var item Model
-	var description pgtype.Text
-	var groups []string
-	err := service.pool.QueryRow(ctx, `
-		SELECT model.id,model.display_name,model.description,model.provider_model_id,
-			model.enabled,model.created_at,model.updated_at,
-			coalesce(array_agg(assignment.group_code ORDER BY CASE assignment.group_code
-				WHEN 'visitor' THEN 1 WHEN 'registered' THEN 2 WHEN 'pro' THEN 3 WHEN 'plus' THEN 4 END)
-				FILTER (WHERE assignment.group_code IS NOT NULL),ARRAY[]::text[])
-		FROM wordweave.ai_models model
-		LEFT JOIN wordweave.group_models assignment ON assignment.model_id=model.id
-		WHERE model.id=$1 GROUP BY model.id`, id).Scan(
-		&item.ID, &item.DisplayName, &description, &item.OpenRouterModelID,
-		&item.Enabled, &item.CreatedAt, &item.UpdatedAt, &groups,
-	)
-	if errors.Is(err, pgx.ErrNoRows) {
-		return Model{}, ErrNotFound
-	}
-	if err != nil {
-		return Model{}, err
-	}
-	if description.Valid {
-		value := description.String
-		item.Description = &value
-	}
-	for _, group := range groups {
-		item.AssignedGroupCodes = append(item.AssignedGroupCodes, publicGroupCode(group))
-	}
-	return item, nil
-}
-
-type GroupModel struct {
-	ID          uuid.UUID
-	DisplayName string
-	Enabled     bool
-}
-
-type Group struct {
-	Code            string
-	Rolling24hLimit *int
-	MaxEntries      int
-	AllowedLengths  []string
-	Models          []GroupModel
-}
-
-func (service *Service) ListGroups(ctx context.Context) ([]Group, error) {
-	groups := make([]Group, 0, 4)
-	for _, code := range []string{"visitor", "basic", "pro", "plus"} {
-		group, err := service.GetGroup(ctx, code)
-		if err != nil {
-			return nil, err
-		}
-		groups = append(groups, group)
-	}
-	return groups, nil
-}
-
-func (service *Service) GetGroup(ctx context.Context, publicCode string) (Group, error) {
-	databaseCode, ok := databaseGroupCode(publicCode)
+	legacy, ok := service.provider.(*ai.OpenRouter)
 	if !ok {
-		return Group{}, ErrNotFound
+		return ai.CredentialStatus{}, "", ErrValidation
 	}
-	var limit pgtype.Int4
-	var maxEntries int
-	if err := service.pool.QueryRow(ctx, `
-		SELECT rolling_quota_limit,max_entries_per_run FROM wordweave.entitlement_groups WHERE code=$1`, databaseCode).Scan(&limit, &maxEntries); err != nil {
-		if errors.Is(err, pgx.ErrNoRows) {
-			return Group{}, ErrNotFound
-		}
-		return Group{}, err
+	if err := legacy.ValidateAPIKey(ctx, apiKey); err != nil {
+		return ai.CredentialStatus{}, "", err
 	}
-	group := Group{Code: publicCode, MaxEntries: maxEntries}
-	if limit.Valid {
-		value := int(limit.Int32)
-		group.Rolling24hLimit = &value
-	}
-	lengthRows, err := service.pool.Query(ctx, `
-		SELECT length_code FROM wordweave.group_lengths WHERE group_code=$1
-		ORDER BY CASE length_code WHEN 'short' THEN 1 WHEN 'medium' THEN 2 WHEN 'long' THEN 3 WHEN 'xlong' THEN 4 END`, databaseCode)
+	status, revision, applied, err := service.credentials.Replace(ctx, actor.ID, apiKey, &c.Revision)
 	if err != nil {
-		return Group{}, err
+		return ai.CredentialStatus{}, "", err
 	}
-	for lengthRows.Next() {
-		var length string
-		if err := lengthRows.Scan(&length); err != nil {
-			lengthRows.Close()
-			return Group{}, err
-		}
-		group.AllowedLengths = append(group.AllowedLengths, length)
+	publicRevision := business.Revision(service.key, "configuration", revision)
+	if !applied {
+		return ai.CredentialStatus{}, "", &business.RevisionConflict{Current: publicRevision}
 	}
-	if err := lengthRows.Err(); err != nil {
-		lengthRows.Close()
-		return Group{}, err
-	}
-	lengthRows.Close()
-	modelRows, err := service.pool.Query(ctx, `
-		SELECT model.id,model.display_name,model.enabled
-		FROM wordweave.group_models assignment JOIN wordweave.ai_models model ON model.id=assignment.model_id
-		WHERE assignment.group_code=$1 ORDER BY lower(model.display_name),model.id`, databaseCode)
-	if err != nil {
-		return Group{}, err
-	}
-	for modelRows.Next() {
-		var model GroupModel
-		if err := modelRows.Scan(&model.ID, &model.DisplayName, &model.Enabled); err != nil {
-			modelRows.Close()
-			return Group{}, err
-		}
-		group.Models = append(group.Models, model)
-	}
-	if err := modelRows.Err(); err != nil {
-		modelRows.Close()
-		return Group{}, err
-	}
-	modelRows.Close()
-	return group, nil
-}
-
-func (service *Service) PutGroup(ctx context.Context, publicCode string, rollingLimit *int, maxEntries int, lengths []string, modelIDs []uuid.UUID) (Group, error) {
-	databaseCode, ok := databaseGroupCode(publicCode)
-	if !ok {
-		return Group{}, ErrNotFound
-	}
-	if maxEntries <= 0 || rollingLimit != nil && *rollingLimit < 0 || hasDuplicateStrings(lengths) || hasDuplicateUUIDs(modelIDs) {
-		return Group{}, ErrValidation
-	}
-	for _, length := range lengths {
-		if length != "short" && length != "medium" && length != "long" && length != "xlong" {
-			return Group{}, ErrValidation
-		}
-	}
-	tx, err := service.pool.BeginTx(ctx, pgx.TxOptions{})
-	if err != nil {
-		return Group{}, err
-	}
-	defer func() { _ = tx.Rollback(ctx) }()
-	result, err := tx.Exec(ctx, `UPDATE wordweave.entitlement_groups SET rolling_quota_limit=$2,max_entries_per_run=$3 WHERE code=$1`, databaseCode, rollingLimit, maxEntries)
-	if err != nil {
-		return Group{}, err
-	}
-	if result.RowsAffected() != 1 {
-		return Group{}, ErrNotFound
-	}
-	if _, err := tx.Exec(ctx, `DELETE FROM wordweave.group_lengths WHERE group_code=$1`, databaseCode); err != nil {
-		return Group{}, err
-	}
-	for _, length := range lengths {
-		if _, err := tx.Exec(ctx, `INSERT INTO wordweave.group_lengths(group_code,length_code) VALUES ($1,$2)`, databaseCode, length); err != nil {
-			return Group{}, err
-		}
-	}
-	if _, err := tx.Exec(ctx, `DELETE FROM wordweave.group_models WHERE group_code=$1`, databaseCode); err != nil {
-		return Group{}, err
-	}
-	for _, modelID := range modelIDs {
-		if _, err := tx.Exec(ctx, `INSERT INTO wordweave.group_models(group_code,model_id) VALUES ($1,$2)`, databaseCode, modelID); err != nil {
-			var postgresError *pgconn.PgError
-			if errors.As(err, &postgresError) && postgresError.Code == "23503" {
-				return Group{}, ErrValidation
-			}
-			return Group{}, err
-		}
-	}
-	if err := tx.Commit(ctx); err != nil {
-		return Group{}, err
-	}
-	return service.GetGroup(ctx, publicCode)
+	return status, publicRevision, nil
 }
 
 type User struct {
@@ -382,6 +99,23 @@ type User struct {
 	CreatedAt          time.Time
 	LearningBatchCount int
 	GenerationQuota    *GenerationQuota
+	Nickname           *string
+	Gender             *string
+	LastLoginAt        *time.Time
+	LastLearningAt     *time.Time
+	Growth             *UserGrowth
+	BaseRevision       *string
+	EffectivePlanCode  *string
+	baseEpoch          int64
+	baseReset          string
+}
+
+type UserGrowth struct {
+	Level      int64           `json:"level_number"`
+	Points     business.Amount `json:"points"`
+	Experience business.Amount `json:"experience"`
+	Mastered   int64           `json:"mastered_total"`
+	Saved      int64           `json:"saved_total"`
 }
 
 const UserCursorVersion = 2
@@ -488,7 +222,12 @@ func (service *Service) ListUsers(ctx context.Context, username string, cursor *
 }
 
 func (service *Service) GetUser(ctx context.Context, id uuid.UUID) (User, error) {
-	return getUser(ctx, service.pool, id)
+	user, err := getUser(ctx, service.pool, id)
+	if err != nil {
+		return User{}, err
+	}
+	signUserBase(&user, service.key)
+	return user, nil
 }
 
 // RequireUser is deliberately a narrow existence check. Read-only library
@@ -502,7 +241,7 @@ func (service *Service) RequireUser(ctx context.Context, id uuid.UUID) error {
 	return err
 }
 
-func (service *Service) ChangeUserGroup(ctx context.Context, id uuid.UUID, publicGroup string, confirmed bool) (User, error) {
+func (service *Service) ChangeUserGroup(ctx context.Context, id uuid.UUID, publicGroup string, confirmed bool, expected string) (User, error) {
 	databaseCode, ok := databaseGroupCode(publicGroup)
 	if !confirmed || !ok || databaseCode == "visitor" {
 		return User{}, ErrValidation
@@ -511,7 +250,7 @@ func (service *Service) ChangeUserGroup(ctx context.Context, id uuid.UUID, publi
 	if err != nil {
 		return User{}, err
 	}
-	return changeUserGroup(ctx, tx, id, databaseCode)
+	return changeUserGroup(ctx, tx, id, databaseCode, expected, service.key)
 }
 
 func (service *Service) ResetUserPassword(ctx context.Context, id uuid.UUID, password, confirmation string, confirmed bool) error {
@@ -527,6 +266,9 @@ func (service *Service) ResetUserPassword(ctx context.Context, id uuid.UUID, pas
 		return err
 	}
 	defer func() { _ = tx.Rollback(ctx) }()
+	if _, err = business.LockConfiguration(ctx, tx, false); err != nil {
+		return err
+	}
 	result, err := tx.Exec(ctx, `UPDATE wordweave.accounts SET password_hash=$2 WHERE id=$1 AND role='learner'`, id, hash)
 	if err != nil {
 		return err

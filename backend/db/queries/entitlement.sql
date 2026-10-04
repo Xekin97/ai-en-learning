@@ -16,8 +16,8 @@ FROM wordweave.group_lengths
 WHERE group_code = sqlc.arg(group_code)
 ORDER BY CASE length_code WHEN 'short' THEN 1 WHEN 'medium' THEN 2 WHEN 'long' THEN 3 WHEN 'xlong' THEN 4 END;
 
--- name: HasOpenRouterCredential :one
-SELECT EXISTS(SELECT 1 FROM wordweave.openrouter_credentials WHERE provider = 'openrouter');
+-- name: HasModelCredential :one
+SELECT EXISTS(SELECT 1 FROM wordweave.ai_providers WHERE credential_configured);
 
 -- name: CountAccountRollingUsage :one
 SELECT count(*)::integer AS used,

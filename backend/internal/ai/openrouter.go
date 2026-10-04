@@ -70,6 +70,16 @@ func (provider *OpenRouter) Open(ctx context.Context, spec GenerationSpec) (_ St
 	request.Header.Set("HTTP-Referer", provider.publicOrigin)
 	request.Header.Set("X-Title", "WordWeave")
 	trace.Check(generationtrace.ProviderOpen, "request_send", -1)
+	usage, err := beginUsage(ctx, spec)
+	if err != nil {
+		return nil, err
+	}
+	handedOff := false
+	defer func() {
+		if !handedOff {
+			usage.done()
+		}
+	}()
 	response, err := provider.client.Do(request)
 	if err != nil {
 		return nil, &ProviderError{Category: FailureUnavailable, Retryable: true, Err: diagnosed("provider_open", "transport_failed", "", -1, err)}
@@ -86,7 +96,8 @@ func (provider *OpenRouter) Open(ctx context.Context, spec GenerationSpec) (_ St
 		response.Body.Close()
 		return nil, &ProviderError{Category: FailureProtocol, Retryable: true, Err: diagnosed("provider_open", "response_not_sse", "", -1, nil)}
 	}
-	return &openRouterStream{body: &privateProviderBody{ReadCloser: response.Body, apiKey: apiKey}}, nil
+	handedOff = true
+	return &openRouterStream{body: &privateProviderBody{ReadCloser: response.Body, apiKey: apiKey}, usage: usage}, nil
 }
 
 func (provider *OpenRouter) CheckCompatibility(ctx context.Context, providerModelID string) error {
@@ -199,12 +210,19 @@ func (provider *OpenRouter) ValidateAPIKey(ctx context.Context, apiKey string) e
 }
 
 type openRouterStream struct {
-	body io.ReadCloser
+	body    io.ReadCloser
+	usage   *callUsage
+	decoder *protocolDecoder
 }
 
-func (stream *openRouterStream) Close() error { return stream.body.Close() }
+func (stream *openRouterStream) Close() error {
+	err := stream.body.Close()
+	stream.usage.done()
+	return err
+}
 
 func (stream *openRouterStream) Receive(ctx context.Context, onPassageDelta func(string) error) (result Candidate, resultErr error) {
+	defer stream.usage.done()
 	trace := generationtrace.From(ctx)
 	guard := newCaptureGuard(ctx, providerKey(stream.body))
 	defer func() {
@@ -239,6 +257,13 @@ func (stream *openRouterStream) Receive(ctx context.Context, onPassageDelta func
 		if data == "" {
 			return false, nil
 		}
+		if stream.decoder != nil {
+			var err error
+			data, err = stream.decoder.event(data)
+			if err != nil {
+				return false, err
+			}
+		}
 		if data == "[DONE]" {
 			termination = "done"
 			return true, nil
@@ -252,6 +277,7 @@ func (stream *openRouterStream) Receive(ctx context.Context, onPassageDelta func
 			return false, &ProviderError{Category: FailureProtocol, Retryable: true, Err: diagnosed("provider_receive", "sse_event_encoding_invalid", "", -1, nil)}
 		}
 		observeProviderEnvelope(ctx, data, frame, providerKey(stream.body))
+		stream.usage.observe(data, providerKey(stream.body))
 		var chunk struct {
 			Choices []struct {
 				Delta struct {
@@ -302,7 +328,7 @@ func (stream *openRouterStream) Receive(ctx context.Context, onPassageDelta func
 				}
 			}
 		}
-		return false, nil
+		return stream.decoder != nil && stream.decoder.finished, nil
 	}
 
 	done := false
@@ -352,6 +378,9 @@ func (stream *openRouterStream) Receive(ctx context.Context, onPassageDelta func
 		if _, err := processEvent(); err != nil {
 			return Candidate{}, err
 		}
+	}
+	if stream.decoder != nil && !stream.decoder.finished {
+		return Candidate{}, streamFailure("stream_incomplete")
 	}
 	if termination == "protocol_error" {
 		termination = "eof"
@@ -911,13 +940,13 @@ func outputSchema(spec GenerationSpec) map[string]any {
 func mapOpenRouterStatus(status int) error {
 	switch status {
 	case http.StatusUnauthorized:
-		return &ProviderError{Category: FailureAuthentication, Retryable: false, Err: errors.New("OpenRouter authentication failed")}
+		return &ProviderError{Category: FailureAuthentication, Retryable: false, Err: errors.New("Model service authentication failed")}
 	case http.StatusForbidden, http.StatusNotFound:
-		return &ProviderError{Category: FailureAuthorization, Retryable: false, Err: errors.New("OpenRouter model or route is unavailable")}
+		return &ProviderError{Category: FailureAuthorization, Retryable: false, Err: errors.New("Model or route is unavailable")}
 	case http.StatusTooManyRequests:
-		return &ProviderError{Category: FailureRateLimited, Retryable: true, Err: errors.New("OpenRouter rate limit reached")}
+		return &ProviderError{Category: FailureRateLimited, Retryable: true, Err: errors.New("Model service rate limit reached")}
 	default:
-		return &ProviderError{Category: FailureUnavailable, Retryable: status >= 500, Err: fmt.Errorf("OpenRouter returned HTTP %d", status)}
+		return &ProviderError{Category: FailureUnavailable, Retryable: status >= 500, Err: fmt.Errorf("Model service returned HTTP %d", status)}
 	}
 }
 

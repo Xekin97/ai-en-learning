@@ -81,7 +81,7 @@ func TestHintOccurrenceMigrationsBackfillAndEnforceLegacyBatches(t *testing.T) {
 	applyEmbeddedMigration(t, ctx, pool, "0005_hint_occurrences_expand.sql")
 	applyEmbeddedMigration(t, ctx, pool, "0006_hint_occurrences_enforce.sql")
 	applyEmbeddedMigration(t, ctx, pool, "0007_entry_meaning.sql")
-	if err := Verify(ctx, pool); err != nil {
+	if err := Migrate(ctx, pool); err != nil {
 		t.Fatal(err)
 	}
 

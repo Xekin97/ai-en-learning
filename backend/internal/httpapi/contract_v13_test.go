@@ -41,90 +41,43 @@ func TestGenerationResultUsesPluralSafeHintBlanks(t *testing.T) {
 	}
 }
 
-func TestReviewPassageProjectionUsesAnonymousV13Groups(t *testing.T) {
-	t.Parallel()
-	keyA := "grp_" + strings.Repeat("A", 22)
-	keyB := "grp_" + strings.Repeat("B", 22)
-	projection := mapReviewItem(review.Item{
-		Stage: "passage_cloze",
-		ID:    "itm_contract",
-		PassageSegments: []review.Segment{
-			{Kind: "blank", BlankID: "blank_1", GroupKey: keyA},
-			{Kind: "text", Text: " teams "},
-			{Kind: "blank", BlankID: "blank_2", GroupKey: keyB},
-			{Kind: "text", Text: " and "},
-			{Kind: "blank", BlankID: "blank_3", GroupKey: keyA},
-		},
-	})
-	segments, ok := projection["passage_segments"].([]any)
-	if !ok || len(segments) != 5 {
-		t.Fatalf("unexpected passage projection: %#v", projection)
-	}
-	wantKeys := []string{keyA, keyB, keyA}
-	blankIndex := 0
-	for _, rawSegment := range segments {
-		segment, ok := rawSegment.(map[string]any)
-		if !ok {
-			t.Fatalf("segment is %T, want object", rawSegment)
-		}
-		if segment["kind"] == "text" {
-			if len(segment) != 2 {
-				t.Fatalf("text segment contains fields outside the v1.3 contract: %#v", segment)
-			}
-			continue
-		}
-		if len(segment) != 3 || segment["blank_id"] == "" || segment["group_key"] != wantKeys[blankIndex] {
-			t.Fatalf("blank segment does not match v1.3: %#v", segment)
-		}
-		blankIndex++
-	}
-	if blankIndex != len(wantKeys) {
-		t.Fatalf("blank count = %d, want %d", blankIndex, len(wantKeys))
-	}
-	raw, err := json.Marshal(projection)
+func TestReviewDraftProjectionKeepsPassageBlanksAnonymous(t *testing.T) {
+	draft := review.DraftAttempt{Words: []review.DraftWord{{QuestionID: "question", EntryMeaning: "gain knowledge", Slots: []review.Slot{{Kind: "letters", Count: 5}}}}}
+	draft.Words[0].Hint.Segments = []review.HintSegment{{Kind: "text", Text: "Keep "}, {Kind: "blank"}}
+	draft.Passage.Segments = []review.DraftSegment{{Kind: "blank", BlankID: "blank_1", GroupKey: "opaque_group"}, {Kind: "text", Text: " and "}, {Kind: "blank", BlankID: "blank_2", GroupKey: "opaque_group"}}
+	raw, err := json.Marshal(draft)
 	if err != nil {
 		t.Fatal(err)
 	}
-	for _, forbidden := range []string{"target_id", "source_entry", "surface", "length_hint", "Learning", "learned"} {
+	for _, forbidden := range []string{"target_id", "source_entry", "surface", "length_hint", "Learning", "learned", "passage_preview", "title"} {
 		if strings.Contains(string(raw), forbidden) {
-			t.Fatalf("passage projection exposed %q: %s", forbidden, raw)
+			t.Fatalf("draft exposed %q", forbidden)
 		}
 	}
-}
-
-func TestReviewSpellingProjectionDoesNotExposeGroupKey(t *testing.T) {
-	t.Parallel()
-	projection := mapReviewItem(review.Item{
-		Stage: "spelling",
-		ID:    "itm_spelling",
-		HintSegments: []review.Segment{
-			{Kind: "text", Text: "Keep "},
-			{Kind: "blank", LengthHint: 8, GroupKey: "grp_" + strings.Repeat("A", 22)},
-		},
-	})
-	raw, err := json.Marshal(projection)
-	if err != nil {
+	var object map[string]any
+	if err = json.Unmarshal(raw, &object); err != nil {
 		t.Fatal(err)
 	}
-	if strings.Contains(string(raw), "group_key") {
-		t.Fatalf("spelling projection exposed a passage-only group key: %s", raw)
+	segments := object["passage"].(map[string]any)["segments"].([]any)
+	first, last := segments[0].(map[string]any), segments[2].(map[string]any)
+	if len(first) != 3 || first["blank_id"] == last["blank_id"] || first["group_key"] != last["group_key"] {
+		t.Fatal("per-occurrence identity or same-target grouping lost")
+	}
+	hints := object["words"].([]any)[0].(map[string]any)["hint"].(map[string]any)["segments"].([]any)
+	if len(hints[1].(map[string]any)) != 1 {
+		t.Fatal("hint blank leaked identity or length")
 	}
 }
-
-func TestReviewActionRejectsV13GroupKeyAtEveryRequestLevel(t *testing.T) {
-	t.Parallel()
-	for name, raw := range map[string]string{
-		"top level":      `{"action_id":"act_1","item_id":"itm_1","action":"skip","group_key":"grp_forbidden"}`,
-		"answer element": `{"action_id":"act_1","item_id":"itm_1","action":"answer","answers":[{"blank_id":"blank_1","answer":"learn","group_key":"grp_forbidden"}]}`,
+func TestReviewSubmissionRejectsGroupKeyAtEveryRequestLevel(t *testing.T) {
+	for _, raw := range []string{
+		`{"expected_revision":"revision","words":[],"passage":[],"group_key":"forbidden"}`,
+		`{"expected_revision":"revision","words":[],"passage":[{"blank_id":"blank","answer":"learn","group_key":"forbidden"}]}`,
 	} {
-		t.Run(name, func(t *testing.T) {
-			t.Parallel()
-			request := httptest.NewRequest("POST", "/api/v1/me/review-attempts/att_1/actions", strings.NewReader(raw))
-			writer := httptest.NewRecorder()
-			var body reviewActionRequest
-			if err := decodeStrict(writer, request, &body, 2048); err == nil {
-				t.Fatalf("review action accepted group_key: %s", raw)
-			}
-		})
+		request := httptest.NewRequest("POST", "/api/v1/me/review-attempts/test/submit", strings.NewReader(raw))
+		writer := httptest.NewRecorder()
+		var body reviewSubmitRequest
+		if err := decodeStrict(writer, request, &body, 2048); err == nil {
+			t.Fatal("accepted passage-only grouping in submitted answer")
+		}
 	}
 }

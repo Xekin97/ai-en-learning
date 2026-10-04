@@ -154,30 +154,8 @@ func Verify(ctx context.Context, pool *pgxpool.Pool) error {
 }
 
 func verifyCurrent(ctx context.Context, pool databaseReader) error {
-	expectedMigrations, err := expectedMigrationNames()
-	if err != nil {
+	if err := verifyMigrationLedger(ctx, pool); err != nil {
 		return err
-	}
-	rows, err := pool.Query(ctx, `SELECT version FROM wordweave.schema_migrations ORDER BY version`)
-	if err != nil {
-		return fmt.Errorf("verify migration ledger: %w", err)
-	}
-	var actualMigrations []string
-	for rows.Next() {
-		var version string
-		if err := rows.Scan(&version); err != nil {
-			rows.Close()
-			return fmt.Errorf("verify migration ledger: %w", err)
-		}
-		actualMigrations = append(actualMigrations, version)
-	}
-	if err := rows.Err(); err != nil {
-		rows.Close()
-		return fmt.Errorf("verify migration ledger: %w", err)
-	}
-	rows.Close()
-	if !slices.Equal(actualMigrations, expectedMigrations) {
-		return fmt.Errorf("database migration ledger differs from embedded migrations: got %v want %v", actualMigrations, expectedMigrations)
 	}
 
 	var version, digest string
@@ -276,7 +254,10 @@ func verifyCurrent(ctx context.Context, pool databaseReader) error {
 	if index != len(assetWords) {
 		return fmt.Errorf("database vocabulary has %d ordered rows, want %d", index, len(assetWords))
 	}
-	return verifyEntryMeaningColumn(ctx, pool)
+	if err := verifyEntryMeaningColumn(ctx, pool); err != nil {
+		return err
+	}
+	return verifyM002Structure(ctx, pool)
 }
 
 func verifyEntryMeaningColumn(ctx context.Context, db databaseReader) error {
@@ -317,4 +298,34 @@ func expectedMigrationNames() ([]string, error) {
 	}
 	slices.Sort(names)
 	return names, nil
+}
+
+func verifyMigrationLedger(ctx context.Context, pool databaseReader) error {
+	expectedMigrations, err := expectedMigrationNames()
+	if err != nil {
+		return err
+	}
+	rows, err := pool.Query(ctx, `SELECT version FROM wordweave.schema_migrations ORDER BY version`)
+	if err != nil {
+		return fmt.Errorf("verify migration ledger: %w", err)
+	}
+	var actualMigrations []string
+	for rows.Next() {
+		var version string
+		if err := rows.Scan(&version); err != nil {
+			rows.Close()
+			return fmt.Errorf("verify migration ledger: %w", err)
+		}
+		actualMigrations = append(actualMigrations, version)
+	}
+	if err := rows.Err(); err != nil {
+		rows.Close()
+		return fmt.Errorf("verify migration ledger: %w", err)
+	}
+	rows.Close()
+	if !slices.Equal(actualMigrations, expectedMigrations) {
+		return fmt.Errorf("database migration ledger differs from embedded migrations: got %v want %v", actualMigrations, expectedMigrations)
+	}
+
+	return nil
 }

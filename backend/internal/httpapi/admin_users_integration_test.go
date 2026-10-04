@@ -62,7 +62,7 @@ func TestAdminUserSearchCursorV2(t *testing.T) {
 	}
 
 	cfg := integrationConfig(testURL, "http://127.0.0.1:1")
-	api, err := New(cfg, pool, pool)
+	api, err := integrationServer(t, cfg, pool)
 	if err != nil {
 		t.Fatal(err)
 	}

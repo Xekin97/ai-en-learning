@@ -18,6 +18,7 @@ import (
 	"strings"
 	"testing"
 	"time"
+	"wordweave/internal/ai"
 
 	"github.com/google/uuid"
 	"github.com/jackc/pgx/v5"
@@ -27,6 +28,7 @@ import (
 	"wordweave/internal/platform/config"
 	"wordweave/internal/platform/postgres"
 	"wordweave/internal/platform/security"
+	"wordweave/internal/review"
 )
 
 func TestM001EndToEnd(t *testing.T) {
@@ -51,7 +53,7 @@ func TestM001EndToEnd(t *testing.T) {
 	provider := newFakeOpenRouter(t)
 	defer provider.Close()
 	cfg := integrationConfig(testURL, provider.URL)
-	api, err := New(cfg, pool, pool)
+	api, err := integrationServer(t, cfg, pool)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -76,28 +78,31 @@ func TestM001EndToEnd(t *testing.T) {
 	requireStatus(t, login, http.StatusOK)
 	adminCSRF = dataString(t, login.body, "csrf_token")
 
-	credential := putJSON(t, adminClient, application.URL+"/api/v1/admin/openrouter-credential", adminCSRF, map[string]any{"api_key": "integration-secret-key", "confirmed": true})
-	requireStatus(t, credential, http.StatusOK)
-	if strings.Contains(credential.raw, "integration-secret-key") || !dataBool(t, credential.body, "configured") {
-		t.Fatalf("credential projection leaked or was not configured: %s", credential.raw)
+	// The global credential endpoint has been replaced. Seed the migrated
+	// fixture connection; all model operations below use the unified HTTP API.
+	var fixtureAdmin uuid.UUID
+	if err := pool.QueryRow(ctx, `SELECT id FROM wordweave.accounts WHERE role='admin' LIMIT 1`).Scan(&fixtureAdmin); err != nil {
+		t.Fatal(err)
 	}
-
+	if err := api.credentials.Put(ctx, fixtureAdmin, "integration-secret-key"); err != nil {
+		t.Fatal(err)
+	}
 	createdModel := postJSON(t, adminClient, application.URL+"/api/v1/admin/models", adminCSRF, map[string]any{
-		"display_name": "Integration model", "description": nil, "openrouter_model_id": "provider/integration",
+		"display_name": "Integration model", "description": nil, "provider_model_id": "provider/integration", "connection_id": ai.LegacyProviderID, "output_mode": "json_schema", "expected_revision": configurationRevisionHTTP(t, adminClient, application.URL),
 	})
 	requireStatus(t, createdModel, http.StatusCreated)
 	modelID := nestedString(t, createdModel.body, "data", "model", "id")
-	enabledModel := postJSON(t, adminClient, application.URL+"/api/v1/admin/models/"+modelID+"/enable", adminCSRF, map[string]any{})
+	enabledModel := postJSON(t, adminClient, application.URL+"/api/v1/admin/models/"+modelID+"/enable", adminCSRF, map[string]any{"expected_revision": configurationRevisionHTTP(t, adminClient, application.URL)})
 	requireStatus(t, enabledModel, http.StatusOK)
 	if !nestedBool(t, enabledModel.body, "data", "model", "enabled") {
 		t.Fatal("model was not enabled")
 	}
 	group := putJSON(t, adminClient, application.URL+"/api/v1/admin/groups/basic", adminCSRF, map[string]any{
-		"rolling_24h_limit": nil, "max_entries": 5, "allowed_lengths": []string{"short", "medium", "long", "xlong"}, "model_ids": []string{modelID},
+		"expected_revision": configurationRevisionHTTP(t, adminClient, application.URL), "priority": 1, "rolling_24h_limit": nil, "max_entries": 5, "allowed_lengths": []string{"short", "medium", "long", "xlong"}, "model_ids": []string{modelID},
 	})
 	requireStatus(t, group, http.StatusOK)
 	visitorGroup := putJSON(t, adminClient, application.URL+"/api/v1/admin/groups/visitor", adminCSRF, map[string]any{
-		"rolling_24h_limit": 1, "max_entries": 5, "allowed_lengths": []string{"short"}, "model_ids": []string{modelID},
+		"expected_revision": configurationRevisionHTTP(t, adminClient, application.URL), "priority": 0, "rolling_24h_limit": 1, "max_entries": 5, "allowed_lengths": []string{"short"}, "model_ids": []string{modelID},
 	})
 	requireStatus(t, visitorGroup, http.StatusOK)
 
@@ -138,7 +143,7 @@ func TestM001EndToEnd(t *testing.T) {
 		return decodeResponse(t, response)
 	}
 	firstClaimConsumption := consumeRequest()
-	requireStatus(t, firstClaimConsumption, http.StatusOK)
+	requireStatus(t, firstClaimConsumption, http.StatusCreated)
 	claimedBatchID := dataString(t, firstClaimConsumption.body, "batch_id")
 	secondClaimConsumption := consumeRequest()
 	requireStatus(t, secondClaimConsumption, http.StatusOK)
@@ -204,86 +209,57 @@ func TestM001EndToEnd(t *testing.T) {
 		"mode": "single_batch", "batch_id": batchID,
 	})
 	requireStatus(t, session, http.StatusCreated)
-	sessionID := dataString(t, session.body, "session_id")
+	sessionID := nestedString(t, session.body, "data", "session", "session_id")
 	attempt := postJSON(t, learnerClient, application.URL+"/api/v1/me/review-sessions/"+sessionID+"/attempts", learnerCSRF, map[string]any{})
-	requireStatus(t, attempt, http.StatusCreated)
-	attemptID := dataString(t, attempt.body, "attempt_id")
-	attemptToken := dataString(t, attempt.body, "attempt_token")
-	itemID := nestedString(t, attempt.body, "data", "item", "item_id")
-	if strings.Contains(strings.ToLower(attempt.raw), "learning") {
-		t.Fatalf("spelling question exposed its answer: %s", attempt.raw)
+	requireStatus(t, attempt, 201)
+	rawAttempt, _ := json.Marshal(attempt.body["data"].(map[string]any)["attempt"])
+	var draft review.DraftAttempt
+	if err := json.Unmarshal(rawAttempt, &draft); err != nil {
+		t.Fatal(err)
 	}
-	if strings.Contains(attempt.raw, `"group_key"`) {
-		t.Fatalf("spelling question exposed a passage-only group key: %s", attempt.raw)
+	if len(draft.Words) != 1 {
+		t.Fatal("missing spelling question")
 	}
-	if strings.Count(attempt.raw, `"kind":"blank"`) != 3 {
-		t.Fatalf("spelling question did not blank every hint occurrence: %s", attempt.raw)
-	}
-	firstAction := rawJSONRequest(t, learnerClient, http.MethodPost, application.URL+"/api/v1/me/review-attempts/"+attemptID+"/actions", learnerCSRF, map[string]any{
-		"action_id": uuid.NewString(), "item_id": itemID, "action": "skip",
-	}, map[string]string{"X-Review-Attempt-Token": attemptToken})
-	first := decodeResponse(t, firstAction)
-	requireStatus(t, first, http.StatusOK)
-	secondItemID := nestedString(t, first.body, "data", "item", "item_id")
-	if strings.Contains(strings.ToLower(first.raw), "learning") {
-		t.Fatalf("cloze question exposed its answer: %s", first.raw)
-	}
-	passageBlanks := reviewPassageBlanks(t, first.body)
-	if len(passageBlanks) != 3 {
-		t.Fatalf("passage blank count=%d want=3: %s", len(passageBlanks), first.raw)
-	}
-	for _, blank := range passageBlanks {
-		if !isV13ReviewGroupKey(blank.groupKey) {
-			t.Fatalf("passage blank has invalid group key %q: %s", blank.groupKey, first.raw)
-		}
-		if blank.groupKey != passageBlanks[0].groupKey {
-			t.Fatalf("different forms of one target did not share a group key: %s", first.raw)
+	hints := 0
+	for _, segment := range draft.Words[0].Hint.Segments {
+		if segment.Kind == "blank" {
+			hints++
 		}
 	}
-	forbiddenAnswers := make([]map[string]any, 0, len(passageBlanks))
-	for index, blank := range passageBlanks {
-		answer := map[string]any{"blank_id": blank.blankID, "answer": "wrong"}
-		if index == 0 {
-			answer["group_key"] = blank.groupKey
-		}
-		forbiddenAnswers = append(forbiddenAnswers, answer)
+	if hints != 3 {
+		t.Fatal("hint did not mask every occurrence")
 	}
-	forbiddenAction := decodeResponse(t, rawJSONRequest(
-		t, learnerClient, http.MethodPost, application.URL+"/api/v1/me/review-attempts/"+attemptID+"/actions",
-		learnerCSRF, map[string]any{
-			"action_id": uuid.NewString(), "item_id": secondItemID, "action": "answer", "answers": forbiddenAnswers,
-		}, map[string]string{"X-Review-Attempt-Token": attemptToken},
-	))
-	requireStatus(t, forbiddenAction, http.StatusBadRequest)
-
-	incorrectAnswers := make([]map[string]any, 0, len(passageBlanks))
-	for _, blank := range passageBlanks {
-		incorrectAnswers = append(incorrectAnswers, map[string]any{"blank_id": blank.blankID, "answer": "wrong"})
-	}
-	retryAction := rawJSONRequest(t, learnerClient, http.MethodPost, application.URL+"/api/v1/me/review-attempts/"+attemptID+"/actions", learnerCSRF, map[string]any{
-		"action_id": uuid.NewString(), "item_id": secondItemID, "action": "answer", "answers": incorrectAnswers,
-	}, map[string]string{"X-Review-Attempt-Token": attemptToken})
-	retry := decodeResponse(t, retryAction)
-	requireStatus(t, retry, http.StatusOK)
-	if dataString(t, retry.body, "outcome") != "retry" {
-		t.Fatalf("incorrect cloze did not retry: %s", retry.raw)
-	}
-	retryBlanks := reviewPassageBlanks(t, retry.body)
-	if len(retryBlanks) != len(passageBlanks) {
-		t.Fatalf("retry blank count changed: %s", retry.raw)
-	}
-	for index := range passageBlanks {
-		if retryBlanks[index] != passageBlanks[index] {
-			t.Fatalf("retry changed blank/group identity: first=%#v retry=%#v", passageBlanks, retryBlanks)
+	answers := []review.PassageAnswer{}
+	answerGroup := ""
+	for _, segment := range draft.Passage.Segments {
+		if segment.Kind == "blank" {
+			if answerGroup != "" && answerGroup != segment.GroupKey {
+				t.Fatal("inflections lost shared target identity")
+			}
+			answerGroup = segment.GroupKey
+			answers = append(answers, review.PassageAnswer{BlankID: segment.BlankID, Answer: "wrong"})
 		}
 	}
-	secondAction := rawJSONRequest(t, learnerClient, http.MethodPost, application.URL+"/api/v1/me/review-attempts/"+attemptID+"/actions", learnerCSRF, map[string]any{
-		"action_id": uuid.NewString(), "item_id": secondItemID, "action": "skip",
-	}, map[string]string{"X-Review-Attempt-Token": attemptToken})
-	second := decodeResponse(t, secondAction)
-	requireStatus(t, second, http.StatusOK)
-	if dataString(t, second.body, "outcome") != "session_completed" {
-		t.Fatalf("unexpected review completion: %s", second.raw)
+	if len(answers) != 3 {
+		t.Fatal("passage did not mask every occurrence")
+	}
+	endpoint := application.URL + "/api/v1/me/review-attempts/" + draft.ID.String()
+	requireStatus(t, postJSON(t, learnerClient, endpoint+"/actions", learnerCSRF, map[string]any{}), 404)
+	input := review.SubmitInput{ExpectedRevision: draft.Revision, Words: []review.WordAnswer{{QuestionID: draft.Words[0].QuestionID, Answer: ""}}, Passage: answers}
+	submitted := decodeResponse(t, rawJSONRequest(t, learnerClient, http.MethodPost, endpoint+"/submit", learnerCSRF, input, map[string]string{"X-Review-Attempt-Token": draft.Token}))
+	requireStatus(t, submitted, 200)
+	if nestedBool(t, submitted.body, "data", "receipt", "successful") || nestedString(t, submitted.body, "data", "session", "status") != "completed" || submitted.body["data"].(map[string]any)["comparison"] == nil {
+		t.Fatal("wrong answers prevented final submission or lost comparison")
+	}
+	retried := decodeResponse(t, rawJSONRequest(t, learnerClient, http.MethodPost, endpoint+"/submit", learnerCSRF, input, map[string]string{"X-Review-Attempt-Token": draft.Token}))
+	requireStatus(t, retried, 200)
+	if retried.body["data"].(map[string]any)["comparison"] != nil {
+		t.Fatal("retry retained answer history")
+	}
+	loaded := getJSON(t, learnerClient, endpoint)
+	requireStatus(t, loaded, 200)
+	if strings.Contains(loaded.raw, `"comparison"`) || strings.Contains(loaded.raw, `"words"`) {
+		t.Fatal("history returned private answers")
 	}
 
 	users := getJSON(t, adminClient, application.URL+"/api/v1/admin/users?username=reader")
@@ -347,6 +323,7 @@ func TestM001EndToEnd(t *testing.T) {
 		RETURNING id`, learnerID, modelID).Scan(&orphanedRunID); err != nil {
 		t.Fatal(err)
 	}
+	fixtureRunCharges(t, ctx, pool)
 	settled, err := maintenance.SettleActiveGenerations(ctx, pool, "integration_startup_recovery")
 	if err != nil || settled != 1 {
 		t.Fatalf("startup settlement count=%d err=%v", settled, err)

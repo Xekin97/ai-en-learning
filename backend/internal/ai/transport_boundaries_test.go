@@ -58,7 +58,7 @@ func TestBoundaryReceiveCancellationUnblocksSilentBody(t *testing.T) {
 	body := &boundaryReadSignal{ReadCloser: reader, started: make(chan struct{})}
 	done := make(chan error, 1)
 	go func() {
-		_, err := (&openRouterStream{body}).Receive(ctx, func(string) error { t.Error("unexpected delta"); return nil })
+		_, err := (&openRouterStream{body: body}).Receive(ctx, func(string) error { t.Error("unexpected delta"); return nil })
 		done <- err
 	}()
 	<-body.started // cancel only after Receive is actually blocked in Read
@@ -142,7 +142,7 @@ func TestBoundaryResourceLimits(t *testing.T) {
 		{"candidate", p0SSE(`{"passage":"grape(grape)","padding":"`) + p0SSE(strings.Repeat("x", 8<<20)) + p0SSE(strings.Repeat("x", 8<<20)), "candidate_byte_limit"},
 	} {
 		t.Run(tc.name, func(t *testing.T) {
-			stream := openRouterStream{io.NopCloser(strings.NewReader(tc.wire))}
+			stream := openRouterStream{body: io.NopCloser(strings.NewReader(tc.wire))}
 			_, err := stream.Receive(context.Background(), func(string) error { return nil })
 			var p *ProviderError
 			if !errors.As(err, &p) || p.Retryable || DescribeFailure(err).Reason != tc.reason {

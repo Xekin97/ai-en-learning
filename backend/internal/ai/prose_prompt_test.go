@@ -88,7 +88,7 @@ func TestProsePromptKnownFailuresRemainRejected(t *testing.T) {
 			t.Fatal("positive boundary control", err)
 		}
 		candidate.Passage = "Prevalent(prevalent)Local conditions are common."
-		stream := openRouterStream{io.NopCloser(strings.NewReader(p0SSE(p0JSON(candidate))))}
+		stream := openRouterStream{body: io.NopCloser(strings.NewReader(p0SSE(p0JSON(candidate))))}
 		defer stream.Close()
 		var preview strings.Builder
 		decoded, err := stream.Receive(context.Background(), func(delta string) error { preview.WriteString(delta); return nil })

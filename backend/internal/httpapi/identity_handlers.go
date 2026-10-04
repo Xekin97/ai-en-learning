@@ -1,6 +1,7 @@
 package httpapi
 
 import (
+	"encoding/json"
 	"errors"
 	"log/slog"
 	"net/http"
@@ -10,17 +11,27 @@ import (
 )
 
 type actorDTO struct {
+	ID       string  `json:"id"`
 	Kind     string  `json:"kind"`
 	Username *string `json:"username"`
 	Role     *string `json:"role"`
 	PlanCode *string `json:"plan_code"`
 }
 
+func (actor actorDTO) MarshalJSON() ([]byte, error) {
+	if actor.Kind == "visitor" {
+		return json.Marshal(struct {
+			Kind string `json:"kind"`
+		}{"visitor"})
+	}
+	type accountActor actorDTO
+	return json.Marshal(accountActor(actor))
+}
+
 type bootstrapDTO struct {
-	Actor              actorDTO `json:"actor"`
-	UILocale           *string  `json:"ui_locale"`
-	SupportedUILocales []string `json:"supported_ui_locales"`
-	CSRFToken          string   `json:"csrf_token"`
+	Actor     actorDTO `json:"actor"`
+	UILocale  *string  `json:"ui_locale"`
+	CSRFToken string   `json:"csrf_token"`
 }
 
 type authDTO struct {
@@ -116,11 +127,49 @@ func (server *Server) updateLocale(writer http.ResponseWriter, request *http.Req
 
 func (server *Server) account(writer http.ResponseWriter, request *http.Request) {
 	actor, _ := actorFromContext(request.Context())
+	result, err := server.identity.Account(request.Context(), actor)
+	if err != nil {
+		server.writeIdentityProblem(writer, request, err, false)
+		return
+	}
 	writeJSON(writer, request, http.StatusOK, struct {
-		Username string  `json:"username"`
-		PlanCode *string `json:"plan_code"`
-		UILocale string  `json:"ui_locale"`
-	}{Username: actor.Username, PlanCode: identity.PlanCode(actor.GroupCode), UILocale: dereference(actor.UILocale)})
+		Account identity.Account `json:"account"`
+	}{result})
+}
+
+type nullableText struct {
+	Set   bool
+	Value *string
+}
+
+func (value *nullableText) UnmarshalJSON(raw []byte) error {
+	if err := json.Unmarshal(raw, &value.Value); err != nil {
+		return err
+	}
+	value.Set = true
+	return nil
+}
+func (server *Server) updateProfile(writer http.ResponseWriter, request *http.Request) {
+	var body struct {
+		Nickname nullableText `json:"nickname"`
+		Gender   nullableText `json:"gender"`
+	}
+	if !decodeOrProblem(writer, request, &body, 4096) {
+		return
+	}
+	if !body.Nickname.Set || !body.Gender.Set {
+		server.writeIdentityProblem(writer, request, identity.ErrValidation, false)
+		return
+	}
+	actor, _ := actorFromContext(request.Context())
+	result, err := server.identity.UpdateProfile(request.Context(), actor, body.Nickname.Value, body.Gender.Value)
+	if err != nil {
+		server.writeIdentityProblem(writer, request, err, false)
+		return
+	}
+	writeJSON(writer, request, http.StatusOK, struct {
+		Account identity.Account `json:"account"`
+	}{result})
 }
 
 func (server *Server) changePassword(writer http.ResponseWriter, request *http.Request) {
@@ -166,6 +215,7 @@ func (server *Server) deleteAccount(writer http.ResponseWriter, request *http.Re
 		slog.Warn("generation_evidence_account_cleanup_failed")
 	}
 	server.clearSessionCookie(writer)
+	server.clearAnalyticsBrowser(writer)
 	writeNoContent(writer)
 }
 
@@ -177,13 +227,14 @@ func (server *Server) writeBootstrapProjection(writer http.ResponseWriter, reque
 	}
 	dto := actorDTO{Kind: actor.Kind}
 	if actor.Kind == "account" {
+		dto.ID = actor.ID.String()
 		dto.Username = &actor.Username
 		dto.Role = &actor.Role
 		dto.PlanCode = identity.PlanCode(actor.GroupCode)
 	}
 	writeJSON(writer, request, http.StatusOK, bootstrapDTO{
 		Actor: dto, UILocale: actor.UILocale,
-		SupportedUILocales: []string{"zh-CN", "en-US"}, CSRFToken: csrf,
+		CSRFToken: csrf,
 	})
 }
 
@@ -195,11 +246,20 @@ func (server *Server) writeAuthProjection(writer http.ResponseWriter, request *h
 	}
 	dto := actorDTO{Kind: actor.Kind}
 	if actor.Kind == "account" {
+		dto.ID = actor.ID.String()
 		dto.Username = &actor.Username
 		dto.Role = &actor.Role
 		dto.PlanCode = identity.PlanCode(actor.GroupCode)
 	}
-	writeJSON(writer, request, status, authDTO{Actor: dto, UILocale: actor.UILocale, CSRFToken: csrf})
+	result := authDTO{Actor: dto, UILocale: actor.UILocale, CSRFToken: csrf}
+	if status == http.StatusOK {
+		writeJSON(writer, request, status, struct {
+			authDTO
+			Welcome *identity.Welcome `json:"welcome"`
+		}{result, actor.Welcome})
+		return
+	}
+	writeJSON(writer, request, status, result)
 }
 
 func (server *Server) writeIdentityProblem(writer http.ResponseWriter, request *http.Request, err error, registering bool) {

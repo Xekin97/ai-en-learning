@@ -29,7 +29,7 @@ func TestAdminQuotaDatabase(t *testing.T) {
 	ctx, cancel := context.WithTimeout(context.Background(), 2*time.Minute)
 	defer cancel()
 	pool := quotaDatabase(t, ctx)
-	service := NewService(pool, nil, nil, nil)
+	service := NewService(pool, nil, nil, nil, []byte("admin-test-key"))
 	model := quotaModel(t, ctx, pool)
 	for _, testName := range []string{"charged facts", "reset boundary", "window boundary", "group reset", "read failure rollback", "uncertain commit", "deferred commit rollback", "canceled request", "missing user"} {
 		t.Run(testName, func(t *testing.T) {
@@ -108,7 +108,7 @@ func TestAdminQuotaDatabase(t *testing.T) {
 				for _, group := range []string{"pro", "plus", "basic"} {
 					dbCode, _ := databaseGroupCode(group)
 					quotaExec(t, ctx, pool, "UPDATE wordweave.entitlement_groups SET rolling_quota_limit=7 WHERE code=$1", dbCode)
-					user, err := service.ChangeUserGroup(ctx, id, group, true)
+					user, err := service.ChangeUserGroup(ctx, id, group, true, *mustQuotaUser(t, ctx, service, id).BaseRevision)
 					if err != nil {
 						t.Fatal(err)
 					}
@@ -145,7 +145,7 @@ func TestAdminQuotaDatabase(t *testing.T) {
 					t.Fatal(err)
 				}
 				fault := &faultQuotaTx{Tx: tx, failDetail: testName == "read failure rollback"}
-				user, err := changeUserGroup(ctx, fault, id, "pro")
+				user, err := changeUserGroup(ctx, fault, id, "pro", *mustQuotaUser(t, ctx, service, id).BaseRevision, service.key)
 				if err == nil || user.ID != uuid.Nil {
 					t.Fatal("fault produced a success")
 				}
@@ -167,7 +167,7 @@ func TestAdminQuotaDatabase(t *testing.T) {
 				CREATE CONSTRAINT TRIGGER quota_commit_failure AFTER UPDATE ON wordweave.accounts
 				DEFERRABLE INITIALLY DEFERRED FOR EACH ROW WHEN (NEW.id='%s'::uuid)
 				EXECUTE FUNCTION wordweave.reject_quota_commit()`, id))
-				user, err := service.ChangeUserGroup(ctx, id, "pro", true)
+				user, err := service.ChangeUserGroup(ctx, id, "pro", true, *mustQuotaUser(t, ctx, service, id).BaseRevision)
 				if err == nil || user.ID != uuid.Nil {
 					t.Fatal("failed commit returned user")
 				}
@@ -180,7 +180,7 @@ func TestAdminQuotaDatabase(t *testing.T) {
 				if user, err := service.GetUser(canceled, id); err == nil || user.ID != uuid.Nil {
 					t.Fatal("canceled read returned success")
 				}
-				if user, err := service.ChangeUserGroup(canceled, id, "pro", true); err == nil || user.ID != uuid.Nil {
+				if user, err := service.ChangeUserGroup(canceled, id, "pro", true, "canceled-revision"); err == nil || user.ID != uuid.Nil {
 					t.Fatal("canceled change returned success")
 				}
 				if *mustQuotaUser(t, ctx, service, id).PlanCode != "basic" {
@@ -194,11 +194,11 @@ func TestAdminQuotaDatabase(t *testing.T) {
 				if err := service.RequireUser(ctx, id); !errors.Is(err, ErrNotFound) {
 					t.Fatal(err)
 				}
-				if _, err := service.ChangeUserGroup(ctx, id, "pro", true); !errors.Is(err, ErrNotFound) {
+				if _, err := service.ChangeUserGroup(ctx, id, "pro", true, "deleted-revision"); !errors.Is(err, ErrNotFound) {
 					t.Fatal(err)
 				}
 				adminID := quotaAccount(t, ctx, pool, "admin")
-				if _, err := service.ChangeUserGroup(ctx, adminID, "pro", true); !errors.Is(err, ErrNotFound) {
+				if _, err := service.ChangeUserGroup(ctx, adminID, "pro", true, "admin-revision"); !errors.Is(err, ErrNotFound) {
 					t.Fatal(err)
 				}
 			}
@@ -217,17 +217,22 @@ func (clock frozenQuotaClock) QueryRow(ctx context.Context, query string, args .
 	if query != userDetailQuery {
 		panic("unexpected fixed-clock query")
 	}
-	return clock.queryer.QueryRow(ctx, strings.ReplaceAll(query, "statement_timestamp()", "$2::timestamptz"), append(args, clock.now)...)
+	args[1] = clock.now
+	return clock.queryer.QueryRow(ctx, query, args...)
 }
 
 type faultQuotaTx struct {
 	pgx.Tx
-	failDetail bool
-	commits    int
+	failDetail  bool
+	commits     int
+	detailReads int
 }
 
 func (tx *faultQuotaTx) QueryRow(ctx context.Context, query string, args ...any) pgx.Row {
-	if tx.failDetail && query == userDetailQuery {
+	if query == userDetailQuery {
+		tx.detailReads++
+	}
+	if tx.failDetail && query == userDetailQuery && tx.detailReads == 2 {
 		return quotaTestRow(func(...any) error { return errors.New("injected detail read failure") })
 	}
 	return tx.Tx.QueryRow(ctx, query, args...)
@@ -244,7 +249,7 @@ func TestAdminQuotaConcurrentSnapshots(t *testing.T) {
 	ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
 	defer cancel()
 	pool := quotaDatabase(t, ctx)
-	service := NewService(pool, nil, nil, nil)
+	service := NewService(pool, nil, nil, nil, []byte("admin-test-key"))
 	id := quotaAccount(t, ctx, pool, "learner")
 	quotaExec(t, ctx, pool, "UPDATE wordweave.entitlement_groups SET rolling_quota_limit=CASE code WHEN 'registered' THEN 5 WHEN 'pro' THEN 7 ELSE 9 END")
 	first, err := pool.BeginTx(ctx, pgx.TxOptions{IsoLevel: pgx.ReadCommitted})
@@ -261,7 +266,7 @@ func TestAdminQuotaConcurrentSnapshots(t *testing.T) {
 	}()
 	firstResult := make(chan quotaUserResult, 1)
 	go func() {
-		user, err := changeUserGroup(ctx, &gatedQuotaTx{Tx: first, entered: entered, release: release}, id, "pro")
+		user, err := changeUserGroup(ctx, &gatedQuotaTx{Tx: first, entered: entered, release: release}, id, "pro", *mustQuotaUser(t, ctx, service, id).BaseRevision, service.key)
 		firstResult <- quotaUserResult{user, err}
 	}()
 	select {
@@ -285,23 +290,28 @@ func TestAdminQuotaConcurrentSnapshots(t *testing.T) {
 	secondPID := second.Conn().PgConn().PID()
 	secondResult := make(chan quotaUserResult, 1)
 	go func() {
-		user, err := changeUserGroup(ctx, second, id, "plus")
+		user, err := changeUserGroup(ctx, second, id, "plus", *old.BaseRevision, service.key)
 		secondResult <- quotaUserResult{user, err}
 	}()
 	waitQuotaLock(t, ctx, pool, secondPID)
-	// Current group policy is read in the detail SELECT, not saved at BEGIN.
-	quotaExec(t, ctx, pool, "UPDATE wordweave.entitlement_groups SET rolling_quota_limit=8 WHERE code='pro'")
+	// A second administrator with the same base revision must refresh after
+	// waiting for the first reset. Global plan writers use their own config lock.
 	close(release)
 	a, b := <-firstResult, <-secondResult
-	if a.err != nil || b.err != nil {
+	if a.err != nil || !errors.Is(b.err, ErrBasePlanChanged) {
 		t.Fatalf("first=%v second=%v", a.err, b.err)
 	}
-	if *a.user.PlanCode != "pro" || *b.user.PlanCode != "plus" {
-		t.Fatal("cross-transaction response mixed plans")
+	if *a.user.PlanCode != "pro" || b.user.ID != uuid.Nil {
+		t.Fatal("stale concurrent reset returned a success")
 	}
-	assertQuota(t, a.user, "limited", 8)
-	assertQuota(t, b.user, "limited", 9)
-	assertQuota(t, mustQuotaUser(t, ctx, service, id), "limited", 9)
+	assertQuota(t, a.user, "limited", 7)
+	current := mustQuotaUser(t, ctx, service, id)
+	assertQuota(t, current, "limited", 7)
+	retried, err := service.ChangeUserGroup(ctx, id, "plus", true, *current.BaseRevision)
+	if err != nil {
+		t.Fatal(err)
+	}
+	assertQuota(t, retried, "limited", 9)
 }
 
 type quotaUserResult struct {
@@ -312,10 +322,12 @@ type gatedQuotaTx struct {
 	pgx.Tx
 	entered chan struct{}
 	release <-chan struct{}
+	gated   bool
 }
 
 func (tx *gatedQuotaTx) QueryRow(ctx context.Context, query string, args ...any) pgx.Row {
-	if query == userDetailQuery {
+	if query == userDetailQuery && !tx.gated {
+		tx.gated = true
 		close(tx.entered)
 		select {
 		case <-tx.release:
@@ -351,7 +363,7 @@ func TestAdminQuotaGenerationWaitsForGroupReset(t *testing.T) {
 	ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
 	defer cancel()
 	pool := quotaDatabase(t, ctx)
-	service := NewService(pool, nil, nil, nil)
+	service := NewService(pool, nil, nil, nil, []byte("admin-test-key"))
 	id, adminID := quotaAccount(t, ctx, pool, "learner"), quotaAccount(t, ctx, pool, "admin")
 	model := quotaModel(t, ctx, pool)
 	quotaExec(t, ctx, pool, "UPDATE wordweave.entitlement_groups SET rolling_quota_limit=7 WHERE code='pro'")
@@ -392,7 +404,7 @@ func TestAdminQuotaGenerationWaitsForGroupReset(t *testing.T) {
 	}()
 	changed := make(chan quotaUserResult, 1)
 	go func() {
-		user, err := changeUserGroup(ctx, &gatedQuotaTx{Tx: tx, entered: entered, release: release}, id, "pro")
+		user, err := changeUserGroup(ctx, &gatedQuotaTx{Tx: tx, entered: entered, release: release}, id, "pro", *mustQuotaUser(t, ctx, service, id).BaseRevision, service.key)
 		changed <- quotaUserResult{user, err}
 	}()
 	select {
@@ -444,6 +456,10 @@ func TestAdminQuotaQueryPlan(t *testing.T) {
 		'registered',$3,'Quota fixture','test/quota','en','story','short',30,5,'valid','abandoned',true,true,
 		CASE WHEN n<=100 THEN statement_timestamp()-interval '1 hour' ELSE statement_timestamp()-interval '25 hours' END,statement_timestamp()
 		FROM generate_series(1,30000) n`, id, other, model)
+	quotaExec(t, ctx, pool, `INSERT INTO wordweave.plan_quota_states(owner_id,plan_code,origin,reset_at) SELECT id,group_code,'base',quota_reset_at FROM wordweave.accounts WHERE role='learner' ON CONFLICT DO NOTHING`)
+	quotaExec(t, ctx, pool, `INSERT INTO wordweave.generation_charges(run_id,account_id,source_kind,plan_code,origin,quota_epoch,state,charged_at,settled_at) SELECT id,account_id,'plan',group_code_snapshot,'base',0,'consumed',started_at,completed_at FROM wordweave.generation_runs WHERE account_id IS NOT NULL`)
+	quotaExec(t, ctx, pool, "ANALYZE wordweave.generation_charges")
+	quotaExec(t, ctx, pool, "ANALYZE wordweave.plan_quota_states")
 	quotaExec(t, ctx, pool, "ANALYZE wordweave.generation_runs")
 	quotaExec(t, ctx, pool, "ANALYZE wordweave.accounts")
 	for _, kind := range []string{"limited", "unlimited", "admin"} {
@@ -455,7 +471,7 @@ func TestAdminQuotaQueryPlan(t *testing.T) {
 			target = adminID
 		}
 		var raw []byte
-		if err := pool.QueryRow(ctx, "EXPLAIN (ANALYZE, BUFFERS, FORMAT JSON) "+userDetailQuery, target).Scan(&raw); err != nil {
+		if err := pool.QueryRow(ctx, "EXPLAIN (ANALYZE, BUFFERS, FORMAT JSON) "+userDetailQuery, target, nil).Scan(&raw); err != nil {
 			t.Fatal(err)
 		}
 		var plans []map[string]any
@@ -467,7 +483,7 @@ func TestAdminQuotaQueryPlan(t *testing.T) {
 		walk = func(value any) {
 			switch node := value.(type) {
 			case map[string]any:
-				if name, ok := node["Index Name"].(string); ok && name == "generation_runs_account_quota_idx" {
+				if name, ok := node["Index Name"].(string); ok && name == "generation_charges_plan_window" {
 					indexes = append(indexes, map[string]any{"index": name, "loops": node["Actual Loops"], "rows": node["Actual Rows"]})
 				}
 				for _, child := range node {
@@ -588,6 +604,18 @@ func quotaRun(t *testing.T, ctx context.Context, pool *pgxpool.Pool, account, vi
 		accountValue, visitorValue, creditValue, group, model, status, disposition, charged, cumulative, at, completed).Scan(&id)
 	if err != nil {
 		t.Fatal(err)
+	}
+	state := "consumed"
+	if status == "active" {
+		state = "reserved"
+	} else if !charged {
+		state = "refunded"
+	}
+	if account != uuid.Nil {
+		quotaExec(t, ctx, pool, `INSERT INTO wordweave.plan_quota_states(owner_id,plan_code,origin,reset_at) SELECT id,group_code,'base',quota_reset_at FROM wordweave.accounts WHERE id=$1 ON CONFLICT DO NOTHING`, account)
+		quotaExec(t, ctx, pool, `INSERT INTO wordweave.generation_charges(run_id,account_id,source_kind,plan_code,origin,quota_epoch,state,charged_at,settled_at) SELECT $1,$2,'plan',$3,'base',reset_epoch,$4,$5,$6 FROM wordweave.plan_quota_states WHERE owner_id=$2 AND plan_code=$3 AND origin='base'`, id, account, group, state, at, completed)
+	} else {
+		quotaExec(t, ctx, pool, `INSERT INTO wordweave.generation_charges(run_id,visitor_id,source_kind,state,charged_at,settled_at) VALUES($1,$2,'visitor',$3,$4,$5)`, id, visitor, state, at, completed)
 	}
 	return id
 }

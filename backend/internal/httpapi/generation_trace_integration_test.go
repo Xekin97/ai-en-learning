@@ -68,9 +68,9 @@ func assertOBS042HTTPMatrixSummary(t *testing.T, logs *p0LogBuffer, mode, fault 
 		want = "draft_commit"
 	case strings.HasPrefix(mode, "open_") || mode == "not_sse":
 		want = "provider_open"
-	case strings.HasPrefix(mode, "stream_") || mode == "bad_event":
+	case strings.HasPrefix(mode, "stream_") || mode == "bad_event" || mode == "truncated":
 		want = "provider_stream"
-	case mode == "truncated" || mode == "tags_count":
+	case mode == "tags_count":
 		want = "candidate_decode"
 	}
 	if s.FirstFailure == nil || s.FirstFailure.Stage != want {

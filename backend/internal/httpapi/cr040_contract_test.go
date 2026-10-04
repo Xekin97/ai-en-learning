@@ -12,14 +12,11 @@ import (
 
 func TestCR040AllMeaningProjectionsUseOnlyCurrentKey(t *testing.T) {
 	const meaning = "易受伤害的；脆弱的"
-	item := review.Item{Stage: "spelling", ID: "spelling-current", EntryMeaning: meaning}
-	progress := review.ItemProgress{}
+	item := review.DraftWord{QuestionID: "spelling-current", EntryMeaning: meaning}
 	cases := map[string]any{
 		"validated":                mapGenerationResult(ai.ValidatedBatch{Targets: []ai.ValidatedTarget{{Entry: "vulnerable", EntryMeaning: meaning}}}),
 		"learner_and_admin_detail": mapBatchDetail(learning.BatchDetail{Targets: []learning.TargetDetail{{Entry: "vulnerable", EntryMeaning: meaning}}}),
-		"initial_item":             mapReviewItem(item),
-		"next_item":                mapReviewOutcome(review.Outcome{Kind: "advanced", Result: "correct", Item: &item, Progress: &progress}),
-		"retry_item":               mapReviewOutcome(review.Outcome{Kind: "retry", Item: &item, Progress: &progress}),
+		"review_word":              item,
 	}
 	for name, value := range cases {
 		t.Run(name, func(t *testing.T) {
@@ -33,7 +30,7 @@ func TestCR040AllMeaningProjectionsUseOnlyCurrentKey(t *testing.T) {
 			}
 		})
 	}
-	raw, _ := json.Marshal(mapReviewItem(review.Item{Stage: "passage_cloze", ID: "passage-current", EntryMeaning: meaning}))
+	raw, _ := json.Marshal(review.DraftSegment{Kind: "blank", BlankID: "passage-current", GroupKey: "opaque"})
 	if strings.Contains(string(raw), "entry_meaning") || strings.Contains(string(raw), meaning) {
 		t.Fatal("stage two leaked meaning")
 	}

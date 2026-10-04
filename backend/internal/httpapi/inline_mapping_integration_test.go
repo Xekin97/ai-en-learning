@@ -29,7 +29,7 @@ func TestInlineMappingHTTPStreamAndSavedContent(t *testing.T) {
 	var calls atomic.Int32
 	provider := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		calls.Add(1)
-		raw, _ := json.Marshal(candidate)
+		raw, _ := json.Marshal(map[string]any{"passage": candidate.Passage, "tags": candidate.Tags, "targets": map[string]any{"grape": map[string]any{"entry_meaning": candidate.Targets[0].EntryMeaning, "hint_phrase": candidate.Targets[0].HintPhrase}}})
 		w.Header().Set("Content-Type", "text/event-stream")
 		// Deliberately split source annotations and the passage's closing quote.
 		for len(raw) > 0 {
@@ -43,7 +43,7 @@ func TestInlineMappingHTTPStreamAndSavedContent(t *testing.T) {
 	}))
 	defer provider.Close()
 	cfg.OpenRouterBaseURL = provider.URL
-	api, err := New(cfg, pool, pool)
+	api, err := integrationServer(t, cfg, pool)
 	if err != nil {
 		t.Fatal(err)
 	}

@@ -14,7 +14,9 @@ import (
 	"github.com/jackc/pgx/v5/pgtype"
 	"github.com/jackc/pgx/v5/pgxpool"
 
+	"wordweave/internal/analytics"
 	"wordweave/internal/dbgen"
+	"wordweave/internal/platform/business"
 	"wordweave/internal/platform/security"
 )
 
@@ -36,6 +38,7 @@ var (
 )
 
 type Actor struct {
+	Welcome          *Welcome
 	Kind             string
 	ID               uuid.UUID
 	SessionID        uuid.UUID
@@ -160,6 +163,10 @@ func (s *Service) Register(ctx context.Context, actor Actor, input RegisterInput
 		return Actor{}, Credential{}, fmt.Errorf("begin registration: %w", err)
 	}
 	defer func() { _ = tx.Rollback(ctx) }()
+	configuration, err := business.LockConfiguration(ctx, tx, false)
+	if err != nil {
+		return Actor{}, Credential{}, err
+	}
 	queries := s.queries.WithTx(tx)
 	account, err := queries.CreateAccount(ctx, dbgen.CreateAccountParams{
 		Username:     input.Username,
@@ -175,6 +182,13 @@ func (s *Service) Register(ctx context.Context, actor Actor, input RegisterInput
 		}
 		return Actor{}, Credential{}, fmt.Errorf("create account: %w", err)
 	}
+	if _, err = tx.Exec(ctx, `UPDATE wordweave.accounts SET last_login_at=$2 WHERE id=$1`, account.ID, configuration.Now); err != nil {
+		return Actor{}, Credential{}, err
+	}
+	if err = analytics.Registered(ctx, tx, account.ID, configuration); err != nil {
+		return Actor{}, Credential{}, err
+	}
+
 	session, err := queries.CreateAccountSession(ctx, dbgen.CreateAccountSessionParams{
 		AccountID: account.ID,
 		TokenHash: security.Digest(s.sessionPepper, "account-session-v1", credential.Token),
@@ -220,12 +234,34 @@ func (s *Service) Login(ctx context.Context, input LoginInput) (Actor, Credentia
 	if err != nil {
 		return Actor{}, Credential{}, err
 	}
+	newHash := ""
+	if security.NeedsRehash(account.PasswordHash) {
+		newHash, err = security.HashPassword(input.Password)
+		if err != nil {
+			return Actor{}, Credential{}, fmt.Errorf("rehash login password: %w", err)
+		}
+	}
 
 	tx, err := s.pool.BeginTx(ctx, pgx.TxOptions{})
 	if err != nil {
 		return Actor{}, Credential{}, fmt.Errorf("begin login: %w", err)
 	}
 	defer func() { _ = tx.Rollback(ctx) }()
+	configuration, err := business.LockConfiguration(ctx, tx, false)
+	if err != nil {
+		return Actor{}, Credential{}, err
+	}
+	var currentHash, displayName string
+	var previousLearning *time.Time
+	if err = tx.QueryRow(ctx, `SELECT password_hash,coalesce(nickname,username),last_learning_at,ui_locale,group_code FROM wordweave.accounts WHERE id=$1 FOR UPDATE`, account.ID).Scan(&currentHash, &displayName, &previousLearning, &account.UiLocale, &account.GroupCode); err != nil {
+		return Actor{}, Credential{}, ErrAuthentication
+	}
+	if currentHash != account.PasswordHash {
+		return Actor{}, Credential{}, ErrAuthentication
+	}
+	if _, err = tx.Exec(ctx, `UPDATE wordweave.accounts SET last_login_at=$2 WHERE id=$1`, account.ID, configuration.Now); err != nil {
+		return Actor{}, Credential{}, err
+	}
 	queries := s.queries.WithTx(tx)
 	locale := account.UiLocale
 	if !locale.Valid {
@@ -234,13 +270,14 @@ func (s *Service) Login(ctx context.Context, input LoginInput) (Actor, Credentia
 			return Actor{}, Credential{}, fmt.Errorf("merge account locale: %w", err)
 		}
 	}
-	if security.NeedsRehash(account.PasswordHash) {
-		newHash, hashErr := security.HashPassword(input.Password)
-		if hashErr != nil {
-			return Actor{}, Credential{}, fmt.Errorf("rehash login password: %w", hashErr)
-		}
+	if newHash != "" {
 		if err := queries.UpdateAccountPassword(ctx, dbgen.UpdateAccountPasswordParams{PasswordHash: newHash, AccountID: account.ID}); err != nil {
 			return Actor{}, Credential{}, fmt.Errorf("update login password hash: %w", err)
+		}
+	}
+	if account.Role == "learner" {
+		if _, _, err = analytics.Link(ctx, tx, account.ID, configuration); err != nil {
+			return Actor{}, Credential{}, err
 		}
 	}
 	session, err := queries.CreateAccountSession(ctx, dbgen.CreateAccountSessionParams{
@@ -259,8 +296,13 @@ func (s *Service) Login(ctx context.Context, input LoginInput) (Actor, Credentia
 		groupCode = account.GroupCode.String
 	}
 	localeString := locale.String
+	var greeting *Welcome
+	if account.Role == "learner" {
+		greeting = welcome(displayName, previousLearning, configuration.Now)
+	}
 	return Actor{
-		Kind: "account", ID: account.ID, SessionID: session.ID, Username: account.Username,
+		Welcome: greeting,
+		Kind:    "account", ID: account.ID, SessionID: session.ID, Username: account.Username,
 		Role: account.Role, GroupCode: groupCode, UILocale: &localeString,
 		SessionCreatedAt: session.CreatedAt.Time, LastSeenAt: session.LastSeenAt.Time,
 	}, credential, nil
@@ -284,10 +326,22 @@ func (s *Service) SetLocale(ctx context.Context, actor Actor, locale string) err
 	if !validLocale(locale) {
 		return ErrValidation
 	}
-	if _, err := s.queries.UpdateAccountLocale(ctx, dbgen.UpdateAccountLocaleParams{UiLocale: pgtype.Text{String: locale, Valid: true}, AccountID: actor.ID}); err != nil {
-		return fmt.Errorf("update account locale: %w", err)
+	tx, err := s.pool.Begin(ctx)
+	if err != nil {
+		return err
 	}
-	return nil
+	defer tx.Rollback(ctx)
+	if _, err = business.LockConfiguration(ctx, tx, false); err != nil {
+		return err
+	}
+	var id uuid.UUID
+	if err = tx.QueryRow(ctx, `SELECT id FROM wordweave.accounts WHERE id=$1 FOR UPDATE`, actor.ID).Scan(&id); err != nil {
+		return ErrUnauthorized
+	}
+	if _, err = s.queries.WithTx(tx).UpdateAccountLocale(ctx, dbgen.UpdateAccountLocaleParams{UiLocale: pgtype.Text{String: locale, Valid: true}, AccountID: actor.ID}); err != nil {
+		return err
+	}
+	return tx.Commit(ctx)
 }
 
 type ChangePasswordInput struct {
@@ -320,6 +374,17 @@ func (s *Service) ChangePassword(ctx context.Context, actor Actor, input ChangeP
 		return fmt.Errorf("begin password change: %w", err)
 	}
 	defer func() { _ = tx.Rollback(ctx) }()
+	if _, err = business.LockConfiguration(ctx, tx, false); err != nil {
+		return err
+	}
+	var lockedHash string
+	if err = tx.QueryRow(ctx, `SELECT password_hash FROM wordweave.accounts WHERE id=$1 AND role='learner' FOR UPDATE`, actor.ID).Scan(&lockedHash); err != nil {
+		return ErrAuthentication
+	}
+	if lockedHash != account.PasswordHash {
+		return ErrValidation
+	}
+
 	queries := s.queries.WithTx(tx)
 	if err := queries.UpdateAccountPassword(ctx, dbgen.UpdateAccountPasswordParams{PasswordHash: hash, AccountID: actor.ID}); err != nil {
 		return fmt.Errorf("update password: %w", err)
@@ -345,14 +410,39 @@ func (s *Service) DeleteAccount(ctx context.Context, actor Actor, password strin
 	if !valid {
 		return ErrValidation
 	}
-	rows, err := s.queries.DeleteAccount(ctx, actor.ID)
+	tx, err := s.pool.Begin(ctx)
+	if err != nil {
+		return err
+	}
+	defer tx.Rollback(ctx)
+	if _, err = business.LockConfiguration(ctx, tx, false); err != nil {
+		return err
+	}
+	var currentHash string
+	if err = tx.QueryRow(ctx, `SELECT password_hash FROM wordweave.accounts WHERE id=$1 AND role='learner' FOR UPDATE`, actor.ID).Scan(&currentHash); err != nil {
+		return ErrAuthentication
+	}
+	if currentHash != account.PasswordHash {
+		return ErrValidation
+	}
+	// DB2-T13: consumed claims belong to the deleted account. Remove them
+	// before account/batch FK actions would SET NULL their required references.
+	// The account lock serializes claim consumption; cleanup and all cascades
+	// must roll back together if any later deletion fails.
+	if _, err = tx.Exec(ctx, `DELETE FROM wordweave.visitor_claims WHERE consumed_account_id=$1`, actor.ID); err != nil {
+		return fmt.Errorf("delete account claims: %w", err)
+	}
+	if err = analytics.Erase(ctx, tx, actor.ID); err != nil {
+		return err
+	}
+	rows, err := s.queries.WithTx(tx).DeleteAccount(ctx, actor.ID)
 	if err != nil {
 		return fmt.Errorf("delete account: %w", err)
 	}
 	if rows != 1 {
 		return ErrAuthentication
 	}
-	return nil
+	return tx.Commit(ctx)
 }
 
 func (s *Service) newAccountCredential(role string) (Credential, error) {

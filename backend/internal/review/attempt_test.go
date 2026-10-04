@@ -13,7 +13,7 @@ func TestBlankSegmentsHideEveryHintOccurrenceWithFixedLength(t *testing.T) {
 	segments, err := blankSegments("learning through shared learning", []hintSpan{
 		{start: 0, end: 8},
 		{start: 24, end: 32},
-	}, reviewHintLengthHint, "")
+	}, 8, "")
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -23,7 +23,7 @@ func TestBlankSegmentsHideEveryHintOccurrenceWithFixedLength(t *testing.T) {
 	if segments[0].Kind != "blank" || segments[1].Text != " through shared " || segments[2].Kind != "blank" {
 		t.Fatalf("unexpected segments: %#v", segments)
 	}
-	if segments[0].LengthHint != reviewHintLengthHint || segments[2].LengthHint != reviewHintLengthHint {
+	if segments[0].LengthHint != 8 || segments[2].LengthHint != 8 {
 		t.Fatalf("blank length hints are not fixed: %#v", segments)
 	}
 }
@@ -35,7 +35,7 @@ func TestBlankSegmentsRejectOverlapAndOutOfBounds(t *testing.T) {
 		{{start: 0, end: 99}},
 		{},
 	} {
-		if _, err := blankSegments("learning", spans, reviewHintLengthHint, ""); err == nil {
+		if _, err := blankSegments("learning", spans, 8, ""); err == nil {
 			t.Fatalf("blankSegments unexpectedly accepted %#v", spans)
 		}
 	}

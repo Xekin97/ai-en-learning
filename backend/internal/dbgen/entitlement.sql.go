@@ -67,9 +67,16 @@ FROM wordweave.entitlement_groups
 WHERE code = $1
 `
 
-func (q *Queries) GetEntitlementGroup(ctx context.Context, code string) (WordweaveEntitlementGroup, error) {
+type GetEntitlementGroupRow struct {
+	Code              string             `json:"code"`
+	RollingQuotaLimit pgtype.Int4        `json:"rolling_quota_limit"`
+	MaxEntriesPerRun  int32              `json:"max_entries_per_run"`
+	UpdatedAt         pgtype.Timestamptz `json:"updated_at"`
+}
+
+func (q *Queries) GetEntitlementGroup(ctx context.Context, code string) (GetEntitlementGroupRow, error) {
 	row := q.db.QueryRow(ctx, getEntitlementGroup, code)
-	var i WordweaveEntitlementGroup
+	var i GetEntitlementGroupRow
 	err := row.Scan(
 		&i.Code,
 		&i.RollingQuotaLimit,
@@ -107,12 +114,12 @@ func (q *Queries) HasActiveVisitorGeneration(ctx context.Context, visitorID uuid
 	return exists, err
 }
 
-const hasOpenRouterCredential = `-- name: HasOpenRouterCredential :one
-SELECT EXISTS(SELECT 1 FROM wordweave.openrouter_credentials WHERE provider = 'openrouter')
+const hasModelCredential = `-- name: HasModelCredential :one
+SELECT EXISTS(SELECT 1 FROM wordweave.ai_providers WHERE credential_configured)
 `
 
-func (q *Queries) HasOpenRouterCredential(ctx context.Context) (bool, error) {
-	row := q.db.QueryRow(ctx, hasOpenRouterCredential)
+func (q *Queries) HasModelCredential(ctx context.Context) (bool, error) {
+	row := q.db.QueryRow(ctx, hasModelCredential)
 	var exists bool
 	err := row.Scan(&exists)
 	return exists, err

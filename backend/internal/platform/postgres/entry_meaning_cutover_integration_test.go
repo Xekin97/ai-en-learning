@@ -100,80 +100,21 @@ func cutoverDigest(t *testing.T, ctx context.Context, pool *pgxpool.Pool) map[st
 	return result
 }
 
-func TestCR040CutoverPreservesAndClearsOnlyApprovedData(t *testing.T) {
+// The M001 destructive cutover was authorized only for its exact seven-file
+// binary. M002 must reject it even on an otherwise matching old database.
+func TestM002RefusesLegacyDestructiveCutoverBeforeAnyMutation(t *testing.T) {
 	ctx, pool, o, _ := cutoverTestDatabase(t)
 	before := cutoverDigest(t, ctx, pool)
-	result, err := CutoverEntryMeaning(ctx, pool, o)
-	if err != nil {
-		t.Fatal(err)
+	called := false
+	result, err := cutoverEntryMeaning(ctx, pool, o, cutoverHooks{
+		at:     func(stage string, tx pgx.Tx) error { called = true; return nil },
+		commit: func(ctx context.Context, tx pgx.Tx) error { called = true; return errors.New("must not commit") },
+	})
+	if err == nil || result.Outcome != "rolled_back" || called {
+		t.Fatalf("legacy destructive command reached mutation: %+v %v called=%v", result, err, called)
 	}
-	if result.Outcome != "committed" || result.Deleted["learner_accounts"] != 1 || result.Deleted["visitor_claims"] != 2 {
-		t.Fatal("incomplete deletion report")
-	}
-	after := cutoverDigest(t, ctx, pool)
-	for _, table := range []string{"ai_models", "openrouter_credentials", "vocabulary_snapshots", "vocabulary_entries"} {
-		if before[table] != after[table] {
-			t.Fatal("retained data changed in", table)
-		}
-	}
-	var admins, sessions, models, limits, lengths int
-	if err := pool.QueryRow(ctx, `SELECT
-	 (SELECT count(*) FROM wordweave.accounts WHERE username='cutover_admin' AND password_hash='synthetic-admin-password-hash'),
-	 (SELECT count(*) FROM wordweave.account_sessions),(SELECT count(*) FROM wordweave.group_models),
-	 (SELECT count(*) FROM wordweave.entitlement_groups WHERE max_entries_per_run=5),
-	 (SELECT count(*) FROM wordweave.group_lengths)`).Scan(&admins, &sessions, &models, &limits, &lengths); err != nil {
-		t.Fatal(err)
-	}
-	if admins != 1 || sessions != 0 || models != 0 || limits != 4 || lengths != 16 {
-		t.Fatal("postconditions differ")
-	}
-	if err := Verify(ctx, pool); err != nil {
-		t.Fatal(err)
-	}
-	// Ordinary startup must accept fresh business data and custom group policies.
-	if _, err := pool.Exec(ctx, `INSERT INTO wordweave.accounts(username,password_hash,role,group_code) VALUES ('new_learner','synthetic','learner','registered');
-	UPDATE wordweave.entitlement_groups SET rolling_quota_limit=7 WHERE code='visitor';`); err != nil {
-		t.Fatal(err)
-	}
-	newData := cutoverDigest(t, ctx, pool)
-	if _, err := CutoverEntryMeaning(ctx, pool, o); err == nil {
-		t.Fatal("repeated destructive cutover accepted")
-	}
-	if err := Migrate(ctx, pool); err != nil {
-		t.Fatal(err)
-	}
-	if !reflect.DeepEqual(newData, cutoverDigest(t, ctx, pool)) {
-		t.Fatal("rerun or ordinary migration changed new data")
-	}
-}
-
-func TestCR040CutoverRollsBackEveryFailureBoundary(t *testing.T) {
-	for _, point := range []string{"delete_visitor_claims", "delete_batch_targets", "before_constraints", "before_migration", "after_migration", "before_commit"} {
-		t.Run(point, func(t *testing.T) {
-			ctx, pool, o, _ := cutoverTestDatabase(t)
-			before := cutoverDigest(t, ctx, pool)
-			result, err := cutoverEntryMeaning(ctx, pool, o, cutoverHooks{at: func(stage string, tx pgx.Tx) error {
-				if stage == point {
-					return errors.New("synthetic injected failure")
-				}
-				return nil
-			}})
-			if err == nil || result.Outcome != "rolled_back" {
-				t.Fatal("failure not reported")
-			}
-			if !reflect.DeepEqual(before, cutoverDigest(t, ctx, pool)) {
-				t.Fatal("failure left partial data")
-			}
-			tx, e := pool.Begin(ctx)
-			if e != nil {
-				t.Fatal(e)
-			}
-			e = checkCutoverPrestate(ctx, tx)
-			_ = tx.Rollback(ctx)
-			if e != nil {
-				t.Fatal("source schema or ledger changed")
-			}
-		})
+	if !reflect.DeepEqual(before, cutoverDigest(t, ctx, pool)) {
+		t.Fatal("legacy command changed user data")
 	}
 }
 
@@ -226,68 +167,6 @@ func TestCR040CutoverRefusesUnexpectedTargetAndSchema(t *testing.T) {
 				t.Fatal("rejected operation changed data")
 			}
 		})
-	}
-}
-
-func TestCR040CutoverCommitUnknownIsNotRetried(t *testing.T) {
-	for _, committed := range []bool{false, true} {
-		t.Run(map[bool]string{false: "not_committed", true: "committed"}[committed], func(t *testing.T) {
-			ctx, pool, o, _ := cutoverTestDatabase(t)
-			calls := 0
-			result, err := cutoverEntryMeaning(ctx, pool, o, cutoverHooks{commit: func(ctx context.Context, tx pgx.Tx) error {
-				calls++
-				if committed {
-					if e := tx.Commit(ctx); e != nil {
-						return e
-					}
-				}
-				return errors.New("synthetic connection loss")
-			}})
-			var cutoverError *CutoverError
-			if !errors.As(err, &cutoverError) || result.Outcome != "unknown" || calls != 1 || result.Deleted != nil {
-				t.Fatal("unknown commit was concealed or retried")
-			}
-			var applied bool
-			if err := pool.QueryRow(ctx, "SELECT EXISTS(SELECT 1 FROM wordweave.schema_migrations WHERE version=$1)", entryMeaningMigration).Scan(&applied); err != nil {
-				t.Fatal(err)
-			}
-			if applied != committed {
-				t.Fatal("read-only reconciliation differs")
-			}
-		})
-	}
-}
-
-func TestCR040CutoverLockConflictDoesNotKillOtherSession(t *testing.T) {
-	ctx, pool, o, url := cutoverTestDatabase(t)
-	before := cutoverDigest(t, ctx, pool)
-	var connection *pgx.Conn
-	t.Cleanup(func() {
-		if connection != nil {
-			_ = connection.Close(context.Background())
-		}
-	})
-	result, err := cutoverEntryMeaning(ctx, pool, o, cutoverHooks{at: func(stage string, tx pgx.Tx) error {
-		if stage != "before_lock" {
-			return nil
-		}
-		var e error
-		connection, e = pgx.Connect(ctx, url)
-		if e != nil {
-			return e
-		}
-		_, e = connection.Exec(ctx, "BEGIN; LOCK TABLE wordweave.accounts IN ACCESS SHARE MODE")
-		return e
-	}})
-	if err == nil || result.Outcome != "rolled_back" {
-		t.Fatal("lock conflict not rejected")
-	}
-	if _, err := connection.Exec(ctx, "ROLLBACK"); err != nil {
-		t.Fatal("other session was terminated")
-	}
-	_ = connection.Close(ctx)
-	if !reflect.DeepEqual(before, cutoverDigest(t, ctx, pool)) {
-		t.Fatal("lock failure changed data")
 	}
 }
 

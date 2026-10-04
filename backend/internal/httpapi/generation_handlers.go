@@ -37,14 +37,20 @@ func (server *Server) generationStream(writer http.ResponseWriter, request *http
 		Scenario: body.Scenario, Length: body.Length, Entries: body.Entries,
 	})
 	if err != nil {
+		server.recordGenerationPrecheck(request)
 		logGenerationDiagnostic(request.Context(), ai.GenerationSpec{}, "preflight", err)
 		server.writeGenerationProblem(writer, request, err)
 		return
 	}
+	server.streamGenerationRun(writer, request, run, startedAt)
+}
+
+func (server *Server) streamGenerationRun(writer http.ResponseWriter, request *http.Request, run generation.Run, startedAt time.Time) {
+	trace := generationtrace.From(request.Context())
 	defer func() {
 		slog.InfoContext(request.Context(), "ai_generation_request_finished", "request_id", requestID(request.Context()), "run_id", run.ID.String(), "model_id", run.Spec.ModelID, "elapsed_ms", time.Since(startedAt).Milliseconds())
 	}()
-	upstreamContext, cancelUpstream := context.WithCancel(request.Context())
+	upstreamContext, cancelUpstream := context.WithCancel(server.generation.UsageContext(request.Context(), run.ID, false))
 	server.generation.Registry().SetCancel(run.ID, cancelUpstream)
 	trace.Begin(generationtrace.ProviderOpen)
 	stream, err := server.generation.Provider().Open(upstreamContext, run.Spec)

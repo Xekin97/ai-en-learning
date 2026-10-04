@@ -46,7 +46,7 @@ func TestOpenRouterLiveMatrix(t *testing.T) {
 	assertSeedBaseline(t, ctx, pool)
 
 	cfg := integrationConfig(testURL, "https://openrouter.ai/api/v1")
-	apiServer, err := New(cfg, pool, pool)
+	apiServer, err := integrationServer(t, cfg, pool)
 	if err != nil {
 		t.Fatal(err)
 	}

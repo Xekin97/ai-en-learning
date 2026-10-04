@@ -4,7 +4,9 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"strings"
 	"time"
+	"unicode/utf8"
 
 	"github.com/google/uuid"
 	"github.com/jackc/pgx/v5"
@@ -15,6 +17,7 @@ import (
 	"wordweave/internal/ai"
 	"wordweave/internal/generation"
 	"wordweave/internal/identity"
+	"wordweave/internal/platform/business"
 	"wordweave/internal/platform/security"
 )
 
@@ -42,6 +45,7 @@ func NewService(pool *pgxpool.Pool, registry *generation.Registry, capabilityKey
 }
 
 type SavedBatch struct {
+	Title   string
 	ID      uuid.UUID
 	SavedAt time.Time
 }
@@ -62,6 +66,11 @@ func (service *Service) Save(ctx context.Context, actor identity.Actor, runIDRaw
 		return SavedBatch{}, false, err
 	}
 	defer func() { _ = tx.Rollback(ctx) }()
+	configuration, err := lockLearningSubject(ctx, tx, actor)
+	if err != nil {
+		return SavedBatch{}, false, err
+	}
+
 	disposition, err := lockOwnedValidRun(ctx, tx, runID, actor)
 	if err != nil {
 		return SavedBatch{}, false, err
@@ -77,7 +86,7 @@ func (service *Service) Save(ctx context.Context, actor identity.Actor, runIDRaw
 		return existing, true, nil
 	}
 	if disposition != "pending" {
-		return SavedBatch{}, false, ErrNotFound
+		return SavedBatch{}, false, ErrConflict
 	}
 	draft, snapshot, err := service.lockActorDraft(ctx, tx, runID, actor, token)
 	if err != nil {
@@ -87,6 +96,10 @@ func (service *Service) Save(ctx context.Context, actor identity.Actor, runIDRaw
 	if err != nil {
 		return SavedBatch{}, false, err
 	}
+	if err = recordSaved(ctx, tx, actor.ID, runID, configuration, nil); err != nil {
+		return SavedBatch{}, false, err
+	}
+
 	if _, err := tx.Exec(ctx, `UPDATE wordweave.generation_runs SET disposition='saved' WHERE id=$1 AND disposition='pending'`, runID); err != nil {
 		return SavedBatch{}, false, fmt.Errorf("mark generation saved: %w", err)
 	}
@@ -115,6 +128,11 @@ func (service *Service) Discard(ctx context.Context, actor identity.Actor, runID
 		return err
 	}
 	defer func() { _ = tx.Rollback(ctx) }()
+	_, err = lockLearningSubject(ctx, tx, actor)
+	if err != nil {
+		return err
+	}
+
 	disposition, err := lockOwnedValidRun(ctx, tx, runID, actor)
 	if err != nil {
 		return err
@@ -159,6 +177,11 @@ func (service *Service) CreateClaim(ctx context.Context, actor identity.Actor, r
 		return Claim{}, err
 	}
 	defer func() { _ = tx.Rollback(ctx) }()
+	_, err = lockLearningSubject(ctx, tx, actor)
+	if err != nil {
+		return Claim{}, err
+	}
+
 	disposition, err := lockOwnedValidRun(ctx, tx, runID, actor)
 	if err != nil {
 		return Claim{}, err
@@ -191,19 +214,32 @@ func (service *Service) CreateClaim(ctx context.Context, actor identity.Actor, r
 	return Claim{Token: claimToken, ExpiresAt: expiresAt}, nil
 }
 
-func (service *Service) ConsumeClaim(ctx context.Context, actor identity.Actor, claimToken string) (uuid.UUID, bool, error) {
+func (service *Service) ConsumeClaim(ctx context.Context, actor identity.Actor, claimToken string) (SavedBatch, bool, error) {
 	if !actor.IsLearner() {
-		return uuid.Nil, false, ErrForbidden
+		return SavedBatch{}, false, ErrForbidden
 	}
 	if claimToken == "" {
-		return uuid.Nil, false, ErrNotFound
+		return SavedBatch{}, false, ErrNotFound
 	}
 	tx, err := service.pool.BeginTx(ctx, pgx.TxOptions{})
 	if err != nil {
-		return uuid.Nil, false, err
+		return SavedBatch{}, false, err
 	}
 	defer func() { _ = tx.Rollback(ctx) }()
+	configuration, err := lockLearningSubject(ctx, tx, actor)
+	if err != nil {
+		return SavedBatch{}, false, err
+	}
 	var claimID, runID, visitorID uuid.UUID
+	if err = tx.QueryRow(ctx, `SELECT visitor_id FROM wordweave.visitor_claims WHERE token_hash=$1`, security.Digest(service.capabilityKey, "visitor-claim-v1", claimToken)).Scan(&visitorID); err != nil {
+		if errors.Is(err, pgx.ErrNoRows) {
+			err = ErrNotFound
+		}
+		return SavedBatch{}, false, err
+	}
+	if _, err = tx.Exec(ctx, `SELECT id FROM wordweave.visitor_identities WHERE id=$1 FOR UPDATE`, visitorID); err != nil {
+		return SavedBatch{}, false, err
+	}
 	var status string
 	var consumedAccountID, consumedBatchID uuid.NullUUID
 	var expiresAt time.Time
@@ -213,50 +249,65 @@ func (service *Service) ConsumeClaim(ctx context.Context, actor identity.Actor, 
 		security.Digest(service.capabilityKey, "visitor-claim-v1", claimToken),
 	).Scan(&claimID, &runID, &visitorID, &status, &consumedAccountID, &consumedBatchID, &expiresAt)
 	if errors.Is(err, pgx.ErrNoRows) {
-		return uuid.Nil, false, ErrNotFound
+		return SavedBatch{}, false, ErrNotFound
 	}
 	if err != nil {
-		return uuid.Nil, false, fmt.Errorf("lock visitor claim: %w", err)
+		return SavedBatch{}, false, fmt.Errorf("lock visitor claim: %w", err)
 	}
 	if status == "consumed" {
 		if !consumedAccountID.Valid || consumedAccountID.UUID != actor.ID || !consumedBatchID.Valid {
-			return uuid.Nil, false, ErrNotFound
+			return SavedBatch{}, false, ErrNotFound
 		}
-		return consumedBatchID.UUID, true, nil
+		existing, found, err := existingBatch(ctx, tx, actor.ID, runID)
+		if err != nil {
+			return SavedBatch{}, false, err
+		}
+		if !found {
+			return SavedBatch{}, false, ErrNotFound
+		}
+		return existing, true, nil
 	}
 	if time.Now().After(expiresAt) {
-		return uuid.Nil, false, ErrCapabilityExpired
+		return SavedBatch{}, false, ErrCapabilityExpired
 	}
 	draft, snapshot, err := lockDraft(ctx, tx, runID, uuid.Nil, visitorID)
 	if err != nil {
-		return uuid.Nil, false, err
+		return SavedBatch{}, false, err
 	}
 	if !time.Now().Before(draft.ExpiresAt) {
-		return uuid.Nil, false, ErrCapabilityExpired
+		return SavedBatch{}, false, ErrCapabilityExpired
 	}
 	batch, err := createBatch(ctx, tx, actor.ID, snapshot, draft.Payload)
 	if err != nil {
-		return uuid.Nil, false, err
+		return SavedBatch{}, false, err
 	}
+	var generatedAt time.Time
+	if err = tx.QueryRow(ctx, `SELECT completed_at FROM wordweave.generation_runs WHERE id=$1`, runID).Scan(&generatedAt); err != nil {
+		return SavedBatch{}, false, err
+	}
+	if err = recordSaved(ctx, tx, actor.ID, runID, configuration, &generatedAt); err != nil {
+		return SavedBatch{}, false, err
+	}
+
 	if _, err := tx.Exec(ctx, `
 		UPDATE wordweave.generation_runs
 		SET credited_account_id=$2, disposition='saved'
 		WHERE id=$1 AND disposition='pending'`, runID, actor.ID); err != nil {
-		return uuid.Nil, false, fmt.Errorf("credit claimed generation: %w", err)
+		return SavedBatch{}, false, fmt.Errorf("credit claimed generation: %w", err)
 	}
 	if _, err := tx.Exec(ctx, `
 		UPDATE wordweave.visitor_claims
 		SET status='consumed', consumed_account_id=$2, consumed_batch_id=$3, consumed_at=clock_timestamp()
 		WHERE id=$1`, claimID, actor.ID, batch.ID); err != nil {
-		return uuid.Nil, false, fmt.Errorf("consume visitor claim: %w", err)
+		return SavedBatch{}, false, fmt.Errorf("consume visitor claim: %w", err)
 	}
 	if _, err := tx.Exec(ctx, `DELETE FROM wordweave.generation_drafts WHERE run_id=$1`, runID); err != nil {
-		return uuid.Nil, false, err
+		return SavedBatch{}, false, err
 	}
 	if err := tx.Commit(ctx); err != nil {
-		return uuid.Nil, false, err
+		return SavedBatch{}, false, err
 	}
-	return batch.ID, false, nil
+	return batch, false, nil
 }
 
 type Summary struct {
@@ -276,8 +327,8 @@ func (service *Service) Summary(ctx context.Context, ownerID uuid.UUID) (Summary
 			(SELECT count(DISTINCT target.vocabulary_entry_id) FROM wordweave.batch_targets target WHERE target.owner_id=$1),
 			(SELECT count(*) FROM wordweave.learning_batches WHERE owner_id=$1 AND participates_in_range_review),
 			(SELECT count(*) FROM wordweave.learning_batches WHERE owner_id=$1 AND NOT participates_in_range_review),
-			(SELECT count(*) FROM wordweave.review_results result JOIN wordweave.learning_batches batch ON batch.id=result.batch_id WHERE result.owner_id=$1 AND result.successful),
-			(SELECT count(DISTINCT result.batch_id) FROM wordweave.review_results result JOIN wordweave.learning_batches batch ON batch.id=result.batch_id WHERE result.owner_id=$1 AND result.successful)
+			(SELECT count(*) FROM wordweave.review_attempts result JOIN wordweave.learning_batches batch ON batch.id=result.batch_id WHERE result.owner_id=$1 AND result.state='submitted' AND result.successful),
+			(SELECT count(DISTINCT result.batch_id) FROM wordweave.review_attempts result JOIN wordweave.learning_batches batch ON batch.id=result.batch_id WHERE result.owner_id=$1 AND result.state='submitted' AND result.successful)
 	`, ownerID).Scan(
 		&summary.GenerationCount, &summary.UniqueLearnedEntries, &summary.ParticipatingBatches,
 		&summary.PausedBatches, &summary.SuccessfulReviewCount, &summary.BatchesEverReviewedSuccessfully,
@@ -294,6 +345,8 @@ type BatchCursor struct {
 }
 
 type BatchSummary struct {
+	Title                     string
+	TitleRevision             string
 	ID                        uuid.UUID
 	SavedAt                   time.Time
 	PassagePreview            string
@@ -307,6 +360,12 @@ type BatchSummary struct {
 	ResumeSessionID           *uuid.UUID
 }
 
+// NormalizeEntryQuery keeps vocabulary lookup and cursor scope on the same exact word.
+// Internal whitespace and punctuation remain significant.
+func NormalizeEntryQuery(query string) string {
+	return strings.ToLower(strings.TrimSpace(query))
+}
+
 func (service *Service) ListBatches(ctx context.Context, ownerID uuid.UUID, entry *string, cursor *BatchCursor, limit int) ([]BatchSummary, bool, error) {
 	if limit < 1 || limit > 100 {
 		return nil, false, ErrValidation
@@ -316,7 +375,7 @@ func (service *Service) ListBatches(ctx context.Context, ownerID uuid.UUID, entr
 		var id int64
 		if err := service.pool.QueryRow(ctx, `
 			SELECT id FROM wordweave.vocabulary_entries
-			WHERE snapshot_id=(SELECT id FROM wordweave.vocabulary_snapshots WHERE version='m001') AND entry=$1`, *entry).Scan(&id); err != nil {
+			WHERE snapshot_id=(SELECT id FROM wordweave.vocabulary_snapshots WHERE version='m001') AND entry=$1`, NormalizeEntryQuery(*entry)).Scan(&id); err != nil {
 			if errors.Is(err, pgx.ErrNoRows) {
 				return nil, false, ErrValidation
 			}
@@ -330,7 +389,7 @@ func (service *Service) ListBatches(ctx context.Context, ownerID uuid.UUID, entr
 		cursorTime, cursorID = cursor.SavedAt, cursor.ID
 	}
 	rows, err := service.pool.Query(ctx, `
-		SELECT batch.id, batch.saved_at, left(batch.passage, 180), batch.tags,
+		SELECT batch.id, batch.saved_at, batch.title,batch.title_revision,left(batch.passage, 180), batch.tags,
 			array_agg(target.source_entry_snapshot ORDER BY target.input_order),
 			batch.model_display_name_snapshot, batch.meaning_language, batch.scenario, batch.length_code,
 			batch.participates_in_range_review,
@@ -355,9 +414,10 @@ func (service *Service) ListBatches(ctx context.Context, ownerID uuid.UUID, entr
 	items := make([]BatchSummary, 0, limit+1)
 	for rows.Next() {
 		var item BatchSummary
+		var revision int64
 		var resume uuid.NullUUID
 		if err := rows.Scan(
-			&item.ID, &item.SavedAt, &item.PassagePreview, &item.Tags, &item.Entries,
+			&item.ID, &item.SavedAt, &item.Title, &revision, &item.PassagePreview, &item.Tags, &item.Entries,
 			&item.ModelName, &item.MeaningLanguage, &item.Scenario, &item.Length,
 			&item.ParticipatesInRangeReview, &resume,
 		); err != nil {
@@ -367,6 +427,7 @@ func (service *Service) ListBatches(ctx context.Context, ownerID uuid.UUID, entr
 			value := resume.UUID
 			item.ResumeSessionID = &value
 		}
+		item.TitleRevision = business.Revision(service.capabilityKey, "batch-title:"+item.ID.String(), revision)
 		items = append(items, item)
 	}
 	if err := rows.Err(); err != nil {
@@ -380,6 +441,7 @@ func (service *Service) ListBatches(ctx context.Context, ownerID uuid.UUID, entr
 }
 
 type BatchDetail struct {
+	TitleMaxLength int
 	BatchSummary
 	Passage string
 	Targets []TargetDetail
@@ -402,11 +464,12 @@ type ReviewSummary struct {
 
 func (service *Service) BatchDetail(ctx context.Context, ownerID, batchID uuid.UUID) (BatchDetail, error) {
 	var detail BatchDetail
+	var revision int64
 	err := service.pool.QueryRow(ctx, `
-		SELECT id, saved_at, model_display_name_snapshot, meaning_language, scenario,
+		SELECT id, saved_at,title,title_revision, model_display_name_snapshot, meaning_language, scenario,
 			length_code, participates_in_range_review, passage, tags
 		FROM wordweave.learning_batches WHERE id=$1 AND owner_id=$2`, batchID, ownerID).Scan(
-		&detail.ID, &detail.SavedAt, &detail.ModelName, &detail.MeaningLanguage,
+		&detail.ID, &detail.SavedAt, &detail.Title, &revision, &detail.ModelName, &detail.MeaningLanguage,
 		&detail.Scenario, &detail.Length, &detail.ParticipatesInRangeReview,
 		&detail.Passage, &detail.Tags,
 	)
@@ -416,6 +479,7 @@ func (service *Service) BatchDetail(ctx context.Context, ownerID, batchID uuid.U
 	if err != nil {
 		return BatchDetail{}, err
 	}
+	detail.TitleRevision = business.Revision(service.capabilityKey, "batch-title:"+detail.ID.String(), revision)
 	rows, err := service.pool.Query(ctx, `
 		SELECT id, source_entry_snapshot, entry_meaning, hint_phrase,
 			hint_surface, hint_start, hint_end
@@ -503,8 +567,8 @@ func (service *Service) BatchDetail(ctx context.Context, ownerID, batchID uuid.U
 	}
 	var last pgtype.Timestamptz
 	if err := service.pool.QueryRow(ctx, `
-		SELECT count(*), count(*) FILTER (WHERE successful), max(completed_at)
-		FROM wordweave.review_results WHERE batch_id=$1 AND owner_id=$2`, batchID, ownerID).Scan(
+		SELECT count(*), count(*) FILTER (WHERE successful), max(submitted_at)
+		FROM wordweave.review_attempts WHERE batch_id=$1 AND owner_id=$2 AND state='submitted'`, batchID, ownerID).Scan(
 		&detail.Review.CompletedCount, &detail.Review.SuccessfulCount, &last,
 	); err != nil {
 		return BatchDetail{}, err
@@ -513,11 +577,26 @@ func (service *Service) BatchDetail(ctx context.Context, ownerID, batchID uuid.U
 		value := last.Time
 		detail.Review.LastCompletedAt = &value
 	}
+	detail.TitleMaxLength = max(200, utf8.RuneCountInString(strings.Join(detail.Entries, " · ")))
 	return detail, nil
 }
 
 func (service *Service) SetRangeParticipation(ctx context.Context, ownerID, batchID uuid.UUID, value bool) error {
-	result, err := service.pool.Exec(ctx, `
+	tx, err := service.pool.Begin(ctx)
+	if err != nil {
+		return err
+	}
+	defer tx.Rollback(ctx)
+	if _, err = business.LockConfiguration(ctx, tx, false); err != nil {
+		return err
+	}
+	if err = business.LockLearner(ctx, tx, ownerID); err != nil {
+		if errors.Is(err, business.ErrNotFound) {
+			return ErrNotFound
+		}
+		return err
+	}
+	result, err := tx.Exec(ctx, `
 		UPDATE wordweave.learning_batches SET participates_in_range_review=$3
 		WHERE id=$1 AND owner_id=$2`, batchID, ownerID, value)
 	if err != nil {
@@ -526,7 +605,7 @@ func (service *Service) SetRangeParticipation(ctx context.Context, ownerID, batc
 	if result.RowsAffected() != 1 {
 		return ErrNotFound
 	}
-	return nil
+	return tx.Commit(ctx)
 }
 
 func (service *Service) DeleteBatch(ctx context.Context, ownerID, batchID uuid.UUID) error {
@@ -535,6 +614,16 @@ func (service *Service) DeleteBatch(ctx context.Context, ownerID, batchID uuid.U
 		return err
 	}
 	defer func() { _ = tx.Rollback(ctx) }()
+	if _, err = business.LockConfiguration(ctx, tx, false); err != nil {
+		return err
+	}
+	if err = business.LockLearner(ctx, tx, ownerID); err != nil {
+		if errors.Is(err, business.ErrNotFound) {
+			err = ErrNotFound
+		}
+		return err
+	}
+
 	// USER-CLAIM-DELETE-001: an explicit owner deletion ends the associated
 	// consumed claim's retry window. Remove it before the batch so the FK's
 	// SET NULL cannot violate the consumed-state constraint. Lock the claim
@@ -562,6 +651,10 @@ func (service *Service) DeleteBatch(ctx context.Context, ownerID, batchID uuid.U
 		)`, ownerID); err != nil {
 		return err
 	}
+	if _, err = tx.Exec(ctx, `UPDATE wordweave.review_sessions s SET status='completed',completed_at=clock_timestamp() WHERE owner_id=$1 AND status='in_progress' AND NOT EXISTS(SELECT 1 FROM wordweave.review_session_batches b WHERE b.session_id=s.id AND b.progress_status='pending') AND NOT EXISTS(SELECT 1 FROM wordweave.review_attempts a WHERE a.session_id=s.id AND a.state='draft')`, ownerID); err != nil {
+		return err
+	}
+
 	return tx.Commit(ctx)
 }
 
@@ -587,7 +680,9 @@ func lockOwnedValidRun(ctx context.Context, tx pgx.Tx, runID uuid.UUID, actor id
 		return "", err
 	}
 	if status != "valid" || completedAt == nil {
-		return "", ErrNotFound
+		// Ownership is already established; an existing but ineligible run is
+		// a state conflict, not a missing resource.
+		return "", ErrConflict
 	}
 	// Pending drafts use their own persisted expiry. Terminal retries use the
 	// previous registry's one-hour retention, without retaining deleted payloads.
@@ -665,8 +760,8 @@ func lockDraft(ctx context.Context, tx pgx.Tx, runID, accountID, visitorID uuid.
 func existingBatch(ctx context.Context, tx pgx.Tx, ownerID, runID uuid.UUID) (SavedBatch, bool, error) {
 	var batch SavedBatch
 	err := tx.QueryRow(ctx, `
-		SELECT id,saved_at FROM wordweave.learning_batches
-		WHERE owner_id=$1 AND generation_run_id=$2`, ownerID, runID).Scan(&batch.ID, &batch.SavedAt)
+		SELECT id,saved_at,title FROM wordweave.learning_batches
+		WHERE owner_id=$1 AND generation_run_id=$2`, ownerID, runID).Scan(&batch.ID, &batch.SavedAt, &batch.Title)
 	if errors.Is(err, pgx.ErrNoRows) {
 		return SavedBatch{}, false, nil
 	}
@@ -679,15 +774,20 @@ func createBatch(ctx context.Context, tx pgx.Tx, ownerID uuid.UUID, snapshot run
 		return SavedBatch{}, fmt.Errorf("decode validated draft: %w", err)
 	}
 	var batch SavedBatch
+	entries := make([]string, len(payload.Targets))
+	for i, target := range payload.Targets {
+		entries[i] = target.Entry
+	}
+	title := strings.Join(entries, " · ")
 	err = tx.QueryRow(ctx, `
 		INSERT INTO wordweave.learning_batches(
 			owner_id,generation_run_id,group_code_snapshot,model_display_name_snapshot,
 			provider_model_id_snapshot,meaning_language,scenario,length_code,passage,tags,
-			expected_target_count,validator_version
-		) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12)
-		RETURNING id,saved_at`, ownerID, snapshot.RunID, snapshot.GroupCode, snapshot.ModelName,
+			expected_target_count,validator_version,title
+		) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13)
+		RETURNING id,saved_at,title`, ownerID, snapshot.RunID, snapshot.GroupCode, snapshot.ModelName,
 		snapshot.ProviderModelID, snapshot.MeaningLanguage, snapshot.Scenario, snapshot.Length,
-		payload.Passage, payload.Tags, len(payload.Targets), payload.ValidatorVersion).Scan(&batch.ID, &batch.SavedAt)
+		payload.Passage, payload.Tags, len(payload.Targets), payload.ValidatorVersion, title).Scan(&batch.ID, &batch.SavedAt, &batch.Title)
 	if err != nil {
 		return SavedBatch{}, fmt.Errorf("insert learning batch: %w", err)
 	}

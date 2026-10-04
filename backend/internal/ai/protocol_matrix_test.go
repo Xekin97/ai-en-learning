@@ -137,7 +137,7 @@ func TestP0ProviderStreamMatrix(t *testing.T) {
 		{"repeat_done", p0SSE(base) + "data: [DONE]\n\ndata: [DONE]\n\n", ""},
 	} {
 		t.Run(tc.name, func(t *testing.T) {
-			stream := openRouterStream{io.NopCloser(strings.NewReader(tc.body))}
+			stream := openRouterStream{body: io.NopCloser(strings.NewReader(tc.body))}
 			var preview strings.Builder
 			got, err := stream.Receive(context.Background(), func(s string) error { preview.WriteString(s); return nil })
 			if tc.reason == "" {
@@ -165,7 +165,7 @@ func TestP0ProviderStreamMatrix(t *testing.T) {
 	} {
 		t.Run("status_"+strconv.Itoa(tc.status), func(t *testing.T) {
 			wire := "data: " + p0JSON(map[string]any{"error": map[string]any{"code": tc.status, "message": "private provider content"}}) + "\n\n"
-			stream := openRouterStream{io.NopCloser(strings.NewReader(wire))}
+			stream := openRouterStream{body: io.NopCloser(strings.NewReader(wire))}
 			_, err := stream.Receive(context.Background(), func(string) error { t.Fatal("error streamed"); return nil })
 			var p *ProviderError
 			if !errors.As(err, &p) || p.Category != tc.category || p.Retryable != tc.retry || strings.Contains(p.Error(), "private") {
@@ -173,12 +173,12 @@ func TestP0ProviderStreamMatrix(t *testing.T) {
 			}
 		})
 	}
-	stream := openRouterStream{io.NopCloser(strings.NewReader(p0SSE(base)))}
+	stream := openRouterStream{body: io.NopCloser(strings.NewReader(p0SSE(base)))}
 	callbackErr := errors.New("synthetic failure")
 	if _, err := stream.Receive(context.Background(), func(string) error { return callbackErr }); !errors.Is(err, callbackErr) {
 		t.Fatal("callback swallowed")
 	}
-	stream = openRouterStream{io.NopCloser(p0BrokenReader{})}
+	stream = openRouterStream{body: io.NopCloser(p0BrokenReader{})}
 	if _, err := stream.Receive(context.Background(), func(string) error { return nil }); DescribeFailure(err).Reason != "sse_read_failed" {
 		t.Fatal("reader failure")
 	}
@@ -204,7 +204,7 @@ func TestP0RandomUnicodeStreamInvariant(t *testing.T) {
 			wire.WriteString(p0SSE(raw[:n]))
 			raw = raw[n:]
 		}
-		stream := openRouterStream{io.NopCloser(strings.NewReader(wire.String()))}
+		stream := openRouterStream{body: io.NopCloser(strings.NewReader(wire.String()))}
 		var preview strings.Builder
 		_, err := stream.Receive(context.Background(), func(delta string) error {
 			preview.WriteString(delta)

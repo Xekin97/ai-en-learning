@@ -38,7 +38,7 @@ func continuationStream(c Candidate) Stream {
 		wire.WriteString(p0SSE(string(r)))
 	}
 	wire.WriteString("data: [DONE]\n\n")
-	return &openRouterStream{io.NopCloser(strings.NewReader(wire.String()))}
+	return &openRouterStream{body: io.NopCloser(strings.NewReader(wire.String()))}
 }
 
 func continuationFixture() (GenerationSpec, Candidate) {
@@ -139,7 +139,7 @@ func TestContinuationCancellationAndProviderErrors(t *testing.T) {
 				provider.err = &ProviderError{Category: FailureRateLimited}
 			}
 			if mode == "receive_error" {
-				provider.next = &openRouterStream{io.NopCloser(strings.NewReader("data: broken\n\n"))}
+				provider.next = &openRouterStream{body: io.NopCloser(strings.NewReader("data: broken\n\n"))}
 			}
 			if mode == "unexpected_targets" {
 				provider.next = continuationStream(candidate)

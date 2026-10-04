@@ -2,13 +2,17 @@ package maintenance
 
 import (
 	"context"
+	"errors"
 	"fmt"
+	"github.com/google/uuid"
 	"log/slog"
 	"time"
 
 	"github.com/jackc/pgx/v5/pgxpool"
 
+	"wordweave/internal/analytics"
 	"wordweave/internal/generation"
+	"wordweave/internal/growth"
 	"wordweave/internal/review"
 )
 
@@ -25,15 +29,38 @@ func New(pool *pgxpool.Pool, generationService *generation.Service, reviewServic
 }
 
 func SettleActiveGenerations(ctx context.Context, pool *pgxpool.Pool, failureCode string) (int64, error) {
-	result, err := pool.Exec(ctx, `
-		UPDATE wordweave.generation_runs
-		SET call_status='server_failed', quota_charged=false, counts_toward_cumulative=false,
-			completed_at=clock_timestamp(), failure_code=$1
-		WHERE call_status='active'`, failureCode)
-	if err != nil {
-		return 0, fmt.Errorf("settle active generations: %w", err)
+	if _, err := generation.SettleActivePreviews(ctx, pool, failureCode); err != nil {
+		return 0, err
 	}
-	return result.RowsAffected(), nil
+	rows, err := pool.Query(ctx, `SELECT id FROM wordweave.generation_runs WHERE call_status='active' ORDER BY id`)
+	if err != nil {
+		return 0, fmt.Errorf("find active generations: %w", err)
+	}
+	var ids []uuid.UUID
+	for rows.Next() {
+		var id uuid.UUID
+		if err = rows.Scan(&id); err != nil {
+			rows.Close()
+			return 0, err
+		}
+		ids = append(ids, id)
+	}
+	if err = rows.Err(); err != nil {
+		rows.Close()
+		return 0, err
+	}
+	rows.Close()
+	var settled int64
+	for _, id := range ids {
+		if err = generation.SettleTerminal(ctx, pool, id, "server_failed", failureCode); err != nil {
+			if errors.Is(err, generation.ErrTerminalRace) || errors.Is(err, generation.ErrRunNotFound) {
+				continue
+			}
+			return settled, err
+		}
+		settled++
+	}
+	return settled, nil
 }
 
 func (runner *Runner) Run(ctx context.Context) {
@@ -47,7 +74,7 @@ func (runner *Runner) Run(ctx context.Context) {
 	if err := runner.cleanupOnce(ctx); err != nil {
 		slog.Error("maintenance cleanup failed", "error", err)
 	}
-	ticker := time.NewTicker(5 * time.Minute)
+	ticker := time.NewTicker(time.Minute)
 	defer ticker.Stop()
 	for {
 		select {
@@ -77,55 +104,43 @@ func (runner *Runner) runRefunds(ctx context.Context) {
 }
 
 func (runner *Runner) cleanupOnce(ctx context.Context) error {
-	statements := []string{
-		`WITH locked AS (
-			SELECT session.id FROM wordweave.account_sessions session
-			JOIN wordweave.accounts account ON account.id=session.account_id
-			WHERE session.expires_at <= clock_timestamp()
-			   OR session.last_seen_at <= clock_timestamp() - CASE WHEN account.role='admin' THEN interval '30 minutes' ELSE interval '7 days' END
-			ORDER BY session.expires_at LIMIT $1 FOR UPDATE OF session SKIP LOCKED
-		) DELETE FROM wordweave.account_sessions session USING locked WHERE session.id=locked.id`,
-		`WITH locked AS (
-			SELECT run.id AS run_id FROM wordweave.generation_runs run
-			JOIN wordweave.generation_drafts draft ON draft.run_id=run.id
-			WHERE draft.expires_at <= clock_timestamp() ORDER BY draft.expires_at LIMIT $1 FOR UPDATE OF run SKIP LOCKED
-		), updated AS (
-			UPDATE wordweave.generation_runs run SET disposition='abandoned'
-			FROM locked WHERE run.id=locked.run_id AND run.call_status='valid' AND run.disposition='pending'
-		) DELETE FROM wordweave.generation_drafts draft USING locked WHERE draft.run_id=locked.run_id`,
-		`WITH locked AS (
-			SELECT id FROM wordweave.visitor_claims WHERE status='active' AND expires_at <= clock_timestamp()
-			ORDER BY expires_at LIMIT $1 FOR UPDATE SKIP LOCKED
-		) DELETE FROM wordweave.visitor_claims claim USING locked WHERE claim.id=locked.id`,
-		`WITH locked AS (
-			SELECT id FROM wordweave.visitor_claims WHERE status='consumed' AND consumed_at <= clock_timestamp()-interval '24 hours'
-			ORDER BY consumed_at LIMIT $1 FOR UPDATE SKIP LOCKED
-		) DELETE FROM wordweave.visitor_claims claim USING locked WHERE claim.id=locked.id`,
-		`WITH locked AS (
-			SELECT visitor.id FROM wordweave.visitor_identities visitor
-			WHERE visitor.last_seen_at <= clock_timestamp()-interval '30 days'
-			  AND NOT EXISTS (SELECT 1 FROM wordweave.visitor_claims claim WHERE claim.visitor_id=visitor.id)
-			  AND NOT EXISTS (
-				SELECT 1 FROM wordweave.generation_runs run
-				LEFT JOIN wordweave.generation_drafts draft ON draft.run_id=run.id
-				WHERE run.visitor_id=visitor.id AND (run.call_status='active' OR draft.run_id IS NOT NULL)
-			  )
-			ORDER BY visitor.last_seen_at LIMIT $1 FOR UPDATE SKIP LOCKED
-		) DELETE FROM wordweave.visitor_identities visitor USING locked WHERE visitor.id=locked.id`,
+	// Independent jobs do not let a failed analytics query strand ordinary TTL
+	// cleanup, generation refunds, or pending qualifications.
+	attempt, cancel := context.WithTimeout(ctx, 30*time.Second)
+	aggregateErr := analytics.Aggregate(attempt, runner.pool)
+	if aggregateErr != nil {
+		slog.ErrorContext(ctx, "analytics_aggregation_failed", "reason", "database_operation_failed")
 	}
-	for _, statement := range statements {
-		if _, err := runner.pool.Exec(ctx, statement, cleanupBatchSize); err != nil {
-			return err
-		}
+	cancel()
+	attempt, cancel = context.WithTimeout(ctx, 15*time.Second)
+	if _, err := analytics.Purge(attempt, runner.pool, cleanupBatchSize); err != nil {
+		slog.ErrorContext(ctx, "analytics_cleanup_failed", "reason", "checkpoint_or_database_unavailable")
+	}
+	cancel()
+	attempt, cancel = context.WithTimeout(ctx, 15*time.Second)
+	if _, err := growth.RecomputeBatch(attempt, runner.pool, cleanupBatchSize); err != nil {
+		slog.ErrorContext(ctx, "growth_recompute_failed", "reason", "database_operation_failed")
+	}
+	cancel()
+
+	attempt, cancel = context.WithTimeout(ctx, 15*time.Second)
+	if _, err := generation.CleanupPresets(attempt, runner.pool, cleanupBatchSize); err != nil {
+		slog.ErrorContext(ctx, "preset_cleanup_failed", "reason", "database_operation_failed")
+	}
+	cancel()
+	if err := runner.cleanupExpired(ctx); err != nil {
+		return err
 	}
 	now := time.Now()
 	runner.generation.Registry().PurgeOlderThan(now.Add(-generation.TerminalTokenRetention))
+	runner.generation.PreviewRegistry().PurgeOlderThan(now.Add(-generation.TerminalTokenRetention))
 	runner.review.PurgeAttempts(now)
 	return nil
 }
 
 func (runner *Runner) Stop(ctx context.Context) error {
 	runner.generation.Registry().CancelAll()
+	runner.generation.PreviewRegistry().CancelAll()
 	_, err := SettleActiveGenerations(ctx, runner.pool, "shutdown")
 	return err
 }

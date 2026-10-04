@@ -11,6 +11,7 @@ import (
 	"github.com/google/uuid"
 
 	"wordweave/internal/learning"
+	"wordweave/internal/platform/business"
 )
 
 func (server *Server) saveGeneration(writer http.ResponseWriter, request *http.Request) {
@@ -31,7 +32,8 @@ func (server *Server) saveGeneration(writer http.ResponseWriter, request *http.R
 	writeJSON(writer, request, status, struct {
 		BatchID string `json:"batch_id"`
 		SavedAt string `json:"saved_at"`
-	}{BatchID: batch.ID.String(), SavedAt: batch.SavedAt.Format(time.RFC3339Nano)})
+		Title   string `json:"title"`
+	}{BatchID: batch.ID.String(), SavedAt: batch.SavedAt.Format(time.RFC3339Nano), Title: batch.Title})
 }
 
 func (server *Server) discardGeneration(writer http.ResponseWriter, request *http.Request) {
@@ -70,15 +72,20 @@ func (server *Server) consumeVisitorClaim(writer http.ResponseWriter, request *h
 		return
 	}
 	actor, _ := actorFromContext(request.Context())
-	batchID, _, err := server.learning.ConsumeClaim(request.Context(), actor, request.Header.Get("X-Claim-Token"))
+	batch, reused, err := server.learning.ConsumeClaim(request.Context(), actor, request.Header.Get("X-Claim-Token"))
 	if err != nil {
 		server.writeLearningProblem(writer, request, err)
 		return
 	}
-	writeJSON(writer, request, http.StatusOK, struct {
+	status := http.StatusCreated
+	if reused {
+		status = http.StatusOK
+	}
+	writeJSON(writer, request, status, struct {
 		BatchID string `json:"batch_id"`
 		Claimed bool   `json:"claimed"`
-	}{BatchID: batchID.String(), Claimed: true})
+		Title   string `json:"title"`
+	}{batch.ID.String(), true, batch.Title})
 }
 
 func (server *Server) learningSummary(writer http.ResponseWriter, request *http.Request) {
@@ -116,7 +123,8 @@ func (server *Server) listBatches(writer http.ResponseWriter, request *http.Requ
 	}
 	var entry *string
 	if raw := request.URL.Query().Get("entry"); raw != "" {
-		entry = &raw
+		normalized := learning.NormalizeEntryQuery(raw)
+		entry = &normalized
 	}
 	scope := "learner-batches:" + actor.ID.String() + ":"
 	if entry != nil {
@@ -181,12 +189,14 @@ func (server *Server) getBatch(writer http.ResponseWriter, request *http.Request
 
 func (server *Server) patchBatch(writer http.ResponseWriter, request *http.Request) {
 	var body struct {
-		Participates requiredBool `json:"participates_in_range_review"`
+		Participates     requiredBool   `json:"participates_in_range_review"`
+		Title            optionalString `json:"title"`
+		ExpectedRevision optionalString `json:"expected_title_revision"`
 	}
-	if !decodeOrProblem(writer, request, &body, 256) {
+	if !decodeOrProblem(writer, request, &body, 1<<20) {
 		return
 	}
-	if !body.Participates.Set {
+	if (body.Participates.Set && (body.Title.Set || body.ExpectedRevision.Set)) || (!body.Participates.Set && (!body.Title.Set || body.Title.Value == nil || !body.ExpectedRevision.Set || body.ExpectedRevision.Value == nil)) {
 		server.writeLearningProblem(writer, request, learning.ErrValidation)
 		return
 	}
@@ -194,6 +204,15 @@ func (server *Server) patchBatch(writer http.ResponseWriter, request *http.Reque
 	batchID, err := uuid.Parse(chi.URLParam(request, "batch_id"))
 	if err != nil {
 		server.writeLearningProblem(writer, request, learning.ErrNotFound)
+		return
+	}
+	if body.Title.Set {
+		result, err := server.learning.SetTitle(request.Context(), actor.ID, batchID, *body.Title.Value, *body.ExpectedRevision.Value)
+		if err != nil {
+			server.writeLearningProblem(writer, request, err)
+			return
+		}
+		writeJSON(writer, request, http.StatusOK, result)
 		return
 	}
 	if err := server.learning.SetRangeParticipation(request.Context(), actor.ID, batchID, body.Participates.Value); err != nil {
@@ -212,6 +231,9 @@ type requiredBool struct {
 }
 
 func (value *requiredBool) UnmarshalJSON(raw []byte) error {
+	if string(raw) == "null" {
+		return errors.New("boolean cannot be null")
+	}
 	if err := json.Unmarshal(raw, &value.Value); err != nil {
 		return err
 	}
@@ -239,6 +261,8 @@ type singleBatchReviewDTO struct {
 }
 
 type batchSummaryDTO struct {
+	Title          string   `json:"title"`
+	TitleRevision  string   `json:"title_revision"`
 	ID             string   `json:"id"`
 	SavedAt        string   `json:"saved_at"`
 	PassagePreview string   `json:"passage_preview"`
@@ -256,6 +280,7 @@ type batchSummaryDTO struct {
 
 func mapBatchSummary(item learning.BatchSummary) batchSummaryDTO {
 	dto := batchSummaryDTO{
+		Title: item.Title, TitleRevision: item.TitleRevision,
 		ID: item.ID.String(), SavedAt: item.SavedAt.Format(time.RFC3339Nano), PassagePreview: item.PassagePreview,
 		Tags: item.Tags, Entries: item.Entries, MeaningLanguage: item.MeaningLanguage,
 		Scenario: item.Scenario, Length: item.Length,
@@ -266,9 +291,12 @@ func mapBatchSummary(item learning.BatchSummary) batchSummaryDTO {
 }
 
 type batchDetailDTO struct {
-	ID            string `json:"id"`
-	SavedAt       string `json:"saved_at"`
-	Configuration struct {
+	Title          string `json:"title"`
+	TitleRevision  string `json:"title_revision"`
+	TitleMaxLength int    `json:"title_max_length"`
+	ID             string `json:"id"`
+	SavedAt        string `json:"saved_at"`
+	Configuration  struct {
 		Model struct {
 			Name string `json:"name"`
 		} `json:"model"`
@@ -304,6 +332,7 @@ type targetDetailDTO struct {
 
 func mapBatchDetail(detail learning.BatchDetail) batchDetailDTO {
 	dto := batchDetailDTO{
+		Title: detail.Title, TitleRevision: detail.TitleRevision, TitleMaxLength: detail.TitleMaxLength,
 		ID: detail.ID.String(), SavedAt: detail.SavedAt.Format(time.RFC3339Nano),
 		ParticipatesInRangeReview: detail.ParticipatesInRangeReview,
 		Passage:                   detail.Passage, Tags: detail.Tags,
@@ -349,13 +378,20 @@ func mapBatchDetail(detail learning.BatchDetail) batchDetailDTO {
 }
 
 func (server *Server) writeLearningProblem(writer http.ResponseWriter, request *http.Request, err error) {
+	var conflict *business.RevisionConflict
+	if errors.As(err, &conflict) {
+		writeProblemContext(writer, request, http.StatusConflict, "revision_conflict", "Content changed", "Reload the current version before saving.", struct {
+			Current string `json:"current_revision"`
+		}{conflict.Current})
+		return
+	}
 	switch {
 	case errors.Is(err, learning.ErrNotFound):
 		writeProblem(writer, request, http.StatusNotFound, "not_found", "Not found", "The requested resource could not be found.")
 	case errors.Is(err, learning.ErrCapabilityExpired):
 		writeProblem(writer, request, http.StatusGone, "capability_expired", "Action expired", "This temporary action has expired.")
 	case errors.Is(err, learning.ErrConflict):
-		writeProblem(writer, request, http.StatusConflict, "conflict", "Action conflict", "The resource is already in another state.")
+		writeProblem(writer, request, http.StatusConflict, "state_conflict", "Action conflict", "The resource is already in another state.")
 	case errors.Is(err, learning.ErrValidation):
 		writeProblem(writer, request, http.StatusUnprocessableEntity, "validation_failed", "Request could not be accepted", "One or more fields need attention.")
 	case errors.Is(err, learning.ErrForbidden):

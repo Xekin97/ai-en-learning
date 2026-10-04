@@ -207,6 +207,17 @@ func requireLearner(next http.Handler) http.Handler {
 	})
 }
 
+func requireAccount(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(writer http.ResponseWriter, request *http.Request) {
+		actor, ok := actorFromContext(request.Context())
+		if !ok || actor.IsVisitor() {
+			writeProblem(writer, request, http.StatusUnauthorized, "authentication_required", "Sign in required", "Authentication is required for this operation.")
+			return
+		}
+		next.ServeHTTP(writer, request)
+	})
+}
+
 func requireAdmin(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(writer http.ResponseWriter, request *http.Request) {
 		actor, ok := actorFromContext(request.Context())

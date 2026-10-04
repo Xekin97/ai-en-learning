@@ -6,7 +6,7 @@ import (
 )
 
 const (
-	PromptVersion    = "m001-v5-r10"
+	PromptVersion    = "m002-v1-r1"
 	ValidatorVersion = "m001-v5-wn31-r2"
 )
 
@@ -23,6 +23,7 @@ type GenerationSpec struct {
 	CompatibilityProbe bool
 	continuation       *passageContinuation // Server-owned; never accepted from the public request.
 	correction         *contentCorrection   // Shares the same bounded correction budget.
+	connection         *connectionSnapshot  // Pinned before charging; never serialized.
 }
 
 type Candidate struct {
@@ -92,7 +93,7 @@ func (err *ProviderError) Error() string {
 
 func (err *ProviderError) Unwrap() error { return err.Err }
 
-var ErrCredentialMissing = errors.New("OpenRouter credential is not configured")
+var ErrCredentialMissing = errors.New("model connection credential is not configured")
 
 type Stream interface {
 	Receive(ctx context.Context, onPassageDelta func(string) error) (Candidate, error)

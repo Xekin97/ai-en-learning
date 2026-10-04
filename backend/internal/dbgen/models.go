@@ -10,16 +10,20 @@ import (
 )
 
 type WordweaveAccount struct {
-	ID           uuid.UUID          `json:"id"`
-	Username     string             `json:"username"`
-	PasswordHash string             `json:"password_hash"`
-	Role         string             `json:"role"`
-	GroupCode    pgtype.Text        `json:"group_code"`
-	Status       string             `json:"status"`
-	UiLocale     pgtype.Text        `json:"ui_locale"`
-	QuotaResetAt pgtype.Timestamptz `json:"quota_reset_at"`
-	CreatedAt    pgtype.Timestamptz `json:"created_at"`
-	UpdatedAt    pgtype.Timestamptz `json:"updated_at"`
+	ID             uuid.UUID          `json:"id"`
+	Username       string             `json:"username"`
+	PasswordHash   string             `json:"password_hash"`
+	Role           string             `json:"role"`
+	GroupCode      pgtype.Text        `json:"group_code"`
+	Status         string             `json:"status"`
+	UiLocale       pgtype.Text        `json:"ui_locale"`
+	QuotaResetAt   pgtype.Timestamptz `json:"quota_reset_at"`
+	CreatedAt      pgtype.Timestamptz `json:"created_at"`
+	UpdatedAt      pgtype.Timestamptz `json:"updated_at"`
+	Nickname       pgtype.Text        `json:"nickname"`
+	Gender         pgtype.Text        `json:"gender"`
+	LastLoginAt    pgtype.Timestamptz `json:"last_login_at"`
+	LastLearningAt pgtype.Timestamptz `json:"last_learning_at"`
 }
 
 type WordweaveAccountSession struct {
@@ -31,6 +35,49 @@ type WordweaveAccountSession struct {
 	ExpiresAt  pgtype.Timestamptz `json:"expires_at"`
 }
 
+type WordweaveAchievementAward struct {
+	OwnerID         uuid.UUID          `json:"owner_id"`
+	TierID          uuid.UUID          `json:"tier_id"`
+	AchievedAt      pgtype.Timestamptz `json:"achieved_at"`
+	TitleZhSnapshot pgtype.Text        `json:"title_zh_snapshot"`
+	TitleEnSnapshot pgtype.Text        `json:"title_en_snapshot"`
+	ClaimedAt       pgtype.Timestamptz `json:"claimed_at"`
+	SettlementID    uuid.NullUUID      `json:"settlement_id"`
+}
+
+type WordweaveAchievementTier struct {
+	ID               uuid.UUID     `json:"id"`
+	Kind             string        `json:"kind"`
+	Threshold        int64         `json:"threshold"`
+	Enabled          bool          `json:"enabled"`
+	NameZh           pgtype.Text   `json:"name_zh"`
+	NameEn           pgtype.Text   `json:"name_en"`
+	TitleZh          pgtype.Text   `json:"title_zh"`
+	TitleEn          pgtype.Text   `json:"title_en"`
+	DescriptionZh    pgtype.Text   `json:"description_zh"`
+	DescriptionEn    pgtype.Text   `json:"description_en"`
+	Points           int64         `json:"points"`
+	Experience       int64         `json:"experience"`
+	ItemDefinitionID uuid.NullUUID `json:"item_definition_id"`
+	ItemCount        int32         `json:"item_count"`
+	Revision         int64         `json:"revision"`
+}
+
+type WordweaveAiCallUsage struct {
+	ID                uuid.UUID          `json:"id"`
+	UserRunID         uuid.NullUUID      `json:"user_run_id"`
+	PreviewRunID      uuid.NullUUID      `json:"preview_run_id"`
+	CallNo            int32              `json:"call_no"`
+	ProviderRequestID pgtype.Text        `json:"provider_request_id"`
+	ModelSnapshot     string             `json:"model_snapshot"`
+	InputTokens       pgtype.Int8        `json:"input_tokens"`
+	OutputTokens      pgtype.Int8        `json:"output_tokens"`
+	CostAmount        pgtype.Numeric     `json:"cost_amount"`
+	Currency          pgtype.Text        `json:"currency"`
+	UsageStatus       string             `json:"usage_status"`
+	CompletedAt       pgtype.Timestamptz `json:"completed_at"`
+}
+
 type WordweaveAiModel struct {
 	ID              uuid.UUID          `json:"id"`
 	DisplayName     string             `json:"display_name"`
@@ -39,6 +86,40 @@ type WordweaveAiModel struct {
 	Enabled         bool               `json:"enabled"`
 	CreatedAt       pgtype.Timestamptz `json:"created_at"`
 	UpdatedAt       pgtype.Timestamptz `json:"updated_at"`
+	RetiredAt       pgtype.Timestamptz `json:"retired_at"`
+}
+
+type WordweaveAnalyticsAccount struct {
+	OwnerID               uuid.UUID          `json:"owner_id"`
+	RegisteredLearningDay pgtype.Date        `json:"registered_learning_day"`
+	FirstSavedAt          pgtype.Timestamptz `json:"first_saved_at"`
+	RetentionDueAt        pgtype.Timestamptz `json:"retention_due_at"`
+}
+
+type WordweaveAnalyticsDaily struct {
+	Day           pgtype.Date        `json:"day"`
+	Metric        string             `json:"metric"`
+	DimensionKey  string             `json:"dimension_key"`
+	Numerator     pgtype.Int8        `json:"numerator"`
+	Denominator   pgtype.Int8        `json:"denominator"`
+	Value         pgtype.Numeric     `json:"value"`
+	UpdatedAt     pgtype.Timestamptz `json:"updated_at"`
+	MaturityState string             `json:"maturity_state"`
+}
+
+type WordweaveAnalyticsEvent struct {
+	ID               uuid.UUID          `json:"id"`
+	EventKey         string             `json:"event_key"`
+	EventKind        string             `json:"event_kind"`
+	OccurredAt       pgtype.Timestamptz `json:"occurred_at"`
+	StartedAt        pgtype.Timestamptz `json:"started_at"`
+	LearningDay      pgtype.Date        `json:"learning_day"`
+	TrafficSessionID uuid.NullUUID      `json:"traffic_session_id"`
+	BrowserKeyHash   []byte             `json:"browser_key_hash"`
+	OwnerID          uuid.NullUUID      `json:"owner_id"`
+	EventOutcome     pgtype.Text        `json:"event_outcome"`
+	SourceKind       string             `json:"source_kind"`
+	ReferenceKey     uuid.NullUUID      `json:"reference_key"`
 }
 
 type WordweaveBatchTarget struct {
@@ -55,11 +136,46 @@ type WordweaveBatchTarget struct {
 	HintEnd             int32     `json:"hint_end"`
 }
 
+type WordweaveCheckinRule struct {
+	ID               uuid.UUID     `json:"id"`
+	EffectiveDay     pgtype.Date   `json:"effective_day"`
+	BasePoints       int64         `json:"base_points"`
+	StepPoints       int64         `json:"step_points"`
+	CapPoints        int64         `json:"cap_points"`
+	NormalExperience int64         `json:"normal_experience"`
+	Revision         int64         `json:"revision"`
+	UpdatedBy        uuid.NullUUID `json:"updated_by"`
+}
+
 type WordweaveEntitlementGroup struct {
 	Code              string             `json:"code"`
 	RollingQuotaLimit pgtype.Int4        `json:"rolling_quota_limit"`
 	MaxEntriesPerRun  int32              `json:"max_entries_per_run"`
 	UpdatedAt         pgtype.Timestamptz `json:"updated_at"`
+	Priority          int32              `json:"priority"`
+}
+
+type WordweaveExtraCreditBalance struct {
+	ItemID         uuid.UUID          `json:"item_id"`
+	OwnerID        uuid.UUID          `json:"owner_id"`
+	InitialCount   int32              `json:"initial_count"`
+	RemainingCount int32              `json:"remaining_count"`
+	ExpiresAt      pgtype.Timestamptz `json:"expires_at"`
+}
+
+type WordweaveGenerationCharge struct {
+	RunID      uuid.UUID          `json:"run_id"`
+	AccountID  uuid.NullUUID      `json:"account_id"`
+	VisitorID  uuid.NullUUID      `json:"visitor_id"`
+	SourceKind string             `json:"source_kind"`
+	PlanCode   pgtype.Text        `json:"plan_code"`
+	Origin     pgtype.Text        `json:"origin"`
+	QuotaEpoch pgtype.Int8        `json:"quota_epoch"`
+	ItemID     uuid.NullUUID      `json:"item_id"`
+	Units      int32              `json:"units"`
+	State      string             `json:"state"`
+	ChargedAt  pgtype.Timestamptz `json:"charged_at"`
+	SettledAt  pgtype.Timestamptz `json:"settled_at"`
 }
 
 type WordweaveGenerationDraft struct {
@@ -92,6 +208,9 @@ type WordweaveGenerationRun struct {
 	FailureCode              pgtype.Text        `json:"failure_code"`
 	StartedAt                pgtype.Timestamptz `json:"started_at"`
 	CompletedAt              pgtype.Timestamptz `json:"completed_at"`
+	GrowthEventID            uuid.UUID          `json:"growth_event_id"`
+	EntryKind                string             `json:"entry_kind"`
+	PresetVersionID          uuid.NullUUID      `json:"preset_version_id"`
 }
 
 type WordweaveGenerationRunEntry struct {
@@ -111,6 +230,57 @@ type WordweaveGroupModel struct {
 	ModelID   uuid.UUID `json:"model_id"`
 }
 
+type WordweaveGrowthBalance struct {
+	OwnerID    uuid.UUID `json:"owner_id"`
+	Points     int64     `json:"points"`
+	Experience int64     `json:"experience"`
+	Revision   int64     `json:"revision"`
+}
+
+type WordweaveGrowthLedger struct {
+	ID           uuid.UUID          `json:"id"`
+	OwnerID      uuid.UUID          `json:"owner_id"`
+	SettlementID uuid.UUID          `json:"settlement_id"`
+	ComponentKey string             `json:"component_key"`
+	Currency     string             `json:"currency"`
+	Delta        int64              `json:"delta"`
+	BalanceAfter int64              `json:"balance_after"`
+	CreatedAt    pgtype.Timestamptz `json:"created_at"`
+}
+
+type WordweaveGrowthLevel struct {
+	ID               uuid.UUID     `json:"id"`
+	LevelNo          int32         `json:"level_no"`
+	MinExperience    int64         `json:"min_experience"`
+	RewardEnabled    bool          `json:"reward_enabled"`
+	Points           int64         `json:"points"`
+	ItemDefinitionID uuid.NullUUID `json:"item_definition_id"`
+	ItemCount        int32         `json:"item_count"`
+	Revision         int64         `json:"revision"`
+}
+
+type WordweaveGrowthSetting struct {
+	Singleton                  bool               `json:"singleton"`
+	ActivatedAt                pgtype.Timestamptz `json:"activated_at"`
+	MasteryExperience          int64              `json:"mastery_experience"`
+	Revision                   int64              `json:"revision"`
+	RecomputeTargetRevision    int64              `json:"recompute_target_revision"`
+	RecomputeAfterOwner        uuid.NullUUID      `json:"recompute_after_owner"`
+	UpdatedAt                  pgtype.Timestamptz `json:"updated_at"`
+	AnalyticsAggregatedThrough pgtype.Timestamptz `json:"analytics_aggregated_through"`
+	AnalyticsUpdatedAt         pgtype.Timestamptz `json:"analytics_updated_at"`
+}
+
+type WordweaveGrowthSettlement struct {
+	ID                 uuid.UUID          `json:"id"`
+	OwnerID            uuid.UUID          `json:"owner_id"`
+	Kind               string             `json:"kind"`
+	SourceKey          string             `json:"source_key"`
+	RequestFingerprint []byte             `json:"request_fingerprint"`
+	CreatedAt          pgtype.Timestamptz `json:"created_at"`
+	ConfigSnapshot     []byte             `json:"config_snapshot"`
+}
+
 type WordweaveHintOccurrence struct {
 	ID              uuid.UUID `json:"id"`
 	OwnerID         uuid.UUID `json:"owner_id"`
@@ -120,6 +290,32 @@ type WordweaveHintOccurrence struct {
 	Surface         string    `json:"surface"`
 	StartOffset     int32     `json:"start_offset"`
 	EndOffset       int32     `json:"end_offset"`
+}
+
+type WordweaveItemDefinition struct {
+	ID                   uuid.UUID          `json:"id"`
+	Kind                 string             `json:"kind"`
+	NameZh               pgtype.Text        `json:"name_zh"`
+	NameEn               pgtype.Text        `json:"name_en"`
+	DescriptionZh        pgtype.Text        `json:"description_zh"`
+	DescriptionEn        pgtype.Text        `json:"description_en"`
+	ExchangePrice        int64              `json:"exchange_price"`
+	ActivationTtlSeconds int64              `json:"activation_ttl_seconds"`
+	Listed               bool               `json:"listed"`
+	ExtraCount           pgtype.Int4        `json:"extra_count"`
+	TrialSeconds         pgtype.Int8        `json:"trial_seconds"`
+	TargetPlanCode       pgtype.Text        `json:"target_plan_code"`
+	RetirementPoints     pgtype.Int8        `json:"retirement_points"`
+	EverIssued           bool               `json:"ever_issued"`
+	Revision             int64              `json:"revision"`
+	CreatedAt            pgtype.Timestamptz `json:"created_at"`
+	UpdatedAt            pgtype.Timestamptz `json:"updated_at"`
+	UpdatedBy            uuid.NullUUID      `json:"updated_by"`
+}
+
+type WordweaveItemDefinitionModel struct {
+	DefinitionID uuid.UUID `json:"definition_id"`
+	ModelID      uuid.UUID `json:"model_id"`
 }
 
 type WordweaveLearningBatch struct {
@@ -138,6 +334,32 @@ type WordweaveLearningBatch struct {
 	ParticipatesInRangeReview bool               `json:"participates_in_range_review"`
 	ExpectedTargetCount       int32              `json:"expected_target_count"`
 	ValidatorVersion          string             `json:"validator_version"`
+	Title                     string             `json:"title"`
+	TitleRevision             int64              `json:"title_revision"`
+	GrowthEventID             uuid.UUID          `json:"growth_event_id"`
+}
+
+type WordweaveLevelAward struct {
+	OwnerID      uuid.UUID          `json:"owner_id"`
+	LevelID      uuid.UUID          `json:"level_id"`
+	AchievedAt   pgtype.Timestamptz `json:"achieved_at"`
+	ClaimedAt    pgtype.Timestamptz `json:"claimed_at"`
+	SettlementID uuid.NullUUID      `json:"settlement_id"`
+}
+
+type WordweaveLexeme struct {
+	ID             int64  `json:"id"`
+	CanonicalEntry string `json:"canonical_entry"`
+}
+
+type WordweaveModelTimeContribution struct {
+	ID        uuid.UUID          `json:"id"`
+	OwnerID   uuid.UUID          `json:"owner_id"`
+	ItemID    uuid.UUID          `json:"item_id"`
+	ModelID   uuid.UUID          `json:"model_id"`
+	StartsAt  pgtype.Timestamptz `json:"starts_at"`
+	EndsAt    pgtype.Timestamptz `json:"ends_at"`
+	RevokedAt pgtype.Timestamptz `json:"revoked_at"`
 }
 
 type WordweaveOpenrouterCredential struct {
@@ -161,17 +383,128 @@ type WordweavePassageOccurrence struct {
 	EndOffset       int32     `json:"end_offset"`
 }
 
-type WordweaveReviewResult struct {
+type WordweavePlanQuotaState struct {
+	OwnerID    uuid.UUID          `json:"owner_id"`
+	PlanCode   string             `json:"plan_code"`
+	Origin     string             `json:"origin"`
+	ResetEpoch int64              `json:"reset_epoch"`
+	ResetAt    pgtype.Timestamptz `json:"reset_at"`
+}
+
+type WordweavePlanTrial struct {
+	ID             uuid.UUID          `json:"id"`
+	OwnerID        uuid.UUID          `json:"owner_id"`
+	TargetPlanCode string             `json:"target_plan_code"`
+	StartedAt      pgtype.Timestamptz `json:"started_at"`
+	EndsAt         pgtype.Timestamptz `json:"ends_at"`
+	ClosedAt       pgtype.Timestamptz `json:"closed_at"`
+	CloseReason    pgtype.Text        `json:"close_reason"`
+}
+
+type WordweavePlanTrialUse struct {
+	ItemID         uuid.UUID          `json:"item_id"`
+	OwnerID        uuid.UUID          `json:"owner_id"`
+	TrialID        uuid.UUID          `json:"trial_id"`
+	AddedSeconds   int64              `json:"added_seconds"`
+	PreviousEndsAt pgtype.Timestamptz `json:"previous_ends_at"`
+	ResultEndsAt   pgtype.Timestamptz `json:"result_ends_at"`
+	ActivatedAt    pgtype.Timestamptz `json:"activated_at"`
+}
+
+type WordweavePlatformNotice struct {
+	ID          uuid.UUID          `json:"id"`
+	TitleZh     pgtype.Text        `json:"title_zh"`
+	TitleEn     pgtype.Text        `json:"title_en"`
+	BodyZh      pgtype.Text        `json:"body_zh"`
+	BodyEn      pgtype.Text        `json:"body_en"`
+	Visible     bool               `json:"visible"`
+	Remind      bool               `json:"remind"`
+	PublishedAt pgtype.Timestamptz `json:"published_at"`
+	UpdatedAt   pgtype.Timestamptz `json:"updated_at"`
+	Revision    int64              `json:"revision"`
+	UpdatedBy   uuid.NullUUID      `json:"updated_by"`
+}
+
+type WordweavePreset struct {
+	ID                 uuid.UUID          `json:"id"`
+	DraftVersionID     uuid.UUID          `json:"draft_version_id"`
+	PublishedVersionID uuid.NullUUID      `json:"published_version_id"`
+	Listed             bool               `json:"listed"`
+	Revision           int64              `json:"revision"`
+	CreatedAt          pgtype.Timestamptz `json:"created_at"`
+	UpdatedAt          pgtype.Timestamptz `json:"updated_at"`
+	UpdatedBy          uuid.NullUUID      `json:"updated_by"`
+}
+
+type WordweavePresetPreview struct {
+	ID               uuid.UUID          `json:"id"`
+	PresetID         uuid.UUID          `json:"preset_id"`
+	RunID            uuid.UUID          `json:"run_id"`
+	ConfigHash       []byte             `json:"config_hash"`
+	ValidatedPayload []byte             `json:"validated_payload"`
+	ValidatedAt      pgtype.Timestamptz `json:"validated_at"`
+	ValidatorVersion string             `json:"validator_version"`
+}
+
+type WordweavePresetPreviewRun struct {
+	ID                    uuid.UUID          `json:"id"`
+	PresetID              uuid.UUID          `json:"preset_id"`
+	VersionID             uuid.NullUUID      `json:"version_id"`
+	RequestedBy           uuid.NullUUID      `json:"requested_by"`
+	Status                string             `json:"status"`
+	ModelID               uuid.UUID          `json:"model_id"`
+	ModelNameSnapshot     string             `json:"model_name_snapshot"`
+	ProviderModelSnapshot string             `json:"provider_model_snapshot"`
+	StartedAt             pgtype.Timestamptz `json:"started_at"`
+	CompletedAt           pgtype.Timestamptz `json:"completed_at"`
+	FailureCategory       pgtype.Text        `json:"failure_category"`
+	ConfigHash            []byte             `json:"config_hash"`
+}
+
+type WordweavePresetVersion struct {
 	ID              uuid.UUID          `json:"id"`
-	OwnerID         uuid.UUID          `json:"owner_id"`
-	SessionID       uuid.UUID          `json:"session_id"`
-	BatchID         uuid.UUID          `json:"batch_id"`
-	CompletedAt     pgtype.Timestamptz `json:"completed_at"`
-	Successful      bool               `json:"successful"`
-	ErrorCount      int32              `json:"error_count"`
-	SkipCount       int32              `json:"skip_count"`
-	Stage1Completed bool               `json:"stage1_completed"`
-	Stage2Completed bool               `json:"stage2_completed"`
+	PresetID        uuid.UUID          `json:"preset_id"`
+	VersionNo       int32              `json:"version_no"`
+	Title           string             `json:"title"`
+	ModelID         uuid.UUID          `json:"model_id"`
+	MeaningLanguage string             `json:"meaning_language"`
+	Scenario        string             `json:"scenario"`
+	LengthCode      string             `json:"length_code"`
+	Configuration   []byte             `json:"configuration"`
+	ConfigHash      []byte             `json:"config_hash"`
+	CreatedAt       pgtype.Timestamptz `json:"created_at"`
+	PreviewID       uuid.NullUUID      `json:"preview_id"`
+}
+
+type WordweavePresetVersionEntry struct {
+	VersionID         uuid.UUID `json:"version_id"`
+	VocabularyEntryID int64     `json:"vocabulary_entry_id"`
+	InputOrder        int32     `json:"input_order"`
+}
+
+type WordweaveReviewAttempt struct {
+	ID            uuid.UUID          `json:"id"`
+	OwnerID       uuid.UUID          `json:"owner_id"`
+	SessionID     uuid.UUID          `json:"session_id"`
+	BatchID       uuid.UUID          `json:"batch_id"`
+	AttemptNo     int32              `json:"attempt_no"`
+	Revision      int64              `json:"revision"`
+	Origin        string             `json:"origin"`
+	StartedAt     pgtype.Timestamptz `json:"started_at"`
+	SubmittedAt   pgtype.Timestamptz `json:"submitted_at"`
+	State         string             `json:"state"`
+	Successful    pgtype.Bool        `json:"successful"`
+	HasAnswer     pgtype.Bool        `json:"has_answer"`
+	HasUnanswered pgtype.Bool        `json:"has_unanswered"`
+	GrowthEventID uuid.UUID          `json:"growth_event_id"`
+}
+
+type WordweaveReviewCohortDaily struct {
+	StartDay        pgtype.Date        `json:"start_day"`
+	StartedCount    int64              `json:"started_count"`
+	SubmittedCount  int64              `json:"submitted_count"`
+	SuccessfulCount int64              `json:"successful_count"`
+	UpdatedAt       pgtype.Timestamptz `json:"updated_at"`
 }
 
 type WordweaveReviewSession struct {
@@ -189,10 +522,12 @@ type WordweaveReviewSession struct {
 }
 
 type WordweaveReviewSessionBatch struct {
-	OwnerID    uuid.UUID `json:"owner_id"`
-	SessionID  uuid.UUID `json:"session_id"`
-	BatchID    uuid.UUID `json:"batch_id"`
-	BatchOrder int32     `json:"batch_order"`
+	OwnerID          uuid.UUID          `json:"owner_id"`
+	SessionID        uuid.UUID          `json:"session_id"`
+	BatchID          uuid.UUID          `json:"batch_id"`
+	BatchOrder       int32              `json:"batch_order"`
+	FirstSubmittedAt pgtype.Timestamptz `json:"first_submitted_at"`
+	ProgressStatus   string             `json:"progress_status"`
 }
 
 type WordweaveReviewSessionTarget struct {
@@ -205,6 +540,89 @@ type WordweaveReviewSessionTarget struct {
 type WordweaveSchemaMigration struct {
 	Version   string             `json:"version"`
 	AppliedAt pgtype.Timestamptz `json:"applied_at"`
+}
+
+type WordweaveTrafficSession struct {
+	ID              uuid.UUID          `json:"id"`
+	BrowserKeyHash  []byte             `json:"browser_key_hash"`
+	StartedAt       pgtype.Timestamptz `json:"started_at"`
+	LastEventAt     pgtype.Timestamptz `json:"last_event_at"`
+	EndedAt         pgtype.Timestamptz `json:"ended_at"`
+	Pageviews       int32              `json:"pageviews"`
+	HasKeyAction    bool               `json:"has_key_action"`
+	EntrySourceType string             `json:"entry_source_type"`
+	UtmSource       pgtype.Text        `json:"utm_source"`
+	UtmMedium       pgtype.Text        `json:"utm_medium"`
+	UtmCampaign     pgtype.Text        `json:"utm_campaign"`
+	ReferrerHost    pgtype.Text        `json:"referrer_host"`
+}
+
+type WordweaveTrafficSessionAccount struct {
+	SessionID uuid.UUID          `json:"session_id"`
+	OwnerID   uuid.UUID          `json:"owner_id"`
+	LinkedAt  pgtype.Timestamptz `json:"linked_at"`
+}
+
+type WordweaveUserCheckin struct {
+	OwnerID                uuid.UUID          `json:"owner_id"`
+	LearningDay            pgtype.Date        `json:"learning_day"`
+	Kind                   string             `json:"kind"`
+	RuleID                 uuid.UUID          `json:"rule_id"`
+	StreakAtLastSettlement int32              `json:"streak_at_last_settlement"`
+	PointsPaid             int64              `json:"points_paid"`
+	NormalExperiencePaid   int64              `json:"normal_experience_paid"`
+	CreatedAt              pgtype.Timestamptz `json:"created_at"`
+}
+
+type WordweaveUserGrowth struct {
+	OwnerID               uuid.UUID `json:"owner_id"`
+	MasteredTotal         int64     `json:"mastered_total"`
+	SavedTotal            int64     `json:"saved_total"`
+	SuccessfulReviewTotal int64     `json:"successful_review_total"`
+	HighestCheckinStreak  int32     `json:"highest_checkin_streak"`
+	HighestReviewStreak   int32     `json:"highest_review_streak"`
+	ConfigRevisionSeen    int64     `json:"config_revision_seen"`
+}
+
+type WordweaveUserItem struct {
+	ID                   uuid.UUID          `json:"id"`
+	OwnerID              uuid.UUID          `json:"owner_id"`
+	DefinitionID         uuid.UUID          `json:"definition_id"`
+	IssuanceSettlementID uuid.UUID          `json:"issuance_settlement_id"`
+	IssuanceComponent    string             `json:"issuance_component"`
+	IssuedAt             pgtype.Timestamptz `json:"issued_at"`
+	ActivationDeadline   pgtype.Timestamptz `json:"activation_deadline"`
+	KindSnapshot         string             `json:"kind_snapshot"`
+	ParametersSnapshot   []byte             `json:"parameters_snapshot"`
+	ActivatedAt          pgtype.Timestamptz `json:"activated_at"`
+	EndedAt              pgtype.Timestamptz `json:"ended_at"`
+	UsedTargetDay        pgtype.Date        `json:"used_target_day"`
+	RefundedAt           pgtype.Timestamptz `json:"refunded_at"`
+	RefundEligibleAt     pgtype.Timestamptz `json:"refund_eligible_at"`
+}
+
+type WordweaveUserItemModel struct {
+	ItemID  uuid.UUID `json:"item_id"`
+	ModelID uuid.UUID `json:"model_id"`
+	OwnerID uuid.UUID `json:"owner_id"`
+}
+
+type WordweaveUserLearningDay struct {
+	OwnerID           uuid.UUID   `json:"owner_id"`
+	LearningDay       pgtype.Date `json:"learning_day"`
+	Active            bool        `json:"active"`
+	ReviewSuccess     bool        `json:"review_success"`
+	ValidGenerations  int32       `json:"valid_generations"`
+	ReviewSubmissions int32       `json:"review_submissions"`
+	SuccessfulReviews int32       `json:"successful_reviews"`
+	SavedCount        int32       `json:"saved_count"`
+}
+
+type WordweaveUserMastery struct {
+	OwnerID      uuid.UUID          `json:"owner_id"`
+	LexemeID     int64              `json:"lexeme_id"`
+	MasteredAt   pgtype.Timestamptz `json:"mastered_at"`
+	SettlementID uuid.UUID          `json:"settlement_id"`
 }
 
 type WordweaveVisitorClaim struct {
@@ -232,6 +650,7 @@ type WordweaveVocabularyEntry struct {
 	SnapshotID  uuid.UUID `json:"snapshot_id"`
 	Entry       string    `json:"entry"`
 	SourceOrder int32     `json:"source_order"`
+	LexemeID    int64     `json:"lexeme_id"`
 }
 
 type WordweaveVocabularySnapshot struct {

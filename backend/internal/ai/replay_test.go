@@ -80,7 +80,7 @@ func captureFixture(t *testing.T, spec GenerationSpec, text string, key string) 
 	wire.WriteString("data: [DONE]\n\n")
 	frames := strings.SplitAfter(wire.String(), "\n\n")
 	frames = frames[:len(frames)-1]
-	stream := openRouterStream{&privateProviderBody{io.NopCloser(&pacedReplayReader{frames: frames}), key}}
+	stream := openRouterStream{body: &privateProviderBody{io.NopCloser(&pacedReplayReader{frames: frames}), key}}
 	candidate, err := stream.Receive(ctx, func(string) error { return nil })
 	stream.Close()
 	if err == nil {

@@ -39,6 +39,12 @@ func TestDraftLifecycleWithoutRegistry(t *testing.T) {
 			t.Fatalf("expected not found, got %v", err)
 		}
 	}
+	checkConflict := func(err error) {
+		t.Helper()
+		if !errors.Is(err, learning.ErrConflict) {
+			t.Fatalf("expected state conflict, got %v", err)
+		}
+	}
 
 	t.Run("save retry concurrent and delete", func(t *testing.T) {
 		run := seed()
@@ -103,7 +109,7 @@ func TestDraftLifecycleWithoutRegistry(t *testing.T) {
 			t.Fatal(err)
 		}
 		_, _, err := fresh().Save(ctx, actor, run.ID.String(), run.Token)
-		checkMissing(err)
+		checkConflict(err)
 	})
 	t.Run("save versus discard serialized", func(t *testing.T) {
 		for range 6 {
@@ -114,7 +120,7 @@ func TestDraftLifecycleWithoutRegistry(t *testing.T) {
 			go func() { defer wg.Done(); _, _, saveErr = fresh().Save(ctx, actor, run.ID.String(), run.Token) }()
 			go func() { defer wg.Done(); discardErr = fresh().Discard(ctx, actor, run.ID.String(), run.Token) }()
 			wg.Wait()
-			if saveErr != nil && !errors.Is(saveErr, learning.ErrNotFound) {
+			if saveErr != nil && !errors.Is(saveErr, learning.ErrConflict) {
 				t.Fatal(saveErr)
 			}
 			if discardErr != nil {
@@ -125,7 +131,7 @@ func TestDraftLifecycleWithoutRegistry(t *testing.T) {
 			if err := pool.QueryRow(ctx, `SELECT disposition,(SELECT count(*) FROM wordweave.learning_batches WHERE generation_run_id=$1) FROM wordweave.generation_runs WHERE id=$1`, run.ID).Scan(&state, &count); err != nil {
 				t.Fatal(err)
 			}
-			if !((state == "saved" && count == 1 && saveErr == nil) || (state == "abandoned" && count == 0 && errors.Is(saveErr, learning.ErrNotFound))) {
+			if !((state == "saved" && count == 1 && saveErr == nil) || (state == "abandoned" && count == 0 && errors.Is(saveErr, learning.ErrConflict))) {
 				t.Fatalf("non-atomic result %s/%d/%v", state, count, saveErr)
 			}
 		}
@@ -165,7 +171,7 @@ func TestDraftLifecycleWithoutRegistry(t *testing.T) {
 				}
 			}
 			_, _, err := fresh().Save(ctx, actor, run.ID.String(), run.Token)
-			checkMissing(err)
+			checkConflict(err)
 			if status == "active" {
 				if err := api.generation.CompleteFailure(ctx, run.ID, "server_failed", "synthetic"); err != nil {
 					t.Fatal(err)
@@ -213,7 +219,7 @@ func TestDraftLifecycleWithoutRegistry(t *testing.T) {
 		other := identity.Actor{Kind: "account", Role: "learner", ID: uuid.New()}
 		_, _, err = fresh().ConsumeClaim(ctx, other, claim.Token)
 		checkMissing(err)
-		cr039AssertReview(t, ctx, api, actor, id, snapshot)
+		cr039AssertReview(t, ctx, api, actor, id.ID, snapshot)
 		run = start()
 		claim, err = fresh().CreateClaim(ctx, visitor, run.ID.String(), run.Token)
 		if err != nil {

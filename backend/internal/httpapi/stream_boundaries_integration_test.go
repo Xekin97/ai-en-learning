@@ -52,7 +52,7 @@ func newBoundaryHTTPFixtureWithPool(t *testing.T, handler http.HandlerFunc, wrap
 	t.Cleanup(upstream.Close)
 	cfg.OpenRouterBaseURL = upstream.URL
 	var err error
-	fixture.api, err = New(cfg, pool, pool)
+	fixture.api, err = integrationServer(t, cfg, pool)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -80,8 +80,12 @@ func (f *boundaryHTTPFixture) start(t *testing.T) *http.Response {
 	}, nil)
 }
 
-func (f *boundaryHTTPFixture) assertSettled(t *testing.T, want string, charged bool, drafts int) {
+func (f *boundaryHTTPFixture) assertSettled(t *testing.T, want string, charged bool, drafts int, callCount ...int32) {
 	t.Helper()
+	expectedCalls := int32(1)
+	if len(callCount) > 0 {
+		expectedCalls = callCount[0]
+	}
 	deadline := time.NewTimer(3 * time.Second)
 	defer deadline.Stop()
 	tick := time.NewTicker(20 * time.Millisecond)
@@ -95,7 +99,7 @@ func (f *boundaryHTTPFixture) assertSettled(t *testing.T, want string, charged b
 			t.Fatal(err)
 		}
 		if status == want {
-			if quota != charged || cumulative != (want == "valid" || want == "user_cancelled") || actualDrafts != drafts || batches != 0 || f.calls.Load() != 1 {
+			if quota != charged || cumulative != (want == "valid" || want == "user_cancelled") || actualDrafts != drafts || batches != 0 || f.calls.Load() != expectedCalls {
 				t.Fatalf("incorrect persisted outcome: %s charged=%v cumulative=%v drafts=%d batches=%d calls=%d", status, quota, cumulative, actualDrafts, batches, f.calls.Load())
 			}
 			return
@@ -269,7 +273,7 @@ func TestBoundaryPreflightPolicyHTTP(t *testing.T) {
 		{"disabled_model", "UPDATE wordweave.ai_models SET enabled=false", 422, "validation_failed"},
 		{"unassigned_model", "DELETE FROM wordweave.group_models WHERE group_code='registered'", 422, "validation_failed"},
 		{"forbidden_length", "DELETE FROM wordweave.group_lengths WHERE group_code='registered' AND length_code='short'", 422, "validation_failed"},
-		{"zero_quota", "UPDATE wordweave.entitlement_groups SET rolling_quota_limit=0 WHERE code='registered'", 503, "generation_unavailable"},
+		{"zero_quota", "UPDATE wordweave.entitlement_groups SET rolling_quota_limit=0 WHERE code='registered'", 429, "quota_exhausted"},
 		{"no_credential", "DELETE FROM wordweave.openrouter_credentials", 503, "generation_unavailable"},
 	} {
 		t.Run(tc.name, func(t *testing.T) {

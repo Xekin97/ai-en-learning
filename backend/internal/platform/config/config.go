@@ -16,6 +16,7 @@ import (
 const minSecretBytes = 32
 
 type Config struct {
+	ClarityProjectID  string
 	HTTPAddr          string
 	MetricsAddr       string
 	PublicOrigin      string
@@ -73,6 +74,7 @@ func Load() (Config, error) {
 		return Config{}, err
 	}
 	cfg := Config{
+		ClarityProjectID:  os.Getenv("CLARITY_PROJECT_ID"),
 		HTTPAddr:          envOr("HTTP_ADDR", ":8080"),
 		MetricsAddr:       envOr("METRICS_ADDR", ":9090"),
 		PublicOrigin:      os.Getenv("PUBLIC_ORIGIN"),
@@ -111,6 +113,10 @@ func Load() (Config, error) {
 }
 
 func (c Config) validate() error {
+	if c.ClarityProjectID != "" && c.ClarityURL() == nil {
+		return errors.New("CLARITY_PROJECT_ID must be an alphanumeric project identifier")
+	}
+
 	var errs []error
 	if c.PublicOrigin == "" {
 		errs = append(errs, errors.New("PUBLIC_ORIGIN is required"))
@@ -238,4 +244,19 @@ func parseCIDRs(raw string) ([]*net.IPNet, error) {
 		networks = append(networks, network)
 	}
 	return networks, nil
+}
+
+// Only a fixed Microsoft project entry is generated; neither browser input nor
+// an arbitrary deployment URL becomes a redirect. This does not load a script.
+func (c Config) ClarityURL() *string {
+	if c.ClarityProjectID == "" || len(c.ClarityProjectID) > 64 {
+		return nil
+	}
+	for _, r := range c.ClarityProjectID {
+		if !(r >= 'a' && r <= 'z' || r >= 'A' && r <= 'Z' || r >= '0' && r <= '9') {
+			return nil
+		}
+	}
+	value := "https://clarity.microsoft.com/projects/view/" + c.ClarityProjectID + "/dashboard"
+	return &value
 }

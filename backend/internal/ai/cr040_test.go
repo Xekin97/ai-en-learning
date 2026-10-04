@@ -27,7 +27,7 @@ func TestCR040EntryMeaningPromptAcrossConfigurations(t *testing.T) {
 						t.Fatal("conflicting old instruction remains")
 					}
 				}
-				if PromptVersion != "m001-v5-r10" {
+				if PromptVersion != "m002-v1-r1" {
 					t.Fatal("prompt version not bumped")
 				}
 			}

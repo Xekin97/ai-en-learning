@@ -37,7 +37,7 @@ func TestDraftProcessHelper(t *testing.T) {
 	if _, err := maintenance.SettleActiveGenerations(ctx, pool, "startup_recovery"); err != nil {
 		t.Fatal(err)
 	}
-	api, err := New(cfg, pool, pool)
+	api, err := integrationServer(t, cfg, pool)
 	if err != nil {
 		t.Fatal(err)
 	}

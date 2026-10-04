@@ -273,7 +273,7 @@ func TestCR039RandomSSEChunksAndFinalInvalidMapping(t *testing.T) {
 			body = body[n:]
 		}
 		sse.WriteString("data: [DONE]\n\n")
-		stream := openRouterStream{io.NopCloser(strings.NewReader(sse.String()))}
+		stream := openRouterStream{body: io.NopCloser(strings.NewReader(sse.String()))}
 		var text strings.Builder
 		got, err := stream.Receive(context.Background(), func(delta string) error { text.WriteString(delta); return nil })
 		if err != nil || text.String() != strings.ReplaceAll(candidate.Passage, "(vulnerable)", "") || !reflect.DeepEqual(got, candidate) {

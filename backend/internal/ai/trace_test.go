@@ -80,7 +80,7 @@ func TestOBS042StreamStagesAndEquivalence(t *testing.T) {
 			r := &tracetest.Recorder{}
 			trace := gt.New("req_stream", r)
 			receive := func(ctx context.Context) (Candidate, error, string) {
-				s := openRouterStream{io.NopCloser(strings.NewReader(tc.wire))}
+				s := openRouterStream{body: io.NopCloser(strings.NewReader(tc.wire))}
 				var b strings.Builder
 				c, err := s.Receive(ctx, func(d string) error { b.WriteString(d); return nil })
 				return c, err, b.String()
@@ -130,7 +130,7 @@ func TestOBS042ProviderMetadataDoesNotChangeTermination(t *testing.T) {
 	meta := `data: {"id":"gen-synthetic","choices":[{"index":0,"delta":{},"finish_reason":"stop"}],"usage":{"prompt_tokens":10,"completion_tokens":20,"total_tokens":30}}` + "\n\n"
 	r := &tracetest.Recorder{}
 	trace := gt.New("req_meta", r)
-	s := openRouterStream{io.NopCloser(strings.NewReader(meta + p0SSE(base) + meta + "data: [DONE]\n\n"))}
+	s := openRouterStream{body: io.NopCloser(strings.NewReader(meta + p0SSE(base) + meta + "data: [DONE]\n\n"))}
 	got, err := s.Receive(gt.With(context.Background(), trace), func(string) error { return nil })
 	trace.Finish()
 	if err != nil || got.Passage != candidate.Passage {

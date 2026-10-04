@@ -51,7 +51,7 @@ func (metrics *Metrics) Begin() func(method, route string, status int) {
 }
 
 func (metrics *Metrics) Handler(pool *pgxpool.Pool) http.Handler {
-	return http.HandlerFunc(func(writer http.ResponseWriter, _ *http.Request) {
+	return http.HandlerFunc(func(writer http.ResponseWriter, request *http.Request) {
 		writer.Header().Set("Content-Type", "text/plain; version=0.0.4; charset=utf-8")
 		writer.Header().Set("Cache-Control", "no-store")
 		_, _ = fmt.Fprintln(writer, "# HELP wordweave_up Whether the process is serving metrics.")
@@ -61,6 +61,7 @@ func (metrics *Metrics) Handler(pool *pgxpool.Pool) http.Handler {
 		_, _ = fmt.Fprintf(writer, "wordweave_http_requests_in_flight %d\n", metrics.inFlight.Load())
 		metrics.writeHTTP(writer)
 		metrics.writeGeneration(writer)
+		writeOperations(request.Context(), writer, pool)
 		stats := pool.Stat()
 		_, _ = fmt.Fprintln(writer, "# TYPE wordweave_db_pool_connections gauge")
 		_, _ = fmt.Fprintf(writer, "wordweave_db_pool_connections{state=\"acquired\"} %d\n", stats.AcquiredConns())

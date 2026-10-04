@@ -106,7 +106,7 @@ func TestCompletionPromptKnownFailuresRemainRejected(t *testing.T) {
 				} else {
 					candidate.Targets[0].HintPhrase = strings.ReplaceAll(candidate.Targets[0].HintPhrase, "enforced(enforce)", "enforce(enforce)d")
 				}
-				stream := openRouterStream{io.NopCloser(strings.NewReader(p0SSE(p0JSON(candidate))))}
+				stream := openRouterStream{body: io.NopCloser(strings.NewReader(p0SSE(p0JSON(candidate))))}
 				defer stream.Close()
 				var preview strings.Builder
 				decoded, err := stream.Receive(context.Background(), func(delta string) error { preview.WriteString(delta); return nil })

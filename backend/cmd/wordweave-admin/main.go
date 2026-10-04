@@ -26,6 +26,9 @@ func main() {
 }
 
 func run(ctx context.Context, args []string) error {
+	if len(args) > 0 && args[0] == "activate-growth" {
+		return runActivateGrowth(ctx, args[1:], os.Getenv("MAINTENANCE_DATABASE_URL"))
+	}
 	if len(args) > 0 && args[0] == "diagnostics" {
 		return diagnostics.Run(ctx, args[1:], os.Stdout)
 	}
@@ -33,7 +36,7 @@ func run(ctx context.Context, args []string) error {
 		return runEntryMeaningCutover(ctx, args[1:], os.Getenv("MAINTENANCE_DATABASE_URL"))
 	}
 	if len(args) != 1 {
-		return errors.New("usage: wordweave-admin migrate|verify|create-admin|cutover-entry-meaning [options]")
+		return errors.New("usage: wordweave-admin migrate|verify|create-admin|activate-growth [options]")
 	}
 	cfg, err := config.Load()
 	if err != nil {

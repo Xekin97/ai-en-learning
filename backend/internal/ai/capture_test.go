@@ -197,7 +197,7 @@ func TestOBS042BStreamCaptureIsBeforeDecodeAndDoesNotChangeResults(t *testing.T)
 	} {
 		t.Run(tc.name, func(t *testing.T) {
 			receive := func(ctx context.Context) (Candidate, error, string) {
-				s := openRouterStream{&privateProviderBody{io.NopCloser(strings.NewReader(tc.wire)), "synthetic-provider-key"}}
+				s := openRouterStream{body: &privateProviderBody{io.NopCloser(strings.NewReader(tc.wire)), "synthetic-provider-key"}}
 				var text strings.Builder
 				c, e := s.Receive(ctx, func(d string) error { text.WriteString(d); return nil })
 				return c, e, text.String()

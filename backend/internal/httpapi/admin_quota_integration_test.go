@@ -58,6 +58,8 @@ func TestAdminQuotaHTTPV14(t *testing.T) {
 		t.Fatal(err)
 	}
 
+	fixtureRunCharges(t, ctx, pool)
+
 	// Run HTTP through the real least-privileged application role. The AI
 	// pool is closed: any accidental dependency on credentials/options fails.
 	appConfig, err := pgxpool.ParseConfig(databaseURL)
@@ -139,9 +141,9 @@ func TestAdminQuotaHTTPV14(t *testing.T) {
 
 	csrf := bootstrap(t, adminClient, application.URL)
 	for _, group := range []string{"pro", "plus", "basic"} {
-		changed := putJSON(t, adminClient, endpoint+"/group", csrf, map[string]any{"group_code": group, "confirmed": true})
+		changed := putJSON(t, adminClient, endpoint+"/group", csrf, map[string]any{"group_code": group, "confirmed": true, "expected_base_revision": baseRevisionHTTP(t, adminClient, endpoint)})
 		requireStatus(t, changed, 200)
-		if err := validateAdminQuotaEnvelope([]byte(changed.raw), true); err != nil {
+		if err := validateM002AdminQuotaEnvelope([]byte(changed.raw), true); err != nil {
 			t.Fatal(err)
 		}
 		if nestedString(t, changed.body, "data", "user", "plan_code") != group {
@@ -162,9 +164,9 @@ func TestAdminQuotaHTTPV14(t *testing.T) {
 	}
 	quotaHTTPExec(t, ctx, pool, "UPDATE wordweave.entitlement_groups SET rolling_quota_limit=0 WHERE code='registered'")
 	assertQuotaHTTP(t, adminClient, endpoint, "limited", 0)
-	zero := putJSON(t, adminClient, endpoint+"/group", csrf, map[string]any{"group_code": "basic", "confirmed": true})
+	zero := putJSON(t, adminClient, endpoint+"/group", csrf, map[string]any{"group_code": "basic", "confirmed": true, "expected_base_revision": baseRevisionHTTP(t, adminClient, endpoint)})
 	requireStatus(t, zero, 200)
-	if err := validateAdminQuotaEnvelope([]byte(zero.raw), true); err != nil {
+	if err := validateM002AdminQuotaEnvelope([]byte(zero.raw), true); err != nil {
 		t.Fatal(err)
 	}
 	if nestedValue(t, zero.body, "data", "user", "generation_quota", "remaining") != float64(0) {
@@ -189,7 +191,7 @@ func TestAdminQuotaHTTPV14(t *testing.T) {
 	requireStatus(t, putJSON(t, adminClient, endpoint+"/group", "", map[string]any{"group_code": "pro", "confirmed": true}), 403)
 	badOrigin := decodeResponse(t, rawJSONRequest(t, adminClient, http.MethodPut, endpoint+"/group", csrf, map[string]any{"group_code": "pro", "confirmed": true}, map[string]string{"Origin": "https://not-wordweave.invalid"}))
 	requireStatus(t, badOrigin, 403)
-	requireStatus(t, putJSON(t, adminClient, application.URL+"/api/v1/admin/users/"+adminID.String()+"/group", csrf, map[string]any{"group_code": "pro", "confirmed": true}), 404)
+	requireStatus(t, putJSON(t, adminClient, application.URL+"/api/v1/admin/users/"+adminID.String()+"/group", csrf, map[string]any{"group_code": "pro", "confirmed": true, "expected_base_revision": baseRevisionHTTP(t, adminClient, endpoint)}), 404)
 
 	// Real SELECT privilege failure after UPDATE must return a safe problem
 	// and roll back both group and reset time, without harming read-only pages.
@@ -197,13 +199,14 @@ func TestAdminQuotaHTTPV14(t *testing.T) {
 	if err := pool.QueryRow(ctx, "SELECT quota_reset_at FROM wordweave.accounts WHERE id=$1", id).Scan(&reset); err != nil {
 		t.Fatal(err)
 	}
-	quotaHTTPExec(t, ctx, pool, "REVOKE SELECT ON wordweave.generation_runs FROM wordweave_app")
+	expectedBaseRevision := baseRevisionHTTP(t, adminClient, endpoint)
+	quotaHTTPExec(t, ctx, pool, "REVOKE SELECT ON wordweave.generation_charges FROM wordweave_app")
 	for _, response := range []testResponse{
 		getJSON(t, adminClient, endpoint),
-		putJSON(t, adminClient, endpoint+"/group", csrf, map[string]any{"group_code": "pro", "confirmed": true}),
+		putJSON(t, adminClient, endpoint+"/group", csrf, map[string]any{"group_code": "pro", "confirmed": true, "expected_base_revision": expectedBaseRevision}),
 	} {
 		requireStatus(t, response, 500)
-		if response.body["code"] != "internal_error" || response.body["data"] != nil || strings.Contains(response.raw, "generation_runs") {
+		if response.body["code"] != "internal_error" || response.body["data"] != nil || strings.Contains(response.raw, "generation_charges") {
 			t.Fatal("unsafe partial/detail failure")
 		}
 	}
@@ -222,7 +225,7 @@ func TestAdminQuotaHTTPV14(t *testing.T) {
 	}
 	requireStatus(t, getJSON(t, adminClient, endpoint+"/batches"), 200)
 	requireStatus(t, getJSON(t, adminClient, batchEndpoint), 200)
-	quotaHTTPExec(t, ctx, pool, "GRANT SELECT ON wordweave.generation_runs TO wordweave_app")
+	quotaHTTPExec(t, ctx, pool, "GRANT SELECT ON wordweave.generation_charges TO wordweave_app")
 	quotaHTTPExec(t, ctx, pool, "DELETE FROM wordweave.accounts WHERE id=$1", other)
 	requireStatus(t, getJSON(t, adminClient, application.URL+"/api/v1/admin/users/"+other.String()), 404)
 }
@@ -244,7 +247,7 @@ func assertQuotaHTTP(t *testing.T, client *http.Client, endpoint, kind string, r
 	}
 	decoded := decodeResponse(t, response)
 	requireStatus(t, decoded, 200)
-	if err := validateAdminQuotaEnvelope([]byte(decoded.raw), false); err != nil {
+	if err := validateM002AdminQuotaEnvelope([]byte(decoded.raw), false); err != nil {
 		t.Fatalf("wire contract: %v", err)
 	}
 	value := nestedValue(t, decoded.body, "data", "user", "generation_quota")
@@ -271,9 +274,9 @@ func quotaHTTPBatch(t *testing.T, ctx context.Context, pool *pgxpool.Pool, owner
 	}
 	defer func() { _ = tx.Rollback(ctx) }()
 	var batch, target uuid.UUID
-	if err := tx.QueryRow(ctx, `INSERT INTO wordweave.learning_batches(owner_id,generation_run_id,group_code_snapshot,model_display_name_snapshot,provider_model_id_snapshot,
+	if err := tx.QueryRow(ctx, `INSERT INTO wordweave.learning_batches(owner_id,generation_run_id,title,group_code_snapshot,model_display_name_snapshot,provider_model_id_snapshot,
 		meaning_language,scenario,length_code,passage,tags,expected_target_count,validator_version)
-		VALUES ($1,$2,'registered','Quota fixture','test/quota','en','story','short','Learning works.',ARRAY['study'],1,'m001-v2') RETURNING id`, owner, runID).Scan(&batch); err != nil {
+		VALUES ($1,$2,'learn','registered','Quota fixture','test/quota','en','story','short','Learning works.',ARRAY['study'],1,'m001-v2') RETURNING id`, owner, runID).Scan(&batch); err != nil {
 		t.Fatal(err)
 	}
 	if err := tx.QueryRow(ctx, `INSERT INTO wordweave.batch_targets(owner_id,batch_id,vocabulary_entry_id,source_entry_snapshot,input_order,entry_meaning,hint_phrase,hint_surface,hint_start,hint_end)

@@ -77,7 +77,9 @@ func (h claimDeleteHarness) seed(t *testing.T, consume bool) claimDeleteFixture 
 	}
 	f := claimDeleteFixture{run: run, visitor: visitor, claim: claim}
 	if consume {
-		f.batch, _, err = h.fresh().ConsumeClaim(h.ctx, h.actor, claim.Token)
+		var saved learning.SavedBatch
+		saved, _, err = h.fresh().ConsumeClaim(h.ctx, h.actor, claim.Token)
+		f.batch = saved.ID
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -135,7 +137,7 @@ func TestClaimedBatchDeletionHTTP(t *testing.T) {
 		return decodeResponse(t, rawJSONRequest(t, client, http.MethodPost, application.URL+"/api/v1/visitor-claims/consume", csrf, map[string]any{}, map[string]string{"X-Claim-Token": token}))
 	}
 	first := consume(f.claim.Token)
-	requireStatus(t, first, http.StatusOK)
+	requireStatus(t, first, http.StatusCreated)
 	f.batch = uuid.MustParse(dataString(t, first.body, "batch_id"))
 	retry := consume(f.claim.Token)
 	requireStatus(t, retry, http.StatusOK)
@@ -146,7 +148,7 @@ func TestClaimedBatchDeletionHTTP(t *testing.T) {
 	cr039AssertReview(t, h.ctx, h.api, h.actor, f.batch, h.snapshot)
 	single := postJSON(t, client, application.URL+"/api/v1/me/review-sessions", csrf, map[string]any{"mode": "single_batch", "batch_id": f.batch.String()})
 	requireStatus(t, single, http.StatusCreated)
-	singleID := dataString(t, single.body, "session_id")
+	singleID := nestedString(t, single.body, "data", "session", "session_id")
 	today := time.Now().UTC().Format("2006-01-02")
 	rangeSession, err := h.api.review.Create(h.ctx, h.actor.ID, review.CreateInput{Mode: "range", StartDate: today, EndDate: today, Timezone: "UTC"})
 	if err != nil {
@@ -192,7 +194,7 @@ func TestClaimedBatchDeletionHTTP(t *testing.T) {
 		(SELECT count(*) FROM wordweave.review_session_batches WHERE session_id=$1),
 		(SELECT count(*) FROM wordweave.batch_targets WHERE batch_id=$2),
 		(SELECT count(*) FROM wordweave.passage_occurrences WHERE batch_id=$2),
-		(SELECT count(*) FROM wordweave.review_results WHERE batch_id=$2)`, rangeSession.ID, f.batch).Scan(&rangeRemaining, &targets, &positions, &results); err != nil || rangeRemaining != 1 || targets != 0 || positions != 0 || results != 0 {
+		(SELECT count(*) FROM wordweave.review_attempts WHERE batch_id=$2)`, rangeSession.ID, f.batch).Scan(&rangeRemaining, &targets, &positions, &results); err != nil || rangeRemaining != 1 || targets != 0 || positions != 0 || results != 0 {
 		t.Fatalf("cascade/range state: %d/%d/%d/%d %v", rangeRemaining, targets, positions, results, err)
 	}
 	after, err := h.fresh().Summary(h.ctx, h.actor.ID)
@@ -200,7 +202,7 @@ func TestClaimedBatchDeletionHTTP(t *testing.T) {
 		t.Fatalf("summary before=%+v after=%+v err=%v", before, after, err)
 	}
 	h.assertDeleted(t, f)
-	if id, reused, err := h.fresh().ConsumeClaim(h.ctx, h.actor, control.claim.Token); err != nil || !reused || id != control.batch {
+	if id, reused, err := h.fresh().ConsumeClaim(h.ctx, h.actor, control.claim.Token); err != nil || !reused || id.ID != control.batch {
 		t.Fatalf("other consumed claim changed: %v", err)
 	}
 	// Deleting the final batch removes the now-empty range session as well.
@@ -257,7 +259,7 @@ func TestClaimedBatchDeletionRollback(t *testing.T) {
 	if err := tx.Rollback(h.ctx); err != nil {
 		t.Fatal(err)
 	}
-	if id, reused, err := h.fresh().ConsumeClaim(h.ctx, h.actor, f.claim.Token); err != nil || !reused || id != f.batch {
+	if id, reused, err := h.fresh().ConsumeClaim(h.ctx, h.actor, f.claim.Token); err != nil || !reused || id.ID != f.batch {
 		t.Fatalf("rollback lost consumed claim: %v", err)
 	}
 	if _, err := h.fresh().BatchDetail(h.ctx, h.actor.ID, f.batch); err != nil {
@@ -279,7 +281,7 @@ func TestClaimedBatchDeletionConcurrency(t *testing.T) {
 		h.waitBlocked(t, "DELETE FROM wordweave.learning_batches")
 		replayed := make(chan error, 1)
 		go func() { _, _, err := h.fresh().ConsumeClaim(h.ctx, h.actor, f.claim.Token); replayed <- err }()
-		h.waitBlocked(t, "WHERE token_hash=$1 FOR UPDATE")
+		h.waitBlocked(t, "SELECT id FROM wordweave.accounts")
 		if err := tx.Rollback(h.ctx); err != nil {
 			t.Fatal(err)
 		}
@@ -301,7 +303,7 @@ func TestClaimedBatchDeletionConcurrency(t *testing.T) {
 				go func() {
 					<-start
 					id, reused, err := h.fresh().ConsumeClaim(h.ctx, h.actor, f.claim.Token)
-					if err == nil && (!reused || id != f.batch) {
+					if err == nil && (!reused || id.ID != f.batch) {
 						err = errors.New("concurrent replay created another batch")
 					}
 					replays <- err
@@ -342,14 +344,15 @@ func TestClaimedBatchDeletionRetention(t *testing.T) {
 	cleanupCtx, cancel := context.WithTimeout(h.ctx, 150*time.Millisecond)
 	h.api.maintenance.Run(cleanupCtx)
 	cancel()
-	if id, reused, err := h.fresh().ConsumeClaim(h.ctx, h.actor, fresh.claim.Token); err != nil || !reused || id != fresh.batch {
-		t.Fatalf("unexpired claim cleaned early: %v", err)
-	}
+
 	if err := tx.Rollback(h.ctx); err != nil {
 		t.Fatal(err)
 	}
 	if err := <-done; err != nil {
 		t.Fatal(err)
+	}
+	if id, reused, err := h.fresh().ConsumeClaim(h.ctx, h.actor, fresh.claim.Token); err != nil || !reused || id.ID != fresh.batch {
+		t.Fatalf("unexpired claim cleaned early: %v", err)
 	}
 	h.assertDeleted(t, expired)
 	// Ordinary 24-hour cleanup still removes only the receipt, not its saved batch.

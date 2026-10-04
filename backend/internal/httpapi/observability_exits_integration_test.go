@@ -88,7 +88,7 @@ func TestOBS042DPreflightAndDraftSQLExits(t *testing.T) {
 		{"model_read", "FROM wordweave.ai_models", "model_assignment", false},
 		{"length_read", "FROM wordweave.group_lengths", "length_assignment", false},
 		{"vocabulary_read", "FROM wordweave.vocabulary_entries", "vocabulary", false},
-		{"quota_read", "SELECT count(*)", "quota", false},
+		{"quota_read", "FROM wordweave.generation_charges", "quota", false},
 		{"reserve_insert", "INSERT INTO wordweave.generation_runs", "reserve", false},
 		{"entry_insert", "INSERT INTO wordweave.generation_run_entries", "entries", false},
 		{"start_commit", "commit", "transaction_commit", false},
@@ -172,7 +172,7 @@ func TestOBS042DCredentialAndPreparationExits(t *testing.T) {
 			}
 			credentials := api.credentials
 			if name == "database" {
-				p, _ := obsFaultPool(t, pool, "FROM wordweave.openrouter_credentials")
+				p, _ := obsFaultPool(t, pool, "wordweave.ai_provider_credentials")
 				env, _ := security.NewEnvelope(cfg.MasterKeys, cfg.CurrentKey)
 				credentials = ai.NewCredentialStore(p, env)
 			}
@@ -187,7 +187,7 @@ func TestOBS042DCredentialAndPreparationExits(t *testing.T) {
 			}
 			service := generation.NewService(pool, credentials, api.generation.Provider(), key, cfg.DraftTTL, api.generation.Validator())
 			for _, stage := range []gt.Stage{gt.Preflight, gt.ProviderOpen} {
-				if (name == "token" || name == "snapshot") && stage == gt.ProviderOpen || name == "request_create" && stage == gt.Preflight {
+				if (name == "token" || name == "snapshot") && stage == gt.ProviderOpen || (name == "request_create" || name == "decrypt") && stage == gt.Preflight {
 					continue
 				}
 				recorder := &tracetest.Recorder{}

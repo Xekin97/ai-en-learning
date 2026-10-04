@@ -58,7 +58,7 @@ func TestP0GenerationHTTPMatrix(t *testing.T) {
 		{"not_sse", "not_sse", "response_not_sse", "provider_open"},
 		{"stream_429", "stream_429", "rate_limited", "provider_receive"},
 		{"bad_event", "bad_event", "sse_event_json_invalid", "provider_receive"},
-		{"truncated", "truncated", "json_invalid", "provider_receive"},
+		{"truncated", "truncated", "stream_incomplete", "provider_receive"},
 		{"short", "short", "passage_too_short", "validation"},
 		{"passage_space", "passage_space", "passage_content_invalid", "validation"},
 		{"passage_language", "passage_language", "passage_language_invalid", "validation"},
@@ -173,7 +173,7 @@ func p0RunHTTPCase(t *testing.T, mode, reason, phase, fault string) {
 	t.Cleanup(provider.Close)
 	cfg.OpenRouterBaseURL = provider.URL
 	var err error
-	api, err = New(cfg, pool, pool)
+	api, err = integrationServer(t, cfg, pool)
 	if err != nil {
 		t.Fatal(err)
 	}

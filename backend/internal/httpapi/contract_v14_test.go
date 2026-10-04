@@ -92,10 +92,21 @@ func TestAdminQuotaV14Fixtures(t *testing.T) {
 			if err := json.Unmarshal(actual, &gotJSON); err != nil {
 				t.Fatal(err)
 			}
+			// M002 inherits every M001 quota field and adds seven explicit nullable
+			// detail fields. Keep the archived v1.4 fixture bytes unchanged.
+			gotUser := gotJSON.(map[string]any)["data"].(map[string]any)["user"].(map[string]any)
+			for _, field := range []string{"nickname", "gender", "last_login_at", "last_learning_at", "growth", "base_revision", "effective_plan_code"} {
+				value, exists := gotUser[field]
+				if !exists || value != nil {
+					t.Fatalf("missing nullable M002 field %s", field)
+				}
+				delete(gotUser, field)
+			}
 			if !reflect.DeepEqual(wantJSON, gotJSON) {
 				t.Fatalf("mapper mismatch: %s", actual)
 			}
-			if err := validateAdminQuotaEnvelope(actual, fixture.Method == "PUT"); err != nil {
+			inherited, _ := json.Marshal(gotJSON)
+			if err := validateAdminQuotaEnvelope(inherited, fixture.Method == "PUT"); err != nil {
 				t.Fatal(err)
 			}
 			summary, err := json.Marshal(mapAdminUserSummary(user))
@@ -240,4 +251,89 @@ func TestAdminQuotaV14RejectsContractDrift(t *testing.T) {
 	if err := validateAdminQuotaEnvelope(base, true); err == nil {
 		t.Fatal("PUT accepted a missing quota_reset")
 	}
+}
+
+// Validate every new detail field, then independently reuse the archived quota
+// oracle for the inherited portion. This never changes the M001 fixture bytes.
+func validateM002AdminQuotaEnvelope(raw []byte, groupChange bool) error {
+	var e map[string]any
+	if err := json.Unmarshal(raw, &e); err != nil {
+		return err
+	}
+	data, ok := e["data"].(map[string]any)
+	if !ok {
+		return fmt.Errorf("data object")
+	}
+	user, ok := data["user"].(map[string]any)
+	if !ok {
+		return fmt.Errorf("user object")
+	}
+	for _, key := range []string{"nickname", "gender", "last_login_at", "last_learning_at", "growth", "base_revision", "effective_plan_code"} {
+		value, exists := user[key]
+		if !exists {
+			return fmt.Errorf("missing M002 field %s", key)
+		}
+		switch key {
+		case "last_login_at", "last_learning_at":
+			if value != nil {
+				v, ok := value.(string)
+				if !ok {
+					return fmt.Errorf("time type")
+				}
+				if _, err := time.Parse(time.RFC3339Nano, v); err != nil {
+					return err
+				}
+			}
+		case "base_revision":
+			if user["role"] == "learner" {
+				if v, ok := value.(string); !ok || v == "" {
+					return fmt.Errorf("learner base revision")
+				}
+			} else if value != nil {
+				return fmt.Errorf("admin base revision")
+			}
+		case "effective_plan_code":
+			if user["role"] == "learner" {
+				if value != "basic" && value != "pro" && value != "plus" {
+					return fmt.Errorf("effective plan")
+				}
+			} else if value != nil {
+				return fmt.Errorf("admin effective plan")
+			}
+		case "gender":
+			if value != nil && value != "male" && value != "female" && value != "other" && value != "unspecified" {
+				return fmt.Errorf("gender")
+			}
+		case "nickname":
+			if value != nil {
+				if _, ok := value.(string); !ok {
+					return fmt.Errorf("nickname type")
+				}
+			}
+		case "growth":
+			if value != nil {
+				g, ok := value.(map[string]any)
+				if !ok || !quotaExactKeys(g, "level_number", "points", "experience", "mastered_total", "saved_total") {
+					return fmt.Errorf("growth keys")
+				}
+				for _, key := range []string{"points", "experience"} {
+					v, ok := g[key].(string)
+					if !ok || v == "" {
+						return fmt.Errorf("amount type")
+					}
+					for _, r := range v {
+						if r < '0' || r > '9' {
+							return fmt.Errorf("amount digits")
+						}
+					}
+				}
+			}
+		}
+		delete(user, key)
+	}
+	inherited, err := json.Marshal(e)
+	if err != nil {
+		return err
+	}
+	return validateAdminQuotaEnvelope(inherited, groupChange)
 }

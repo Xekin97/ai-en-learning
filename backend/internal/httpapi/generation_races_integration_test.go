@@ -137,7 +137,7 @@ func TestMixedCommitAcknowledgementHTTP(t *testing.T) {
 			}
 			tag := "COMMIT"
 			if mode == "failure_update" {
-				tag = "UPDATE 1"
+				tag = "COMMIT"
 				candidate.Passage = "Young(young) people share grapes(grape)."
 			}
 			f := newBoundaryHTTPFixtureWithPool(t, func(w http.ResponseWriter, r *http.Request) {
@@ -165,7 +165,7 @@ func TestMixedCommitAcknowledgementHTTP(t *testing.T) {
 					t.Fatal("committed draft was projected as failure")
 				}
 			} else {
-				f.assertSettled(t, "validation_failed", false, 0)
+				f.assertSettled(t, "provider_failed", false, 0, 2)
 				if strings.Count(string(raw), "event: generation.failed") != 1 || !strings.Contains(string(raw), "\"quota_refunded\":true") || strings.Contains(string(raw), "event: generation.validated") {
 					t.Fatal("committed refund was not recovered")
 				}
@@ -185,7 +185,7 @@ func TestMixedCancelledWriteAcknowledgement(t *testing.T) {
 		<-r.Context().Done()
 	}, func(pool *pgxpool.Pool) *pgxpool.Pool {
 		var wrapped *pgxpool.Pool
-		proxy, wrapped = newCommitAckProxy(t, pool, "UPDATE 1")
+		proxy, wrapped = newCommitAckProxy(t, pool, "COMMIT")
 		return wrapped
 	})
 	response := f.start(t)

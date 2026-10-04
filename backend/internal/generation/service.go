@@ -11,13 +11,15 @@ import (
 	"github.com/google/uuid"
 	"github.com/jackc/pgx/v5"
 	"github.com/jackc/pgx/v5/pgconn"
-	"github.com/jackc/pgx/v5/pgtype"
 	"github.com/jackc/pgx/v5/pgxpool"
 
 	"wordweave/internal/ai"
 	"wordweave/internal/dbgen"
+	"wordweave/internal/entitlement"
 	"wordweave/internal/generationtrace"
+	"wordweave/internal/growth"
 	"wordweave/internal/identity"
+	"wordweave/internal/platform/business"
 	"wordweave/internal/platform/security"
 )
 
@@ -50,20 +52,21 @@ type CancelOutcome struct {
 }
 
 type Service struct {
-	app           *pgxpool.Pool
-	queries       *dbgen.Queries
-	credentials   *ai.CredentialStore
-	provider      ai.Provider
-	validator     ai.Validator
-	registry      *Registry
-	capabilityKey []byte
-	draftTTL      time.Duration
+	app             *pgxpool.Pool
+	queries         *dbgen.Queries
+	credentials     *ai.CredentialStore
+	provider        ai.Provider
+	validator       ai.Validator
+	registry        *Registry
+	previewRegistry *Registry
+	capabilityKey   []byte
+	draftTTL        time.Duration
 }
 
 func NewService(app *pgxpool.Pool, credentials *ai.CredentialStore, provider ai.Provider, capabilityKey []byte, draftTTL time.Duration, validator ai.Validator) *Service {
 	return &Service{
 		app: app, queries: dbgen.New(app), credentials: credentials, provider: provider,
-		validator: validator, registry: NewRegistry(capabilityKey),
+		validator: validator, registry: NewRegistry(capabilityKey), previewRegistry: NewRegistry(capabilityKey),
 		capabilityKey: append([]byte(nil), capabilityKey...), draftTTL: draftTTL,
 	}
 }
@@ -72,7 +75,16 @@ func (service *Service) Provider() ai.Provider   { return service.provider }
 func (service *Service) Validator() ai.Validator { return service.validator }
 func (service *Service) Registry() *Registry     { return service.registry }
 
-func (service *Service) Start(ctx context.Context, actor identity.Actor, input Input) (_ Run, resultErr error) {
+func (service *Service) Start(ctx context.Context, actor identity.Actor, input Input) (Run, error) {
+	return service.start(ctx, actor, input, uuid.Nil, uuid.Nil)
+}
+func (service *Service) StartPreset(ctx context.Context, actor identity.Actor, id, version uuid.UUID) (Run, error) {
+	if id == uuid.Nil || version == uuid.Nil {
+		return Run{}, ErrInvalidInput
+	}
+	return service.start(ctx, actor, Input{}, id, version)
+}
+func (service *Service) start(ctx context.Context, actor identity.Actor, input Input, presetID, versionID uuid.UUID) (_ Run, resultErr error) {
 	trace := generationtrace.From(ctx)
 	trace.Begin(generationtrace.Preflight)
 	defer func() { finishTrace(ctx, generationtrace.Preflight, resultErr) }()
@@ -80,21 +92,6 @@ func (service *Service) Start(ctx context.Context, actor identity.Actor, input I
 	check("input")
 	if actor.IsAdmin() {
 		return Run{}, ErrForbidden
-	}
-	modelID, err := uuid.Parse(input.ModelID)
-	if err != nil || !validMeaningLanguage(input.MeaningLanguage) || !validScenario(input.Scenario) {
-		return Run{}, ErrInvalidInput
-	}
-	minimumWords, ok := minimumWords(input.Length)
-	if !ok || len(input.Entries) == 0 || hasDuplicate(input.Entries) {
-		return Run{}, ErrInvalidInput
-	}
-	check("credentials")
-	if _, err := service.credentials.Get(ctx); err != nil {
-		if errors.Is(err, ai.ErrCredentialMissing) {
-			return Run{}, ErrGenerationUnavailable
-		}
-		return Run{}, fmt.Errorf("check generation credential: %w", err)
 	}
 	check("transaction_begin")
 	tx, err := service.app.BeginTx(ctx, pgx.TxOptions{})
@@ -112,8 +109,46 @@ func (service *Service) Start(ctx context.Context, actor identity.Actor, input I
 		}
 	}()
 
+	configuration, err := business.LockConfiguration(ctx, tx, false)
+	if err != nil {
+		return Run{}, err
+	}
+	isPreset := presetID != uuid.Nil
+	var presetVersion *uuid.UUID
+	entryKind := "normal"
+	if isPreset {
+		var published uuid.UUID
+		err = tx.QueryRow(ctx, `SELECT published_version_id FROM wordweave.presets WHERE id=$1 AND listed`, presetID).Scan(&published)
+		if errors.Is(err, pgx.ErrNoRows) {
+			return Run{}, ErrPresetUnavailable
+		}
+		if err != nil {
+			return Run{}, err
+		}
+		if published != versionID {
+			return Run{}, ErrPresetChanged
+		}
+		v, err := readPresetVersion(ctx, tx, published)
+		if err != nil {
+			return Run{}, err
+		}
+		if !v.Enabled || v.Payload == nil {
+			return Run{}, ErrPresetInvalidReference
+		}
+		input = Input{ModelID: v.Input.ModelID.String(), MeaningLanguage: v.Input.MeaningLanguage, Scenario: v.Input.Scenario, Length: v.Input.Length, Entries: v.Input.Entries}
+		presetVersion = &published
+		entryKind = "preset"
+	}
+	modelID, err := uuid.Parse(input.ModelID)
+	if err != nil || !validMeaningLanguage(input.MeaningLanguage) || !validScenario(input.Scenario) {
+		return Run{}, ErrInvalidInput
+	}
+	minimumWords, ok := minimumWords(input.Length)
+	if !ok || len(input.Entries) == 0 || hasDuplicate(input.Entries) {
+		return Run{}, ErrInvalidInput
+	}
 	check("actor_lock")
-	groupCode, quotaResetAt, err := lockActor(ctx, tx, actor)
+	_, _, err = lockActor(ctx, tx, actor)
 	if err != nil {
 		if errors.Is(err, pgx.ErrNoRows) {
 			return Run{}, ErrForbidden
@@ -121,14 +156,13 @@ func (service *Service) Start(ctx context.Context, actor identity.Actor, input I
 		return Run{}, err
 	}
 	check("group_policy")
-	var quotaLimit pgtype.Int4
-	var maxEntries int
-	if err := tx.QueryRow(ctx, `
-		SELECT rolling_quota_limit, max_entries_per_run
-		FROM wordweave.entitlement_groups WHERE code=$1`, groupCode).Scan(&quotaLimit, &maxEntries); err != nil {
-		return Run{}, fmt.Errorf("read generation group policy: %w", err)
+	plan, err := entitlement.Resolve(ctx, tx, actor, configuration.Now)
+	if err != nil {
+		return Run{}, err
 	}
-	if len(input.Entries) > maxEntries {
+	groupCode, quotaLimit, maxEntries := plan.Code, plan.Limit, plan.MaxEntries
+
+	if !isPreset && len(input.Entries) > maxEntries {
 		return Run{}, ErrInvalidInput
 	}
 	check("model_assignment")
@@ -136,12 +170,21 @@ func (service *Service) Start(ctx context.Context, actor identity.Actor, input I
 	if err := tx.QueryRow(ctx, `
 		SELECT model.display_name, model.provider_model_id
 		FROM wordweave.ai_models model
-		JOIN wordweave.group_models assignment ON assignment.model_id=model.id
-		WHERE model.id=$1 AND assignment.group_code=$2 AND model.enabled`, modelID, groupCode).Scan(&modelName, &providerModelID); err != nil {
+		WHERE model.id=$1 AND model.enabled AND model.retired_at IS NULL AND ($6 OR
+ EXISTS(SELECT 1 FROM wordweave.group_models assignment WHERE assignment.model_id=model.id AND assignment.group_code=$2) OR
+ ($5 AND EXISTS(SELECT 1 FROM wordweave.model_time_contributions c WHERE c.owner_id=$3 AND c.model_id=model.id AND c.revoked_at IS NULL AND c.starts_at<=$4 AND c.ends_at>$4)))`, modelID, groupCode, actor.ID, configuration.Now, actor.IsLearner(), isPreset).Scan(&modelName, &providerModelID); err != nil {
 		if errors.Is(err, pgx.ErrNoRows) {
 			return Run{}, ErrInvalidInput
 		}
 		return Run{}, fmt.Errorf("authorize generation model: %w", err)
+	}
+	check("credentials")
+	spec := ai.GenerationSpec{ModelID: modelID.String(), ProviderModelID: providerModelID, MeaningLanguage: input.MeaningLanguage, Scenario: input.Scenario, LengthCode: input.Length, MinimumWords: minimumWords, Entries: append([]string(nil), input.Entries...), PromptVersion: ai.PromptVersion}
+	if err = service.credentials.BindSpec(ctx, &spec); err != nil {
+		if errors.Is(err, ai.ErrCredentialMissing) {
+			return Run{}, ErrGenerationUnavailable
+		}
+		return Run{}, err
 	}
 	check("length_assignment")
 	var allowedLength bool
@@ -150,7 +193,7 @@ func (service *Service) Start(ctx context.Context, actor identity.Actor, input I
 	)`, groupCode, input.Length).Scan(&allowedLength); err != nil {
 		return Run{}, fmt.Errorf("authorize generation length: %w", err)
 	}
-	if !allowedLength {
+	if !isPreset && !allowedLength {
 		return Run{}, ErrInvalidInput
 	}
 	check("vocabulary")
@@ -160,19 +203,6 @@ func (service *Service) Start(ctx context.Context, actor identity.Actor, input I
 	}
 	if len(resolved) != len(input.Entries) {
 		return Run{}, ErrInvalidInput
-	}
-	check("quota")
-	if quotaLimit.Valid {
-		if quotaLimit.Int32 == 0 {
-			return Run{}, ErrGenerationUnavailable
-		}
-		used, err := countQuota(ctx, tx, actor, quotaResetAt)
-		if err != nil {
-			return Run{}, err
-		}
-		if used >= int(quotaLimit.Int32) {
-			return Run{}, ErrQuotaExhausted
-		}
 	}
 
 	accountID := uuid.NullUUID{}
@@ -184,6 +214,24 @@ func (service *Service) Start(ctx context.Context, actor identity.Actor, input I
 		accountID = uuid.NullUUID{UUID: actor.ID, Valid: true}
 		creditedAccountID = accountID
 	}
+	check("quota")
+	// Keep the existing quota rejection precedence while holding the actor lock;
+	// the later source reservation cannot race another request for this owner.
+	if plan.Limit != nil {
+		usage, e := entitlement.Usage(ctx, tx, actor, plan, configuration.Now)
+		if e != nil {
+			return Run{}, e
+		}
+		if usage.Remaining != nil && *usage.Remaining == 0 {
+			extra, e := entitlement.Extra(ctx, tx, actor, configuration.Now)
+			if e != nil {
+				return Run{}, e
+			}
+			if extra.Remaining == 0 {
+				return Run{}, ErrQuotaExhausted
+			}
+		}
+	}
 	check("reserve")
 	var runID uuid.UUID
 	err = tx.QueryRow(ctx, `
@@ -191,11 +239,11 @@ func (service *Service) Start(ctx context.Context, actor identity.Actor, input I
 			account_id, visitor_id, credited_account_id, group_code_snapshot,
 			model_id, model_display_name_snapshot, provider_model_id_snapshot,
 			meaning_language, scenario, length_code, minimum_words_snapshot,
-			quota_limit_snapshot, max_entries_snapshot
-		) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13)
+			quota_limit_snapshot, max_entries_snapshot,entry_kind,preset_version_id,started_at
+		) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16)
 		RETURNING id`, accountID, visitorID, creditedAccountID, groupCode,
 		modelID, modelName, providerModelID, input.MeaningLanguage, input.Scenario,
-		input.Length, minimumWords, quotaLimit, maxEntries).Scan(&runID)
+		input.Length, minimumWords, quotaLimit, maxEntries, entryKind, presetVersion, configuration.Now).Scan(&runID)
 	if err != nil {
 		var postgresError *pgconn.PgError
 		if errors.As(err, &postgresError) && postgresError.Code == "23505" {
@@ -203,12 +251,29 @@ func (service *Service) Start(ctx context.Context, actor identity.Actor, input I
 		}
 		return Run{}, fmt.Errorf("reserve generation run: %w", err)
 	}
+	if err = entitlement.Reserve(ctx, tx, actor, plan, runID, configuration.Now); err != nil {
+		if errors.Is(err, entitlement.ErrQuotaExhausted) {
+			return Run{}, ErrQuotaExhausted
+		}
+		return Run{}, err
+	}
 	check("entries")
 	for index, entry := range resolved {
 		if _, err := tx.Exec(ctx, `
 			INSERT INTO wordweave.generation_run_entries(run_id, vocabulary_entry_id, input_order, source_entry_snapshot)
 			VALUES ($1,$2,$3,$4)`, runID, entry.ID, index, entry.Entry); err != nil {
 			return Run{}, fmt.Errorf("store generation entry: %w", err)
+		}
+	}
+	if growth.Enabled(configuration) {
+		source := "visitor"
+		var owner any
+		if actor.IsLearner() {
+			source = "account"
+			owner = actor.ID
+		}
+		if _, err = tx.Exec(ctx, `INSERT INTO wordweave.analytics_events(event_key,event_kind,occurred_at,started_at,learning_day,owner_id,source_kind,reference_key) VALUES($1,'generation_started',$2,$2,$3,$4,$5,$6)`, "generation-start:"+runID.String(), configuration.Now, business.LearningDay(configuration.Now), owner, source, runID); err != nil {
+			return Run{}, err
 		}
 	}
 	check("token")
@@ -222,11 +287,7 @@ func (service *Service) Start(ctx context.Context, actor identity.Actor, input I
 		trace.Note(generationtrace.Preflight, "transaction_commit", generationtrace.Why("transaction_unknown"))
 		return Run{}, fmt.Errorf("commit generation preflight: %w", err)
 	}
-	spec := ai.GenerationSpec{
-		RunID: runID.String(), ModelID: modelID.String(), ProviderModelID: providerModelID,
-		MeaningLanguage: input.MeaningLanguage, Scenario: input.Scenario, LengthCode: input.Length,
-		MinimumWords: minimumWords, Entries: append([]string(nil), input.Entries...), PromptVersion: ai.PromptVersion,
-	}
+	spec.RunID = runID.String()
 	trace.BindRun(runID.String(), modelID.String())
 	service.registry.Register(runID, actor, token)
 	service.registry.AttachTrace(runID, trace)
@@ -266,17 +327,34 @@ func (service *Service) CompleteValid(ctx context.Context, run Run, batch ai.Val
 		}
 	}()
 	check("cas")
+	configuration, actor, err := lockRunSubject(ctx, tx, run.ID)
+	if err != nil {
+		return err
+	}
+
 	result, err := tx.Exec(ctx, `
 		UPDATE wordweave.generation_runs
 		SET call_status='valid', quota_charged=true, counts_toward_cumulative=true,
-			completed_at=clock_timestamp(), failure_code=NULL
-		WHERE id=$1 AND call_status='active'`, run.ID)
+			completed_at=$2, failure_code=NULL
+		WHERE id=$1 AND call_status='active'`, run.ID, configuration.Now)
 	if err != nil {
 		return fmt.Errorf("settle valid generation: %w", err)
 	}
 	if result.RowsAffected() != 1 {
 		return ErrTerminalRace
 	}
+	if err = settleCharge(ctx, tx, run.ID, false, configuration.Now); err != nil {
+		return err
+	}
+	if actor.IsLearner() {
+		if _, err = growth.RecordGeneration(ctx, tx, actor.ID, configuration); err != nil {
+			return err
+		}
+	}
+	if err = recordGenerationTerminal(ctx, tx, run.ID, actor, "valid", configuration); err != nil {
+		return err
+	}
+
 	check("draft_insert")
 	if _, err := tx.Exec(ctx, `
 		INSERT INTO wordweave.generation_drafts(run_id, access_token_hash, payload, expires_at)
@@ -297,17 +375,10 @@ func (service *Service) CompleteFailure(ctx context.Context, runID uuid.UUID, st
 	if status != "provider_failed" && status != "server_failed" && status != "stream_failed" && status != "validation_failed" {
 		return errors.New("invalid generation failure status")
 	}
-	result, err := service.app.Exec(ctx, `
-		UPDATE wordweave.generation_runs
-		SET call_status=$2, quota_charged=false, counts_toward_cumulative=false,
-			completed_at=clock_timestamp(), failure_code=$3
-		WHERE id=$1 AND call_status='active'`, runID, status, failureCode)
-	if err != nil {
-		return fmt.Errorf("settle failed generation: %w", err)
+	if err := SettleTerminal(ctx, service.app, runID, status, failureCode); err != nil {
+		return err
 	}
-	if result.RowsAffected() != 1 {
-		return ErrTerminalRace
-	}
+
 	service.registry.SetStatus(runID, "failed")
 	return nil
 }
@@ -333,12 +404,8 @@ func (service *Service) Cancel(ctx context.Context, actor identity.Actor, runIDR
 		finishTrace(ctx, generationtrace.Settlement, resultErr)
 	}()
 	trace.Check(generationtrace.Settlement, "cas", -1)
-	result, err := service.app.Exec(ctx, `
-		UPDATE wordweave.generation_runs
-		SET call_status='user_cancelled', quota_charged=true, counts_toward_cumulative=true,
-			completed_at=clock_timestamp(), failure_code=NULL
-		WHERE id=$1 AND call_status='active'`, runID)
-	if err == nil && result.RowsAffected() == 1 {
+	err = SettleTerminal(ctx, service.app, runID, "user_cancelled", "")
+	if err == nil {
 		service.registry.SetStatus(runID, "cancelled")
 		if cancel != nil {
 			cancel()
@@ -402,25 +469,6 @@ func lockActor(ctx context.Context, tx pgx.Tx, actor identity.Actor) (string, ti
 		SELECT group_code, quota_reset_at FROM wordweave.accounts
 		WHERE id=$1 AND role='learner' FOR UPDATE`, actor.ID).Scan(&groupCode, &reset)
 	return groupCode, reset, err
-}
-
-func countQuota(ctx context.Context, tx pgx.Tx, actor identity.Actor, reset time.Time) (int, error) {
-	var used int
-	if actor.IsVisitor() {
-		if err := tx.QueryRow(ctx, `
-			SELECT count(*) FROM wordweave.generation_runs
-			WHERE visitor_id=$1 AND quota_charged AND started_at >= clock_timestamp()-interval '24 hours'`, actor.ID).Scan(&used); err != nil {
-			return 0, fmt.Errorf("count visitor generation quota: %w", err)
-		}
-		return used, nil
-	}
-	if err := tx.QueryRow(ctx, `
-		SELECT count(*) FROM wordweave.generation_runs
-		WHERE account_id=$1 AND quota_charged
-		AND started_at >= greatest(clock_timestamp()-interval '24 hours', $2)`, actor.ID, reset).Scan(&used); err != nil {
-		return 0, fmt.Errorf("count account generation quota: %w", err)
-	}
-	return used, nil
 }
 
 func validMeaningLanguage(value string) bool { return value == "zh" || value == "en" || value == "ja" }

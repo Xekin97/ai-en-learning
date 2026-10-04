@@ -82,12 +82,20 @@ type quotaTestTx struct {
 	group              string
 	cancel             context.CancelFunc
 	rollbackContextErr error
+	updated            bool
 }
 
 func (tx *quotaTestTx) QueryRow(_ context.Context, query string, _ ...any) pgx.Row {
 	step := "lock"
 	if query == userDetailQuery {
 		step = "detail"
+		if !tx.updated {
+			step = "before"
+		}
+	} else if strings.Contains(query, "growth_settings") {
+		step = "configuration"
+	} else if strings.Contains(query, "SELECT clock_timestamp()") {
+		step = "clock"
 	} else if !strings.Contains(query, "FOR UPDATE") {
 		panic("unexpected SQL")
 	}
@@ -95,6 +103,14 @@ func (tx *quotaTestTx) QueryRow(_ context.Context, query string, _ ...any) pgx.R
 	return quotaTestRow(func(dest ...any) error {
 		if tx.failAt == step {
 			return tx.failure
+		}
+		if step == "configuration" {
+			*dest[0].(*int64) = 1
+			return nil
+		}
+		if step == "clock" {
+			*dest[0].(*time.Time) = time.Date(2026, 9, 20, 1, 0, 0, 0, time.UTC)
+			return nil
 		}
 		*dest[0].(*uuid.UUID) = uuid.MustParse("11111111-1111-4111-8111-111111111111")
 		if step == "lock" {
@@ -110,15 +126,23 @@ func (tx *quotaTestTx) QueryRow(_ context.Context, query string, _ ...any) pgx.R
 		*dest[8].(*bool) = true
 		*dest[9].(*pgtype.Int4) = pgtype.Int4{Int32: 5, Valid: true}
 		*dest[10].(*int64) = 0
+		if tx.updated {
+			*dest[16].(*int64) = 1
+		}
 		return nil
 	})
 }
-func (tx *quotaTestTx) Exec(_ context.Context, _ string, args ...any) (pgconn.CommandTag, error) {
-	tx.calls = append(tx.calls, "update")
-	if tx.failAt == "update" {
+func (tx *quotaTestTx) Exec(_ context.Context, query string, args ...any) (pgconn.CommandTag, error) {
+	step := "update"
+	if strings.Contains(query, "plan_quota_states") {
+		step = "quota"
+	}
+	tx.calls = append(tx.calls, step)
+	if tx.failAt == step {
 		return pgconn.CommandTag{}, tx.failure
 	}
 	tx.group = args[1].(string)
+	tx.updated = true
 	return pgconn.NewCommandTag("UPDATE 1"), nil
 }
 func (tx *quotaTestTx) Commit(context.Context) error {
@@ -139,14 +163,18 @@ func (tx *quotaTestTx) Rollback(ctx context.Context) error {
 
 func TestUserGroupTransactionOrderingAndFailures(t *testing.T) {
 	t.Parallel()
-	for _, failureStep := range []string{"", "lock", "update", "detail", "commit"} {
+	for _, failureStep := range []string{"", "configuration", "clock", "lock", "before", "update", "quota", "detail", "commit"} {
 		t.Run("failure_"+failureStep, func(t *testing.T) {
 			t.Parallel()
 			ctx, cancel := context.WithCancel(context.Background())
 			defer cancel()
 			failure := errors.New("injected transaction failure")
-			tx := &quotaTestTx{failAt: failureStep, failure: failure, cancel: cancel}
-			user, err := changeUserGroup(ctx, tx, uuid.MustParse("11111111-1111-4111-8111-111111111111"), "pro")
+			tx := &quotaTestTx{failAt: failureStep, failure: failure, cancel: cancel, group: "registered"}
+			plan := "basic"
+			before := User{ID: uuid.MustParse("11111111-1111-4111-8111-111111111111"), Role: "learner", PlanCode: &plan}
+			key := []byte("test-base")
+			signUserBase(&before, key)
+			user, err := changeUserGroup(ctx, tx, before.ID, "pro", *before.BaseRevision, key)
 			if failureStep != "" {
 				if !errors.Is(err, failure) || user.ID != uuid.Nil || user.GenerationQuota != nil {
 					t.Fatalf("partial success: user=%v err=%v", user, err)
@@ -154,7 +182,7 @@ func TestUserGroupTransactionOrderingAndFailures(t *testing.T) {
 			} else if err != nil || user.PlanCode == nil || *user.PlanCode != "pro" || *user.GenerationQuota.Remaining != 5 {
 				t.Fatalf("user=%v err=%v", user, err)
 			}
-			want := []string{"lock", "update", "detail", "commit"}
+			want := []string{"configuration", "clock", "lock", "before", "update", "quota", "detail", "commit"}
 			if failureStep != "" {
 				for i, step := range want {
 					if step == failureStep {
@@ -176,20 +204,20 @@ func TestUserGroupTransactionOrderingAndFailures(t *testing.T) {
 
 func TestUserGroupRejectsInvalidInputBeforeDatabase(t *testing.T) {
 	t.Parallel()
-	service := NewService(nil, nil, nil, nil)
+	service := NewService(nil, nil, nil, nil, []byte("admin-test-key"))
 	for _, group := range []string{"visitor", "registered", "admin", "unknown"} {
-		if _, err := service.ChangeUserGroup(context.Background(), uuid.New(), group, true); !errors.Is(err, ErrValidation) {
+		if _, err := service.ChangeUserGroup(context.Background(), uuid.New(), group, true, "revision"); !errors.Is(err, ErrValidation) {
 			t.Fatalf("group=%s err=%v", group, err)
 		}
 	}
-	if _, err := service.ChangeUserGroup(context.Background(), uuid.New(), "pro", false); !errors.Is(err, ErrValidation) {
+	if _, err := service.ChangeUserGroup(context.Background(), uuid.New(), "pro", false, "revision"); !errors.Is(err, ErrValidation) {
 		t.Fatal(err)
 	}
 }
 
 func TestUserDetailNoRowsNeverReturnsPartialUser(t *testing.T) {
 	t.Parallel()
-	tx := &quotaTestTx{failAt: "detail", failure: pgx.ErrNoRows}
+	tx := &quotaTestTx{failAt: "before", failure: pgx.ErrNoRows}
 	user, err := getUser(context.Background(), tx, uuid.New())
 	if !errors.Is(err, ErrNotFound) || user.ID != uuid.Nil || user.GenerationQuota != nil {
 		t.Fatalf("user=%v err=%v", user, err)

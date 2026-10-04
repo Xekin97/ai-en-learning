@@ -33,7 +33,7 @@ func TestCR039BrowserDisconnectRefundsWithoutDraft(t *testing.T) {
 	provider := newFakeOpenRouter(t)
 	defer provider.Close()
 	cfg.OpenRouterBaseURL = provider.URL
-	api, err := New(cfg, pool, pool)
+	api, err := integrationServer(t, cfg, pool)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -91,17 +91,17 @@ func TestCR039OneExplicitCompatibilityProbeNoStartupCalls(t *testing.T) {
 	}))
 	defer provider.Close()
 	cfg.OpenRouterBaseURL = provider.URL
-	api, err := New(cfg, pool, pool)
+	api, err := integrationServer(t, cfg, pool)
 	if err != nil {
 		t.Fatal(err)
 	}
 	if catalogs.Load() != 0 || chats.Load() != 0 {
 		t.Fatal("startup triggered provider calls")
 	}
-	if err := api.openrouter.CheckCompatibility(ctx, "provider/integration"); err != nil {
+	if err := api.gateway.CheckCompatibility(ctx, model.String()); err != nil {
 		t.Fatal(err)
 	}
-	if catalogs.Load() != 1 || chats.Load() != 1 {
+	if catalogs.Load() != 0 || chats.Load() != 1 {
 		t.Fatalf("probe called catalog=%d chat=%d", catalogs.Load(), chats.Load())
 	}
 	var enabled bool
@@ -192,7 +192,7 @@ func TestCR039InputVocabularyMappingPersistenceAndTerminalCAS(t *testing.T) {
 	if err != nil || !reused || second != claimed {
 		t.Fatal("claim idempotency failed")
 	}
-	cr039AssertReview(t, ctx, api, actor, claimed, validated)
+	cr039AssertReview(t, ctx, api, actor, claimed.ID, validated)
 	for _, status := range []string{"validation_failed", "stream_failed", "user_cancelled"} {
 		t.Run(status, func(t *testing.T) {
 			run, err := api.generation.Start(ctx, actor, input)
@@ -243,7 +243,7 @@ func TestCR039InvalidFinalMappingHTTPDoesNotPublishDraft(t *testing.T) {
 	}))
 	defer provider.Close()
 	cfg.OpenRouterBaseURL = provider.URL
-	api, err := New(cfg, pool, pool)
+	api, err := integrationServer(t, cfg, pool)
 	if err != nil {
 		t.Fatal(err)
 	}

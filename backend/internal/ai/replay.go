@@ -85,7 +85,7 @@ func ReplayEvidence(ctx context.Context, view evidence.View, current evidence.Fi
 			wire.WriteString("}}]}\n\n")
 		}
 		wire.WriteString("data: [DONE]\n\n")
-		stream := openRouterStream{io.NopCloser(strings.NewReader(wire.String()))}
+		stream := openRouterStream{body: io.NopCloser(strings.NewReader(wire.String()))}
 		deltas := sha256.New()
 		candidate, err = stream.Receive(ctx, func(delta string) error { hashCleanDelta(deltas, delta); return nil })
 		report.PassageDeltaSHA256 = hex.EncodeToString(deltas.Sum(nil))

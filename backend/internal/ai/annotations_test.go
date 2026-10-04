@@ -198,7 +198,7 @@ func TestInlineAnnotationLimitsUseCleanContentAndCancellation(t *testing.T) {
 	if _, err := parser.Push(ctx, "grapes(grape)", true); !errors.Is(err, context.Canceled) {
 		t.Fatalf("cancellation lost: %v", err)
 	}
-	if PromptVersion != "m001-v5-r10" || ValidatorVersion != "m001-v5-wn31-r2" {
+	if PromptVersion != "m002-v1-r1" || ValidatorVersion != "m001-v5-wn31-r2" {
 		t.Fatal(fmt.Sprintf("unexpected protocol versions: %s %s", PromptVersion, ValidatorVersion))
 	}
 }

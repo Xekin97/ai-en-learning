@@ -8,6 +8,7 @@ import (
 	"io"
 	"net/http"
 	"strings"
+	"unicode/utf8"
 )
 
 type responseMeta struct {
@@ -43,6 +44,7 @@ type problem struct {
 	Detail      string       `json:"detail"`
 	RequestID   string       `json:"request_id"`
 	FieldErrors []fieldError `json:"field_errors,omitempty"`
+	Context     any          `json:"context,omitempty"`
 }
 
 func writeJSON(writer http.ResponseWriter, request *http.Request, status int, data any) {
@@ -68,6 +70,10 @@ func writeNoContent(writer http.ResponseWriter) {
 }
 
 func writeProblem(writer http.ResponseWriter, request *http.Request, status int, code, title, detail string, fields ...fieldError) {
+	writeProblemContext(writer, request, status, code, title, detail, nil, fields...)
+}
+
+func writeProblemContext(writer http.ResponseWriter, request *http.Request, status int, code, title, detail string, context any, fields ...fieldError) {
 	writer.Header().Set("Content-Type", "application/problem+json; charset=utf-8")
 	writer.Header().Set("Cache-Control", "no-store")
 	writer.WriteHeader(status)
@@ -75,6 +81,7 @@ func writeProblem(writer http.ResponseWriter, request *http.Request, status int,
 		Type:  "https://wordweave.example/problems/" + strings.ReplaceAll(code, "_", "-"),
 		Title: title, Status: status, Code: code, Detail: detail,
 		RequestID: requestID(request.Context()), FieldErrors: fields,
+		Context: context,
 	})
 }
 
@@ -86,6 +93,9 @@ func decodeStrict(writer http.ResponseWriter, request *http.Request, target any,
 	}
 	if len(bytes.TrimSpace(raw)) == 0 {
 		return errors.New("request body is required")
+	}
+	if !utf8.Valid(raw) {
+		return errors.New("request body must contain valid UTF-8")
 	}
 	if err := rejectDuplicateKeys(raw); err != nil {
 		return err
@@ -164,6 +174,11 @@ func inspectJSONValue(decoder *json.Decoder) error {
 
 func decodeOrProblem(writer http.ResponseWriter, request *http.Request, target any, maxBytes int64) bool {
 	if err := decodeStrict(writer, request, target, maxBytes); err != nil {
+		var sizeError *http.MaxBytesError
+		if errors.As(err, &sizeError) {
+			writeProblem(writer, request, http.StatusRequestEntityTooLarge, "payload_too_large", "Request is too large", "The request exceeds the transport size limit.")
+			return false
+		}
 		writeProblem(writer, request, http.StatusBadRequest, "malformed_request", "Malformed request", "The request body is not valid for this operation.")
 		return false
 	}

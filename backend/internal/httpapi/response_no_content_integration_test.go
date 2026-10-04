@@ -10,6 +10,7 @@ import (
 	"os"
 	"testing"
 	"time"
+	"wordweave/internal/ai"
 
 	"github.com/google/uuid"
 
@@ -38,7 +39,7 @@ func TestNoContentConsumersEnforcePrivateNoStoreResponse(t *testing.T) {
 
 	provider := newFakeOpenRouter(t)
 	defer provider.Close()
-	api, err := New(integrationConfig(testURL, provider.URL), pool, pool)
+	api, err := integrationServer(t, integrationConfig(testURL, provider.URL), pool)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -62,18 +63,23 @@ func TestNoContentConsumersEnforcePrivateNoStoreResponse(t *testing.T) {
 	requireStatus(t, adminLogin, http.StatusOK)
 	adminCSRF = dataString(t, adminLogin.body, "csrf_token")
 
-	credential := putJSON(t, adminClient, application.URL+"/api/v1/admin/openrouter-credential", adminCSRF, map[string]any{
-		"api_key": "integration-secret-key", "confirmed": true,
-	})
-	requireStatus(t, credential, http.StatusOK)
+	// The global credential endpoint has been replaced. Seed the migrated
+	// fixture connection; all model operations below use the unified HTTP API.
+	var fixtureAdmin uuid.UUID
+	if err := pool.QueryRow(ctx, `SELECT id FROM wordweave.accounts WHERE role='admin' LIMIT 1`).Scan(&fixtureAdmin); err != nil {
+		t.Fatal(err)
+	}
+	if err := api.credentials.Put(ctx, fixtureAdmin, "integration-secret-key"); err != nil {
+		t.Fatal(err)
+	}
 	createdModel := postJSON(t, adminClient, application.URL+"/api/v1/admin/models", adminCSRF, map[string]any{
-		"display_name": "CR038 synthetic model", "description": nil, "openrouter_model_id": "provider/integration",
+		"display_name": "CR038 synthetic model", "description": nil, "provider_model_id": "provider/integration", "connection_id": ai.LegacyProviderID, "output_mode": "json_schema", "expected_revision": configurationRevisionHTTP(t, adminClient, application.URL),
 	})
 	requireStatus(t, createdModel, http.StatusCreated)
 	modelID := nestedString(t, createdModel.body, "data", "model", "id")
-	requireStatus(t, postJSON(t, adminClient, application.URL+"/api/v1/admin/models/"+modelID+"/enable", adminCSRF, map[string]any{}), http.StatusOK)
+	requireStatus(t, postJSON(t, adminClient, application.URL+"/api/v1/admin/models/"+modelID+"/enable", adminCSRF, map[string]any{"expected_revision": configurationRevisionHTTP(t, adminClient, application.URL)}), http.StatusOK)
 	requireStatus(t, putJSON(t, adminClient, application.URL+"/api/v1/admin/groups/basic", adminCSRF, map[string]any{
-		"rolling_24h_limit": nil, "max_entries": 5, "allowed_lengths": []string{"short"}, "model_ids": []string{modelID},
+		"priority": 1, "expected_revision": configurationRevisionHTTP(t, adminClient, application.URL), "rolling_24h_limit": nil, "max_entries": 5, "allowed_lengths": []string{"short"}, "model_ids": []string{modelID},
 	}), http.StatusOK)
 
 	learnerClient := newBrowserClient(t)
@@ -142,7 +148,7 @@ func TestNoContentConsumersEnforcePrivateNoStoreResponse(t *testing.T) {
 			"mode": "single_batch", "batch_id": batchID,
 		})
 		requireStatus(t, session, http.StatusCreated)
-		sessionID := dataString(t, session.body, "session_id")
+		sessionID := nestedString(t, session.body, "data", "session", "session_id")
 
 		response := rawJSONRequest(t, learnerClient, http.MethodDelete, application.URL+"/api/v1/me/batches/"+batchID, learnerCSRF, nil, nil)
 		assertPrivateNoContentResponse(t, response)

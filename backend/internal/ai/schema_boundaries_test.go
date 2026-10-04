@@ -93,7 +93,7 @@ func TestBoundarySSEFraming(t *testing.T) {
 			if crlf {
 				body = strings.ReplaceAll(body, "\n", "\r\n")
 			}
-			stream := openRouterStream{io.NopCloser(strings.NewReader(body))}
+			stream := openRouterStream{body: io.NopCloser(strings.NewReader(body))}
 			var clean strings.Builder
 			got, err := stream.Receive(context.Background(), func(s string) error { clean.WriteString(s); return nil })
 			if err != nil || got.Passage != candidate.Passage || clean.String() != "Young people share grapes and another grape." {
@@ -106,7 +106,7 @@ func TestBoundarySSEFraming(t *testing.T) {
 func TestBoundarySSEInvalidUTF8RejectedBeforeReplacement(t *testing.T) {
 	_, candidate := p0Candidate()
 	wire := strings.Replace(p0SSE(p0JSON(candidate)), "people", "pe"+string([]byte{0xff})+"ple", 1)
-	stream := openRouterStream{io.NopCloser(strings.NewReader(wire))}
+	stream := openRouterStream{body: io.NopCloser(strings.NewReader(wire))}
 	var preview strings.Builder
 	_, err := stream.Receive(context.Background(), func(s string) error { preview.WriteString(s); return nil })
 	if DescribeFailure(err).Reason != "sse_event_encoding_invalid" || preview.Len() != 0 {
@@ -118,7 +118,7 @@ func TestBoundaryMultipleCompleteChoicesAreNotMergedAsValid(t *testing.T) {
 	_, candidate := p0Candidate()
 	choice := map[string]any{"delta": map[string]string{"content": p0JSON(candidate)}}
 	wire := "data: " + p0JSON(map[string]any{"choices": []any{choice, choice}}) + "\n\n"
-	stream := openRouterStream{io.NopCloser(strings.NewReader(wire))}
+	stream := openRouterStream{body: io.NopCloser(strings.NewReader(wire))}
 	_, err := stream.Receive(context.Background(), func(string) error { return nil })
 	if DescribeFailure(err).Reason != "json_trailing_content" {
 		t.Fatalf("two complete choices accepted as one result: %v", err)

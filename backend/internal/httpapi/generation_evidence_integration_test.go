@@ -114,7 +114,11 @@ func TestOBS042CGenerationCaptureServiceEquivalence(t *testing.T) {
 						}
 					}
 				}
-				raw, _ := json.Marshal(candidate)
+				targets := make(map[string]any, len(candidate.Targets))
+				for _, target := range candidate.Targets {
+					targets[target.SourceEntry] = map[string]any{"entry_meaning": target.EntryMeaning, "hint_phrase": target.HintPhrase}
+				}
+				raw, _ := json.Marshal(map[string]any{"passage": candidate.Passage, "tags": candidate.Tags, "targets": targets})
 				if name == "candidate_json" {
 					raw = raw[:len(raw)-2]
 				}
@@ -131,7 +135,7 @@ func TestOBS042CGenerationCaptureServiceEquivalence(t *testing.T) {
 			}))
 			defer provider.Close()
 			cfg.OpenRouterBaseURL = provider.URL
-			api, err = New(cfg, pool, pool)
+			api, err = integrationServer(t, cfg, pool)
 			if err != nil {
 				t.Fatal(err)
 			}
@@ -201,8 +205,12 @@ func TestOBS042CGenerationCaptureServiceEquivalence(t *testing.T) {
 					if !result.Valid && (strings.Count(string(raw), "event: generation.failed") != 1 || !strings.Contains(string(raw), "\"quota_refunded\":true")) {
 						t.Fatal("failure/refund projection changed")
 					}
-					if calls.Load()-callBefore != 1 {
-						t.Fatal("unexpected provider call count")
+					expectedCalls := int32(1)
+					if name == "hint_missing" || name == "relation" || name == "changed_configuration" {
+						expectedCalls = 3
+					}
+					if calls.Load()-callBefore != expectedCalls {
+						t.Fatalf("unexpected provider call count: got %d want %d", calls.Load()-callBefore, expectedCalls)
 					}
 				} else if calls.Load() != callBefore {
 					t.Fatal("rejected input invoked provider")
@@ -252,6 +260,12 @@ func TestOBS042CGenerationCaptureServiceEquivalence(t *testing.T) {
 					continue
 				}
 				report := ai.ReplayEvidence(context.Background(), view, fp, ai.ReplayStream, api.generation.Validator())
+				if name == "hint_missing" || name == "relation" || name == "changed_configuration" {
+					if report.Status != "unavailable" || report.Reason != "multiple_model_attempts" {
+						t.Fatalf("multi-call capture incorrectly replayed as one: %+v", report)
+					}
+					continue
+				}
 				if name == "key_echo" {
 					if report.Status != "unavailable" {
 						t.Fatal("redacted capture replayed")

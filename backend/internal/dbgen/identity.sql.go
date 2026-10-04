@@ -27,7 +27,20 @@ type CreateAccountParams struct {
 	UiLocale     pgtype.Text `json:"ui_locale"`
 }
 
-func (q *Queries) CreateAccount(ctx context.Context, arg CreateAccountParams) (WordweaveAccount, error) {
+type CreateAccountRow struct {
+	ID           uuid.UUID          `json:"id"`
+	Username     string             `json:"username"`
+	PasswordHash string             `json:"password_hash"`
+	Role         string             `json:"role"`
+	GroupCode    pgtype.Text        `json:"group_code"`
+	Status       string             `json:"status"`
+	UiLocale     pgtype.Text        `json:"ui_locale"`
+	QuotaResetAt pgtype.Timestamptz `json:"quota_reset_at"`
+	CreatedAt    pgtype.Timestamptz `json:"created_at"`
+	UpdatedAt    pgtype.Timestamptz `json:"updated_at"`
+}
+
+func (q *Queries) CreateAccount(ctx context.Context, arg CreateAccountParams) (CreateAccountRow, error) {
 	row := q.db.QueryRow(ctx, createAccount,
 		arg.Username,
 		arg.PasswordHash,
@@ -35,7 +48,7 @@ func (q *Queries) CreateAccount(ctx context.Context, arg CreateAccountParams) (W
 		arg.GroupCode,
 		arg.UiLocale,
 	)
-	var i WordweaveAccount
+	var i CreateAccountRow
 	err := row.Scan(
 		&i.ID,
 		&i.Username,
@@ -171,9 +184,22 @@ WHERE id = $1
 LIMIT 1
 `
 
-func (q *Queries) FindAccountByID(ctx context.Context, id uuid.UUID) (WordweaveAccount, error) {
+type FindAccountByIDRow struct {
+	ID           uuid.UUID          `json:"id"`
+	Username     string             `json:"username"`
+	PasswordHash string             `json:"password_hash"`
+	Role         string             `json:"role"`
+	GroupCode    pgtype.Text        `json:"group_code"`
+	Status       string             `json:"status"`
+	UiLocale     pgtype.Text        `json:"ui_locale"`
+	QuotaResetAt pgtype.Timestamptz `json:"quota_reset_at"`
+	CreatedAt    pgtype.Timestamptz `json:"created_at"`
+	UpdatedAt    pgtype.Timestamptz `json:"updated_at"`
+}
+
+func (q *Queries) FindAccountByID(ctx context.Context, id uuid.UUID) (FindAccountByIDRow, error) {
 	row := q.db.QueryRow(ctx, findAccountByID, id)
-	var i WordweaveAccount
+	var i FindAccountByIDRow
 	err := row.Scan(
 		&i.ID,
 		&i.Username,
@@ -197,9 +223,22 @@ WHERE lower(username) = lower($1)
 LIMIT 1
 `
 
-func (q *Queries) FindAccountByUsername(ctx context.Context, username string) (WordweaveAccount, error) {
+type FindAccountByUsernameRow struct {
+	ID           uuid.UUID          `json:"id"`
+	Username     string             `json:"username"`
+	PasswordHash string             `json:"password_hash"`
+	Role         string             `json:"role"`
+	GroupCode    pgtype.Text        `json:"group_code"`
+	Status       string             `json:"status"`
+	UiLocale     pgtype.Text        `json:"ui_locale"`
+	QuotaResetAt pgtype.Timestamptz `json:"quota_reset_at"`
+	CreatedAt    pgtype.Timestamptz `json:"created_at"`
+	UpdatedAt    pgtype.Timestamptz `json:"updated_at"`
+}
+
+func (q *Queries) FindAccountByUsername(ctx context.Context, username string) (FindAccountByUsernameRow, error) {
 	row := q.db.QueryRow(ctx, findAccountByUsername, username)
-	var i WordweaveAccount
+	var i FindAccountByUsernameRow
 	err := row.Scan(
 		&i.ID,
 		&i.Username,

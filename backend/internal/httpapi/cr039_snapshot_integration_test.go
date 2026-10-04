@@ -14,6 +14,7 @@ import (
 	"github.com/google/uuid"
 	"github.com/jackc/pgx/v5/pgxpool"
 	"wordweave/internal/ai"
+	"wordweave/internal/entitlement"
 	"wordweave/internal/generation"
 	"wordweave/internal/identity"
 	"wordweave/internal/platform/config"
@@ -43,7 +44,7 @@ func cr039Harness(t *testing.T) (context.Context, *Server, *pgxpool.Pool, identi
 	}
 	// No provider is reachable. Loading, saving and reviewing must stay offline.
 	cfg := integrationConfig(url, "http://127.0.0.1:1")
-	api, err := New(cfg, pool, pool)
+	api, err := integrationServer(t, cfg, pool)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -88,6 +89,22 @@ func cr039SeedRun(t *testing.T, ctx context.Context, api *Server, pool *pgxpool.
 	if _, err := pool.Exec(ctx, `INSERT INTO wordweave.generation_run_entries(run_id,vocabulary_entry_id,input_order,source_entry_snapshot) SELECT $1,id,0,entry FROM wordweave.vocabulary_entries WHERE entry=$2`, run.ID, entry); err != nil {
 		t.Fatal(err)
 	}
+	tx, err := pool.Begin(ctx)
+	if err != nil {
+		t.Fatal(err)
+	}
+	defer tx.Rollback(ctx)
+	plan, err := entitlement.Resolve(ctx, tx, actor, time.Now())
+	if err != nil {
+		t.Fatal(err)
+	}
+	if err = entitlement.Reserve(ctx, tx, actor, plan, run.ID, time.Now()); err != nil {
+		t.Fatal(err)
+	}
+	if err = tx.Commit(ctx); err != nil {
+		t.Fatal(err)
+	}
+
 	api.generation.Registry().Register(run.ID, actor, run.Token)
 	return run
 }
@@ -102,12 +119,11 @@ func cr039AssertReview(t *testing.T, ctx context.Context, api *Server, actor ide
 	if err != nil {
 		t.Fatal(err)
 	}
-	if attempt.Item.EntryMeaning != snapshot.Targets[0].EntryMeaning ||
-		mapReviewItem(attempt.Item)["entry_meaning"] != snapshot.Targets[0].EntryMeaning {
+	if attempt.Words[0].EntryMeaning != snapshot.Targets[0].EntryMeaning {
 		t.Fatal("spelling did not preserve original entry meaning")
 	}
 	hintBlanks := 0
-	for _, segment := range attempt.Item.HintSegments {
+	for _, segment := range attempt.Words[0].Hint.Segments {
 		if segment.Kind == "blank" {
 			hintBlanks++
 		} else if strings.Contains(strings.ToLower(segment.Text), "vulnerab") {
@@ -117,52 +133,53 @@ func cr039AssertReview(t *testing.T, ctx context.Context, api *Server, actor ide
 	if hintBlanks != len(snapshot.Targets[0].HintOccurrences) {
 		t.Fatal("hint positions changed")
 	}
-	action := func(itemID string, answer *string, answers []review.BlankAnswer) review.Outcome {
-		out, err := api.review.Act(ctx, actor, attempt.ID, attempt.Token, review.Action{ActionID: uuid.NewString(), ItemID: itemID, Kind: "answer", Answer: answer, Answers: answers})
-		if err != nil {
-			t.Fatal(err)
+	build := func(d review.DraftAttempt, valid bool) review.SubmitInput {
+		answer := snapshot.Targets[0].Entry
+		if !valid {
+			answer = snapshot.Targets[0].PassageOccurrences[0].Surface
 		}
-		return out
-	}
-	wrong := snapshot.Targets[0].PassageOccurrences[0].Surface
-	out := action(attempt.Item.ID, &wrong, nil)
-	if out.Kind != "retry" {
-		t.Fatalf("spelling accepted derived instead of original: %+v", out)
-	}
-	correct := snapshot.Targets[0].Entry
-	out = action(attempt.Item.ID, &correct, nil)
-	if out.Item == nil {
-		t.Fatal("passage question missing")
-	}
-	var correctAnswers, badAnswers []review.BlankAnswer
-	group := ""
-	for _, segment := range out.Item.PassageSegments {
-		if segment.Kind != "blank" {
-			if strings.Contains(strings.ToLower(segment.Text), "vulnerab") {
-				t.Fatal("passage leaked known form")
+		input := review.SubmitInput{ExpectedRevision: d.Revision, Words: []review.WordAnswer{{QuestionID: d.Words[0].QuestionID, Answer: answer}}, Passage: []review.PassageAnswer{}}
+		group := ""
+		for _, segment := range d.Passage.Segments {
+			if segment.Kind != "blank" {
+				if strings.Contains(strings.ToLower(segment.Text), "vulnerab") {
+					t.Fatal("passage leaked known form")
+				}
+				continue
 			}
-			continue
+			if group == "" {
+				group = segment.GroupKey
+			}
+			if segment.GroupKey == "" || segment.GroupKey != group {
+				t.Fatal("one target has inconsistent anonymous group")
+			}
+			value := snapshot.Targets[0].PassageOccurrences[len(input.Passage)].Surface
+			if !valid {
+				value = snapshot.Targets[0].Entry
+			}
+			input.Passage = append(input.Passage, review.PassageAnswer{BlankID: segment.BlankID, Answer: value})
 		}
-		if group == "" {
-			group = segment.GroupKey
+		if len(input.Passage) != len(snapshot.Targets[0].PassageOccurrences) {
+			t.Fatal("passage positions changed")
 		}
-		if group == "" || segment.GroupKey != group {
-			t.Fatal("one target has inconsistent anonymous group")
-		}
-		index := len(correctAnswers)
-		correctAnswers = append(correctAnswers, review.BlankAnswer{BlankID: segment.BlankID, Answer: snapshot.Targets[0].PassageOccurrences[index].Surface})
-		badAnswers = append(badAnswers, review.BlankAnswer{BlankID: segment.BlankID, Answer: correct})
+		return input
 	}
-	if len(correctAnswers) != len(snapshot.Targets[0].PassageOccurrences) {
-		t.Fatal("passage positions changed")
+	failed, err := api.review.Submit(ctx, actor, attempt.ID, attempt.Token, build(attempt, false))
+	if err != nil {
+		t.Fatal(err)
 	}
-	itemID := out.Item.ID
-	if wrong := action(itemID, nil, badAnswers); wrong.Kind != "retry" {
-		t.Fatal("passage accepted original for derived gaps")
+	if failed.Receipt.Successful || failed.Comparison.Words[0].Result != "incorrect" {
+		t.Fatal("derived spelling or wrong passage surfaces accepted")
 	}
-	if done := action(itemID, nil, correctAnswers); done.Kind != "session_completed" {
-		t.Fatalf("surface answers did not finish: %+v", done)
+	redo, err := api.review.Restart(ctx, actor, attempt.ID, failed.Receipt.Revision)
+	if err != nil {
+		t.Fatal(err)
 	}
+	done, err := api.review.Submit(ctx, actor, redo.Attempt.ID, redo.Attempt.Token, build(redo.Attempt, true))
+	if err != nil || !done.Receipt.Successful || done.Session.Status != "completed" {
+		t.Fatalf("correct full submission: %v", err)
+	}
+
 }
 
 func TestCR040CurrentStoredSnapshotRoundTrip(t *testing.T) {
@@ -183,7 +200,7 @@ func TestCR040CurrentStoredSnapshotRoundTrip(t *testing.T) {
 			if err != nil || !reused || first.ID != second.ID {
 				t.Fatalf("idempotency: %v", err)
 			}
-			restarted, err := New(cfg, pool, pool)
+			restarted, err := integrationServer(t, cfg, pool)
 			if err != nil {
 				t.Fatal(err)
 			}
