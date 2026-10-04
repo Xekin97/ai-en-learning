@@ -1,0 +1,176 @@
+{
+  "scope": "CR019 / FE2-R19 / QA2-F16",
+  "agent_name": "frontend-claire",
+  "authorization": "TRANSITION-M002-042",
+  "result": "implemented_pending_qa",
+  "finalized_at": "2026-09-28T08:53:54.623390+00:00",
+  "source_file_count": 282,
+  "production_changed_files": [
+    "frontend/app/pages/library/[batchId].vue"
+  ],
+  "compiled_file_count": 444,
+  "developer_checks": [
+    {
+      "name": "lint",
+      "command": [
+        "pnpm",
+        "exec",
+        "eslint",
+        "app/pages/library/[batchId].vue"
+      ],
+      "exit_code": 0,
+      "seconds": 1.98
+    },
+    {
+      "name": "format",
+      "command": [
+        "pnpm",
+        "exec",
+        "prettier",
+        "--check",
+        "app/pages/library/[batchId].vue"
+      ],
+      "exit_code": 0,
+      "seconds": 0.64
+    },
+    {
+      "name": "typecheck",
+      "command": [
+        "pnpm",
+        "typecheck"
+      ],
+      "exit_code": 0,
+      "seconds": 6.74
+    },
+    {
+      "name": "unit",
+      "command": [
+        "pnpm",
+        "test",
+        "tests/unit/library-title-editor.test.ts"
+      ],
+      "exit_code": 0,
+      "seconds": 1.19
+    },
+    {
+      "name": "build",
+      "command": [
+        "node",
+        "/Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/.planning/milestones/M002/implementation/evidence/frontend-cr019/build.mjs"
+      ],
+      "exit_code": 0,
+      "seconds": 14.07
+    }
+  ],
+  "target_unit_tests": 7,
+  "browser_cases": {
+    "pass": 8,
+    "fail": 0,
+    "runtime_events": 0,
+    "environment": "production Nuxt + existing contract mock + approved prototype; no real backend retest"
+  },
+  "visual_inspection": "Representative zh390/zh1440 paired and en390 prototype screenshots viewed",
+  "protected_files": 7508,
+  "protected_mismatches": [],
+  "unexpected_new_files": [],
+  "prior_artifact_count": 102,
+  "prior_documents_archived_by_hash": [
+    ".planning/milestones/M002/implementation/frontend-worktree-plan.md",
+    ".planning/milestones/M002/implementation/frontend-validation.md",
+    ".planning/milestones/M002/handoffs/frontend-implementation.md"
+  ],
+  "prior_other_artifacts_unchanged": 99,
+  "qa15_manifest_sha256": "4551281c6fc4ad61d7468527a68f59c20069cc9ba570a7e8c4b84ec7238f0c97",
+  "qa15_artifacts_unchanged": 171,
+  "controls_unchanged": true,
+  "backend_unchanged": true,
+  "broken_links": [],
+  "anchor_checks": [
+    {
+      "target": "frontend-validation.md#cr019",
+      "valid": true
+    },
+    {
+      "target": "../implementation/frontend-validation.md#cr019",
+      "valid": true
+    }
+  ],
+  "services_stopped": true,
+  "provider_calls": 0,
+  "cr_closed": false,
+  "stage_transitioned": false,
+  "uat_passed": false,
+  "new_session_handoff_test": "not_executed",
+  "input_tokens": "unknown",
+  "runtime_model_switch": "not_performed",
+  "document_measurement": [
+    {
+      "file": ".planning/milestones/M002/implementation/frontend-worktree-plan.md",
+      "lines": 32,
+      "bytes": 2636
+    },
+    {
+      "file": ".planning/milestones/M002/implementation/frontend-validation.md",
+      "lines": 110,
+      "bytes": 13830
+    },
+    {
+      "file": ".planning/milestones/M002/handoffs/frontend-implementation.md",
+      "lines": 34,
+      "bytes": 3110
+    },
+    {
+      "file": ".planning/milestones/M002/implementation/evidence/frontend-cr019/README.md",
+      "lines": 21,
+      "bytes": 2632
+    }
+  ],
+  "artifacts": {
+    ".planning/milestones/M002/implementation/evidence/frontend-cr019/R19-chromium-en-1440-production.png": "6a0979df948b618bcd2cc94a73cbe3febcb7c2dcf3b04905c14b214df35d8a46",
+    ".planning/milestones/M002/implementation/evidence/frontend-cr019/R19-chromium-en-1440-prototype.png": "6a0979df948b618bcd2cc94a73cbe3febcb7c2dcf3b04905c14b214df35d8a46",
+    ".planning/milestones/M002/implementation/evidence/frontend-cr019/R19-chromium-en-390-production.png": "9cf7ce4e8380cce9b9bbaddc68ae314bbf7ce77ec3bd3b1b45ca85fbfde9392b",
+    ".planning/milestones/M002/implementation/evidence/frontend-cr019/R19-chromium-en-390-prototype.png": "9cf7ce4e8380cce9b9bbaddc68ae314bbf7ce77ec3bd3b1b45ca85fbfde9392b",
+    ".planning/milestones/M002/implementation/evidence/frontend-cr019/R19-chromium-zh-1440-production.png": "5b835de1fe3c6380c2b876cf4d4eb1d533910c11b0585f743d978475fd74ff35",
+    ".planning/milestones/M002/implementation/evidence/frontend-cr019/R19-chromium-zh-1440-prototype.png": "5b835de1fe3c6380c2b876cf4d4eb1d533910c11b0585f743d978475fd74ff35",
+    ".planning/milestones/M002/implementation/evidence/frontend-cr019/R19-chromium-zh-390-production.png": "927c57095087b410fbd552a7989f1ee58e209c2b6a04d4f052db5d616d4c62c3",
+    ".planning/milestones/M002/implementation/evidence/frontend-cr019/R19-chromium-zh-390-prototype.png": "927c57095087b410fbd552a7989f1ee58e209c2b6a04d4f052db5d616d4c62c3",
+    ".planning/milestones/M002/implementation/evidence/frontend-cr019/R19-webkit-en-1440-production.png": "7a7c8ed689f9544f51e59a91d12f7071a34ec8660a2b9dcc9d83d454d4d97eb0",
+    ".planning/milestones/M002/implementation/evidence/frontend-cr019/R19-webkit-en-1440-prototype.png": "7a7c8ed689f9544f51e59a91d12f7071a34ec8660a2b9dcc9d83d454d4d97eb0",
+    ".planning/milestones/M002/implementation/evidence/frontend-cr019/R19-webkit-en-390-production.png": "5efc0515efb38998571b21a0c1a250c0a0170b2210a54b1e6792d968508ce70a",
+    ".planning/milestones/M002/implementation/evidence/frontend-cr019/R19-webkit-en-390-prototype.png": "5efc0515efb38998571b21a0c1a250c0a0170b2210a54b1e6792d968508ce70a",
+    ".planning/milestones/M002/implementation/evidence/frontend-cr019/R19-webkit-zh-1440-production.png": "62a61f82dbee1f172e282eb9d414cb54e26877a6a80f9a73f324c2613f90b1ee",
+    ".planning/milestones/M002/implementation/evidence/frontend-cr019/R19-webkit-zh-1440-prototype.png": "62a61f82dbee1f172e282eb9d414cb54e26877a6a80f9a73f324c2613f90b1ee",
+    ".planning/milestones/M002/implementation/evidence/frontend-cr019/R19-webkit-zh-390-production.png": "a12e583f01e44007ba809787ddeee1eb19b6470d68b0073e200d4977abc309f3",
+    ".planning/milestones/M002/implementation/evidence/frontend-cr019/R19-webkit-zh-390-prototype.png": "a12e583f01e44007ba809787ddeee1eb19b6470d68b0073e200d4977abc309f3",
+    ".planning/milestones/M002/implementation/evidence/frontend-cr019/README.md": "b637066728b49b90f1e1f9a21ebb8262b4d0458567470c678a01f87a371e5e29",
+    ".planning/milestones/M002/implementation/evidence/frontend-cr019/before-owned.tar.gz": "57c26744cf734490f3ecc964d39ced13bb91090649026494e29b257c0669449b",
+    ".planning/milestones/M002/implementation/evidence/frontend-cr019/browser-check.mjs": "96ebd0a6e86d3f048362f625688df0a909070bcf621d17179b2b7f59d462576f",
+    ".planning/milestones/M002/implementation/evidence/frontend-cr019/browser-results.json": "12f18882389a7a439a4bb3bee65b7335686c5d7537e72fdfb415fc27b11fb56a",
+    ".planning/milestones/M002/implementation/evidence/frontend-cr019/browser.log": "ba9181b2f695bcc5c4c3f0d2b748dd44168579ceacc6783adcc4e9837aa1be9e",
+    ".planning/milestones/M002/implementation/evidence/frontend-cr019/build-location.json": "c250349b73a5163931b52abb1e8294f3321594eb244444cf1fc797649559cf74",
+    ".planning/milestones/M002/implementation/evidence/frontend-cr019/build-source.json": "6ff93742276311a689bc30b621ece4755ac066fdc29b3e27bd1d6f69acdf4f84",
+    ".planning/milestones/M002/implementation/evidence/frontend-cr019/build.log": "f9bce28c5c66b6f0ad319d29f8df01a33a16f56f33a46c5345b828ce1bc14a87",
+    ".planning/milestones/M002/implementation/evidence/frontend-cr019/build.mjs": "2742b3a90e07811b0fe0d64e12333f880f0738fbd05eee9ef2f68d0e4f424ec0",
+    ".planning/milestones/M002/implementation/evidence/frontend-cr019/checks.json": "accc8af436d5eda7d1c2d710e68cdaad5663efbd2939abcac8880a6216e28058",
+    ".planning/milestones/M002/implementation/evidence/frontend-cr019/finalization-correction.json": "8ac5ce0585bcb508647e1ecabcd0f3cf846a605bbaeb537cf01841f85b735fa8",
+    ".planning/milestones/M002/implementation/evidence/frontend-cr019/finalize.py": "4bed7868c9c4847af7364293814c35716b51f235b50bc1c84333ce52526679fc",
+    ".planning/milestones/M002/implementation/evidence/frontend-cr019/format.log": "17aa973d3f004560237d9a95171210b0671deff23d61628eecf7322ff5938f20",
+    ".planning/milestones/M002/implementation/evidence/frontend-cr019/frontend-server.log": "463a1ea62d58f3e3c76cadb87841ed49eb051c8371ed5ae418c4b962a11aa0b6",
+    ".planning/milestones/M002/implementation/evidence/frontend-cr019/frontend-source.tar.gz": "7ef763406ab7209e964bb05f512cb57b3b663daa99dc8c3bf91bc1ba78bc899c",
+    ".planning/milestones/M002/implementation/evidence/frontend-cr019/inputs.json": "8568d4e4fcc7825e3b103cf3a9db0b6287d1f950d39ad8da5496f243d1c0544d",
+    ".planning/milestones/M002/implementation/evidence/frontend-cr019/lint.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    ".planning/milestones/M002/implementation/evidence/frontend-cr019/mock-server.log": "858d7f50d5900d613afdc0637575a4403df6e716d19a583dc3a8566638ef50ec",
+    ".planning/milestones/M002/implementation/evidence/frontend-cr019/protected-before.json": "0418009f6b9c3965fec6fa0a10fc7ad9ea365102e8b5b576fb58cb110a960a64",
+    ".planning/milestones/M002/implementation/evidence/frontend-cr019/prototype-server.log": "000f8b11dc439d004a47e958f3e33c3fa3b05aadf28a45ca31b85fceb65e68a8",
+    ".planning/milestones/M002/implementation/evidence/frontend-cr019/proxy-server.log": "44a489016ea84d99ddfacc2928198802eb5deebd5d148f4ceac5c34fa8d3d4d0",
+    ".planning/milestones/M002/implementation/evidence/frontend-cr019/run-browser.py": "635e255a8951efda4b9228372cde8a548c947c7f5bd0674ae00ff108967dceee",
+    ".planning/milestones/M002/implementation/evidence/frontend-cr019/runtime.json": "60ba76a864cdb0208a58092910e731863999c395fdb5dfa26183a5192a9af2f2",
+    ".planning/milestones/M002/implementation/evidence/frontend-cr019/source-diff.patch": "3266f23fec40230de4f8b4fac54cdb8481fe780aad9080ec32aebcc2fde0e4c9",
+    ".planning/milestones/M002/implementation/evidence/frontend-cr019/source.json": "bae79f818dfbd09d4675f121bbbeee062e8abd6737d894200737a4ce52d98af5",
+    ".planning/milestones/M002/implementation/evidence/frontend-cr019/typecheck.log": "88b5ca85f247e1da1f8c7040e2921c6f0d0be6624b6448d57703b6915f61afee",
+    ".planning/milestones/M002/implementation/evidence/frontend-cr019/unit.log": "043b16dc0957da0b669d8c717caa78540b873c164c0c1a7bfe4cae7b7b3f70db",
+    ".planning/milestones/M002/implementation/frontend-worktree-plan.md": "6488f38c202edadffa25a03ee9528e4592e0c60936329d06b0aa7d5a0866bb51",
+    ".planning/milestones/M002/implementation/frontend-validation.md": "01c819f834e0dee8c24e03c7f274814f590a0ab7c20674b147a41ec994bf18dc",
+    ".planning/milestones/M002/handoffs/frontend-implementation.md": "c6af47655af0136fb28bd3728c8093fccf2ddc65d08966b05e4050b1763bb157"
+  }
+}

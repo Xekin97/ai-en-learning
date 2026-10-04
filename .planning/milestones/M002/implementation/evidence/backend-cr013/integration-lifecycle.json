@@ -1,0 +1,19 @@
+{
+  "command": [
+    "go",
+    "test",
+    "-race",
+    "-tags=integration",
+    "./internal/httpapi",
+    "-run",
+    "^(TestDraftLifecycleWithoutRegistry|TestDraftHTTPAcrossProcessRestart|TestClaimedBatchDeletionHTTP|TestClaimedBatchDeletionRollback|TestClaimedBatchDeletionConcurrency|TestClaimedBatchDeletionRetention|TestM001EndToEnd)$",
+    "-count=1",
+    "-v",
+    "-timeout=180s"
+  ],
+  "cwd": "backend",
+  "exit_code": 0,
+  "seconds": 29.21,
+  "log_sha256": "790ae4d216804b06f26e74e35b0d1b80186441772d49dd5a6469ab78b2f3a420",
+  "real_provider_calls": 0
+}

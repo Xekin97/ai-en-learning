@@ -1,0 +1,24 @@
+{
+  "authorization": "TRANSITION-M002-039",
+  "owner": "frontend-claire",
+  "risk": "high: shared SSR/client date formatting",
+  "owned_existing": [
+    "frontend/app/composables/use-display-formatters.ts",
+    "frontend/app/pages/library/[batchId].vue",
+    "frontend/tests/unit/library-title-editor.test.ts",
+    ".planning/milestones/M002/implementation/frontend-worktree-plan.md",
+    ".planning/milestones/M002/implementation/frontend-validation.md",
+    ".planning/milestones/M002/handoffs/frontend-implementation.md"
+  ],
+  "new_source": [
+    "frontend/tests/unit/display-formatters.test.ts"
+  ],
+  "baseline_source_manifest": ".planning/milestones/M002/implementation/evidence/frontend-cr016/source.json",
+  "baseline_source_sha256": "5731ba5406b2bf28172e00318af8e471d13c286ce0af77ae8f224abb3306a529",
+  "qa13_manifest_sha256": "3691be754238b7fea94c0467a926274aa58e07cfc412399c241eafae1be435eb",
+  "source_diagnosis": "Intl literal connectors differ between Node and WebKit; normal title failure selects generic copy key",
+  "design": "UI22/H01",
+  "frontend_plan": "FE02",
+  "runtime_model_switch": "not_performed",
+  "input_tokens": "unknown"
+}

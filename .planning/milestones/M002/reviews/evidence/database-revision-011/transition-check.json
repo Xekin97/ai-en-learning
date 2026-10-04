@@ -1,0 +1,85 @@
+{
+  "decision_id": "TRANSITION-M002-011",
+  "checked_at": "2026-09-20T04:07:32.112692+00:00",
+  "result": "PASS",
+  "checks": [
+    {
+      "check": "state_project_registry_match",
+      "status": "PASS",
+      "detail": "Same-stage backend activation; source handoff is DB-02."
+    },
+    {
+      "check": "one_active_specialist",
+      "status": "PASS",
+      "detail": "Registry agrees with state."
+    },
+    {
+      "check": "bounded_state_changes",
+      "status": "PASS",
+      "detail": {
+        "changed": [
+          "active_agent",
+          "active_role",
+          "authorization_refs",
+          "context_entries",
+          "current_handoff",
+          "database_approval",
+          "last_transition"
+        ],
+        "stage": "technical-design",
+        "required_artifacts_unchanged": true
+      }
+    },
+    {
+      "check": "historical_approval_retained",
+      "status": "PASS",
+      "detail": "Current DB approval advances to DB-02; DB-01 review/history and design approval retained."
+    },
+    {
+      "check": "history_append_only",
+      "status": "PASS",
+      "detail": "Exactly one added history item; original bytes retained."
+    },
+    {
+      "check": "open_items_retained",
+      "status": "PASS",
+      "detail": "CR-003 requires backend reception; no automatic closure."
+    },
+    {
+      "check": "professional_and_application_files_unchanged",
+      "status": "PASS",
+      "detail": {
+        "files_checked": 5066,
+        "changed": []
+      }
+    },
+    {
+      "check": "review_links_and_next_task",
+      "status": "PASS",
+      "detail": {
+        "missing_links": [],
+        "report_link_created_now": ".planning/milestones/M002/reviews/evidence/database-revision-011/transition-check.json"
+      }
+    },
+    {
+      "check": "new_files_scoped_to_gate",
+      "status": "PASS",
+      "detail": {
+        "unexpected": []
+      }
+    }
+  ],
+  "approved_version": "M002-DB-02",
+  "active_agent": "backend-alex",
+  "stage": "technical-design",
+  "stage_transition": false,
+  "runtime_tests": false,
+  "backend_reception_performed": false,
+  "post_controls_sha256": {
+    ".planning/workflow/state.yaml": "082c7a39f89a6103db3364bb167b2ba1d2f12d8e9e1caa0081d5acc0953e15a0",
+    ".planning/workflow/history.yaml": "2c694b3eeb62a5104aac4da5b6747324fdd9cdbced8bcd023a8f21abd28d342e",
+    ".planning/agt/project.yaml": "9b747f616b25ffb10b2320347a1e35ba7af21c4a0bc26462b0d3976ae126a03c",
+    ".planning/agt/agents.yaml": "dc798668a58bf41406e0a585d70cfc20f02ea4177905856ab15cda5405825753"
+  },
+  "review_sha256": "a5c958d7d9906e9df8915d68df197949275c900ce419c6fa9efbe03245e2c709"
+}

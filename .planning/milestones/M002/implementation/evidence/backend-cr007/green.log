@@ -1,0 +1,36 @@
+=== RUN   TestM002ClaimedAccountDeletionHTTP
+2026/09/21 14:17:08 INFO http_request request_id=req_IhfN2mwmBayDOQ7J-UnznQ method=GET route=/api/v1/bootstrap status=200 duration_ms=2
+2026/09/21 14:17:09 INFO http_request request_id=req_FDQfMpGR0M8f-YUUpmNS9A method=POST route=/api/v1/auth/login status=200 duration_ms=759
+2026/09/21 14:17:09 INFO http_request request_id=req_vQNglQlJky5Qx10mvRmjGQ method=GET route=/api/v1/bootstrap status=200 duration_ms=0
+2026/09/21 14:17:10 INFO http_request request_id=req_S4hoC6MejDh0qmOwYV-7VQ method=POST route=/api/v1/auth/login status=200 duration_ms=801
+2026/09/21 14:17:10 INFO http_request request_id=req_Q0P2uGfjzwbFbRQTV-V0jg method=GET route=/api/v1/bootstrap status=200 duration_ms=0
+2026/09/21 14:17:11 INFO http_request request_id=req_Jr8FCY2NdElkdzasnMCHsg method=POST route=/api/v1/auth/login status=200 duration_ms=755
+2026/09/21 14:17:11 INFO http_request request_id=req_QbSdPO8m-W7d-izTg_Xeyg method=GET route=/api/v1/bootstrap status=200 duration_ms=0
+2026/09/21 14:17:11 INFO http_request request_id=req_V33dAldRp9JWCP1-3oM2kw method=POST route=/api/v1/analytics/events status=204 duration_ms=4
+=== RUN   TestM002ClaimedAccountDeletionHTTP/wrong_password
+2026/09/21 14:17:11 INFO http_request request_id=req_q8uHF23efKutrQH7J0pqDQ method=DELETE route=/api/v1/me/account status=422 duration_ms=737
+2026/09/21 14:17:11 INFO http_request request_id=req_4jzz4kKRAAFVpZfRkdCRuA method=GET route=/api/v1/me/batches/{batch_id} status=200 duration_ms=4
+=== RUN   TestM002ClaimedAccountDeletionHTTP/confirmation_required
+2026/09/21 14:17:12 INFO http_request request_id=req_HOZgiYZbQscfdoRCesSDbw method=DELETE route=/api/v1/me/account status=422 duration_ms=0
+2026/09/21 14:17:12 INFO http_request request_id=req_CPRTDOYlLFVb8lqOqQZ3Jg method=GET route=/api/v1/me/batches/{batch_id} status=200 duration_ms=1
+2026/09/21 14:17:12 INFO http_request request_id=req_wy9S61-laft7R4vHi2UYXQ method=DELETE route=/api/v1/me/account status=204 duration_ms=773
+2026/09/21 14:17:12 INFO http_request request_id=req_pik7krmlSPwKsZ8c1ezuTg method=GET route=/api/v1/me/account status=401 duration_ms=0
+2026/09/21 14:17:12 INFO http_request request_id=req_iMqq7wGJQYlwBqOT1ZBBjg method=GET route=/api/v1/me/batches/{batch_id} status=401 duration_ms=0
+2026/09/21 14:17:12 INFO http_request request_id=req_FLxUQBqyo3GPhhSv6o2XAA method=GET route=/api/v1/me/account status=401 duration_ms=0
+2026/09/21 14:17:12 INFO http_request request_id=req_85MD7h1azSm8ZglrJPl99w method=GET route=/api/v1/me/batches/{batch_id} status=401 duration_ms=0
+2026/09/21 14:17:12 INFO http_request request_id=req_NWVqdztTFXn8TXhz5BZjmg method=GET route=/api/v1/bootstrap status=200 duration_ms=0
+2026/09/21 14:17:13 INFO http_request request_id=req_kDG5bwizQHSGOlkgi64KJg method=POST route=/api/v1/auth/login status=401 duration_ms=741
+2026/09/21 14:17:13 INFO http_request request_id=req_kCmRU9p0H-9mvJBSd1Idzw method=GET route=/api/v1/me/batches/{batch_id} status=200 duration_ms=1
+2026/09/21 14:17:13 INFO http_request request_id=req_xGsFT57XjKmZTOQMlbsxag method=GET route=/api/v1/bootstrap status=200 duration_ms=0
+2026/09/21 14:17:14 INFO http_request request_id=req_gpOK-YDQsSjYB-Gtf-Co9A method=POST route=/api/v1/auth/register status=201 duration_ms=752
+2026/09/21 14:17:15 INFO http_request request_id=req_T9TUNNNRCaQ-CWqXxFJ2Jg method=DELETE route=/api/v1/me/account status=204 duration_ms=743
+2026/09/21 14:17:15 INFO http_request request_id=req_kaXu1gZ5jAUjIpXXJk8TRQ method=GET route=/api/v1/me/account status=401 duration_ms=0
+--- PASS: TestM002ClaimedAccountDeletionHTTP (11.59s)
+    --- PASS: TestM002ClaimedAccountDeletionHTTP/wrong_password (0.74s)
+    --- PASS: TestM002ClaimedAccountDeletionHTTP/confirmation_required (0.00s)
+=== RUN   TestM002ClaimedAccountDeletionRollback
+--- PASS: TestM002ClaimedAccountDeletionRollback (3.06s)
+=== RUN   TestM002ClaimedAccountDeletionBlocksClaimReplay
+--- PASS: TestM002ClaimedAccountDeletionBlocksClaimReplay (3.98s)
+PASS
+ok  	wordweave/internal/httpapi	19.974s

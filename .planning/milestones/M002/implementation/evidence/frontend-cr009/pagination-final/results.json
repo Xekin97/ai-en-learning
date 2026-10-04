@@ -1,0 +1,163 @@
+{
+  "results": [
+    {
+      "id": "FE9-01",
+      "name": "Later-page sole reference is auto-loaded and price-only save retains it",
+      "result": "PASS"
+    },
+    {
+      "id": "FE9-02",
+      "name": "Actual modifier-click adds a visible model without dropping the later-page reference",
+      "result": "PASS"
+    },
+    {
+      "id": "FE9-03",
+      "name": "Explicit removal persists and cannot newly add retired model on reopen or a new card",
+      "result": "PASS"
+    },
+    {
+      "id": "FE9-04",
+      "name": "Failed reference page blocks incomplete selection/save, retains input and retries on mobile",
+      "result": "PASS"
+    },
+    {
+      "id": "FE9-05",
+      "name": "Revision conflict loads newly referenced later-page retired models and waits for explicit retry",
+      "result": "FAIL",
+      "error": "Error: expect(locator).toContainText(expected) failed\n\nLocator: locator('dialog[open]').getByRole('listbox', { name: 'AI model', exact: true }).locator('option[value=\"01a0c2df-696e-7717-b3d2-95354ea9dbfb\"]')\nExpected substring: \"This model has been retired\"\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n  - Expect \"to.have.text\" with timeout 5000ms\n  - waiting for locator('dialog[open]').getByRole('listbox', { name: 'AI model', exact: true }).locator('option[value=\"01a0c2df-696e-7717-b3d2-95354ea9dbfb\"]')\n"
+    }
+  ],
+  "pageErrors": [],
+  "writes": [
+    {
+      "method": "PUT",
+      "body": {
+        "kind": "model_trial",
+        "name": {
+          "zh_CN": null,
+          "en_US": "Later-only card 1789975816409"
+        },
+        "description": {
+          "zh_CN": null,
+          "en_US": "Pagination regression"
+        },
+        "exchange_price": "5",
+        "activation_ttl_seconds": 2592000,
+        "effect": {
+          "kind": "model_trial",
+          "model_ids": [
+            "01a0c2df-6922-7705-af2c-e0bae3281366"
+          ],
+          "trial_seconds": 259200,
+          "retirement_points": "31"
+        },
+        "expected_revision": "j0V6xTYxiZS1XLbzPKJpBDulYM_qgFhZjN7yt3SVUhw"
+      }
+    },
+    {
+      "method": "PUT",
+      "body": {
+        "kind": "model_trial",
+        "name": {
+          "zh_CN": null,
+          "en_US": "Mixed-page card 1789975816409"
+        },
+        "description": {
+          "zh_CN": null,
+          "en_US": "Pagination regression"
+        },
+        "exchange_price": "5",
+        "activation_ttl_seconds": 2592000,
+        "effect": {
+          "kind": "model_trial",
+          "model_ids": [
+            "01a0c2df-68dd-7812-9830-66cbbbabd474",
+            "01a0c2df-68e1-76cb-b7ff-60b2e833d211",
+            "01a0c2df-6922-7705-af2c-e0bae3281366"
+          ],
+          "trial_seconds": 259200,
+          "retirement_points": "20"
+        },
+        "expected_revision": "8RMw3SJH_1O1b6WaB7anENXgkqpbGmYDog-SJVZCedM"
+      }
+    },
+    {
+      "method": "PUT",
+      "body": {
+        "kind": "model_trial",
+        "name": {
+          "zh_CN": null,
+          "en_US": "Mixed-page card 1789975816409"
+        },
+        "description": {
+          "zh_CN": null,
+          "en_US": "Pagination regression"
+        },
+        "exchange_price": "5",
+        "activation_ttl_seconds": 2592000,
+        "effect": {
+          "kind": "model_trial",
+          "model_ids": [
+            "01a0c2df-68dd-7812-9830-66cbbbabd474",
+            "01a0c2df-68e1-76cb-b7ff-60b2e833d211"
+          ],
+          "trial_seconds": 259200,
+          "retirement_points": "20"
+        },
+        "expected_revision": "96bBf_XC761MZmFmnHDTApRdvLBBqFCvIajP8pdH5H8"
+      }
+    },
+    {
+      "method": "PUT",
+      "body": {
+        "kind": "model_trial",
+        "name": {
+          "zh_CN": null,
+          "en_US": "Page retry card 1789975816409"
+        },
+        "description": {
+          "zh_CN": null,
+          "en_US": "Pagination regression"
+        },
+        "exchange_price": "5",
+        "activation_ttl_seconds": 2592000,
+        "effect": {
+          "kind": "model_trial",
+          "model_ids": [
+            "01a0c2df-6922-7705-af2c-e0bae3281366"
+          ],
+          "trial_seconds": 259200,
+          "retirement_points": "48"
+        },
+        "expected_revision": "d_qystbBs1NuTzfZzdFZrLpXP_sTAg-4zuljwkc2cpg"
+      }
+    },
+    {
+      "method": "PUT",
+      "body": {
+        "kind": "model_trial",
+        "name": {
+          "zh_CN": null,
+          "en_US": "Mixed-page card 1789975816409"
+        },
+        "description": {
+          "zh_CN": null,
+          "en_US": "Pagination regression"
+        },
+        "exchange_price": "5",
+        "activation_ttl_seconds": 2592000,
+        "effect": {
+          "kind": "model_trial",
+          "model_ids": [
+            "01a0c2df-68dd-7812-9830-66cbbbabd474",
+            "01a0c2df-68e1-76cb-b7ff-60b2e833d211"
+          ],
+          "trial_seconds": 259200,
+          "retirement_points": "61"
+        },
+        "expected_revision": "TEhrtHlEqIBAd6-XP74MjrIWcQt14eV-3_6bb42LclY"
+      }
+    }
+  ],
+  "realProviderCalls": 0
+}

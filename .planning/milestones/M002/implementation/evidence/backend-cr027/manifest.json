@@ -1,0 +1,35 @@
+{
+  "scope": "BE4-I01 / BE4-V01–03",
+  "status": "developer_verified_pending_qa",
+  "files": {
+    "backend/internal/httpapi/catalog_handlers.go": "c760f2c5468171786f52bcfec306d124005e9cca5a130091bb30a0fa6bcd0604",
+    "backend/internal/httpapi/vocabulary_search_integration_test.go": "debb44981857054c22daa4bc931edc90fdda48ec7c751c3da3ecdc50b151ce52"
+  },
+  "checks": [
+    {
+      "command": [
+        "go",
+        "test",
+        "-race",
+        "-tags=integration",
+        "./internal/httpapi",
+        "-run",
+        "^TestVocabularySearchRolesAndBoundaries$",
+        "-count=1",
+        "-v"
+      ],
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "go",
+        "vet",
+        "./internal/httpapi"
+      ],
+      "exit_code": 0
+    }
+  ],
+  "real_model_calls": 0,
+  "database_scope": "fresh random test database, cleaned by existing harness",
+  "source_before": "before.tar.gz"
+}

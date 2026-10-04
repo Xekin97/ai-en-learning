@@ -1,0 +1,19 @@
+{
+  "command": [
+    "go",
+    "test",
+    "-race",
+    "-tags=integration",
+    "./internal/httpapi",
+    "-run",
+    "^(TestM001EndToEnd|TestM002ProfileWelcomeAndPrivateTitleHTTP|TestClaimedBatchDeletionHTTP|TestNoContentConsumersEnforcePrivateNoStoreResponse|TestAdminUserSearchCursorV2)$",
+    "-count=1",
+    "-v",
+    "-timeout=180s"
+  ],
+  "cwd": "backend",
+  "exit_code": 0,
+  "seconds": 28.47,
+  "log_sha256": "7bb265e4ff87469b80cf925c0828714c509e4941239896130b36a2c8e10127eb",
+  "real_provider_calls": 0
+}

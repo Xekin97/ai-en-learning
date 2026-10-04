@@ -1,0 +1,91 @@
+{
+  "decision_id": "TRANSITION-M002-012",
+  "checked_at": "2026-09-20T04:20:01.980873+00:00",
+  "result": "PASS",
+  "checks": [
+    {
+      "check": "state_project_registry_match",
+      "status": "PASS",
+      "detail": "Same-stage frontend activation; backend handoff is current."
+    },
+    {
+      "check": "one_active_specialist",
+      "status": "PASS",
+      "detail": "Registry matches workflow state."
+    },
+    {
+      "check": "bounded_control_changes",
+      "status": "PASS",
+      "detail": {
+        "changed": [
+          "active_agent",
+          "active_role",
+          "authorization_refs",
+          "backend_approval",
+          "context_entries",
+          "current_handoff",
+          "last_transition",
+          "open_change_requests"
+        ],
+        "stage": "technical-design"
+      }
+    },
+    {
+      "check": "upstream_approvals_and_stage_contract_retained",
+      "status": "PASS",
+      "detail": "DB-02/design approvals, original authorization refs and technical stage requirements unchanged."
+    },
+    {
+      "check": "backend_approval_exact_version",
+      "status": "PASS",
+      "detail": "Approval points to inspected BE-02 frozen archive."
+    },
+    {
+      "check": "history_append_only",
+      "status": "PASS",
+      "detail": "Exactly one appended history item, all earlier bytes retained."
+    },
+    {
+      "check": "CR003_only_design_reception_closed",
+      "status": "PASS",
+      "detail": "Other changes/quality items retained; frozen CR source remains original approval-time record; runtime validation pending."
+    },
+    {
+      "check": "professional_and_application_files_unchanged",
+      "status": "PASS",
+      "detail": {
+        "protected_files": 5078,
+        "changed": []
+      }
+    },
+    {
+      "check": "current_entry_and_review_links",
+      "status": "PASS",
+      "detail": {
+        "broken": [],
+        "report_created_now": ".planning/milestones/M002/reviews/evidence/backend-design-012/transition-check.json"
+      }
+    },
+    {
+      "check": "new_files_scoped_to_gate",
+      "status": "PASS",
+      "detail": {
+        "unexpected": []
+      }
+    }
+  ],
+  "approved_version": "M002-BE-02",
+  "active_agent": "frontend-bob",
+  "stage": "technical-design",
+  "stage_transition": false,
+  "closed_design_reception": "M002-CR-003",
+  "runtime_tests": false,
+  "frontend_design_performed": false,
+  "post_controls_sha256": {
+    ".planning/workflow/state.yaml": "b8e3136aaedea387334686045b783c3eadef15bb96c1236c323db1331990a189",
+    ".planning/workflow/history.yaml": "cfed3256a7b410ef54594514205d20444cd44a62febb651a8047e8c726f9d6bc",
+    ".planning/agt/project.yaml": "ed5301a89d4b6c28baa662ed586c2a25419f92c0618baf7529c10f1a55d55fb4",
+    ".planning/agt/agents.yaml": "7107efa02676b0a0aca49aad9a740156e00d902a165a02a696b49429ad5ec883"
+  },
+  "review_sha256": "5dd348a58880292194a1449c64abdaed5d28fac8ba121f0d0b2991eaffb70b1d"
+}

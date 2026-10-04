@@ -1,0 +1,54 @@
+--- before/frontend/app/pages/library/index.vue
++++ after/frontend/app/pages/library/index.vue
+@@ -1,5 +1,26 @@
+ <script setup lang="ts">
+ import { useLearnerAccess } from "@presentation/controllers/learner-access";
++
++definePageMeta({
++  middleware: (to, from) => {
++    const position = useState<{
++      query: string;
++      target: string;
++      restore: boolean;
++    }>("library-position").value;
++    // Decide before mounting consumes the saved position. Nuxt otherwise
++    // schedules a second scroll to the top after page:loading:end.
++    const restore = Boolean(
++      position?.restore &&
++      from.path === `/library/${position.target}` &&
++      position.query ===
++        (typeof to.query.entry === "string" ? to.query.entry : ""),
++    );
++    to.meta.scrollToTop = !restore;
++    if (position && !restore) position.restore = false;
++  },
++});
++
+ const access = useLearnerAccess(),
+   library = useLibraryStore(),
+   format = useDisplayFormatters(),
+@@ -46,18 +67,19 @@
+     position.value = {
+       query: query.value,
+       top: window.scrollY,
+-      target:
+-        document.activeElement
+-          ?.closest("[data-batch]")
+-          ?.getAttribute("data-batch") ?? "",
++      target: typeof to.params.batchId === "string" ? to.params.batchId : "",
+       restore: true,
+     };
+   } else position.value.restore = false;
+ });
++let restoreFrame: number | undefined;
++onBeforeUnmount(() => {
++  if (restoreFrame !== undefined) cancelAnimationFrame(restoreFrame);
++});
+ onMounted(async () => {
+   if (!position.value.restore || position.value.query !== query.value) return;
+   await nextTick();
+-  requestAnimationFrame(() => {
++  restoreFrame = requestAnimationFrame(() => {
+     document
+       .querySelector<HTMLElement>(
+         `[data-batch="${CSS.escape(position.value.target)}"] h2 a`,

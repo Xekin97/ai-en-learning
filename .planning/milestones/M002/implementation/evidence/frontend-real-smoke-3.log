@@ -1,0 +1,30 @@
+{
+  "passed": [
+    "real admin login + overview",
+    "all 8 admin modules accept real DTOs, no initial operational reward fixtures",
+    "admin draft → real independent preview SSE → publish"
+  ],
+  "pageErrors": [],
+  "error": "Error: locator.click: Error: strict mode violation: locator('a[href^=\"/register\"]') resolved to 2 elements:\n    1) <a href=\"/register\" class=\"btn quiet\">Register</a> aka getByRole('banner').getByRole('link', { name: 'Register' })\n    2) <a class=\"btn quiet\" href=\"/register?claim=1&redirect=/library\">Register</a> aka locator('#main-content').getByRole('link', { name: 'Register' })\n\nCall log:\n\u001b[2m  - waiting for locator('a[href^=\"/register\"]')\u001b[22m\n"
+}
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+locator.click: Error: strict mode violation: locator('a[href^="/register"]') resolved to 2 elements:
+    1) <a href="/register" class="btn quiet">Register</a> aka getByRole('banner').getByRole('link', { name: 'Register' })
+    2) <a class="btn quiet" href="/register?claim=1&redirect=/library">Register</a> aka locator('#main-content').getByRole('link', { name: 'Register' })
+
+Call log:
+[2m  - waiting for locator('a[href^="/register"]')[22m
+
+    at /Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/frontend/tests/integration/m002-real-smoke.mjs:81:44 {
+  log: [ `  - waiting for locator('a[href^="/register"]')` ]
+}
+
+Node.js v24.21.0
+npm notice
+npm notice New major version of npm available! 10.9.8 -> 12.0.2
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.0.2
+npm notice To update run: npm install -g npm@12.0.2
+npm notice

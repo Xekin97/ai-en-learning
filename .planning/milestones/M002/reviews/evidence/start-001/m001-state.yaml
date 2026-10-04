@@ -1,0 +1,91 @@
+schema_version: 1
+profile: consumer-ai-web@1.0.0
+agt_revision: b5badf88cd7194400c3d4d0e9395e7c98490dc26
+milestone: M001
+stage: milestone-complete
+active_role: null
+active_agent: null
+status: complete
+required_artifacts: []
+pending_user_decisions: []
+open_change_requests: []
+closed_change_requests:
+- CR-039
+- CR-040
+- CR-041
+- CR-042
+retained_open_items:
+- id: CR039-L1
+  status: open
+  source: .planning/milestones/M001/changes/CR-039.md#retained-limitations
+- id: CR042-L1
+  status: open
+  source: .planning/milestones/M001/verification/CR-042-generation-evidence.md#retained-limitations
+- id: AI-QUALITY-90
+  status: unverified
+  source: .planning/milestones/M001/verification/ai-evaluation.md
+current_handoff: .planning/milestones/M001/handoffs/verification.md
+completion:
+  application_commit: 387c775534844ff0b8ca9857523dc39c1d8ee87a
+  framework_commit_at_closeout: 42acf7579d08a7d17d597709ccb57bebcad0dc96
+  decision_id: TRANSITION-M001-138
+  authorization: USER-M001-CLOSEOUT-20260916
+  completed_at: '2026-09-16T02:09:06.968504+00:00'
+  evidence: .planning/milestones/M001/reviews/evidence/m001-closeout-138.json
+  current_handoff: .planning/milestones/M001/handoffs/verification.md
+  known_limitations_waived: false
+  further_model_tuning_authorized: false
+  release_approved: false
+current_uat_acceptance:
+  decision_id: USER-UAT-ACCEPTANCE-134
+  status: accepted_by_user
+  accepted_at: '2026-09-12T09:45:21Z'
+  scope: Current local UAT candidate FRONTEND-SYNC-133; specific user test cases not supplied
+  record: .planning/milestones/M001/reviews/stream-failure-capture-gates.md
+  known_limitations_waived: false
+  release_approved: false
+compatibility_policy:
+  decision_id: USER-COMPAT-001
+  record: .planning/milestones/M001/reviews/first-release-compatibility-policy.md
+  scope: Project-wide standing rule; M001 is the first release under development
+claim_deletion_policy:
+  decision_id: USER-CLAIM-DELETE-001
+  record: .planning/milestones/M001/reviews/claimed-batch-delete-retention-exception.md
+  scope: Explicit owner deletion of a saved batch removes its associated consumed claim in the same transaction
+generation_quality_target:
+  decision_id: USER-GENERATION-QUALITY-129
+  confirmed_success_rate_minimum: 0.9
+  status: unverified
+  current_evidence: .planning/milestones/M001/verification/ai-evaluation.md
+  live_model_batch_authorized: false
+model_routing:
+  status: enabled
+  lock: .planning/agt/model-routing-v1.lock.json
+  adoption: .planning/agt/model-routing-adoption-001.md
+  policy: codex-balanced@1.0.0
+allowed_transitions: []
+last_transition:
+  timestamp: '2026-09-16T02:09:06.968504+00:00'
+  from: verification
+  to: milestone-complete
+  previous_role: quality/base
+  previous_agent: qa-quinn
+  active_role: null
+  active_agent: null
+  confirmed_by: user
+  authorization: USER-M001-CLOSEOUT-20260916
+  evidence: .planning/milestones/M001/reviews/stream-failure-capture-gates.md
+  scope: 按用户验收与收尾授权完成 M001，保留已知限制
+  user_uat_accepted: true
+  real_model_calls_authorized: false
+  release_approved: false
+  decision_id: TRANSITION-M001-138
+document_maintenance:
+  id: M001-AGENT-CONTEXT-001
+  authorization: USER-M001-AGENT-CONTEXT-20260916
+  scope: Agent-oriented document consolidation; no milestone transition or application changes
+  evidence: .planning/milestones/M001/reviews/evidence/m001-agent-context-001.json
+  history_index: .planning/milestones/M001/handoffs/archive.md
+  prior_state_commit: 521de847183088dc8f3d69112d94f4977a90d06b
+  handoff_test: not_executed
+  open_item: CTX-M001-01

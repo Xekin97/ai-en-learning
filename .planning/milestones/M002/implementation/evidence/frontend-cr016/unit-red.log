@@ -1,0 +1,139 @@
+
+ RUN  v4.1.11 /Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/frontend
+
+stdout | tests/unit/library-title-editor.test.ts > batch title async completion > retains text and stored title, restores focus after failure, then explicitly retries
+<Suspense> is an experimental feature and its API will likely change.
+
+ ❯ tests/unit/library-title-editor.test.ts (7 tests | 5 failed) 63ms
+     × retains text and stored title, restores focus after failure, then explicitly retries 30ms
+     × ignores a delayed false result after identity changes even if a batch is available again 7ms
+     × ignores a delayed true result after identity changes even if a batch is available again 6ms
+     × does not read a removed private batch after session invalidation 6ms
+     × does not restore a deleted batch or show success after a delayed result 4ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 5 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/unit/library-title-editor.test.ts > batch title async completion > retains text and stored title, restores focus after failure, then explicitly retries
+AssertionError: expected <button …(2)></button> to be <input id="batch-title" …(2)></input> // Object.is equality
+
+- Expected
++ Received
+
+- <input
+-   aria-describedby="batch-title-hint"
+-   aria-invalid="true"
+-   id="batch-title"
+- />
++ <button
++   class="btn primary"
++   type="submit"
++ >
++   l.title.save
++ </button>
+
+ ❯ tests/unit/library-title-editor.test.ts:97:36
+     95|     expect(input.value).toBe("My new title");
+     96|     expect(input.disabled).toBe(false);
+     97|     expect(document.activeElement).toBe(input);
+       |                                    ^
+     98|     expect(state.value.details.batch?.title).toBe("Original title");
+     99|     expect(show).not.toHaveBeenCalled();
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/5]⎯
+
+ FAIL  tests/unit/library-title-editor.test.ts > batch title async completion > ignores a delayed false result after identity changes even if a batch is available again
+AssertionError: expected true to be false // Object.is equality
+
+- Expected
++ Received
+
+- false
++ true
+
+ ❯ tests/unit/library-title-editor.test.ts:123:73
+    121|       await submit();
+    122|       expect(show).not.toHaveBeenCalled();
+    123|       expect(wrapper.find(".batch-title-editor [role=alert]").exists()…
+       |                                                                         ^
+    124|         false,
+    125|       );
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/5]⎯
+
+ FAIL  tests/unit/library-title-editor.test.ts > batch title async completion > ignores a delayed true result after identity changes even if a batch is available again
+AssertionError: expected "vi.fn()" to not be called at all, but actually been called 1 times
+
+Received:
+
+  1st vi.fn() call:
+
+    Array [
+      "l.title.saved",
+    ]
+
+
+Number of calls: 1
+
+ ❯ tests/unit/library-title-editor.test.ts:122:24
+    120|       });
+    121|       await submit();
+    122|       expect(show).not.toHaveBeenCalled();
+       |                        ^
+    123|       expect(wrapper.find(".batch-title-editor [role=alert]").exists()…
+    124|         false,
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/5]⎯
+
+ FAIL  tests/unit/library-title-editor.test.ts > batch title async completion > does not read a removed private batch after session invalidation
+AssertionError: expected [ …(1) ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   TypeError {
++     "message": "Cannot read properties of undefined (reading 'titleRevision')",
++   },
++ ]
+
+ ❯ tests/unit/library-title-editor.test.ts:140:20
+    138|     });
+    139|     await submit();
+    140|     expect(errors).toEqual([]);
+       |                    ^
+    141|     expect(show).not.toHaveBeenCalled();
+    142|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/5]⎯
+
+ FAIL  tests/unit/library-title-editor.test.ts > batch title async completion > does not restore a deleted batch or show success after a delayed result
+AssertionError: expected "vi.fn()" to not be called at all, but actually been called 1 times
+
+Received:
+
+  1st vi.fn() call:
+
+    Array [
+      "l.title.saved",
+    ]
+
+
+Number of calls: 1
+
+ ❯ tests/unit/library-title-editor.test.ts:152:22
+    150|     await submit();
+    151|     expect(state.value.details).toEqual({});
+    152|     expect(show).not.toHaveBeenCalled();
+       |                      ^
+    153|     expect(errors).toEqual([]);
+    154|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/5]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  5 failed | 2 passed (7)
+   Start at  15:06:43
+   Duration  614ms (transform 73ms, setup 0ms, import 121ms, tests 63ms, environment 310ms)
+

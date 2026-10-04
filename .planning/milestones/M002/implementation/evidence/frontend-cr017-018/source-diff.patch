@@ -1,0 +1,101 @@
+--- before/frontend/app/composables/use-display-formatters.ts
++++ after/frontend/app/composables/use-display-formatters.ts
+@@ -32,12 +32,26 @@
+         notation: "standard",
+         maximumFractionDigits: 0,
+       }).format(value),
+-    dateTime: (value: string) =>
+-      new Intl.DateTimeFormat(locale.value, {
+-        dateStyle: "medium",
+-        timeStyle: "short",
++    dateTime: (value: string) => {
++      const chinese = locale.value === "zh-CN";
++      const parts = new Intl.DateTimeFormat(locale.value, {
++        year: "numeric",
++        month: chinese ? "numeric" : "short",
++        day: "numeric",
++        hour: chinese ? "2-digit" : "numeric",
++        minute: "2-digit",
++        hourCycle: chinese ? "h23" : "h12",
+         timeZone: "Asia/Shanghai",
+-      }).format(new Date(value)),
++      }).formatToParts(new Date(value));
++      const part = (type: Intl.DateTimeFormatPartTypes) =>
++        parts.find((item) => item.type === type)?.value ?? "";
++      // Host ICU versions differ in date/time connectors (", " versus " at ").
++      // Keep the existing display format identical during SSR and hydration.
++      const time = `${part("hour")}:${part("minute")}`;
++      return chinese
++        ? `${part("year")}年${part("month")}月${part("day")}日 ${time}`
++        : `${part("month")} ${part("day")}, ${part("year")}, ${time} ${part("dayPeriod")}`;
++    },
+     date: (value: string) =>
+       new Intl.DateTimeFormat(locale.value, { dateStyle: "medium" }).format(
+         new Date(value),
+--- before/frontend/app/pages/library/[batchId].vue
++++ after/frontend/app/pages/library/[batchId].vue
+@@ -52,10 +52,7 @@
+       editing.value = false;
+       useFeedbackStore().show("l.title.saved");
+     } else {
+-      titleError.value =
+-        library.state.value.failure?.kind === "conflict"
+-          ? "l.title.failed"
+-          : "failed";
++      titleError.value = "l.title.failed";
+       revision.value = batch.value.titleRevision;
+     }
+   } finally {
+--- before/frontend/tests/unit/display-formatters.test.ts
++++ after/frontend/tests/unit/display-formatters.test.ts
+@@ -0,0 +1,38 @@
++import { afterEach, describe, expect, it, vi } from "vitest";
++import { ref } from "vue";
++import { useDisplayFormatters } from "../../app/composables/use-display-formatters";
++
++afterEach(() => vi.unstubAllGlobals());
++
++function setup(language = "en-US") {
++  const locale = ref(language);
++  vi.stubGlobal("useI18n", () => ({ locale, t: vi.fn() }));
++  vi.stubGlobal("useDesignCopy", () => ({ copy: vi.fn() }));
++  return { locale, format: useDisplayFormatters() };
++}
++
++describe("localized date and time display", () => {
++  it.each([
++    ["en-US", "2026-09-27T19:59:00Z", "Sep 28, 2026, 3:59 AM"],
++    ["en-US", "2026-09-27T20:00:00Z", "Sep 28, 2026, 4:00 AM"],
++    ["en-US", "2026-09-28T04:00:00Z", "Sep 28, 2026, 12:00 PM"],
++    ["en-US", "2026-12-31T16:00:00Z", "Jan 1, 2027, 12:00 AM"],
++    ["zh-CN", "2026-09-27T19:59:00Z", "2026年9月28日 03:59"],
++    ["zh-CN", "2026-09-27T20:00:00Z", "2026年9月28日 04:00"],
++    ["zh-CN", "2026-09-28T04:00:00Z", "2026年9月28日 12:00"],
++    ["zh-CN", "2026-12-31T16:00:00Z", "2027年1月1日 00:00"],
++  ])("uses Beijing time for %s at %s", (language, value, expected) => {
++    expect(setup(language).format.dateTime(value)).toBe(expected);
++  });
++
++  it("reacts to the current language and preserves equivalent instants", () => {
++    const { locale, format } = setup();
++    const utc = "2026-09-28T06:46:00Z";
++    const offset = "2026-09-28T14:46:00+08:00";
++    expect(format.dateTime(utc)).toBe("Sep 28, 2026, 2:46 PM");
++    expect(format.dateTime(offset)).toBe(format.dateTime(utc));
++    locale.value = "zh-CN";
++    expect(format.dateTime(utc)).toBe("2026年9月28日 14:46");
++    expect(format.dateTime(offset)).toBe(format.dateTime(utc));
++  });
++});
+--- before/frontend/tests/unit/library-title-editor.test.ts
++++ after/frontend/tests/unit/library-title-editor.test.ts
+@@ -96,6 +96,9 @@
+     expect(input.disabled).toBe(false);
+     expect(document.activeElement).toBe(input);
+     expect(state.value.details.batch?.title).toBe("Original title");
++    expect(wrapper.get(".batch-title-editor [role=alert]").text()).toBe(
++      "l.title.failed",
++    );
+     expect(show).not.toHaveBeenCalled();
+     await submit();
+     expect(updateTitle).toHaveBeenLastCalledWith("batch", "My new title", "1");

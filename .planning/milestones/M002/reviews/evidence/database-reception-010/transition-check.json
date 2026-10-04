@@ -1,0 +1,98 @@
+{
+  "decision_id": "TRANSITION-M002-010",
+  "result": "PASS",
+  "checked_at": "2026-09-20T03:47:48.467904+00:00",
+  "checks": [
+    {
+      "name": "state_and_mirrors",
+      "pass": true,
+      "detail": {
+        "stage": "technical-design",
+        "role": "dba/base",
+        "agent": "dba-diana"
+      }
+    },
+    {
+      "name": "one_active_specialist",
+      "pass": true,
+      "detail": [
+        "dba-diana"
+      ]
+    },
+    {
+      "name": "original_approvals_and_stage_contract_unchanged",
+      "pass": true,
+      "detail": {
+        "database_approval": "TRANSITION-M002-009",
+        "design_approval": "APPROVAL-M002-007"
+      }
+    },
+    {
+      "name": "history_append_only",
+      "pass": true,
+      "detail": {
+        "new_record": "TRANSITION-M002-010",
+        "old_bytes_preserved": 163574
+      }
+    },
+    {
+      "name": "correct_current_entries",
+      "pass": true,
+      "detail": {
+        "current_handoff": ".planning/milestones/M002/handoffs/backend-architecture.md",
+        "task_index": ".planning/milestones/M002/changes/CR-003.md",
+        "constraints_index": ".planning/milestones/M002/product/overview.md",
+        "stage_review": ".planning/milestones/M002/reviews/database-reception-rework.md"
+      }
+    },
+    {
+      "name": "open_cr_registered_not_closed",
+      "pass": true,
+      "detail": [
+        "M002-CR-001",
+        "M002-CR-002",
+        "M002-CR-003"
+      ]
+    },
+    {
+      "name": "specialist_code_and_existing_evidence_preserved",
+      "pass": true,
+      "detail": {
+        "files": 5051,
+        "changed": []
+      }
+    },
+    {
+      "name": "no_artifact_or_implementation_approval",
+      "pass": true,
+      "detail": {
+        "artifact_approval": false,
+        "stage_transition": false,
+        "implementation_authorized": false
+      }
+    },
+    {
+      "name": "review_links",
+      "pass": true,
+      "detail": {
+        "checked": 20,
+        "missing": [],
+        "self_evidence_created_with_this_result": true
+      }
+    }
+  ],
+  "controls_after": {
+    ".planning/workflow/state.yaml": "96794389e60fc0764732052f0e2ffcda26aee850616c3a5c889e59efc55a9f86",
+    ".planning/workflow/history.yaml": "eba72e541c7ba67e79d4c6d7b0b2b2ba2052dd0301c6d3d0f64e28498dca681f",
+    ".planning/agt/project.yaml": "33eff8a3b0d5fd5f5623a1d63a32979d4f0d446e42693c4d1676ef65c1e1883e",
+    ".planning/agt/agents.yaml": "0e257dad6d3955c0c1df6a692792361cf2f0ecf3181df771a7637ef131e81acc"
+  },
+  "review_sha256": "336fca053b7c7a6013f1370c08c2b51c66061c13f4197ab8efe3f92090a83f80",
+  "before_controls_archive_sha256": "7e58a9ed899a1ae1dbbc424b25fa281771548337466c75ffd37441c3aef62dfa",
+  "scope": "Authorized same-stage role activation for CR-003 only",
+  "runtime_tests": "not_run",
+  "database_connected": false,
+  "real_ai_calls": 0,
+  "actual_model": "unknown",
+  "usage": "unknown"
+}

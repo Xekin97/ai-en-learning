@@ -1,0 +1,160 @@
+
+ RUN  v4.1.11 /Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/frontend
+
+ ❯ tests/unit/library-participation.test.ts (8 tests | 8 failed) 3018ms
+     × refreshes both directions and repeated values without losing query/cursor () 6ms
+     × refreshes both directions and repeated values without losing query/cursor (LEARN) 1ms
+     × keeps confirmed values on PATCH failure, then retries without double counting 2ms
+     × retains the confirmed mutation if the subsequent statistics read fails and can refresh 1ms
+     × ignores a delayed first toggle summary after a newer toggle has completed 1003ms
+     × does not let an older list read overwrite the post-mutation summary 1ms
+     × does not let an older mutation summary overwrite a newer list summary 1002ms
+     × does not apply a statistics response after identity changes 1001ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 8 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/unit/library-participation.test.ts > library participation and authoritative full-library statistics > refreshes both directions and repeated values without losing query/cursor ()
+ FAIL  tests/unit/library-participation.test.ts > library participation and authoritative full-library statistics > refreshes both directions and repeated values without losing query/cursor (LEARN)
+AssertionError: expected { generationCount: 22, …(5) } to deeply equal { generationCount: 22, …(5) }
+
+- Expected
++ Received
+
+  {
+    "batchesEverReviewedSuccessfully": 2,
+    "generationCount": 22,
+-   "participatingBatches": 19,
+-   "pausedBatches": 2,
++   "participatingBatches": 20,
++   "pausedBatches": 1,
+    "successfulReviewCount": 4,
+    "uniqueLearnedEntries": 3,
+  }
+
+ ❯ tests/unit/library-participation.test.ts:52:41
+     50|       api.getLearningSummary.mockResolvedValueOnce(summary(count));
+     51|       await store.setParticipation("a", value);
+     52|       expect(store.state.value.summary).toEqual(summary(count));
+       |                                         ^
+     53|       expect(store.state.value.batches[0]?.participatesInRangeReview).…
+     54|       expect(store.state.value.details.a?.participatesInRangeReview).t…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/8]⎯
+
+ FAIL  tests/unit/library-participation.test.ts > library participation and authoritative full-library statistics > keeps confirmed values on PATCH failure, then retries without double counting
+AssertionError: expected { generationCount: 22, …(5) } to deeply equal { generationCount: 22, …(5) }
+
+- Expected
++ Received
+
+  {
+    "batchesEverReviewedSuccessfully": 2,
+    "generationCount": 22,
+-   "participatingBatches": 19,
+-   "pausedBatches": 2,
++   "participatingBatches": 20,
++   "pausedBatches": 1,
+    "successfulReviewCount": 4,
+    "uniqueLearnedEntries": 3,
+  }
+
+ ❯ tests/unit/library-participation.test.ts:71:39
+     69|     api.getLearningSummary.mockResolvedValueOnce(summary(19));
+     70|     await store.setParticipation("a", false);
+     71|     expect(store.state.value.summary).toEqual(summary(19));
+       |                                       ^
+     72|     expect(store.state.value.failure).toBeNull();
+     73|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/8]⎯
+
+ FAIL  tests/unit/library-participation.test.ts > library participation and authoritative full-library statistics > retains the confirmed mutation if the subsequent statistics read fails and can refresh
+AssertionError: promise resolved "undefined" instead of rejecting
+
+- Expected:
+Error {
+  "message": "rejected promise",
+}
+
++ Received:
+undefined
+
+ ❯ tests/unit/library-participation.test.ts:78:53
+     76|     await store.load();
+     77|     api.getLearningSummary.mockRejectedValueOnce(new Error("offline"));
+     78|     await expect(store.setParticipation("a", false)).rejects.toBeDefin…
+       |                                                     ^
+     79|     expect(store.state.value.batches[0]?.participatesInRangeReview).to…
+     80|     expect(store.state.value.summary).toEqual(summary());
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/8]⎯
+
+ FAIL  tests/unit/library-participation.test.ts > library participation and authoritative full-library statistics > ignores a delayed first toggle summary after a newer toggle has completed
+AssertionError: expected "vi.fn()" to be called 2 times, but got 1 times
+ ❯ tests/unit/library-participation.test.ts:93:59
+     91|     api.getLearningSummary.mockReturnValueOnce(old.promise);
+     92|     const first = store.setParticipation("a", false);
+     93|     await vi.waitFor(() => expect(api.getLearningSummary).toHaveBeenCa…
+       |                                                           ^
+     94|     api.getLearningSummary.mockResolvedValueOnce(summary(18));
+     95|     await store.setParticipation("b", false);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/8]⎯
+
+ FAIL  tests/unit/library-participation.test.ts > library participation and authoritative full-library statistics > does not let an older list read overwrite the post-mutation summary
+AssertionError: expected { generationCount: 22, …(5) } to deeply equal { generationCount: 22, …(5) }
+
+- Expected
++ Received
+
+  {
+    "batchesEverReviewedSuccessfully": 2,
+    "generationCount": 22,
+-   "participatingBatches": 19,
+-   "pausedBatches": 2,
++   "participatingBatches": 20,
++   "pausedBatches": 1,
+    "successfulReviewCount": 4,
+    "uniqueLearnedEntries": 3,
+  }
+
+ ❯ tests/unit/library-participation.test.ts:109:39
+    107|     old.resolve(summary());
+    108|     await list;
+    109|     expect(store.state.value.summary).toEqual(summary(19));
+       |                                       ^
+    110|   });
+    111|   it("does not let an older mutation summary overwrite a newer list su…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/8]⎯
+
+ FAIL  tests/unit/library-participation.test.ts > library participation and authoritative full-library statistics > does not let an older mutation summary overwrite a newer list summary
+AssertionError: expected "vi.fn()" to be called 2 times, but got 1 times
+ ❯ tests/unit/library-participation.test.ts:117:59
+    115|     api.getLearningSummary.mockReturnValueOnce(old.promise);
+    116|     const first = store.setParticipation("a", false);
+    117|     await vi.waitFor(() => expect(api.getLearningSummary).toHaveBeenCa…
+       |                                                           ^
+    118|     api.getLearningSummary.mockResolvedValueOnce(summary(18));
+    119|     await store.load("LEARN");
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/8]⎯
+
+ FAIL  tests/unit/library-participation.test.ts > library participation and authoritative full-library statistics > does not apply a statistics response after identity changes
+AssertionError: expected "vi.fn()" to be called 2 times, but got 1 times
+ ❯ tests/unit/library-participation.test.ts:130:59
+    128|     api.getLearningSummary.mockReturnValueOnce(old.promise);
+    129|     const first = store.setParticipation("a", false);
+    130|     await vi.waitFor(() => expect(api.getLearningSummary).toHaveBeenCa…
+       |                                                           ^
+    131|     epoch.value++;
+    132|     old.resolve(summary(19));
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[7/8]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  8 failed (8)
+   Start at  09:48:50
+   Duration  3.49s (transform 29ms, setup 0ms, import 63ms, tests 3.02s, environment 303ms)
+

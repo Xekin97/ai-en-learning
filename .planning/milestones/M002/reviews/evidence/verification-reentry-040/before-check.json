@@ -1,0 +1,201 @@
+{
+  "decision_id": "TRANSITION-M002-040",
+  "timestamp": "2026-09-28T08:04:44.344471+00:00",
+  "current": {
+    "milestone": "M002",
+    "stage": "implementation",
+    "agent": "frontend-claire",
+    "role": "frontend-implementer/base",
+    "status": "active"
+  },
+  "target": {
+    "stage": "verification",
+    "role": "quality/base",
+    "agent": "qa-quinn"
+  },
+  "profile": {
+    "reference": "consumer-ai-web@1.0.0",
+    "pinned_sha256": "9d9258ebc8cba13f5df2f8289fa81e973e60af9f10e5ca126fd83482aa0c050f",
+    "matches": true
+  },
+  "name_validation": {
+    "gatekeeper-owen": "valid agent name: gatekeeper-owen",
+    "qa-quinn": "valid agent name: qa-quinn"
+  },
+  "required_artifacts": {
+    "implementation": [
+      ".planning/milestones/M002/implementation/backend-validation.md",
+      ".planning/milestones/M002/implementation/frontend-validation.md",
+      ".planning/milestones/M002/handoffs/backend-implementation.md",
+      ".planning/milestones/M002/handoffs/frontend-implementation.md"
+    ],
+    "verification": [
+      ".planning/milestones/M002/verification/coverage-matrix.md",
+      ".planning/milestones/M002/verification/report.md",
+      ".planning/milestones/M002/verification/ai-evaluation.md",
+      ".planning/milestones/M002/verification/uat.md",
+      ".planning/milestones/M002/handoffs/verification.md"
+    ]
+  },
+  "verification_allowed_transitions": [
+    "milestone-complete",
+    "product-planning",
+    "uiux-design",
+    "technical-design",
+    "implementation"
+  ],
+  "source_checks": {
+    "frontend-cr017-018": {
+      "manifest": ".planning/milestones/M002/implementation/evidence/frontend-cr017-018/manifest.json",
+      "manifest_sha256": "57719c596d4f21c4df3b544862c65bc50acebb3363f30d872f5a0a0a2ed0794c",
+      "artifact_count": 102,
+      "artifacts_match": true,
+      "source_files": 282,
+      "source_sha256": "e8bd3285a0292218d8e1108a47e39e1eb8550d928867a01e25428c023f009775",
+      "source_archive_matches": true
+    },
+    "backend-cr013": {
+      "manifest": ".planning/milestones/M002/implementation/evidence/backend-cr013/manifest.json",
+      "manifest_sha256": "13b5dccdeb84e1b958c0ac378b4add5ed4c6815e9024cc3cf0eb6fd19e99912d",
+      "artifact_count": 31,
+      "artifacts_match": true,
+      "source_files": 288,
+      "source_sha256": "c54307a04cecb3dd99cc13d64ae0fbcb6c1fca2c0538711af040d279bbe9b549",
+      "source_archive_matches": true
+    }
+  },
+  "frontend_evidence": {
+    "assessment": ".planning/milestones/M002/implementation/evidence/frontend-cr017-018/assessment.json",
+    "accepted_cases": 27,
+    "counts": {
+      "pass": 27,
+      "fail": 0
+    },
+    "core_checks": 13,
+    "shared_checks": 14,
+    "developer_checks": [
+      {
+        "command": "pnpm --dir frontend typecheck",
+        "exit_code": 0,
+        "log": "typecheck.log"
+      },
+      {
+        "command": "pnpm --dir frontend lint",
+        "exit_code": 0,
+        "log": "lint.log"
+      },
+      {
+        "command": "pnpm --dir frontend format:check",
+        "exit_code": 0,
+        "log": "format-check.log"
+      },
+      {
+        "command": "pnpm --dir frontend lint:boundaries",
+        "exit_code": 0,
+        "log": "lint-boundaries.log"
+      },
+      {
+        "command": "pnpm --dir frontend test",
+        "exit_code": 0,
+        "log": "test.log"
+      }
+    ],
+    "unit_count": 333,
+    "unit_files": 32,
+    "compiled_files": 444,
+    "compiled_matches": true,
+    "raw_failures_preserved": [
+      "browser/shared-results.json: 8 PASS / 6 FAIL (fixture/query)",
+      "shared-control/shared-results.json: 4 PASS / 2 FAIL (growth activation missing)",
+      "browser/shared-tests.log: immutable issued-definition deletion rejected"
+    ],
+    "fixture_diagnosis": "Title-only DB had no level1, growth activation or check-in rules; blank /admin/users intentionally does not search. Added configured baseline and all=1 in test control; no product change or warning filter. Transient fixtures removed; issued definitions remain unlisted in disposable DB.",
+    "local_provider_calls": 1,
+    "real_provider_calls": 0
+  },
+  "qa13_preserved": {
+    "manifest": ".planning/milestones/M002/verification/evidence/qa2-013/manifest.json",
+    "manifest_sha256": "3691be754238b7fea94c0467a926274aa58e07cfc412399c241eafae1be435eb",
+    "artifact_count": 59,
+    "matches": true,
+    "overall": "FAIL",
+    "coverage_counts": {
+      "CAP": 49,
+      "PAGE": 25,
+      "views": 28,
+      "UIA": 119
+    }
+  },
+  "frontend_cr016_archived_documents": [
+    ".planning/milestones/M002/implementation/frontend-worktree-plan.md",
+    ".planning/milestones/M002/implementation/frontend-validation.md",
+    ".planning/milestones/M002/handoffs/frontend-implementation.md"
+  ],
+  "approval_archives": {
+    "design_approval": {
+      "version": "M002-UI-22",
+      "archive": ".planning/milestones/M002/design/evidence/M002-UI-22.tar.gz",
+      "sha256": "37df94f33a3bbc8be9f2be5bc0ef187f8d6b08e422a201aa9514732d0487b767",
+      "matches": true
+    },
+    "database_approval": {
+      "version": "M002-DB-03",
+      "archive": ".planning/milestones/M002/technical/evidence/M002-DB-03.tar.gz",
+      "sha256": "188df7f5d1d63431a9755ab6461f31c4aa94ab62eb6dd6dc92396a81f74fd527",
+      "matches": true
+    },
+    "backend_approval": {
+      "version": "M002-BE-03",
+      "archive": ".planning/milestones/M002/technical/evidence/M002-BE-03.tar.gz",
+      "sha256": "f66ec03208ef6c28a106bb6ae4ddc7047c1eb27bce353f725adcc3688fad6dbd",
+      "matches": true
+    },
+    "frontend_approval": {
+      "version": "M002-FE-02",
+      "archive": ".planning/milestones/M002/technical/evidence/M002-FE-02.tar.gz",
+      "sha256": "0e13fe1d9d3b23d415e486306a32f4d0c49b9c48b35d735c0a8a4ab8683738b4",
+      "matches": true
+    }
+  },
+  "before_control_hashes": {
+    ".planning/workflow/state.yaml": "87c5072a264b39b773457e83f94bc55b75a5a5ef852c48dd0a0fcc5c042c3691",
+    ".planning/workflow/history.yaml": "f733631245f3530e0f64198f08dfa533b8627ad08ef519a4a9e785ffcdebbcd7",
+    ".planning/agt/project.yaml": "1ef109e934ca9d603040abac5ab2b8f7e7e688224022d2fe203f4592d5f58547",
+    ".planning/agt/agents.yaml": "c4696881da3815fd1817592fbd75a327b262be83aa2510fe9a5f35d6af6bd0a6"
+  },
+  "protected_count": 7287,
+  "open_change_requests": [
+    "M002-CR-001",
+    "M002-CR-002",
+    "M002-CR-017",
+    "M002-CR-018"
+  ],
+  "retained_open_items": [
+    {
+      "id": "CR039-L1",
+      "status": "open",
+      "source": ".planning/milestones/M001/changes/CR-039.md#retained-limitations"
+    },
+    {
+      "id": "CR042-L1",
+      "status": "open",
+      "source": ".planning/milestones/M001/verification/CR-042-generation-evidence.md#retained-limitations"
+    },
+    {
+      "id": "AI-QUALITY-90",
+      "status": "unverified",
+      "source": ".planning/milestones/M001/verification/ai-evaluation.md"
+    },
+    {
+      "id": "FE2-R16-W1",
+      "status": "open",
+      "source": ".planning/milestones/M002/changes/CR-017.md"
+    }
+  ],
+  "pending_user_decisions": [],
+  "authorization": "上一轮明确提出交QA独立复验两项、CR暂未关闭，用户本轮回复下一步；同一目标不重复请求批准。",
+  "code_semantic_review": false,
+  "developer_checks_rerun": false,
+  "runtime_model_switch": "not_performed",
+  "input_tokens": "unknown"
+}

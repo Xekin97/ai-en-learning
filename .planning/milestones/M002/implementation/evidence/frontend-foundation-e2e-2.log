@@ -1,0 +1,54 @@
+
+Running 4 tests using 1 worker
+
+(node:93058) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  1 [desktop] › tests/e2e/m002-foundation.spec.ts:7:2 › UI22 home content and layout zh (631ms)
+  ✓  2 [desktop] › tests/e2e/m002-foundation.spec.ts:7:2 › UI22 home content and layout en (534ms)
+  ✓  3 [desktop] › tests/e2e/m002-foundation.spec.ts:27:1 › UI22 manual story selection stops the automatic turn (843ms)
+  ✘  4 [desktop] › tests/e2e/m002-foundation.spec.ts:39:1 › explicit login shows welcome over reminder and keeps it for the designed duration (5.7s)
+
+
+  1) [desktop] › tests/e2e/m002-foundation.spec.ts:39:1 › explicit login shows welcome over reminder and keeps it for the designed duration 
+
+    Error: expect(locator).toHaveText(expected) failed
+
+    Locator:  locator('#toast').locator('.toast-days')
+    Expected: "5 days"
+    Received: "5 learning days"
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveText" with timeout 5000ms
+      - waiting for locator('#toast').locator('.toast-days')
+        14 × locator resolved to <strong class="toast-days">5 learning days</strong>
+           - unexpected value "5 learning days"
+
+
+      45 |  const toast=page.locator('#toast');
+      46 |  await expect(toast).toBeVisible();
+    > 47 |  await expect(toast.locator('.toast-days')).toHaveText('5 days');
+         |                                             ^
+      48 |  await expect(page.locator('dialog[open]')).toBeVisible();
+      49 |  expect(await toast.evaluate(el=>el.parentElement?.tagName)).toBe('DIALOG');
+      50 |  expect(await toast.evaluate(el=>el.matches(':popover-open'))).toBe(true);
+        at /Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/frontend/tests/e2e/m002-foundation.spec.ts:47:45
+
+    Error Context: test-results/m002-foundation-explicit-l-c5106-t-for-the-designed-duration-desktop/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/m002-foundation-explicit-l-c5106-t-for-the-designed-duration-desktop/trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace test-results/m002-foundation-explicit-l-c5106-t-for-the-designed-duration-desktop/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [desktop] › tests/e2e/m002-foundation.spec.ts:39:1 › explicit login shows welcome over reminder and keeps it for the designed duration 
+  3 passed (8.4s)
+npm notice
+npm notice New major version of npm available! 10.9.8 -> 12.0.2
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.0.2
+npm notice To update run: npm install -g npm@12.0.2
+npm notice

@@ -1,0 +1,125 @@
+
+Running 8 tests using 1 worker
+
+(node:59087) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1/8] [desktop] › tests/e2e/m002-generic-models.spec.ts:12:3 › UI29 en › configuration, protocol retention, explicit tests, save and secret-safe edit
+  1) [desktop] › tests/e2e/m002-generic-models.spec.ts:12:3 › UI29 en › configuration, protocol retention, explicit tests, save and secret-safe edit 
+
+    Test timeout of 30000ms exceeded.
+
+    Error: locator.fill: Test timeout of 30000ms exceeded.
+    Call log:
+      - waiting for locator('#model-form').locator('[name="displayName"]')
+        - locator resolved to <input value="" required="" maxlength="200" name="displayName"/>
+        - fill("Custom service")
+      - attempting fill action
+        2 × waiting for element to be visible, enabled and editable
+          - element is not visible
+        - retrying fill action
+        - waiting 20ms
+        2 × waiting for element to be visible, enabled and editable
+          - element is not visible
+        - retrying fill action
+          - waiting 100ms
+        46 × waiting for element to be visible, enabled and editable
+           - element is not visible
+         - retrying fill action
+           - waiting 500ms
+        - waiting for "http://127.0.0.1:3324/admin/models" navigation to finish...
+        - navigated to "http://127.0.0.1:3324/admin/models"
+        - waiting for element to be visible, enabled and editable
+      - element was detached from the DOM, retrying
+        - locator resolved to <input value="" required="" maxlength="200" name="displayName"/>
+        - fill("Custom service")
+      - attempting fill action
+        2 × waiting for element to be visible, enabled and editable
+          - element is not visible
+        - retrying fill action
+        - waiting 20ms
+        2 × waiting for element to be visible, enabled and editable
+          - element is not visible
+        - retrying fill action
+          - waiting 100ms
+        10 × waiting for element to be visible, enabled and editable
+           - element is not visible
+         - retrying fill action
+           - waiting 500ms
+
+
+      18 |       await context.addCookies([
+      19 |         { name: "wordweave_session", value: "admin", url: baseURL! },
+    > 20 |         {
+         |          ^
+      21 |           name: "wordweave_ui_locale",
+      22 |           value: lang === "en" ? "en-US" : "zh-CN",
+      23 |           url: baseURL!,
+        at /Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/frontend/tests/e2e/m002-generic-models.spec.ts:20:47
+
+    Error Context: ../.planning/milestones/M002/implementation/evidence/generic-models29/playwright/m002-generic-models-UI29-e-e6046-s-save-and-secret-safe-edit-desktop/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../.planning/milestones/M002/implementation/evidence/generic-models29/playwright/m002-generic-models-UI29-e-e6046-s-save-and-secret-safe-edit-desktop/trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace ../.planning/milestones/M002/implementation/evidence/generic-models29/playwright/m002-generic-models-UI29-e-e6046-s-save-and-secret-safe-edit-desktop/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+(node:60668) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[2/8] [desktop] › tests/e2e/m002-generic-models.spec.ts:52:3 › UI29 en › discard confirmation and revision recovery preserve deliberate edits
+  2) [desktop] › tests/e2e/m002-generic-models.spec.ts:52:3 › UI29 en › discard confirmation and revision recovery preserve deliberate edits 
+
+    Test timeout of 30000ms exceeded.
+
+    Error: locator.fill: Test timeout of 30000ms exceeded.
+    Call log:
+      - waiting for locator('#admin-model').locator('[name="displayName"]')
+        - locator resolved to <input value="" required="" maxlength="200" name="displayName"/>
+        - fill("Edited name")
+      - attempting fill action
+        2 × waiting for element to be visible, enabled and editable
+          - element is not visible
+        - retrying fill action
+        - waiting 20ms
+        2 × waiting for element to be visible, enabled and editable
+          - element is not visible
+        - retrying fill action
+          - waiting 100ms
+        58 × waiting for element to be visible, enabled and editable
+           - element is not visible
+         - retrying fill action
+           - waiting 500ms
+
+
+      54 |         .locator('[name="baseUrl"]')
+      55 |         .fill("https://provider.example/custom/v1/");
+    > 56 |       await form.locator('[name="apiKey"]').fill("bad-key");
+         |               ^
+      57 |       for (const protocol of [
+      58 |         "openai_responses",
+      59 |         "anthropic_messages",
+        at /Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/frontend/tests/e2e/m002-generic-models.spec.ts:56:15
+
+    Error Context: ../.planning/milestones/M002/implementation/evidence/generic-models29/playwright/m002-generic-models-UI29-e-412b0-y-preserve-deliberate-edits-desktop/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../.planning/milestones/M002/implementation/evidence/generic-models29/playwright/m002-generic-models-UI29-e-412b0-y-preserve-deliberate-edits-desktop/trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace ../.planning/milestones/M002/implementation/evidence/generic-models29/playwright/m002-generic-models-UI29-e-412b0-y-preserve-deliberate-edits-desktop/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+(node:62270) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[3/8] [desktop] › tests/e2e/m002-generic-models.spec.ts:12:3 › UI29 zh › configuration, protocol retention, explicit tests, save and secret-safe edit

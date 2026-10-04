@@ -1,0 +1,222 @@
+
+Running 14 tests using 1 worker
+
+(node:32666) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   1 [desktop] › tests/e2e/m002-admin-growth.spec.ts:7:1 › check-in settings submit five values once and preserve next-day effective state (1.9s)
+  ✓   2 [desktop] › tests/e2e/m002-admin-growth.spec.ts:10:1 › six levels save atomically and hidden edited rows remain in the submitted snapshot (880ms)
+  ✓   3 [desktop] › tests/e2e/m002-admin-growth.spec.ts:13:1 › achievement content remains plain and a field error reveals its hidden row (848ms)
+  ✘   4 [desktop] › tests/e2e/m002-admin-growth.spec.ts:16:1 › issued cards cannot be deleted and model cards send only model-time effects (30.1s)
+(node:34212) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘   5 [desktop] › tests/e2e/m002-admin-presets.spec.ts:7:1 › draft, validated preview and explicit publish remain distinct (30.1s)
+(node:35376) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘   6 [desktop] › tests/e2e/m002-admin-presets.spec.ts:8:1 › unavailable credential and load failure retain configurable models without quota (5.7s)
+(node:35708) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   7 [desktop] › tests/e2e/m002-admin-presets.spec.ts:9:1 › explicit cancellation uses preview capability without user quota commands (857ms)
+(node:35785) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   8 [mobile] › tests/e2e/m002-admin-growth.spec.ts:7:1 › check-in settings submit five values once and preserve next-day effective state (812ms)
+  ✓   9 [mobile] › tests/e2e/m002-admin-growth.spec.ts:10:1 › six levels save atomically and hidden edited rows remain in the submitted snapshot (1.2s)
+  ✓  10 [mobile] › tests/e2e/m002-admin-growth.spec.ts:13:1 › achievement content remains plain and a field error reveals its hidden row (1.2s)
+  ✘  11 [mobile] › tests/e2e/m002-admin-growth.spec.ts:16:1 › issued cards cannot be deleted and model cards send only model-time effects (30.1s)
+(node:36973) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  12 [mobile] › tests/e2e/m002-admin-presets.spec.ts:7:1 › draft, validated preview and explicit publish remain distinct (30.2s)
+(node:38327) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  13 [mobile] › tests/e2e/m002-admin-presets.spec.ts:8:1 › unavailable credential and load failure retain configurable models without quota (5.6s)
+(node:38561) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  14 [mobile] › tests/e2e/m002-admin-presets.spec.ts:9:1 › explicit cancellation uses preview capability without user quota commands (826ms)
+
+
+  1) [desktop] › tests/e2e/m002-admin-growth.spec.ts:16:1 › issued cards cannot be deleted and model cards send only model-time effects 
+
+    Test timeout of 30000ms exceeded.
+
+    Error: locator.selectOption: Test timeout of 30000ms exceeded.
+    Call log:
+      - waiting for locator('dialog[open]').getByLabel('AI model', { exact: true })
+
+
+      15 | });
+      16 | test('issued cards cannot be deleted and model cards send only model-time effects',async({page},info)=>{
+    > 17 |  let body:Record<string,unknown>|null=null;page.on('request',r=>{if(r.method()==='POST'&&r.url().endsWith('/growth/items'))body=r.postDataJSON();});await page.goto('/admin/growth');await ready(page);await page.getByRole('button',{name:t('delete'),exact:true}).click();await expect(page.locator('dialog[open]')).toContainText(t('delete.blocked'));await expect(page.locator('dialog[open]').getByRole('button',{name:t('delete'),exact:true})).toHaveCount(0);await page.keyboard.press('Escape');await page.getByRole('button',{name:t('newitem'),exact:true}).click();const dialog=page.locator('dialog[open]');await dialog.getByLabel(t('name.en'),{exact:true}).fill('Model time');await dialog.getByLabel(t('price'),{exact:true}).fill('20');await dialog.getByLabel(t('deadline'),{exact:true}).fill('30');await dialog.getByLabel(t('model'),{exact:true}).selectOption('model-admin');await dialog.getByLabel(t('retirementpoints'),{exact:true}).fill('40');await dialog.getByLabel(t('duration'),{exact:true}).fill('3');await dialog.getByRole('button',{name:t('save'),exact:true}).click();await expect(dialog).toHaveCount(0);expect(body).toMatchObject({kind:'model_trial',activation_ttl_seconds:2592000,effect:{kind:'model_trial',model_ids:['model-admin'],trial_seconds:259200,retirement_points:'40'}});expect(body).not.toHaveProperty('listed');expect(body?.effect).not.toHaveProperty('extra_count');await page.screenshot({path:`../.planning/milestones/M002/implementation/evidence/frontend-admin-items-${info.project.name}.png`,fullPage:true});
+         |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             ^
+      18 | });
+      19 |
+        at /Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/frontend/tests/e2e/m002-admin-growth.spec.ts:17:845
+
+    Error Context: test-results/m002-admin-growth-issued-c-b932b-end-only-model-time-effects-desktop/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/m002-admin-growth-issued-c-b932b-end-only-model-time-effects-desktop/trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace test-results/m002-admin-growth-issued-c-b932b-end-only-model-time-effects-desktop/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [desktop] › tests/e2e/m002-admin-presets.spec.ts:7:1 › draft, validated preview and explicit publish remain distinct 
+
+    Test timeout of 30000ms exceeded.
+
+    Error: locator.selectOption: Test timeout of 30000ms exceeded.
+    Call log:
+      - waiting for getByLabel('Style', { exact: true })
+
+
+       5 | const ready=async(page:import('@playwright/test').Page)=>page.waitForFunction(()=>document.documentElement.dataset.appReady==='true');
+       6 | test.beforeEach(async({context,request})=>{await request.post('http://127.0.0.1:38080/api/v1/__test/admin-presets-reset');await context.addCookies([{name:'wordweave_session',value:'admin',url:'http://127.0.0.1:3300'}]);});
+    >  7 | test('draft, validated preview and explicit publish remain distinct',async({page,request},info)=>{const writes:{url:string;body:Record<string,unknown>}[]=[];page.on('request',r=>{if(['POST','PUT'].includes(r.method())&&r.url().includes('/admin/presets'))writes.push({url:r.url(),body:r.postDataJSON()});});await page.goto('/admin/presets');await ready(page);await page.getByLabel(t('preset.name'),{exact:true}).fill('New title');await page.getByLabel(t('style'),{exact:true}).selectOption('news');await page.getByRole('button',{name:t('save.draft'),exact:true}).click();await expect(page.getByRole('button',{name:t('publish'),exact:true})).toBeDisabled();let record=(await(await request.get('http://127.0.0.1:38080/api/v1/admin/presets/preset-admin')).json()).data.preset;expect(record.published.title).toBe('Live story');await page.getByRole('button',{name:t('previewgen'),exact:true}).click();await expect(page.getByRole('button',{name:t('publish'),exact:true})).toBeEnabled();expect(writes.filter(w=>w.url.endsWith('/publish'))).toHaveLength(0);await expect(page.locator('.preset-sample-text')).toHaveText('Teams adapt quickly when the context changes.');await page.getByRole('button',{name:t('publish'),exact:true}).click();await page.locator('dialog[open]').getByRole('button',{name:t('confirm'),exact:true}).click();await expect(page.locator('dialog[open]')).toHaveCount(0);record=(await(await request.get('http://127.0.0.1:38080/api/v1/admin/presets/preset-admin')).json()).data.preset;expect(record.published.title).toBe('New title');expect(writes.find(w=>w.url.endsWith('/previews/stream'))?.body).toEqual({draft_version:'draft-2'});expect(writes[0]?.body).not.toHaveProperty('description');await expect(page.locator('body')).not.toContainText('preview-private-token');await page.screenshot({path:`../.planning/milestones/M002/implementation/evidence/frontend-admin-presets-${info.project.name}.png`,fullPage:true});});
+         |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             ^
+       8 | test('unavailable credential and load failure retain configurable models without quota',async({page,request})=>{await request.post('http://127.0.0.1:38080/api/v1/__test/admin-presets-state',{data:{missing:true}});await page.goto('/admin/presets');await ready(page);await expect(page.getByRole('button',{name:t('previewgen'),exact:true})).toBeDisabled();await expect(page.getByLabel(t('model'),{exact:true})).toHaveValue('model-admin');await expect(page.locator('main')).toContainText(t('a.key.missing'));await page.getByLabel(t('preset.name'),{exact:true}).fill('Kept draft');await request.post('http://127.0.0.1:38080/api/v1/__test/admin-presets-state',{data:{missing:false}});await page.getByRole('button',{name:t('save.draft'),exact:true}).click();await expect(page.getByLabel(t('preset.name'),{exact:true})).toHaveValue('Kept draft');await page.reload();await ready(page);await expect(page.getByRole('button',{name:t('previewgen'),exact:true})).toBeEnabled();await expect(page.locator('main')).not.toContainText('creations left');});
+       9 | test('explicit cancellation uses preview capability without user quota commands',async({page,request})=>{await request.post('http://127.0.0.1:38080/api/v1/__test/admin-presets-state',{data:{delayed:true}});let token:string|undefined;page.on('request',r=>{if(r.url().endsWith('/preview-new/cancel'))token=r.headers()['x-preview-token'];});await page.goto('/admin/presets');await ready(page);await page.getByRole('button',{name:t('previewgen'),exact:true}).click();await expect(page.getByRole('button',{name:t('cancelgen'),exact:true})).toBeEnabled();await page.getByRole('button',{name:t('cancelgen'),exact:true}).click();await expect(page.getByRole('button',{name:t('previewgen'),exact:true})).toBeEnabled();expect(token).toBe('preview-private-token');await expect(page.locator('main')).toContainText(t('create.cancelled'));});
+      10 |
+        at /Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/frontend/tests/e2e/m002-admin-presets.spec.ts:7:477
+
+    Error Context: test-results/m002-admin-presets-draft-v-8c6b6-cit-publish-remain-distinct-desktop/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/m002-admin-presets-draft-v-8c6b6-cit-publish-remain-distinct-desktop/trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace test-results/m002-admin-presets-draft-v-8c6b6-cit-publish-remain-distinct-desktop/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3) [desktop] › tests/e2e/m002-admin-presets.spec.ts:8:1 › unavailable credential and load failure retain configurable models without quota 
+
+    Error: expect(locator).toHaveValue(expected) failed
+
+    Locator: getByLabel('AI model', { exact: true })
+    Expected: "model-admin"
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toHaveValue" with timeout 5000ms
+      - waiting for getByLabel('AI model', { exact: true })
+
+
+       6 | test.beforeEach(async({context,request})=>{await request.post('http://127.0.0.1:38080/api/v1/__test/admin-presets-reset');await context.addCookies([{name:'wordweave_session',value:'admin',url:'http://127.0.0.1:3300'}]);});
+       7 | test('draft, validated preview and explicit publish remain distinct',async({page,request},info)=>{const writes:{url:string;body:Record<string,unknown>}[]=[];page.on('request',r=>{if(['POST','PUT'].includes(r.method())&&r.url().includes('/admin/presets'))writes.push({url:r.url(),body:r.postDataJSON()});});await page.goto('/admin/presets');await ready(page);await page.getByLabel(t('preset.name'),{exact:true}).fill('New title');await page.getByLabel(t('style'),{exact:true}).selectOption('news');await page.getByRole('button',{name:t('save.draft'),exact:true}).click();await expect(page.getByRole('button',{name:t('publish'),exact:true})).toBeDisabled();let record=(await(await request.get('http://127.0.0.1:38080/api/v1/admin/presets/preset-admin')).json()).data.preset;expect(record.published.title).toBe('Live story');await page.getByRole('button',{name:t('previewgen'),exact:true}).click();await expect(page.getByRole('button',{name:t('publish'),exact:true})).toBeEnabled();expect(writes.filter(w=>w.url.endsWith('/publish'))).toHaveLength(0);await expect(page.locator('.preset-sample-text')).toHaveText('Teams adapt quickly when the context changes.');await page.getByRole('button',{name:t('publish'),exact:true}).click();await page.locator('dialog[open]').getByRole('button',{name:t('confirm'),exact:true}).click();await expect(page.locator('dialog[open]')).toHaveCount(0);record=(await(await request.get('http://127.0.0.1:38080/api/v1/admin/presets/preset-admin')).json()).data.preset;expect(record.published.title).toBe('New title');expect(writes.find(w=>w.url.endsWith('/previews/stream'))?.body).toEqual({draft_version:'draft-2'});expect(writes[0]?.body).not.toHaveProperty('description');await expect(page.locator('body')).not.toContainText('preview-private-token');await page.screenshot({path:`../.planning/milestones/M002/implementation/evidence/frontend-admin-presets-${info.project.name}.png`,fullPage:true});});
+    >  8 | test('unavailable credential and load failure retain configurable models without quota',async({page,request})=>{await request.post('http://127.0.0.1:38080/api/v1/__test/admin-presets-state',{data:{missing:true}});await page.goto('/admin/presets');await ready(page);await expect(page.getByRole('button',{name:t('previewgen'),exact:true})).toBeDisabled();await expect(page.getByLabel(t('model'),{exact:true})).toHaveValue('model-admin');await expect(page.locator('main')).toContainText(t('a.key.missing'));await page.getByLabel(t('preset.name'),{exact:true}).fill('Kept draft');await request.post('http://127.0.0.1:38080/api/v1/__test/admin-presets-state',{data:{missing:false}});await page.getByRole('button',{name:t('save.draft'),exact:true}).click();await expect(page.getByLabel(t('preset.name'),{exact:true})).toHaveValue('Kept draft');await page.reload();await ready(page);await expect(page.getByRole('button',{name:t('previewgen'),exact:true})).toBeEnabled();await expect(page.locator('main')).not.toContainText('creations left');});
+         |                                                                                                                                                                                                                                                                                                                                                                                                                         ^
+       9 | test('explicit cancellation uses preview capability without user quota commands',async({page,request})=>{await request.post('http://127.0.0.1:38080/api/v1/__test/admin-presets-state',{data:{delayed:true}});let token:string|undefined;page.on('request',r=>{if(r.url().endsWith('/preview-new/cancel'))token=r.headers()['x-preview-token'];});await page.goto('/admin/presets');await ready(page);await page.getByRole('button',{name:t('previewgen'),exact:true}).click();await expect(page.getByRole('button',{name:t('cancelgen'),exact:true})).toBeEnabled();await page.getByRole('button',{name:t('cancelgen'),exact:true}).click();await expect(page.getByRole('button',{name:t('previewgen'),exact:true})).toBeEnabled();expect(token).toBe('preview-private-token');await expect(page.locator('main')).toContainText(t('create.cancelled'));});
+      10 |
+        at /Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/frontend/tests/e2e/m002-admin-presets.spec.ts:8:409
+
+    Error Context: test-results/m002-admin-presets-unavail-3abe5-urable-models-without-quota-desktop/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/m002-admin-presets-unavail-3abe5-urable-models-without-quota-desktop/trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace test-results/m002-admin-presets-unavail-3abe5-urable-models-without-quota-desktop/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  4) [mobile] › tests/e2e/m002-admin-growth.spec.ts:16:1 › issued cards cannot be deleted and model cards send only model-time effects 
+
+    Test timeout of 30000ms exceeded.
+
+    Error: locator.selectOption: Test timeout of 30000ms exceeded.
+    Call log:
+      - waiting for locator('dialog[open]').getByLabel('AI model', { exact: true })
+
+
+      15 | });
+      16 | test('issued cards cannot be deleted and model cards send only model-time effects',async({page},info)=>{
+    > 17 |  let body:Record<string,unknown>|null=null;page.on('request',r=>{if(r.method()==='POST'&&r.url().endsWith('/growth/items'))body=r.postDataJSON();});await page.goto('/admin/growth');await ready(page);await page.getByRole('button',{name:t('delete'),exact:true}).click();await expect(page.locator('dialog[open]')).toContainText(t('delete.blocked'));await expect(page.locator('dialog[open]').getByRole('button',{name:t('delete'),exact:true})).toHaveCount(0);await page.keyboard.press('Escape');await page.getByRole('button',{name:t('newitem'),exact:true}).click();const dialog=page.locator('dialog[open]');await dialog.getByLabel(t('name.en'),{exact:true}).fill('Model time');await dialog.getByLabel(t('price'),{exact:true}).fill('20');await dialog.getByLabel(t('deadline'),{exact:true}).fill('30');await dialog.getByLabel(t('model'),{exact:true}).selectOption('model-admin');await dialog.getByLabel(t('retirementpoints'),{exact:true}).fill('40');await dialog.getByLabel(t('duration'),{exact:true}).fill('3');await dialog.getByRole('button',{name:t('save'),exact:true}).click();await expect(dialog).toHaveCount(0);expect(body).toMatchObject({kind:'model_trial',activation_ttl_seconds:2592000,effect:{kind:'model_trial',model_ids:['model-admin'],trial_seconds:259200,retirement_points:'40'}});expect(body).not.toHaveProperty('listed');expect(body?.effect).not.toHaveProperty('extra_count');await page.screenshot({path:`../.planning/milestones/M002/implementation/evidence/frontend-admin-items-${info.project.name}.png`,fullPage:true});
+         |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             ^
+      18 | });
+      19 |
+        at /Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/frontend/tests/e2e/m002-admin-growth.spec.ts:17:845
+
+    Error Context: test-results/m002-admin-growth-issued-c-b932b-end-only-model-time-effects-mobile/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/m002-admin-growth-issued-c-b932b-end-only-model-time-effects-mobile/trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace test-results/m002-admin-growth-issued-c-b932b-end-only-model-time-effects-mobile/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  5) [mobile] › tests/e2e/m002-admin-presets.spec.ts:7:1 › draft, validated preview and explicit publish remain distinct 
+
+    Test timeout of 30000ms exceeded.
+
+    Error: locator.selectOption: Test timeout of 30000ms exceeded.
+    Call log:
+      - waiting for getByLabel('Style', { exact: true })
+
+
+       5 | const ready=async(page:import('@playwright/test').Page)=>page.waitForFunction(()=>document.documentElement.dataset.appReady==='true');
+       6 | test.beforeEach(async({context,request})=>{await request.post('http://127.0.0.1:38080/api/v1/__test/admin-presets-reset');await context.addCookies([{name:'wordweave_session',value:'admin',url:'http://127.0.0.1:3300'}]);});
+    >  7 | test('draft, validated preview and explicit publish remain distinct',async({page,request},info)=>{const writes:{url:string;body:Record<string,unknown>}[]=[];page.on('request',r=>{if(['POST','PUT'].includes(r.method())&&r.url().includes('/admin/presets'))writes.push({url:r.url(),body:r.postDataJSON()});});await page.goto('/admin/presets');await ready(page);await page.getByLabel(t('preset.name'),{exact:true}).fill('New title');await page.getByRole('combobox',{name:t('style'),exact:true}).selectOption('news');await page.getByRole('button',{name:t('save.draft'),exact:true}).click();await expect(page.getByRole('button',{name:t('publish'),exact:true})).toBeDisabled();let record=(await(await request.get('http://127.0.0.1:38080/api/v1/admin/presets/preset-admin')).json()).data.preset;expect(record.published.title).toBe('Live story');await page.getByRole('button',{name:t('previewgen'),exact:true}).click();await expect(page.getByRole('button',{name:t('publish'),exact:true})).toBeEnabled();expect(writes.filter(w=>w.url.endsWith('/publish'))).toHaveLength(0);await expect(page.locator('.preset-sample-text')).toHaveText('Teams adapt quickly when the context changes.');await page.getByRole('button',{name:t('publish'),exact:true}).click();await page.locator('dialog[open]').getByRole('button',{name:t('confirm'),exact:true}).click();await expect(page.locator('dialog[open]')).toHaveCount(0);record=(await(await request.get('http://127.0.0.1:38080/api/v1/admin/presets/preset-admin')).json()).data.preset;expect(record.published.title).toBe('New title');expect(writes.find(w=>w.url.endsWith('/previews/stream'))?.body).toEqual({draft_version:'draft-2'});expect(writes[0]?.body).not.toHaveProperty('description');await expect(page.locator('body')).not.toContainText('preview-private-token');await page.screenshot({path:`../.planning/milestones/M002/implementation/evidence/frontend-admin-presets-${info.project.name}.png`,fullPage:true});});
+         |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             ^
+       8 | test('unavailable credential and load failure retain configurable models without quota',async({page,request})=>{await request.post('http://127.0.0.1:38080/api/v1/__test/admin-presets-state',{data:{missing:true}});await page.goto('/admin/presets');await ready(page);await expect(page.getByRole('button',{name:t('previewgen'),exact:true})).toBeDisabled();await expect(page.getByRole('combobox',{name:t('model'),exact:true})).toHaveValue('model-admin');await expect(page.locator('main')).toContainText(t('a.key.missing'));await page.getByLabel(t('preset.name'),{exact:true}).fill('Kept draft');await request.post('http://127.0.0.1:38080/api/v1/__test/admin-presets-state',{data:{missing:false}});await page.getByRole('button',{name:t('save.draft'),exact:true}).click();await expect(page.getByLabel(t('preset.name'),{exact:true})).toHaveValue('Kept draft');await page.reload();await ready(page);await expect(page.getByRole('button',{name:t('previewgen'),exact:true})).toBeEnabled();await expect(page.locator('main')).not.toContainText('creations left');});
+       9 | test('explicit cancellation uses preview capability without user quota commands',async({page,request})=>{await request.post('http://127.0.0.1:38080/api/v1/__test/admin-presets-state',{data:{delayed:true}});let token:string|undefined;page.on('request',r=>{if(r.url().endsWith('/preview-new/cancel'))token=r.headers()['x-preview-token'];});await page.goto('/admin/presets');await ready(page);await page.getByRole('button',{name:t('previewgen'),exact:true}).click();await expect(page.getByRole('button',{name:t('cancelgen'),exact:true})).toBeEnabled();await page.getByRole('button',{name:t('cancelgen'),exact:true}).click();await expect(page.getByRole('button',{name:t('previewgen'),exact:true})).toBeEnabled();expect(token).toBe('preview-private-token');await expect(page.locator('main')).toContainText(t('create.cancelled'));});
+      10 |
+        at /Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/frontend/tests/e2e/m002-admin-presets.spec.ts:7:477
+
+    Error Context: test-results/m002-admin-presets-draft-v-8c6b6-cit-publish-remain-distinct-mobile/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/m002-admin-presets-draft-v-8c6b6-cit-publish-remain-distinct-mobile/trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace test-results/m002-admin-presets-draft-v-8c6b6-cit-publish-remain-distinct-mobile/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  6) [mobile] › tests/e2e/m002-admin-presets.spec.ts:8:1 › unavailable credential and load failure retain configurable models without quota 
+
+    Error: expect(locator).toHaveValue(expected) failed
+
+    Locator: getByLabel('AI model', { exact: true })
+    Expected: "model-admin"
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toHaveValue" with timeout 5000ms
+      - waiting for getByLabel('AI model', { exact: true })
+
+
+       6 | test.beforeEach(async({context,request})=>{await request.post('http://127.0.0.1:38080/api/v1/__test/admin-presets-reset');await context.addCookies([{name:'wordweave_session',value:'admin',url:'http://127.0.0.1:3300'}]);});
+       7 | test('draft, validated preview and explicit publish remain distinct',async({page,request},info)=>{const writes:{url:string;body:Record<string,unknown>}[]=[];page.on('request',r=>{if(['POST','PUT'].includes(r.method())&&r.url().includes('/admin/presets'))writes.push({url:r.url(),body:r.postDataJSON()});});await page.goto('/admin/presets');await ready(page);await page.getByLabel(t('preset.name'),{exact:true}).fill('New title');await page.getByRole('combobox',{name:t('style'),exact:true}).selectOption('news');await page.getByRole('button',{name:t('save.draft'),exact:true}).click();await expect(page.getByRole('button',{name:t('publish'),exact:true})).toBeDisabled();let record=(await(await request.get('http://127.0.0.1:38080/api/v1/admin/presets/preset-admin')).json()).data.preset;expect(record.published.title).toBe('Live story');await page.getByRole('button',{name:t('previewgen'),exact:true}).click();await expect(page.getByRole('button',{name:t('publish'),exact:true})).toBeEnabled();expect(writes.filter(w=>w.url.endsWith('/publish'))).toHaveLength(0);await expect(page.locator('.preset-sample-text')).toHaveText('Teams adapt quickly when the context changes.');await page.getByRole('button',{name:t('publish'),exact:true}).click();await page.locator('dialog[open]').getByRole('button',{name:t('confirm'),exact:true}).click();await expect(page.locator('dialog[open]')).toHaveCount(0);record=(await(await request.get('http://127.0.0.1:38080/api/v1/admin/presets/preset-admin')).json()).data.preset;expect(record.published.title).toBe('New title');expect(writes.find(w=>w.url.endsWith('/previews/stream'))?.body).toEqual({draft_version:'draft-2'});expect(writes[0]?.body).not.toHaveProperty('description');await expect(page.locator('body')).not.toContainText('preview-private-token');await page.screenshot({path:`../.planning/milestones/M002/implementation/evidence/frontend-admin-presets-${info.project.name}.png`,fullPage:true});});
+    >  8 | test('unavailable credential and load failure retain configurable models without quota',async({page,request})=>{await request.post('http://127.0.0.1:38080/api/v1/__test/admin-presets-state',{data:{missing:true}});await page.goto('/admin/presets');await ready(page);await expect(page.getByRole('button',{name:t('previewgen'),exact:true})).toBeDisabled();await expect(page.getByRole('combobox',{name:t('model'),exact:true})).toHaveValue('model-admin');await expect(page.locator('main')).toContainText(t('a.key.missing'));await page.getByLabel(t('preset.name'),{exact:true}).fill('Kept draft');await request.post('http://127.0.0.1:38080/api/v1/__test/admin-presets-state',{data:{missing:false}});await page.getByRole('button',{name:t('save.draft'),exact:true}).click();await expect(page.getByLabel(t('preset.name'),{exact:true})).toHaveValue('Kept draft');await page.reload();await ready(page);await expect(page.getByRole('button',{name:t('previewgen'),exact:true})).toBeEnabled();await expect(page.locator('main')).not.toContainText('creations left');});
+         |                                                                                                                                                                                                                                                                                                                                                                                                                         ^
+       9 | test('explicit cancellation uses preview capability without user quota commands',async({page,request})=>{await request.post('http://127.0.0.1:38080/api/v1/__test/admin-presets-state',{data:{delayed:true}});let token:string|undefined;page.on('request',r=>{if(r.url().endsWith('/preview-new/cancel'))token=r.headers()['x-preview-token'];});await page.goto('/admin/presets');await ready(page);await page.getByRole('button',{name:t('previewgen'),exact:true}).click();await expect(page.getByRole('button',{name:t('cancelgen'),exact:true})).toBeEnabled();await page.getByRole('button',{name:t('cancelgen'),exact:true}).click();await expect(page.getByRole('button',{name:t('previewgen'),exact:true})).toBeEnabled();expect(token).toBe('preview-private-token');await expect(page.locator('main')).toContainText(t('create.cancelled'));});
+      10 |
+        at /Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/frontend/tests/e2e/m002-admin-presets.spec.ts:8:409
+
+    Error Context: test-results/m002-admin-presets-unavail-3abe5-urable-models-without-quota-mobile/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/m002-admin-presets-unavail-3abe5-urable-models-without-quota-mobile/trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace test-results/m002-admin-presets-unavail-3abe5-urable-models-without-quota-mobile/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  6 failed
+    [desktop] › tests/e2e/m002-admin-growth.spec.ts:16:1 › issued cards cannot be deleted and model cards send only model-time effects 
+    [desktop] › tests/e2e/m002-admin-presets.spec.ts:7:1 › draft, validated preview and explicit publish remain distinct 
+    [desktop] › tests/e2e/m002-admin-presets.spec.ts:8:1 › unavailable credential and load failure retain configurable models without quota 
+    [mobile] › tests/e2e/m002-admin-growth.spec.ts:16:1 › issued cards cannot be deleted and model cards send only model-time effects 
+    [mobile] › tests/e2e/m002-admin-presets.spec.ts:7:1 › draft, validated preview and explicit publish remain distinct 
+    [mobile] › tests/e2e/m002-admin-presets.spec.ts:8:1 › unavailable credential and load failure retain configurable models without quota 
+  8 passed (2.4m)
+npm notice
+npm notice New major version of npm available! 10.9.8 -> 12.0.2
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.0.2
+npm notice To update run: npm install -g npm@12.0.2
+npm notice

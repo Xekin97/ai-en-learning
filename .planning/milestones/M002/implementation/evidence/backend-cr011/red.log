@@ -1,0 +1,75 @@
+=== RUN   TestM002LibrarySearchHTTP
+2026/09/22 10:14:12 INFO http_request request_id=req_FYACCGBCVQDUA9Vv6iYUOA method=GET route=/api/v1/bootstrap status=200 duration_ms=6
+2026/09/22 10:14:12 INFO http_request request_id=req_cRrXhGDRXPV6AB_bY2sirA method=POST route=/api/v1/auth/login status=200 duration_ms=761
+2026/09/22 10:14:12 INFO http_request request_id=req_l6ckJIedxXsE0EskQaFWWw method=GET route=/api/v1/bootstrap status=200 duration_ms=0
+2026/09/22 10:14:13 INFO http_request request_id=req_s-rf85VfTWfYm1zwTPoSJg method=POST route=/api/v1/auth/login status=200 duration_ms=754
+2026/09/22 10:14:13 INFO http_request request_id=req_-irAmbNC49fzrGZ39GvBVA method=GET route=/api/v1/bootstrap status=200 duration_ms=0
+2026/09/22 10:14:14 INFO http_request request_id=req_Uo-b1reqXC_L3tZavBjX-Q method=POST route=/api/v1/auth/login status=200 duration_ms=746
+2026/09/22 10:14:14 INFO http_request request_id=req_Lu6zhkUoh47np3LsG4bVhg method=GET route=/api/v1/bootstrap status=200 duration_ms=1
+2026/09/22 10:14:14 INFO http_request request_id=req_FmyNxDUZ8ivMVkHWDsmA1w method=DELETE route=/api/v1/me/batches/{batch_id} status=204 duration_ms=7
+2026/09/22 10:14:14 INFO http_request request_id=req_C7aeYre9HjWFVWhv0raY2Q method=GET route=/api/v1/me/learning-summary status=200 duration_ms=1
+=== RUN   TestM002LibrarySearchHTTP/complete_word_normalization_includes_paused_but_not_deleted_or_other-owner_batches
+=== RUN   TestM002LibrarySearchHTTP/complete_word_normalization_includes_paused_but_not_deleted_or_other-owner_batches/learn
+2026/09/22 10:14:14 INFO http_request request_id=req_YV8op-ohyeVXdprzddEdMg method=GET route=/api/v1/me/batches status=200 duration_ms=2
+=== RUN   TestM002LibrarySearchHTTP/complete_word_normalization_includes_paused_but_not_deleted_or_other-owner_batches/LEARN
+2026/09/22 10:14:14 INFO http_request request_id=req_f_7sxScbPyN6aheVFkj34w method=GET route=/api/v1/me/batches status=422 duration_ms=0
+    m002_library_search_integration_test.go:94: status=422 want=200 body={"type":"https://wordweave.example/problems/validation-failed","title":"Request could not be accepted","status":422,"code":"validation_failed","detail":"One or more fields need attention.","request_id":"req_f_7sxScbPyN6aheVFkj34w"}
+=== RUN   TestM002LibrarySearchHTTP/complete_word_normalization_includes_paused_but_not_deleted_or_other-owner_batches/Learn
+2026/09/22 10:14:14 INFO http_request request_id=req_BCKmdSho5NJnVCIKIo32hA method=GET route=/api/v1/me/batches status=422 duration_ms=0
+    m002_library_search_integration_test.go:94: status=422 want=200 body={"type":"https://wordweave.example/problems/validation-failed","title":"Request could not be accepted","status":422,"code":"validation_failed","detail":"One or more fields need attention.","request_id":"req_BCKmdSho5NJnVCIKIo32hA"}
+=== RUN   TestM002LibrarySearchHTTP/complete_word_normalization_includes_paused_but_not_deleted_or_other-owner_batches/__LeArN_
+2026/09/22 10:14:14 INFO http_request request_id=req_EwvfG7cknOaupy2GgdjgiQ method=GET route=/api/v1/me/batches status=422 duration_ms=0
+    m002_library_search_integration_test.go:94: status=422 want=200 body={"type":"https://wordweave.example/problems/validation-failed","title":"Request could not be accepted","status":422,"code":"validation_failed","detail":"One or more fields need attention.","request_id":"req_EwvfG7cknOaupy2GgdjgiQ"}
+=== RUN   TestM002LibrarySearchHTTP/complete_word_normalization_includes_paused_but_not_deleted_or_other-owner_batches/_LEARN_
+2026/09/22 10:14:14 INFO http_request request_id=req_ey9vW9As_Q_jdMlKZdZ6bw method=GET route=/api/v1/me/batches status=422 duration_ms=0
+    m002_library_search_integration_test.go:94: status=422 want=200 body={"type":"https://wordweave.example/problems/validation-failed","title":"Request could not be accepted","status":422,"code":"validation_failed","detail":"One or more fields need attention.","request_id":"req_ey9vW9As_Q_jdMlKZdZ6bw"}
+=== RUN   TestM002LibrarySearchHTTP/cursor_follows_normalized_spelling_in_both_directions
+=== RUN   TestM002LibrarySearchHTTP/cursor_follows_normalized_spelling_in_both_directions/learn
+2026/09/22 10:14:14 INFO http_request request_id=req_ud2V-iXC_b5oR_ICVzfqAA method=GET route=/api/v1/me/batches status=200 duration_ms=0
+2026/09/22 10:14:14 INFO http_request request_id=req_nZOfMOz4_xpjvrf0xXJqqw method=GET route=/api/v1/me/batches status=422 duration_ms=0
+    m002_library_search_integration_test.go:116: status=422 want=200 body={"type":"https://wordweave.example/problems/validation-failed","title":"Request could not be accepted","status":422,"code":"validation_failed","detail":"One or more fields need attention.","request_id":"req_nZOfMOz4_xpjvrf0xXJqqw"}
+=== RUN   TestM002LibrarySearchHTTP/cursor_follows_normalized_spelling_in_both_directions/Learn
+2026/09/22 10:14:14 INFO http_request request_id=req_0tb26ZRZbN1Ztx-qoPjcMw method=GET route=/api/v1/me/batches status=422 duration_ms=0
+    m002_library_search_integration_test.go:110: status=422 want=200 body={"type":"https://wordweave.example/problems/validation-failed","title":"Request could not be accepted","status":422,"code":"validation_failed","detail":"One or more fields need attention.","request_id":"req_0tb26ZRZbN1Ztx-qoPjcMw"}
+=== RUN   TestM002LibrarySearchHTTP/cursor_remains_bound_to_owner_and_exact_filter
+2026/09/22 10:14:14 INFO http_request request_id=req_mgYoJx8d7hkWWeTTI0XOjg method=GET route=/api/v1/me/batches status=200 duration_ms=0
+2026/09/22 10:14:14 INFO http_request request_id=req_mw-I3mFVkwnsoJkdPZQWeA method=GET route=/api/v1/me/batches status=422 duration_ms=0
+2026/09/22 10:14:14 INFO http_request request_id=req_QiRfrDHbe1uvVbJ20V4v-Q method=GET route=/api/v1/me/batches status=422 duration_ms=0
+2026/09/22 10:14:14 INFO http_request request_id=req_7C8HhvUwEBdTzG5JLe_r8w method=GET route=/api/v1/me/batches status=422 duration_ms=0
+2026/09/22 10:14:14 INFO http_request request_id=req_CoNWxoQRC9NRcH85jSApww method=GET route=/api/v1/me/batches status=422 duration_ms=0
+2026/09/22 10:14:14 INFO http_request request_id=req_PhkqDQHDf2WiHTWX6C7BOw method=GET route=/api/v1/me/batches status=422 duration_ms=0
+2026/09/22 10:14:14 INFO http_request request_id=req_gb1TneD7B7SSRk1S9oX3bw method=GET route=/api/v1/me/batches status=200 duration_ms=0
+=== RUN   TestM002LibrarySearchHTTP/title_and_tags_are_not_searched_and_invalid_words_stay_invalid
+2026/09/22 10:14:14 INFO http_request request_id=req_z58Za_IB0LOV_YwWn7ErIg method=GET route=/api/v1/me/batches status=200 duration_ms=0
+2026/09/22 10:14:14 INFO http_request request_id=req_Hwup6w0e6bui7KQzzjTKeA method=GET route=/api/v1/me/batches status=200 duration_ms=0
+2026/09/22 10:14:14 INFO http_request request_id=req_ui-Tx_cngSyawI9yXTkiFw method=GET route=/api/v1/me/batches status=422 duration_ms=0
+2026/09/22 10:14:14 INFO http_request request_id=req_HJN-IAamhjWIq4QTvH_mAA method=GET route=/api/v1/me/batches status=422 duration_ms=0
+2026/09/22 10:14:14 INFO http_request request_id=req_87d1TjbvJsofZXpISUa_JA method=GET route=/api/v1/me/batches status=422 duration_ms=0
+2026/09/22 10:14:14 INFO http_request request_id=req_e2Cd2HyAPwlDdg9rGOKO0g method=GET route=/api/v1/me/batches status=422 duration_ms=0
+2026/09/22 10:14:14 INFO http_request request_id=req_1xPpJEO_X0CkKwAaI8SNjw method=GET route=/api/v1/me/batches status=422 duration_ms=0
+=== RUN   TestM002LibrarySearchHTTP/omitted_and_empty_filters_preserve_unfiltered_listing_and_access_rules
+2026/09/22 10:14:14 INFO http_request request_id=req_eHvY4ReONoFcMwN8V5xlyQ method=GET route=/api/v1/me/batches status=200 duration_ms=0
+2026/09/22 10:14:14 INFO http_request request_id=req_DBPBUV9NcogKcaPdtVzh2w method=GET route=/api/v1/me/batches status=200 duration_ms=0
+2026/09/22 10:14:14 INFO http_request request_id=req_xNxV9AT6jXG9R6vYnMTSGw method=GET route=/api/v1/me/batches status=401 duration_ms=0
+2026/09/22 10:14:14 INFO http_request request_id=req_UlpQ1QMo_dpW58ucs8nA6A method=GET route=/api/v1/me/batches status=403 duration_ms=0
+2026/09/22 10:14:14 INFO http_request request_id=req_6ogaxP_8OivP2EA9qnlovQ method=GET route=/api/v1/admin/users/{user_id}/batches status=200 duration_ms=1
+=== RUN   TestM002LibrarySearchHTTP/direct_library_service_uses_the_same_exact_normalization
+    m002_library_search_integration_test.go:178: service entry "LEARN": batches=0, more=false, error=learning validation failed
+2026/09/22 10:14:14 INFO http_request request_id=req_Ub8Dw6y49eKqfT_hw8DsYg method=GET route=/api/v1/me/learning-summary status=200 duration_ms=0
+--- FAIL: TestM002LibrarySearchHTTP (7.00s)
+    --- FAIL: TestM002LibrarySearchHTTP/complete_word_normalization_includes_paused_but_not_deleted_or_other-owner_batches (0.01s)
+        --- PASS: TestM002LibrarySearchHTTP/complete_word_normalization_includes_paused_but_not_deleted_or_other-owner_batches/learn (0.00s)
+        --- FAIL: TestM002LibrarySearchHTTP/complete_word_normalization_includes_paused_but_not_deleted_or_other-owner_batches/LEARN (0.00s)
+        --- FAIL: TestM002LibrarySearchHTTP/complete_word_normalization_includes_paused_but_not_deleted_or_other-owner_batches/Learn (0.00s)
+        --- FAIL: TestM002LibrarySearchHTTP/complete_word_normalization_includes_paused_but_not_deleted_or_other-owner_batches/__LeArN_ (0.00s)
+        --- FAIL: TestM002LibrarySearchHTTP/complete_word_normalization_includes_paused_but_not_deleted_or_other-owner_batches/_LEARN_ (0.00s)
+    --- FAIL: TestM002LibrarySearchHTTP/cursor_follows_normalized_spelling_in_both_directions (0.00s)
+        --- FAIL: TestM002LibrarySearchHTTP/cursor_follows_normalized_spelling_in_both_directions/learn (0.00s)
+        --- FAIL: TestM002LibrarySearchHTTP/cursor_follows_normalized_spelling_in_both_directions/Learn (0.00s)
+    --- PASS: TestM002LibrarySearchHTTP/cursor_remains_bound_to_owner_and_exact_filter (0.01s)
+    --- PASS: TestM002LibrarySearchHTTP/title_and_tags_are_not_searched_and_invalid_words_stay_invalid (0.01s)
+    --- PASS: TestM002LibrarySearchHTTP/omitted_and_empty_filters_preserve_unfiltered_listing_and_access_rules (0.01s)
+    --- FAIL: TestM002LibrarySearchHTTP/direct_library_service_uses_the_same_exact_normalization (0.00s)
+FAIL
+FAIL	wordweave/internal/httpapi	7.430s
+FAIL

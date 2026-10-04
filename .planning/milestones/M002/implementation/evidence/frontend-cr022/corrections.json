@@ -1,0 +1,7 @@
+{
+  "initial": "initial/results.json",
+  "control": "timer-control/results.json",
+  "finding": "Runtime reduced-motion change sometimes reset position while scroll stayed at second card. Overlapping onMounted/watch bindMotion calls could both attach listeners after nextTick; stale instance overwrote shared selected ID.",
+  "resolution": "Monotonic binding version suppresses stale nextTick continuations and pending work after unmount. Same CAR11 lifecycle requirement, no API/behavior extension.",
+  "all_original_failures_preserved": true
+}

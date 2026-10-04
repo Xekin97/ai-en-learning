@@ -1,0 +1,42 @@
+=== RUN   TestM002RandomExcludesCurrentLibraryAndSelectedEntries
+    random_integration_test.go:49: Limit  (cost=1989.98..1989.99 rows=1 width=40) (actual time=3.857..3.858 rows=1.00 loops=1)
+    random_integration_test.go:49:   Buffers: shared hit=392
+    random_integration_test.go:49:   ->  Sort  (cost=1989.98..1990.06 rows=30 width=40) (actual time=3.857..3.857 rows=1.00 loops=1)
+    random_integration_test.go:49:         Sort Key: (random())
+    random_integration_test.go:49:         Sort Method: top-N heapsort  Memory: 25kB
+    random_integration_test.go:49:         Buffers: shared hit=392
+    random_integration_test.go:49:         ->  Nested Loop  (cost=4.81..1989.83 rows=30 width=40) (actual time=0.556..2.992 rows=13858.00 loops=1)
+    random_integration_test.go:49:               Buffers: shared hit=392
+    random_integration_test.go:49:               ->  Seq Scan on vocabulary_snapshots s  (cost=0.00..12.88 rows=1 width=16) (actual time=0.003..0.003 rows=1.00 loops=1)
+    random_integration_test.go:49:                     Filter: (version = 'm001'::text)
+    random_integration_test.go:49:                     Buffers: shared hit=1
+    random_integration_test.go:49:               ->  Bitmap Heap Scan on vocabulary_entries v  (cost=4.81..1976.54 rows=34 width=48) (actual time=0.544..2.352 rows=13858.00 loops=1)
+    random_integration_test.go:49:                     Recheck Cond: (snapshot_id = s.id)
+    random_integration_test.go:49:                     Filter: ((entry <> ALL ('{weave}'::text[])) AND (NOT (ANY (lexeme_id = (hashed SubPlan 2).col1))))
+    random_integration_test.go:49:                     Rows Removed by Filter: 2
+    random_integration_test.go:49:                     Heap Blocks: exact=247
+    random_integration_test.go:49:                     Buffers: shared hit=391
+    random_integration_test.go:49:                     ->  Bitmap Index Scan on vocabulary_entries_snapshot_lexeme_unique  (cost=0.00..4.80 rows=69 width=0) (actual time=0.451..0.452 rows=27720.00 loops=1)
+    random_integration_test.go:49:                           Index Cond: (snapshot_id = s.id)
+    random_integration_test.go:49:                           Index Searches: 1
+    random_integration_test.go:49:                           Buffers: shared hit=138
+    random_integration_test.go:49:                     SubPlan 2
+    random_integration_test.go:49:                       ->  Nested Loop  (cost=4.45..26.11 rows=2 width=8) (actual time=0.004..0.004 rows=1.00 loops=1)
+    random_integration_test.go:49:                             Buffers: shared hit=6
+    random_integration_test.go:49:                             ->  Bitmap Heap Scan on batch_targets t  (cost=4.16..9.50 rows=2 width=8) (actual time=0.002..0.002 rows=1.00 loops=1)
+    random_integration_test.go:49:                                   Recheck Cond: (owner_id = '01a0bddb-bb1b-79c2-8c6c-b57cc5052e13'::uuid)
+    random_integration_test.go:49:                                   Heap Blocks: exact=1
+    random_integration_test.go:49:                                   Buffers: shared hit=2
+    random_integration_test.go:49:                                   ->  Bitmap Index Scan on batch_targets_owner_vocabulary_idx  (cost=0.00..4.16 rows=2 width=0) (actual time=0.001..0.001 rows=1.00 loops=1)
+    random_integration_test.go:49:                                         Index Cond: (owner_id = '01a0bddb-bb1b-79c2-8c6c-b57cc5052e13'::uuid)
+    random_integration_test.go:49:                                         Index Searches: 1
+    random_integration_test.go:49:                                         Buffers: shared hit=1
+    random_integration_test.go:49:                             ->  Index Scan using vocabulary_entries_pkey on vocabulary_entries member  (cost=0.29..8.30 rows=1 width=16) (actual time=0.002..0.002 rows=1.00 loops=1)
+    random_integration_test.go:49:                                   Index Cond: (id = t.vocabulary_entry_id)
+    random_integration_test.go:49:                                   Index Searches: 1
+    random_integration_test.go:49:                                   Buffers: shared hit=4
+    random_integration_test.go:49: Planning Time: 0.140 ms
+    random_integration_test.go:49: Execution Time: 3.870 ms
+--- PASS: TestM002RandomExcludesCurrentLibraryAndSelectedEntries (0.54s)
+PASS
+ok  	wordweave/internal/vocabulary	0.947s

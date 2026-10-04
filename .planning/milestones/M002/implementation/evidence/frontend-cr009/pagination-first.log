@@ -1,0 +1,36 @@
+FE9-01 PASS
+FE9-02 PASS
+FE9-03 PASS
+FE9-04 PASS
+FE9-05 FAIL
+{
+  "results": [
+    {
+      "id": "FE9-01",
+      "name": "Later-page sole reference is auto-loaded and price-only save retains it",
+      "result": "PASS"
+    },
+    {
+      "id": "FE9-02",
+      "name": "Actual modifier-click adds a visible model without dropping the later-page reference",
+      "result": "PASS"
+    },
+    {
+      "id": "FE9-03",
+      "name": "Explicit removal persists and cannot newly add retired model on reopen or a new card",
+      "result": "PASS"
+    },
+    {
+      "id": "FE9-04",
+      "name": "Failed reference page blocks incomplete selection/save, retains input and retries on mobile",
+      "result": "PASS"
+    },
+    {
+      "id": "FE9-05",
+      "name": "Revision conflict loads newly referenced later-page retired models and waits for explicit retry",
+      "result": "FAIL",
+      "error": "Error: expect(locator).toContainText(expected) failed\n\nLocator: locator('dialog[open]').getByRole('listbox', { name: 'AI model', exact: true }).locator('option[value=\"01a0c2dd-174d-708a-8acc-64b27908d578\"]')\nExpected substring: \"This model has been retired\"\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n  - Expect \"to.have.text\" with timeout 5000ms\n  - waiting for locator('dialog[open]').getByRole('listbox', { name: 'AI model', exact: true }).locator('option[value=\"01a0c2dd-174d-708a-8acc-64b27908d578\"]')\n"
+    }
+  ],
+  "pageErrors": []
+}

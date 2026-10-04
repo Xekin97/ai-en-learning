@@ -1,0 +1,27 @@
+
+> wordweave-frontend@0.1.0 typecheck /Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/frontend
+> nuxt typecheck
+
+app/infrastructure/http/repositories/admin-presets-repository.ts(20,8): error TS2322: Type '(cursor: string | undefined) => Promise<{ items: AdminPresetModel[]; revision: string; nextCursor: string | null; }>' is not assignable to type '(cursor?: string | undefined) => Promise<PageModel<AdminPresetModel> & { revision: string; }>'.
+  Type 'Promise<{ items: AdminPresetModel[]; revision: string; nextCursor: string | null; }>' is not assignable to type 'Promise<PageModel<AdminPresetModel> & { revision: string; }>'.
+    Type '{ items: globalThis.AdminPresetModel[]; revision: string; nextCursor: string | null; }' is not assignable to type 'PageModel<AdminPresetModel> & { revision: string; }'.
+      Property 'hasMore' is missing in type '{ items: globalThis.AdminPresetModel[]; revision: string; nextCursor: string | null; }' but required in type 'PageModel<AdminPresetModel>'.
+app/infrastructure/http/repositories/admin-presets-repository.ts(28,8): error TS2322: Type '(startDate: string, endDate: string, cursor: string | undefined) => Promise<{ summary: UsageSummaryModel; nextCursor: string | null; items: { runId: string; presetId: string | null; ... 4 more ...; usage: UsageSummaryModel; }[]; }>' is not assignable to type '(startDate: string, endDate: string, cursor?: string | undefined) => Promise<PageModel<PreviewUsageModel> & { summary: UsageSummaryModel; }>'.
+  Type 'Promise<{ summary: UsageSummaryModel; nextCursor: string | null; items: { runId: string; presetId: string | null; draftVersion: string | null; status: "failed" | "cancelled" | "valid" | "active"; startedAt: string; completedAt: string | null; usage: UsageSummaryModel; }[]; }>' is not assignable to type 'Promise<PageModel<PreviewUsageModel> & { summary: UsageSummaryModel; }>'.
+    Type '{ summary: globalThis.UsageSummaryModel; nextCursor: string | null; items: { runId: string; presetId: string | null; draftVersion: string | null; status: "failed" | "cancelled" | "valid" | "active"; startedAt: string; completedAt: string | null; usage: globalThis.UsageSummaryModel; }[]; }' is not assignable to type 'PageModel<PreviewUsageModel> & { summary: UsageSummaryModel; }'.
+      Property 'hasMore' is missing in type '{ summary: globalThis.UsageSummaryModel; nextCursor: string | null; items: { runId: string; presetId: string | null; draftVersion: string | null; status: "failed" | "cancelled" | "valid" | "active"; startedAt: string; completedAt: string | null; usage: globalThis.UsageSummaryModel; }[]; }' but required in type 'PageModel<PreviewUsageModel>'.
+app/pages/admin/presets.vue(18,65): error TS2322: Type '{ readonly id: string; readonly draftVersion: string; readonly publishedVersion: string | null; readonly listed: boolean; readonly title: string; readonly configuration: { readonly model: { readonly id: string; readonly name: string; }; readonly entries: readonly string[]; readonly meaningLanguage: MeaningLanguage; ...' is not assignable to type 'AdminPresetModel'.
+  The types of 'configuration.entries' are incompatible between these types.
+    The type 'readonly string[]' is 'readonly' and cannot be assigned to the mutable type 'string[]'.
+app/pages/admin/presets.vue(29,150): error TS2322: Type '{ readonly id: string; readonly draftVersion: string; readonly publishedVersion: string | null; readonly listed: boolean; readonly title: string; readonly configuration: { readonly model: { readonly id: string; readonly name: string; }; readonly entries: readonly string[]; readonly meaningLanguage: MeaningLanguage; ...' is not assignable to type 'AdminPresetModel'.
+  The types of 'configuration.entries' are incompatible between these types.
+    The type 'readonly string[]' is 'readonly' and cannot be assigned to the mutable type 'string[]'.
+app/pages/admin/presets.vue(44,732): error TS2345: Argument of type '{ readonly id: string; readonly draftVersion: string; readonly publishedVersion: string | null; readonly listed: boolean; readonly title: string; readonly configuration: { readonly model: { readonly id: string; readonly name: string; }; readonly entries: readonly string[]; readonly meaningLanguage: MeaningLanguage; ...' is not assignable to parameter of type 'AdminPresetModel'.
+  The types of 'configuration.entries' are incompatible between these types.
+    The type 'readonly string[]' is 'readonly' and cannot be assigned to the mutable type 'string[]'.
+ ELIFECYCLE  Command failed with exit code 2.
+npm notice
+npm notice New major version of npm available! 10.9.8 -> 12.0.2
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.0.2
+npm notice To update run: npm install -g npm@12.0.2
+npm notice

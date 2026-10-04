@@ -1,0 +1,7 @@
+2026/10/01 20:14:00 INFO http_request request_id=req_oLH2FHkP4OSJi_uliNvkXw method=GET route=/api/v1/bootstrap status=200 duration_ms=0
+2026/10/01 20:14:00 INFO http_request request_id=req_EbBtIGW0HUGmRpBYFZVz2g method=GET route=/api/v1/admin/* status=401 duration_ms=0
+--- FAIL: TestGenericModelHTTPAuthorizationSaveAndExplicitProbe (0.89s)
+    model_connections_integration_test.go:68: status=401 want=403 body={"type":"https://wordweave.example/problems/authentication-required","title":"Sign in required","status":401,"code":"authentication_required","detail":"Authentication is required for this operation.","request_id":"req_EbBtIGW0HUGmRpBYFZVz2g"}
+FAIL
+FAIL	wordweave/internal/httpapi	1.264s
+FAIL

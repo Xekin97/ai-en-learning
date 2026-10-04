@@ -1,0 +1,118 @@
+{
+  "timestamp": "2026-09-28T08:25:44.048172+00:00",
+  "decision_id": "APPROVAL-M002-041",
+  "status": "PASS_FOR_SCOPED_CLOSURE",
+  "state": {
+    "milestone": "M002",
+    "stage": "verification",
+    "active_role": "quality/base",
+    "active_agent": "qa-quinn",
+    "status": "active",
+    "open_change_requests": [
+      "M002-CR-001",
+      "M002-CR-002",
+      "M002-CR-017",
+      "M002-CR-018"
+    ],
+    "retained_open_items": [
+      {
+        "id": "CR039-L1",
+        "status": "open",
+        "source": ".planning/milestones/M001/changes/CR-039.md#retained-limitations"
+      },
+      {
+        "id": "CR042-L1",
+        "status": "open",
+        "source": ".planning/milestones/M001/verification/CR-042-generation-evidence.md#retained-limitations"
+      },
+      {
+        "id": "AI-QUALITY-90",
+        "status": "unverified",
+        "source": ".planning/milestones/M001/verification/ai-evaluation.md"
+      },
+      {
+        "id": "FE2-R16-W1",
+        "status": "open",
+        "source": ".planning/milestones/M002/changes/CR-017.md"
+      }
+    ],
+    "last_transition": {
+      "milestone": "M002",
+      "timestamp": "2026-09-28T08:06:02.436474+00:00",
+      "operation": "transition-stage",
+      "from": "implementation",
+      "to": "verification",
+      "previous_role": "frontend-implementer/base",
+      "previous_agent": "frontend-claire",
+      "active_role": "quality/base",
+      "active_agent": "qa-quinn",
+      "confirmed_by": "user",
+      "decision_id": "TRANSITION-M002-040",
+      "evidence": ".planning/milestones/M002/reviews/verification-reentry-040.md",
+      "kind": "stage_transition"
+    }
+  },
+  "controls_sha256": {
+    ".planning/workflow/state.yaml": "8e3b3a3ad931c497f8a275a00d60be746c7e8fbb9bc65933705a138cb4556a25",
+    ".planning/workflow/history.yaml": "136fbeee8011bf0c37d72cf82dbc45f9d74d44a2ac769e72db3fc8d5fa98325a",
+    ".planning/agt/project.yaml": "b3a8a4594877cf12fcacebe7e38530c32d45b437bbb6fe4912d304e30e2ff149",
+    ".planning/agt/agents.yaml": "a4801c93de5068cd1aaef3edad010436051572a70f61076aa445956680c54f16"
+  },
+  "profile_sha256": "9d9258ebc8cba13f5df2f8289fa81e973e60af9f10e5ca126fd83482aa0c050f",
+  "required_artifacts": [
+    ".planning/milestones/M002/verification/coverage-matrix.md",
+    ".planning/milestones/M002/verification/report.md",
+    ".planning/milestones/M002/verification/ai-evaluation.md",
+    ".planning/milestones/M002/verification/uat.md",
+    ".planning/milestones/M002/handoffs/verification.md"
+  ],
+  "semantic_names_valid_unique": true,
+  "qa14": {
+    "manifest": ".planning/milestones/M002/verification/evidence/qa2-014/manifest.json",
+    "manifest_sha256": "b0331baf700a4cc58727769a2df0055d30b87b8d4dd4eca7b261a81e84ab04a5",
+    "artifacts": 43,
+    "checks": 21,
+    "passed": 21,
+    "failed": 0,
+    "matches": true
+  },
+  "source_checks": {
+    "frontend-cr017-018": {
+      "manifest": ".planning/milestones/M002/implementation/evidence/frontend-cr017-018/manifest.json",
+      "manifest_sha256": "57719c596d4f21c4df3b544862c65bc50acebb3363f30d872f5a0a0a2ed0794c",
+      "artifact_count": 102,
+      "source_files": 282,
+      "source_sha256": "e8bd3285a0292218d8e1108a47e39e1eb8550d928867a01e25428c023f009775",
+      "source_archive_matches": true
+    },
+    "backend-cr013": {
+      "manifest": ".planning/milestones/M002/implementation/evidence/backend-cr013/manifest.json",
+      "manifest_sha256": "13b5dccdeb84e1b958c0ac378b4add5ed4c6815e9024cc3cf0eb6fd19e99912d",
+      "artifact_count": 31,
+      "source_files": 288,
+      "source_sha256": "c54307a04cecb3dd99cc13d64ae0fbcb6c1fca2c0538711af040d279bbe9b549",
+      "source_archive_matches": true
+    }
+  },
+  "compiled_files": 444,
+  "qa13": {
+    "manifest_sha256": "3691be754238b7fea94c0467a926274aa58e07cfc412399c241eafae1be435eb",
+    "original_documents_archived": 5,
+    "remaining_artifacts_unchanged": 54,
+    "original_result": "FAIL"
+  },
+  "approved_archives_unchanged": 4,
+  "coverage_counts": {
+    "CAP": 49,
+    "PAGE": 25,
+    "views": 28,
+    "UIA": 119
+  },
+  "protected_count": 7332,
+  "developer_checks_rerun": false,
+  "qa_tests_rerun": false,
+  "runtime_model_switch": "not_performed",
+  "input_tokens": "unknown",
+  "new_session_handoff_test": "not_executed",
+  "authorization": "Prior assistant explicitly proposed scoped closure of CR017/018 and continued verification; user replied 下一步. Same scope, no repeated approval."
+}

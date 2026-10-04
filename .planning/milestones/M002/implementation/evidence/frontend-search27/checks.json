@@ -1,0 +1,31 @@
+[
+  {
+    "command": [
+      "pnpm",
+      "typecheck"
+    ],
+    "exit": 0
+  },
+  {
+    "command": [
+      "pnpm",
+      "exec",
+      "eslint",
+      "app/presentation/components/WordPicker.vue",
+      "tests/e2e/mock-backend.mjs",
+      "scripts/sync-design.mjs"
+    ],
+    "exit": 0
+  },
+  {
+    "command": [
+      "pnpm",
+      "exec",
+      "vitest",
+      "run",
+      "tests/unit/vocabulary-search.test.ts",
+      "tests/unit/generation-lifecycle.test.ts"
+    ],
+    "exit": 0
+  }
+]

@@ -1,0 +1,205 @@
+{
+  "at": "2026-09-21T02:52:35.973490+00:00",
+  "milestone": "M002",
+  "role": "backend-ethan",
+  "authorization": "TRANSITION-M002-019",
+  "scope": "M002-CR-006 / QA2-F02",
+  "status": "development_checks_passed_pending_independent_quality",
+  "source_manifest": {
+    "path": "source.json",
+    "sha256": "8fb696cda27f470f9315eda1682c6bece84464f9b27e605c14e38772a2e1b0d4",
+    "file_count": 284
+  },
+  "source_archive": {
+    "path": "backend-source.tar.gz",
+    "sha256": "ac8c980eda14a2b158749446dee8f4f9840dc646c72f6fb29e08c30b1090f9ee"
+  },
+  "source_changes": {
+    "modified": [
+      "backend/internal/growth/activation_integration_test.go",
+      "backend/internal/growth/item_definitions.go"
+    ],
+    "added": [
+      "backend/internal/httpapi/m002_item_retirement_integration_test.go"
+    ]
+  },
+  "diff_sha256": "3652bb9e2f165833104172f1cafbf5ef7506e0be3ba0bc3f1d004ac5ac825189",
+  "checks": {
+    "unit": {
+      "command": [
+        "go",
+        "test",
+        "-race",
+        "./...",
+        "-count=1",
+        "-timeout=120s"
+      ],
+      "exit_code": 0,
+      "seconds": 25.69,
+      "log_sha256": "1a09bfa2e58eea0b699cdce6cfdbe7eee6e968aba904715894087707fa37318c",
+      "record_sha256": "76e0031fbb9e0a054bc135999eb8df902f364f3384a2672275529cc63399b07b"
+    },
+    "integration-growth-admin": {
+      "command": [
+        "go",
+        "test",
+        "-race",
+        "-tags=integration",
+        "./internal/growth",
+        "./internal/admin",
+        "-count=1",
+        "-v",
+        "-timeout=180s"
+      ],
+      "exit_code": 0,
+      "seconds": 20.74,
+      "real_provider_calls": 0,
+      "log_sha256": "6d4f8400ea4819d5715089488954a14283ef9e205ebf217497afad8624066428",
+      "record_sha256": "6f0632757f05ff0e13b212636e2bf1bf637a9576fcd814f808df0f9bfac461bb",
+      "passed_top_level_tests": 33,
+      "skipped_tests": 0
+    },
+    "integration-http": {
+      "command": [
+        "go",
+        "test",
+        "-race",
+        "-tags=integration",
+        "./internal/httpapi",
+        "-run",
+        "TestM002(RetiredCardPriceEditingAndRefundHTTP|BulkConfigurationLostCommitAcknowledgement)$",
+        "-count=1",
+        "-v",
+        "-timeout=120s"
+      ],
+      "exit_code": 0,
+      "seconds": 12.29,
+      "real_provider_calls": 0,
+      "log_sha256": "0bef9e28722f5b89e6d4504c4049df30895da6861069747fea0f46baa26a0598",
+      "record_sha256": "1e83a90c590945b58ca8c7ea6458f87bc0f4e1ffbfb29c8e9422e52711d55d1f",
+      "passed_top_level_tests": 2,
+      "skipped_tests": 0
+    },
+    "vet": {
+      "command": [
+        "go",
+        "vet",
+        "./..."
+      ],
+      "exit_code": 0,
+      "seconds": 1.2,
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "record_sha256": "cefc5ffd0148b6dda344c4eafcb49ee2d4469a73b0a4e9bb2170401ea8740388"
+    },
+    "build": {
+      "command": [
+        "go",
+        "build",
+        "./..."
+      ],
+      "exit_code": 0,
+      "seconds": 0.95,
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "record_sha256": "de2a8144cd4ac71099660e7b6ebd08da7d63df56077f61af9355988c17141d77"
+    },
+    "format": {
+      "command": [
+        "gofmt",
+        "-l",
+        "internal/growth/item_definitions.go",
+        "internal/growth/activation_integration_test.go",
+        "internal/httpapi/m002_item_retirement_integration_test.go"
+      ],
+      "exit_code": 0,
+      "seconds": 0.01,
+      "no_formatting_changes_needed": true,
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "record_sha256": "0dd83a6e3cdb0cf93cb0c2456abd4cd0f66a007681f7afdaaa9d22f52571a087"
+    },
+    "diff-check": {
+      "command": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "exit_code": 0
+    }
+  },
+  "red_evidence": {
+    "initial": "red.json",
+    "harness_correction": "definition_id replaces invalid item_definition_id; initial raw failure retained",
+    "confirmed_failure": "red-confirmed.json",
+    "expected_exit": 1
+  },
+  "protected_audit": {
+    "checked": 5654,
+    "changed": [
+      ".planning/milestones/M002/implementation/backend-worktree-plan.md",
+      ".planning/milestones/M002/implementation/backend-validation.md",
+      ".planning/milestones/M002/handoffs/backend-implementation.md",
+      "backend/internal/growth/activation_integration_test.go",
+      "backend/internal/growth/item_definitions.go"
+    ],
+    "unexpected_changes": [],
+    "missing": [],
+    "control_plane_unchanged": true,
+    "qa_report_raw_evidence_and_cr_originals_unchanged": true
+  },
+  "link_check": {
+    "documents": 3,
+    "local_links_checked": 83,
+    "missing": []
+  },
+  "documents": {
+    ".planning/milestones/M002/implementation/backend-validation.md": "c73c81eda9e6401b56792648b6f45cefa545ee86cf7255ff7d32823871854bd2",
+    ".planning/milestones/M002/implementation/backend-worktree-plan.md": "d638d38ffbaa81e3012c908b3386c4474994c65a0f6f16b89765a3f9fd3bcea8",
+    ".planning/milestones/M002/handoffs/backend-implementation.md": "764d47a84b2b07beed19a4a9b44f3d5e1dbd1e214a7fbb8fd2f9d9c4aba33e0f"
+  },
+  "real_provider_calls": 0,
+  "environment_stop": {
+    "exit_code": 0,
+    "private_temporary_data_preserved": true,
+    "existing_services_modified": false
+  },
+  "committed": false,
+  "deployed": false,
+  "qa_closed": false,
+  "runtime_model_switch": "not_performed",
+  "notes": [
+    "Prior full delivery/QA evidence remains frozen. Current backend is the prior source plus this bounded fix and regression tests.",
+    "No API/schema/dependency changes. All 13 migrations unchanged.",
+    "Gift and concurrency scenarios retain their existing module evidence; new HTTP scenario specifically exercises exchanged activated/unused cards.",
+    "Current QA state remains FAIL pending the frontend fix and independent re-verification."
+  ],
+  "evidence_hashes": {
+    "backend-source.tar.gz": "ac8c980eda14a2b158749446dee8f4f9840dc646c72f6fb29e08c30b1090f9ee",
+    "before-git-status.txt": "375a521da405815083e865641f4071bb1b6626f2fe6a5827a80713c6324c0f0e",
+    "before-owned.tar.gz": "b8f3302976e439cdb02af0003196c73d5436efee073ade1e7365fc9b0f6c4f1c",
+    "build.json": "de2a8144cd4ac71099660e7b6ebd08da7d63df56077f61af9355988c17141d77",
+    "build.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "diff-check.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "environment-start.log": "2d7b749bb6fa03fc9be2f2fd82ca5100314817cc9e84fffc8583e3bf9a4e7a83",
+    "environment-stop.json": "dedfd7a79c76332fdebf5d6edefc88991d800b2509008551987b8e4a83abcdf0",
+    "environment-stop.log": "ca19178a35ab4153b75b494963b66ce8243e1b94c173107c87b44d09db23652d",
+    "environment.json": "9ab1f0c654e32c7979e467545a3875c43998224cac1741e06a863301745d1785",
+    "format.json": "0dd83a6e3cdb0cf93cb0c2456abd4cd0f66a007681f7afdaaa9d22f52571a087",
+    "format.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "green.json": "001d0dfff14d68592056199e5f57f3ef24d396063d94d551f01bc6deacaa404c",
+    "green.log": "7a5ceeffe20fbc49e7963653a2dd90b3b7cf4e3cf45732c73852ad59d6b0dd27",
+    "inputs.json": "d41ab6cbb50b6b3ca6e85c08fab26d83dc235e3ddaf04cec0567a1c2fa1e4c12",
+    "integration-growth-admin.json": "6f0632757f05ff0e13b212636e2bf1bf637a9576fcd814f808df0f9bfac461bb",
+    "integration-growth-admin.log": "6d4f8400ea4819d5715089488954a14283ef9e205ebf217497afad8624066428",
+    "integration-http.json": "1e83a90c590945b58ca8c7ea6458f87bc0f4e1ffbfb29c8e9422e52711d55d1f",
+    "integration-http.log": "0bef9e28722f5b89e6d4504c4049df30895da6861069747fea0f46baa26a0598",
+    "red-confirmed.json": "e1568d3ee81666bf3d9bb89aa137bc6ab31d9b775743ae4bb464fa5a4d617c91",
+    "red-confirmed.log": "8566e2fd462f2cc51f14e373e8cecda4d6a8f105d5aa73e164127873b9b75e56",
+    "red.json": "4c83d0b30af3b9681f3d7792fb0ce6e0ad4d6aae6b1284c6a8301f30f5e1bf44",
+    "red.log": "d8f1f41235c4faf9b6f998208601d1d9b9484758367559c9c80fec162c6ea2dd",
+    "source-diff.patch": "3652bb9e2f165833104172f1cafbf5ef7506e0be3ba0bc3f1d004ac5ac825189",
+    "source.json": "8fb696cda27f470f9315eda1682c6bece84464f9b27e605c14e38772a2e1b0d4",
+    "unit.json": "76e0031fbb9e0a054bc135999eb8df902f364f3384a2672275529cc63399b07b",
+    "unit.log": "1a09bfa2e58eea0b699cdce6cfdbe7eee6e968aba904715894087707fa37318c",
+    "vet.json": "cefc5ffd0148b6dda344c4eafcb49ee2d4469a73b0a4e9bb2170401ea8740388",
+    "vet.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  }
+}

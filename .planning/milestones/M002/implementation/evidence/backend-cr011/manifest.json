@@ -1,0 +1,267 @@
+{
+  "at": "2026-09-22T02:18:53.522554+00:00",
+  "milestone": "M002",
+  "role": "backend-ethan",
+  "authorization": "TRANSITION-M002-029",
+  "scope": "M002-CR-011 / QA2-F07",
+  "status": "development_checks_passed_pending_independent_quality",
+  "risk": "high",
+  "source_manifest": {
+    "path": "source.json",
+    "sha256": "3ce57a3517aec9a965238dbd3f398f37db11d40f3ad28c5d4055fc1218e7b617",
+    "file_count": 287
+  },
+  "source_archive": {
+    "path": "backend-source.tar.gz",
+    "sha256": "382129e2d0651a57ee912ed759b91afd10e09c423a80765a201e1394f1beb3d7",
+    "round_trip_verified": true
+  },
+  "source_changes": {
+    "modified": [
+      "backend/internal/httpapi/learning_handlers.go",
+      "backend/internal/learning/service.go"
+    ],
+    "added": [
+      "backend/internal/httpapi/m002_library_search_integration_test.go",
+      "backend/internal/learning/query_test.go"
+    ]
+  },
+  "diff_sha256": "b750c2eb8d44390d4a7635fa1333a20be46fa7dc2897fd0b93aba5e3fbdf3aca",
+  "checks": {
+    "green": {
+      "command": [
+        "go",
+        "test",
+        "-race",
+        "-tags=integration",
+        "./internal/httpapi",
+        "-run",
+        "^TestM002LibrarySearchHTTP$",
+        "-count=1",
+        "-v",
+        "-timeout=120s"
+      ],
+      "cwd": "backend",
+      "exit_code": 0,
+      "seconds": 11.33,
+      "log_sha256": "536daccaf8e5e74a6746b026c3edc6864882d74b2e4d3507f95551d4a82d9c59",
+      "real_provider_calls": 0,
+      "record_sha256": "33bef610fe82def93cf13225286c43259283f2867bd838c6acf0c06626cf874a",
+      "passed_top_level_tests": 1,
+      "skipped_tests": 0
+    },
+    "integration-http": {
+      "command": [
+        "go",
+        "test",
+        "-race",
+        "-tags=integration",
+        "./internal/httpapi",
+        "-run",
+        "^(TestM001EndToEnd|TestM002ProfileWelcomeAndPrivateTitleHTTP|TestClaimedBatchDeletionHTTP|TestNoContentConsumersEnforcePrivateNoStoreResponse|TestAdminUserSearchCursorV2)$",
+        "-count=1",
+        "-v",
+        "-timeout=180s"
+      ],
+      "cwd": "backend",
+      "exit_code": 0,
+      "seconds": 28.47,
+      "log_sha256": "7bb265e4ff87469b80cf925c0828714c509e4941239896130b36a2c8e10127eb",
+      "real_provider_calls": 0,
+      "record_sha256": "92343458c89a4668196116082df63f6326ddce15c596c95834f23522dc1ee179",
+      "passed_top_level_tests": 5,
+      "skipped_tests": 0
+    },
+    "unit": {
+      "command": [
+        "go",
+        "test",
+        "-race",
+        "./...",
+        "-count=1",
+        "-timeout=120s"
+      ],
+      "cwd": "backend",
+      "exit_code": 0,
+      "seconds": 24.66,
+      "log_sha256": "d84325d24482275f41ef04f26c40b8c7c1968565c1169a43c635688f8d3715ce",
+      "real_provider_calls": 0,
+      "record_sha256": "27fae506e1163882a3672b0f8e62fe336a3d0af6b1e1ef8abf43b4170e398bf4"
+    },
+    "vet": {
+      "command": [
+        "go",
+        "vet",
+        "./..."
+      ],
+      "cwd": "backend",
+      "exit_code": 0,
+      "seconds": 1.74,
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "real_provider_calls": 0,
+      "record_sha256": "b959de0044f36fb562e168161a759257e867f8c44347de95eeb6176c0e7a52ab"
+    },
+    "build": {
+      "command": [
+        "go",
+        "build",
+        "./..."
+      ],
+      "cwd": "backend",
+      "exit_code": 0,
+      "seconds": 2.25,
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "real_provider_calls": 0,
+      "record_sha256": "f07b3d1962812ee5ef5bf720c5776e2b065c1f555e3669d730f41fcf1bfbe53a"
+    },
+    "format": {
+      "command": [
+        "gofmt",
+        "-l",
+        "internal/learning/service.go",
+        "internal/learning/query_test.go",
+        "internal/httpapi/learning_handlers.go",
+        "internal/httpapi/m002_library_search_integration_test.go"
+      ],
+      "cwd": "backend",
+      "exit_code": 0,
+      "seconds": 0.01,
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "real_provider_calls": 0,
+      "record_sha256": "32456e11c74a28a5717e6ca16510a0d8c0bf150253c058028e5b93ba4084b581",
+      "no_formatting_changes_needed": true
+    },
+    "diff-check": {
+      "command": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "cwd": "backend",
+      "exit_code": 0,
+      "seconds": 0.08,
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "real_provider_calls": 0,
+      "record_sha256": "b631f254202e497c074dffe06f77b4430eb462ea81195006dd56d0fb5b9debc1"
+    }
+  },
+  "counts": {
+    "new_integration": 1,
+    "new_behavior_groups": 6,
+    "existing_related_integration": 5,
+    "normalization_unit_cases": 10,
+    "skipped_integration": 0
+  },
+  "red_evidence": {
+    "confirmed_failure": "red.log",
+    "record": "red.json",
+    "expected_exit": 1,
+    "harness_changes_between_red_and_green": false
+  },
+  "protected_audit": {
+    "protected_count": 6377,
+    "unexpected_changed": [],
+    "allowed_existing_changed": [
+      "backend/internal/httpapi/learning_handlers.go",
+      "backend/internal/learning/service.go",
+      ".planning/milestones/M002/implementation/backend-validation.md",
+      ".planning/milestones/M002/implementation/backend-worktree-plan.md",
+      ".planning/milestones/M002/handoffs/backend-implementation.md"
+    ],
+    "control_plane_unchanged": true,
+    "qa_report_raw_evidence_and_cr_originals_unchanged": true,
+    "qa05_artifacts_unchanged": 80,
+    "frontend_cr010_files_unchanged": 277,
+    "original_ports_after": {
+      "3300": true,
+      "3330": true,
+      "38080": true,
+      "4186": true
+    }
+  },
+  "link_check": {
+    "documents": 3,
+    "local_links_checked": 87,
+    "missing": [],
+    "preserved_report_anchors": [
+      "cr006",
+      "cr007",
+      "cr011"
+    ]
+  },
+  "documents": {
+    ".planning/milestones/M002/implementation/backend-validation.md": "1db8f2ef4363c257f95eac58a4b179e9b4ae3bac4260f9eb6e80a9fb698905ac",
+    ".planning/milestones/M002/implementation/backend-worktree-plan.md": "e78f88fb5b1aa10f14996af85584448506f741520c4882ee28928d39d900a793",
+    ".planning/milestones/M002/handoffs/backend-implementation.md": "b78ae2fc503d23a7af5e64e26d0cb952e03ba39cefc3d259bc1295574fa14095"
+  },
+  "document_scope_characters": {
+    ".planning/milestones/M002/implementation/backend-validation.md": {
+      "before_unicode_characters": 9005,
+      "after_unicode_characters": 8897
+    },
+    ".planning/milestones/M002/implementation/backend-worktree-plan.md": {
+      "before_unicode_characters": 3438,
+      "after_unicode_characters": 3561
+    },
+    ".planning/milestones/M002/handoffs/backend-implementation.md": {
+      "before_unicode_characters": 2665,
+      "after_unicode_characters": 2543
+    }
+  },
+  "input_tokens": "unknown",
+  "runtime_model_switch": "not_performed",
+  "real_provider_calls": 0,
+  "environment_stop": {
+    "exit_code": 0,
+    "private_temporary_data_preserved": true,
+    "existing_services_modified": false
+  },
+  "toolchain": "go version go1.26.7 darwin/arm64",
+  "postgres_version": "pg_ctl (PostgreSQL) 18.6 (Homebrew)",
+  "committed": false,
+  "deployed": false,
+  "qa_closed": false,
+  "notes": [
+    "No API/schema/dependency/frontend changes; all 13 migrations unchanged.",
+    "CR-011 stays OPEN in the immutable QA original; implementation progress is recorded in current backend documents.",
+    "QA05 13 PASS / 1 FAIL and CR005-010 scoped closures remain unchanged.",
+    "Actual PostgreSQL and restricted app-role HTTP regression; independent browser QA and complete milestone verification pending.",
+    "Static handoff checks only; independent new-session handoff test not performed."
+  ],
+  "evidence_hashes": {
+    "backend-source.tar.gz": "382129e2d0651a57ee912ed759b91afd10e09c423a80765a201e1394f1beb3d7",
+    "before-git-status.txt": "b6cce8f4c36773982034f30833e2951afe7f3b5e320cff2f4e821967578476f9",
+    "before-owned.tar.gz": "9069f355af56c26a423751e994883bb044128f6e361c92e1673a1e117907b16d",
+    "build.json": "f07b3d1962812ee5ef5bf720c5776e2b065c1f555e3669d730f41fcf1bfbe53a",
+    "build.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "diff-check.json": "b631f254202e497c074dffe06f77b4430eb462ea81195006dd56d0fb5b9debc1",
+    "diff-check.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "environment-start.log": "c9ea403f8d7673f3e5f72dd562b4297139b7c512613e840ad94aa40ffa251bb3",
+    "environment-stop.json": "dedfd7a79c76332fdebf5d6edefc88991d800b2509008551987b8e4a83abcdf0",
+    "environment-stop.log": "ca19178a35ab4153b75b494963b66ce8243e1b94c173107c87b44d09db23652d",
+    "environment.json": "317d9f416d7916e685c54cf5c4b372b3c2cb4a7a4ef3a96c379f77f45eed771a",
+    "format.json": "32456e11c74a28a5717e6ca16510a0d8c0bf150253c058028e5b93ba4084b581",
+    "format.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "green.json": "33bef610fe82def93cf13225286c43259283f2867bd838c6acf0c06626cf874a",
+    "green.log": "536daccaf8e5e74a6746b026c3edc6864882d74b2e4d3507f95551d4a82d9c59",
+    "inputs.json": "d6216636b085570205491996399430192d5d4592123348b553e98342b6b8a4ef",
+    "integration-http.json": "92343458c89a4668196116082df63f6326ddce15c596c95834f23522dc1ee179",
+    "integration-http.log": "7bb265e4ff87469b80cf925c0828714c509e4941239896130b36a2c8e10127eb",
+    "links.json": "741c3d6ca5a77d6ae274eb8a2a4ab6eb6e4fe19503dc5eca4fd118f4273962b1",
+    "previous-backend-validation.md": "24846893a940436745cecd054a6b7826169aa85e8b73c0c7ce899068809f43f1",
+    "previous-backend-worktree-plan.md": "ec9d4c58f823f0806384cd6eb327037372aaf8fe44b589d72bf24d6c32c32543",
+    "previous-handoff.md": "af5d47263d5d2eb0cefc1a274d73b571c5cfcc464d9ebd9ef0812508226d4696",
+    "protection.json": "b72bb160e76720738face6f0ec3b2414cd4119effcc468c302cc28c5a4b00c31",
+    "red.json": "7f4d5cb2dc681b7aa0ac9d40819c1e9cfbe9f24622c326aca1c6222621d3842e",
+    "red.log": "26fd26674adb4515bf3e712c398f390f257293c0a3a0aa9a803049dd0823762c",
+    "run.py": "5c7c4d835400edd224c0a7ad8f49af17e735661841d474dcc2e954b7b27eb55d",
+    "source-diff.patch": "b750c2eb8d44390d4a7635fa1333a20be46fa7dc2897fd0b93aba5e3fbdf3aca",
+    "source.json": "3ce57a3517aec9a965238dbd3f398f37db11d40f3ad28c5d4055fc1218e7b617",
+    "toolchain.json": "b83b5755a5e95b5333bdd349b80c5d6a784cda7315a5bc0190581ef53b100e4f",
+    "toolchain.log": "b1b217d0bb4a51246bbf46c2844e09c39d598e70f5fdfe6709bbab9867c5b35b",
+    "unit.json": "27fae506e1163882a3672b0f8e62fe336a3d0af6b1e1ef8abf43b4170e398bf4",
+    "unit.log": "d84325d24482275f41ef04f26c40b8c7c1968565c1169a43c635688f8d3715ce",
+    "vet.json": "b959de0044f36fb562e168161a759257e867f8c44347de95eeb6176c0e7a52ab",
+    "vet.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  }
+}

@@ -1,0 +1,83 @@
+{
+  "decision_id": "TRANSITION-M002-015",
+  "status": "PASS",
+  "checks": [
+    {
+      "name": "state_changes_bounded",
+      "status": "PASS",
+      "details": [
+        "active_agent",
+        "active_role",
+        "authorization_refs",
+        "backend_approval",
+        "context_entries",
+        "current_handoff",
+        "last_transition"
+      ]
+    },
+    {
+      "name": "project_synchronized",
+      "status": "PASS",
+      "details": "Only current role, agent and handoff changed; locked Profile preserved."
+    },
+    {
+      "name": "registry_synchronized",
+      "status": "PASS",
+      "details": "Unique active specialist matches state."
+    },
+    {
+      "name": "history_append_only",
+      "status": "PASS",
+      "details": "One record appended; original history bytes and other indexes unchanged."
+    },
+    {
+      "name": "exact_backend_approval",
+      "status": "PASS",
+      "details": "BE03 approved against frozen archive; prior authorizations kept."
+    },
+    {
+      "name": "open_items_retained",
+      "status": "PASS",
+      "details": "CR004 remains open for frontend reception; other items retain status."
+    },
+    {
+      "name": "professional_files_protected",
+      "status": "PASS",
+      "details": {
+        "files": 5127,
+        "changed": []
+      }
+    },
+    {
+      "name": "frozen_members_current",
+      "status": "PASS",
+      "details": "All19 source/evidence members unchanged."
+    },
+    {
+      "name": "entry_links",
+      "status": "PASS",
+      "details": {
+        "broken": []
+      }
+    },
+    {
+      "name": "scope_preserved",
+      "status": "PASS",
+      "details": "DB approval retained; no frontend artifact approval, implementation or stage advancement."
+    }
+  ],
+  "active_agent": "frontend-bob",
+  "stage": "technical-design",
+  "approved_version": "M002-BE-03",
+  "after_controls_sha256": {
+    ".planning/workflow/state.yaml": "6b66cff714984d6fe91c4f51422aa31eeed90a3a459f94a6e10b37bef5881f21",
+    ".planning/workflow/history.yaml": "382e10ee30a2f4e5d0479d70dbf53d770c94d4b7ab71c3a87d462bdee1fb149a",
+    ".planning/agt/project.yaml": "ed5301a89d4b6c28baa662ed586c2a25419f92c0618baf7529c10f1a55d55fb4",
+    ".planning/agt/agents.yaml": "4eb8ebaaba4f1d28eca58efc7442ba6194ad4cb7a97b5aa38ea159e7940ad51b"
+  },
+  "review_sha256": "956efbfdc61036c503d40debf8c9ce0abaf1464dfa9917f832149ce7bdc12954",
+  "developer_tests_rerun": false,
+  "database_access": false,
+  "real_ai_calls": 0,
+  "runtime_model_switch": false
+}

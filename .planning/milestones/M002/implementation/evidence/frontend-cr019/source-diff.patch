@@ -1,0 +1,11 @@
+--- before/frontend/app/pages/library/[batchId].vue
++++ after/frontend/app/pages/library/[batchId].vue
+@@ -102,7 +102,7 @@
+         <div v-if="!editing" class="batch-title-header">
+           <h2 id="saved-batch-title" class="batch-title">{{ batch.title }}</h2>
+           <button class="btn quiet small" @click="edit">
+-            {{ copy("l.title.edit") }}
++            <AppIcon name="pencil" />{{ copy("l.title.edit") }}
+           </button>
+         </div>
+         <form

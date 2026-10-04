@@ -1,0 +1,292 @@
+
+Running 12 tests using 1 worker
+
+(node:89496) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘   1 [desktop] › tests/e2e/m002-inheritance.spec.ts:7:34 › inherited private gates keep exact return intent through login/register: en (1.2s)
+(node:89575) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘   2 [desktop] › tests/e2e/m002-inheritance.spec.ts:7:34 › inherited private gates keep exact return intent through login/register: zh (1.1s)
+(node:89584) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   3 [desktop] › tests/e2e/m002-inheritance.spec.ts:18:1 › incorrect login keeps return intent and permits explicit retry (706ms)
+  ✘   4 [desktop] › tests/e2e/m002-inheritance.spec.ts:24:1 › date ranges preserve invalid input, never submit it, and recover through explicit retry (5.6s)
+(node:89883) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘   5 [desktop] › tests/e2e/m002-inheritance.spec.ts:35:1 › account deletion keeps unchecked consent, final confirmation and clears private identity (5.7s)
+(node:90146) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   6 [desktop] › tests/e2e/m002-inheritance.spec.ts:42:1 › private SSR responses remain separated and serialize no capability tokens (70ms)
+(node:90150) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘   7 [mobile] › tests/e2e/m002-inheritance.spec.ts:7:34 › inherited private gates keep exact return intent through login/register: en (1.1s)
+(node:90247) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘   8 [mobile] › tests/e2e/m002-inheritance.spec.ts:7:34 › inherited private gates keep exact return intent through login/register: zh (1.2s)
+(node:90327) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   9 [mobile] › tests/e2e/m002-inheritance.spec.ts:18:1 › incorrect login keeps return intent and permits explicit retry (747ms)
+  ✘  10 [mobile] › tests/e2e/m002-inheritance.spec.ts:24:1 › date ranges preserve invalid input, never submit it, and recover through explicit retry (5.6s)
+(node:91242) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  11 [mobile] › tests/e2e/m002-inheritance.spec.ts:35:1 › account deletion keeps unchecked consent, final confirmation and clears private identity (5.7s)
+(node:91497) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  12 [mobile] › tests/e2e/m002-inheritance.spec.ts:42:1 › private SSR responses remain separated and serialize no capability tokens (61ms)
+
+
+  1) [desktop] › tests/e2e/m002-inheritance.spec.ts:7:34 › inherited private gates keep exact return intent through login/register: en 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: "/library"
+    Received: null
+
+       9 |  for(const target of ['/review','/library','/library/batch-e2e','/account']){
+      10 |   await page.goto(target);await ready(page);await expect(page.locator('.auth-gate')).toBeVisible();
+    > 11 |   await page.locator('.auth-gate a[href^="/login"]').click();await ready(page);expect(new URL(page.url()).searchParams.get('redirect')).toBe(target);
+         |                                                                                                                                         ^
+      12 |   const username=page.locator('input[autocomplete=username]');await username.fill('unsent');
+      13 |   await page.locator('.auth-form a[href^="/register"]').click();await expect(page).toHaveURL(/\/register/);expect(new URL(page.url()).searchParams.get('redirect')).toBe(target);
+      14 |   await expect(page.locator('.auth-intent')).toBeVisible();await expect(page.locator('.auth-form h1')).toHaveText(t('i.register',locale));
+        at /Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/frontend/tests/e2e/m002-inheritance.spec.ts:11:137
+
+    Error Context: test-results/m002-inheritance-inherited-8736c-t-through-login-register-en-desktop/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/m002-inheritance-inherited-8736c-t-through-login-register-en-desktop/trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace test-results/m002-inheritance-inherited-8736c-t-through-login-register-en-desktop/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [desktop] › tests/e2e/m002-inheritance.spec.ts:7:34 › inherited private gates keep exact return intent through login/register: zh 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: "/library"
+    Received: null
+
+       9 |  for(const target of ['/review','/library','/library/batch-e2e','/account']){
+      10 |   await page.goto(target);await ready(page);await expect(page.locator('.auth-gate')).toBeVisible();
+    > 11 |   await page.locator('.auth-gate a[href^="/login"]').click();await ready(page);expect(new URL(page.url()).searchParams.get('redirect')).toBe(target);
+         |                                                                                                                                         ^
+      12 |   const username=page.locator('input[autocomplete=username]');await username.fill('unsent');
+      13 |   await page.locator('.auth-form a[href^="/register"]').click();await expect(page).toHaveURL(/\/register/);expect(new URL(page.url()).searchParams.get('redirect')).toBe(target);
+      14 |   await expect(page.locator('.auth-intent')).toBeVisible();await expect(page.locator('.auth-form h1')).toHaveText(t('i.register',locale));
+        at /Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/frontend/tests/e2e/m002-inheritance.spec.ts:11:137
+
+    Error Context: test-results/m002-inheritance-inherited-bdc8d-t-through-login-register-zh-desktop/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/m002-inheritance-inherited-bdc8d-t-through-login-register-zh-desktop/trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace test-results/m002-inheritance-inherited-bdc8d-t-through-login-register-zh-desktop/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3) [desktop] › tests/e2e/m002-inheritance.spec.ts:24:1 › date ranges preserve invalid input, never submit it, and recover through explicit retry 
+
+    Error: expect(locator).toHaveAttribute(expected) failed
+
+    Locator:  locator('.range-editor')
+    Expected: "empty"
+    Received: "ready"
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveAttribute" with timeout 5000ms
+      - waiting for locator('.range-editor')
+        14 × locator resolved to <div class="range-editor" data-range-preview="ready">…</div>
+           - unexpected value "ready"
+
+
+      24 | test('date ranges preserve invalid input, never submit it, and recover through explicit retry',async({page,context})=>{
+      25 |  await context.addCookies([{name:'wordweave_session',value:'learner',url:origin},{name:'cr034_case',value:'old',url:origin}]);await page.goto('/review');await ready(page);
+    > 26 |  await expect(page.locator('.range-editor')).toHaveAttribute('data-range-preview','empty');
+         |                                              ^
+      27 |  const from=page.getByLabel(t('l.from'),{exact:true}),to=page.getByLabel(t('l.to'),{exact:true});const original=await from.elementHandle();let writes=0;
+      28 |  page.on('request',r=>{if(r.method()==='POST'&&r.url().includes('/review/sessions'))writes++});
+      29 |  await from.fill('');await to.fill('');await page.locator('.range-editor form').dispatchEvent('submit');await expect(from).toHaveAttribute('aria-invalid','true');expect(writes).toBe(0);
+        at /Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/frontend/tests/e2e/m002-inheritance.spec.ts:26:46
+
+    Error Context: test-results/m002-inheritance-date-rang-d5d87-over-through-explicit-retry-desktop/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/m002-inheritance-date-rang-d5d87-over-through-explicit-retry-desktop/trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace test-results/m002-inheritance-date-rang-d5d87-over-through-explicit-retry-desktop/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  4) [desktop] › tests/e2e/m002-inheritance.spec.ts:35:1 › account deletion keeps unchecked consent, final confirmation and clears private identity 
+
+    Error: expect(locator).not.toBeChecked() failed
+
+    Locator: locator('#delete-account').getByRole('checkbox')
+    Expected: not checked
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "not toBeChecked" with timeout 5000ms
+      - waiting for locator('#delete-account').getByRole('checkbox')
+
+
+      35 | test('account deletion keeps unchecked consent, final confirmation and clears private identity',async({page,context})=>{
+      36 |  await context.addCookies([{name:'wordweave_session',value:'learner',url:origin}]);await page.goto('/account');await ready(page);
+    > 37 |  await page.getByRole('button',{name:t('deleteaccount'),exact:true}).click();const dialog=page.locator('#delete-account');await expect(dialog.getByRole('checkbox')).not.toBeChecked();
+         |                                                                                                                                                                          ^
+      38 |  await dialog.locator('input[type=password]').fill('CorrectPass123!');let deletes=0;page.on('request',r=>{if(r.method()==='DELETE'&&r.url().endsWith('/me/account')){deletes++;expect(r.postDataJSON()).toEqual({current_password:'CorrectPass123!',confirmed:true})}});
+      39 |  await dialog.getByRole('button',{name:t('confirm'),exact:true}).click();expect(deletes).toBe(0);await expect(dialog.getByRole('checkbox')).toBeVisible();await dialog.getByRole('checkbox').check();await dialog.getByRole('button',{name:t('confirm'),exact:true}).click();expect(deletes).toBe(0);
+      40 |  await dialog.getByRole('button',{name:t('deleteaccount'),exact:true}).click();await expect(page).toHaveURL(origin+'/');expect(deletes).toBe(1);await page.goto('/library');await ready(page);await expect(page.locator('.auth-gate')).toBeVisible();
+        at /Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/frontend/tests/e2e/m002-inheritance.spec.ts:37:170
+
+    Error Context: test-results/m002-inheritance-account-d-1ab50-and-clears-private-identity-desktop/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/m002-inheritance-account-d-1ab50-and-clears-private-identity-desktop/trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace test-results/m002-inheritance-account-d-1ab50-and-clears-private-identity-desktop/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  5) [mobile] › tests/e2e/m002-inheritance.spec.ts:7:34 › inherited private gates keep exact return intent through login/register: en 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: "/library"
+    Received: null
+
+       9 |  for(const target of ['/review','/library','/library/batch-e2e','/account']){
+      10 |   await page.goto(target);await ready(page);await expect(page.locator('.auth-gate')).toBeVisible();
+    > 11 |   await page.locator('.auth-gate a[href^="/login"]').click();await ready(page);expect(new URL(page.url()).searchParams.get('redirect')).toBe(target);
+         |                                                                                                                                         ^
+      12 |   const username=page.locator('input[autocomplete=username]');await username.fill('unsent');
+      13 |   await page.locator('.auth-form a[href^="/register"]').click();await expect(page).toHaveURL(/\/register/);expect(new URL(page.url()).searchParams.get('redirect')).toBe(target);
+      14 |   await expect(page.locator('.auth-intent')).toBeVisible();await expect(page.locator('.auth-form h1')).toHaveText(t('i.register',locale));
+        at /Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/frontend/tests/e2e/m002-inheritance.spec.ts:11:137
+
+    Error Context: test-results/m002-inheritance-inherited-8736c-t-through-login-register-en-mobile/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/m002-inheritance-inherited-8736c-t-through-login-register-en-mobile/trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace test-results/m002-inheritance-inherited-8736c-t-through-login-register-en-mobile/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  6) [mobile] › tests/e2e/m002-inheritance.spec.ts:7:34 › inherited private gates keep exact return intent through login/register: zh 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: "/library"
+    Received: null
+
+       9 |  for(const target of ['/review','/library','/library/batch-e2e','/account']){
+      10 |   await page.goto(target);await ready(page);await expect(page.locator('.auth-gate')).toBeVisible();
+    > 11 |   await page.locator('.auth-gate a[href^="/login"]').click();await ready(page);expect(new URL(page.url()).searchParams.get('redirect')).toBe(target);
+         |                                                                                                                                         ^
+      12 |   const username=page.locator('input[autocomplete=username]');await username.fill('unsent');
+      13 |   await page.locator('.auth-form a[href^="/register"]').click();await expect(page).toHaveURL(/\/register/);expect(new URL(page.url()).searchParams.get('redirect')).toBe(target);
+      14 |   await expect(page.locator('.auth-intent')).toBeVisible();await expect(page.locator('.auth-form h1')).toHaveText(t('i.register',locale));
+        at /Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/frontend/tests/e2e/m002-inheritance.spec.ts:11:137
+
+    Error Context: test-results/m002-inheritance-inherited-bdc8d-t-through-login-register-zh-mobile/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/m002-inheritance-inherited-bdc8d-t-through-login-register-zh-mobile/trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace test-results/m002-inheritance-inherited-bdc8d-t-through-login-register-zh-mobile/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  7) [mobile] › tests/e2e/m002-inheritance.spec.ts:24:1 › date ranges preserve invalid input, never submit it, and recover through explicit retry 
+
+    Error: expect(locator).toHaveAttribute(expected) failed
+
+    Locator:  locator('.range-editor')
+    Expected: "empty"
+    Received: "ready"
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveAttribute" with timeout 5000ms
+      - waiting for locator('.range-editor')
+        14 × locator resolved to <div class="range-editor" data-range-preview="ready">…</div>
+           - unexpected value "ready"
+
+
+      24 | test('date ranges preserve invalid input, never submit it, and recover through explicit retry',async({page,context})=>{
+      25 |  await context.addCookies([{name:'wordweave_session',value:'learner',url:origin},{name:'cr034_case',value:'old',url:origin}]);await page.goto('/review');await ready(page);
+    > 26 |  await expect(page.locator('.range-editor')).toHaveAttribute('data-range-preview','empty');
+         |                                              ^
+      27 |  const from=page.getByLabel(t('l.from'),{exact:true}),to=page.getByLabel(t('l.to'),{exact:true});const original=await from.elementHandle();let writes=0;
+      28 |  page.on('request',r=>{if(r.method()==='POST'&&r.url().includes('/review/sessions'))writes++});
+      29 |  await from.fill('');await to.fill('');await page.locator('.range-editor form').dispatchEvent('submit');await expect(from).toHaveAttribute('aria-invalid','true');expect(writes).toBe(0);
+        at /Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/frontend/tests/e2e/m002-inheritance.spec.ts:26:46
+
+    Error Context: test-results/m002-inheritance-date-rang-d5d87-over-through-explicit-retry-mobile/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/m002-inheritance-date-rang-d5d87-over-through-explicit-retry-mobile/trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace test-results/m002-inheritance-date-rang-d5d87-over-through-explicit-retry-mobile/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  8) [mobile] › tests/e2e/m002-inheritance.spec.ts:35:1 › account deletion keeps unchecked consent, final confirmation and clears private identity 
+
+    Error: expect(locator).not.toBeChecked() failed
+
+    Locator: locator('#delete-account').getByRole('checkbox')
+    Expected: not checked
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "not toBeChecked" with timeout 5000ms
+      - waiting for locator('#delete-account').getByRole('checkbox')
+
+
+      35 | test('account deletion keeps unchecked consent, final confirmation and clears private identity',async({page,context})=>{
+      36 |  await context.addCookies([{name:'wordweave_session',value:'learner',url:origin}]);await page.goto('/account');await ready(page);
+    > 37 |  await page.getByRole('button',{name:t('deleteaccount'),exact:true}).click();const dialog=page.locator('#delete-account');await expect(dialog.getByRole('checkbox')).not.toBeChecked();
+         |                                                                                                                                                                          ^
+      38 |  await dialog.locator('input[type=password]').fill('CorrectPass123!');let deletes=0;page.on('request',r=>{if(r.method()==='DELETE'&&r.url().endsWith('/me/account')){deletes++;expect(r.postDataJSON()).toEqual({current_password:'CorrectPass123!',confirmed:true})}});
+      39 |  await dialog.getByRole('button',{name:t('confirm'),exact:true}).click();expect(deletes).toBe(0);await expect(dialog.getByRole('checkbox')).toBeVisible();await dialog.getByRole('checkbox').check();await dialog.getByRole('button',{name:t('confirm'),exact:true}).click();expect(deletes).toBe(0);
+      40 |  await dialog.getByRole('button',{name:t('deleteaccount'),exact:true}).click();await expect(page).toHaveURL(origin+'/');expect(deletes).toBe(1);await page.goto('/library');await ready(page);await expect(page.locator('.auth-gate')).toBeVisible();
+        at /Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/frontend/tests/e2e/m002-inheritance.spec.ts:37:170
+
+    Error Context: test-results/m002-inheritance-account-d-1ab50-and-clears-private-identity-mobile/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/m002-inheritance-account-d-1ab50-and-clears-private-identity-mobile/trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace test-results/m002-inheritance-account-d-1ab50-and-clears-private-identity-mobile/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  8 failed
+    [desktop] › tests/e2e/m002-inheritance.spec.ts:7:34 › inherited private gates keep exact return intent through login/register: en 
+    [desktop] › tests/e2e/m002-inheritance.spec.ts:7:34 › inherited private gates keep exact return intent through login/register: zh 
+    [desktop] › tests/e2e/m002-inheritance.spec.ts:24:1 › date ranges preserve invalid input, never submit it, and recover through explicit retry 
+    [desktop] › tests/e2e/m002-inheritance.spec.ts:35:1 › account deletion keeps unchecked consent, final confirmation and clears private identity 
+    [mobile] › tests/e2e/m002-inheritance.spec.ts:7:34 › inherited private gates keep exact return intent through login/register: en 
+    [mobile] › tests/e2e/m002-inheritance.spec.ts:7:34 › inherited private gates keep exact return intent through login/register: zh 
+    [mobile] › tests/e2e/m002-inheritance.spec.ts:24:1 › date ranges preserve invalid input, never submit it, and recover through explicit retry 
+    [mobile] › tests/e2e/m002-inheritance.spec.ts:35:1 › account deletion keeps unchecked consent, final confirmation and clears private identity 
+  4 passed (49.3s)
+npm notice
+npm notice New major version of npm available! 10.9.8 -> 12.0.2
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.0.2
+npm notice To update run: npm install -g npm@12.0.2
+npm notice

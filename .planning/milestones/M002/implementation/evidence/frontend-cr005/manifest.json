@@ -1,0 +1,191 @@
+{
+  "role": "frontend-claire",
+  "authorization": "TRANSITION-M002-020",
+  "milestone": "M002",
+  "result": "cr005_implemented_pending_qa",
+  "date": "2026-09-21T03:35:39.237793+00:00",
+  "design": "UI22/H01",
+  "git_head": "5da571b226635113c41cd9cb8c4f33433946fbad",
+  "committed": false,
+  "risk": "high: local answers/CAS/account isolation",
+  "node": "24.21.0",
+  "pnpm": "10.33.0",
+  "source": "source.json",
+  "source_sha256": "eb5203ff7160b58f78227049a3ba2de0b3d6553ddeb02cd9a266bedc63c8f27e",
+  "archive_round_trip": "273 source hashes match archive and working files",
+  "current_documents": {
+    ".planning/milestones/M002/handoffs/frontend-implementation.md": "9577bca00268e69be72bbd4290eab67c7af989e207f8d7e3909d0df424c09871",
+    ".planning/milestones/M002/implementation/frontend-validation.md": "6ec49a0d58ec7faa9ad0928c408e16e10c24f762eaf329f5ed32f437b2db7846",
+    ".planning/milestones/M002/implementation/frontend-worktree-plan.md": "3a904d3168d6fee6625baa8657aab559255b7e60b4e97a51e60462e669c300ed",
+    "frontend/app/infrastructure/storage/review-drafts.ts": "b96019873a57c1839069f2c585f643aaa410c372697b7f3e89f49a0812253bfd",
+    "frontend/app/runtime/stores/review.ts": "a507a3dfd12b97bb25b95a8dc7a11a201af49f42d69966bf275b488105c6e1d1"
+  },
+  "checks": {
+    "unit": {
+      "command": "pnpm test",
+      "cwd": "frontend",
+      "log": "unit.log",
+      "sha256": "d01b4b912115233b8dc2ff0a0ee1200759a630cde4730337847f0957fdc51af1",
+      "exit_code": 0
+    },
+    "typecheck": {
+      "command": "pnpm typecheck",
+      "cwd": "frontend",
+      "log": "typecheck.log",
+      "sha256": "88b5ca85f247e1da1f8c7040e2921c6f0d0be6624b6448d57703b6915f61afee",
+      "exit_code": 0
+    },
+    "lint": {
+      "command": "pnpm lint",
+      "cwd": "frontend",
+      "log": "lint.log",
+      "sha256": "d79f90b700e53bb47fb55aa02d5631c0b8861ccdc7bfffe30dd154cade851731",
+      "exit_code": 0
+    },
+    "boundaries": {
+      "command": "pnpm lint:boundaries",
+      "cwd": "frontend",
+      "log": "boundaries.log",
+      "sha256": "26c7c57c5f001e92b638fd8a1ed21adea0ced3b6c585c7a8becb0c2698586c8a",
+      "exit_code": 0
+    },
+    "format": {
+      "command": "pnpm format:check",
+      "cwd": "frontend",
+      "log": "format.log",
+      "sha256": "6e2b89fe281b4b2b62dd74106efb7bc9a4422bbe8a9b4f757a8dc380a026ae9f",
+      "exit_code": 0
+    },
+    "build": {
+      "command": "node ../.planning/milestones/M002/implementation/evidence/frontend-cr005/build.mjs",
+      "cwd": "frontend",
+      "log": "build.log",
+      "sha256": "6140d741aaafbb0d1a16bf6422df097784e579822e393397c01fee4a56087095",
+      "exit_code": 0
+    },
+    "browser": {
+      "command": "pnpm exec playwright test --config ../.planning/milestones/M002/implementation/evidence/frontend-cr005/playwright.config.mjs",
+      "cwd": "frontend",
+      "log": "browser.log",
+      "sha256": "bcfe82d6418d1adec22110cd79f4017bc5a6d58c5f32976ad587dababa7a2ca3",
+      "exit_code": 0
+    },
+    "visual": {
+      "command": "node ../.planning/milestones/M002/implementation/evidence/frontend-cr005/visual.mjs",
+      "cwd": "frontend",
+      "log": "visual.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "exit_code": 0
+    },
+    "test-index": {
+      "command": "pnpm exec playwright test --config ../.planning/milestones/M002/implementation/evidence/frontend-cr005/playwright.config.mjs --list",
+      "cwd": "frontend",
+      "log": "test-index.log",
+      "sha256": "6f30d9e298110c88f0134803f6a07ed8b7c3d00de6272e7f6df306a06c30e495",
+      "exit_code": 0
+    }
+  },
+  "counts": {
+    "unit_files": 28,
+    "unit_cases": 299,
+    "new_unit_cases": 10,
+    "browser_cases": 24,
+    "chromium_desktop": 8,
+    "chromium_mobile_320": 8,
+    "firefox": 4,
+    "webkit": 4
+  },
+  "protection": {
+    "checked": 5689,
+    "allowed_existing": [
+      ".planning/milestones/M002/handoffs/frontend-implementation.md",
+      ".planning/milestones/M002/implementation/frontend-validation.md",
+      ".planning/milestones/M002/implementation/frontend-worktree-plan.md",
+      "frontend/app/infrastructure/storage/review-drafts.ts",
+      "frontend/app/runtime/stores/review.ts"
+    ],
+    "protected_count": 5684,
+    "unexpected_changed": [],
+    "missing": []
+  },
+  "link_check": {
+    "file": "links.json",
+    "checked": 60,
+    "broken": 0
+  },
+  "first_failures_preserved": [
+    "first-browser.log",
+    "first-browser-results.json",
+    "first-browser-results/",
+    "build-first.log",
+    "format-first.log"
+  ],
+  "evidence_sha256": {
+    "README.md": "0482b1944636ca90012efa9b5dd845773527f2e33f49aa42599249e2b19c5166",
+    "before-git-status.txt": "0455f92e28c63d427dcc562db44c35ca5b9964b943e5c45b12582a8727f6ef16",
+    "before-owned.tar.gz": "0f03d0810f552ff9369c7105d9e5612a9a1df5b9607432856954bba30eb33728",
+    "boundaries.log": "26c7c57c5f001e92b638fd8a1ed21adea0ced3b6c585c7a8becb0c2698586c8a",
+    "browser-production-first-results/.last-run.json": "91d1c43004802cd49950d78eb11c8fa7d05da8ffffe219a8b13b2f561bc00903",
+    "browser-production-first-results/m002-review-storage-denied-b419a-ies-and-summary-is-one-time-desktop/memory-overview.png": "524dfd75dc7c35ca450d4d6622091b59b3adb55ee541e9c7e4d2b0443413f70b",
+    "browser-production-first-results/m002-review-storage-denied-b419a-ies-and-summary-is-one-time-firefox/memory-overview.png": "5129d6d664483912574b26d475cd8d9343515ff9410c8610dd2e5701118a0ad1",
+    "browser-production-first-results/m002-review-storage-denied-b419a-ies-and-summary-is-one-time-mobile/memory-overview.png": "74fbb855433d3718843dea03f15024a832a74a66c087bb65060c75465391aca4",
+    "browser-production-first-results/m002-review-storage-denied-b419a-ies-and-summary-is-one-time-webkit/memory-overview.png": "335436de9dc528aa57b6960eafec121ba8498dea7bd87ff5bec706477fb150cf",
+    "browser-production-first.log": "f73745ded6a6d529d3f86c883f04aa7893b8190343ea131c79e60b20c6f6c1da",
+    "browser-results/.last-run.json": "91d1c43004802cd49950d78eb11c8fa7d05da8ffffe219a8b13b2f561bc00903",
+    "browser-results/m002-review-storage-denied-b419a-ies-and-summary-is-one-time-desktop/memory-overview.png": "e0f79f3acf82bfd1d77d2e2f86ece31852ddf6b0445fec14baa6743a96d49273",
+    "browser-results/m002-review-storage-denied-b419a-ies-and-summary-is-one-time-firefox/memory-overview.png": "63ce88787b650b4a2a9da832b73861bfc0c8183d408c03f6fe4edddbb97faf94",
+    "browser-results/m002-review-storage-denied-b419a-ies-and-summary-is-one-time-mobile/memory-overview.png": "2feb4f33660fcd2b9087c5e447a64615fe09c43e7ccf7a9351ef5e004d880a11",
+    "browser-results/m002-review-storage-denied-b419a-ies-and-summary-is-one-time-webkit/memory-overview.png": "03a66c1f938cad2606f62d85039c5509ea5cd161e6b7971fbdcdd83c7ae8f639",
+    "browser-results.json": "9f97baa04a37341c92f210e6ab02cc335bd9d2e064a6d834df53840b0c9c0438",
+    "browser.log": "bcfe82d6418d1adec22110cd79f4017bc5a6d58c5f32976ad587dababa7a2ca3",
+    "build-first.log": "d5177a7bc18ccb8020561a059f1a86fcb6842267054c42ca2f8748d9af2f0097",
+    "build-location-first.json": "c7a40528a379114ca998e60f3036e80024dd4ce3bb128be84a7d8f8398943ef7",
+    "build-location.json": "e6cccb0e4504519da65e0cdaccc3e95284d3509d3cefaa6f36efa07e03a43803",
+    "build.log": "6140d741aaafbb0d1a16bf6422df097784e579822e393397c01fee4a56087095",
+    "build.mjs": "0b45cd9c48aeed3b57b580767e7161e3ee8180416cc38af1d1c3c141e214fd43",
+    "first-browser-results/.last-run.json": "4d12e65cfc6c69a95b2578db05335fd5eab31547a3702b2b4421dbbe248ad50e",
+    "first-browser-results/m002-review-storage-an-unk-7cb14-cted-until-explicit-restart-desktop/error-context.md": "ddfddebeb4ceb69683ef4748b634450c9e5f3e9ebf90d1e69b593ba4c9c49114",
+    "first-browser-results/m002-review-storage-an-unk-7cb14-cted-until-explicit-restart-desktop/trace.zip": "ca970587926cf3cdbedc27a3b9cceb6119d7f2f647eac05a1f2dd0b7dc2144bc",
+    "first-browser-results/m002-review-storage-an-unk-7cb14-cted-until-explicit-restart-mobile/error-context.md": "46453f03a21d97099a9d058bbd8f7f197b6ff910b4a0e9ea0ae53ef3494cdc8c",
+    "first-browser-results/m002-review-storage-an-unk-7cb14-cted-until-explicit-restart-mobile/trace.zip": "7366a9492fbe823429dad40a391f03a34111db1464d1a9a1cea462a01c9cdf34",
+    "first-browser-results/m002-review-storage-denied-b419a-ies-and-summary-is-one-time-desktop/memory-overview.png": "6faa5af73b6d8aa34113393660a1ad1b94d48fa8b9a6b255724572d1b01b746e",
+    "first-browser-results/m002-review-storage-denied-b419a-ies-and-summary-is-one-time-mobile/memory-overview.png": "d60496834ebf43ab7edba2191378db9169d192cd20ed4a0b70a175a42ab55fea",
+    "first-browser-results.json": "3eb414d44e40a4090c777d281f423f3dd6d675193b3e3565af0d9605e1059459",
+    "first-browser.log": "f1903938684830bd5a790a7d70cdb1e5dbb0bb14cc345a65739e3ad912269901",
+    "format-first.log": "5e29091b29f66137cae952aab25437b81968944208d0dfd264f4b388fc322d1c",
+    "format.log": "6e2b89fe281b4b2b62dd74106efb7bc9a4422bbe8a9b4f757a8dc380a026ae9f",
+    "frontend-source.tar.gz": "df5b096bd6e78152f8234b515e6c80df60a49777ea49dfd7aa4dbbb76681f5e3",
+    "links.json": "006610f69f639fad57354036fe65e6e46da6d5c6ad62d6076a2aa71f2f6593b3",
+    "lint.log": "d79f90b700e53bb47fb55aa02d5631c0b8861ccdc7bfffe30dd154cade851731",
+    "memory-editing-1440.png": "c3c6e5b79e4e7c8379654a06e6286f30c74c4e0a629c3edd3f16de5b7b824624",
+    "memory-editing-320.png": "7468331392fe5deb7dd004a52da9a78d7ad9278b628e163ba0ac3b4f15f32a60",
+    "playwright-first.config.mjs": "9ba1fe5d2a58838ff9c8f76a97e96a4a390ab3ae0a98b116b3477d7298d575b3",
+    "playwright.config.mjs": "bfa1d6d41befed1a4c955f22a76da420ec9bb9f282e2ffdb8c43fd7437efbe58",
+    "production-proxy.mjs": "224de3baa5117d9ff8a4cbc5e8a0098ff19679657a4acba077f8398d849cb73b",
+    "production-server.mjs": "152d8d8afb8df75389925d246d20658ca5a6fcac3abcfd6ad298e302b4f61c74",
+    "protection.json": "d8ebfd0e5aea6a990b88a504ea37e216e2592e0437de09bfb549c5c385d652aa",
+    "prototype-observation.json": "fd06e4136b2f22c6bf29740034cb0218cea657bff8457ff3d55e43837e2e4735",
+    "prototype-review-stable.png": "96dd8bdb066f0823419fe8c14b81ae7dc403f7af9402c3b06e3b21587f1ffa36",
+    "prototype-review.png": "487cad93ce7cbf38e71be51178474a34330aa9d2aff6b094b9fb5e225ccd6501",
+    "services.json": "261af2b5ed8ddc71352613a822c84c21de8fe315d6f98ee28cbd23279ae7a0a9",
+    "source-diff.patch": "98a8d5a504bf64bfffc0374ef50ce24c548f2d7357db57fb9ae6eb8604dab174",
+    "source.json": "eb5203ff7160b58f78227049a3ba2de0b3d6553ddeb02cd9a266bedc63c8f27e",
+    "test-index-results.json": "126d72c0d86b7aa285c47fc47e40ee24b30dcd3702ba25beee01efdd1ed316f0",
+    "test-index.log": "6f30d9e298110c88f0134803f6a07ed8b7c3d00de6272e7f6df306a06c30e495",
+    "typecheck.log": "88b5ca85f247e1da1f8c7040e2921c6f0d0be6624b6448d57703b6915f61afee",
+    "unit.log": "d01b4b912115233b8dc2ff0a0ee1200759a630cde4730337847f0957fdc51af1",
+    "visual.json": "9465cb264c9065407cb792b81294d48a6f5bbb39a817b5e5061b32f124718537",
+    "visual.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "visual.mjs": "a91ecbd7755cf801e609fb07fee9dd8ac4e3f44f1b83ca2afa3f04b5e6df0fea"
+  },
+  "source_count": 273,
+  "real_provider_calls": 0,
+  "real_go_pg_rerun": false,
+  "workflow_mutation": false,
+  "remaining": "QA independent CR-005 and CR-006 verification; retain existing coverage matrix and unresolved items",
+  "handoff_check": "static only; no new-session independent agent execution",
+  "input_tokens": "unknown",
+  "runtime_model_changed": false,
+  "services": "services.json",
+  "config_note": "Cwd-relative runner uses the same projects/filters/ports; final run has 24 passes. Prior passing run retained; list report kept separately."
+}

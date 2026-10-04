@@ -1,0 +1,159 @@
+
+Running 10 tests using 1 worker
+
+(node:29212) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   1 [desktop] › tests/e2e/m002-review.spec.ts:8:1 › partial answers, overview editing, one-time comparison and restart (1.6s)
+  ✓   2 [desktop] › tests/e2e/m002-review.spec.ts:17:1 › local restoration requires confirmation and never creates a new attempt on reload (1.6s)
+  ✓   3 [desktop] › tests/e2e/m002-review.spec.ts:21:1 › a lost submit response reconciles the receipt without recreating comparison (759ms)
+  ✘   4 [desktop] › tests/e2e/m002-review.spec.ts:24:1 › two tabs cannot silently overwrite the same local draft (30.2s)
+(node:30557) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   5 [desktop] › tests/e2e/m002-review.spec.ts:29:1 › over-capacity paste is rejected as a whole and existing letters remain (708ms)
+(node:30636) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   6 [mobile] › tests/e2e/m002-review.spec.ts:8:1 › partial answers, overview editing, one-time comparison and restart (1.6s)
+  ✓   7 [mobile] › tests/e2e/m002-review.spec.ts:17:1 › local restoration requires confirmation and never creates a new attempt on reload (1.5s)
+  ✓   8 [mobile] › tests/e2e/m002-review.spec.ts:21:1 › a lost submit response reconciles the receipt without recreating comparison (767ms)
+  ✘   9 [mobile] › tests/e2e/m002-review.spec.ts:24:1 › two tabs cannot silently overwrite the same local draft (30.2s)
+(node:31877) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  10 [mobile] › tests/e2e/m002-review.spec.ts:29:1 › over-capacity paste is rejected as a whole and existing letters remain (730ms)
+
+
+  1) [desktop] › tests/e2e/m002-review.spec.ts:24:1 › two tabs cannot silently overwrite the same local draft 
+
+    Test timeout of 30000ms exceeded.
+
+    Error: locator.click: Test timeout of 30000ms exceeded.
+    Call log:
+      - waiting for locator('.answer-link').first()
+        - locator resolved to <button class="answer-link">…</button>
+      - attempting click action
+        2 × waiting for element to be visible, enabled and stable
+          - element is visible, enabled and stable
+          - scrolling into view if needed
+          - done scrolling
+          - <dialog open="" aria-labelledby="restore-draft-dialog-title">…</dialog> intercepts pointer events
+        - retrying click action
+        - waiting 20ms
+        2 × waiting for element to be visible, enabled and stable
+          - element is visible, enabled and stable
+          - scrolling into view if needed
+          - done scrolling
+          - <dialog open="" aria-labelledby="restore-draft-dialog-title">…</dialog> intercepts pointer events
+        - retrying click action
+          - waiting 100ms
+        55 × waiting for element to be visible, enabled and stable
+           - element is visible, enabled and stable
+           - scrolling into view if needed
+           - done scrolling
+           - <dialog open="" aria-labelledby="restore-draft-dialog-title">…</dialog> intercepts pointer events
+         - retrying click action
+           - waiting 500ms
+
+
+      25 |  await start(page);await page.locator('.slot').first().fill('a');await page.getByRole('button',{name:t('overview'),exact:true}).click();await page.waitForTimeout(150);
+      26 |  const second=await context.newPage();await second.goto(page.url());await ready(second);await expect(second.locator('dialog[open]')).toBeVisible();await second.locator('dialog[open]').getByRole('button',{name:t('resume'),exact:true}).click();await second.locator('.answer-link').first().click();
+    > 27 |  await page.locator('.answer-link').first().click();await page.locator('.slot').first().fill('b');await expect(second.locator('dialog[open]')).toBeVisible();await second.locator('dialog[open]').getByRole('button',{name:t('resume'),exact:true}).click();await expect(second.locator('.slot').first()).toHaveValue('b');await second.close();
+         |                                             ^
+      28 | });
+      29 | test('over-capacity paste is rejected as a whole and existing letters remain',async({page})=>{
+      30 |  await start(page);await page.locator('.slot').first().fill('a');await page.locator('.slot').first().evaluate(el=>{const clipboard=new DataTransfer();clipboard.setData('text/plain','toolong');el.dispatchEvent(new ClipboardEvent('paste',{bubbles:true,clipboardData:clipboard}));});await expect(page.locator('.slot').first()).toHaveValue('a');await expect(page.locator('.slot').nth(1)).toHaveValue('');await expect(page.locator('.review-paper [role=alert]')).toBeVisible();
+        at /Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/frontend/tests/e2e/m002-review.spec.ts:27:45
+
+    Error Context: test-results/m002-review-two-tabs-canno-89a2e-rwrite-the-same-local-draft-desktop/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/m002-review-two-tabs-canno-89a2e-rwrite-the-same-local-draft-desktop/trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace test-results/m002-review-two-tabs-canno-89a2e-rwrite-the-same-local-draft-desktop/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [mobile] › tests/e2e/m002-review.spec.ts:24:1 › two tabs cannot silently overwrite the same local draft 
+
+    Test timeout of 30000ms exceeded.
+
+    Error: locator.click: Test timeout of 30000ms exceeded.
+    Call log:
+      - waiting for locator('.answer-link').first()
+        - locator resolved to <button class="answer-link">…</button>
+      - attempting click action
+        - waiting for element to be visible, enabled and stable
+        - element is not stable
+      - retrying click action
+        - waiting for element to be visible, enabled and stable
+        - element is visible, enabled and stable
+        - scrolling into view if needed
+        - done scrolling
+        - <dialog open="" aria-labelledby="restore-draft-dialog-title">…</dialog> intercepts pointer events
+      - retrying click action
+        - waiting 20ms
+        2 × waiting for element to be visible, enabled and stable
+          - element is visible, enabled and stable
+          - scrolling into view if needed
+          - done scrolling
+          - <p>Resume your saved answers and step, or restart on…</p> from <dialog open="" aria-labelledby="restore-draft-dialog-title">…</dialog> subtree intercepts pointer events
+        - retrying click action
+          - waiting 100ms
+        8 × waiting for element to be visible, enabled and stable
+          - element is visible, enabled and stable
+          - scrolling into view if needed
+          - done scrolling
+          - <p>Resume your saved answers and step, or restart on…</p> from <dialog open="" aria-labelledby="restore-draft-dialog-title">…</dialog> subtree intercepts pointer events
+        - retrying click action
+          - waiting 500ms
+          - waiting for element to be visible, enabled and stable
+          - element is visible, enabled and stable
+          - scrolling into view if needed
+          - done scrolling
+          - <dialog open="" aria-labelledby="restore-draft-dialog-title">…</dialog> intercepts pointer events
+        - retrying click action
+          - waiting 500ms
+          - waiting for element to be visible, enabled and stable
+          - element is visible, enabled and stable
+          - scrolling into view if needed
+          - done scrolling
+          - <p>Resume your saved answers and step, or restart on…</p> from <dialog open="" aria-labelledby="restore-draft-dialog-title">…</dialog> subtree intercepts pointer events
+        - retrying click action
+          - waiting 500ms
+          - waiting for element to be visible, enabled and stable
+          - element is visible, enabled and stable
+          - scrolling into view if needed
+          - done scrolling
+          - <p>Resume your saved answers and step, or restart on…</p> from <dialog open="" aria-labelledby="restore-draft-dialog-title">…</dialog> subtree intercepts pointer events
+        - retrying click action
+          - waiting 500ms
+      - element was detached from the DOM, retrying
+
+
+      25 |  await start(page);await page.locator('.slot').first().fill('a');await page.getByRole('button',{name:t('overview'),exact:true}).click();await page.waitForTimeout(150);
+      26 |  const second=await context.newPage();await second.goto(page.url());await ready(second);await expect(second.locator('dialog[open]')).toBeVisible();await second.locator('dialog[open]').getByRole('button',{name:t('resume'),exact:true}).click();await second.locator('.answer-link').first().click();
+    > 27 |  await page.locator('.answer-link').first().click();await page.locator('.slot').first().fill('b');await expect(second.locator('dialog[open]')).toBeVisible();await second.locator('dialog[open]').getByRole('button',{name:t('resume'),exact:true}).click();await expect(second.locator('.slot').first()).toHaveValue('b');await second.close();
+         |                                             ^
+      28 | });
+      29 | test('over-capacity paste is rejected as a whole and existing letters remain',async({page})=>{
+      30 |  await start(page);await page.locator('.slot').first().fill('a');await page.locator('.slot').first().evaluate(el=>{const clipboard=new DataTransfer();clipboard.setData('text/plain','toolong');el.dispatchEvent(new ClipboardEvent('paste',{bubbles:true,clipboardData:clipboard}));});await expect(page.locator('.slot').first()).toHaveValue('a');await expect(page.locator('.slot').nth(1)).toHaveValue('');await expect(page.locator('.review-paper [role=alert]')).toBeVisible();
+        at /Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/frontend/tests/e2e/m002-review.spec.ts:27:45
+
+    Error Context: test-results/m002-review-two-tabs-canno-89a2e-rwrite-the-same-local-draft-mobile/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/m002-review-two-tabs-canno-89a2e-rwrite-the-same-local-draft-mobile/trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace test-results/m002-review-two-tabs-canno-89a2e-rwrite-the-same-local-draft-mobile/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2 failed
+    [desktop] › tests/e2e/m002-review.spec.ts:24:1 › two tabs cannot silently overwrite the same local draft 
+    [mobile] › tests/e2e/m002-review.spec.ts:24:1 › two tabs cannot silently overwrite the same local draft 
+  8 passed (1.2m)
+npm notice
+npm notice New major version of npm available! 10.9.8 -> 12.0.2
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.0.2
+npm notice To update run: npm install -g npm@12.0.2
+npm notice

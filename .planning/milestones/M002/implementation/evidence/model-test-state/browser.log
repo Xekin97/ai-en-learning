@@ -1,0 +1,167 @@
+
+Running 8 tests using 1 worker
+
+(node:8524) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  1 [desktop] › tests/e2e/m002-generic-models.spec.ts:27:5 › UI29 en › configuration, protocol retention, explicit tests, save and secret-safe edit (2.5s)
+  ✘  2 [desktop] › tests/e2e/m002-generic-models.spec.ts:130:5 › UI29 en › only the clicked model shows connection test progress and result (5.7s)
+(node:8945) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  3 [desktop] › tests/e2e/m002-generic-models.spec.ts:27:5 › UI29 zh › configuration, protocol retention, explicit tests, save and secret-safe edit (2.2s)
+  ✘  4 [desktop] › tests/e2e/m002-generic-models.spec.ts:130:5 › UI29 zh › only the clicked model shows connection test progress and result (5.7s)
+(node:9448) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  5 [mobile] › tests/e2e/m002-generic-models.spec.ts:27:5 › UI29 en › configuration, protocol retention, explicit tests, save and secret-safe edit (2.1s)
+  ✘  6 [mobile] › tests/e2e/m002-generic-models.spec.ts:130:5 › UI29 en › only the clicked model shows connection test progress and result (5.7s)
+(node:9848) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  7 [mobile] › tests/e2e/m002-generic-models.spec.ts:27:5 › UI29 zh › configuration, protocol retention, explicit tests, save and secret-safe edit (2.0s)
+  ✘  8 [mobile] › tests/e2e/m002-generic-models.spec.ts:130:5 › UI29 zh › only the clicked model shows connection test progress and result (5.7s)
+
+
+  1) [desktop] › tests/e2e/m002-generic-models.spec.ts:130:5 › UI29 en › only the clicked model shows connection test progress and result 
+
+    Error: expect(locator).toHaveCount(expected) failed
+
+    Locator:  locator('.generic-model-row')
+    Expected: 2
+    Received: 1
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveCount" with timeout 5000ms
+      - waiting for locator('.generic-model-row')
+        14 × locator resolved to 1 element
+           - unexpected value "1"
+
+
+      151 |       );
+      152 |       const rows = page.locator(".generic-model-row");
+    > 153 |       await expect(rows).toHaveCount(2);
+          |                          ^
+      154 |       const first = rows.nth(0),
+      155 |         second = rows.nth(1);
+      156 |       await first
+        at /Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/frontend/tests/e2e/m002-generic-models.spec.ts:153:26
+
+    Error Context: ../.planning/milestones/M002/implementation/evidence/model-test-state/playwright/m002-generic-models-UI29-e-a8240-on-test-progress-and-result-desktop/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../.planning/milestones/M002/implementation/evidence/model-test-state/playwright/m002-generic-models-UI29-e-a8240-on-test-progress-and-result-desktop/trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace ../.planning/milestones/M002/implementation/evidence/model-test-state/playwright/m002-generic-models-UI29-e-a8240-on-test-progress-and-result-desktop/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [desktop] › tests/e2e/m002-generic-models.spec.ts:130:5 › UI29 zh › only the clicked model shows connection test progress and result 
+
+    Error: expect(locator).toHaveCount(expected) failed
+
+    Locator:  locator('.generic-model-row')
+    Expected: 2
+    Received: 1
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveCount" with timeout 5000ms
+      - waiting for locator('.generic-model-row')
+        14 × locator resolved to 1 element
+           - unexpected value "1"
+
+
+      151 |       );
+      152 |       const rows = page.locator(".generic-model-row");
+    > 153 |       await expect(rows).toHaveCount(2);
+          |                          ^
+      154 |       const first = rows.nth(0),
+      155 |         second = rows.nth(1);
+      156 |       await first
+        at /Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/frontend/tests/e2e/m002-generic-models.spec.ts:153:26
+
+    Error Context: ../.planning/milestones/M002/implementation/evidence/model-test-state/playwright/m002-generic-models-UI29-z-df280-on-test-progress-and-result-desktop/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../.planning/milestones/M002/implementation/evidence/model-test-state/playwright/m002-generic-models-UI29-z-df280-on-test-progress-and-result-desktop/trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace ../.planning/milestones/M002/implementation/evidence/model-test-state/playwright/m002-generic-models-UI29-z-df280-on-test-progress-and-result-desktop/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3) [mobile] › tests/e2e/m002-generic-models.spec.ts:130:5 › UI29 en › only the clicked model shows connection test progress and result 
+
+    Error: expect(locator).toHaveCount(expected) failed
+
+    Locator:  locator('.generic-model-row')
+    Expected: 2
+    Received: 1
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveCount" with timeout 5000ms
+      - waiting for locator('.generic-model-row')
+        14 × locator resolved to 1 element
+           - unexpected value "1"
+
+
+      151 |       );
+      152 |       const rows = page.locator(".generic-model-row");
+    > 153 |       await expect(rows).toHaveCount(2);
+          |                          ^
+      154 |       const first = rows.nth(0),
+      155 |         second = rows.nth(1);
+      156 |       await first
+        at /Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/frontend/tests/e2e/m002-generic-models.spec.ts:153:26
+
+    Error Context: ../.planning/milestones/M002/implementation/evidence/model-test-state/playwright/m002-generic-models-UI29-e-a8240-on-test-progress-and-result-mobile/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../.planning/milestones/M002/implementation/evidence/model-test-state/playwright/m002-generic-models-UI29-e-a8240-on-test-progress-and-result-mobile/trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace ../.planning/milestones/M002/implementation/evidence/model-test-state/playwright/m002-generic-models-UI29-e-a8240-on-test-progress-and-result-mobile/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  4) [mobile] › tests/e2e/m002-generic-models.spec.ts:130:5 › UI29 zh › only the clicked model shows connection test progress and result 
+
+    Error: expect(locator).toHaveCount(expected) failed
+
+    Locator:  locator('.generic-model-row')
+    Expected: 2
+    Received: 1
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveCount" with timeout 5000ms
+      - waiting for locator('.generic-model-row')
+        14 × locator resolved to 1 element
+           - unexpected value "1"
+
+
+      151 |       );
+      152 |       const rows = page.locator(".generic-model-row");
+    > 153 |       await expect(rows).toHaveCount(2);
+          |                          ^
+      154 |       const first = rows.nth(0),
+      155 |         second = rows.nth(1);
+      156 |       await first
+        at /Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/frontend/tests/e2e/m002-generic-models.spec.ts:153:26
+
+    Error Context: ../.planning/milestones/M002/implementation/evidence/model-test-state/playwright/m002-generic-models-UI29-z-df280-on-test-progress-and-result-mobile/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../.planning/milestones/M002/implementation/evidence/model-test-state/playwright/m002-generic-models-UI29-z-df280-on-test-progress-and-result-mobile/trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace ../.planning/milestones/M002/implementation/evidence/model-test-state/playwright/m002-generic-models-UI29-z-df280-on-test-progress-and-result-mobile/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  4 failed
+    [desktop] › tests/e2e/m002-generic-models.spec.ts:130:5 › UI29 en › only the clicked model shows connection test progress and result 
+    [desktop] › tests/e2e/m002-generic-models.spec.ts:130:5 › UI29 zh › only the clicked model shows connection test progress and result 
+    [mobile] › tests/e2e/m002-generic-models.spec.ts:130:5 › UI29 en › only the clicked model shows connection test progress and result 
+    [mobile] › tests/e2e/m002-generic-models.spec.ts:130:5 › UI29 zh › only the clicked model shows connection test progress and result 
+  4 passed (33.8s)

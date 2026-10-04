@@ -1,0 +1,142 @@
+{
+  "timestamp": "2026-09-28T08:46:44.981932+00:00",
+  "decision_id": "TRANSITION-M002-042",
+  "status": "PASS_FOR_SCOPED_CLOSURE_AND_REWORK",
+  "controls_sha256": {
+    ".planning/workflow/state.yaml": "77183922bd52ec053f31101e057e31b750cd7bfbc8805ebd3cc6897fcdb380db",
+    ".planning/workflow/history.yaml": "a81a40002d082a8ac8fb579812bfd4eaa0598f3b2fddc7c92d7d481f8db4eb24",
+    ".planning/agt/project.yaml": "051a14ebbc1346a080970b585aab5c7fcb01a6f440a886f260ecc0d860da1ad5",
+    ".planning/agt/agents.yaml": "a4801c93de5068cd1aaef3edad010436051572a70f61076aa445956680c54f16"
+  },
+  "profile_sha256": "9d9258ebc8cba13f5df2f8289fa81e973e60af9f10e5ca126fd83482aa0c050f",
+  "required_artifacts": [
+    ".planning/milestones/M002/verification/coverage-matrix.md",
+    ".planning/milestones/M002/verification/report.md",
+    ".planning/milestones/M002/verification/ai-evaluation.md",
+    ".planning/milestones/M002/verification/uat.md",
+    ".planning/milestones/M002/handoffs/verification.md"
+  ],
+  "target": {
+    "id": "implementation",
+    "completion_policy": "all-roles",
+    "role_sequence": [
+      "backend-implementer/base",
+      "frontend-implementer/base"
+    ],
+    "allowed_roles": [
+      "backend-implementer/base",
+      "frontend-implementer/base"
+    ],
+    "required_artifacts": [
+      ".planning/milestones/{milestone}/implementation/backend-validation.md",
+      ".planning/milestones/{milestone}/implementation/frontend-validation.md",
+      ".planning/milestones/{milestone}/handoffs/backend-implementation.md",
+      ".planning/milestones/{milestone}/handoffs/frontend-implementation.md"
+    ],
+    "user_approval_required": true,
+    "transitions": [
+      "verification",
+      "product-planning",
+      "uiux-design",
+      "technical-design"
+    ]
+  },
+  "semantic_names_valid_unique": true,
+  "qa15": {
+    "manifest": ".planning/milestones/M002/verification/evidence/qa2-015/manifest.json",
+    "manifest_sha256": "4551281c6fc4ad61d7468527a68f59c20069cc9ba570a7e8c4b84ec7238f0c97",
+    "artifacts": 171,
+    "accepted_checks": 9,
+    "passed": 8,
+    "failed": 1,
+    "result": "FAIL_TITLE_EDIT_ICON_FIDELITY",
+    "accepted_runtime_cases": [
+      {
+        "id": "UI15-zh-360",
+        "result": "PASS",
+        "source": "control/results.json"
+      },
+      {
+        "id": "UI15-zh-390",
+        "result": "PASS",
+        "source": "final-control/results.json"
+      },
+      {
+        "id": "UI15-zh-768",
+        "result": "PASS",
+        "source": "control/results.json"
+      },
+      {
+        "id": "UI15-zh-1440",
+        "result": "PASS",
+        "source": "confirmed-control/results.json"
+      },
+      {
+        "id": "UI15-en-360",
+        "result": "PASS",
+        "source": "control/results.json"
+      },
+      {
+        "id": "UI15-en-390",
+        "result": "PASS",
+        "source": "final-control/results.json"
+      },
+      {
+        "id": "UI15-en-768",
+        "result": "PASS",
+        "source": "control/results.json"
+      },
+      {
+        "id": "UI15-en-1440",
+        "result": "PASS",
+        "source": "confirmed-control/results.json"
+      }
+    ],
+    "I01_method": "manual visual and source comparison; no new live DOM count",
+    "raw_failures_preserved": true
+  },
+  "inheritance": {
+    "count": 29,
+    "historical_evidence_hashes_verified": 19,
+    "scope": "CR001 inheritance baseline and downstream reception only",
+    "new_runtime_count": 0
+  },
+  "source_checks": {
+    "frontend-cr017-018": {
+      "manifest": ".planning/milestones/M002/implementation/evidence/frontend-cr017-018/manifest.json",
+      "manifest_sha256": "57719c596d4f21c4df3b544862c65bc50acebb3363f30d872f5a0a0a2ed0794c",
+      "artifact_count": 102,
+      "source_files": 282,
+      "source_sha256": "e8bd3285a0292218d8e1108a47e39e1eb8550d928867a01e25428c023f009775",
+      "source_archive_matches": true
+    },
+    "backend-cr013": {
+      "manifest": ".planning/milestones/M002/implementation/evidence/backend-cr013/manifest.json",
+      "manifest_sha256": "13b5dccdeb84e1b958c0ac378b4add5ed4c6815e9024cc3cf0eb6fd19e99912d",
+      "artifact_count": 31,
+      "source_files": 288,
+      "source_sha256": "c54307a04cecb3dd99cc13d64ae0fbcb6c1fca2c0538711af040d279bbe9b549",
+      "source_archive_matches": true
+    }
+  },
+  "compiled_files": 444,
+  "qa14": {
+    "manifest_sha256": "b0331baf700a4cc58727769a2df0055d30b87b8d4dd4eca7b261a81e84ab04a5",
+    "original_documents_archived": 5,
+    "remaining_artifacts_unchanged": 38
+  },
+  "approved_archives_unchanged": 4,
+  "coverage_counts": {
+    "capabilities": 49,
+    "pages": 25,
+    "views": 28,
+    "ui_acceptance": 119
+  },
+  "protected_count": 7503,
+  "developer_checks_rerun": false,
+  "qa_tests_rerun": false,
+  "runtime_model_switch": "not_performed",
+  "input_tokens": "unknown",
+  "new_session_handoff_test": "not_executed",
+  "authorization": "Prior proposed scoped CR001 closure and verification to implementation/frontend-claire for CR019, retaining CR002; user replied 下一步. Same target and scope, no repeated permission."
+}

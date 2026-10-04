@@ -1,0 +1,62 @@
+=== RUN   TestM002SaveStateHTTP
+2026/09/23 11:37:08 INFO http_request request_id=req_ccEUnqAOK-9VF7YFDkIwrA method=GET route=/api/v1/bootstrap status=200 duration_ms=4
+2026/09/23 11:37:09 INFO http_request request_id=req_KaXa4APprA3aVwerQDt-wQ method=POST route=/api/v1/auth/login status=200 duration_ms=797
+2026/09/23 11:37:09 INFO http_request request_id=req_R3qiZght_fI9SZinUe21cQ method=GET route=/api/v1/bootstrap status=200 duration_ms=0
+2026/09/23 11:37:10 INFO http_request request_id=req_SQyI-XcbFOgYaOWcq1yH1Q method=POST route=/api/v1/auth/login status=200 duration_ms=766
+2026/09/23 11:37:10 INFO http_request request_id=req_eOkMT_eXFvz_nqrjvOz9kw method=GET route=/api/v1/bootstrap status=200 duration_ms=1
+2026/09/23 11:37:10 INFO http_request request_id=req_q5CtjOfQeWy2FH8e9vG1CQ method=GET route=/api/v1/bootstrap status=200 duration_ms=0
+=== RUN   TestM002SaveStateHTTP/active_is_conflict_without_side_effects
+2026/09/23 11:37:10 INFO http_request request_id=req_m0XxrhIMuTi6u_BAuA3mbQ method=POST route=/api/v1/generations/{run_id}/save status=404 duration_ms=1
+    m002_save_state_integration_test.go:109: status=404 want=409 body={"type":"https://wordweave.example/problems/not-found","title":"Not found","status":404,"code":"not_found","detail":"The requested resource could not be found.","request_id":"req_m0XxrhIMuTi6u_BAuA3mbQ"}
+=== RUN   TestM002SaveStateHTTP/provider_failed_is_conflict_without_side_effects
+2026/09/23 11:37:10 INFO http_request request_id=req_aV2VcM3lnPLUTvPbEXxGQw method=POST route=/api/v1/generations/{run_id}/save status=404 duration_ms=1
+    m002_save_state_integration_test.go:109: status=404 want=409 body={"type":"https://wordweave.example/problems/not-found","title":"Not found","status":404,"code":"not_found","detail":"The requested resource could not be found.","request_id":"req_aV2VcM3lnPLUTvPbEXxGQw"}
+=== RUN   TestM002SaveStateHTTP/server_failed_is_conflict_without_side_effects
+2026/09/23 11:37:10 INFO http_request request_id=req_TBfN4oGPSGZh-KDxz2XZQg method=POST route=/api/v1/generations/{run_id}/save status=404 duration_ms=1
+    m002_save_state_integration_test.go:109: status=404 want=409 body={"type":"https://wordweave.example/problems/not-found","title":"Not found","status":404,"code":"not_found","detail":"The requested resource could not be found.","request_id":"req_TBfN4oGPSGZh-KDxz2XZQg"}
+=== RUN   TestM002SaveStateHTTP/stream_failed_is_conflict_without_side_effects
+2026/09/23 11:37:10 INFO http_request request_id=req_PrOIBDOPhbOlZkK_xciMyw method=POST route=/api/v1/generations/{run_id}/save status=404 duration_ms=1
+    m002_save_state_integration_test.go:109: status=404 want=409 body={"type":"https://wordweave.example/problems/not-found","title":"Not found","status":404,"code":"not_found","detail":"The requested resource could not be found.","request_id":"req_PrOIBDOPhbOlZkK_xciMyw"}
+=== RUN   TestM002SaveStateHTTP/validation_failed_is_conflict_without_side_effects
+2026/09/23 11:37:10 INFO http_request request_id=req_CYK7cMpjpA38K7dLCh8r4g method=POST route=/api/v1/generations/{run_id}/save status=404 duration_ms=1
+    m002_save_state_integration_test.go:109: status=404 want=409 body={"type":"https://wordweave.example/problems/not-found","title":"Not found","status":404,"code":"not_found","detail":"The requested resource could not be found.","request_id":"req_CYK7cMpjpA38K7dLCh8r4g"}
+=== RUN   TestM002SaveStateHTTP/user_cancelled_is_conflict_without_side_effects
+2026/09/23 11:37:10 INFO http_request request_id=req_ayXR2zcBLRYsM1AvELlrIQ method=POST route=/api/v1/generations/{run_id}/save status=404 duration_ms=1
+    m002_save_state_integration_test.go:109: status=404 want=409 body={"type":"https://wordweave.example/problems/not-found","title":"Not found","status":404,"code":"not_found","detail":"The requested resource could not be found.","request_id":"req_ayXR2zcBLRYsM1AvELlrIQ"}
+=== RUN   TestM002SaveStateHTTP/abandoned_conflicts_and_repeated_discard_stays_idempotent
+2026/09/23 11:37:10 INFO http_request request_id=req_gbzOPTzH42hE0GeY4hWvow method=POST route=/api/v1/generations/{run_id}/discard status=204 duration_ms=2
+2026/09/23 11:37:10 INFO http_request request_id=req_3vsn9rjTMyn6OHD0TBn3wg method=POST route=/api/v1/generations/{run_id}/save status=404 duration_ms=1
+    m002_save_state_integration_test.go:131: status=404 want=409 body={"type":"https://wordweave.example/problems/not-found","title":"Not found","status":404,"code":"not_found","detail":"The requested resource could not be found.","request_id":"req_3vsn9rjTMyn6OHD0TBn3wg"}
+=== RUN   TestM002SaveStateHTTP/valid_save_retries_and_deleted_batch_cannot_be_recreated
+2026/09/23 11:37:10 INFO http_request request_id=req_lNbn9p5MeEyY6aJ2BMHtrQ method=POST route=/api/v1/generations/{run_id}/save status=404 duration_ms=1
+2026/09/23 11:37:10 INFO http_request request_id=req_favO44jpuUGTfMc029JqMw method=POST route=/api/v1/generations/{run_id}/save status=201 duration_ms=8
+2026/09/23 11:37:10 INFO http_request request_id=req_XwhnT4AEXPShKqVpyu9eMg method=POST route=/api/v1/generations/{run_id}/save status=200 duration_ms=1
+2026/09/23 11:37:10 INFO http_request request_id=req_rBZuD5XNvUX9VqAw4uMjhg method=POST route=/api/v1/generations/{run_id}/discard status=204 duration_ms=0
+2026/09/23 11:37:10 INFO http_request request_id=req_-KWSMJ17WyoIlr1uxZ0mAQ method=DELETE route=/api/v1/me/batches/{batch_id} status=204 duration_ms=3
+2026/09/23 11:37:10 INFO http_request request_id=req_zbHr2IiPXtvqWulbexLuEw method=POST route=/api/v1/generations/{run_id}/save status=404 duration_ms=1
+=== RUN   TestM002SaveStateHTTP/expired_valid_draft_and_abandoned_token_remain_gone
+2026/09/23 11:37:10 INFO http_request request_id=req_exd_yhao8pke12Gd_klKLw method=POST route=/api/v1/generations/{run_id}/save status=410 duration_ms=1
+2026/09/23 11:37:10 INFO http_request request_id=req_-qYdEe2MKuIskvp_sYtWwA method=POST route=/api/v1/generations/{run_id}/discard status=204 duration_ms=1
+2026/09/23 11:37:10 INFO http_request request_id=req_xohEdeDFfGIBulg-eSEoIw method=POST route=/api/v1/generations/{run_id}/save status=410 duration_ms=0
+2026/09/23 11:37:10 INFO http_request request_id=req_1LIDniWUfFPArZEmpCGZMQ method=POST route=/api/v1/generations/{run_id}/save status=404 duration_ms=0
+=== RUN   TestM002SaveStateHTTP/missing_run_with_valid_signature_stays_hidden
+2026/09/23 11:37:10 INFO http_request request_id=req_WpFXo4TlMI8Y6g0mw8X67w method=POST route=/api/v1/generations/{run_id}/save status=404 duration_ms=0
+=== RUN   TestM002SaveStateHTTP/invalid_visitor_claim_uses_the_shared_conflict_guard
+2026/09/23 11:37:10 INFO http_request request_id=req_WuQatmh3P75XW1PohpP8Tg method=GET route=/api/v1/bootstrap status=200 duration_ms=0
+2026/09/23 11:37:10 INFO http_request request_id=req_yPgwAg5k_LwhAdJSALduBQ method=POST route=/api/v1/generations/{run_id}/visitor-claim status=404 duration_ms=1
+    m002_save_state_integration_test.go:218: status=404 want=409 body={"type":"https://wordweave.example/problems/not-found","title":"Not found","status":404,"code":"not_found","detail":"The requested resource could not be found.","request_id":"req_yPgwAg5k_LwhAdJSALduBQ"}
+--- FAIL: TestM002SaveStateHTTP (6.44s)
+    --- FAIL: TestM002SaveStateHTTP/active_is_conflict_without_side_effects (0.01s)
+    --- FAIL: TestM002SaveStateHTTP/provider_failed_is_conflict_without_side_effects (0.01s)
+    --- FAIL: TestM002SaveStateHTTP/server_failed_is_conflict_without_side_effects (0.01s)
+    --- FAIL: TestM002SaveStateHTTP/stream_failed_is_conflict_without_side_effects (0.01s)
+    --- FAIL: TestM002SaveStateHTTP/validation_failed_is_conflict_without_side_effects (0.01s)
+    --- FAIL: TestM002SaveStateHTTP/user_cancelled_is_conflict_without_side_effects (0.01s)
+    --- FAIL: TestM002SaveStateHTTP/abandoned_conflicts_and_repeated_discard_stays_idempotent (0.01s)
+    --- PASS: TestM002SaveStateHTTP/valid_save_retries_and_deleted_batch_cannot_be_recreated (0.02s)
+    --- PASS: TestM002SaveStateHTTP/expired_valid_draft_and_abandoned_token_remain_gone (0.01s)
+    --- PASS: TestM002SaveStateHTTP/missing_run_with_valid_signature_stays_hidden (0.00s)
+    --- FAIL: TestM002SaveStateHTTP/invalid_visitor_claim_uses_the_shared_conflict_guard (0.01s)
+FAIL
+FAIL	wordweave/internal/httpapi	6.946s
+FAIL

@@ -1,0 +1,189 @@
+{
+  "results": [
+    {
+      "id": "FE9-01",
+      "name": "Later-page sole reference is auto-loaded and price-only save retains it",
+      "result": "PASS"
+    },
+    {
+      "id": "FE9-02",
+      "name": "Actual modifier-click adds a visible model without dropping the later-page reference",
+      "result": "PASS"
+    },
+    {
+      "id": "FE9-03",
+      "name": "Explicit removal persists and cannot newly add retired model on reopen or a new card",
+      "result": "PASS"
+    },
+    {
+      "id": "FE9-04",
+      "name": "Failed reference page blocks incomplete selection/save, retains input and retries on mobile",
+      "result": "PASS"
+    },
+    {
+      "id": "FE9-05",
+      "name": "Revision conflict loads newly referenced later-page retired models and waits for explicit retry",
+      "result": "PASS"
+    }
+  ],
+  "pageErrors": [],
+  "writes": [
+    {
+      "method": "PUT",
+      "body": {
+        "kind": "model_trial",
+        "name": {
+          "zh_CN": null,
+          "en_US": "Later-only card 1789975985243"
+        },
+        "description": {
+          "zh_CN": null,
+          "en_US": "Pagination regression"
+        },
+        "exchange_price": "5",
+        "activation_ttl_seconds": 2592000,
+        "effect": {
+          "kind": "model_trial",
+          "model_ids": [
+            "01a0c2e1-fcb1-75f8-ba7e-d4bb4fce981d"
+          ],
+          "trial_seconds": 259200,
+          "retirement_points": "31"
+        },
+        "expected_revision": "1THNQ7fqlSvQqlsagwDhb8Lp0JkNvfdjs1fVbICqfM8"
+      }
+    },
+    {
+      "method": "PUT",
+      "body": {
+        "kind": "model_trial",
+        "name": {
+          "zh_CN": null,
+          "en_US": "Mixed-page card 1789975985243"
+        },
+        "description": {
+          "zh_CN": null,
+          "en_US": "Pagination regression"
+        },
+        "exchange_price": "5",
+        "activation_ttl_seconds": 2592000,
+        "effect": {
+          "kind": "model_trial",
+          "model_ids": [
+            "01a0c2e1-fc5e-7cbb-9c11-15d128ca83b7",
+            "01a0c2e1-fc63-70df-9d70-ab167455d3a3",
+            "01a0c2e1-fcb1-75f8-ba7e-d4bb4fce981d"
+          ],
+          "trial_seconds": 259200,
+          "retirement_points": "20"
+        },
+        "expected_revision": "gGhcXxTOPQhSwlOdeeS2hOV-s2hEXcK2Nv-WX2CzXV4"
+      }
+    },
+    {
+      "method": "PUT",
+      "body": {
+        "kind": "model_trial",
+        "name": {
+          "zh_CN": null,
+          "en_US": "Mixed-page card 1789975985243"
+        },
+        "description": {
+          "zh_CN": null,
+          "en_US": "Pagination regression"
+        },
+        "exchange_price": "5",
+        "activation_ttl_seconds": 2592000,
+        "effect": {
+          "kind": "model_trial",
+          "model_ids": [
+            "01a0c2e1-fc5e-7cbb-9c11-15d128ca83b7",
+            "01a0c2e1-fc63-70df-9d70-ab167455d3a3"
+          ],
+          "trial_seconds": 259200,
+          "retirement_points": "20"
+        },
+        "expected_revision": "W9iWq4btkZImvvX3U2llW_Ge0e_47v1WpP2AIzdDeqQ"
+      }
+    },
+    {
+      "method": "PUT",
+      "body": {
+        "kind": "model_trial",
+        "name": {
+          "zh_CN": null,
+          "en_US": "Page retry card 1789975985243"
+        },
+        "description": {
+          "zh_CN": null,
+          "en_US": "Pagination regression"
+        },
+        "exchange_price": "5",
+        "activation_ttl_seconds": 2592000,
+        "effect": {
+          "kind": "model_trial",
+          "model_ids": [
+            "01a0c2e1-fcb1-75f8-ba7e-d4bb4fce981d"
+          ],
+          "trial_seconds": 259200,
+          "retirement_points": "48"
+        },
+        "expected_revision": "vomDTnehG0WDkBTjirHFN25M_FcfX4oGPHie8ufD3-o"
+      }
+    },
+    {
+      "method": "PUT",
+      "body": {
+        "kind": "model_trial",
+        "name": {
+          "zh_CN": null,
+          "en_US": "Mixed-page card 1789975985243"
+        },
+        "description": {
+          "zh_CN": null,
+          "en_US": "Pagination regression"
+        },
+        "exchange_price": "5",
+        "activation_ttl_seconds": 2592000,
+        "effect": {
+          "kind": "model_trial",
+          "model_ids": [
+            "01a0c2e1-fc5e-7cbb-9c11-15d128ca83b7",
+            "01a0c2e1-fc63-70df-9d70-ab167455d3a3"
+          ],
+          "trial_seconds": 259200,
+          "retirement_points": "61"
+        },
+        "expected_revision": "weVhX1feggHYoT9kxHpGQ0eo9_fsza351rk7zGwosv4"
+      }
+    },
+    {
+      "method": "PUT",
+      "body": {
+        "kind": "model_trial",
+        "name": {
+          "zh_CN": null,
+          "en_US": "Mixed-page card 1789975985243"
+        },
+        "description": {
+          "zh_CN": null,
+          "en_US": "Pagination regression"
+        },
+        "exchange_price": "5",
+        "activation_ttl_seconds": 2592000,
+        "effect": {
+          "kind": "model_trial",
+          "model_ids": [
+            "01a0c2e1-fc5e-7cbb-9c11-15d128ca83b7",
+            "01a0c2e1-fc63-70df-9d70-ab167455d3a3",
+            "01a0c2e1-fcfa-7961-8036-8152a959e74f"
+          ],
+          "trial_seconds": 259200,
+          "retirement_points": "61"
+        },
+        "expected_revision": "RuOP4DmW0QXVzZxvLqScflL1Jwq9p9kchFeEmnPRBGc"
+      }
+    }
+  ],
+  "realProviderCalls": 0
+}

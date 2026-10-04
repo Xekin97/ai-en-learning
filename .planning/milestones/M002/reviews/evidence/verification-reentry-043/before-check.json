@@ -1,0 +1,89 @@
+{
+  "decision_id": "TRANSITION-M002-043",
+  "timestamp": "2026-09-28T08:58:49.643953+00:00",
+  "result": "PASS_FOR_INDEPENDENT_VERIFICATION",
+  "controls_sha256": {
+    ".planning/workflow/state.yaml": "398cec7bd1fb7dfb099c007c2ab0c2de15fbe4b8ce396e6435659e8294c843ed",
+    ".planning/workflow/history.yaml": "a601b39441b062c01537ed11d5af742a72c1ba792232f5068b0a7b1d33c5e12d",
+    ".planning/agt/project.yaml": "1ef109e934ca9d603040abac5ab2b8f7e7e688224022d2fe203f4592d5f58547",
+    ".planning/agt/agents.yaml": "89a36462c245185709ab38c3568d0db7911d5a2988760124d23b88076b09f9a1"
+  },
+  "profile_sha256": "9d9258ebc8cba13f5df2f8289fa81e973e60af9f10e5ca126fd83482aa0c050f",
+  "target": {
+    "id": "verification",
+    "completion_policy": "single-role",
+    "allowed_roles": [
+      "quality/base"
+    ],
+    "required_artifacts": [
+      ".planning/milestones/{milestone}/verification/coverage-matrix.md",
+      ".planning/milestones/{milestone}/verification/report.md",
+      ".planning/milestones/{milestone}/verification/ai-evaluation.md",
+      ".planning/milestones/{milestone}/verification/uat.md",
+      ".planning/milestones/{milestone}/handoffs/verification.md"
+    ],
+    "user_approval_required": true,
+    "transitions": [
+      "milestone-complete",
+      "product-planning",
+      "uiux-design",
+      "technical-design",
+      "implementation"
+    ]
+  },
+  "required_artifacts": [
+    ".planning/milestones/M002/implementation/backend-validation.md",
+    ".planning/milestones/M002/implementation/frontend-validation.md",
+    ".planning/milestones/M002/handoffs/backend-implementation.md",
+    ".planning/milestones/M002/handoffs/frontend-implementation.md"
+  ],
+  "source_checks": {
+    "frontend-cr019": {
+      "manifest": ".planning/milestones/M002/implementation/evidence/frontend-cr019/manifest.json",
+      "manifest_sha256": "1ec32b0724b215931c8c6c90970eeb509787cd18b77868126fbb3125b258e8c1",
+      "artifact_count": 46,
+      "source_manifest_sha256": "bae79f818dfbd09d4675f121bbbeee062e8abd6737d894200737a4ce52d98af5",
+      "source_files": 282,
+      "archive_matches": true
+    },
+    "backend-cr013": {
+      "manifest": ".planning/milestones/M002/implementation/evidence/backend-cr013/manifest.json",
+      "manifest_sha256": "13b5dccdeb84e1b958c0ac378b4add5ed4c6815e9024cc3cf0eb6fd19e99912d",
+      "artifact_count": 31,
+      "source_manifest_sha256": "c54307a04cecb3dd99cc13d64ae0fbcb6c1fca2c0538711af040d279bbe9b549",
+      "source_files": 288,
+      "archive_matches": true
+    }
+  },
+  "compiled_file_count": 444,
+  "developer_checks_passed": true,
+  "target_unit_tests": 7,
+  "browser": {
+    "pass": 8,
+    "fail": 0,
+    "runtime_events": 0,
+    "environment": "production Nuxt + contract mock + UI22 prototype; not independent QA"
+  },
+  "previous_frontend": {
+    "artifacts": 102,
+    "archived_by_exact_hash": [
+      ".planning/milestones/M002/implementation/frontend-worktree-plan.md",
+      ".planning/milestones/M002/implementation/frontend-validation.md",
+      ".planning/milestones/M002/handoffs/frontend-implementation.md"
+    ],
+    "remaining_unchanged": 99
+  },
+  "qa15": {
+    "manifest_sha256": "4551281c6fc4ad61d7468527a68f59c20069cc9ba570a7e8c4b84ec7238f0c97",
+    "artifacts": 171,
+    "result_preserved": "FAIL_TITLE_EDIT_ICON_FIDELITY"
+  },
+  "approved_archives_unchanged": 4,
+  "protected_file_count": 7552,
+  "names_valid_unique": true,
+  "authorization": "User replied 下一步 to explicitly proposed qa-quinn independent retest of CR019 then CR019/CR002 closure assessment; same target and scope.",
+  "developer_or_qa_tests_rerun": false,
+  "runtime_model_switch": "not_performed",
+  "input_tokens": "unknown",
+  "new_session_handoff_test": "not_executed"
+}

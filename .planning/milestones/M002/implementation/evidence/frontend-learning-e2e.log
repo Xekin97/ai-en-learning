@@ -1,0 +1,92 @@
+
+Running 4 tests using 1 worker
+
+(node:8450) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  1 [desktop] › tests/e2e/m002-learning.spec.ts:6:1 › ordinary workspace defaults, random selection, validated save and editable batch title (6.1s)
+(node:8814) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  2 [desktop] › tests/e2e/m002-learning.spec.ts:21:1 › gallery loads all cursors before counts, filters language and enters a locked manual-start workspace (1.1s)
+(node:8894) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  3 [mobile] › tests/e2e/m002-learning.spec.ts:6:1 › ordinary workspace defaults, random selection, validated save and editable batch title (5.7s)
+(node:9132) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  4 [mobile] › tests/e2e/m002-learning.spec.ts:21:1 › gallery loads all cursors before counts, filters language and enters a locked manual-start workspace (965ms)
+
+
+  1) [desktop] › tests/e2e/m002-learning.spec.ts:6:1 › ordinary workspace defaults, random selection, validated save and editable batch title 
+
+    Error: expect(locator).toHaveValue(expected) failed
+
+    Locator: getByLabel('Style', { exact: true })
+    Expected: "story"
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toHaveValue" with timeout 5000ms
+      - waiting for getByLabel('Style', { exact: true })
+
+
+       8 |  await page.goto('/create');await ready(page);
+       9 |  const settings=page.locator('details.settings');if(!await settings.evaluate(el=>(el as HTMLDetailsElement).open))await settings.locator('summary').click();
+    > 10 |  await expect(page.getByLabel(text('style'),{exact:true})).toHaveValue('story');await expect(page.getByLabel(text('length'),{exact:true})).toHaveValue('short');
+         |                                                            ^
+      11 |  await expect(page.getByLabel(text('model'),{exact:true})).toHaveValue('');await expect(page.getByLabel(text('explain'),{exact:true})).toHaveValue('');
+      12 |  await page.getByLabel(text('model'),{exact:true}).selectOption('model-fast');await page.getByLabel(text('explain'),{exact:true}).selectOption('en');
+      13 |  await page.getByRole('button',{name:text('random'),exact:true}).click();await expect(page.locator('.workspace .chips .chip')).toContainText('adapt');
+        at /Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/frontend/tests/e2e/m002-learning.spec.ts:10:60
+
+    Error Context: test-results/m002-learning-ordinary-wor-89de7-ve-and-editable-batch-title-desktop/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/m002-learning-ordinary-wor-89de7-ve-and-editable-batch-title-desktop/trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace test-results/m002-learning-ordinary-wor-89de7-ve-and-editable-batch-title-desktop/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [mobile] › tests/e2e/m002-learning.spec.ts:6:1 › ordinary workspace defaults, random selection, validated save and editable batch title 
+
+    Error: expect(locator).toHaveValue(expected) failed
+
+    Locator: getByLabel('Style', { exact: true })
+    Expected: "story"
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toHaveValue" with timeout 5000ms
+      - waiting for getByLabel('Style', { exact: true })
+
+
+       8 |  await page.goto('/create');await ready(page);
+       9 |  const settings=page.locator('details.settings');if(!await settings.evaluate(el=>(el as HTMLDetailsElement).open))await settings.locator('summary').click();
+    > 10 |  await expect(page.getByLabel(text('style'),{exact:true})).toHaveValue('story');await expect(page.getByLabel(text('length'),{exact:true})).toHaveValue('short');
+         |                                                            ^
+      11 |  await expect(page.getByLabel(text('model'),{exact:true})).toHaveValue('');await expect(page.getByLabel(text('explain'),{exact:true})).toHaveValue('');
+      12 |  await page.getByLabel(text('model'),{exact:true}).selectOption('model-fast');await page.getByLabel(text('explain'),{exact:true}).selectOption('en');
+      13 |  await page.getByRole('button',{name:text('random'),exact:true}).click();await expect(page.locator('.workspace .chips .chip')).toContainText('adapt');
+        at /Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/frontend/tests/e2e/m002-learning.spec.ts:10:60
+
+    Error Context: test-results/m002-learning-ordinary-wor-89de7-ve-and-editable-batch-title-mobile/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/m002-learning-ordinary-wor-89de7-ve-and-editable-batch-title-mobile/trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace test-results/m002-learning-ordinary-wor-89de7-ve-and-editable-batch-title-mobile/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2 failed
+    [desktop] › tests/e2e/m002-learning.spec.ts:6:1 › ordinary workspace defaults, random selection, validated save and editable batch title 
+    [mobile] › tests/e2e/m002-learning.spec.ts:6:1 › ordinary workspace defaults, random selection, validated save and editable batch title 
+  2 passed (16.2s)
+npm notice
+npm notice New major version of npm available! 10.9.8 -> 12.0.2
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.0.2
+npm notice To update run: npm install -g npm@12.0.2
+npm notice

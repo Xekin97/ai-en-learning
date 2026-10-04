@@ -1,0 +1,171 @@
+{
+  "results": [
+    {
+      "id": "FE8-01",
+      "name": "Real editor preserves a retired reference and persists 20 -> 35",
+      "result": "PASS"
+    },
+    {
+      "id": "FE8-02",
+      "name": "UI price change invalidates old preview; latest refund settles exactly once",
+      "result": "PASS"
+    },
+    {
+      "id": "FE8-03",
+      "name": "Mixed card retains both references and saves on a 320px viewport",
+      "result": "PASS"
+    },
+    {
+      "id": "FE8-04",
+      "name": "New cards exclude every retired reference and cannot save an empty selection",
+      "result": "FAIL",
+      "error": "Error: expect(locator).toHaveCount(expected) failed\n\nLocator:  locator('dialog[open]')\nExpected: 0\nReceived: 1\nTimeout:  5000ms\n\nCall log:\n  - Expect \"to.have.count\" with timeout 5000ms\n  - waiting for locator('dialog[open]')\n    14 × locator resolved to 1 element\n       - unexpected value \"1\"\n"
+    },
+    {
+      "id": "FE8-05",
+      "name": "Clearing existing model selection is still blocked by native validation",
+      "result": "PASS"
+    },
+    {
+      "id": "FE8-06",
+      "name": "Revision conflict keeps the draft and retained references for explicit retry",
+      "result": "FAIL",
+      "error": "Error: expect(locator).toBeVisible() failed\n\nLocator: locator('dialog[open]').locator('.notice.warn')\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n  - Expect \"to.be.visible\" with timeout 5000ms\n  - waiting for locator('dialog[open]').locator('.notice.warn')\n"
+    },
+    {
+      "id": "FE8-07",
+      "name": "A retired reference removed by saving cannot be newly added again",
+      "result": "PASS"
+    }
+  ],
+  "pageErrors": [],
+  "writes": [
+    {
+      "method": "PUT",
+      "body": {
+        "kind": "model_trial",
+        "name": {
+          "zh_CN": null,
+          "en_US": "Single retained card"
+        },
+        "description": {
+          "zh_CN": null,
+          "en_US": "Isolated regression"
+        },
+        "exchange_price": "5",
+        "activation_ttl_seconds": 2592000,
+        "effect": {
+          "kind": "model_trial",
+          "model_ids": [
+            "01a0c2aa-c146-75af-a8cf-9d56d0f05c86"
+          ],
+          "trial_seconds": 259200,
+          "retirement_points": "35"
+        },
+        "expected_revision": "f4Q-C3KY1OpA3uaIMotibo9SjzEvW3YXvvMBqmWRwJ0"
+      }
+    },
+    {
+      "method": "PUT",
+      "body": {
+        "kind": "model_trial",
+        "name": {
+          "zh_CN": null,
+          "en_US": "Mixed retained card"
+        },
+        "description": {
+          "zh_CN": null,
+          "en_US": "Isolated regression"
+        },
+        "exchange_price": "5",
+        "activation_ttl_seconds": 2592000,
+        "effect": {
+          "kind": "model_trial",
+          "model_ids": [
+            "01a0c2aa-c146-75af-a8cf-9d56d0f05c86",
+            "01a0c2aa-c14a-7819-ab98-0118aa51d42b"
+          ],
+          "trial_seconds": 259200,
+          "retirement_points": "45"
+        },
+        "expected_revision": "kdGr3OWhKir2qA1gh-X2bUdS2GmSXpO0fpmfTpOC_1A"
+      }
+    },
+    {
+      "method": "POST",
+      "body": {
+        "kind": "model_trial",
+        "name": {
+          "zh_CN": null,
+          "en_US": "New valid card"
+        },
+        "description": {
+          "zh_CN": null,
+          "en_US": null
+        },
+        "exchange_price": "5",
+        "activation_ttl_seconds": 2592000,
+        "effect": {
+          "kind": "model_trial",
+          "model_ids": [
+            "01a0c2aa-c14a-7819-ab98-0118aa51d42b"
+          ],
+          "trial_seconds": 259200,
+          "retirement_points": "10"
+        }
+      }
+    },
+    {
+      "method": "PUT",
+      "body": {
+        "kind": "model_trial",
+        "name": {
+          "zh_CN": null,
+          "en_US": "Mixed retained card"
+        },
+        "description": {
+          "zh_CN": null,
+          "en_US": "Isolated regression"
+        },
+        "exchange_price": "5",
+        "activation_ttl_seconds": 2592000,
+        "effect": {
+          "kind": "model_trial",
+          "model_ids": [
+            "01a0c2aa-c146-75af-a8cf-9d56d0f05c86",
+            "01a0c2aa-c14a-7819-ab98-0118aa51d42b"
+          ],
+          "trial_seconds": 259200,
+          "retirement_points": "55"
+        },
+        "expected_revision": "7zbkMMV1mwnaBV7Pk_-4jd-mMsO5Yua5ziMZ_Wpa4xc"
+      }
+    },
+    {
+      "method": "PUT",
+      "body": {
+        "kind": "model_trial",
+        "name": {
+          "zh_CN": null,
+          "en_US": "Mixed retained card"
+        },
+        "description": {
+          "zh_CN": null,
+          "en_US": "Isolated regression"
+        },
+        "exchange_price": "5",
+        "activation_ttl_seconds": 2592000,
+        "effect": {
+          "kind": "model_trial",
+          "model_ids": [
+            "01a0c2aa-c14a-7819-ab98-0118aa51d42b"
+          ],
+          "trial_seconds": 259200,
+          "retirement_points": "70"
+        },
+        "expected_revision": "5MAAuLosNdB8bmKV4bTIp4tm7MXsryszvXKFj0xWXEc"
+      }
+    }
+  ],
+  "realProviderCalls": 0
+}

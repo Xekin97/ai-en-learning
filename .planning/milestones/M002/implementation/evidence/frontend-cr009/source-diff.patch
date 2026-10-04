@@ -1,0 +1,172 @@
+--- before/frontend/app/runtime/stores/admin.ts
++++ after/frontend/app/runtime/stores/admin.ts
+@@ -77,6 +77,59 @@
+       if (accept()) state.value.credential = value;
+     }, true);
+   }
++  async function ensureModels(ids: readonly string[]): Promise<void> {
++    const missing = () =>
++      ids.some((id) => !state.value.models.some((model) => model.id === id));
++    if (!missing()) return;
++    await run(async (accept) => {
++      let cursor = state.value.models.length
++        ? state.value.nextModelCursor
++        : undefined;
++      const seen = new Set<string | undefined>();
++      let restarted = false,
++        replace = false;
++      const restart = () => {
++        cursor = undefined;
++        restarted = true;
++        replace = true;
++        seen.clear();
++      };
++      while (missing()) {
++        if (cursor === null && !restarted) restart();
++        if (cursor === null || seen.has(cursor))
++          throw new Error("Referenced models could not be loaded");
++        seen.add(cursor);
++        let page;
++        try {
++          page = await api.listModels(cursor);
++        } catch (error) {
++          if (!accept()) return;
++          const failure = normalizeFailure(error);
++          const staleCursor =
++            (failure.status === 409 && failure.code === "revision_conflict") ||
++            (failure.status === 422 &&
++              failure.code === "validation_failed" &&
++              failure.fields.cursor === "invalid");
++          if (cursor && !restarted && staleCursor) {
++            restart();
++            continue;
++          }
++          throw error;
++        }
++        if (!accept()) return;
++        state.value.models = [
++          ...new Map(
++            [...(replace ? [] : state.value.models), ...page.items].map(
++              (model) => [model.id, model],
++            ),
++          ).values(),
++        ];
++        state.value.nextModelCursor = page.nextCursor;
++        replace = false;
++        cursor = page.nextCursor;
++      }
++    });
++  }
+   async function createModel(input: {
+     displayName: string;
+     description: string | null;
+@@ -394,6 +447,7 @@
+   return {
+     state: readonly(state),
+     loadModels,
++    ensureModels,
+     saveCredential,
+     createModel,
+     saveModelDraft,
+--- before/frontend/app/presentation/components/admin/ItemDefinitions.vue
++++ after/frontend/app/presentation/components/admin/ItemDefinitions.vue
+@@ -51,6 +51,26 @@
+   unknownCreate = ref(false);
+ const draft = ref(empty()),
+   known = ref<DeepReadonly<ItemDefinitionModel> | null>(null);
++const referencedModelIds = computed(() => [
++  ...new Set([
++    ...baseline.value.modelIds,
++    ...draft.value.modelIds,
++    ...(known.value?.effect.kind === "model_trial"
++      ? known.value.effect.modelIds
++      : []),
++  ]),
++]);
++const modelsReady = computed(() =>
++  referencedModelIds.value.every((id) =>
++    admin.state.value.models.some((model) => model.id === id),
++  ),
++);
++const modelOptions = computed(() =>
++  admin.state.value.models.filter(
++    (model) => !model.retiredAt || referencedModelIds.value.includes(model.id),
++  ),
++);
++const loadReferencedModels = () => admin.ensureModels(referencedModelIds.value);
+ const names = (value: DeepReadonly<ItemDefinitionModel>) =>
+   value.name[language.value] ||
+   value.name[language.value === "zh" ? "en" : "zh"] ||
+@@ -98,6 +118,7 @@
+   draft.value = fields(item);
+   baseline.value = clone(draft.value);
+   open.value = true;
++  void loadReferencedModels();
+ }
+ 
+ function close() {
+@@ -115,7 +136,7 @@
+   return String(value).trim() && Number.isSafeInteger(n) && n > 0 ? n : null;
+ }
+ async function save() {
+-  if (unknownCreate.value) return;
++  if (unknownCreate.value || !modelsReady.value) return;
+   if (known.value) {
+     const current = fields(known.value);
+     draft.value = {
+@@ -170,6 +191,7 @@
+   if (result) open.value = false;
+   else if (d.id) {
+     known.value = items.state.value.items.find((i) => i.id === d.id) ?? null;
++    await loadReferencedModels();
+   } else if (
+     items.failure.value?.status === null ||
+     (items.failure.value?.status ?? 0) >= 500
+@@ -374,13 +396,25 @@
+             /></label>
+           </div>
+           <template v-if="draft.kind === 'model_trial'"
+-            ><label class="field"
++            ><AppError :failure="admin.state.value.failure" />
++            <button
++              v-if="!modelsReady && admin.state.value.failure"
++              class="btn small"
++              type="button"
++              @click="loadReferencedModels"
++            >
++              {{ copy("retry") }}
++            </button>
++            <label class="field"
+               ><span>{{ copy("model") }}</span
+-              ><select v-model="draft.modelIds" multiple required>
++              ><select
++                v-model="draft.modelIds"
++                multiple
++                required
++                :disabled="!modelsReady"
++              >
+                 <option
+-                  v-for="model in admin.state.value.models.filter(
+-                    (m) => !m.retiredAt || baseline.modelIds.includes(m.id),
+-                  )"
++                  v-for="model in modelOptions"
+                   :key="model.id"
+                   :value="model.id"
+                 >
+@@ -392,6 +426,7 @@
+               v-if="admin.state.value.nextModelCursor"
+               class="btn small"
+               type="button"
++              :disabled="!modelsReady || admin.state.value.status === 'loading'"
+               @click="admin.loadModels(true)"
+             >
+               {{ copy("a.more") }}</button
+@@ -441,7 +476,7 @@
+           class="btn primary"
+           form="item-definition-form"
+           type="submit"
+-          :disabled="items.busy.value || unknownCreate"
++          :disabled="items.busy.value || unknownCreate || !modelsReady"
+         >
+           {{ copy("save") }}
+         </button></template

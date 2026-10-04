@@ -1,0 +1,103 @@
+{
+  "results": [
+    {
+      "id": "en-US-items",
+      "result": "FAIL",
+      "error": "Error: expect(received).toBeGreaterThan(expected)\n\nExpected: > 0\nReceived:   0"
+    },
+    {
+      "id": "en-US-admin-users",
+      "result": "PASS"
+    },
+    {
+      "id": "en-US-admin-user-detail",
+      "result": "PASS"
+    },
+    {
+      "id": "zh-CN-items",
+      "result": "FAIL",
+      "error": "Error: expect(received).toBeGreaterThan(expected)\n\nExpected: > 0\nReceived:   0"
+    },
+    {
+      "id": "zh-CN-admin-users",
+      "result": "PASS"
+    },
+    {
+      "id": "zh-CN-admin-user-detail",
+      "result": "PASS"
+    }
+  ],
+  "samples": [
+    {
+      "id": "en-US-admin-users",
+      "route": "/admin/users?all=1",
+      "selector": "tbody tr td:nth-child(4)",
+      "width": 1440,
+      "browserTimeZone": "America/Los_Angeles",
+      "server": [
+        "Sep 28, 2026, 2:46 PM",
+        "Sep 28, 2026, 2:46 PM",
+        "Sep 28, 2026, 2:46 PM"
+      ],
+      "client": [
+        "Sep 28, 2026, 2:46 PM",
+        "Sep 28, 2026, 2:46 PM",
+        "Sep 28, 2026, 2:46 PM"
+      ]
+    },
+    {
+      "id": "en-US-admin-user-detail",
+      "route": "/admin/users/01a0e6c3-8035-7a18-9158-d153126453b6",
+      "selector": ".admin-facts > div:nth-child(4) dd, .admin-facts > div:nth-child(5) dd, .admin-facts > div:nth-child(6) dd",
+      "width": 1440,
+      "browserTimeZone": "America/Los_Angeles",
+      "server": [
+        "Sep 28, 2026, 2:46 PM",
+        "Sep 28, 2026, 3:57 PM",
+        "Sep 28, 2026, 3:54 PM"
+      ],
+      "client": [
+        "Sep 28, 2026, 2:46 PM",
+        "Sep 28, 2026, 3:57 PM",
+        "Sep 28, 2026, 3:54 PM"
+      ]
+    },
+    {
+      "id": "zh-CN-admin-users",
+      "route": "/admin/users?all=1",
+      "selector": "tbody tr td:nth-child(4)",
+      "width": 390,
+      "browserTimeZone": "America/Los_Angeles",
+      "server": [
+        "2026年9月28日 14:46",
+        "2026年9月28日 14:46",
+        "2026年9月28日 14:46"
+      ],
+      "client": [
+        "2026年9月28日 14:46",
+        "2026年9月28日 14:46",
+        "2026年9月28日 14:46"
+      ]
+    },
+    {
+      "id": "zh-CN-admin-user-detail",
+      "route": "/admin/users/01a0e6c3-8035-7a18-9158-d153126453b6",
+      "selector": ".admin-facts > div:nth-child(4) dd, .admin-facts > div:nth-child(5) dd, .admin-facts > div:nth-child(6) dd",
+      "width": 390,
+      "browserTimeZone": "America/Los_Angeles",
+      "server": [
+        "2026年9月28日 14:46",
+        "2026年9月28日 15:57",
+        "2026年9月28日 15:54"
+      ],
+      "client": [
+        "2026年9月28日 14:46",
+        "2026年9月28日 15:57",
+        "2026年9月28日 15:54"
+      ]
+    }
+  ],
+  "runtime": [],
+  "localProviderCalls": 0,
+  "realProviderCalls": 0
+}

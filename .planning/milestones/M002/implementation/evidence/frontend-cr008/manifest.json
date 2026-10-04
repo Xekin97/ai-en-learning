@@ -1,0 +1,171 @@
+{
+  "role": "frontend-claire",
+  "authorization": "TRANSITION-M002-023",
+  "milestone": "M002",
+  "result": "cr008_implemented_pending_qa",
+  "date": "2026-09-21T06:36:56.179854+00:00",
+  "design": "UI22/H01",
+  "git_head": "5da571b226635113c41cd9cb8c4f33433946fbad",
+  "committed": false,
+  "risk": "high: benefit configuration / retirement points",
+  "node": "24.21.0",
+  "pnpm": "10.33.0",
+  "source": "source.json",
+  "source_sha256": "33090089b0e1fb3de268d4e988189ec657c1adcd5f172db681c37b47e6a438a3",
+  "archive": "frontend-source.tar.gz",
+  "archive_sha256": "c33127b9083e51096588a3621f75cfa1bf060afa1458a2ce4c4810f64cd47a43",
+  "archive_round_trip": "274 source hashes match archive and working files",
+  "current_documents": {
+    "frontend/app/presentation/components/admin/ItemDefinitions.vue": "b6ae1769d809fdff8cf6bb20825462330a9315d7b04de75b567a48bcc9728035",
+    ".planning/milestones/M002/implementation/frontend-worktree-plan.md": "0ed58c62e6ec628675494ea16d13282e722d553ec3c0daa49f4b231f318fc366",
+    ".planning/milestones/M002/implementation/frontend-validation.md": "7f67689353df2145257dc1c6182b80655fc60abf52604f153089d267d5e9276f",
+    ".planning/milestones/M002/handoffs/frontend-implementation.md": "5e14272617c0229b0d0a28fcf05e0a60e16b85cdf14ed7c1402b54302435a8d4"
+  },
+  "checks": {
+    "unit": {
+      "command": "pnpm test",
+      "cwd": "frontend",
+      "log": "unit.log",
+      "sha256": "be32d3fe200ed8ce62d855f0956ec42c4211ba5722a357cdef259814daf75225",
+      "exit_code": 0
+    },
+    "typecheck": {
+      "command": "pnpm typecheck",
+      "cwd": "frontend",
+      "log": "typecheck.log",
+      "sha256": "88b5ca85f247e1da1f8c7040e2921c6f0d0be6624b6448d57703b6915f61afee",
+      "exit_code": 0
+    },
+    "lint": {
+      "command": "pnpm lint",
+      "cwd": "frontend",
+      "log": "lint-final.log",
+      "sha256": "d79f90b700e53bb47fb55aa02d5631c0b8861ccdc7bfffe30dd154cade851731",
+      "exit_code": 0
+    },
+    "boundaries": {
+      "command": "pnpm lint:boundaries",
+      "cwd": "frontend",
+      "log": "boundaries.log",
+      "sha256": "26c7c57c5f001e92b638fd8a1ed21adea0ced3b6c585c7a8becb0c2698586c8a",
+      "exit_code": 0
+    },
+    "format": {
+      "command": "pnpm format:check",
+      "cwd": "frontend",
+      "log": "format-final.log",
+      "sha256": "6e2b89fe281b4b2b62dd74106efb7bc9a4422bbe8a9b4f757a8dc380a026ae9f",
+      "exit_code": 0
+    },
+    "build": {
+      "command": "node ../.planning/milestones/M002/implementation/evidence/frontend-cr008/build.mjs",
+      "cwd": "frontend",
+      "log": "build.log",
+      "sha256": "32ac7b21cab8dc18e6fb453bb0207f86b33668682fdfb781e8f0ddc43f16ea60",
+      "exit_code": 0
+    },
+    "real-browser": {
+      "command": "node frontend/tests/integration/m002-retired-card.mjs .planning/milestones/M002/implementation/evidence/frontend-cr008/real-final",
+      "cwd": "product root",
+      "log": "real-final.log",
+      "sha256": "91ad58a8f2429557f31667177fefdbdb2f2b00302dafc18c86307db7cfe13e29",
+      "exit_code": 0
+    },
+    "diff-check": {
+      "command": "git diff --check -- frontend",
+      "cwd": "product root",
+      "log": "diff-check.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "exit_code": 0
+    }
+  },
+  "counts": {
+    "unit_files": 28,
+    "unit_cases": 299,
+    "new_unit_cases": 0,
+    "real_browser_cases": 7,
+    "source_files": 274
+  },
+  "protection": {
+    "checked": 5838,
+    "allowed_existing": [
+      "frontend/app/presentation/components/admin/ItemDefinitions.vue",
+      ".planning/milestones/M002/implementation/frontend-worktree-plan.md",
+      ".planning/milestones/M002/implementation/frontend-validation.md",
+      ".planning/milestones/M002/handoffs/frontend-implementation.md"
+    ],
+    "protected_count": 5834,
+    "unexpected_changed": [],
+    "missing": []
+  },
+  "link_check": {
+    "file": "links.json",
+    "checked": 61,
+    "broken": 0
+  },
+  "first_failures_preserved": [
+    "real-first/",
+    "real-first.log",
+    "real-second/",
+    "real-second.log"
+  ],
+  "evidence_sha256": {
+    "README.md": "af94cd169d1c869d353f05fde32bb5b5d4c581a3505fc009bdc6281c29bd0cbe",
+    "before-owned.tar.gz": "891da356f3c7fd01b703bfbdf7ab66943e7e6f73bfce14da4c4dce9949cee29b",
+    "before.json": "645404b9e81bd468917f6f7ee9d62d8107b5744efa01f67ecfb7f9c01bef68fd",
+    "boundaries.log": "26c7c57c5f001e92b638fd8a1ed21adea0ced3b6c585c7a8becb0c2698586c8a",
+    "build-location.json": "5acaff6ca5f037eb6ccdf9320ae12a036fc10ea3f644398af50cc05821bf9edd",
+    "build.log": "32ac7b21cab8dc18e6fb453bb0207f86b33668682fdfb781e8f0ddc43f16ea60",
+    "build.mjs": "2edde643a9670633b3c8be90b7a0907183fe66cce1cae5fff1f42b52640ae4a5",
+    "cleanup.json": "076d7768159e7b70718dfb0d52eb0949541e92946e58fbd925ee2600fd61c328",
+    "diff-check.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "format-final.log": "6e2b89fe281b4b2b62dd74106efb7bc9a4422bbe8a9b4f757a8dc380a026ae9f",
+    "format.log": "6e2b89fe281b4b2b62dd74106efb7bc9a4422bbe8a9b4f757a8dc380a026ae9f",
+    "frontend-source.tar.gz": "c33127b9083e51096588a3621f75cfa1bf060afa1458a2ce4c4810f64cd47a43",
+    "git-status-after.txt": "f41ce5132797de23be8584df8e1f6b4e6a26d4dc99208bf3afb0843dcc470282",
+    "git-status-before.txt": "0a8ed031c88dc1530673ae99bf1abe81c667ffcf7cce894b21e1181998b95ddc",
+    "links.json": "8565223b3a7e1641569cb86abfcb395052ef462d45691b69613b8bf9a6e2ebfc",
+    "lint-final.log": "d79f90b700e53bb47fb55aa02d5631c0b8861ccdc7bfffe30dd154cade851731",
+    "lint.log": "d79f90b700e53bb47fb55aa02d5631c0b8861ccdc7bfffe30dd154cade851731",
+    "production-server.mjs": "152d8d8afb8df75389925d246d20658ca5a6fcac3abcfd6ad298e302b4f61c74",
+    "prototype-editor.png": "eba149ba486b42137222d688518df61b9564fb685b6a38bf87dbe103faca28da",
+    "prototype-model-editor.png": "9d525b4ce1c1be915407935d382851a43b9c0033bd1d2bab9dd940940d068310",
+    "real-final/final.png": "2b3562a10df217f8b6db1d904f28d57f8fa24c7de737f8eaf5aaa7a19ad7ebb0",
+    "real-final/mixed-editor-320.json": "bb841ecb4696a9450cfdfe57b33b553b3374e14d823f450f85d482e81c277ab5",
+    "real-final/mixed-editor-320.png": "34dc686eac06bfcb157580e53ca10b41c270438e7051a7f3c58813b1b1c02a81",
+    "real-final/results.json": "b25e9b499085058f1c0e69a6b6c92911d49407ae8c37e8bc0b47db4ed8410f12",
+    "real-final/retired-editor-1440.json": "984a0dc2919c30d3c51f6bb0b10fd10886876b3ec9723faf4973cee4724a5663",
+    "real-final/retired-editor-1440.png": "4916ef8546093f908a6014e1ad597186956b1e063678b13145a1cf545088a8b7",
+    "real-final.log": "91ad58a8f2429557f31667177fefdbdb2f2b00302dafc18c86307db7cfe13e29",
+    "real-first/final.png": "cb9c3b8047859412e8abcaed51ad9ecefb4bd820c8849af4992e593d500d1836",
+    "real-first/results.json": "eab3acc9df3dbe59d2d41c649a4d7b7205417249f0d65553280c20111defae90",
+    "real-first/script.mjs": "39034802e450f305ca8ec2c619603ed3e45600e63341f0d5d5df31e9e3e70db8",
+    "real-first.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "real-second/final.png": "b6059168cc72302dae63df4d7800a755c43dfb65b7e3713a95be9d89d2296d45",
+    "real-second/mixed-editor-320.json": "9796adb2696d7404bc8b43a0ce60a1a3ffad79a55cdb713fef3a873d37ed3478",
+    "real-second/mixed-editor-320.png": "34dc686eac06bfcb157580e53ca10b41c270438e7051a7f3c58813b1b1c02a81",
+    "real-second/results.json": "a27ce29aac672bd8eb4891cdf16c7c1aa3a4643f16a0db23fca255692171cbdb",
+    "real-second/retired-editor-1440.json": "7a064a313837fcd38929b55cb957fc28d63954fbdd091b301382e29e2b352724",
+    "real-second/retired-editor-1440.png": "4916ef8546093f908a6014e1ad597186956b1e063678b13145a1cf545088a8b7",
+    "real-second/script.mjs": "23c1fca8a93ec61f861e95a075ae15d34aa3e5e768aedf816fcfe65f24fbd526",
+    "real-second.log": "680e9eec94c40985aa8ee7e8790edff0dcb23d6894b2509bdcaea0fc1b043b89",
+    "server.log": "9d8e806ea5091f8bde1086b4958df7e25f471080293e0ab6fe408e073f98948b",
+    "source-diff.patch": "4d948e1d436b43f63f4d456b96fb7f213016a3473f89799cce9b446c1e8e6690",
+    "source.json": "33090089b0e1fb3de268d4e988189ec657c1adcd5f172db681c37b47e6a438a3",
+    "stack-final-stop.log": "e053e26ab0e1a87ff9227f10a7742aaa43c01aca65bf8c495ad3e2bc2467e5b1",
+    "stack-first-stop.log": "e053e26ab0e1a87ff9227f10a7742aaa43c01aca65bf8c495ad3e2bc2467e5b1",
+    "stack-second-stop.log": "e053e26ab0e1a87ff9227f10a7742aaa43c01aca65bf8c495ad3e2bc2467e5b1",
+    "stack-second.log": "132b58a6869988705e604deba2c044d0bb8eceb748c64fbb68d593140a896a4d",
+    "stack-third.log": "132b58a6869988705e604deba2c044d0bb8eceb748c64fbb68d593140a896a4d",
+    "stack.log": "132b58a6869988705e604deba2c044d0bb8eceb748c64fbb68d593140a896a4d",
+    "typecheck.log": "88b5ca85f247e1da1f8c7040e2921c6f0d0be6624b6448d57703b6915f61afee",
+    "unit.log": "be32d3fe200ed8ce62d855f0956ec42c4211ba5722a357cdef259814daf75225"
+  },
+  "qa_state_unchanged": "QA02 FAIL; CR007/008 open pending independent verification; CR005/006 closed by TRANSITION-M002-022",
+  "limitations": [
+    "Chromium desktop/320px only this turn",
+    "No model pagination stress, real device, screen reader or full UIA rerun",
+    "No real AI, deployment, production database change or CR007 QA verification"
+  ],
+  "service_cleanup": "cleanup.json"
+}

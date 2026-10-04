@@ -1,0 +1,327 @@
+ M .planning/agt/agents.yaml
+ M .planning/agt/project.yaml
+ M .planning/workflow/history.yaml
+ M .planning/workflow/state.yaml
+ M backend/.env.example
+ M backend/README.md
+ M backend/cmd/wordweave-admin/main.go
+ M backend/go.mod
+ M backend/go.sum
+ M backend/internal/admin/service.go
+ M backend/internal/admin/user_detail.go
+ M backend/internal/admin/user_detail_integration_test.go
+ M backend/internal/admin/user_detail_test.go
+ M backend/internal/ai/capture_test.go
+ M backend/internal/ai/completion_prompt_test.go
+ M backend/internal/ai/continuation_test.go
+ M backend/internal/ai/cr039_test.go
+ M backend/internal/ai/credential_store.go
+ M backend/internal/ai/openrouter.go
+ M backend/internal/ai/prose_prompt_test.go
+ M backend/internal/ai/protocol_matrix_test.go
+ M backend/internal/ai/replay.go
+ M backend/internal/ai/replay_test.go
+ M backend/internal/ai/schema_boundaries_test.go
+ M backend/internal/ai/trace_test.go
+ M backend/internal/ai/transport_boundaries_test.go
+ M backend/internal/dbgen/entitlement.sql.go
+ M backend/internal/dbgen/identity.sql.go
+ M backend/internal/dbgen/models.go
+ M backend/internal/dbgen/querier.go
+ M backend/internal/entitlement/service.go
+ M backend/internal/generation/service.go
+ M backend/internal/httpapi/admin_handlers.go
+ M backend/internal/httpapi/admin_quota_integration_test.go
+ M backend/internal/httpapi/admin_users_integration_test.go
+ M backend/internal/httpapi/catalog_handlers.go
+ M backend/internal/httpapi/claimed_batch_delete_integration_test.go
+ M backend/internal/httpapi/contract_v13_test.go
+ M backend/internal/httpapi/contract_v14_test.go
+ M backend/internal/httpapi/cr039_mapping_integration_test.go
+ M backend/internal/httpapi/cr039_snapshot_integration_test.go
+ M backend/internal/httpapi/cr040_contract_test.go
+ M backend/internal/httpapi/draft_lifecycle_integration_test.go
+ M backend/internal/httpapi/draft_process_integration_test.go
+ M backend/internal/httpapi/e2e_integration_test.go
+ M backend/internal/httpapi/generation_evidence_integration_test.go
+ M backend/internal/httpapi/generation_handlers.go
+ M backend/internal/httpapi/generation_matrix_integration_test.go
+ M backend/internal/httpapi/generation_races_integration_test.go
+ M backend/internal/httpapi/identity_handlers.go
+ M backend/internal/httpapi/inline_mapping_integration_test.go
+ M backend/internal/httpapi/learning_handlers.go
+ M backend/internal/httpapi/middleware.go
+ M backend/internal/httpapi/observability_exits_integration_test.go
+ M backend/internal/httpapi/openrouter_live_integration_test.go
+ M backend/internal/httpapi/response.go
+ M backend/internal/httpapi/response_no_content_integration_test.go
+ M backend/internal/httpapi/review_handlers.go
+ M backend/internal/httpapi/server.go
+ M backend/internal/httpapi/stream_boundaries_integration_test.go
+ M backend/internal/identity/service.go
+ M backend/internal/learning/service.go
+ M backend/internal/maintenance/maintenance.go
+ M backend/internal/observability/metrics.go
+ M backend/internal/platform/config/config.go
+ M backend/internal/platform/postgres/entry_meaning_cutover_integration_test.go
+ M backend/internal/platform/postgres/migrate.go
+ M backend/internal/platform/postgres/migrate_integration_test.go
+ M backend/internal/review/attempt.go
+ M backend/internal/review/attempt_test.go
+ M backend/internal/review/service.go
+ M backend/internal/vocabulary/service.go
+ M frontend/README.md
+ M frontend/app/app.vue
+ M frontend/app/application/admin/user-detail.ts
+ M frontend/app/application/auth/return-intent.ts
+ M frontend/app/application/review/range-setup.ts
+ M frontend/app/application/shared/models.ts
+ M frontend/app/application/shared/ports.ts
+ M frontend/app/assets/css/application.css
+ M frontend/app/assets/css/theme.css
+ M frontend/app/composables/use-display-formatters.ts
+ M frontend/app/infrastructure/http/mappers/index.ts
+ M frontend/app/infrastructure/http/mappers/problem-mapper.ts
+ M frontend/app/infrastructure/http/repositories/api-repository.ts
+ M frontend/app/infrastructure/http/schemas/admin.ts
+ M frontend/app/infrastructure/http/schemas/common.ts
+ M frontend/app/infrastructure/http/schemas/generation.ts
+ M frontend/app/infrastructure/http/schemas/learning.ts
+ M frontend/app/infrastructure/http/schemas/review.ts
+ M frontend/app/infrastructure/http/schemas/session.ts
+ M frontend/app/layouts/admin.vue
+ M frontend/app/layouts/default.vue
+ M frontend/app/middleware/guest.ts
+ M frontend/app/middleware/learner.ts
+ D frontend/app/pages/account.vue
+ M frontend/app/pages/admin/models.vue
+ M frontend/app/pages/admin/plans.vue
+ M frontend/app/pages/admin/users/[userId]/batches/[batchId].vue
+ M frontend/app/pages/admin/users/[userId]/index.vue
+ M frontend/app/pages/admin/users/index.vue
+ M frontend/app/pages/create.vue
+ M frontend/app/pages/index.vue
+ M frontend/app/pages/library/[batchId].vue
+ M frontend/app/pages/library/index.vue
+ M frontend/app/pages/login.vue
+ M frontend/app/pages/register.vue
+ M frontend/app/pages/review/[sessionId].vue
+ M frontend/app/pages/review/index.vue
+ M frontend/app/presentation/components/AppDialog.vue
+ M frontend/app/presentation/components/AppError.vue
+ M frontend/app/presentation/components/AppHeader.vue
+ M frontend/app/presentation/components/AppIcon.vue
+ M frontend/app/presentation/components/BrandMark.vue
+ M frontend/app/presentation/components/review/ReviewRangeSetup.vue
+ M frontend/app/presentation/controllers/admin-user-detail.ts
+ M frontend/app/presentation/controllers/admin-user-search.ts
+ M frontend/app/presentation/controllers/learner-access.ts
+ M frontend/app/presentation/controllers/review-setup.ts
+ M frontend/app/presentation/review/cloze-group-style-registry.ts
+ M frontend/app/runtime/session/token-vault.ts
+ M frontend/app/runtime/stores/account.ts
+ M frontend/app/runtime/stores/admin.ts
+ M frontend/app/runtime/stores/generation.ts
+ M frontend/app/runtime/stores/library.ts
+ M frontend/app/runtime/stores/review.ts
+ M frontend/app/runtime/stores/session.ts
+ M frontend/i18n/locales/en-US.json
+ M frontend/i18n/locales/zh-CN.json
+ M frontend/nuxt.config.ts
+ M frontend/playwright.config.ts
+ M frontend/tests/e2e/mock-backend.mjs
+ M frontend/tests/unit/account-password-error.test.ts
+ M frontend/tests/unit/admin-detail-state.test.ts
+ M frontend/tests/unit/admin-layout-content.test.ts
+ M frontend/tests/unit/admin-quota-contract.test.ts
+ M frontend/tests/unit/auth-card-design.test.ts
+ M frontend/tests/unit/auth-reader-presenters.test.ts
+ M frontend/tests/unit/entry-meaning-contract.test.ts
+ M frontend/tests/unit/generation-lifecycle.test.ts
+ M frontend/tests/unit/private-session-state.test.ts
+ M frontend/tests/unit/review-range-setup.test.ts
+ M frontend/tests/unit/review-setup-presenter.test.ts
+ M frontend/tests/unit/strict-contracts.test.ts
+?? .planning/milestones/M002/
+?? backend/cmd/wordweave-admin/activate_growth.go
+?? backend/db/migrations/0008_m002_identity_vocabulary.sql
+?? backend/db/migrations/0009_m002_review_facts.sql
+?? backend/db/migrations/0010_m002_growth_items.sql
+?? backend/db/migrations/0011_m002_presets_quota.sql
+?? backend/db/migrations/0012_m002_notices_analytics.sql
+?? backend/db/migrations/0013_m002_operational_privileges.sql
+?? backend/internal/admin/benefits.go
+?? backend/internal/admin/groups.go
+?? backend/internal/admin/m002_integration_test.go
+?? backend/internal/admin/model_removal.go
+?? backend/internal/admin/models.go
+?? backend/internal/ai/usage.go
+?? backend/internal/ai/usage_test.go
+?? backend/internal/analytics/
+?? backend/internal/entitlement/quota_integration_test.go
+?? backend/internal/generation/charge.go
+?? backend/internal/generation/preset_catalog.go
+?? backend/internal/generation/preset_cleanup.go
+?? backend/internal/generation/preset_preview.go
+?? backend/internal/generation/preset_usage.go
+?? backend/internal/generation/presets.go
+?? backend/internal/generation/presets_integration_test.go
+?? backend/internal/generation/usage.go
+?? backend/internal/growth/
+?? backend/internal/httpapi/admin_benefits_handlers.go
+?? backend/internal/httpapi/analytics_events.go
+?? backend/internal/httpapi/analytics_handlers.go
+?? backend/internal/httpapi/configuration_decode.go
+?? backend/internal/httpapi/configuration_decode_test.go
+?? backend/internal/httpapi/group_handlers.go
+?? backend/internal/httpapi/growth_configuration_handlers.go
+?? backend/internal/httpapi/growth_handlers.go
+?? backend/internal/httpapi/inventory_handlers.go
+?? backend/internal/httpapi/item_definition_handlers.go
+?? backend/internal/httpapi/m002_analytics_integration_test.go
+?? backend/internal/httpapi/m002_harness_integration_test.go
+?? backend/internal/httpapi/m002_identity_configuration_integration_test.go
+?? backend/internal/httpapi/m002_item_retirement_integration_test.go
+?? backend/internal/httpapi/m002_presets_integration_test.go
+?? backend/internal/httpapi/makeup_handlers.go
+?? backend/internal/httpapi/model_removal_handlers.go
+?? backend/internal/httpapi/notice_handlers.go
+?? backend/internal/httpapi/preset_handlers.go
+?? backend/internal/httpapi/preset_preview_handlers.go
+?? backend/internal/identity/profile.go
+?? backend/internal/identity/profile_test.go
+?? backend/internal/learning/settlement.go
+?? backend/internal/learning/title.go
+?? backend/internal/maintenance/cleanup.go
+?? backend/internal/maintenance/m002_integration_test.go
+?? backend/internal/notices/
+?? backend/internal/observability/operations.go
+?? backend/internal/observability/operations_integration_test.go
+?? backend/internal/platform/business/
+?? backend/internal/platform/postgres/m002_integration_test.go
+?? backend/internal/platform/postgres/m002_restore_integration_test.go
+?? backend/internal/platform/postgres/m002_verify.go
+?? backend/internal/review/draft.go
+?? backend/internal/review/m002_integration_test.go
+?? backend/internal/review/session.go
+?? backend/internal/review/submit.go
+?? backend/internal/testdb/
+?? backend/internal/vocabulary/random_integration_test.go
+?? docs/
+?? frontend/app/application/admin/configuration.ts
+?? frontend/app/application/admin/growth-drafts.ts
+?? frontend/app/application/admin/growth.ts
+?? frontend/app/application/admin/items.ts
+?? frontend/app/application/admin/notices.ts
+?? frontend/app/application/admin/presets.ts
+?? frontend/app/application/admin/usage.ts
+?? frontend/app/application/admin/user-benefits.ts
+?? frontend/app/application/analytics/
+?? frontend/app/application/benefits/
+?? frontend/app/application/growth/
+?? frontend/app/application/notices/
+?? frontend/app/application/presets/
+?? frontend/app/application/review/models.ts
+?? frontend/app/composables/use-design-copy.ts
+?? frontend/app/infrastructure/http/mappers/admin-growth-mapper.ts
+?? frontend/app/infrastructure/http/mappers/admin-items-mapper.ts
+?? frontend/app/infrastructure/http/mappers/admin-notice-mapper.ts
+?? frontend/app/infrastructure/http/mappers/admin-presets-mapper.ts
+?? frontend/app/infrastructure/http/mappers/analytics-mapper.ts
+?? frontend/app/infrastructure/http/mappers/benefits-mapper.ts
+?? frontend/app/infrastructure/http/mappers/growth-mapper.ts
+?? frontend/app/infrastructure/http/mappers/notices-mapper.ts
+?? frontend/app/infrastructure/http/mappers/presets-mapper.ts
+?? frontend/app/infrastructure/http/mappers/review-mapper.ts
+?? frontend/app/infrastructure/http/repositories/admin-configuration-repository.ts
+?? frontend/app/infrastructure/http/repositories/admin-growth-repository.ts
+?? frontend/app/infrastructure/http/repositories/admin-items-repository.ts
+?? frontend/app/infrastructure/http/repositories/admin-notices-repository.ts
+?? frontend/app/infrastructure/http/repositories/admin-presets-repository.ts
+?? frontend/app/infrastructure/http/repositories/admin-user-benefits-repository.ts
+?? frontend/app/infrastructure/http/repositories/analytics-repository.ts
+?? frontend/app/infrastructure/http/repositories/benefits-repository.ts
+?? frontend/app/infrastructure/http/repositories/growth-repository.ts
+?? frontend/app/infrastructure/http/repositories/notices-repository.ts
+?? frontend/app/infrastructure/http/repositories/presets-repository.ts
+?? frontend/app/infrastructure/http/repositories/repository-support.ts
+?? frontend/app/infrastructure/http/repositories/review-repository.ts
+?? frontend/app/infrastructure/http/schemas/admin-growth.ts
+?? frontend/app/infrastructure/http/schemas/admin-items.ts
+?? frontend/app/infrastructure/http/schemas/admin-notices.ts
+?? frontend/app/infrastructure/http/schemas/admin-presets.ts
+?? frontend/app/infrastructure/http/schemas/admin-user-benefits.ts
+?? frontend/app/infrastructure/http/schemas/analytics.ts
+?? frontend/app/infrastructure/http/schemas/benefits.ts
+?? frontend/app/infrastructure/http/schemas/growth.ts
+?? frontend/app/infrastructure/http/schemas/notices.ts
+?? frontend/app/infrastructure/http/schemas/presets.ts
+?? frontend/app/infrastructure/storage/
+?? frontend/app/pages/account/
+?? frontend/app/pages/admin/analytics.vue
+?? frontend/app/pages/admin/growth.vue
+?? frontend/app/pages/admin/index.vue
+?? frontend/app/pages/admin/notices.vue
+?? frontend/app/pages/admin/presets.vue
+?? frontend/app/pages/explore.vue
+?? frontend/app/pages/notices.vue
+?? frontend/app/pages/trial/
+?? frontend/app/plugins/analytics.client.ts
+?? frontend/app/presentation/admin/item-type-names.ts
+?? frontend/app/presentation/analytics/
+?? frontend/app/presentation/components/AccountPage.vue
+?? frontend/app/presentation/components/AccountShell.vue
+?? frontend/app/presentation/components/AchievementCard.vue
+?? frontend/app/presentation/components/BatchParticipation.vue
+?? frontend/app/presentation/components/GenerationSettings.vue
+?? frontend/app/presentation/components/GenerationWorkspace.vue
+?? frontend/app/presentation/components/ItemEffect.vue
+?? frontend/app/presentation/components/ItemsWorkspace.vue
+?? frontend/app/presentation/components/MetricChart.vue
+?? frontend/app/presentation/components/NoticeHost.vue
+?? frontend/app/presentation/components/SafeNoticeBody.vue
+?? frontend/app/presentation/components/ToastHost.vue
+?? frontend/app/presentation/components/admin/
+?? frontend/app/presentation/components/review/LetterSlots.vue
+?? frontend/app/presentation/components/review/ReviewComparison.vue
+?? frontend/app/presentation/home/
+?? frontend/app/runtime/analytics/
+?? frontend/app/runtime/feedback/
+?? frontend/app/runtime/session/authentication-feedback.ts
+?? frontend/app/runtime/stores/admin-growth.ts
+?? frontend/app/runtime/stores/admin-items.ts
+?? frontend/app/runtime/stores/admin-notices.ts
+?? frontend/app/runtime/stores/admin-presets.ts
+?? frontend/app/runtime/stores/admin-user-benefits.ts
+?? frontend/app/runtime/stores/analytics-events.ts
+?? frontend/app/runtime/stores/analytics.ts
+?? frontend/app/runtime/stores/benefits.ts
+?? frontend/app/runtime/stores/feedback.ts
+?? frontend/app/runtime/stores/growth.ts
+?? frontend/app/runtime/stores/notices.ts
+?? frontend/app/runtime/stores/presets.ts
+?? frontend/design/
+?? frontend/public/
+?? frontend/scripts/
+?? frontend/tests/e2e/README.md
+?? frontend/tests/e2e/m002-admin-core.spec.ts
+?? frontend/tests/e2e/m002-admin-fixture.mjs
+?? frontend/tests/e2e/m002-admin-growth-fixture.mjs
+?? frontend/tests/e2e/m002-admin-growth.spec.ts
+?? frontend/tests/e2e/m002-admin-presets-fixture.mjs
+?? frontend/tests/e2e/m002-admin-presets.spec.ts
+?? frontend/tests/e2e/m002-foundation.spec.ts
+?? frontend/tests/e2e/m002-growth-fixture.mjs
+?? frontend/tests/e2e/m002-growth.spec.ts
+?? frontend/tests/e2e/m002-inheritance.spec.ts
+?? frontend/tests/e2e/m002-learning.spec.ts
+?? frontend/tests/e2e/m002-operations-fixture.mjs
+?? frontend/tests/e2e/m002-operations.spec.ts
+?? frontend/tests/e2e/m002-review-fixture.mjs
+?? frontend/tests/e2e/m002-review.spec.ts
+?? frontend/tests/fixtures/
+?? frontend/tests/integration/m002-browser-matrix.mjs
+?? frontend/tests/integration/m002-local-stack.py
+?? frontend/tests/integration/m002-mock-proxy.mjs
+?? frontend/tests/integration/m002-real-smoke.mjs
+?? frontend/tests/unit/m002-admin-contracts.test.ts

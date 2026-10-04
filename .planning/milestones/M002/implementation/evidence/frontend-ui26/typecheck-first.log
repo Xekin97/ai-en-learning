@@ -1,0 +1,21 @@
+
+> wordweave-frontend@0.1.0 typecheck /Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/frontend
+> nuxt typecheck
+
+app/pages/admin/presets.vue(607,10): error TS2379: Argument of type '{ targets: never[]; meaningLanguage: MeaningLanguage | undefined; }' is not assignable to parameter of type '{ readonly targets: readonly { entry: string; entryMeaning: string; }[]; readonly meaningLanguage?: MeaningLanguage; } & VNodeProps & AllowedComponentProps & ComponentCustomProps & Record<...>' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+  Type '{ targets: never[]; meaningLanguage: MeaningLanguage | undefined; }' is not assignable to type '{ readonly targets: readonly { entry: string; entryMeaning: string; }[]; readonly meaningLanguage?: MeaningLanguage; }' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+    Types of property 'meaningLanguage' are incompatible.
+      Type 'MeaningLanguage | undefined' is not assignable to type 'MeaningLanguage'.
+        Type 'undefined' is not assignable to type 'MeaningLanguage'.
+app/presentation/components/admin/ItemDefinitions.vue(411,17): error TS2322: Type 'string[]' is not assignable to type 'string | number | null | undefined'.
+app/presentation/components/NoticeHost.vue(23,4): error TS2379: Argument of type '{ id: string; open: boolean; title: string; bodyKey: string | undefined; meta: string | undefined; onClose: any; }' is not assignable to parameter of type '{ readonly id: string; readonly open: boolean; readonly title: string; readonly meta?: string; readonly bodyKey?: string; readonly onClose?: () => any; } & VNodeProps & AllowedComponentProps & ComponentCustomProps & Record<...>' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+  Type '{ id: string; open: boolean; title: string; bodyKey: string | undefined; meta: string | undefined; onClose: any; }' is not assignable to type '{ readonly id: string; readonly open: boolean; readonly title: string; readonly meta?: string; readonly bodyKey?: string; readonly onClose?: () => any; }' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+    Types of property 'meta' are incompatible.
+      Type 'string | undefined' is not assignable to type 'string'.
+        Type 'undefined' is not assignable to type 'string'.
+app/presentation/components/NoticeReadingDialog.vue(7,3): error TS2379: Argument of type '{ id: string; open: boolean; title: string; closeLabel: string; bodyKey: string | undefined; notice: true; onClose: any; }' is not assignable to parameter of type '{ readonly id: string; readonly open: boolean; readonly title: string; readonly closeLabel?: string; readonly notice?: boolean; readonly bodyKey?: string; readonly onClose?: () => any; } & VNodeProps & AllowedComponentProps & ComponentCustomProps & Record<...>' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+  Type '{ id: string; open: boolean; title: string; closeLabel: string; bodyKey: string | undefined; notice: true; onClose: any; }' is not assignable to type '{ readonly id: string; readonly open: boolean; readonly title: string; readonly closeLabel?: string; readonly notice?: boolean; readonly bodyKey?: string; readonly onClose?: () => any; }' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+    Types of property 'bodyKey' are incompatible.
+      Type 'string | undefined' is not assignable to type 'string'.
+        Type 'undefined' is not assignable to type 'string'.
+ ELIFECYCLE  Command failed with exit code 2.

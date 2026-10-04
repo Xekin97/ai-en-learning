@@ -1,0 +1,153 @@
+{
+  "operation": "transition-stage-precheck",
+  "status": "ready_for_user_confirmation",
+  "checked_at": "2026-09-18T06:48:54.741264+00:00",
+  "reviewer": "gatekeeper-owen",
+  "source": {
+    "milestone": "M002",
+    "stage": "product-planning",
+    "active_role": "product/to-c",
+    "active_agent": "product-maya",
+    "status": "active"
+  },
+  "target": {
+    "stage": "uiux-design",
+    "active_role": "uiux/base",
+    "active_agent": "designer-tony",
+    "product_version": "M002-PRODUCT-03"
+  },
+  "checks": [
+    {
+      "name": "locked_profile",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "proposed_transition_allowed",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "role_registry",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "required_artifacts_and_ready_declarations",
+      "status": "PASS",
+      "detail": [
+        ".planning/milestones/M002/product/overview.md",
+        ".planning/milestones/M002/product/data-assets.md",
+        ".planning/milestones/M002/product/abilities.md",
+        ".planning/milestones/M002/product/pages/index.md",
+        ".planning/milestones/M002/product/ai-behavior.md",
+        ".planning/milestones/M002/handoffs/product.md"
+      ]
+    },
+    {
+      "name": "review_snapshot_matches_current",
+      "status": "PASS",
+      "detail": {
+        "files": 12,
+        "mismatch": []
+      }
+    },
+    {
+      "name": "review_archive_digest",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "archive_members_match_manifest",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "recorded_product_checks",
+      "status": "PASS",
+      "detail": {
+        "count": 17,
+        "counts": {
+          "capabilities": 49,
+          "acceptance_ids": 49,
+          "data_identities": 32,
+          "current_pages": 25
+        },
+        "rerun": false
+      }
+    },
+    {
+      "name": "pending_decisions",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "open_changes_have_product_resolution",
+      "status": "PASS",
+      "detail": {
+        "M002-CR-001": {
+          "id": "M002-CR-001",
+          "status": "open",
+          "resolution_status": "ready_for_review",
+          "resolution_owner": "product-maya",
+          "resolution_version": "M002-PRODUCT-02",
+          "milestone": "M002",
+          "raised_by": "designer-tony",
+          "owner_stage": "product-planning",
+          "date": "2026-09-18"
+        },
+        "M002-CR-002": {
+          "id": "M002-CR-002",
+          "status": "open",
+          "resolution_status": "ready_for_review",
+          "resolution_owner": "product-maya",
+          "resolution_version": "M002-PRODUCT-03",
+          "milestone": "M002",
+          "raised_by": "user",
+          "owner_stage": "product-planning",
+          "date": "2026-09-18"
+        }
+      }
+    },
+    {
+      "name": "confirmation_records",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "frozen_history_design_controls_and_readonly_inputs_unchanged",
+      "status": "PASS",
+      "detail": {
+        "files": 236,
+        "mismatch": []
+      }
+    },
+    {
+      "name": "current_entry_points_exist",
+      "status": "PASS",
+      "detail": null
+    }
+  ],
+  "original_review_manifest": ".planning/milestones/M002/product/evidence/M002-PRODUCT-03-review.json",
+  "review_manifest_sha256": "ceb1c88483efd22c12a0e82aebafb4f6f5c4e3316027c1fc757139cee04d3f42",
+  "product_archive_sha256": "80df63c3b75eff95f7381a4f04692cbbc659eb1649de7681554aaaa37c4fafb9",
+  "control_sha256": {
+    ".planning/workflow/state.yaml": "e404efc63526e79707227c9b43e5391db8648e6d6d06603a642a6a0dd8f7267f",
+    ".planning/workflow/history.yaml": "4d44fc29630bc71207d636b38b734b2e717594ebc58e018bba35cdc45662a200",
+    ".planning/agt/agents.yaml": "69397a81d45c971834dd100087277a1bd112209ad5407fda82a0a02a53382d72",
+    ".planning/agt/project.yaml": "1cf3f0675b652b34014996e121be5fb4511584de9507db46d5b1ba268d2edd58"
+  },
+  "authorization": {
+    "request": "下一步",
+    "specific_product_and_transition_approval": "pending",
+    "prior_transition_004": "covers PRODUCT-02 only",
+    "transition_performed": false
+  },
+  "open_change_requests": "retain M002-CR-001 and M002-CR-002 until appropriate design acceptance; not blockers for proposed design reception after product approval",
+  "application_tests": "not_executed",
+  "model_calls": "not_executed",
+  "runtime_model_switch": "not_performed",
+  "usage": "unknown",
+  "review_path": ".planning/milestones/M002/reviews/product-title-revision.md",
+  "review_sha256": "ba289d8585dce6d3f8457a3056212b3a355c317e4819b3350d5a5846470d8d12"
+}

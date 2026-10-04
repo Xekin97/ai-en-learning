@@ -1,0 +1,38 @@
+[
+  {
+    "name": "unit",
+    "command": "pnpm --dir frontend exec vitest run tests/unit/account-menu.test.ts",
+    "exit_code": 0,
+    "log": "unit.log"
+  },
+  {
+    "name": "lint",
+    "command": "pnpm --dir frontend exec eslint app/presentation/components/AppHeader.vue tests/unit/account-menu.test.ts",
+    "exit_code": 0,
+    "log": "lint.log"
+  },
+  {
+    "name": "format",
+    "command": "pnpm --dir frontend exec prettier --check app/presentation/components/AppHeader.vue tests/unit/account-menu.test.ts",
+    "exit_code": 0,
+    "log": "format.log"
+  },
+  {
+    "name": "typecheck",
+    "command": "pnpm --dir frontend typecheck",
+    "exit_code": 0,
+    "log": "typecheck.log"
+  },
+  {
+    "name": "build",
+    "command": "cd frontend; node ../.planning/milestones/M002/implementation/evidence/frontend-cr020/build.mjs",
+    "exit_code": 0,
+    "log": "build.log"
+  },
+  {
+    "name": "browser",
+    "command": "python3 .planning/milestones/M002/implementation/evidence/frontend-cr020/run-browser.py",
+    "exit_code": 0,
+    "log": "browser.log"
+  }
+]

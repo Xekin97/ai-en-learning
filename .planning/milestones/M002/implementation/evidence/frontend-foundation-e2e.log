@@ -1,0 +1,92 @@
+
+Running 4 tests using 1 worker
+
+(node:84494) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  1 [desktop] › tests/e2e/m002-foundation.spec.ts:7:2 › UI22 home content and layout zh (1.1s)
+  ✓  2 [desktop] › tests/e2e/m002-foundation.spec.ts:7:2 › UI22 home content and layout en (586ms)
+  ✘  3 [desktop] › tests/e2e/m002-foundation.spec.ts:27:1 › UI22 manual story selection stops the automatic turn (5.3s)
+(node:84841) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  4 [desktop] › tests/e2e/m002-foundation.spec.ts:38:1 › explicit login shows welcome over reminder and keeps it for the designed duration (5.7s)
+
+
+  1) [desktop] › tests/e2e/m002-foundation.spec.ts:27:1 › UI22 manual story selection stops the automatic turn 
+
+    Error: expect(locator).toHaveAttribute(expected) failed
+
+    Locator:  locator('.home-card-stack')
+    Expected: "0"
+    Received: "1"
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveAttribute" with timeout 5000ms
+      - waiting for locator('.home-card-stack')
+        14 × locator resolved to <div data-top="1" data-motion="paused" class="home-card-stack">…</div>
+           - unexpected value "1"
+
+
+      29 |  const stack=page.locator('.home-card-stack');
+      30 |  await page.locator('.home-paper-back').focus();
+    > 31 |  await expect(stack).toHaveAttribute('data-top','0');
+         |                      ^
+      32 |  await expect(stack).toHaveAttribute('data-motion','paused');
+      33 |  await page.emulateMedia({reducedMotion:'reduce'});
+      34 |  await expect(stack).toHaveAttribute('data-motion','reduced');
+        at /Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/frontend/tests/e2e/m002-foundation.spec.ts:31:22
+
+    Error Context: test-results/m002-foundation-UI22-manua-ee972-on-stops-the-automatic-turn-desktop/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/m002-foundation-UI22-manua-ee972-on-stops-the-automatic-turn-desktop/trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace test-results/m002-foundation-UI22-manua-ee972-on-stops-the-automatic-turn-desktop/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [desktop] › tests/e2e/m002-foundation.spec.ts:38:1 › explicit login shows welcome over reminder and keeps it for the designed duration 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator:  locator('#toast')
+    Expected: visible
+    Received: hidden
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toBeVisible" with timeout 5000ms
+      - waiting for locator('#toast')
+        14 × locator resolved to <div class="" id="toast" role="status" popover="manual" aria-live="polite" aria-atomic="true"></div>
+           - unexpected value "hidden"
+
+
+      42 |  await page.locator('.auth-form button[type=submit]').click();
+      43 |  const toast=page.locator('#toast');
+    > 44 |  await expect(toast).toBeVisible();
+         |                      ^
+      45 |  await expect(toast.locator('.toast-days')).toHaveText('5 days');
+      46 |  await expect(page.locator('dialog[open]')).toBeVisible();
+      47 |  expect(await toast.evaluate(el=>el.parentElement?.tagName)).toBe('DIALOG');
+        at /Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/frontend/tests/e2e/m002-foundation.spec.ts:44:22
+
+    Error Context: test-results/m002-foundation-explicit-l-c5106-t-for-the-designed-duration-desktop/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/m002-foundation-explicit-l-c5106-t-for-the-designed-duration-desktop/trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace test-results/m002-foundation-explicit-l-c5106-t-for-the-designed-duration-desktop/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2 failed
+    [desktop] › tests/e2e/m002-foundation.spec.ts:27:1 › UI22 manual story selection stops the automatic turn 
+    [desktop] › tests/e2e/m002-foundation.spec.ts:38:1 › explicit login shows welcome over reminder and keeps it for the designed duration 
+  2 passed (14.2s)
+npm notice
+npm notice New major version of npm available! 10.9.8 -> 12.0.2
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.0.2
+npm notice To update run: npm install -g npm@12.0.2
+npm notice

@@ -1,0 +1,204 @@
+
+> wordweave-frontend@0.1.0 test /Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/frontend
+> vitest run
+
+
+ RUN  v4.1.11 /Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/frontend
+
+ ❯ tests/unit/auth-card-design.test.ts (22 tests | 20 failed) 23ms
+     × places a live status before the title for each safe target in en-US 9ms
+     × places a live status before the title for each safe target in zh-CN 1ms
+     × omits a hint for an absent or unsafe target: undefined 1ms
+     × omits a hint for an absent or unsafe target: "//outside.test" 1ms
+     × omits a hint for an absent or unsafe target: "https://outside.test" 1ms
+     × omits a hint for an absent or unsafe target: "/admin/users" 1ms
+     × omits a hint for an absent or unsafe target: "/review" 1ms
+     × gives a valid visitor claim its own leading notice 1ms
+     × does not let a stale claim suppress a safe return hint 1ms
+     × keeps the hint first while language, target and error change 1ms
+     × places a live status before the title for each safe target in en-US 1ms
+     × places a live status before the title for each safe target in zh-CN 1ms
+     × omits a hint for an absent or unsafe target: undefined 0ms
+     × omits a hint for an absent or unsafe target: "//outside.test" 0ms
+     × omits a hint for an absent or unsafe target: "https://outside.test" 0ms
+     × omits a hint for an absent or unsafe target: "/admin/users" 0ms
+     × omits a hint for an absent or unsafe target: "/review" 0ms
+     × gives a valid visitor claim its own leading notice 0ms
+     × does not let a stale claim suppress a safe return hint 0ms
+     × keeps the hint first while language, target and error change 0ms
+ ❯ tests/unit/auth-reader-presenters.test.ts (8 tests | 1 failed) 27ms
+     × drops unapproved query/hash fields and gives administrator routing priority 11ms
+ ❯ tests/unit/entry-meaning-contract.test.ts (9 tests | 2 failed) 13ms
+     × maps generation, shared learner/admin detail, first and next spelling items 5ms
+     × does not change persisted meaning when UI locale changes 1ms
+
+⎯⎯⎯⎯⎯⎯ Failed Tests 23 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/unit/auth-card-design.test.ts > CR037 login card order > places a live status before the title for each safe target in en-US
+ FAIL  tests/unit/auth-card-design.test.ts > CR037 login card order > places a live status before the title for each safe target in zh-CN
+ FAIL  tests/unit/auth-card-design.test.ts > CR037 login card order > omits a hint for an absent or unsafe target: undefined
+ FAIL  tests/unit/auth-card-design.test.ts > CR037 login card order > omits a hint for an absent or unsafe target: "//outside.test"
+ FAIL  tests/unit/auth-card-design.test.ts > CR037 login card order > omits a hint for an absent or unsafe target: "https://outside.test"
+ FAIL  tests/unit/auth-card-design.test.ts > CR037 login card order > omits a hint for an absent or unsafe target: "/admin/users"
+ FAIL  tests/unit/auth-card-design.test.ts > CR037 login card order > omits a hint for an absent or unsafe target: "/review"
+ FAIL  tests/unit/auth-card-design.test.ts > CR037 login card order > gives a valid visitor claim its own leading notice
+ FAIL  tests/unit/auth-card-design.test.ts > CR037 login card order > does not let a stale claim suppress a safe return hint
+ FAIL  tests/unit/auth-card-design.test.ts > CR037 login card order > keeps the hint first while language, target and error change
+ReferenceError: useDesignCopy is not defined
+ ❯ setup app/pages/login.vue:18:18
+     16| );
+     17| const { t } = useI18n();
+     18| const { copy } = useDesignCopy();
+       |                  ^
+     19| const continueHint = computed(() =>
+     20|   returnIntent.value
+ ❯ callWithErrorHandling node_modules/.pnpm/@vue+runtime-core@3.5.42/node_modules/@vue/runtime-core/dist/runtime-core.cjs.js:200:19
+ ❯ setupStatefulComponent node_modules/.pnpm/@vue+runtime-core@3.5.42/node_modules/@vue/runtime-core/dist/runtime-core.cjs.js:8231:25
+ ❯ setupComponent node_modules/.pnpm/@vue+runtime-core@3.5.42/node_modules/@vue/runtime-core/dist/runtime-core.cjs.js:8193:36
+ ❯ mountComponent node_modules/.pnpm/@vue+runtime-core@3.5.42/node_modules/@vue/runtime-core/dist/runtime-core.cjs.js:6087:7
+ ❯ processComponent node_modules/.pnpm/@vue+runtime-core@3.5.42/node_modules/@vue/runtime-core/dist/runtime-core.cjs.js:6053:9
+ ❯ patch node_modules/.pnpm/@vue+runtime-core@3.5.42/node_modules/@vue/runtime-core/dist/runtime-core.cjs.js:5558:11
+ ❯ ReactiveEffect.componentUpdateFn [as fn] node_modules/.pnpm/@vue+runtime-core@3.5.42/node_modules/@vue/runtime-core/dist/runtime-core.cjs.js:6201:11
+ ❯ ReactiveEffect.run node_modules/.pnpm/@vue+reactivity@3.5.42/node_modules/@vue/reactivity/dist/reactivity.cjs.js:268:19
+ ❯ setupRenderEffect node_modules/.pnpm/@vue+runtime-core@3.5.42/node_modules/@vue/runtime-core/dist/runtime-core.cjs.js:6329:5
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/23]⎯
+
+ FAIL  tests/unit/auth-card-design.test.ts > CR037 register card order > places a live status before the title for each safe target in en-US
+ FAIL  tests/unit/auth-card-design.test.ts > CR037 register card order > places a live status before the title for each safe target in zh-CN
+ FAIL  tests/unit/auth-card-design.test.ts > CR037 register card order > omits a hint for an absent or unsafe target: undefined
+ FAIL  tests/unit/auth-card-design.test.ts > CR037 register card order > omits a hint for an absent or unsafe target: "//outside.test"
+ FAIL  tests/unit/auth-card-design.test.ts > CR037 register card order > omits a hint for an absent or unsafe target: "https://outside.test"
+ FAIL  tests/unit/auth-card-design.test.ts > CR037 register card order > omits a hint for an absent or unsafe target: "/admin/users"
+ FAIL  tests/unit/auth-card-design.test.ts > CR037 register card order > omits a hint for an absent or unsafe target: "/review"
+ FAIL  tests/unit/auth-card-design.test.ts > CR037 register card order > gives a valid visitor claim its own leading notice
+ FAIL  tests/unit/auth-card-design.test.ts > CR037 register card order > does not let a stale claim suppress a safe return hint
+ FAIL  tests/unit/auth-card-design.test.ts > CR037 register card order > keeps the hint first while language, target and error change
+ReferenceError: useDesignCopy is not defined
+ ❯ setup app/pages/register.vue:19:18
+     17| );
+     18| const { t } = useI18n();
+     19| const { copy } = useDesignCopy();
+       |                  ^
+     20| const continueHint = computed(() =>
+     21|   returnIntent.value
+ ❯ callWithErrorHandling node_modules/.pnpm/@vue+runtime-core@3.5.42/node_modules/@vue/runtime-core/dist/runtime-core.cjs.js:200:19
+ ❯ setupStatefulComponent node_modules/.pnpm/@vue+runtime-core@3.5.42/node_modules/@vue/runtime-core/dist/runtime-core.cjs.js:8231:25
+ ❯ setupComponent node_modules/.pnpm/@vue+runtime-core@3.5.42/node_modules/@vue/runtime-core/dist/runtime-core.cjs.js:8193:36
+ ❯ mountComponent node_modules/.pnpm/@vue+runtime-core@3.5.42/node_modules/@vue/runtime-core/dist/runtime-core.cjs.js:6087:7
+ ❯ processComponent node_modules/.pnpm/@vue+runtime-core@3.5.42/node_modules/@vue/runtime-core/dist/runtime-core.cjs.js:6053:9
+ ❯ patch node_modules/.pnpm/@vue+runtime-core@3.5.42/node_modules/@vue/runtime-core/dist/runtime-core.cjs.js:5558:11
+ ❯ ReactiveEffect.componentUpdateFn [as fn] node_modules/.pnpm/@vue+runtime-core@3.5.42/node_modules/@vue/runtime-core/dist/runtime-core.cjs.js:6201:11
+ ❯ ReactiveEffect.run node_modules/.pnpm/@vue+reactivity@3.5.42/node_modules/@vue/reactivity/dist/reactivity.cjs.js:268:19
+ ❯ setupRenderEffect node_modules/.pnpm/@vue+runtime-core@3.5.42/node_modules/@vue/runtime-core/dist/runtime-core.cjs.js:6329:5
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/23]⎯
+
+ FAIL  tests/unit/auth-reader-presenters.test.ts > semantic authentication targets > drops unapproved query/hash fields and gives administrator routing priority
+AssertionError: expected { path: '/admin', query: {} } to deeply equal { path: '/admin/models', query: {} }
+
+- Expected
++ Received
+
+  {
+-   "path": "/admin/models",
++   "path": "/admin",
+    "query": {},
+  }
+
+ ❯ tests/unit/auth-reader-presenters.test.ts:59:53
+     57|       query: { batch: "batch-1" },
+     58|     });
+     59|     expect(authenticationDestination(true, intent)).toEqual({
+       |                                                     ^
+     60|       path: "/admin/models",
+     61|       query: {},
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/23]⎯
+
+ FAIL  tests/unit/entry-meaning-contract.test.ts > CR-040 original-entry meaning > maps generation, shared learner/admin detail, first and next spelling items
+ZodError: [
+  {
+    "expected": "number",
+    "code": "invalid_type",
+    "path": [
+      "title_max_length"
+    ],
+    "message": "Invalid input: expected number, received undefined"
+  },
+  {
+    "expected": "string",
+    "code": "invalid_type",
+    "path": [
+      "title"
+    ],
+    "message": "Invalid input: expected string, received undefined"
+  },
+  {
+    "expected": "string",
+    "code": "invalid_type",
+    "path": [
+      "title_revision"
+    ],
+    "message": "Invalid input: expected string, received undefined"
+  }
+]
+ ❯ tests/unit/entry-meaning-contract.test.ts:106:56
+    104|       generationValidatedEventSchema.parse(generation),
+    105|     );
+    106|     const detail = mapBatchDetailDto(batchDetailSchema.parse(batch));
+       |                                                        ^
+    107|     const admin = mapBatchDetailDto(
+    108|       adminBatchDetailEnvelopeSchema.parse({ data: { batch }, meta }).…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/23]⎯
+
+ FAIL  tests/unit/entry-meaning-contract.test.ts > CR-040 original-entry meaning > does not change persisted meaning when UI locale changes
+ZodError: [
+  {
+    "expected": "number",
+    "code": "invalid_type",
+    "path": [
+      "title_max_length"
+    ],
+    "message": "Invalid input: expected number, received undefined"
+  },
+  {
+    "expected": "string",
+    "code": "invalid_type",
+    "path": [
+      "title"
+    ],
+    "message": "Invalid input: expected string, received undefined"
+  },
+  {
+    "expected": "string",
+    "code": "invalid_type",
+    "path": [
+      "title_revision"
+    ],
+    "message": "Invalid input: expected string, received undefined"
+  }
+]
+ ❯ tests/unit/entry-meaning-contract.test.ts:142:56
+    140|
+    141|   it("does not change persisted meaning when UI locale changes", () =>…
+    142|     const detail = mapBatchDetailDto(batchDetailSchema.parse(batch));
+       |                                                        ^
+    143|     for (const locale of ["zh-CN", "en-US"]) {
+    144|       const view = presentAdminBatchReader(
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/23]⎯
+
+
+ Test Files  3 failed | 23 passed (26)
+      Tests  23 failed | 240 passed (263)
+   Start at  17:11:28
+   Duration  1.93s (transform 2.59s, setup 0ms, import 4.50s, tests 388ms, environment 7.69s)
+
+ ELIFECYCLE  Test failed. See above for more details.
+npm notice
+npm notice New major version of npm available! 10.9.8 -> 12.0.2
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.0.2
+npm notice To update run: npm install -g npm@12.0.2
+npm notice

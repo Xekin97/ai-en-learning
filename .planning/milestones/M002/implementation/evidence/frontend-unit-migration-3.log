@@ -1,0 +1,39 @@
+
+> wordweave-frontend@0.1.0 test /Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/frontend
+> vitest run
+
+
+ RUN  v4.1.11 /Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/frontend
+
+ ❯ tests/unit/auth-card-design.test.ts (20 tests | 2 failed) 91ms
+     × keeps identity form and contextual copy in separate aligned regions in en-US 4ms
+     × keeps identity form and contextual copy in separate aligned regions in zh-CN 5ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/unit/auth-card-design.test.ts > M002 register identity layout > keeps identity form and contextual copy in separate aligned regions in en-US
+ FAIL  tests/unit/auth-card-design.test.ts > M002 register identity layout > keeps identity form and contextual copy in separate aligned regions in zh-CN
+Error: Missing copy: m002.signup
+ ❯ translate tests/unit/auth-card-design.test.ts:26:40
+     24|       messages,
+     25|     );
+     26|   if (typeof value !== "string") throw new Error("Missing copy: " + ke…
+       |                                        ^
+     27|   return value;
+     28| }
+ ❯ tests/unit/auth-card-design.test.ts:91:11
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+
+ Test Files  1 failed | 25 passed (26)
+      Tests  2 failed | 259 passed (261)
+   Start at  18:06:49
+   Duration  2.18s (transform 3.06s, setup 0ms, import 5.78s, tests 408ms, environment 8.35s)
+
+ ELIFECYCLE  Test failed. See above for more details.
+npm notice
+npm notice New major version of npm available! 10.9.8 -> 12.0.2
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.0.2
+npm notice To update run: npm install -g npm@12.0.2
+npm notice

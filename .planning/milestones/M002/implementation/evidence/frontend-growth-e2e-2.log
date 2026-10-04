@@ -1,0 +1,86 @@
+
+Running 4 tests using 2 workers
+
+(node:52694) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:52693) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  2 [desktop] › tests/e2e/m002-growth.spec.ts:7:1 › growth preserves large amounts and literal descriptions, rewards require a click (1.3s)
+  ✓  1 [mobile] › tests/e2e/m002-growth.spec.ts:7:1 › growth preserves large amounts and literal descriptions, rewards require a click (1.4s)
+  ✘  3 [desktop] › tests/e2e/m002-growth.spec.ts:11:1 › plan activation requires confirmation and stale retirement price requires another preview (6.6s)
+  ✘  4 [mobile] › tests/e2e/m002-growth.spec.ts:11:1 › plan activation requires confirmation and stale retirement price requires another preview (6.7s)
+
+
+  1) [desktop] › tests/e2e/m002-growth.spec.ts:11:1 › plan activation requires confirmation and stale retirement price requires another preview 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: locator('dialog[open]').getByRole('button', { name: 'Retry', exact: true })
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" with timeout 5000ms
+      - waiting for locator('dialog[open]').getByRole('button', { name: 'Retry', exact: true })
+
+
+      11 | test('plan activation requires confirmation and stale retirement price requires another preview',async({page,request},info)=>{
+      12 |  let activates=0;page.on('request',r=>{if(r.url().endsWith('/activate'))activates++;});await page.goto('/account/items');await ready(page);await page.locator('.item-plan').getByRole('button').click();await expect(page.locator('dialog[open]')).toContainText(t('b.cover'));expect(activates).toBe(0);expect(await page.evaluate(()=>document.querySelector('script[data-nuxt-data]')?.textContent ?? '')).not.toContain('activation-private');await page.locator('dialog[open]').getByRole('button',{name:t('confirm'),exact:true}).click();await expect(page.locator('dialog[open]')).toHaveCount(0);expect(activates).toBe(1);
+    > 13 |  await page.locator('.item-model').getByRole('button').click();await request.post('http://127.0.0.1:38080/api/v1/__test/refund-price-change');await page.locator('dialog[open]').getByRole('button',{name:t('confirm'),exact:true}).click();await expect(page.locator('dialog[open]').getByRole('button',{name:t('retry'),exact:true})).toBeVisible();await page.locator('dialog[open]').getByRole('button',{name:t('retry'),exact:true}).click();await expect(page.locator('dialog[open]')).toContainText('40');await page.locator('dialog[open]').getByRole('button',{name:t('confirm'),exact:true}).click();await expect(page.locator('dialog[open]')).toHaveCount(0);await expect(page.locator('.item-model button')).toBeDisabled();await page.screenshot({path:`../.planning/milestones/M002/implementation/evidence/frontend-items-${info.project.name}.png`,fullPage:true});
+         |                                                                                                                                                                                                                                                                                                                                         ^
+      14 | });
+      15 |
+        at /Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/frontend/tests/e2e/m002-growth.spec.ts:13:329
+
+    Error Context: test-results/m002-growth-plan-activatio-5b22b-ce-requires-another-preview-desktop/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/m002-growth-plan-activatio-5b22b-ce-requires-another-preview-desktop/trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace test-results/m002-growth-plan-activatio-5b22b-ce-requires-another-preview-desktop/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [mobile] › tests/e2e/m002-growth.spec.ts:11:1 › plan activation requires confirmation and stale retirement price requires another preview 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: locator('dialog[open]').getByRole('button', { name: 'Retry', exact: true })
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" with timeout 5000ms
+      - waiting for locator('dialog[open]').getByRole('button', { name: 'Retry', exact: true })
+
+
+      11 | test('plan activation requires confirmation and stale retirement price requires another preview',async({page,request},info)=>{
+      12 |  let activates=0;page.on('request',r=>{if(r.url().endsWith('/activate'))activates++;});await page.goto('/account/items');await ready(page);await page.locator('.item-plan').getByRole('button').click();await expect(page.locator('dialog[open]')).toContainText(t('b.cover'));expect(activates).toBe(0);expect(await page.evaluate(()=>document.querySelector('script[data-nuxt-data]')?.textContent ?? '')).not.toContain('activation-private');await page.locator('dialog[open]').getByRole('button',{name:t('confirm'),exact:true}).click();await expect(page.locator('dialog[open]')).toHaveCount(0);expect(activates).toBe(1);
+    > 13 |  await page.locator('.item-model').getByRole('button').click();await request.post('http://127.0.0.1:38080/api/v1/__test/refund-price-change');await page.locator('dialog[open]').getByRole('button',{name:t('confirm'),exact:true}).click();await expect(page.locator('dialog[open]').getByRole('button',{name:t('retry'),exact:true})).toBeVisible();await page.locator('dialog[open]').getByRole('button',{name:t('retry'),exact:true}).click();await expect(page.locator('dialog[open]')).toContainText('40');await page.locator('dialog[open]').getByRole('button',{name:t('confirm'),exact:true}).click();await expect(page.locator('dialog[open]')).toHaveCount(0);await expect(page.locator('.item-model button')).toBeDisabled();await page.screenshot({path:`../.planning/milestones/M002/implementation/evidence/frontend-items-${info.project.name}.png`,fullPage:true});
+         |                                                                                                                                                                                                                                                                                                                                         ^
+      14 | });
+      15 |
+        at /Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/frontend/tests/e2e/m002-growth.spec.ts:13:329
+
+    Error Context: test-results/m002-growth-plan-activatio-5b22b-ce-requires-another-preview-mobile/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/m002-growth-plan-activatio-5b22b-ce-requires-another-preview-mobile/trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace test-results/m002-growth-plan-activatio-5b22b-ce-requires-another-preview-mobile/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2 failed
+    [desktop] › tests/e2e/m002-growth.spec.ts:11:1 › plan activation requires confirmation and stale retirement price requires another preview 
+    [mobile] › tests/e2e/m002-growth.spec.ts:11:1 › plan activation requires confirmation and stale retirement price requires another preview 
+  2 passed (8.9s)
+npm notice
+npm notice New major version of npm available! 10.9.8 -> 12.0.2
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.0.2
+npm notice To update run: npm install -g npm@12.0.2
+npm notice

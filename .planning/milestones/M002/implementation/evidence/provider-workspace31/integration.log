@@ -1,0 +1,34 @@
+=== RUN   TestGenericModelConnectionsAtomicAndIsolated
+--- PASS: TestGenericModelConnectionsAtomicAndIsolated (0.78s)
+=== RUN   TestProviderWorkspaceStableIdentityAtomicUpdatesAndFullListing
+--- PASS: TestProviderWorkspaceStableIdentityAtomicUpdatesAndFullListing (0.71s)
+PASS
+ok  	wordweave/internal/admin	2.820s
+=== RUN   TestGenericModelHTTPAuthorizationSaveAndExplicitProbe
+2026/10/02 00:15:36 INFO http_request request_id=req_KpjUGk2C8jJhhX37TTB5Yg method=GET route=/api/v1/bootstrap status=200 duration_ms=0
+2026/10/02 00:15:36 INFO http_request request_id=req_A-LYfI6P-B12uLuXaMjvIQ method=GET route=/api/v1/admin/* status=401 duration_ms=0
+2026/10/02 00:15:36 INFO http_request request_id=req_4jFSfkLTzl_jolgmtea_xA method=POST route=/api/v1/auth/login status=200 duration_ms=79
+2026/10/02 00:15:36 INFO http_request request_id=req_xbS4E6mbUpuwYt2R1jDzeA method=GET route=/api/v1/admin/groups status=200 duration_ms=3
+2026/10/02 00:15:36 INFO http_request request_id=req_4_IJCklKVsmDvkQeMwmcJQ method=POST route=/api/v1/admin/models status=201 duration_ms=2
+2026/10/02 00:15:36 INFO http_request request_id=req_BqZ4JW2O89WwwmazjmAQRw method=GET route=/api/v1/admin/groups status=200 duration_ms=1
+2026/10/02 00:15:36 INFO http_request request_id=req_njOhqbhEYyhaHwvMCLVJhA method=POST route=/api/v1/admin/models/batch status=201 duration_ms=1
+2026/10/02 00:15:36 INFO http_request request_id=req_5C8sbWOh_r4QyA1nHzQA2Q method=GET route=/api/v1/admin/groups status=200 duration_ms=1
+2026/10/02 00:15:36 INFO http_request request_id=req_8cHb-2dfBoc0eYJRceOtOA method=POST route=/api/v1/admin/models/batch status=409 duration_ms=0
+2026/10/02 00:15:36 INFO http_request request_id=req_bnS5cmxWF92gonH1abnf1w method=GET route=/api/v1/admin/model-connections status=200 duration_ms=0
+2026/10/02 00:15:36 INFO http_request request_id=req_AfTb5vMiFYLVpIDNByh45g method=GET route=/api/v1/admin/* status=404 duration_ms=0
+2026/10/02 00:15:36 INFO http_request request_id=req_Ee1jWJ_Hi348e_nVN5A7gA method=GET route=/api/v1/admin/groups status=200 duration_ms=1
+2026/10/02 00:15:36 INFO http_request request_id=req_5p3rqwV17PICYiqA7Ilw5w method=POST route=/api/v1/admin/model-providers status=403 duration_ms=0
+2026/10/02 00:15:36 INFO http_request request_id=req_IIv8uDapTw5QmNUf3_I3dg method=POST route=/api/v1/admin/model-providers status=201 duration_ms=1
+2026/10/02 00:15:36 INFO http_request request_id=req_T6D8oYHM6x4EyRq3lVGv0g method=PATCH route=/api/v1/admin/model-providers/{provider_id} status=200 duration_ms=2
+2026/10/02 00:15:36 INFO http_request request_id=req_lLSb0LdiVyrn-1i_sx60TQ method=GET route=/api/v1/admin/model-providers status=200 duration_ms=0
+2026/10/02 00:15:36 INFO http_request request_id=req_meI6fxoRs5Wz02-FjmxLew method=PATCH route=/api/v1/admin/model-providers/{provider_id} status=409 duration_ms=0
+2026/10/02 00:15:36 INFO http_request request_id=req_K-LLCScocS5v_nppsZLuUw method=POST route=/api/v1/admin/model-connection-test status=200 duration_ms=0
+2026/10/02 00:15:36 INFO http_request request_id=req_9p8jXc0RtA_gmJUqZuOu8w method=POST route=/api/v1/admin/model-connection-test status=200 duration_ms=0
+2026/10/02 00:15:36 INFO http_request request_id=req_G-ihrjIi208K3I_P10mrjg method=POST route=/api/v1/admin/model-connection-test status=200 duration_ms=0
+--- PASS: TestGenericModelHTTPAuthorizationSaveAndExplicitProbe (1.19s)
+PASS
+ok  	wordweave/internal/httpapi	2.446s
+=== RUN   TestGenericModelMigrationPreservesOriginalRows
+--- PASS: TestGenericModelMigrationPreservesOriginalRows (0.89s)
+PASS
+ok  	wordweave/internal/platform/postgres	2.406s

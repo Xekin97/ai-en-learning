@@ -1,0 +1,53 @@
+[
+  {
+    "name": "lint",
+    "command": [
+      "pnpm",
+      "exec",
+      "eslint",
+      "app/pages/library/[batchId].vue"
+    ],
+    "exit_code": 0,
+    "seconds": 1.98
+  },
+  {
+    "name": "format",
+    "command": [
+      "pnpm",
+      "exec",
+      "prettier",
+      "--check",
+      "app/pages/library/[batchId].vue"
+    ],
+    "exit_code": 0,
+    "seconds": 0.64
+  },
+  {
+    "name": "typecheck",
+    "command": [
+      "pnpm",
+      "typecheck"
+    ],
+    "exit_code": 0,
+    "seconds": 6.74
+  },
+  {
+    "name": "unit",
+    "command": [
+      "pnpm",
+      "test",
+      "tests/unit/library-title-editor.test.ts"
+    ],
+    "exit_code": 0,
+    "seconds": 1.19
+  },
+  {
+    "name": "build",
+    "command": [
+      "node",
+      "/Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/.planning/milestones/M002/implementation/evidence/frontend-cr019/build.mjs"
+    ],
+    "exit_code": 0,
+    "seconds": 14.07
+  }
+]

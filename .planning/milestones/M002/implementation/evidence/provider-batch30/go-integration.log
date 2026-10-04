@@ -1,0 +1,24 @@
+=== RUN   TestGenericModelConnectionsAtomicAndIsolated
+--- PASS: TestGenericModelConnectionsAtomicAndIsolated (0.76s)
+=== RUN   TestModelBatchOneConnectionAtomicRollbackAndRevision
+--- PASS: TestModelBatchOneConnectionAtomicRollbackAndRevision (0.91s)
+PASS
+ok  	wordweave/internal/admin	3.218s
+=== RUN   TestGenericModelHTTPAuthorizationSaveAndExplicitProbe
+2026/10/01 23:30:30 INFO http_request request_id=req_xxkdPPl5jipSkEVJ7lk51A method=GET route=/api/v1/bootstrap status=200 duration_ms=1
+2026/10/01 23:30:30 INFO http_request request_id=req_0RbSsntqChoF4CmaizINXg method=GET route=/api/v1/admin/* status=401 duration_ms=0
+2026/10/01 23:30:30 INFO http_request request_id=req_hhAG7o9eQAgWsawIieJOEg method=POST route=/api/v1/auth/login status=200 duration_ms=78
+2026/10/01 23:30:30 INFO http_request request_id=req_iGyNzjtd7ytrqfCfOBuDpA method=GET route=/api/v1/admin/groups status=200 duration_ms=2
+2026/10/01 23:30:30 INFO http_request request_id=req_UfKYpvdD-TRxu4qqUikPvQ method=POST route=/api/v1/admin/models status=201 duration_ms=2
+2026/10/01 23:30:30 INFO http_request request_id=req_hoIaCjTp7igEVlB7q4i7Cw method=GET route=/api/v1/admin/groups status=200 duration_ms=1
+2026/10/01 23:30:30 INFO http_request request_id=req_vginWIfKEYjNPA9hvJGbXg method=POST route=/api/v1/admin/models/batch status=201 duration_ms=1
+2026/10/01 23:30:30 INFO http_request request_id=req_HTuQjEqpPAyV8OUqUyLpEg method=GET route=/api/v1/admin/groups status=200 duration_ms=1
+2026/10/01 23:30:30 INFO http_request request_id=req_SCTOE9Pz_qMG_VP6upmqwQ method=POST route=/api/v1/admin/models/batch status=409 duration_ms=0
+2026/10/01 23:30:30 INFO http_request request_id=req_LlRVtXT_FK0Eg731Eg8XPw method=GET route=/api/v1/admin/model-connections status=200 duration_ms=0
+2026/10/01 23:30:30 INFO http_request request_id=req_3LXDbG5AYHBGFEEdBP9b1Q method=GET route=/api/v1/admin/* status=404 duration_ms=0
+2026/10/01 23:30:30 INFO http_request request_id=req__GhQeTEQ2PJxpEeY_kFEHg method=POST route=/api/v1/admin/model-connection-test status=200 duration_ms=0
+2026/10/01 23:30:30 INFO http_request request_id=req_JZNSv8pqPrglHetjQp-29w method=POST route=/api/v1/admin/model-connection-test status=200 duration_ms=0
+2026/10/01 23:30:30 INFO http_request request_id=req_vR61wPZDqkSbshNKxsL1wA method=POST route=/api/v1/admin/model-connection-test status=200 duration_ms=0
+--- PASS: TestGenericModelHTTPAuthorizationSaveAndExplicitProbe (1.02s)
+PASS
+ok  	wordweave/internal/httpapi	3.708s

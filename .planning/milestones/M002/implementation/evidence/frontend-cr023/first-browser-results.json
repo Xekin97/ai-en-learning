@@ -1,0 +1,800 @@
+{
+  "config": {
+    "argv": [
+      "/Users/xekinzhuo/.npm/_npx/387698761821791d/node_modules/node/bin/node",
+      "/Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/frontend/node_modules/@playwright/test/cli.js",
+      "test",
+      "--config",
+      "../.planning/milestones/M002/implementation/evidence/frontend-cr023/playwright.config.mjs"
+    ],
+    "configFile": "/Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/.planning/milestones/M002/implementation/evidence/frontend-cr023/playwright.config.mjs",
+    "rootDir": "/Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/frontend/tests/e2e",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/var/folders/z9/99ckxr957v901zwwc8jdk8640000gn/T/wordweave-cr023-browser-r8ow6ghq/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium1440",
+        "name": "chromium1440",
+        "testDir": "/Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/frontend/tests/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "m002-uat-fixes.spec.ts"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "/var/folders/z9/99ckxr957v901zwwc8jdk8640000gn/T/wordweave-cr023-browser-r8ow6ghq/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit390",
+        "name": "webkit390",
+        "testDir": "/Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/frontend/tests/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "m002-uat-fixes.spec.ts"
+        ],
+        "timeout": 30000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "json",
+        {
+          "outputFile": "/Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/.planning/milestones/M002/implementation/evidence/frontend-cr023/browser-results.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.62.1",
+    "workers": 1,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "m002-uat-fixes.spec.ts",
+      "file": "m002-uat-fixes.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "UAT23 en",
+          "file": "m002-uat-fixes.spec.ts",
+          "line": 22,
+          "column": 8,
+          "specs": [
+            {
+              "title": "authentication errors retain actionable text and use a compact outline icon",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium1440",
+                  "projectName": "chromium1440",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 590,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-09-29T03:04:06.068Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "2ea52b93de923e06df84-b9f6ece81f586f582416",
+              "file": "m002-uat-fixes.spec.ts",
+              "line": 34,
+              "column": 5
+            },
+            {
+              "title": "review and library go directly to authentication and return after login",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium1440",
+                  "projectName": "chromium1440",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 5249,
+                      "error": {
+                        "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveCount\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator:  locator('.auth-gate')\nExpected: \u001b[32m0\u001b[39m\nReceived: \u001b[31m1\u001b[39m\nTimeout:  5000ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveCount\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('.auth-gate')\u001b[22m\n\u001b[2m    14 × locator resolved to 1 element\u001b[22m\n\u001b[2m       - unexpected value \"1\"\u001b[22m\n",
+                        "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveCount\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator:  locator('.auth-gate')\nExpected: \u001b[32m0\u001b[39m\nReceived: \u001b[31m1\u001b[39m\nTimeout:  5000ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveCount\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('.auth-gate')\u001b[22m\n\u001b[2m    14 × locator resolved to 1 element\u001b[22m\n\u001b[2m       - unexpected value \"1\"\u001b[22m\n\n    at /Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/frontend/tests/e2e/m002-uat-fixes.spec.ts:115:50",
+                        "location": {
+                          "file": "/Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/frontend/tests/e2e/m002-uat-fixes.spec.ts",
+                          "column": 50,
+                          "line": 115
+                        },
+                        "snippet": "  113 |         );\n  114 |         await ready(page);\n> 115 |         await expect(page.locator(\".auth-gate\")).toHaveCount(0);\n      |                                                  ^\n  116 |         await expect(\n  117 |           page.locator('.auth-form input[autocomplete=\"username\"]'),\n  118 |         ).toBeVisible();"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/frontend/tests/e2e/m002-uat-fixes.spec.ts",
+                            "column": 50,
+                            "line": 115
+                          },
+                          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveCount\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator:  locator('.auth-gate')\nExpected: \u001b[32m0\u001b[39m\nReceived: \u001b[31m1\u001b[39m\nTimeout:  5000ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveCount\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('.auth-gate')\u001b[22m\n\u001b[2m    14 × locator resolved to 1 element\u001b[22m\n\u001b[2m       - unexpected value \"1\"\u001b[22m\n\n\n  113 |         );\n  114 |         await ready(page);\n> 115 |         await expect(page.locator(\".auth-gate\")).toHaveCount(0);\n      |                                                  ^\n  116 |         await expect(\n  117 |           page.locator('.auth-form input[autocomplete=\"username\"]'),\n  118 |         ).toBeVisible();\n    at /Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/frontend/tests/e2e/m002-uat-fixes.spec.ts:115:50"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-09-29T03:04:06.883Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/var/folders/z9/99ckxr957v901zwwc8jdk8640000gn/T/wordweave-cr023-browser-r8ow6ghq/test-results/m002-uat-fixes-UAT23-en-re-09fc8-tion-and-return-after-login-chromium1440/error-context.md"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "/var/folders/z9/99ckxr957v901zwwc8jdk8640000gn/T/wordweave-cr023-browser-r8ow6ghq/test-results/m002-uat-fixes-UAT23-en-re-09fc8-tion-and-return-after-login-chromium1440/trace.zip"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/frontend/tests/e2e/m002-uat-fixes.spec.ts",
+                        "column": 50,
+                        "line": 115
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "2ea52b93de923e06df84-04f743894ec1e053a663",
+              "file": "m002-uat-fixes.spec.ts",
+              "line": 95,
+              "column": 5
+            },
+            {
+              "title": "plan fields match the approved groups and persist confirmed edits",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium1440",
+                  "projectName": "chromium1440",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1031,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-09-29T03:04:12.416Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "2ea52b93de923e06df84-7f5d40a1fbcbf135e3ca",
+              "file": "m002-uat-fixes.spec.ts",
+              "line": 139,
+              "column": 5
+            },
+            {
+              "title": "login reminders preserve prototype hierarchy, pagination and welcome layer",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium1440",
+                  "projectName": "chromium1440",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 836,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-09-29T03:04:13.572Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "2ea52b93de923e06df84-fcbb3557ec3a1bb4be21",
+              "file": "m002-uat-fixes.spec.ts",
+              "line": 202,
+              "column": 5
+            },
+            {
+              "title": "authentication errors retain actionable text and use a compact outline icon",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit390",
+                  "projectName": "webkit390",
+                  "results": [
+                    {
+                      "workerIndex": 3,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1303,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-09-29T03:04:22.446Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "2ea52b93de923e06df84-7a1b1666fad9b08a5e1d",
+              "file": "m002-uat-fixes.spec.ts",
+              "line": 34,
+              "column": 5
+            },
+            {
+              "title": "review and library go directly to authentication and return after login",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit390",
+                  "projectName": "webkit390",
+                  "results": [
+                    {
+                      "workerIndex": 3,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 5508,
+                      "error": {
+                        "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveCount\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator:  locator('.auth-gate')\nExpected: \u001b[32m0\u001b[39m\nReceived: \u001b[31m1\u001b[39m\nTimeout:  5000ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveCount\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('.auth-gate')\u001b[22m\n\u001b[2m    14 × locator resolved to 1 element\u001b[22m\n\u001b[2m       - unexpected value \"1\"\u001b[22m\n",
+                        "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveCount\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator:  locator('.auth-gate')\nExpected: \u001b[32m0\u001b[39m\nReceived: \u001b[31m1\u001b[39m\nTimeout:  5000ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveCount\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('.auth-gate')\u001b[22m\n\u001b[2m    14 × locator resolved to 1 element\u001b[22m\n\u001b[2m       - unexpected value \"1\"\u001b[22m\n\n    at /Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/frontend/tests/e2e/m002-uat-fixes.spec.ts:115:50",
+                        "location": {
+                          "file": "/Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/frontend/tests/e2e/m002-uat-fixes.spec.ts",
+                          "column": 50,
+                          "line": 115
+                        },
+                        "snippet": "  113 |         );\n  114 |         await ready(page);\n> 115 |         await expect(page.locator(\".auth-gate\")).toHaveCount(0);\n      |                                                  ^\n  116 |         await expect(\n  117 |           page.locator('.auth-form input[autocomplete=\"username\"]'),\n  118 |         ).toBeVisible();"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/frontend/tests/e2e/m002-uat-fixes.spec.ts",
+                            "column": 50,
+                            "line": 115
+                          },
+                          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveCount\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator:  locator('.auth-gate')\nExpected: \u001b[32m0\u001b[39m\nReceived: \u001b[31m1\u001b[39m\nTimeout:  5000ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveCount\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('.auth-gate')\u001b[22m\n\u001b[2m    14 × locator resolved to 1 element\u001b[22m\n\u001b[2m       - unexpected value \"1\"\u001b[22m\n\n\n  113 |         );\n  114 |         await ready(page);\n> 115 |         await expect(page.locator(\".auth-gate\")).toHaveCount(0);\n      |                                                  ^\n  116 |         await expect(\n  117 |           page.locator('.auth-form input[autocomplete=\"username\"]'),\n  118 |         ).toBeVisible();\n    at /Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/frontend/tests/e2e/m002-uat-fixes.spec.ts:115:50"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-09-29T03:04:24.136Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/var/folders/z9/99ckxr957v901zwwc8jdk8640000gn/T/wordweave-cr023-browser-r8ow6ghq/test-results/m002-uat-fixes-UAT23-en-re-09fc8-tion-and-return-after-login-webkit390/error-context.md"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "/var/folders/z9/99ckxr957v901zwwc8jdk8640000gn/T/wordweave-cr023-browser-r8ow6ghq/test-results/m002-uat-fixes-UAT23-en-re-09fc8-tion-and-return-after-login-webkit390/trace.zip"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/frontend/tests/e2e/m002-uat-fixes.spec.ts",
+                        "column": 50,
+                        "line": 115
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "2ea52b93de923e06df84-4d7f81df50128e79daec",
+              "file": "m002-uat-fixes.spec.ts",
+              "line": 95,
+              "column": 5
+            },
+            {
+              "title": "plan fields match the approved groups and persist confirmed edits",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit390",
+                  "projectName": "webkit390",
+                  "results": [
+                    {
+                      "workerIndex": 4,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1345,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-09-29T03:04:29.921Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "2ea52b93de923e06df84-2f21f53d4774d28f76b1",
+              "file": "m002-uat-fixes.spec.ts",
+              "line": 139,
+              "column": 5
+            },
+            {
+              "title": "login reminders preserve prototype hierarchy, pagination and welcome layer",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit390",
+                  "projectName": "webkit390",
+                  "results": [
+                    {
+                      "workerIndex": 4,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1002,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-09-29T03:04:31.472Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "2ea52b93de923e06df84-96cc06eab08891286a12",
+              "file": "m002-uat-fixes.spec.ts",
+              "line": 202,
+              "column": 5
+            }
+          ]
+        },
+        {
+          "title": "UAT23 zh",
+          "file": "m002-uat-fixes.spec.ts",
+          "line": 22,
+          "column": 8,
+          "specs": [
+            {
+              "title": "authentication errors retain actionable text and use a compact outline icon",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium1440",
+                  "projectName": "chromium1440",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 508,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-09-29T03:04:14.413Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "2ea52b93de923e06df84-f8a03ae7b1a8aa1e82ca",
+              "file": "m002-uat-fixes.spec.ts",
+              "line": 34,
+              "column": 5
+            },
+            {
+              "title": "review and library go directly to authentication and return after login",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium1440",
+                  "projectName": "chromium1440",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 5180,
+                      "error": {
+                        "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveCount\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator:  locator('.auth-gate')\nExpected: \u001b[32m0\u001b[39m\nReceived: \u001b[31m1\u001b[39m\nTimeout:  5000ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveCount\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('.auth-gate')\u001b[22m\n\u001b[2m    14 × locator resolved to 1 element\u001b[22m\n\u001b[2m       - unexpected value \"1\"\u001b[22m\n",
+                        "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveCount\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator:  locator('.auth-gate')\nExpected: \u001b[32m0\u001b[39m\nReceived: \u001b[31m1\u001b[39m\nTimeout:  5000ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveCount\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('.auth-gate')\u001b[22m\n\u001b[2m    14 × locator resolved to 1 element\u001b[22m\n\u001b[2m       - unexpected value \"1\"\u001b[22m\n\n    at /Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/frontend/tests/e2e/m002-uat-fixes.spec.ts:115:50",
+                        "location": {
+                          "file": "/Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/frontend/tests/e2e/m002-uat-fixes.spec.ts",
+                          "column": 50,
+                          "line": 115
+                        },
+                        "snippet": "  113 |         );\n  114 |         await ready(page);\n> 115 |         await expect(page.locator(\".auth-gate\")).toHaveCount(0);\n      |                                                  ^\n  116 |         await expect(\n  117 |           page.locator('.auth-form input[autocomplete=\"username\"]'),\n  118 |         ).toBeVisible();"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/frontend/tests/e2e/m002-uat-fixes.spec.ts",
+                            "column": 50,
+                            "line": 115
+                          },
+                          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveCount\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator:  locator('.auth-gate')\nExpected: \u001b[32m0\u001b[39m\nReceived: \u001b[31m1\u001b[39m\nTimeout:  5000ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveCount\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('.auth-gate')\u001b[22m\n\u001b[2m    14 × locator resolved to 1 element\u001b[22m\n\u001b[2m       - unexpected value \"1\"\u001b[22m\n\n\n  113 |         );\n  114 |         await ready(page);\n> 115 |         await expect(page.locator(\".auth-gate\")).toHaveCount(0);\n      |                                                  ^\n  116 |         await expect(\n  117 |           page.locator('.auth-form input[autocomplete=\"username\"]'),\n  118 |         ).toBeVisible();\n    at /Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/frontend/tests/e2e/m002-uat-fixes.spec.ts:115:50"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-09-29T03:04:14.927Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/var/folders/z9/99ckxr957v901zwwc8jdk8640000gn/T/wordweave-cr023-browser-r8ow6ghq/test-results/m002-uat-fixes-UAT23-zh-re-997c4-tion-and-return-after-login-chromium1440/error-context.md"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "/var/folders/z9/99ckxr957v901zwwc8jdk8640000gn/T/wordweave-cr023-browser-r8ow6ghq/test-results/m002-uat-fixes-UAT23-zh-re-997c4-tion-and-return-after-login-chromium1440/trace.zip"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/frontend/tests/e2e/m002-uat-fixes.spec.ts",
+                        "column": 50,
+                        "line": 115
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "2ea52b93de923e06df84-8e9610cd57663a79f683",
+              "file": "m002-uat-fixes.spec.ts",
+              "line": 95,
+              "column": 5
+            },
+            {
+              "title": "plan fields match the approved groups and persist confirmed edits",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium1440",
+                  "projectName": "chromium1440",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 767,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-09-29T03:04:20.407Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "2ea52b93de923e06df84-82e84c91591fa612935d",
+              "file": "m002-uat-fixes.spec.ts",
+              "line": 139,
+              "column": 5
+            },
+            {
+              "title": "login reminders preserve prototype hierarchy, pagination and welcome layer",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium1440",
+                  "projectName": "chromium1440",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 857,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-09-29T03:04:21.306Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "2ea52b93de923e06df84-9d1354d0d26fb788bee3",
+              "file": "m002-uat-fixes.spec.ts",
+              "line": 202,
+              "column": 5
+            },
+            {
+              "title": "authentication errors retain actionable text and use a compact outline icon",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit390",
+                  "projectName": "webkit390",
+                  "results": [
+                    {
+                      "workerIndex": 4,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 688,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-09-29T03:04:32.481Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "2ea52b93de923e06df84-76ae569d599812534d43",
+              "file": "m002-uat-fixes.spec.ts",
+              "line": 34,
+              "column": 5
+            },
+            {
+              "title": "review and library go directly to authentication and return after login",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit390",
+                  "projectName": "webkit390",
+                  "results": [
+                    {
+                      "workerIndex": 4,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 5399,
+                      "error": {
+                        "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveCount\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator:  locator('.auth-gate')\nExpected: \u001b[32m0\u001b[39m\nReceived: \u001b[31m1\u001b[39m\nTimeout:  5000ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveCount\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('.auth-gate')\u001b[22m\n\u001b[2m    14 × locator resolved to 1 element\u001b[22m\n\u001b[2m       - unexpected value \"1\"\u001b[22m\n",
+                        "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveCount\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator:  locator('.auth-gate')\nExpected: \u001b[32m0\u001b[39m\nReceived: \u001b[31m1\u001b[39m\nTimeout:  5000ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveCount\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('.auth-gate')\u001b[22m\n\u001b[2m    14 × locator resolved to 1 element\u001b[22m\n\u001b[2m       - unexpected value \"1\"\u001b[22m\n\n    at /Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/frontend/tests/e2e/m002-uat-fixes.spec.ts:115:50",
+                        "location": {
+                          "file": "/Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/frontend/tests/e2e/m002-uat-fixes.spec.ts",
+                          "column": 50,
+                          "line": 115
+                        },
+                        "snippet": "  113 |         );\n  114 |         await ready(page);\n> 115 |         await expect(page.locator(\".auth-gate\")).toHaveCount(0);\n      |                                                  ^\n  116 |         await expect(\n  117 |           page.locator('.auth-form input[autocomplete=\"username\"]'),\n  118 |         ).toBeVisible();"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/frontend/tests/e2e/m002-uat-fixes.spec.ts",
+                            "column": 50,
+                            "line": 115
+                          },
+                          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveCount\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator:  locator('.auth-gate')\nExpected: \u001b[32m0\u001b[39m\nReceived: \u001b[31m1\u001b[39m\nTimeout:  5000ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveCount\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('.auth-gate')\u001b[22m\n\u001b[2m    14 × locator resolved to 1 element\u001b[22m\n\u001b[2m       - unexpected value \"1\"\u001b[22m\n\n\n  113 |         );\n  114 |         await ready(page);\n> 115 |         await expect(page.locator(\".auth-gate\")).toHaveCount(0);\n      |                                                  ^\n  116 |         await expect(\n  117 |           page.locator('.auth-form input[autocomplete=\"username\"]'),\n  118 |         ).toBeVisible();\n    at /Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/frontend/tests/e2e/m002-uat-fixes.spec.ts:115:50"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-09-29T03:04:33.176Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/var/folders/z9/99ckxr957v901zwwc8jdk8640000gn/T/wordweave-cr023-browser-r8ow6ghq/test-results/m002-uat-fixes-UAT23-zh-re-997c4-tion-and-return-after-login-webkit390/error-context.md"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "/var/folders/z9/99ckxr957v901zwwc8jdk8640000gn/T/wordweave-cr023-browser-r8ow6ghq/test-results/m002-uat-fixes-UAT23-zh-re-997c4-tion-and-return-after-login-webkit390/trace.zip"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/frontend/tests/e2e/m002-uat-fixes.spec.ts",
+                        "column": 50,
+                        "line": 115
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "2ea52b93de923e06df84-329849358de5513d5024",
+              "file": "m002-uat-fixes.spec.ts",
+              "line": 95,
+              "column": 5
+            },
+            {
+              "title": "plan fields match the approved groups and persist confirmed edits",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit390",
+                  "projectName": "webkit390",
+                  "results": [
+                    {
+                      "workerIndex": 5,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1410,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-09-29T03:04:38.859Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "2ea52b93de923e06df84-556abdebe95a5d9373a6",
+              "file": "m002-uat-fixes.spec.ts",
+              "line": 139,
+              "column": 5
+            },
+            {
+              "title": "login reminders preserve prototype hierarchy, pagination and welcome layer",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit390",
+                  "projectName": "webkit390",
+                  "results": [
+                    {
+                      "workerIndex": 5,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 986,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-09-29T03:04:40.467Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "2ea52b93de923e06df84-634e18b3a0e9026f043d",
+              "file": "m002-uat-fixes.spec.ts",
+              "line": 202,
+              "column": 5
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-09-29T03:04:05.755Z",
+    "duration": 35723.139,
+    "expected": 12,
+    "skipped": 0,
+    "unexpected": 4,
+    "flaky": 0
+  }
+}

@@ -1,0 +1,63 @@
+=== RUN   TestM002PresetDraftPreviewPublicationIsolation
+--- PASS: TestM002PresetDraftPreviewPublicationIsolation (0.85s)
+=== RUN   TestM002PresetExceptionChargesOwnerAndKeepsRunningSnapshot
+--- PASS: TestM002PresetExceptionChargesOwnerAndKeepsRunningSnapshot (0.79s)
+=== RUN   TestM002PresetCleanupKeepsPublishedPreviewActiveCallsAndUsage
+--- PASS: TestM002PresetCleanupKeepsPublishedPreviewActiveCallsAndUsage (0.80s)
+=== RUN   TestM002PublicPresetQueryPlans
+    presets_integration_test.go:380: published_page Limit  (cost=31.21..31.22 rows=1 width=24) (actual time=0.013..0.014 rows=1.00 loops=1)
+    presets_integration_test.go:380: published_page   Buffers: shared hit=2
+    presets_integration_test.go:380: published_page   ->  Sort  (cost=31.21..31.22 rows=1 width=24) (actual time=0.013..0.013 rows=1.00 loops=1)
+    presets_integration_test.go:380: published_page         Sort Key: v.created_at DESC, p.id
+    presets_integration_test.go:380: published_page         Sort Method: quicksort  Memory: 25kB
+    presets_integration_test.go:380: published_page         Buffers: shared hit=2
+    presets_integration_test.go:380: published_page         ->  Hash Join  (cost=13.39..31.20 rows=1 width=24) (actual time=0.007..0.007 rows=1.00 loops=1)
+    presets_integration_test.go:380: published_page               Hash Cond: (p.published_version_id = v.id)
+    presets_integration_test.go:380: published_page               Buffers: shared hit=2
+    presets_integration_test.go:380: published_page               ->  Seq Scan on presets p  (cost=0.00..16.90 rows=345 width=32) (actual time=0.002..0.002 rows=1.00 loops=1)
+    presets_integration_test.go:380: published_page                     Filter: listed
+    presets_integration_test.go:380: published_page                     Buffers: shared hit=1
+    presets_integration_test.go:380: published_page               ->  Hash  (cost=13.38..13.38 rows=1 width=24) (actual time=0.003..0.003 rows=1.00 loops=1)
+    presets_integration_test.go:380: published_page                     Buckets: 1024  Batches: 1  Memory Usage: 9kB
+    presets_integration_test.go:380: published_page                     Buffers: shared hit=1
+    presets_integration_test.go:380: published_page                     ->  Seq Scan on preset_versions v  (cost=0.00..13.38 rows=1 width=24) (actual time=0.003..0.003 rows=1.00 loops=1)
+    presets_integration_test.go:380: published_page                           Filter: (meaning_language = 'en'::text)
+    presets_integration_test.go:380: published_page                           Buffers: shared hit=1
+    presets_integration_test.go:380: published_page Planning:
+    presets_integration_test.go:380: published_page   Buffers: shared hit=12
+    presets_integration_test.go:380: published_page Planning Time: 0.041 ms
+    presets_integration_test.go:380: published_page Execution Time: 0.020 ms
+    presets_integration_test.go:380: full_sample Nested Loop  (cost=8.33..33.24 rows=1 width=245) (actual time=0.022..0.025 rows=1.00 loops=1)
+    presets_integration_test.go:380: full_sample   Buffers: shared hit=8
+    presets_integration_test.go:380: full_sample   ->  Hash Right Join  (cost=8.18..25.04 rows=1 width=228) (actual time=0.017..0.019 rows=1.00 loops=1)
+    presets_integration_test.go:380: full_sample         Hash Cond: ((p.id = v.preview_id) AND (p.config_hash = v.config_hash))
+    presets_integration_test.go:380: full_sample         Join Filter: (ANY ((p.run_id = (hashed SubPlan 2).col1) AND (v.configuration = (hashed SubPlan 2).col2)))
+    presets_integration_test.go:380: full_sample         Buffers: shared hit=6
+    presets_integration_test.go:380: full_sample         ->  Seq Scan on preset_previews p  (cost=0.00..14.50 rows=450 width=104) (actual time=0.001..0.001 rows=1.00 loops=1)
+    presets_integration_test.go:380: full_sample               Buffers: shared hit=1
+    presets_integration_test.go:380: full_sample         ->  Hash  (cost=8.17..8.17 rows=1 width=172) (actual time=0.004..0.004 rows=1.00 loops=1)
+    presets_integration_test.go:380: full_sample               Buckets: 1024  Batches: 1  Memory Usage: 9kB
+    presets_integration_test.go:380: full_sample               Buffers: shared hit=2
+    presets_integration_test.go:380: full_sample               ->  Index Scan using preset_versions_pkey on preset_versions v  (cost=0.15..8.17 rows=1 width=172) (actual time=0.003..0.003 rows=1.00 loops=1)
+    presets_integration_test.go:380: full_sample                     Index Cond: (id = '80f45da2-b75d-4367-aae2-d46cb1dc0330'::uuid)
+    presets_integration_test.go:380: full_sample                     Index Searches: 1
+    presets_integration_test.go:380: full_sample                     Buffers: shared hit=2
+    presets_integration_test.go:380: full_sample         SubPlan 2
+    presets_integration_test.go:380: full_sample           ->  Nested Loop  (cost=0.15..21.72 rows=1 width=48) (actual time=0.005..0.005 rows=1.00 loops=1)
+    presets_integration_test.go:380: full_sample                 Buffers: shared hit=3
+    presets_integration_test.go:380: full_sample                 ->  Seq Scan on preset_preview_runs pr  (cost=0.00..13.50 rows=1 width=32) (actual time=0.001..0.001 rows=1.00 loops=1)
+    presets_integration_test.go:380: full_sample                       Filter: (status = 'valid'::text)
+    presets_integration_test.go:380: full_sample                       Buffers: shared hit=1
+    presets_integration_test.go:380: full_sample                 ->  Index Scan using preset_versions_pkey on preset_versions original  (cost=0.15..8.17 rows=1 width=48) (actual time=0.003..0.003 rows=1.00 loops=1)
+    presets_integration_test.go:380: full_sample                       Index Cond: (id = pr.version_id)
+    presets_integration_test.go:380: full_sample                       Index Searches: 1
+    presets_integration_test.go:380: full_sample                       Buffers: shared hit=2
+    presets_integration_test.go:380: full_sample   ->  Index Scan using ai_models_pkey on ai_models m  (cost=0.15..8.17 rows=1 width=57) (actual time=0.004..0.004 rows=1.00 loops=1)
+    presets_integration_test.go:380: full_sample         Index Cond: (id = v.model_id)
+    presets_integration_test.go:380: full_sample         Index Searches: 1
+    presets_integration_test.go:380: full_sample         Buffers: shared hit=2
+    presets_integration_test.go:380: full_sample Planning Time: 0.129 ms
+    presets_integration_test.go:380: full_sample Execution Time: 0.043 ms
+--- PASS: TestM002PublicPresetQueryPlans (0.99s)
+PASS
+ok  	wordweave/internal/generation	4.774s

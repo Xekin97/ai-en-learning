@@ -1,0 +1,14 @@
+
+> wordweave-frontend@0.1.0 typecheck /Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/frontend
+> nuxt typecheck
+
+app/pages/review/[sessionId].vue(25,521): error TS2345: Argument of type '{ readonly questionId: string; readonly entryMeaning: string; readonly slots: readonly ({ readonly kind: "letters"; readonly count: number; } | { readonly kind: "separator"; readonly text: string; })[]; readonly hint: readonly ({ ...; } | { ...; })[]; }' is not assignable to parameter of type 'Readonly<WordQuestion>'.
+  Types of property 'slots' are incompatible.
+    The type 'readonly ({ readonly kind: "letters"; readonly count: number; } | { readonly kind: "separator"; readonly text: string; })[]' is 'readonly' and cannot be assigned to the mutable type '({ kind: "letters"; count: number; } | { kind: "separator"; text: string; })[]'.
+app/presentation/components/review/LetterSlots.vue(12,445): error TS2322: Type 'true' is not assignable to type 'false'.
+ ELIFECYCLE  Command failed with exit code 2.
+npm notice
+npm notice New major version of npm available! 10.9.8 -> 12.0.2
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.0.2
+npm notice To update run: npm install -g npm@12.0.2
+npm notice

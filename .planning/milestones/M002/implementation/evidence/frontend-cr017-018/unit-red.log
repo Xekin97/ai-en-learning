@@ -1,0 +1,38 @@
+
+> wordweave-frontend@0.1.0 test /Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/frontend
+> vitest run tests/unit/library-title-editor.test.ts
+
+
+ RUN  v4.1.11 /Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/frontend
+
+stdout | tests/unit/library-title-editor.test.ts > batch title async completion > retains text and stored title, restores focus after failure, then explicitly retries
+<Suspense> is an experimental feature and its API will likely change.
+
+ ❯ tests/unit/library-title-editor.test.ts (7 tests | 1 failed) 58ms
+     × retains text and stored title, restores focus after failure, then explicitly retries 29ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/unit/library-title-editor.test.ts > batch title async completion > retains text and stored title, restores focus after failure, then explicitly retries
+AssertionError: expected 'failed' to be 'l.title.failed' // Object.is equality
+
+Expected: "l.title.failed"
+Received: "failed"
+
+ ❯ tests/unit/library-title-editor.test.ts:99:68
+     97|     expect(document.activeElement).toBe(input);
+     98|     expect(state.value.details.batch?.title).toBe("Original title");
+     99|     expect(wrapper.get(".batch-title-editor [role=alert]").text()).toB…
+       |                                                                    ^
+    100|       "l.title.failed",
+    101|     );
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 6 passed (7)
+   Start at  15:51:30
+   Duration  544ms (transform 74ms, setup 0ms, import 122ms, tests 58ms, environment 267ms)
+
+ ELIFECYCLE  Test failed. See above for more details.

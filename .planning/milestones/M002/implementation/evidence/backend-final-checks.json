@@ -1,0 +1,42 @@
+[
+  {
+    "name": "format",
+    "command": "gofmt -l .",
+    "GOTOOLCHAIN": "go1.26.7",
+    "exit_code": 0,
+    "started_at": "2026-09-20T08:14:37.488338+00:00",
+    "seconds": 0.044479,
+    "log": "backend-final-format.log",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "name": "vet",
+    "command": "go vet -tags=integration ./...",
+    "GOTOOLCHAIN": "go1.26.7",
+    "exit_code": 0,
+    "started_at": "2026-09-20T08:14:37.533328+00:00",
+    "seconds": 1.652097,
+    "log": "backend-final-vet.log",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "name": "build",
+    "command": "go build ./...",
+    "GOTOOLCHAIN": "go1.26.7",
+    "exit_code": 0,
+    "started_at": "2026-09-20T08:14:39.185917+00:00",
+    "seconds": 0.765717,
+    "log": "backend-final-build.log",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "name": "vulnerability",
+    "command": "go run golang.org/x/vuln/cmd/govulncheck@v1.1.4 -show verbose ./...",
+    "GOTOOLCHAIN": "go1.26.7",
+    "exit_code": 0,
+    "started_at": "2026-09-20T08:14:39.952058+00:00",
+    "seconds": 8.223605,
+    "log": "backend-final-vulnerability.log",
+    "sha256": "2234077a8fbf6915828196b1a96c9ce1339e0554e2f8081aed33b59c14e421cf"
+  }
+]

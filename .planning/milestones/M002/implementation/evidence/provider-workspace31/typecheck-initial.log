@@ -1,0 +1,18 @@
+
+> wordweave-frontend@0.1.0 typecheck /Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/frontend
+> nuxt typecheck
+
+
+ WARN  Duplicated imports "modelEntryDraft", the one from "/Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/frontend/app/application/admin/model-draft.ts" has been ignored and "/Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/frontend/app/application/admin/provider-draft.ts" is used
+
+
+ WARN  Duplicated imports "modelEntryDraft", the one from "/Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/frontend/app/application/admin/model-draft.ts" has been ignored and "/Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/frontend/app/application/admin/provider-draft.ts" is used
+
+app/pages/admin/models.vue(191,33): error TS2345: Argument of type '{ readonly connection: { readonly id: string; readonly name: string; readonly protocol: ModelProtocol; readonly baseUrl: string; readonly credentialConfigured: boolean; readonly maskedHint: string | null; }; readonly models: readonly { ...; }[]; } | undefined' is not assignable to parameter of type 'AdminProviderModel | undefined'.
+  Type '{ readonly connection: { readonly id: string; readonly name: string; readonly protocol: ModelProtocol; readonly baseUrl: string; readonly credentialConfigured: boolean; readonly maskedHint: string | null; }; readonly models: readonly { ...; }[]; }' is not assignable to type 'AdminProviderModel'.
+    Types of property 'models' are incompatible.
+      The type 'readonly { readonly revision: string; readonly retiredAt: string | null; readonly id: string; readonly displayName: string; readonly description: string | null; readonly providerModelId: string; ... 6 more ...; readonly updatedAt: string; }[]' is 'readonly' and cannot be assigned to the mutable type 'AdminModelModel[]'.
+app/pages/admin/models.vue(324,34): error TS2345: Argument of type '{ readonly connection: { readonly id: string; readonly name: string; readonly protocol: ModelProtocol; readonly baseUrl: string; readonly credentialConfigured: boolean; readonly maskedHint: string | null; }; readonly models: readonly { ...; }[]; }' is not assignable to parameter of type 'AdminProviderModel'.
+  Types of property 'models' are incompatible.
+    The type 'readonly { readonly revision: string; readonly retiredAt: string | null; readonly id: string; readonly displayName: string; readonly description: string | null; readonly providerModelId: string; ... 6 more ...; readonly updatedAt: string; }[]' is 'readonly' and cannot be assigned to the mutable type 'AdminModelModel[]'.
+ ELIFECYCLE  Command failed with exit code 2.

@@ -1,0 +1,2416 @@
+
+> wordweave-frontend@0.1.0 test /Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/frontend
+> vitest run
+
+
+ RUN  v4.1.11 /Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/frontend
+
+ ❯ tests/unit/auth-reader-presenters.test.ts (8 tests | 1 failed) 8ms
+     × drops unapproved query/hash fields and gives administrator routing priority 4ms
+ ❯ tests/unit/entry-meaning-contract.test.ts (9 tests | 8 failed) 11ms
+     × maps generation, shared learner/admin detail, first and next spelling items 5ms
+     × does not change persisted meaning when UI locale changes 1ms
+     × rejects old fields consistently in every public projection 1ms
+     × rejects dual fields consistently in every public projection 0ms
+     × rejects missing fields consistently in every public projection 0ms
+     × rejects null fields consistently in every public projection 0ms
+     × rejects number fields consistently in every public projection 0ms
+     × rejects alias fields consistently in every public projection 0ms
+ ❯ tests/unit/review-setup-presenter.test.ts (4 tests | 1 failed) 11ms
+   × preserves input nodes and focus while rendering every preview state and locale 8ms
+ ❯ tests/unit/auth-card-design.test.ts (22 tests | 20 failed) 22ms
+     × places a live status before the title for each safe target in en-US 9ms
+     × places a live status before the title for each safe target in zh-CN 1ms
+     × omits a hint for an absent or unsafe target: undefined 1ms
+     × omits a hint for an absent or unsafe target: "//outside.test" 1ms
+     × omits a hint for an absent or unsafe target: "https://outside.test" 1ms
+     × omits a hint for an absent or unsafe target: "/admin/users" 1ms
+     × omits a hint for an absent or unsafe target: "/review" 1ms
+     × gives a valid visitor claim its own leading notice 1ms
+     × does not let a stale claim suppress a safe return hint 1ms
+     × keeps the hint first while language, target and error change 1ms
+     × places a live status before the title for each safe target in en-US 1ms
+     × places a live status before the title for each safe target in zh-CN 0ms
+     × omits a hint for an absent or unsafe target: undefined 0ms
+     × omits a hint for an absent or unsafe target: "//outside.test" 0ms
+     × omits a hint for an absent or unsafe target: "https://outside.test" 0ms
+     × omits a hint for an absent or unsafe target: "/admin/users" 0ms
+     × omits a hint for an absent or unsafe target: "/review" 0ms
+     × gives a valid visitor claim its own leading notice 0ms
+     × does not let a stale claim suppress a safe return hint 0ms
+     × keeps the hint first while language, target and error change 0ms
+ ❯ tests/unit/review-range-setup.test.ts (47 tests | 21 failed) 41ms
+     × maps null active and strict server reuse without leaking DTO fields 3ms
+     × SSR starts neutral without guessing dates or making preview requests 3ms
+     × old→empty→ready retains the draft and independent resume 1ms
+     × invalid start  has no GET/POST and keeps resume 1ms
+     × invalid start 2026-02-30 has no GET/POST and keeps resume 0ms
+     × invalid start 2026-09-07 has no GET/POST and keeps resume 0ms
+     × permits an inclusive same-day range 2ms
+     × invalidates before debounce, ignores a slow earlier request and late finally 2ms
+     × A→B→A rejects old A even if the underlying transport ignores abort 3ms
+     × preview failure and recovery do not erase active range 1ms
+     × resume failure does not block ready preview 1ms
+     × leaving cancels the debounce and ignores pending resume 1ms
+     × old page disposal does not cancel a new visit 0ms
+     × old identity resolve cannot write state or invalidate the new actor 1ms
+     × security refresh failure releases the command lock without posting 0ms
+     × double click takes one synchronous lock and accepts server reuse 0ms
+     × date change after dispatch does not rewrite the captured request 1ms
+     × late create after leave never navigates 0ms
+     × late create after account never navigates 0ms
+     × uncertain POST gets active range once, never replays, and exposes resume 0ms
+     × holds the submission lock while reconciling and does not invent empty on 422 0ms
+ ❯ tests/unit/admin-detail-state.test.ts (15 tests | 9 failed) 19ms
+     × does not accept A after B, including the same batch ID across users 6ms
+     × replaces the full returned user for pro without reloading 2ms
+     × replaces the full returned user for plus without reloading 1ms
+     × replaces the full returned user for basic without reloading 0ms
+     × blocks duplicate submission and ignores response after logout 1ms
+     × reconciles an uncertain PUT once without claiming success or replaying 0ms
+     × failed reconciliation retries GET only; explicit refusal keeps old snapshot 1ms
+     × projects exact localized quota without changing models: en-US 0ms
+     × projects exact localized quota without changing models: zh-CN 0ms
+ ❯ tests/unit/generation-lifecycle.test.ts (21 tests | 21 failed) 12ms
+     × does not submit twice while refreshing the security context 5ms
+     × ignores old request resolve after leaving and restarting 1ms
+     × ignores old request reject after leaving and restarting 0ms
+     × ignores old request event after leaving and restarting 0ms
+     × does not submit a request after leaving during security refresh 0ms
+     × projects a security refresh failure into the existing error state 0ms
+     × preserves valid after a later reader rejection 0ms
+     × preserves failed after a later reader rejection 0ms
+     × preserves cancelled after a later reader rejection 0ms
+     × treats EOF without a terminal as failure and disallows saving 0ms
+     × clears private generation and stops callbacks on identity change 0ms
+     × does not share controllers across two Nuxt application instances 0ms
+     × does not apply a late save to a new task 0ms
+     × does not apply a late discard to a new task 0ms
+     × does not send a save after identity changed during security refresh 0ms
+     × keeps reading when cancellation loses to valid 0ms
+     × keeps reading when cancellation loses to failed 0ms
+     × does not overwrite a completed result with a delayed cancel acknowledgement 0ms
+     × queues early cancellation until started supplies its capability 0ms
+     × handles cancel transport failure without pretending cancellation succeeded 0ms
+     × deduplicates simultaneous cancellation requests 0ms
+ ❯ tests/unit/strict-contracts.test.ts (6 tests | 3 failed) 8ms
+     × maps only safe spelling fields into application state 2ms
+     × requires opaque v1.3 groups and trims them from application state 0ms
+     × never sends local grouping data in a passage action 1ms
+ ❯ tests/unit/admin-quota-contract.test.ts (26 tests | 8 failed) 16ms
+     × validates backend-owned bytes and strict schema: 'user-limited.json' 6ms
+     × validates backend-owned bytes and strict schema: 'user-zero.json' 1ms
+     × validates backend-owned bytes and strict schema: 'user-unlimited.json' 1ms
+     × validates backend-owned bytes and strict schema: 'user-admin.json' 0ms
+     × validates backend-owned bytes and strict schema: 'group-limited.json' 1ms
+     × validates backend-owned bytes and strict schema: 'group-zero.json' 1ms
+     × validates backend-owned bytes and strict schema: 'group-unlimited.json' 1ms
+     × keeps 0 and max integers; rejects quota on admin and extra on summary 0ms
+ ❯ tests/unit/admin-layout-content.test.ts (3 tests | 3 failed) 8ms
+     × preserves the entire username through the contract, state and presenters: abcdefghijklmnopqrstuvwxyz123456 7ms
+     × preserves the entire username through the contract, state and presenters: WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW 0ms
+     × preserves the entire username through the contract, state and presenters: reader 0ms
+ ❯ tests/unit/private-session-state.test.ts (5 tests | 1 failed) 7ms
+     × drops review attempts and ignores late answers after logout 3ms
+
+⎯⎯⎯⎯⎯⎯ Failed Tests 96 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/unit/admin-detail-state.test.ts > admin detail lifecycle > does not accept A after B, including the same batch ID across users
+ZodError: [
+  {
+    "code": "invalid_union",
+    "errors": [
+      [
+        {
+          "expected": "string",
+          "code": "invalid_type",
+          "path": [
+            "nickname"
+          ],
+          "message": "Invalid input: expected string, received undefined"
+        },
+        {
+          "code": "invalid_value",
+          "values": [
+            "male",
+            "female"
+          ],
+          "path": [
+            "gender"
+          ],
+          "message": "Invalid option: expected one of \"male\"|\"female\""
+        },
+        {
+          "expected": "string",
+          "code": "invalid_type",
+          "path": [
+            "last_login_at"
+          ],
+          "message": "Invalid input: expected string, received undefined"
+        },
+        {
+          "expected": "string",
+          "code": "invalid_type",
+          "path": [
+            "last_learning_at"
+          ],
+          "message": "Invalid input: expected string, received undefined"
+        },
+        {
+          "expected": "string",
+          "code": "invalid_type",
+          "path": [
+            "base_revision"
+          ],
+          "message": "Invalid input: expected string, received undefined"
+        },
+        {
+          "code": "invalid_value",
+          "values": [
+            "basic",
+            "pro",
+            "plus"
+          ],
+          "path": [
+            "effective_plan_code"
+          ],
+          "message": "Invalid option: expected one of \"basic\"|\"pro\"|\"plus\""
+        },
+        {
+          "expected": "object",
+          "code": "invalid_type",
+          "path": [
+            "growth"
+          ],
+          "message": "Invalid input: expected object, received undefined"
+        }
+      ],
+      [
+        {
+          "code": "invalid_value",
+          "values": [
+            "admin"
+          ],
+          "path": [
+            "role"
+          ],
+          "message": "Invalid input: expected \"admin\""
+        },
+        {
+          "expected": "null",
+          "code": "invalid_type",
+          "path": [
+            "plan_code"
+          ],
+          "message": "Invalid input: expected null, received string"
+        },
+        {
+          "expected": "string",
+          "code": "invalid_type",
+          "path": [
+            "nickname"
+          ],
+          "message": "Invalid input: expected string, received undefined"
+        },
+        {
+          "code": "invalid_value",
+          "values": [
+            "male",
+            "female"
+          ],
+          "path": [
+            "gender"
+          ],
+          "message": "Invalid option: expected one of \"male\"|\"female\""
+        },
+        {
+          "expected": "string",
+          "code": "invalid_type",
+          "path": [
+            "last_login_at"
+          ],
+          "message": "Invalid input: expected string, received undefined"
+        },
+        {
+          "expected": "string",
+          "code": "invalid_type",
+          "path": [
+            "last_learning_at"
+          ],
+          "message": "Invalid input: expected string, received undefined"
+        },
+        {
+          "expected": "null",
+          "code": "invalid_type",
+          "path": [
+            "generation_quota"
+          ],
+          "message": "Invalid input: expected null, received object"
+        },
+        {
+          "expected": "null",
+          "code": "invalid_type",
+          "path": [
+            "base_revision"
+          ],
+          "message": "Invalid input: expected null, received undefined"
+        },
+        {
+          "expected": "null",
+          "code": "invalid_type",
+          "path": [
+            "effective_plan_code"
+          ],
+          "message": "Invalid input: expected null, received undefined"
+        },
+        {
+          "expected": "null",
+          "code": "invalid_type",
+          "path": [
+            "growth"
+          ],
+          "message": "Invalid input: expected null, received undefined"
+        }
+      ]
+    ],
+    "path": [
+      "data",
+      "user"
+    ],
+    "message": "Invalid input"
+  }
+]
+ ❯ user tests/unit/admin-detail-state.test.ts:20:54
+     18| function user(id = "A"): AdminUserDetailModel {
+     19|   return {
+     20|     ...mapAdminUserDetailDto(adminUserEnvelopeSchema.parse(raw).data.u…
+       |                                                      ^
+     21|     id,
+     22|   };
+ ❯ tests/unit/admin-detail-state.test.ts:106:17
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/96]⎯
+
+ FAIL  tests/unit/admin-detail-state.test.ts > admin detail lifecycle > replaces the full returned user for pro without reloading
+ FAIL  tests/unit/admin-detail-state.test.ts > admin detail lifecycle > replaces the full returned user for plus without reloading
+ FAIL  tests/unit/admin-detail-state.test.ts > admin detail lifecycle > replaces the full returned user for basic without reloading
+AssertionError: expected 'ignored' to be 'applied' // Object.is equality
+
+Expected: "applied"
+Received: "ignored"
+
+ ❯ tests/unit/admin-detail-state.test.ts:147:28
+    145|       const reader = h.state().reader;
+    146|       const outcome = await h.actions.changeGroup("A", plan);
+    147|       expect(outcome.kind).toBe("applied");
+       |                            ^
+    148|       expect(h.state().user).toMatchObject({
+    149|         planCode: plan,
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/96]⎯
+
+ FAIL  tests/unit/admin-detail-state.test.ts > admin detail lifecycle > blocks duplicate submission and ignores response after logout
+ZodError: [
+  {
+    "code": "invalid_union",
+    "errors": [
+      [
+        {
+          "expected": "string",
+          "code": "invalid_type",
+          "path": [
+            "nickname"
+          ],
+          "message": "Invalid input: expected string, received undefined"
+        },
+        {
+          "code": "invalid_value",
+          "values": [
+            "male",
+            "female"
+          ],
+          "path": [
+            "gender"
+          ],
+          "message": "Invalid option: expected one of \"male\"|\"female\""
+        },
+        {
+          "expected": "string",
+          "code": "invalid_type",
+          "path": [
+            "last_login_at"
+          ],
+          "message": "Invalid input: expected string, received undefined"
+        },
+        {
+          "expected": "string",
+          "code": "invalid_type",
+          "path": [
+            "last_learning_at"
+          ],
+          "message": "Invalid input: expected string, received undefined"
+        },
+        {
+          "expected": "string",
+          "code": "invalid_type",
+          "path": [
+            "base_revision"
+          ],
+          "message": "Invalid input: expected string, received undefined"
+        },
+        {
+          "code": "invalid_value",
+          "values": [
+            "basic",
+            "pro",
+            "plus"
+          ],
+          "path": [
+            "effective_plan_code"
+          ],
+          "message": "Invalid option: expected one of \"basic\"|\"pro\"|\"plus\""
+        },
+        {
+          "expected": "object",
+          "code": "invalid_type",
+          "path": [
+            "growth"
+          ],
+          "message": "Invalid input: expected object, received undefined"
+        }
+      ],
+      [
+        {
+          "code": "invalid_value",
+          "values": [
+            "admin"
+          ],
+          "path": [
+            "role"
+          ],
+          "message": "Invalid input: expected \"admin\""
+        },
+        {
+          "expected": "null",
+          "code": "invalid_type",
+          "path": [
+            "plan_code"
+          ],
+          "message": "Invalid input: expected null, received string"
+        },
+        {
+          "expected": "string",
+          "code": "invalid_type",
+          "path": [
+            "nickname"
+          ],
+          "message": "Invalid input: expected string, received undefined"
+        },
+        {
+          "code": "invalid_value",
+          "values": [
+            "male",
+            "female"
+          ],
+          "path": [
+            "gender"
+          ],
+          "message": "Invalid option: expected one of \"male\"|\"female\""
+        },
+        {
+          "expected": "string",
+          "code": "invalid_type",
+          "path": [
+            "last_login_at"
+          ],
+          "message": "Invalid input: expected string, received undefined"
+        },
+        {
+          "expected": "string",
+          "code": "invalid_type",
+          "path": [
+            "last_learning_at"
+          ],
+          "message": "Invalid input: expected string, received undefined"
+        },
+        {
+          "expected": "null",
+          "code": "invalid_type",
+          "path": [
+            "generation_quota"
+          ],
+          "message": "Invalid input: expected null, received object"
+        },
+        {
+          "expected": "null",
+          "code": "invalid_type",
+          "path": [
+            "base_revision"
+          ],
+          "message": "Invalid input: expected null, received undefined"
+        },
+        {
+          "expected": "null",
+          "code": "invalid_type",
+          "path": [
+            "effective_plan_code"
+          ],
+          "message": "Invalid input: expected null, received undefined"
+        },
+        {
+          "expected": "null",
+          "code": "invalid_type",
+          "path": [
+            "growth"
+          ],
+          "message": "Invalid input: expected null, received undefined"
+        }
+      ]
+    ],
+    "path": [
+      "data",
+      "user"
+    ],
+    "message": "Invalid input"
+  }
+]
+ ❯ user tests/unit/admin-detail-state.test.ts:20:54
+     18| function user(id = "A"): AdminUserDetailModel {
+     19|   return {
+     20|     ...mapAdminUserDetailDto(adminUserEnvelopeSchema.parse(raw).data.u…
+       |                                                      ^
+     21|     id,
+     22|   };
+ ❯ tests/unit/admin-detail-state.test.ts:168:12
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/96]⎯
+
+ FAIL  tests/unit/admin-detail-state.test.ts > admin detail lifecycle > reconciles an uncertain PUT once without claiming success or replaying
+ZodError: [
+  {
+    "code": "invalid_union",
+    "errors": [
+      [
+        {
+          "expected": "string",
+          "code": "invalid_type",
+          "path": [
+            "nickname"
+          ],
+          "message": "Invalid input: expected string, received undefined"
+        },
+        {
+          "code": "invalid_value",
+          "values": [
+            "male",
+            "female"
+          ],
+          "path": [
+            "gender"
+          ],
+          "message": "Invalid option: expected one of \"male\"|\"female\""
+        },
+        {
+          "expected": "string",
+          "code": "invalid_type",
+          "path": [
+            "last_login_at"
+          ],
+          "message": "Invalid input: expected string, received undefined"
+        },
+        {
+          "expected": "string",
+          "code": "invalid_type",
+          "path": [
+            "last_learning_at"
+          ],
+          "message": "Invalid input: expected string, received undefined"
+        },
+        {
+          "expected": "string",
+          "code": "invalid_type",
+          "path": [
+            "base_revision"
+          ],
+          "message": "Invalid input: expected string, received undefined"
+        },
+        {
+          "code": "invalid_value",
+          "values": [
+            "basic",
+            "pro",
+            "plus"
+          ],
+          "path": [
+            "effective_plan_code"
+          ],
+          "message": "Invalid option: expected one of \"basic\"|\"pro\"|\"plus\""
+        },
+        {
+          "expected": "object",
+          "code": "invalid_type",
+          "path": [
+            "growth"
+          ],
+          "message": "Invalid input: expected object, received undefined"
+        }
+      ],
+      [
+        {
+          "code": "invalid_value",
+          "values": [
+            "admin"
+          ],
+          "path": [
+            "role"
+          ],
+          "message": "Invalid input: expected \"admin\""
+        },
+        {
+          "expected": "null",
+          "code": "invalid_type",
+          "path": [
+            "plan_code"
+          ],
+          "message": "Invalid input: expected null, received string"
+        },
+        {
+          "expected": "string",
+          "code": "invalid_type",
+          "path": [
+            "nickname"
+          ],
+          "message": "Invalid input: expected string, received undefined"
+        },
+        {
+          "code": "invalid_value",
+          "values": [
+            "male",
+            "female"
+          ],
+          "path": [
+            "gender"
+          ],
+          "message": "Invalid option: expected one of \"male\"|\"female\""
+        },
+        {
+          "expected": "string",
+          "code": "invalid_type",
+          "path": [
+            "last_login_at"
+          ],
+          "message": "Invalid input: expected string, received undefined"
+        },
+        {
+          "expected": "string",
+          "code": "invalid_type",
+          "path": [
+            "last_learning_at"
+          ],
+          "message": "Invalid input: expected string, received undefined"
+        },
+        {
+          "expected": "null",
+          "code": "invalid_type",
+          "path": [
+            "generation_quota"
+          ],
+          "message": "Invalid input: expected null, received object"
+        },
+        {
+          "expected": "null",
+          "code": "invalid_type",
+          "path": [
+            "base_revision"
+          ],
+          "message": "Invalid input: expected null, received undefined"
+        },
+        {
+          "expected": "null",
+          "code": "invalid_type",
+          "path": [
+            "effective_plan_code"
+          ],
+          "message": "Invalid input: expected null, received undefined"
+        },
+        {
+          "expected": "null",
+          "code": "invalid_type",
+          "path": [
+            "growth"
+          ],
+          "message": "Invalid input: expected null, received undefined"
+        }
+      ]
+    ],
+    "path": [
+      "data",
+      "user"
+    ],
+    "message": "Invalid input"
+  }
+]
+ ❯ user tests/unit/admin-detail-state.test.ts:20:54
+     18| function user(id = "A"): AdminUserDetailModel {
+     19|   return {
+     20|     ...mapAdminUserDetailDto(adminUserEnvelopeSchema.parse(raw).data.u…
+       |                                                      ^
+     21|     id,
+     22|   };
+ ❯ tests/unit/admin-detail-state.test.ts:182:46
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/96]⎯
+
+ FAIL  tests/unit/admin-detail-state.test.ts > admin detail lifecycle > failed reconciliation retries GET only; explicit refusal keeps old snapshot
+AssertionError: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ tests/unit/admin-detail-state.test.ts:206:43
+    204|     await h.actions.changeGroup("A", "plus");
+    205|     expect(h.state().user).toBeNull();
+    206|     expect(h.state().needsReconciliation).toBe(true);
+       |                                           ^
+    207|     await h.actions.readUser("A");
+    208|     expect(h.api.changeUserGroup).toHaveBeenCalledTimes(2);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/96]⎯
+
+ FAIL  tests/unit/admin-detail-state.test.ts > detail presenter > projects exact localized quota without changing models: en-US
+ FAIL  tests/unit/admin-detail-state.test.ts > detail presenter > projects exact localized quota without changing models: zh-CN
+ZodError: [
+  {
+    "code": "invalid_union",
+    "errors": [
+      [
+        {
+          "expected": "string",
+          "code": "invalid_type",
+          "path": [
+            "nickname"
+          ],
+          "message": "Invalid input: expected string, received undefined"
+        },
+        {
+          "code": "invalid_value",
+          "values": [
+            "male",
+            "female"
+          ],
+          "path": [
+            "gender"
+          ],
+          "message": "Invalid option: expected one of \"male\"|\"female\""
+        },
+        {
+          "expected": "string",
+          "code": "invalid_type",
+          "path": [
+            "last_login_at"
+          ],
+          "message": "Invalid input: expected string, received undefined"
+        },
+        {
+          "expected": "string",
+          "code": "invalid_type",
+          "path": [
+            "last_learning_at"
+          ],
+          "message": "Invalid input: expected string, received undefined"
+        },
+        {
+          "expected": "string",
+          "code": "invalid_type",
+          "path": [
+            "base_revision"
+          ],
+          "message": "Invalid input: expected string, received undefined"
+        },
+        {
+          "code": "invalid_value",
+          "values": [
+            "basic",
+            "pro",
+            "plus"
+          ],
+          "path": [
+            "effective_plan_code"
+          ],
+          "message": "Invalid option: expected one of \"basic\"|\"pro\"|\"plus\""
+        },
+        {
+          "expected": "object",
+          "code": "invalid_type",
+          "path": [
+            "growth"
+          ],
+          "message": "Invalid input: expected object, received undefined"
+        }
+      ],
+      [
+        {
+          "code": "invalid_value",
+          "values": [
+            "admin"
+          ],
+          "path": [
+            "role"
+          ],
+          "message": "Invalid input: expected \"admin\""
+        },
+        {
+          "expected": "null",
+          "code": "invalid_type",
+          "path": [
+            "plan_code"
+          ],
+          "message": "Invalid input: expected null, received string"
+        },
+        {
+          "expected": "string",
+          "code": "invalid_type",
+          "path": [
+            "nickname"
+          ],
+          "message": "Invalid input: expected string, received undefined"
+        },
+        {
+          "code": "invalid_value",
+          "values": [
+            "male",
+            "female"
+          ],
+          "path": [
+            "gender"
+          ],
+          "message": "Invalid option: expected one of \"male\"|\"female\""
+        },
+        {
+          "expected": "string",
+          "code": "invalid_type",
+          "path": [
+            "last_login_at"
+          ],
+          "message": "Invalid input: expected string, received undefined"
+        },
+        {
+          "expected": "string",
+          "code": "invalid_type",
+          "path": [
+            "last_learning_at"
+          ],
+          "message": "Invalid input: expected string, received undefined"
+        },
+        {
+          "expected": "null",
+          "code": "invalid_type",
+          "path": [
+            "generation_quota"
+          ],
+          "message": "Invalid input: expected null, received object"
+        },
+        {
+          "expected": "null",
+          "code": "invalid_type",
+          "path": [
+            "base_revision"
+          ],
+          "message": "Invalid input: expected null, received undefined"
+        },
+        {
+          "expected": "null",
+          "code": "invalid_type",
+          "path": [
+            "effective_plan_code"
+          ],
+          "message": "Invalid input: expected null, received undefined"
+        },
+        {
+          "expected": "null",
+          "code": "invalid_type",
+          "path": [
+            "growth"
+          ],
+          "message": "Invalid input: expected null, received undefined"
+        }
+      ]
+    ],
+    "path": [
+      "data",
+      "user"
+    ],
+    "message": "Invalid input"
+  }
+]
+ ❯ user tests/unit/admin-detail-state.test.ts:20:54
+     18| function user(id = "A"): AdminUserDetailModel {
+     19|   return {
+     20|     ...mapAdminUserDetailDto(adminUserEnvelopeSchema.parse(raw).data.u…
+       |                                                      ^
+     21|     id,
+     22|   };
+ ❯ tests/unit/admin-detail-state.test.ts:237:22
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/96]⎯
+
+ FAIL  tests/unit/admin-layout-content.test.ts > CR030 long-name layout keeps content intact > preserves the entire username through the contract, state and presenters: abcdefghijklmnopqrstuvwxyz123456
+ FAIL  tests/unit/admin-layout-content.test.ts > CR030 long-name layout keeps content intact > preserves the entire username through the contract, state and presenters: WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW
+ FAIL  tests/unit/admin-layout-content.test.ts > CR030 long-name layout keeps content intact > preserves the entire username through the contract, state and presenters: reader
+ZodError: [
+  {
+    "code": "invalid_union",
+    "errors": [
+      [
+        {
+          "expected": "string",
+          "code": "invalid_type",
+          "path": [
+            "nickname"
+          ],
+          "message": "Invalid input: expected string, received undefined"
+        },
+        {
+          "code": "invalid_value",
+          "values": [
+            "male",
+            "female"
+          ],
+          "path": [
+            "gender"
+          ],
+          "message": "Invalid option: expected one of \"male\"|\"female\""
+        },
+        {
+          "expected": "string",
+          "code": "invalid_type",
+          "path": [
+            "last_login_at"
+          ],
+          "message": "Invalid input: expected string, received undefined"
+        },
+        {
+          "expected": "string",
+          "code": "invalid_type",
+          "path": [
+            "last_learning_at"
+          ],
+          "message": "Invalid input: expected string, received undefined"
+        },
+        {
+          "expected": "string",
+          "code": "invalid_type",
+          "path": [
+            "base_revision"
+          ],
+          "message": "Invalid input: expected string, received undefined"
+        },
+        {
+          "code": "invalid_value",
+          "values": [
+            "basic",
+            "pro",
+            "plus"
+          ],
+          "path": [
+            "effective_plan_code"
+          ],
+          "message": "Invalid option: expected one of \"basic\"|\"pro\"|\"plus\""
+        },
+        {
+          "expected": "object",
+          "code": "invalid_type",
+          "path": [
+            "growth"
+          ],
+          "message": "Invalid input: expected object, received undefined"
+        }
+      ],
+      [
+        {
+          "code": "invalid_value",
+          "values": [
+            "admin"
+          ],
+          "path": [
+            "role"
+          ],
+          "message": "Invalid input: expected \"admin\""
+        },
+        {
+          "expected": "null",
+          "code": "invalid_type",
+          "path": [
+            "plan_code"
+          ],
+          "message": "Invalid input: expected null, received string"
+        },
+        {
+          "expected": "string",
+          "code": "invalid_type",
+          "path": [
+            "nickname"
+          ],
+          "message": "Invalid input: expected string, received undefined"
+        },
+        {
+          "code": "invalid_value",
+          "values": [
+            "male",
+            "female"
+          ],
+          "path": [
+            "gender"
+          ],
+          "message": "Invalid option: expected one of \"male\"|\"female\""
+        },
+        {
+          "expected": "string",
+          "code": "invalid_type",
+          "path": [
+            "last_login_at"
+          ],
+          "message": "Invalid input: expected string, received undefined"
+        },
+        {
+          "expected": "string",
+          "code": "invalid_type",
+          "path": [
+            "last_learning_at"
+          ],
+          "message": "Invalid input: expected string, received undefined"
+        },
+        {
+          "expected": "null",
+          "code": "invalid_type",
+          "path": [
+            "generation_quota"
+          ],
+          "message": "Invalid input: expected null, received object"
+        },
+        {
+          "expected": "null",
+          "code": "invalid_type",
+          "path": [
+            "base_revision"
+          ],
+          "message": "Invalid input: expected null, received undefined"
+        },
+        {
+          "expected": "null",
+          "code": "invalid_type",
+          "path": [
+            "effective_plan_code"
+          ],
+          "message": "Invalid input: expected null, received undefined"
+        },
+        {
+          "expected": "null",
+          "code": "invalid_type",
+          "path": [
+            "growth"
+          ],
+          "message": "Invalid input: expected null, received undefined"
+        }
+      ]
+    ],
+    "path": [
+      "data",
+      "user"
+    ],
+    "message": "Invalid input"
+  }
+]
+ ❯ tests/unit/admin-layout-content.test.ts:26:43
+     24|     "preserves the entire username through the contract, state and pre…
+     25|     (username) => {
+     26|       const dto = adminUserEnvelopeSchema.parse({
+       |                                           ^
+     27|         ...raw,
+     28|         data: { user: { ...raw.data.user, username } },
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[7/96]⎯
+
+ FAIL  tests/unit/admin-quota-contract.test.ts > API v1.4 shared raw contracts > validates backend-owned bytes and strict schema: 'user-limited.json'
+ FAIL  tests/unit/admin-quota-contract.test.ts > API v1.4 shared raw contracts > validates backend-owned bytes and strict schema: 'user-zero.json'
+ FAIL  tests/unit/admin-quota-contract.test.ts > API v1.4 shared raw contracts > validates backend-owned bytes and strict schema: 'user-unlimited.json'
+ FAIL  tests/unit/admin-quota-contract.test.ts > API v1.4 shared raw contracts > validates backend-owned bytes and strict schema: 'group-limited.json'
+ FAIL  tests/unit/admin-quota-contract.test.ts > API v1.4 shared raw contracts > validates backend-owned bytes and strict schema: 'group-zero.json'
+ FAIL  tests/unit/admin-quota-contract.test.ts > API v1.4 shared raw contracts > validates backend-owned bytes and strict schema: 'group-unlimited.json'
+ZodError: [
+  {
+    "code": "invalid_union",
+    "errors": [
+      [
+        {
+          "expected": "string",
+          "code": "invalid_type",
+          "path": [
+            "nickname"
+          ],
+          "message": "Invalid input: expected string, received undefined"
+        },
+        {
+          "code": "invalid_value",
+          "values": [
+            "male",
+            "female"
+          ],
+          "path": [
+            "gender"
+          ],
+          "message": "Invalid option: expected one of \"male\"|\"female\""
+        },
+        {
+          "expected": "string",
+          "code": "invalid_type",
+          "path": [
+            "last_login_at"
+          ],
+          "message": "Invalid input: expected string, received undefined"
+        },
+        {
+          "expected": "string",
+          "code": "invalid_type",
+          "path": [
+            "last_learning_at"
+          ],
+          "message": "Invalid input: expected string, received undefined"
+        },
+        {
+          "expected": "string",
+          "code": "invalid_type",
+          "path": [
+            "base_revision"
+          ],
+          "message": "Invalid input: expected string, received undefined"
+        },
+        {
+          "code": "invalid_value",
+          "values": [
+            "basic",
+            "pro",
+            "plus"
+          ],
+          "path": [
+            "effective_plan_code"
+          ],
+          "message": "Invalid option: expected one of \"basic\"|\"pro\"|\"plus\""
+        },
+        {
+          "expected": "object",
+          "code": "invalid_type",
+          "path": [
+            "growth"
+          ],
+          "message": "Invalid input: expected object, received undefined"
+        }
+      ],
+      [
+        {
+          "code": "invalid_value",
+          "values": [
+            "admin"
+          ],
+          "path": [
+            "role"
+          ],
+          "message": "Invalid input: expected \"admin\""
+        },
+        {
+          "expected": "null",
+          "code": "invalid_type",
+          "path": [
+            "plan_code"
+          ],
+          "message": "Invalid input: expected null, received string"
+        },
+        {
+          "expected": "string",
+          "code": "invalid_type",
+          "path": [
+            "nickname"
+          ],
+          "message": "Invalid input: expected string, received undefined"
+        },
+        {
+          "code": "invalid_value",
+          "values": [
+            "male",
+            "female"
+          ],
+          "path": [
+            "gender"
+          ],
+          "message": "Invalid option: expected one of \"male\"|\"female\""
+        },
+        {
+          "expected": "string",
+          "code": "invalid_type",
+          "path": [
+            "last_login_at"
+          ],
+          "message": "Invalid input: expected string, received undefined"
+        },
+        {
+          "expected": "string",
+          "code": "invalid_type",
+          "path": [
+            "last_learning_at"
+          ],
+          "message": "Invalid input: expected string, received undefined"
+        },
+        {
+          "expected": "null",
+          "code": "invalid_type",
+          "path": [
+            "generation_quota"
+          ],
+          "message": "Invalid input: expected null, received object"
+        },
+        {
+          "expected": "null",
+          "code": "invalid_type",
+          "path": [
+            "base_revision"
+          ],
+          "message": "Invalid input: expected null, received undefined"
+        },
+        {
+          "expected": "null",
+          "code": "invalid_type",
+          "path": [
+            "effective_plan_code"
+          ],
+          "message": "Invalid input: expected null, received undefined"
+        },
+        {
+          "expected": "null",
+          "code": "invalid_type",
+          "path": [
+            "growth"
+          ],
+          "message": "Invalid input: expected null, received undefined"
+        }
+      ]
+    ],
+    "path": [
+      "data",
+      "user"
+    ],
+    "message": "Invalid input"
+  }
+]
+ ❯ tests/unit/admin-quota-contract.test.ts:32:31
+     30|           ? adminUserEnvelopeSchema
+     31|           : userGroupChangeEnvelopeSchema;
+     32|       const envelope = schema.parse(JSON.parse(raw.toString()));
+       |                               ^
+     33|       const model = mapAdminUserDetailDto(envelope.data.user);
+     34|       expect(JSON.stringify(model)).not.toContain("generation_quota");
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[8/96]⎯
+
+ FAIL  tests/unit/admin-quota-contract.test.ts > API v1.4 shared raw contracts > validates backend-owned bytes and strict schema: 'user-admin.json'
+ZodError: [
+  {
+    "code": "invalid_union",
+    "errors": [
+      [
+        {
+          "code": "invalid_value",
+          "values": [
+            "learner"
+          ],
+          "path": [
+            "role"
+          ],
+          "message": "Invalid input: expected \"learner\""
+        },
+        {
+          "code": "invalid_value",
+          "values": [
+            "basic",
+            "pro",
+            "plus"
+          ],
+          "path": [
+            "plan_code"
+          ],
+          "message": "Invalid option: expected one of \"basic\"|\"pro\"|\"plus\""
+        },
+        {
+          "expected": "string",
+          "code": "invalid_type",
+          "path": [
+            "nickname"
+          ],
+          "message": "Invalid input: expected string, received undefined"
+        },
+        {
+          "code": "invalid_value",
+          "values": [
+            "male",
+            "female"
+          ],
+          "path": [
+            "gender"
+          ],
+          "message": "Invalid option: expected one of \"male\"|\"female\""
+        },
+        {
+          "expected": "string",
+          "code": "invalid_type",
+          "path": [
+            "last_login_at"
+          ],
+          "message": "Invalid input: expected string, received undefined"
+        },
+        {
+          "expected": "string",
+          "code": "invalid_type",
+          "path": [
+            "last_learning_at"
+          ],
+          "message": "Invalid input: expected string, received undefined"
+        },
+        {
+          "code": "invalid_union",
+          "errors": [
+            [
+              {
+                "expected": "object",
+                "code": "invalid_type",
+                "path": [],
+                "message": "Invalid input: expected object, received null"
+              }
+            ],
+            [
+              {
+                "expected": "object",
+                "code": "invalid_type",
+                "path": [],
+                "message": "Invalid input: expected object, received null"
+              }
+            ]
+          ],
+          "path": [
+            "generation_quota"
+          ],
+          "message": "Invalid input"
+        },
+        {
+          "expected": "string",
+          "code": "invalid_type",
+          "path": [
+            "base_revision"
+          ],
+          "message": "Invalid input: expected string, received undefined"
+        },
+        {
+          "code": "invalid_value",
+          "values": [
+            "basic",
+            "pro",
+            "plus"
+          ],
+          "path": [
+            "effective_plan_code"
+          ],
+          "message": "Invalid option: expected one of \"basic\"|\"pro\"|\"plus\""
+        },
+        {
+          "expected": "object",
+          "code": "invalid_type",
+          "path": [
+            "growth"
+          ],
+          "message": "Invalid input: expected object, received undefined"
+        }
+      ],
+      [
+        {
+          "expected": "string",
+          "code": "invalid_type",
+          "path": [
+            "nickname"
+          ],
+          "message": "Invalid input: expected string, received undefined"
+        },
+        {
+          "code": "invalid_value",
+          "values": [
+            "male",
+            "female"
+          ],
+          "path": [
+            "gender"
+          ],
+          "message": "Invalid option: expected one of \"male\"|\"female\""
+        },
+        {
+          "expected": "string",
+          "code": "invalid_type",
+          "path": [
+            "last_login_at"
+          ],
+          "message": "Invalid input: expected string, received undefined"
+        },
+        {
+          "expected": "string",
+          "code": "invalid_type",
+          "path": [
+            "last_learning_at"
+          ],
+          "message": "Invalid input: expected string, received undefined"
+        },
+        {
+          "expected": "null",
+          "code": "invalid_type",
+          "path": [
+            "base_revision"
+          ],
+          "message": "Invalid input: expected null, received undefined"
+        },
+        {
+          "expected": "null",
+          "code": "invalid_type",
+          "path": [
+            "effective_plan_code"
+          ],
+          "message": "Invalid input: expected null, received undefined"
+        },
+        {
+          "expected": "null",
+          "code": "invalid_type",
+          "path": [
+            "growth"
+          ],
+          "message": "Invalid input: expected null, received undefined"
+        }
+      ]
+    ],
+    "path": [
+      "data",
+      "user"
+    ],
+    "message": "Invalid input"
+  }
+]
+ ❯ tests/unit/admin-quota-contract.test.ts:32:31
+     30|           ? adminUserEnvelopeSchema
+     31|           : userGroupChangeEnvelopeSchema;
+     32|       const envelope = schema.parse(JSON.parse(raw.toString()));
+       |                               ^
+     33|       const model = mapAdminUserDetailDto(envelope.data.user);
+     34|       expect(JSON.stringify(model)).not.toContain("generation_quota");
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[9/96]⎯
+
+ FAIL  tests/unit/admin-quota-contract.test.ts > API v1.4 shared raw contracts > keeps 0 and max integers; rejects quota on admin and extra on summary
+ZodError: [
+  {
+    "code": "invalid_union",
+    "errors": [
+      [
+        {
+          "expected": "string",
+          "code": "invalid_type",
+          "path": [
+            "nickname"
+          ],
+          "message": "Invalid input: expected string, received undefined"
+        },
+        {
+          "code": "invalid_value",
+          "values": [
+            "male",
+            "female"
+          ],
+          "path": [
+            "gender"
+          ],
+          "message": "Invalid option: expected one of \"male\"|\"female\""
+        },
+        {
+          "expected": "string",
+          "code": "invalid_type",
+          "path": [
+            "last_login_at"
+          ],
+          "message": "Invalid input: expected string, received undefined"
+        },
+        {
+          "expected": "string",
+          "code": "invalid_type",
+          "path": [
+            "last_learning_at"
+          ],
+          "message": "Invalid input: expected string, received undefined"
+        },
+        {
+          "expected": "string",
+          "code": "invalid_type",
+          "path": [
+            "base_revision"
+          ],
+          "message": "Invalid input: expected string, received undefined"
+        },
+        {
+          "code": "invalid_value",
+          "values": [
+            "basic",
+            "pro",
+            "plus"
+          ],
+          "path": [
+            "effective_plan_code"
+          ],
+          "message": "Invalid option: expected one of \"basic\"|\"pro\"|\"plus\""
+        },
+        {
+          "expected": "object",
+          "code": "invalid_type",
+          "path": [
+            "growth"
+          ],
+          "message": "Invalid input: expected object, received undefined"
+        }
+      ],
+      [
+        {
+          "code": "invalid_value",
+          "values": [
+            "admin"
+          ],
+          "path": [
+            "role"
+          ],
+          "message": "Invalid input: expected \"admin\""
+        },
+        {
+          "expected": "null",
+          "code": "invalid_type",
+          "path": [
+            "plan_code"
+          ],
+          "message": "Invalid input: expected null, received string"
+        },
+        {
+          "expected": "string",
+          "code": "invalid_type",
+          "path": [
+            "nickname"
+          ],
+          "message": "Invalid input: expected string, received undefined"
+        },
+        {
+          "code": "invalid_value",
+          "values": [
+            "male",
+            "female"
+          ],
+          "path": [
+            "gender"
+          ],
+          "message": "Invalid option: expected one of \"male\"|\"female\""
+        },
+        {
+          "expected": "string",
+          "code": "invalid_type",
+          "path": [
+            "last_login_at"
+          ],
+          "message": "Invalid input: expected string, received undefined"
+        },
+        {
+          "expected": "string",
+          "code": "invalid_type",
+          "path": [
+            "last_learning_at"
+          ],
+          "message": "Invalid input: expected string, received undefined"
+        },
+        {
+          "expected": "null",
+          "code": "invalid_type",
+          "path": [
+            "generation_quota"
+          ],
+          "message": "Invalid input: expected null, received object"
+        },
+        {
+          "expected": "null",
+          "code": "invalid_type",
+          "path": [
+            "base_revision"
+          ],
+          "message": "Invalid input: expected null, received undefined"
+        },
+        {
+          "expected": "null",
+          "code": "invalid_type",
+          "path": [
+            "effective_plan_code"
+          ],
+          "message": "Invalid input: expected null, received undefined"
+        },
+        {
+          "expected": "null",
+          "code": "invalid_type",
+          "path": [
+            "growth"
+          ],
+          "message": "Invalid input: expected null, received undefined"
+        }
+      ]
+    ],
+    "path": [
+      "data",
+      "user"
+    ],
+    "message": "Invalid input"
+  }
+]
+ ❯ tests/unit/admin-quota-contract.test.ts:67:46
+     65|   it("keeps 0 and max integers; rejects quota on admin and extra on su…
+     66|     for (const value of [0, 2147483647]) {
+     67|       const parsed = adminUserEnvelopeSchema.parse({
+       |                                              ^
+     68|         ...limited,
+     69|         data: {
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[10/96]⎯
+
+ FAIL  tests/unit/auth-card-design.test.ts > CR037 login card order > places a live status before the title for each safe target in en-US
+ FAIL  tests/unit/auth-card-design.test.ts > CR037 login card order > places a live status before the title for each safe target in zh-CN
+ FAIL  tests/unit/auth-card-design.test.ts > CR037 login card order > omits a hint for an absent or unsafe target: undefined
+ FAIL  tests/unit/auth-card-design.test.ts > CR037 login card order > omits a hint for an absent or unsafe target: "//outside.test"
+ FAIL  tests/unit/auth-card-design.test.ts > CR037 login card order > omits a hint for an absent or unsafe target: "https://outside.test"
+ FAIL  tests/unit/auth-card-design.test.ts > CR037 login card order > omits a hint for an absent or unsafe target: "/admin/users"
+ FAIL  tests/unit/auth-card-design.test.ts > CR037 login card order > omits a hint for an absent or unsafe target: "/review"
+ FAIL  tests/unit/auth-card-design.test.ts > CR037 login card order > gives a valid visitor claim its own leading notice
+ FAIL  tests/unit/auth-card-design.test.ts > CR037 login card order > does not let a stale claim suppress a safe return hint
+ FAIL  tests/unit/auth-card-design.test.ts > CR037 login card order > keeps the hint first while language, target and error change
+ReferenceError: useDesignCopy is not defined
+ ❯ setup app/pages/login.vue:20:18
+     18| );
+     19| const { t } = useI18n();
+     20| const { copy } = useDesignCopy();
+       |                  ^
+     21| const continueHint = computed(() =>
+     22|   returnIntent.value
+ ❯ callWithErrorHandling node_modules/.pnpm/@vue+runtime-core@3.5.42/node_modules/@vue/runtime-core/dist/runtime-core.cjs.js:200:19
+ ❯ setupStatefulComponent node_modules/.pnpm/@vue+runtime-core@3.5.42/node_modules/@vue/runtime-core/dist/runtime-core.cjs.js:8231:25
+ ❯ setupComponent node_modules/.pnpm/@vue+runtime-core@3.5.42/node_modules/@vue/runtime-core/dist/runtime-core.cjs.js:8193:36
+ ❯ mountComponent node_modules/.pnpm/@vue+runtime-core@3.5.42/node_modules/@vue/runtime-core/dist/runtime-core.cjs.js:6087:7
+ ❯ processComponent node_modules/.pnpm/@vue+runtime-core@3.5.42/node_modules/@vue/runtime-core/dist/runtime-core.cjs.js:6053:9
+ ❯ patch node_modules/.pnpm/@vue+runtime-core@3.5.42/node_modules/@vue/runtime-core/dist/runtime-core.cjs.js:5558:11
+ ❯ ReactiveEffect.componentUpdateFn [as fn] node_modules/.pnpm/@vue+runtime-core@3.5.42/node_modules/@vue/runtime-core/dist/runtime-core.cjs.js:6201:11
+ ❯ ReactiveEffect.run node_modules/.pnpm/@vue+reactivity@3.5.42/node_modules/@vue/reactivity/dist/reactivity.cjs.js:268:19
+ ❯ setupRenderEffect node_modules/.pnpm/@vue+runtime-core@3.5.42/node_modules/@vue/runtime-core/dist/runtime-core.cjs.js:6329:5
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[11/96]⎯
+
+ FAIL  tests/unit/auth-card-design.test.ts > CR037 register card order > places a live status before the title for each safe target in en-US
+ FAIL  tests/unit/auth-card-design.test.ts > CR037 register card order > places a live status before the title for each safe target in zh-CN
+ FAIL  tests/unit/auth-card-design.test.ts > CR037 register card order > omits a hint for an absent or unsafe target: undefined
+ FAIL  tests/unit/auth-card-design.test.ts > CR037 register card order > omits a hint for an absent or unsafe target: "//outside.test"
+ FAIL  tests/unit/auth-card-design.test.ts > CR037 register card order > omits a hint for an absent or unsafe target: "https://outside.test"
+ FAIL  tests/unit/auth-card-design.test.ts > CR037 register card order > omits a hint for an absent or unsafe target: "/admin/users"
+ FAIL  tests/unit/auth-card-design.test.ts > CR037 register card order > omits a hint for an absent or unsafe target: "/review"
+ FAIL  tests/unit/auth-card-design.test.ts > CR037 register card order > gives a valid visitor claim its own leading notice
+ FAIL  tests/unit/auth-card-design.test.ts > CR037 register card order > does not let a stale claim suppress a safe return hint
+ FAIL  tests/unit/auth-card-design.test.ts > CR037 register card order > keeps the hint first while language, target and error change
+ReferenceError: useNuxtApp is not defined
+ ❯ useAnalyticsEvents app/runtime/stores/analytics-events.ts:6:12
+
+ ❯ setup app/pages/register.vue:10:45
+ ❯ callWithErrorHandling node_modules/.pnpm/@vue+runtime-core@3.5.42/node_modules/@vue/runtime-core/dist/runtime-core.cjs.js:200:19
+ ❯ setupStatefulComponent node_modules/.pnpm/@vue+runtime-core@3.5.42/node_modules/@vue/runtime-core/dist/runtime-core.cjs.js:8231:25
+ ❯ setupComponent node_modules/.pnpm/@vue+runtime-core@3.5.42/node_modules/@vue/runtime-core/dist/runtime-core.cjs.js:8193:36
+ ❯ mountComponent node_modules/.pnpm/@vue+runtime-core@3.5.42/node_modules/@vue/runtime-core/dist/runtime-core.cjs.js:6087:7
+ ❯ processComponent node_modules/.pnpm/@vue+runtime-core@3.5.42/node_modules/@vue/runtime-core/dist/runtime-core.cjs.js:6053:9
+ ❯ patch node_modules/.pnpm/@vue+runtime-core@3.5.42/node_modules/@vue/runtime-core/dist/runtime-core.cjs.js:5558:11
+ ❯ ReactiveEffect.componentUpdateFn [as fn] node_modules/.pnpm/@vue+runtime-core@3.5.42/node_modules/@vue/runtime-core/dist/runtime-core.cjs.js:6201:11
+ ❯ ReactiveEffect.run node_modules/.pnpm/@vue+reactivity@3.5.42/node_modules/@vue/reactivity/dist/reactivity.cjs.js:268:19
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[12/96]⎯
+
+ FAIL  tests/unit/auth-reader-presenters.test.ts > semantic authentication targets > drops unapproved query/hash fields and gives administrator routing priority
+AssertionError: expected { path: '/admin', query: {} } to deeply equal { path: '/admin/models', query: {} }
+
+- Expected
++ Received
+
+  {
+-   "path": "/admin/models",
++   "path": "/admin",
+    "query": {},
+  }
+
+ ❯ tests/unit/auth-reader-presenters.test.ts:59:53
+     57|       query: { batch: "batch-1" },
+     58|     });
+     59|     expect(authenticationDestination(true, intent)).toEqual({
+       |                                                     ^
+     60|       path: "/admin/models",
+     61|       query: {},
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[13/96]⎯
+
+ FAIL  tests/unit/entry-meaning-contract.test.ts > CR-040 original-entry meaning > maps generation, shared learner/admin detail, first and next spelling items
+ZodError: [
+  {
+    "expected": "number",
+    "code": "invalid_type",
+    "path": [
+      "title_max_length"
+    ],
+    "message": "Invalid input: expected number, received undefined"
+  },
+  {
+    "expected": "string",
+    "code": "invalid_type",
+    "path": [
+      "title"
+    ],
+    "message": "Invalid input: expected string, received undefined"
+  },
+  {
+    "expected": "string",
+    "code": "invalid_type",
+    "path": [
+      "title_revision"
+    ],
+    "message": "Invalid input: expected string, received undefined"
+  }
+]
+ ❯ tests/unit/entry-meaning-contract.test.ts:106:56
+    104|       generationValidatedEventSchema.parse(generation),
+    105|     );
+    106|     const detail = mapBatchDetailDto(batchDetailSchema.parse(batch));
+       |                                                        ^
+    107|     const admin = mapBatchDetailDto(
+    108|       adminBatchDetailEnvelopeSchema.parse({ data: { batch }, meta }).…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[14/96]⎯
+
+ FAIL  tests/unit/entry-meaning-contract.test.ts > CR-040 original-entry meaning > does not change persisted meaning when UI locale changes
+ZodError: [
+  {
+    "expected": "number",
+    "code": "invalid_type",
+    "path": [
+      "title_max_length"
+    ],
+    "message": "Invalid input: expected number, received undefined"
+  },
+  {
+    "expected": "string",
+    "code": "invalid_type",
+    "path": [
+      "title"
+    ],
+    "message": "Invalid input: expected string, received undefined"
+  },
+  {
+    "expected": "string",
+    "code": "invalid_type",
+    "path": [
+      "title_revision"
+    ],
+    "message": "Invalid input: expected string, received undefined"
+  }
+]
+ ❯ tests/unit/entry-meaning-contract.test.ts:142:56
+    140|
+    141|   it("does not change persisted meaning when UI locale changes", () =>…
+    142|     const detail = mapBatchDetailDto(batchDetailSchema.parse(batch));
+       |                                                        ^
+    143|     for (const locale of ["zh-CN", "en-US"]) {
+    144|       const view = presentAdminBatchReader(
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[15/96]⎯
+
+ FAIL  tests/unit/entry-meaning-contract.test.ts > CR-040 original-entry meaning > rejects old fields consistently in every public projection
+ FAIL  tests/unit/entry-meaning-contract.test.ts > CR-040 original-entry meaning > rejects dual fields consistently in every public projection
+ FAIL  tests/unit/entry-meaning-contract.test.ts > CR-040 original-entry meaning > rejects missing fields consistently in every public projection
+ FAIL  tests/unit/entry-meaning-contract.test.ts > CR-040 original-entry meaning > rejects null fields consistently in every public projection
+ FAIL  tests/unit/entry-meaning-contract.test.ts > CR-040 original-entry meaning > rejects number fields consistently in every public projection
+ FAIL  tests/unit/entry-meaning-contract.test.ts > CR-040 original-entry meaning > rejects alias fields consistently in every public projection
+TypeError: Cannot read properties of undefined (reading 'safeParse')
+ ❯ tests/unit/entry-meaning-contract.test.ts:193:36
+    191|           data: { ...attempt.data, item: invalidItem },
+    192|         }),
+    193|         reviewActionEnvelopeSchema.safeParse({
+       |                                    ^
+    194|           ...nextItem,
+    195|           data: { ...nextItem.data, item: invalidItem },
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[16/96]⎯
+
+ FAIL  tests/unit/generation-lifecycle.test.ts > G14 generation request ownership > does not submit twice while refreshing the security context
+TypeError: Cannot read properties of undefined (reading 'value')
+ ❯ Object.action app/runtime/stores/analytics-events.ts:9:399
+
+ ❯ Object.addEntry app/runtime/stores/generation.ts:210:15
+ ❯ Object.select tests/unit/generation-lifecycle.test.ts:82:11
+ ❯ tests/unit/generation-lifecycle.test.ts:105:5
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[17/96]⎯
+
+ FAIL  tests/unit/generation-lifecycle.test.ts > G14 generation request ownership > ignores old request resolve after leaving and restarting
+ FAIL  tests/unit/generation-lifecycle.test.ts > G14 generation request ownership > ignores old request reject after leaving and restarting
+ FAIL  tests/unit/generation-lifecycle.test.ts > G14 generation request ownership > ignores old request event after leaving and restarting
+TypeError: Cannot read properties of undefined (reading 'value')
+ ❯ Object.action app/runtime/stores/analytics-events.ts:9:399
+
+ ❯ Object.addEntry app/runtime/stores/generation.ts:210:15
+ ❯ Object.select tests/unit/generation-lifecycle.test.ts:82:11
+ ❯ tests/unit/generation-lifecycle.test.ts:124:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[18/96]⎯
+
+ FAIL  tests/unit/generation-lifecycle.test.ts > G14 generation request ownership > does not submit a request after leaving during security refresh
+TypeError: Cannot read properties of undefined (reading 'value')
+ ❯ Object.action app/runtime/stores/analytics-events.ts:9:399
+
+ ❯ Object.addEntry app/runtime/stores/generation.ts:210:15
+ ❯ Object.select tests/unit/generation-lifecycle.test.ts:82:11
+ ❯ tests/unit/generation-lifecycle.test.ts:154:5
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[19/96]⎯
+
+ FAIL  tests/unit/generation-lifecycle.test.ts > G14 generation request ownership > projects a security refresh failure into the existing error state
+TypeError: Cannot read properties of undefined (reading 'value')
+ ❯ Object.action app/runtime/stores/analytics-events.ts:9:399
+
+ ❯ Object.addEntry app/runtime/stores/generation.ts:210:15
+ ❯ Object.select tests/unit/generation-lifecycle.test.ts:82:11
+ ❯ tests/unit/generation-lifecycle.test.ts:166:5
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[20/96]⎯
+
+ FAIL  tests/unit/generation-lifecycle.test.ts > G14 generation request ownership > preserves valid after a later reader rejection
+ FAIL  tests/unit/generation-lifecycle.test.ts > G14 generation request ownership > preserves failed after a later reader rejection
+ FAIL  tests/unit/generation-lifecycle.test.ts > G14 generation request ownership > preserves cancelled after a later reader rejection
+TypeError: Cannot read properties of undefined (reading 'value')
+ ❯ Object.action app/runtime/stores/analytics-events.ts:9:399
+
+ ❯ Object.addEntry app/runtime/stores/generation.ts:210:15
+ ❯ Object.select tests/unit/generation-lifecycle.test.ts:82:11
+ ❯ tests/unit/generation-lifecycle.test.ts:177:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[21/96]⎯
+
+ FAIL  tests/unit/generation-lifecycle.test.ts > G14 generation request ownership > treats EOF without a terminal as failure and disallows saving
+TypeError: Cannot read properties of undefined (reading 'value')
+ ❯ Object.action app/runtime/stores/analytics-events.ts:9:399
+
+ ❯ Object.addEntry app/runtime/stores/generation.ts:210:15
+ ❯ Object.select tests/unit/generation-lifecycle.test.ts:82:11
+ ❯ tests/unit/generation-lifecycle.test.ts:202:5
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[22/96]⎯
+
+ FAIL  tests/unit/generation-lifecycle.test.ts > G14 generation request ownership > clears private generation and stops callbacks on identity change
+TypeError: Cannot read properties of undefined (reading 'value')
+ ❯ Object.action app/runtime/stores/analytics-events.ts:9:399
+
+ ❯ Object.addEntry app/runtime/stores/generation.ts:210:15
+ ❯ Object.select tests/unit/generation-lifecycle.test.ts:82:11
+ ❯ tests/unit/generation-lifecycle.test.ts:218:5
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[23/96]⎯
+
+ FAIL  tests/unit/generation-lifecycle.test.ts > G14 generation request ownership > does not share controllers across two Nuxt application instances
+TypeError: Cannot read properties of undefined (reading 'value')
+ ❯ Object.action app/runtime/stores/analytics-events.ts:9:399
+
+ ❯ Object.addEntry app/runtime/stores/generation.ts:210:15
+ ❯ Object.select tests/unit/generation-lifecycle.test.ts:82:11
+ ❯ tests/unit/generation-lifecycle.test.ts:238:5
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[24/96]⎯
+
+ FAIL  tests/unit/generation-lifecycle.test.ts > G14 saved/discarded draft ownership > does not apply a late save to a new task
+ FAIL  tests/unit/generation-lifecycle.test.ts > G14 saved/discarded draft ownership > does not apply a late discard to a new task
+TypeError: Cannot read properties of undefined (reading 'value')
+ ❯ Object.action app/runtime/stores/analytics-events.ts:9:399
+
+ ❯ Object.addEntry app/runtime/stores/generation.ts:210:15
+ ❯ Object.select tests/unit/generation-lifecycle.test.ts:82:11
+ ❯ tests/unit/generation-lifecycle.test.ts:258:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[25/96]⎯
+
+ FAIL  tests/unit/generation-lifecycle.test.ts > G14 saved/discarded draft ownership > does not send a save after identity changed during security refresh
+TypeError: Cannot read properties of undefined (reading 'value')
+ ❯ Object.action app/runtime/stores/analytics-events.ts:9:399
+
+ ❯ Object.addEntry app/runtime/stores/generation.ts:210:15
+ ❯ Object.select tests/unit/generation-lifecycle.test.ts:82:11
+ ❯ tests/unit/generation-lifecycle.test.ts:294:5
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[26/96]⎯
+
+ FAIL  tests/unit/generation-lifecycle.test.ts > G14 cancellation races > keeps reading when cancellation loses to valid
+ FAIL  tests/unit/generation-lifecycle.test.ts > G14 cancellation races > keeps reading when cancellation loses to failed
+TypeError: Cannot read properties of undefined (reading 'value')
+ ❯ Object.action app/runtime/stores/analytics-events.ts:9:399
+
+ ❯ Object.addEntry app/runtime/stores/generation.ts:210:15
+ ❯ Object.select tests/unit/generation-lifecycle.test.ts:82:11
+ ❯ tests/unit/generation-lifecycle.test.ts:321:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[27/96]⎯
+
+ FAIL  tests/unit/generation-lifecycle.test.ts > G14 cancellation races > does not overwrite a completed result with a delayed cancel acknowledgement
+TypeError: Cannot read properties of undefined (reading 'value')
+ ❯ Object.action app/runtime/stores/analytics-events.ts:9:399
+
+ ❯ Object.addEntry app/runtime/stores/generation.ts:210:15
+ ❯ Object.select tests/unit/generation-lifecycle.test.ts:82:11
+ ❯ tests/unit/generation-lifecycle.test.ts:349:5
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[28/96]⎯
+
+ FAIL  tests/unit/generation-lifecycle.test.ts > G14 cancellation races > queues early cancellation until started supplies its capability
+TypeError: Cannot read properties of undefined (reading 'value')
+ ❯ Object.action app/runtime/stores/analytics-events.ts:9:399
+
+ ❯ Object.addEntry app/runtime/stores/generation.ts:210:15
+ ❯ Object.select tests/unit/generation-lifecycle.test.ts:82:11
+ ❯ tests/unit/generation-lifecycle.test.ts:364:5
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[29/96]⎯
+
+ FAIL  tests/unit/generation-lifecycle.test.ts > G14 cancellation races > handles cancel transport failure without pretending cancellation succeeded
+TypeError: Cannot read properties of undefined (reading 'value')
+ ❯ Object.action app/runtime/stores/analytics-events.ts:9:399
+
+ ❯ Object.addEntry app/runtime/stores/generation.ts:210:15
+ ❯ Object.select tests/unit/generation-lifecycle.test.ts:82:11
+ ❯ tests/unit/generation-lifecycle.test.ts:385:5
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[30/96]⎯
+
+ FAIL  tests/unit/generation-lifecycle.test.ts > G14 cancellation races > deduplicates simultaneous cancellation requests
+TypeError: Cannot read properties of undefined (reading 'value')
+ ❯ Object.action app/runtime/stores/analytics-events.ts:9:399
+
+ ❯ Object.addEntry app/runtime/stores/generation.ts:210:15
+ ❯ Object.select tests/unit/generation-lifecycle.test.ts:82:11
+ ❯ tests/unit/generation-lifecycle.test.ts:401:5
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[31/96]⎯
+
+ FAIL  tests/unit/private-session-state.test.ts > private request lifetime > drops review attempts and ignores late answers after logout
+ReferenceError: ref is not defined
+ ❯ useReviewStore app/runtime/stores/review.ts:10:64
+
+ ❯ tests/unit/private-session-state.test.ts:113:37
+ ❯ EffectScope.run node_modules/.pnpm/@vue+reactivity@3.5.42/node_modules/@vue/reactivity/dist/reactivity.cjs.js:96:16
+ ❯ tests/unit/private-session-state.test.ts:113:27
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[32/96]⎯
+
+ FAIL  tests/unit/review-range-setup.test.ts > calendar and contract boundary > maps null active and strict server reuse without leaking DTO fields
+ZodError: [
+  {
+    "expected": "object",
+    "code": "invalid_type",
+    "path": [
+      "data",
+      "session"
+    ],
+    "message": "Invalid input: expected object, received undefined"
+  },
+  {
+    "code": "unrecognized_keys",
+    "keys": [
+      "session_id",
+      "mode",
+      "status",
+      "date_range",
+      "progress",
+      "current_batch"
+    ],
+    "path": [
+      "data"
+    ],
+    "message": "Unrecognized keys: \"session_id\", \"mode\", \"status\", \"date_range\", \"progress\", \"current_batch\""
+  }
+]
+ ❯ created tests/unit/review-range-setup.test.ts:73:40
+     71| function created(): ReviewSessionCreatedModel {
+     72|   return mapReviewSessionCreatedDto(
+     73|     reviewSessionCreatedEnvelopeSchema.parse({
+       |                                        ^
+     74|       data: {
+     75|         session_id: "old-range",
+ ❯ tests/unit/review-range-setup.test.ts:217:12
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[33/96]⎯
+
+ FAIL  tests/unit/review-range-setup.test.ts > range setup lifecycle > SSR starts neutral without guessing dates or making preview requests
+AssertionError: expected null to be 'old-range' // Object.is equality
+
+- Expected:
+"old-range"
+
++ Received:
+null
+
+ ❯ tests/unit/review-range-setup.test.ts:237:45
+    235|     });
+    236|     expect(h.api.previewReviewRange).not.toHaveBeenCalled();
+    237|     expect(h.actions.resumeTarget(h.owner)).toBe("old-range");
+       |                                             ^
+    238|     expect(canStartRange(h.state(), true)).toBe(false);
+    239|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[34/96]⎯
+
+ FAIL  tests/unit/review-range-setup.test.ts > range setup lifecycle > old→empty→ready retains the draft and independent resume
+TypeError: mapReviewRangePreviewDto is not a function
+ ❯ empty tests/unit/review-range-setup.test.ts:39:3
+     37|   );
+     38| const empty = (): ReviewRangePreviewModel =>
+     39|   mapReviewRangePreviewDto(
+       |   ^
+     40|     reviewRangePreviewEnvelopeSchema.parse({
+     41|       data: { batch_count: 0, entry_count: 0, empty: true },
+ ❯ tests/unit/review-range-setup.test.ts:266:30
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[35/96]⎯
+
+ FAIL  tests/unit/review-range-setup.test.ts > range setup lifecycle > invalid start  has no GET/POST and keeps resume
+ FAIL  tests/unit/review-range-setup.test.ts > range setup lifecycle > invalid start 2026-02-30 has no GET/POST and keeps resume
+ FAIL  tests/unit/review-range-setup.test.ts > range setup lifecycle > invalid start 2026-09-07 has no GET/POST and keeps resume
+AssertionError: expected null to be 'old-range' // Object.is equality
+
+- Expected:
+"old-range"
+
++ Received:
+null
+
+ ❯ tests/unit/review-range-setup.test.ts:286:47
+    284|       expect(h.api.previewReviewRange).not.toHaveBeenCalled();
+    285|       expect(h.api.createReviewSession).not.toHaveBeenCalled();
+    286|       expect(h.actions.resumeTarget(h.owner)).toBe("old-range");
+       |                                               ^
+    287|     },
+    288|   );
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[36/96]⎯
+
+ FAIL  tests/unit/review-range-setup.test.ts > range setup lifecycle > permits an inclusive same-day range
+AssertionError: expected 'failed' to be 'ready' // Object.is equality
+
+Expected: "ready"
+Received: "failed"
+
+ ❯ tests/unit/review-range-setup.test.ts:294:36
+    292|     h.actions.changeDate(h.owner, "startDate", query.endDate);
+    293|     await h.actions.preview(h.owner);
+    294|     expect(h.state().preview.kind).toBe("ready");
+       |                                    ^
+    295|     expect(h.api.previewReviewRange).toHaveBeenCalledWith(
+    296|       { ...query, startDate: query.endDate },
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[37/96]⎯
+
+ FAIL  tests/unit/review-range-setup.test.ts > range setup lifecycle > invalidates before debounce, ignores a slow earlier request and late finally
+TypeError: mapReviewRangePreviewDto is not a function
+ ❯ empty tests/unit/review-range-setup.test.ts:39:3
+     37|   );
+     38| const empty = (): ReviewRangePreviewModel =>
+     39|   mapReviewRangePreviewDto(
+       |   ^
+     40|     reviewRangePreviewEnvelopeSchema.parse({
+     41|       data: { batch_count: 0, entry_count: 0, empty: true },
+ ❯ tests/unit/review-range-setup.test.ts:310:18
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[38/96]⎯
+
+ FAIL  tests/unit/review-range-setup.test.ts > range setup lifecycle > A→B→A rejects old A even if the underlying transport ignores abort
+TypeError: mapReviewRangePreviewDto is not a function
+ ❯ empty tests/unit/review-range-setup.test.ts:39:3
+     37|   );
+     38| const empty = (): ReviewRangePreviewModel =>
+     39|   mapReviewRangePreviewDto(
+       |   ^
+     40|     reviewRangePreviewEnvelopeSchema.parse({
+     41|       data: { batch_count: 0, entry_count: 0, empty: true },
+ ❯ tests/unit/review-range-setup.test.ts:330:18
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[39/96]⎯
+
+ FAIL  tests/unit/review-range-setup.test.ts > range setup lifecycle > preview failure and recovery do not erase active range
+AssertionError: expected null to be 'old-range' // Object.is equality
+
+- Expected:
+"old-range"
+
++ Received:
+null
+
+ ❯ tests/unit/review-range-setup.test.ts:341:45
+    339|     await h.actions.preview(h.owner);
+    340|     expect(h.state().preview.kind).toBe("failed");
+    341|     expect(h.actions.resumeTarget(h.owner)).toBe("old-range");
+       |                                             ^
+    342|     await h.actions.preview(h.owner);
+    343|     expect(h.state().preview.kind).toBe("ready");
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[40/96]⎯
+
+ FAIL  tests/unit/review-range-setup.test.ts > range setup lifecycle > resume failure does not block ready preview
+AssertionError: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ tests/unit/review-range-setup.test.ts:354:44
+    352|     ]);
+    353|     expect(h.state().resume.status).toBe("failed");
+    354|     expect(canStartRange(h.state(), true)).toBe(true);
+       |                                            ^
+    355|   });
+    356|   it("leaving cancels the debounce and ignores pending resume", async …
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[41/96]⎯
+
+ FAIL  tests/unit/review-range-setup.test.ts > range setup lifecycle > leaving cancels the debounce and ignores pending resume
+ZodError: [
+  {
+    "expected": "number",
+    "code": "invalid_type",
+    "path": [
+      "data",
+      "session",
+      "progress",
+      "skipped_batches"
+    ],
+    "message": "Invalid input: expected number, received undefined"
+  },
+  {
+    "expected": "object",
+    "code": "invalid_type",
+    "path": [
+      "data",
+      "session",
+      "current_batch"
+    ],
+    "message": "Invalid input: expected object, received undefined"
+  },
+  {
+    "expected": "object",
+    "code": "invalid_type",
+    "path": [
+      "data",
+      "session",
+      "current_attempt"
+    ],
+    "message": "Invalid input: expected object, received undefined"
+  }
+]
+ ❯ active tests/unit/review-range-setup.test.ts:52:41
+     50| };
+     51| function active(): ActiveRangeModel {
+     52|   const dto = activeRangeEnvelopeSchema.parse({
+       |                                         ^
+     53|     data: {
+     54|       session: {
+ ❯ tests/unit/review-range-setup.test.ts:366:21
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[42/96]⎯
+
+ FAIL  tests/unit/review-range-setup.test.ts > range setup lifecycle > old page disposal does not cancel a new visit
+AssertionError: expected 'failed' to be 'ready' // Object.is equality
+
+Expected: "ready"
+Received: "failed"
+
+ ❯ tests/unit/review-range-setup.test.ts:377:36
+    375|     h.actions.dispose(h.owner);
+    376|     await h.actions.preview(next);
+    377|     expect(h.state().preview.kind).toBe("ready");
+       |                                    ^
+    378|   });
+    379|   it.each(["resolve", "reject"] as const)(
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[43/96]⎯
+
+ FAIL  tests/unit/review-range-setup.test.ts > range setup lifecycle > old identity resolve cannot write state or invalidate the new actor
+TypeError: mapReviewRangePreviewDto is not a function
+ ❯ ready tests/unit/review-range-setup.test.ts:32:3
+     30| };
+     31| const ready = (): ReviewRangePreviewModel =>
+     32|   mapReviewRangePreviewDto(
+       |   ^
+     33|     reviewRangePreviewEnvelopeSchema.parse({
+     34|       data: { batch_count: 2, entry_count: 6, empty: false },
+ ❯ tests/unit/review-range-setup.test.ts:388:47
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[44/96]⎯
+
+ FAIL  tests/unit/review-range-setup.test.ts > create guard and reconciliation > security refresh failure releases the command lock without posting
+AssertionError: expected 'idle' to be 'failed' // Object.is equality
+
+Expected: "failed"
+Received: "idle"
+
+ ❯ tests/unit/review-range-setup.test.ts:417:37
+    415|     expect(await h.actions.start(h.owner)).toBeNull();
+    416|     expect(h.api.createReviewSession).not.toHaveBeenCalled();
+    417|     expect(h.state().create.status).toBe("failed");
+       |                                     ^
+    418|     expect(canStartRange(h.state(), true)).toBe(true);
+    419|     expect(await h.actions.start(h.owner)).toBe("old-range");
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[45/96]⎯
+
+ FAIL  tests/unit/review-range-setup.test.ts > create guard and reconciliation > double click takes one synchronous lock and accepts server reuse
+AssertionError: expected null to be 'old-range' // Object.is equality
+
+- Expected:
+"old-range"
+
++ Received:
+null
+
+ ❯ tests/unit/review-range-setup.test.ts:431:25
+    429|     expect(canStartRange(h.state(), true)).toBe(false);
+    430|     gate.resolve(undefined);
+    431|     expect(await first).toBe("old-range");
+       |                         ^
+    432|     expect(h.api.createReviewSession).toHaveBeenCalledOnce();
+    433|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[46/96]⎯
+
+ FAIL  tests/unit/review-range-setup.test.ts > create guard and reconciliation > date change after dispatch does not rewrite the captured request
+ZodError: [
+  {
+    "expected": "object",
+    "code": "invalid_type",
+    "path": [
+      "data",
+      "session"
+    ],
+    "message": "Invalid input: expected object, received undefined"
+  },
+  {
+    "code": "unrecognized_keys",
+    "keys": [
+      "session_id",
+      "mode",
+      "status",
+      "date_range",
+      "progress",
+      "current_batch"
+    ],
+    "path": [
+      "data"
+    ],
+    "message": "Unrecognized keys: \"session_id\", \"mode\", \"status\", \"date_range\", \"progress\", \"current_batch\""
+  }
+]
+ ❯ created tests/unit/review-range-setup.test.ts:73:40
+     71| function created(): ReviewSessionCreatedModel {
+     72|   return mapReviewSessionCreatedDto(
+     73|     reviewSessionCreatedEnvelopeSchema.parse({
+       |                                        ^
+     74|       data: {
+     75|         session_id: "old-range",
+ ❯ tests/unit/review-range-setup.test.ts:455:21
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[47/96]⎯
+
+ FAIL  tests/unit/review-range-setup.test.ts > create guard and reconciliation > late create after leave never navigates
+ FAIL  tests/unit/review-range-setup.test.ts > create guard and reconciliation > late create after account never navigates
+ZodError: [
+  {
+    "expected": "object",
+    "code": "invalid_type",
+    "path": [
+      "data",
+      "session"
+    ],
+    "message": "Invalid input: expected object, received undefined"
+  },
+  {
+    "code": "unrecognized_keys",
+    "keys": [
+      "session_id",
+      "mode",
+      "status",
+      "date_range",
+      "progress",
+      "current_batch"
+    ],
+    "path": [
+      "data"
+    ],
+    "message": "Unrecognized keys: \"session_id\", \"mode\", \"status\", \"date_range\", \"progress\", \"current_batch\""
+  }
+]
+ ❯ created tests/unit/review-range-setup.test.ts:73:40
+     71| function created(): ReviewSessionCreatedModel {
+     72|   return mapReviewSessionCreatedDto(
+     73|     reviewSessionCreatedEnvelopeSchema.parse({
+       |                                        ^
+     74|       data: {
+     75|         session_id: "old-range",
+ ❯ tests/unit/review-range-setup.test.ts:474:23
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[48/96]⎯
+
+ FAIL  tests/unit/review-range-setup.test.ts > create guard and reconciliation > uncertain POST gets active range once, never replays, and exposes resume
+AssertionError: expected "vi.fn()" to be called once, but got 0 times
+ ❯ tests/unit/review-range-setup.test.ts:484:39
+    482|     h.api.createReviewSession.mockRejectedValueOnce(network);
+    483|     expect(await h.actions.start(h.owner)).toBeNull();
+    484|     expect(h.api.createReviewSession).toHaveBeenCalledOnce();
+       |                                       ^
+    485|     expect(h.api.getActiveRange).toHaveBeenCalledOnce();
+    486|     expect(h.actions.resumeTarget(h.owner)).toBe("old-range");
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[49/96]⎯
+
+ FAIL  tests/unit/review-range-setup.test.ts > create guard and reconciliation > holds the submission lock while reconciling and does not invent empty on 422
+AssertionError: expected 'failed' to be 'ready' // Object.is equality
+
+Expected: "ready"
+Received: "failed"
+
+ ❯ tests/unit/review-range-setup.test.ts:506:36
+    504|     pending.resolve(null);
+    505|     await first;
+    506|     expect(h.state().preview.kind).toBe("ready");
+       |                                    ^
+    507|     expect(h.state().create.status).toBe("failed");
+    508|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[50/96]⎯
+
+ FAIL  tests/unit/review-setup-presenter.test.ts > preserves input nodes and focus while rendering every preview state and locale
+ReferenceError: useDesignCopy is not defined
+ ❯ setup app/presentation/components/review/ReviewRangeSetup.vue:4:49
+
+ ❯ callWithErrorHandling node_modules/.pnpm/@vue+runtime-core@3.5.42/node_modules/@vue/runtime-core/dist/runtime-core.cjs.js:200:19
+ ❯ setupStatefulComponent node_modules/.pnpm/@vue+runtime-core@3.5.42/node_modules/@vue/runtime-core/dist/runtime-core.cjs.js:8231:25
+ ❯ setupComponent node_modules/.pnpm/@vue+runtime-core@3.5.42/node_modules/@vue/runtime-core/dist/runtime-core.cjs.js:8193:36
+ ❯ mountComponent node_modules/.pnpm/@vue+runtime-core@3.5.42/node_modules/@vue/runtime-core/dist/runtime-core.cjs.js:6087:7
+ ❯ processComponent node_modules/.pnpm/@vue+runtime-core@3.5.42/node_modules/@vue/runtime-core/dist/runtime-core.cjs.js:6053:9
+ ❯ patch node_modules/.pnpm/@vue+runtime-core@3.5.42/node_modules/@vue/runtime-core/dist/runtime-core.cjs.js:5558:11
+ ❯ ReactiveEffect.componentUpdateFn [as fn] node_modules/.pnpm/@vue+runtime-core@3.5.42/node_modules/@vue/runtime-core/dist/runtime-core.cjs.js:6201:11
+ ❯ ReactiveEffect.run node_modules/.pnpm/@vue+reactivity@3.5.42/node_modules/@vue/reactivity/dist/reactivity.cjs.js:268:19
+ ❯ setupRenderEffect node_modules/.pnpm/@vue+runtime-core@3.5.42/node_modules/@vue/runtime-core/dist/runtime-core.cjs.js:6329:5
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[51/96]⎯
+
+ FAIL  tests/unit/strict-contracts.test.ts > strict transport contracts > maps only safe spelling fields into application state
+ZodError: [
+  {
+    "expected": "object",
+    "code": "invalid_type",
+    "path": [
+      "data",
+      "attempt"
+    ],
+    "message": "Invalid input: expected object, received undefined"
+  },
+  {
+    "code": "unrecognized_keys",
+    "keys": [
+      "attempt_id",
+      "attempt_token",
+      "item",
+      "progress"
+    ],
+    "path": [
+      "data"
+    ],
+    "message": "Unrecognized keys: \"attempt_id\", \"attempt_token\", \"item\", \"progress\""
+  }
+]
+ ❯ tests/unit/strict-contracts.test.ts:28:48
+     26|
+     27|   it("maps only safe spelling fields into application state", () => {
+     28|     const parsed = reviewAttemptEnvelopeSchema.parse(spellingAttempt()…
+       |                                                ^
+     29|     const model = mapReviewAttemptDto(parsed.data);
+     30|     expect(JSON.stringify(model)).not.toContain("adapt");
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[52/96]⎯
+
+ FAIL  tests/unit/strict-contracts.test.ts > strict transport contracts > requires opaque v1.3 groups and trims them from application state
+ZodError: [
+  {
+    "expected": "object",
+    "code": "invalid_type",
+    "path": [
+      "data",
+      "attempt"
+    ],
+    "message": "Invalid input: expected object, received undefined"
+  },
+  {
+    "code": "unrecognized_keys",
+    "keys": [
+      "attempt_id",
+      "attempt_token",
+      "item",
+      "progress"
+    ],
+    "path": [
+      "data"
+    ],
+    "message": "Unrecognized keys: \"attempt_id\", \"attempt_token\", \"item\", \"progress\""
+  }
+]
+ ❯ tests/unit/strict-contracts.test.ts:45:48
+     43|
+     44|   it("requires opaque v1.3 groups and trims them from application stat…
+     45|     const parsed = reviewAttemptEnvelopeSchema.parse(passageAttempt());
+       |                                                ^
+     46|     const model = mapReviewAttemptDto(parsed.data);
+     47|     expect(model.item.stage).toBe("passage_cloze");
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[53/96]⎯
+
+ FAIL  tests/unit/strict-contracts.test.ts > strict transport contracts > never sends local grouping data in a passage action
+TypeError: repository.actOnReview is not a function
+ ❯ tests/unit/strict-contracts.test.ts:98:22
+     96|       true,
+     97|     );
+     98|     await repository.actOnReview("attempt-1", {
+       |                      ^
+     99|       actionId: "action-1",
+    100|       itemId: "item-passage",
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[54/96]⎯
+
+
+ Test Files  11 failed | 15 passed (26)
+      Tests  96 failed | 167 passed (263)
+   Start at  18:03:13
+   Duration  1.94s (transform 3.25s, setup 0ms, import 5.10s, tests 299ms, environment 7.44s)
+
+ ELIFECYCLE  Test failed. See above for more details.
+npm notice
+npm notice New major version of npm available! 10.9.8 -> 12.0.2
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.0.2
+npm notice To update run: npm install -g npm@12.0.2
+npm notice

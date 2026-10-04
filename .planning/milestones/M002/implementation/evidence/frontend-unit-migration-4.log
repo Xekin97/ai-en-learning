@@ -1,0 +1,68 @@
+
+> wordweave-frontend@0.1.0 test /Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/frontend
+> vitest run
+
+
+ RUN  v4.1.11 /Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/frontend
+
+ ❯ tests/unit/account-password-error.test.ts (3 tests | 3 failed) 5ms
+     × keeps a normalized password failure separate from the page failure 3ms
+     × clears the prior password failure when retry starts and after success 0ms
+     × clears only the password failure when the dialog is cancelled 0ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 3 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/unit/account-password-error.test.ts > CR037-03 account password failure state > keeps a normalized password failure separate from the page failure
+ReferenceError: useFeedbackStore is not defined
+ ❯ useAccountStore app/runtime/stores/account.ts:15:46
+     13| export function useAccountStore() {
+     14|   const api = useNuxtApp().$api;
+     15|   const session = useSessionStore(),feedback=useFeedbackStore();
+       |                                              ^
+     16|   const state = usePrivateState<AccountState>("account", () => ({
+     17|     account: null,
+ ❯ harness tests/unit/account-password-error.test.ts:48:19
+ ❯ tests/unit/account-password-error.test.ts:55:30
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/3]⎯
+
+ FAIL  tests/unit/account-password-error.test.ts > CR037-03 account password failure state > clears the prior password failure when retry starts and after success
+ReferenceError: useFeedbackStore is not defined
+ ❯ useAccountStore app/runtime/stores/account.ts:15:46
+     13| export function useAccountStore() {
+     14|   const api = useNuxtApp().$api;
+     15|   const session = useSessionStore(),feedback=useFeedbackStore();
+       |                                              ^
+     16|   const state = usePrivateState<AccountState>("account", () => ({
+     17|     account: null,
+ ❯ harness tests/unit/account-password-error.test.ts:48:19
+ ❯ tests/unit/account-password-error.test.ts:82:23
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/3]⎯
+
+ FAIL  tests/unit/account-password-error.test.ts > CR037-03 account password failure state > clears only the password failure when the dialog is cancelled
+ReferenceError: useFeedbackStore is not defined
+ ❯ useAccountStore app/runtime/stores/account.ts:15:46
+     13| export function useAccountStore() {
+     14|   const api = useNuxtApp().$api;
+     15|   const session = useSessionStore(),feedback=useFeedbackStore();
+       |                                              ^
+     16|   const state = usePrivateState<AccountState>("account", () => ({
+     17|     account: null,
+ ❯ harness tests/unit/account-password-error.test.ts:48:19
+ ❯ tests/unit/account-password-error.test.ts:103:23
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/3]⎯
+
+
+ Test Files  1 failed | 26 passed (27)
+      Tests  3 failed | 286 passed (289)
+   Start at  18:10:37
+   Duration  1.92s (transform 2.76s, setup 0ms, import 4.95s, tests 387ms, environment 7.82s)
+
+ ELIFECYCLE  Test failed. See above for more details.
+npm notice
+npm notice New major version of npm available! 10.9.8 -> 12.0.2
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.0.2
+npm notice To update run: npm install -g npm@12.0.2
+npm notice

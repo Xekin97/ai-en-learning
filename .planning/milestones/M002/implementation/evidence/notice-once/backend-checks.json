@@ -1,0 +1,23 @@
+[
+  {
+    "command": [
+      "go",
+      "test",
+      "-race",
+      "-tags=integration",
+      "./internal/notices",
+      "-count=1",
+      "-v"
+    ],
+    "exit": 0
+  },
+  {
+    "command": [
+      "go",
+      "vet",
+      "./internal/notices",
+      "./internal/httpapi"
+    ],
+    "exit": 0
+  }
+]

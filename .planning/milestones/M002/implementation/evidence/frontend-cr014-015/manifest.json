@@ -1,0 +1,223 @@
+{
+  "at": "2026-09-28T01:55:58.618329+00:00",
+  "milestone": "M002",
+  "role": "frontend-claire",
+  "authorization": "TRANSITION-M002-034",
+  "result": "cr014_cr015_implemented_pending_qa",
+  "risk": "high: authenticated private asynchronous state and cache",
+  "design": "UI22/H01",
+  "technical": "FE02",
+  "git_head": "5da571b226635113c41cd9cb8c4f33433946fbad",
+  "source": "source.json",
+  "source_sha256": "83260ed1472683df3d547d366cddd31262c7bb7e0eb3ad3c9d74914bb9aa78b1",
+  "source_files": 280,
+  "source_archive": "frontend-source.tar.gz",
+  "source_archive_sha256": "50f336858e6908a309a36c1664dc9e85d419358795e4bec36b7e876ef00503a6",
+  "source_archive_matches": true,
+  "changed_sources": [
+    "frontend/app/pages/library/index.vue",
+    "frontend/app/presentation/components/BatchParticipation.vue",
+    "frontend/app/runtime/stores/library.ts",
+    "frontend/tests/integration/m002-library-interactions.mjs",
+    "frontend/tests/unit/library-participation.test.ts"
+  ],
+  "current_documents": {
+    ".planning/milestones/M002/implementation/frontend-worktree-plan.md": "71a3b5c8e5273967bf262d64ca4a50e5641cf91da550fc4dfe40dbaf53e50ce2",
+    ".planning/milestones/M002/implementation/frontend-validation.md": "61b85c2f598d16519f75e98f31e9f9bc7803174bcfc3912cde43def7d2df6e35",
+    ".planning/milestones/M002/handoffs/frontend-implementation.md": "e3d00a076e4ce5f7660c22bd2d9a2d0226927ea3215b887c0fe89cf5a4d6ceb0"
+  },
+  "checks": [
+    {
+      "command": "pnpm --dir frontend typecheck",
+      "exit_code": 0,
+      "log": "typecheck.log"
+    },
+    {
+      "command": "pnpm --dir frontend lint",
+      "exit_code": 0,
+      "log": "lint.log"
+    },
+    {
+      "command": "pnpm --dir frontend format:check",
+      "exit_code": 0,
+      "log": "format-check.log"
+    },
+    {
+      "command": "pnpm --dir frontend lint:boundaries",
+      "exit_code": 0,
+      "log": "lint-boundaries.log"
+    },
+    {
+      "command": "pnpm --dir frontend test",
+      "exit_code": 0,
+      "log": "test.log"
+    }
+  ],
+  "extra_checks": {
+    "build": {
+      "exit_code": 0,
+      "log": "build.log"
+    },
+    "browser_script_lint": {
+      "exit_code": 0,
+      "log": "browser-lint-final.log"
+    },
+    "browser_script_format": {
+      "exit_code": 0,
+      "log": "browser-format-final.log"
+    },
+    "unit_red": {
+      "tests_failed": 8,
+      "log": "unit-red.log",
+      "outer_shell_variable_error": true
+    },
+    "unit_green": {
+      "tests_passed": 8,
+      "log": "unit-green.log"
+    },
+    "unit_all": {
+      "files": 30,
+      "passed": 317,
+      "log": "test.log"
+    },
+    "browser": {
+      "cases": 21,
+      "passed": 21,
+      "source": "browser-v2/results.json",
+      "first_attempt": "browser/results.json",
+      "first_attempt_script_issue": "setChecked tests synchronous state despite async confirmed-only UI; preserved 4 failures including interrupted last case",
+      "pageerrors": 0,
+      "intentional_network_errors": 3
+    },
+    "axe": {
+      "violations": 0,
+      "source": "browser-v2/axe.json"
+    },
+    "visual": {
+      "source": "visual-check.json",
+      "manual_comparison": "320 English long title and 1440 Chinese library against UI22; differing fixture statistics intentional"
+    }
+  },
+  "protected_audit": {
+    "file_count": 6677,
+    "unexpected_changed": [],
+    "control_plane_unchanged": true,
+    "upstream_backend_qa_unchanged": true
+  },
+  "backend_source": {
+    "files": 288,
+    "source_sha256": "c54307a04cecb3dd99cc13d64ae0fbcb6c1fca2c0538711af040d279bbe9b549"
+  },
+  "qa07": {
+    "manifest_sha256": "ae93ab837f2c975c73dcba367c18b55d93b4166e01461ec81e5d022a01411527",
+    "artifacts_preserved": 75,
+    "overall_result": "FAIL"
+  },
+  "links": {
+    "checked": 58,
+    "missing": []
+  },
+  "document_sizes": {
+    ".planning/milestones/M002/implementation/frontend-worktree-plan.md": {
+      "before_utf8_bytes": 4139,
+      "after_utf8_bytes": 4603
+    },
+    ".planning/milestones/M002/implementation/frontend-validation.md": {
+      "before_utf8_bytes": 14900,
+      "after_utf8_bytes": 14383
+    },
+    ".planning/milestones/M002/handoffs/frontend-implementation.md": {
+      "before_utf8_bytes": 3758,
+      "after_utf8_bytes": 3479
+    }
+  },
+  "local_provider_calls": 22,
+  "real_provider_calls": 0,
+  "committed": false,
+  "deployed": false,
+  "stage_transition": false,
+  "crs_closed": false,
+  "runtime_model_switch": "not performed",
+  "handoff_test": "not performed; static source/link checks only",
+  "input_tokens": "unknown",
+  "cleanup": "cleanup.json",
+  "remaining": [
+    "CR014/015 independent QA",
+    "CR001/002",
+    "CR039-L1",
+    "CR042-L1",
+    "AI-QUALITY-90",
+    "remaining coverage matrix"
+  ],
+  "artifacts": {
+    "README.md": "32ef0036cf2eef5c374722b7b0dc94e1c6d0c5fd56d20d7aaac1159af0e0cccf",
+    "before-owned.tar.gz": "ed587ef6db476479bc2ad093c19544c33c5624f12ca42bc14707e79450f02ab4",
+    "browser/chromium-en-320-failure.png": "806f15a4101055d604ead8b14f6768239439a07d20d0e5651eb2d0a602f9e2d3",
+    "browser/chromium-en-390-failure.png": "b284ef527f8e17255ffe47c949921a8d9f2dc70f0b24cc49ade389671ab26e2e",
+    "browser/chromium-en-768-failure.png": "5d6b8902c4bab15abcea43d54e9c88bc1d7674210d1b961b17bc11772257be2e",
+    "browser/details.json": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+    "browser/fixture.json": "2017008132c597bb673ee416cf5976c54956c674e98a484c809d1dde7a55083a",
+    "browser/prototype-1440.png": "ad0a0c6500fad3cfa30a9e28220f8a47a1842b525d3f9ae0f8e24d72e0a5c818",
+    "browser/prototype-320.png": "e24cddec1425633d2aa8f41b6c4eedea83b877e004431c3cc225f8bbdf0e199b",
+    "browser/regression-script.mjs": "84da308af80f6baf7e37dc2e454e2d23a1510f08ade18dab2fb4d8b2ce69218f",
+    "browser/results.json": "7df30bf105723eca5f6e5a1ba3be0cd76983f6a13c5ee7d346f43b787b3e7c27",
+    "browser-format-final.log": "17aa973d3f004560237d9a95171210b0671deff23d61628eecf7322ff5938f20",
+    "browser-format-v2.log": "af3051503bd0db42cb3cbe25518bae9f8530acc4bcb8845bd97705996fdcf206",
+    "browser-format.log": "e2da092a43b71bebefa485bee03ecc6cbafeb61f3a161ed208f4a98b13e505ec",
+    "browser-lint-final.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "browser-v2/axe.json": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+    "browser-v2/chromium-en-1440.png": "3a324f72969fc21438deb1b008490d9c01b31005e1760b8b2a0fb90c78e2299e",
+    "browser-v2/chromium-en-320.png": "4bd7e453d2d4cdacbba1d685817678635e2e7e6ea43cc6b61f1c299e7499511c",
+    "browser-v2/chromium-en-390.png": "6a1807fc54a94a2508c7cde3377bbd4336f43765ad861df7ad5bd8576fd20f18",
+    "browser-v2/chromium-en-768.png": "0ae37d620a6738077de4afdcba72bfe95abb69c2ac619f4d57bf9d0ae5484eb8",
+    "browser-v2/chromium-return.png": "969e30dfcf736c2de6ca32f0b47aea5d41438163c3a63e39a2600ca294f76fd6",
+    "browser-v2/chromium-zh-1440.png": "758359d7137eb538f71a67fe4ba88c22102eedfa01cd9704403ecf93f0865e2d",
+    "browser-v2/chromium-zh-320.png": "13dde8f8c78f8a6fb71f18a3e33bc873b858aa914c7745f4b833f96c5a45f0d3",
+    "browser-v2/chromium-zh-390.png": "762bdb8a7450fa7940d3090229454afd878798fe1f7823a820067b6077aa5a83",
+    "browser-v2/chromium-zh-768.png": "35edb02c8e06ae4ba7c0ef800d04808e8e8a509181557a2103ef523bd8599bb7",
+    "browser-v2/details.json": "523ebfc8e8e8fba268cc55e22522ee39fa4ad16fb4ed7c1873375081e65bdce7",
+    "browser-v2/firefox-en-390.png": "e1dcf08e78a0c2993487ebc1e10474c6eb2383dd49e2edfc275f7bf0fe83fd86",
+    "browser-v2/firefox-return.png": "3b31093060891e205ea67e83bf0ee1977fec247f47bd617b17669156ca521de6",
+    "browser-v2/firefox-zh-390.png": "5f8e003b6b51a65abdc52424e3c31518ed9241fe66011d9cf7674014bf1d704d",
+    "browser-v2/fixture.json": "2017008132c597bb673ee416cf5976c54956c674e98a484c809d1dde7a55083a",
+    "browser-v2/history-return.png": "8bc8436af02fd628edd1a7813b5a478c6b411c027e13f6471194adc4aab5bda2",
+    "browser-v2/prototype-1440.png": "c139111c2c48bb98bc4417121599aa1ada8315c3f05ab385db68333b981159d4",
+    "browser-v2/prototype-320.png": "e24cddec1425633d2aa8f41b6c4eedea83b877e004431c3cc225f8bbdf0e199b",
+    "browser-v2/regression-script.mjs": "79c88d18b4145b30be245e67a75df3261bba3cfd93b467ba422fdeb6f30caa56",
+    "browser-v2/results.json": "a9648c606bca82c9f3dde75a4516629fba62dfc1289e45ba460885215402b2dc",
+    "browser-v2/webkit-en-1440.png": "65386521e904f988216655219be9eb3183fa38684fce69748dcbec3c109f5339",
+    "browser-v2/webkit-return.png": "7a57cba4e65cb3420cefdc14ddd48e9f8da51811764df477d24251e62ef8f476",
+    "browser-v2/webkit-zh-1440.png": "099ac83253306250aaaed8e1cd4fc3d7e961edc67fd7955c6615e9361273b943",
+    "browser-v2.log": "baa5e01da9466d1c483c3d0db059da64e96b32fcb1bfc6c56ce4de67fc32d74b",
+    "browser.log": "40e8fd974714114e48e7811f4a539f73b4ec4067fc672a3c406c576516e27643",
+    "build-location.json": "c1d218fe566264efd818db16f1927e8c5dbcf1fe3adf5ff7f75a69c2e0c58160",
+    "build.log": "fbf7dc00080524393570bf7c16347a4a21175b3b0efabe7fe107c18371e0648e",
+    "build.mjs": "a68755785ac4dd7fdf0ba9e0288aad26553e7a4e6dc459e329c5fca5115f2cbc",
+    "checks.json": "bc7b40466d71ffe510818801f647c032546cf2c0a8245fd0e7c3196bdcd6479c",
+    "cleanup.json": "d6ee8e199e686687c14d566024d0c66c9691c7ae9fe2999d8204089e9a8a5d39",
+    "cleanup.log": "e053e26ab0e1a87ff9227f10a7742aaa43c01aca65bf8c495ad3e2bc2467e5b1",
+    "format-check.log": "6e2b89fe281b4b2b62dd74106efb7bc9a4422bbe8a9b4f757a8dc380a026ae9f",
+    "format-write.log": "322b3a80e5e1a3a6955955b219fab204a58388dc3027bddeba7cfce525c1688c",
+    "frontend-source.tar.gz": "50f336858e6908a309a36c1664dc9e85d419358795e4bec36b7e876ef00503a6",
+    "inputs.json": "5df7177300963561c92d1c78af047fac7cb249160a1a1407d7b2bc5179ed14da",
+    "lint-boundaries.log": "67fad5b2ab5662f206dc14fe0a56218730cbc1b68476748bfb84de3dd488ac0b",
+    "lint.log": "d79f90b700e53bb47fb55aa02d5631c0b8861ccdc7bfffe30dd154cade851731",
+    "production-server.mjs": "152d8d8afb8df75389925d246d20658ca5a6fcac3abcfd6ad298e302b4f61c74",
+    "protected-before.json": "759a15a45c96d24d23b3095283cda952b31e218508b503b9af6e3c89107a2355",
+    "server.log": "9d8e806ea5091f8bde1086b4958df7e25f471080293e0ab6fe408e073f98948b",
+    "source-diff.patch": "377a8e846e3137537e21dcbfa6e0b7aa6e6f3e702f19fa929179a3fa14a468cc",
+    "source.json": "83260ed1472683df3d547d366cddd31262c7bb7e0eb3ad3c9d74914bb9aa78b1",
+    "stack.log": "132b58a6869988705e604deba2c044d0bb8eceb748c64fbb68d593140a896a4d",
+    "test.log": "95cbc801b36b6a2a26b802c261785ef82c26fc45a0cfe34e954d250fb03a4299",
+    "typecheck.log": "88b5ca85f247e1da1f8c7040e2921c6f0d0be6624b6448d57703b6915f61afee",
+    "unit-green.log": "d3077bf7f44d6593b76787b51cb63e03200310652bb797987669161c0215879b",
+    "unit-red.log": "1bbd37fecc5d1fa63c7f09c488b750df9d10aab7ec61a4ade52a94a3a51953b0",
+    "visual-check.json": "0123a942fcbcecab5313492d29270554749a271fd82d7467f1b44561fb0a34cc",
+    "visual-check.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "visual-check.mjs": "fa8c97e30210a0503036c2b7047e7100223e31b040a47e0c35fbfe47d046745f",
+    "visual-production-en-320.png": "c3b224af2365031bc634fd0d8aa21ea08a377ca345eb73e229851d8bfddb5e83",
+    "visual-production-zh-1440.png": "b5a28835c204821e4fb40bf4a8ba6bb6e4da8f65ab7d36630b59f87888260698",
+    "visual-prototype-en-320.png": "815c8cd0b735f297696f94e4b606ca1d630bfca72059692b74abfa1dffa5772f",
+    "visual-prototype-zh-1440.png": "26581a586e868a6388ce47e6ad75dce398a7baf02b17fb152870974fb068295b"
+  }
+}

@@ -1,0 +1,24 @@
+[
+  {
+    "command": [
+      "go",
+      "test",
+      "-race",
+      "-tags=integration",
+      "./internal/httpapi",
+      "-run",
+      "^TestVocabularySearchRolesAndBoundaries$",
+      "-count=1",
+      "-v"
+    ],
+    "exit_code": 0
+  },
+  {
+    "command": [
+      "go",
+      "vet",
+      "./internal/httpapi"
+    ],
+    "exit_code": 0
+  }
+]

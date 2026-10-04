@@ -1,0 +1,711 @@
+--- before/frontend/app/assets/css/application.css
++++ after/frontend/app/assets/css/application.css
+@@ -37,7 +37,21 @@
+   white-space: nowrap;
+ }
+ .app-error {
++  display: flex;
++  align-items: flex-start;
++  gap: 10px;
+   margin-block: 16px;
++  line-height: 1.5;
++}
++.app-error > .ui-icon {
++  flex: 0 0 20px;
++  width: 20px;
++  height: 20px;
++  margin-top: 1px;
++}
++.app-error > div {
++  min-width: 0;
++  overflow-wrap: anywhere;
+ }
+ #main-content:focus {
+   outline: none;
+--- before/frontend/app/composables/use-display-formatters.ts
++++ after/frontend/app/composables/use-display-formatters.ts
+@@ -27,6 +27,17 @@
+       ),
+     group: (value: GroupCode) => t(`enum.group.${value}`),
+     adminDate: (value: string) => value.slice(0, 10),
++    calendarDate: (value: string) => {
++      const parts = new Intl.DateTimeFormat("en", {
++        year: "numeric",
++        month: "2-digit",
++        day: "2-digit",
++        timeZone: "Asia/Shanghai",
++      }).formatToParts(new Date(value));
++      return ["year", "month", "day"]
++        .map((type) => parts.find((part) => part.type === type)?.value ?? "")
++        .join("-");
++    },
+     integer: (value: number) =>
+       new Intl.NumberFormat(locale.value, {
+         notation: "standard",
+--- before/frontend/app/middleware/learner-login.ts
++++ after/frontend/app/middleware/learner-login.ts
+@@ -0,0 +1,19 @@
++import { safeReturnIntent } from "@application/auth/return-intent";
++
++export default defineNuxtRouteMiddleware(async (to) => {
++  const session = useSessionStore();
++  await session.load();
++  if (session.isAdmin.value) return navigateTo("/admin");
++  // A failed identity request must remain retryable, not become a guest redirect.
++  if (
++    session.state.value.status === "ready" &&
++    session.actor.value?.kind === "visitor"
++  ) {
++    const intent = safeReturnIntent(to.fullPath);
++    if (intent)
++      return navigateTo(
++        { path: "/login", query: { redirect: intent.href } },
++        { replace: true },
++      );
++  }
++});
+--- before/frontend/app/pages/admin/plans.vue
++++ after/frontend/app/pages/admin/plans.vue
+@@ -207,7 +207,7 @@
+ </script>
+ <template>
+   <div>
+-    <div class="section-head">
++    <div class="page-head">
+       <h1>{{ copy("a.plans") }}</h1>
+       <button class="btn" :disabled="busy || !draft" @click="openPriorities">
+         {{ copy("priority") }}
+@@ -265,27 +265,31 @@
+       </div>
+     </dl>
+     <form v-if="draft" class="panel" @submit.prevent="preview">
+-      <p class="muted">{{ copy("plan.effect") }}</p>
++      <details class="form-help">
++        <summary>{{ copy("help.rules") }}</summary>
++        <p class="notice">{{ copy("plan.effect") }}</p>
++      </details>
+       <p v-if="warnings.length" class="notice warn">
+         {{ warnings.map((key) => copy(key)).join(" · ") }}
+       </p>
+       <fieldset :disabled="busy">
+         <div class="form-grid">
+           <div>
+-            <fieldset class="multi">
++            <fieldset class="admin-options">
+               <legend>{{ copy("a.plan.models") }}</legend>
+               <label
+                 v-for="model in admin.state.value.models.filter(
+                   (m) => !m.retiredAt,
+                 )"
+                 :key="model.id"
+-                class="check"
+                 ><input
+                   v-model="draft.modelIds"
+                   type="checkbox"
+                   :value="model.id"
+-                />{{ model.displayName
+-                }}{{ model.enabled ? "" : " · " + copy("disabled") }}</label
++                /><span
++                  >{{ model.displayName
++                  }}{{ model.enabled ? "" : " · " + copy("disabled") }}</span
++                ></label
+               ><button
+                 v-if="admin.state.value.nextModelCursor"
+                 class="btn small"
+@@ -295,14 +299,14 @@
+                 {{ copy("a.more") }}
+               </button>
+             </fieldset>
+-            <fieldset class="multi">
++            <fieldset class="admin-options">
+               <legend>{{ copy("a.plan.lengths") }}</legend>
+-              <label v-for="length in lengths" :key="length" class="check"
++              <label v-for="length in lengths" :key="length"
+                 ><input
+                   v-model="draft.allowedLengths"
+                   type="checkbox"
+                   :value="length"
+-                />{{ copy("a.length." + length) }}</label
++                /><span>{{ copy("a.length." + length) }}</span></label
+               >
+             </fieldset>
+           </div>
+@@ -332,18 +336,19 @@
+                 step="1"
+                 :disabled="draft.rolling24hLimit === null"
+                 :required="draft.rolling24hLimit !== null" /></label
+-            ><label class="check"
++            ><label class="field inline"
+               ><input
+                 type="checkbox"
+                 :checked="draft.rolling24hLimit === null"
+                 @change="unlimited"
+-              />{{ copy("a.plan.unlimited") }}</label
++              /><span>{{ copy("a.plan.unlimited") }}</span></label
+             >
+             <p class="muted">{{ copy("a.plan.window") }}</p>
+           </div>
+         </div>
+         <div class="form-footer">
+           <button class="btn primary" type="submit">
++            <AppIcon name="save" />
+             {{ copy("a.save") }}
+           </button>
+         </div>
+--- before/frontend/app/pages/library/index.vue
++++ after/frontend/app/pages/library/index.vue
+@@ -2,23 +2,26 @@
+ import { useLearnerAccess } from "@presentation/controllers/learner-access";
+ 
+ definePageMeta({
+-  middleware: (to, from) => {
+-    const position = useState<{
+-      query: string;
+-      target: string;
+-      restore: boolean;
+-    }>("library-position").value;
+-    // Decide before mounting consumes the saved position. Nuxt otherwise
+-    // schedules a second scroll to the top after page:loading:end.
+-    const restore = Boolean(
+-      position?.restore &&
+-      from.path === `/library/${position.target}` &&
+-      position.query ===
+-        (typeof to.query.entry === "string" ? to.query.entry : ""),
+-    );
+-    to.meta.scrollToTop = !restore;
+-    if (position && !restore) position.restore = false;
+-  },
++  middleware: [
++    "learner-login",
++    (to, from) => {
++      const position = useState<{
++        query: string;
++        target: string;
++        restore: boolean;
++      }>("library-position").value;
++      // Decide before mounting consumes the saved position. Nuxt otherwise
++      // schedules a second scroll to the top after page:loading:end.
++      const restore = Boolean(
++        position?.restore &&
++        from.path === `/library/${position.target}` &&
++        position.query ===
++          (typeof to.query.entry === "string" ? to.query.entry : ""),
++      );
++      to.meta.scrollToTop = !restore;
++      if (position && !restore) position.restore = false;
++    },
++  ],
+ });
+ 
+ const access = useLearnerAccess(),
+--- before/frontend/app/pages/review/index.vue
++++ after/frontend/app/pages/review/index.vue
+@@ -1,5 +1,6 @@
+ <script setup lang="ts">
+ import { useReviewSetupController } from "@presentation/controllers/review-setup";
++definePageMeta({ middleware: "learner-login" });
+ const setup = useReviewSetupController();
+ const { editor } = setup;
+ const { copy } = useDesignCopy();
+--- before/frontend/app/presentation/components/AppDialog.vue
++++ after/frontend/app/presentation/components/AppDialog.vue
+@@ -1,5 +1,10 @@
+ <script setup lang="ts">
+-const props = defineProps<{ id: string; open: boolean; title: string }>();
++const props = defineProps<{
++  id: string;
++  open: boolean;
++  title: string;
++  closeLabel?: string;
++}>();
+ const emit = defineEmits<{ close: [] }>();
+ const dialog = ref<HTMLDialogElement | null>(null);
+ const feedback = useFeedbackStore();
+@@ -47,7 +52,8 @@
+         :aria-label="$t('common.close')"
+         @click="emit('close')"
+       >
+-        <AppIcon name="x" />
++        <template v-if="closeLabel">{{ closeLabel }}</template>
++        <AppIcon v-else name="x" />
+       </button>
+       <h2 :id="`${id}-dialog-title`">{{ title }}</h2>
+       <div class="dialog-body"><slot /></div>
+--- before/frontend/app/presentation/components/AppIcon.vue
++++ after/frontend/app/presentation/components/AppIcon.vue
+@@ -77,6 +77,11 @@
+     class="ui-icon icon"
+     xmlns="http://www.w3.org/2000/svg"
+     viewBox="0 0 24 24"
++    fill="none"
++    stroke="currentColor"
++    stroke-width="2"
++    stroke-linecap="round"
++    stroke-linejoin="round"
+     aria-hidden="true"
+     focusable="false"
+   >
+--- before/frontend/app/presentation/components/NoticeHost.vue
++++ after/frontend/app/presentation/components/NoticeHost.vue
+@@ -3,6 +3,7 @@
+ const events = authenticationFeedbackFor(useNuxtApp());
+ const notices = useNoticesStore();
+ const { copy, language } = useDesignCopy();
++const format = useDisplayFormatters();
+ watch(
+   events.reminders,
+   (value) => {
+@@ -22,13 +23,26 @@
+   <AppDialog
+     id="platform-notice"
+     :open="notices.state.value.open"
+-    :title="notices.selected.value?.title ?? copy('notices')"
++    :title="copy('notices.title')"
++    :close-label="copy('close')"
+     @close="notices.close"
+-    ><SafeNoticeBody
+-      v-if="notices.selected.value"
+-      :notice="notices.selected.value"
+-    /><AppError :failure="notices.state.value.failure" /><template #footer
+-      ><template v-if="notices.state.value.dialog.length > 1"
++    ><template v-if="notices.selected.value">
++      <p class="muted notice-meta">
++        <time :datetime="notices.selected.value.publishedAt">{{
++          format.calendarDate(notices.selected.value.publishedAt)
++        }}</time>
++        ·
++        {{
++          copy("position", {
++            index: notices.state.value.index + 1,
++            total: notices.state.value.dialog.length,
++          })
++        }}
++      </p>
++      <h3>{{ notices.selected.value.title }}</h3>
++      <SafeNoticeBody :notice="notices.selected.value" /> </template
++    ><AppError :failure="notices.state.value.failure" /><template #footer
++      ><template v-if="notices.state.value.dialog.length"
+         ><button
+           class="btn"
+           type="button"
+@@ -36,9 +50,6 @@
+           @click="notices.move(-1)"
+         >
+           {{ copy("previous") }}</button
+-        ><span
+-          >{{ notices.state.value.index + 1 }} /
+-          {{ notices.state.value.dialog.length }}</span
+         ><button
+           class="btn"
+           type="button"
+@@ -49,7 +60,7 @@
+         >
+           {{ copy("next") }}
+         </button></template
+-      ><button class="btn" type="button" @click="notices.close">
++      ><button class="btn primary" type="button" @click="notices.close">
+         {{ copy("close") }}
+       </button></template
+     ></AppDialog
+--- before/frontend/app/presentation/components/SafeNoticeBody.vue
++++ after/frontend/app/presentation/components/SafeNoticeBody.vue
+@@ -8,7 +8,7 @@
+   <!-- This sole HTML sink accepts the backend's sanitized notice projection, never user input or Markdown. -->
+   <!-- eslint-disable-next-line vue/no-v-html -->
+   <div
+-    class="notice-body"
++    class="notice-body markdown"
+     :lang="notice.contentLocale"
+     v-html="notice.safeBody"
+   />
+--- before/frontend/tests/e2e/m002-inheritance.spec.ts
++++ after/frontend/tests/e2e/m002-inheritance.spec.ts
+@@ -35,8 +35,10 @@
+       ]) {
+         await page.goto(target);
+         await ready(page);
+-        await expect(page.locator(".auth-gate")).toBeVisible();
+-        await page.locator('.auth-gate a[href^="/login"]').click();
++        if (target !== "/review" && target !== "/library") {
++          await expect(page.locator(".auth-gate")).toBeVisible();
++          await page.locator('.auth-gate a[href^="/login"]').click();
++        }
+         await expect(page).toHaveURL(
+           (u) =>
+             u.pathname === "/login" &&
+@@ -195,7 +197,11 @@
+   expect(deletes).toBe(1);
+   await page.goto("/library");
+   await ready(page);
+-  await expect(page.locator(".auth-gate")).toBeVisible();
++  await expect(page).toHaveURL(
++    (url) =>
++      url.pathname === "/login" &&
++      url.searchParams.get("redirect") === "/library",
++  );
+ });
+ test("private SSR responses remain separated and serialize no capability tokens", async ({
+   browser,
+--- before/frontend/tests/e2e/m002-uat-fixes.spec.ts
++++ after/frontend/tests/e2e/m002-uat-fixes.spec.ts
+@@ -0,0 +1,297 @@
++import { test, expect } from "@playwright/test";
++import { readFileSync } from "node:fs";
++
++const source = JSON.parse(
++  readFileSync(
++    new URL(
++      "../../../.planning/milestones/M002/design/copy.json",
++      import.meta.url,
++    ),
++    "utf8",
++  ),
++);
++const ready = (page: import("@playwright/test").Page) =>
++  page.waitForFunction(
++    () => document.documentElement.dataset.appReady === "true",
++  );
++for (const lang of ["en", "zh"]) {
++  const locale = lang === "en" ? "en-US" : "zh-CN";
++  const t = (key: string) =>
++    (source.static[lang + "." + key] ??
++      source.templates[lang + "." + key]) as string;
++  test.describe("UAT23 " + lang, () => {
++    test.beforeEach(async ({ context, baseURL }) => {
++      await context.addCookies([
++        { name: "wordweave_ui_locale", value: locale, url: baseURL! },
++      ]);
++      await context.route("**/api/v1/auth/login", async (route) => {
++        const response = await route.fetch(),
++          json = await response.json();
++        if (response.status() === 200) json.data.ui_locale = locale;
++        await route.fulfill({ response, json });
++      });
++    });
++    test("authentication errors retain actionable text and use a compact outline icon", async ({
++      page,
++    }) => {
++      await page.goto("/login");
++      await ready(page);
++      await page.locator('input[autocomplete="username"]').fill("learner_e2e");
++      await page.locator('input[type="password"]').fill("WrongPass123!");
++      await page.locator('form button[type="submit"]').click();
++      const error = page.locator(".app-error");
++      await expect(error).toBeVisible();
++      await expect(error).toHaveAttribute("role", "alert");
++      expect(await error.innerText()).not.toBe("");
++      const styles = await error.evaluate((el) => {
++        const icon = el.querySelector("svg")!,
++          path = icon.querySelector("path")!,
++          text = el.querySelector("div")!;
++        return {
++          fill: getComputedStyle(path).fill,
++          stroke: getComputedStyle(path).stroke,
++          color: getComputedStyle(el).color,
++          width: icon.getBoundingClientRect().width,
++          aligned:
++            icon.getBoundingClientRect().right <=
++            text.getBoundingClientRect().left,
++          height: el.getBoundingClientRect().height,
++        };
++      });
++      expect(styles.fill).toBe("none");
++      expect(styles.stroke).toBe(styles.color);
++      expect(styles.width).toBe(20);
++      expect(styles.aligned).toBe(true);
++      expect(styles.height).toBeLessThan(110);
++      await expect(page.locator('input[autocomplete="username"]')).toHaveValue(
++        "learner_e2e",
++      );
++      await expect(page.locator('input[type="password"]')).toHaveValue("");
++      await page.route("**/api/v1/auth/register", (route) =>
++        route.fulfill({
++          status: 409,
++          json: {
++            type: "https://wordweave.example/problems/username_unavailable",
++            title: "Username unavailable",
++            status: 409,
++            code: "username_unavailable",
++            detail: "Choose another username.",
++            request_id: "uat23-register-conflict",
++          },
++        }),
++      );
++      await page.locator('.auth-form a[href^="/register"]').click();
++      await expect(page).toHaveURL(/\/register/);
++      await expect(
++        page.locator('input[autocomplete="new-password"]'),
++      ).toHaveCount(2);
++      await page.locator('input[autocomplete="username"]').fill("learner_e2e");
++      for (const input of await page.locator('input[type="password"]').all())
++        await input.fill("CorrectPass123!");
++      await page.locator('form button[type="submit"]').click();
++      await expect(error).toBeVisible();
++      await expect(error.locator("svg")).toHaveAttribute("fill", "none");
++    });
++    test("review and library go directly to authentication and return after login", async ({
++      page,
++    }) => {
++      const privateRequests: string[] = [];
++      page.on("request", (r) => {
++        if (
++          /\/me\/(learning-summary|batches|review-range|review-sessions)/.test(
++            r.url(),
++          )
++        )
++          privateRequests.push(r.url());
++      });
++      for (const target of ["/library", "/review"]) {
++        await page.goto(target);
++        await expect(page).toHaveURL(
++          (u) =>
++            u.pathname === "/login" &&
++            u.searchParams.get("redirect") === target,
++        );
++        await ready(page);
++        await expect(page.locator(".auth-gate")).toHaveCount(0);
++        await expect(
++          page.locator('.auth-form input[autocomplete="username"]'),
++        ).toBeVisible();
++        await page.locator('.auth-form a[href^="/register"]').click();
++        await expect(page).toHaveURL(
++          (u) =>
++            u.pathname === "/register" &&
++            u.searchParams.get("redirect") === target,
++        );
++        await page.locator('.auth-form a[href^="/login"]').click();
++        await expect(page).toHaveURL(
++          (u) =>
++            u.pathname === "/login" &&
++            u.searchParams.get("redirect") === target,
++        );
++      }
++      expect(privateRequests).toEqual([]);
++      await page.locator('input[autocomplete="username"]').fill("learner_e2e");
++      await page.locator('input[type="password"]').fill("CorrectPass123!");
++      await page.locator('form button[type="submit"]').click();
++      await expect(page).toHaveURL(/\/review$/);
++      await expect(page.locator(".range-editor")).toBeVisible();
++    });
++    test("plan fields match the approved groups and persist confirmed edits", async ({
++      page,
++      context,
++      request,
++      baseURL,
++    }) => {
++      await request.post("/api/v1/__test/admin-reset");
++      await context.addCookies([
++        { name: "wordweave_session", value: "admin", url: baseURL! },
++      ]);
++      await page.goto("/admin/plans");
++      await ready(page);
++      const groups = page.locator("form.panel .admin-options");
++      await expect(groups).toHaveCount(2);
++      await expect(groups.nth(1).locator("label")).toHaveCount(4);
++      const layout = await page.locator("form.panel").evaluate((el) => {
++        const columns = [...el.querySelectorAll(".form-grid > div")].map((c) =>
++          c.getBoundingClientRect(),
++        );
++        const rows = [...el.querySelectorAll(".admin-options label")].map(
++          (label) => ({
++            box: label.getBoundingClientRect(),
++            input: label.querySelector("input")!.getBoundingClientRect(),
++            text: label.querySelector("span")!.getBoundingClientRect(),
++          }),
++        );
++        return {
++          desktop: innerWidth > 760,
++          sideBySide: columns[1]!.left > columns[0]!.right,
++          stacked: columns[1]!.top >= columns[0]!.bottom,
++          aligned: rows.every(
++            (r) =>
++              r.input.right < r.text.left && r.box.height >= r.input.height,
++          ),
++          overflow: document.documentElement.scrollWidth > innerWidth,
++        };
++      });
++      expect(layout.overflow).toBe(false);
++      expect(layout.aligned).toBe(true);
++      expect(layout.desktop ? layout.sideBySide : layout.stacked).toBe(true);
++      await page.getByLabel(t("words.limit"), { exact: true }).fill("17");
++      await page
++        .getByRole("checkbox", { name: t("a.length.long"), exact: true })
++        .check();
++      await page
++        .locator("form.panel")
++        .getByRole("button", { name: t("a.save"), exact: true })
++        .click();
++      await expect(page.locator("#plan-impact[open]")).toBeVisible();
++      await page
++        .locator("#plan-impact")
++        .getByRole("button", { name: t("a.save"), exact: true })
++        .click();
++      await expect(page.locator("#plan-impact")).not.toBeVisible();
++      await page.reload();
++      await ready(page);
++      await expect(
++        page.getByLabel(t("words.limit"), { exact: true }),
++      ).toHaveValue("17");
++      await expect(
++        page.getByRole("checkbox", { name: t("a.length.long"), exact: true }),
++      ).toBeChecked();
++    });
++    test("login reminders preserve prototype hierarchy, pagination and welcome layer", async ({
++      page,
++    }) => {
++      const notices = [1, 2].map((i) => ({
++        id: "uat23-notice-" + i,
++        title:
++          lang === "zh" ? "本周学习提醒 " + i : "This week's learning " + i,
++        body_html:
++          "<h2>Keep learning</h2><p>A little practice every day.</p><ul><li>Read a story</li><li>Review your words</li></ul>",
++        content_locale: locale,
++        remind: true,
++        published_at: "2026-09-20T01:00:00Z",
++        revision: "notice-revision-" + i,
++      }));
++      await page.route("**/api/v1/notices**", (route) => {
++        const id = new URL(route.request().url()).pathname.split("/").at(-1);
++        return route.fulfill({
++          json:
++            id === "notices"
++              ? {
++                  data: { items: notices },
++                  meta: {
++                    request_id: "uat23-notices",
++                    next_cursor: null,
++                    has_more: false,
++                  },
++                }
++              : {
++                  data: { notice: notices.find((n) => n.id === id) },
++                  meta: { request_id: "uat23-notice" },
++                },
++        });
++      });
++      await page.goto("/login");
++      await ready(page);
++      await page.locator('input[autocomplete="username"]').fill("learner_e2e");
++      await page.locator('input[type="password"]').fill("CorrectPass123!");
++      await page.locator('form button[type="submit"]').click();
++      const dialog = page.locator("#platform-notice");
++      await expect(dialog).toBeVisible();
++      await expect(dialog.locator(":scope > h2")).toHaveText(
++        t("notices.title"),
++      );
++      await expect(dialog.locator(".notice-meta")).toContainText("1 / 2");
++      await expect(dialog.locator("time")).toHaveAttribute(
++        "datetime",
++        notices[0]!.published_at,
++      );
++      await expect(dialog.locator("time")).toHaveText("2026-09-20");
++      await expect(dialog.locator(".dialog-close")).toHaveText(t("close"));
++      await expect(dialog.locator(".dialog-body > h3")).toHaveText(
++        notices[0]!.title,
++      );
++      await expect(dialog.locator(".markdown h2")).toHaveText("Keep learning");
++      await expect(dialog.locator(".dialog-actions .btn")).toHaveText([
++        t("previous"),
++        t("next"),
++        t("close"),
++      ]);
++      await expect(
++        dialog.getByRole("button", { name: t("previous"), exact: true }),
++      ).toBeDisabled();
++      await expect(dialog.locator(".dialog-actions .primary")).toHaveText(
++        t("close"),
++      );
++      await expect(page.locator('[role="status"][popover]')).toBeVisible();
++      expect(
++        await page
++          .locator('[role="status"][popover]')
++          .evaluate(
++            (el) =>
++              el.matches(":popover-open") &&
++              document.querySelector("#platform-notice")!.contains(el),
++          ),
++      ).toBe(true);
++      await dialog
++        .getByRole("button", { name: t("next"), exact: true })
++        .click();
++      await expect(dialog.locator(".notice-meta")).toContainText("2 / 2");
++      await expect(dialog.locator(".dialog-body > h3")).toHaveText(
++        notices[1]!.title,
++      );
++      await expect(
++        dialog.getByRole("button", { name: t("next"), exact: true }),
++      ).toBeDisabled();
++      expect(
++        await page.evaluate(
++          () => document.documentElement.scrollWidth <= innerWidth,
++        ),
++      ).toBe(true);
++      await page.keyboard.press("Escape");
++      await expect(dialog).not.toBeVisible();
++      await expect(page.locator('[role="status"][popover]')).toBeVisible();
++    });
++  });
++}
+--- before/frontend/tests/unit/learner-login.test.ts
++++ after/frontend/tests/unit/learner-login.test.ts
+@@ -0,0 +1,60 @@
++import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
++
++const navigate = vi.fn((to: unknown) => to);
++const session = {
++  load: vi.fn(async () => {}),
++  state: { value: { status: "ready" } },
++  actor: { value: { kind: "visitor" } },
++  isAdmin: { value: false },
++};
++let guard: (to: { fullPath: string }) => Promise<unknown>;
++beforeEach(async () => {
++  vi.resetModules();
++  vi.clearAllMocks();
++  session.state.value.status = "ready";
++  session.actor.value.kind = "visitor";
++  session.isAdmin.value = false;
++  vi.stubGlobal("useSessionStore", () => session);
++  vi.stubGlobal("navigateTo", navigate);
++  vi.stubGlobal(
++    "defineNuxtRouteMiddleware",
++    (handler: typeof guard) => handler,
++  );
++  guard = (await import("../../app/middleware/learner-login"))
++    .default as unknown as typeof guard;
++});
++afterEach(() => vi.unstubAllGlobals());
++
++describe("learner entry authentication", () => {
++  it.each(["/library", "/review"])(
++    "redirects a confirmed guest before rendering %s",
++    async (fullPath) => {
++      await guard({ fullPath });
++      expect(session.load).toHaveBeenCalledOnce();
++      expect(navigate).toHaveBeenCalledWith(
++        { path: "/login", query: { redirect: fullPath } },
++        { replace: true },
++      );
++    },
++  );
++  it("keeps identity failures retryable instead of treating them as logout", async () => {
++    session.state.value.status = "failed";
++    await guard({ fullPath: "/review" });
++    expect(navigate).not.toHaveBeenCalled();
++  });
++  it("allows a learner and routes an administrator to the admin area", async () => {
++    session.actor.value.kind = "account";
++    await guard({ fullPath: "/library" });
++    expect(navigate).not.toHaveBeenCalled();
++    session.isAdmin.value = true;
++    await guard({ fullPath: "/library" });
++    expect(navigate).toHaveBeenCalledWith("/admin");
++  });
++  it("uses only the existing safe return target and drops untrusted redirect parameters", async () => {
++    await guard({ fullPath: "/review?redirect=https://outside.example" });
++    expect(navigate).toHaveBeenCalledWith(
++      { path: "/login", query: { redirect: "/review" } },
++      { replace: true },
++    );
++  });
++});

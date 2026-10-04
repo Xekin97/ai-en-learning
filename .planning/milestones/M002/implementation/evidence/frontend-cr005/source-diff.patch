@@ -1,0 +1,805 @@
+--- before/frontend/app/infrastructure/storage/review-drafts.ts
++++ after/frontend/app/infrastructure/storage/review-drafts.ts
+@@ -2,6 +2,11 @@
+ export class DraftConflict extends Error {
+   constructor() {
+     super("Local draft changed");
++  }
++}
++export class InvalidDraft extends Error {
++  constructor() {
++    super("Invalid local draft");
+   }
+ }
+ function database(): Promise<IDBDatabase> {
+@@ -83,7 +88,7 @@
+       request.onsuccess = () => {
+         if (request.result === undefined) set(null);
+         else if (valid(request.result)) set(request.result);
+-        else fail(new Error("Invalid local draft"));
++        else fail(new InvalidDraft());
+       };
+     });
+   },
+@@ -97,7 +102,7 @@
+       get.onsuccess = () => {
+         const old = get.result;
+         if (old !== undefined && !valid(old)) {
+-          fail(new Error("Invalid local draft"));
++          fail(new InvalidDraft());
+           return;
+         }
+         if ((old?.localRevision ?? 0) !== expected) {
+--- before/frontend/app/runtime/stores/review.ts
++++ after/frontend/app/runtime/stores/review.ts
+@@ -13,6 +13,7 @@
+ import {
+   reviewDrafts,
+   DraftConflict,
++  InvalidDraft,
+ } from "@infrastructure/storage/review-drafts";
+ export function useReviewStore() {
+   const analytics = useAnalyticsEvents();
+@@ -38,6 +39,7 @@
+     >("loading");
+   let key: DraftKey | null = null,
+     stored: LocalDraft | null = null,
++    localReadPending = false,
+     localRevision = 0,
+     dirty = 0,
+     saved = 0,
+@@ -61,6 +63,7 @@
+     receipt.value = null;
+     key = null;
+     stored = null;
++    localReadPending = false;
+     localRevision = dirty = saved = 0;
+     restoreOpen.value = false;
+     phase.value = "entry";
+@@ -113,6 +116,14 @@
+       value.navigation.step <= question.words.length
+     );
+   }
++  async function readMatchingDraft(
++    readingKey: DraftKey,
++    question: DraftAttemptModel,
++  ) {
++    const found = await reviewDrafts.read(readingKey);
++    if (found && !matches(found, question)) throw new InvalidDraft();
++    return found;
++  }
+   async function accept(value: DraftAttemptModel, restore = true) {
+     const epoch = identity.epoch.value,
+       version = request;
+@@ -122,17 +133,19 @@
+     comparison.value = null;
+     receipt.value = null;
+     key = [owner, value.sessionId, value.attemptId];
++    stored = null;
++    localReadPending = true;
++    restoreOpen.value = false;
+     draft.value = blank(value);
+     localRevision = dirty = saved = 0;
+     storageFailed.value = false;
+     phase.value = "editing";
+     try {
+-      const found = await reviewDrafts.read(key);
+-      if (!owns(epoch, version)) return;
++      const found = await readMatchingDraft(key, value);
++      if (!owns(epoch, version)) return;
++      localReadPending = false;
+       stored = found;
+       if (stored) {
+-        if (!matches(stored, value))
+-          throw new Error("Draft no longer matches questions");
+         localRevision = stored.localRevision;
+         if (restore) {
+           restoreOpen.value = true;
+@@ -141,10 +154,12 @@
+           draft.value = stored;
+         }
+       }
+-    } catch {
++    } catch (error) {
+       if (!owns(epoch, version)) return;
+       storageFailed.value = true;
+-      phase.value = "entry";
++      // Storage availability must not gate learning. Unknown persisted data is
++      // checked again before any later write; corrupt records still need restart.
++      phase.value = error instanceof InvalidDraft ? "entry" : "editing";
+     }
+   }
+   async function removeDraft() {
+@@ -156,6 +171,7 @@
+       channel?.postMessage({ key: [...removing], invalid: true });
+       if (epoch !== identity.epoch.value || key !== removing) return;
+       localRevision = dirty = saved = 0;
++      localReadPending = false;
+       storageFailed.value = false;
+     } catch {
+       if (epoch === identity.epoch.value && key === removing)
+@@ -258,6 +274,7 @@
+     if (stored && attempt.value && matches(stored, attempt.value)) {
+       draft.value = structuredClone(stored);
+       localRevision = stored.localRevision;
++      localReadPending = false;
+       dirty = saved = 0;
+       restoreOpen.value = false;
+       storageFailed.value = false;
+@@ -280,17 +297,27 @@
+       epoch = identity.epoch.value,
+       version = request;
+     try {
+-      const current = await reviewDrafts.read(checking);
++      const current = await readMatchingDraft(checking, attempt.value);
+       if (!owns(epoch, version) || key !== checking) return;
+-      if ((current?.localRevision ?? 0) !== localRevision) {
++      const wasPending = localReadPending;
++      localReadPending = false;
++      if (wasPending || (current?.localRevision ?? 0) !== localRevision) {
+         stored = current;
++        if (current) {
++          storageFailed.value = true;
++          restoreOpen.value = true;
++        } else if (wasPending) {
++          if (dirty === saved) storageFailed.value = false;
++        } else if (session.value) await load(session.value.sessionId);
++      }
++    } catch (error) {
++      if (owns(epoch, version) && key === checking) {
+         storageFailed.value = true;
+-        if (current) {
+-          restoreOpen.value = true;
+-        } else if (session.value) await load(session.value.sessionId);
+-      }
+-    } catch {
+-      if (owns(epoch, version) && key === checking) storageFailed.value = true;
++        if (error instanceof InvalidDraft) {
++          localReadPending = true;
++          phase.value = "entry";
++        }
++      }
+     }
+   }
+ 
+@@ -301,15 +328,37 @@
+       await removeDraft();
+       return;
+     }
+-    if (!key || !draft.value || dirty === saved || restoreOpen.value) return;
++    if (!key || !draft.value || !attempt.value || restoreOpen.value) return;
+     const writingKey = key,
++      question = attempt.value,
+       epoch = identity.epoch.value;
+     flushing = (async () => {
++      if (localReadPending) {
++        try {
++          const found = await readMatchingDraft(writingKey, question);
++          if (key !== writingKey || epoch !== identity.epoch.value) return;
++          localReadPending = false;
++          if (found) {
++            stored = found;
++            restoreOpen.value = true;
++            storageFailed.value = true;
++            return;
++          }
++          if (phase.value === "entry") phase.value = "editing";
++          if (dirty === saved) storageFailed.value = false;
++        } catch (error) {
++          if (key !== writingKey || epoch !== identity.epoch.value) return;
++          storageFailed.value = true;
++          if (error instanceof InvalidDraft) phase.value = "entry";
++          return;
++        }
++      }
+       while (
+         key === writingKey &&
+         epoch === identity.epoch.value &&
+         dirty !== saved &&
+-        !restoreOpen.value
++        !restoreOpen.value &&
++        (phase.value === "editing" || phase.value === "submitting")
+       ) {
+         const snapshot = structuredClone(draft.value!),
+           version = dirty;
+@@ -331,11 +380,20 @@
+         } catch (error) {
+           if (key !== writingKey || epoch !== identity.epoch.value) return;
+           storageFailed.value = true;
++          if (error instanceof InvalidDraft) {
++            localReadPending = true;
++            phase.value = "entry";
++          }
+           if (error instanceof DraftConflict) {
+-            const other = await reviewDrafts.read(writingKey).catch(() => null);
++            localReadPending = true;
++            const other = await readMatchingDraft(writingKey, question).catch(
++              () => null,
++            );
+             if (key !== writingKey || epoch !== identity.epoch.value) return;
+             stored = other;
+             restoreOpen.value = stored !== null;
++            if (stored) localReadPending = false;
++            else phase.value = "entry";
+           }
+           break;
+         }
+@@ -423,8 +481,8 @@
+     phase.value = "submitting";
+     await flush();
+     if (!owns(epoch, version) || !draft.value) return;
+-    if (restoreOpen.value) {
+-      phase.value = "editing";
++    if (restoreOpen.value || phase.value !== "submitting") {
++      if (phase.value === "submitting") phase.value = "editing";
+       return;
+     }
+     failure.value = null;
+--- /dev/null
++++ after/frontend/tests/e2e/m002-review-storage.spec.ts
+@@ -0,0 +1,249 @@
++import { test, expect, type Page } from "@playwright/test";
++import { readFileSync } from "node:fs";
++
++const source = JSON.parse(
++  readFileSync(
++    new URL(
++      "../../../.planning/milestones/M002/design/copy.json",
++      import.meta.url,
++    ),
++    "utf8",
++  ),
++);
++const t = (key: string) =>
++  (source.static[`en.${key}`] ?? source.templates[`en.${key}`]) as string;
++const ready = (page: Page) =>
++  page.waitForFunction(
++    () => document.documentElement.dataset.appReady === "true",
++  );
++async function fault(page: Page, value: "all" | "write" | null) {
++  await page.evaluate((value) => {
++    Reflect.set(window, "__reviewStorageFault", value);
++  }, value);
++}
++async function records(page: Page) {
++  return page.evaluate(
++    () =>
++      new Promise<Record<string, unknown>[]>((resolve, reject) => {
++        const request = indexedDB.open("wordweave-review-drafts", 1);
++        request.onerror = () => reject(request.error);
++        request.onsuccess = () => {
++          const db = request.result;
++          const tx = db.transaction("drafts", "readonly");
++          const rows = tx.objectStore("drafts").getAll();
++          tx.oncomplete = () => {
++            db.close();
++            resolve(rows.result);
++          };
++          tx.onabort = () => {
++            db.close();
++            reject(tx.error);
++          };
++        };
++      }),
++  );
++}
++async function start(page: Page) {
++  await page.goto("/library/batch-e2e");
++  await ready(page);
++  await page.getByRole("button", { name: t("l.single"), exact: true }).click();
++  await expect(page.locator(".slot")).toHaveCount(5);
++}
++const retry = (page: Page) =>
++  page
++    .getByRole("alert")
++    .filter({ hasText: t("failed") })
++    .getByRole("button", { name: t("retry"), exact: true });
++const warning = (page: Page) =>
++  page.getByRole("alert").filter({ hasText: t("failed") });
++
++test.beforeEach(async ({ context, request }) => {
++  await request.post("http://127.0.0.1:38080/api/v1/__test/review-reset");
++  await context.addCookies([
++    {
++      name: "wordweave_session",
++      value: "learner",
++      url: "http://127.0.0.1:3332",
++    },
++  ]);
++  await context.addInitScript(() => {
++    const open = IDBFactory.prototype.open;
++    IDBFactory.prototype.open = function (...args) {
++      if (
++        args[0] === "wordweave-review-drafts" &&
++        Reflect.get(window, "__reviewStorageFault") === "all"
++      )
++        throw new DOMException(
++          "Storage denied for regression",
++          "SecurityError",
++        );
++      return open.apply(this, args);
++    };
++    const transaction = IDBDatabase.prototype.transaction;
++    IDBDatabase.prototype.transaction = function (...args) {
++      const tx = transaction.apply(this, args);
++      if (
++        this.name === "wordweave-review-drafts" &&
++        args[1] === "readwrite" &&
++        Reflect.get(window, "__reviewStorageFault") === "write"
++      )
++        queueMicrotask(() => tx.abort());
++      return tx;
++    };
++  });
++});
++
++test("denied storage preserves editing and submits the latest memory answers; cleanup retries and summary is one-time", async ({
++  page,
++}, info) => {
++  const errors: string[] = [];
++  page.on("pageerror", (error) => errors.push(error.message));
++  await page.addInitScript(() => {
++    Reflect.set(window, "__reviewStorageFault", "all");
++  });
++  await start(page);
++  await expect(warning(page)).toBeVisible();
++  await page.locator(".slot").first().fill("x");
++  await retry(page).click();
++  await expect(page.locator(".slot").first()).toHaveValue("x");
++  await page.getByRole("button", { name: t("next"), exact: true }).click();
++  await page.locator(".gap").fill("wrong");
++  await page.getByRole("button", { name: t("next"), exact: true }).click();
++  await expect(page.locator(".answer-link").first()).toHaveText("x");
++  await page.locator(".answer-link").first().click();
++  await page.locator(".slot").first().fill("y");
++  await page.getByRole("button", { name: t("next"), exact: true }).click();
++  await expect(page.locator(".answer-link").first()).toHaveText("y");
++  expect(
++    await page.evaluate(
++      () => document.documentElement.scrollWidth <= innerWidth,
++    ),
++  ).toBe(true);
++  await page.screenshot({
++    path: info.outputPath("memory-overview.png"),
++    fullPage: true,
++  });
++  const submitted = page.waitForRequest(
++    (r) => r.method() === "POST" && r.url().endsWith("/submit"),
++  );
++  await page.getByRole("button", { name: t("submit"), exact: true }).click();
++  expect((await submitted).postDataJSON()).toMatchObject({
++    words: [{ answer: "y" }],
++    passage: [{ answer: "wrong" }],
++  });
++  await expect(page.locator(".result-word .bad").first()).toHaveText("y");
++  await expect(warning(page)).toBeVisible();
++  await fault(page, null);
++  await retry(page).click();
++  await expect(warning(page)).toHaveCount(0);
++  expect(await records(page)).toEqual([]);
++  await page.reload();
++  await ready(page);
++  await expect(page.locator(".result-word")).toHaveCount(0);
++  await expect(
++    page.getByText(t("l.summary.unavailable"), { exact: true }),
++  ).toBeVisible();
++  expect(errors).toEqual([]);
++});
++
++test("a failed write retains current input and persists it on retry for confirmed restoration", async ({
++  page,
++}) => {
++  await start(page);
++  await page.locator(".slot").first().fill("a");
++  await expect
++    .poll(async () => (await records(page))[0]?.wordInputs)
++    .toEqual({ "q-opaque": ["a", "", "", "", ""] });
++  await fault(page, "write");
++  await page.locator(".slot").first().fill("b");
++  await expect(warning(page)).toBeVisible();
++  await retry(page).click();
++  await expect(page.locator(".slot").first()).toHaveValue("b");
++  expect((await records(page))[0]?.wordInputs).toEqual({
++    "q-opaque": ["a", "", "", "", ""],
++  });
++  await fault(page, null);
++  await retry(page).click();
++  await expect(warning(page)).toHaveCount(0);
++  await page.reload();
++  await ready(page);
++  await expect(page.locator("dialog[open]")).toBeVisible();
++  await expect(page.locator(".slot")).toHaveCount(0);
++  await page
++    .locator("dialog[open]")
++    .getByRole("button", { name: t("resume"), exact: true })
++    .click();
++  await expect(page.locator(".slot").first()).toHaveValue("b");
++});
++
++test("recovering a failed read never overwrites an existing draft before restore confirmation", async ({
++  page,
++}) => {
++  await start(page);
++  await page.locator(".slot").first().fill("a");
++  await expect.poll(async () => (await records(page)).length).toBe(1);
++  await page.addInitScript(() => {
++    Reflect.set(window, "__reviewStorageFault", "all");
++  });
++  await page.reload();
++  await ready(page);
++  await expect(page.locator(".slot")).toHaveCount(5);
++  await page.locator(".slot").first().fill("b");
++  await expect(warning(page)).toBeVisible();
++  await fault(page, null);
++  await retry(page).click();
++  await expect(page.locator("dialog[open]")).toBeVisible();
++  expect((await records(page))[0]?.wordInputs).toEqual({
++    "q-opaque": ["a", "", "", "", ""],
++  });
++  await page
++    .locator("dialog[open]")
++    .getByRole("button", { name: t("resume"), exact: true })
++    .click();
++  await expect(page.locator(".slot").first()).toHaveValue("a");
++});
++
++test("an unknown draft schema is protected until explicit restart", async ({
++  page,
++}) => {
++  await start(page);
++  await page.locator(".slot").first().fill("a");
++  await expect.poll(async () => (await records(page)).length).toBe(1);
++  await page.evaluate(
++    () =>
++      new Promise<void>((resolve, reject) => {
++        const request = indexedDB.open("wordweave-review-drafts", 1);
++        request.onsuccess = () => {
++          const db = request.result;
++          const tx = db.transaction("drafts", "readwrite");
++          const cursor = tx.objectStore("drafts").openCursor();
++          cursor.onsuccess = () => {
++            if (cursor.result)
++              cursor.result.update({
++                ...cursor.result.value,
++                schemaVersion: 2,
++              });
++          };
++          tx.oncomplete = () => {
++            db.close();
++            resolve();
++          };
++          tx.onabort = () => {
++            db.close();
++            reject(tx.error);
++          };
++        };
++        request.onerror = () => reject(request.error);
++      }),
++  );
++  await page.reload();
++  await ready(page);
++  await expect(warning(page)).toBeVisible();
++  await expect(page.locator(".slot")).toHaveCount(0);
++  await retry(page).click();
++  expect((await records(page))[0]?.schemaVersion).toBe(2);
++  await page.getByRole("button", { name: t("restart"), exact: true }).click();
++  await expect(page.locator(".slot")).toHaveCount(5);
++  await expect(page.locator(".slot").first()).toHaveValue("");
++  expect(await records(page)).toEqual([]);
++});
+--- /dev/null
++++ after/frontend/tests/unit/review-storage-failure.test.ts
+@@ -0,0 +1,313 @@
++import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
++import {
++  effectScope,
++  onScopeDispose,
++  readonly,
++  ref,
++  shallowRef,
++  watch,
++} from "vue";
++import { useReviewStore } from "@runtime/stores/review";
++import {
++  DraftConflict,
++  InvalidDraft,
++  reviewDrafts,
++} from "@infrastructure/storage/review-drafts";
++import type {
++  DraftAttemptModel,
++  LocalDraft,
++  SessionModel,
++  SubmissionModel,
++} from "@application/review/models";
++
++vi.mock("@runtime/stores/analytics-events", () => ({
++  useAnalyticsEvents: () => ({ action: vi.fn() }),
++}));
++
++const attempt: DraftAttemptModel = {
++  attemptId: "attempt-1",
++  sessionId: "session-1",
++  batchId: "batch-1",
++  revision: "revision-1",
++  tokenExpiresAt: "2099-01-01T00:00:00Z",
++  words: [
++    {
++      questionId: "q1",
++      entryMeaning: "适应",
++      slots: [{ kind: "letters", count: 5 }],
++      hint: [],
++    },
++  ],
++  passage: [],
++};
++const session: SessionModel = {
++  sessionId: "session-1",
++  mode: "single_batch",
++  status: "active",
++  dateRange: null,
++  progress: {
++    completedBatches: 0,
++    totalBatches: 1,
++    successfulBatches: 0,
++    unsuccessfulBatches: 0,
++    skippedBatches: 0,
++  },
++  currentBatch: null,
++  currentAttempt: {
++    attemptId: attempt.attemptId,
++    revision: attempt.revision,
++    state: "draft",
++  },
++  revision: "session-revision",
++};
++const submitted: SubmissionModel = {
++  outcome: "already_submitted",
++  session: { ...session, status: "completed", currentAttempt: null },
++  receipt: {
++    attemptId: attempt.attemptId,
++    batchId: attempt.batchId,
++    revision: "submitted-revision",
++    submittedAt: "2026-09-21T00:00:00Z",
++    successful: false,
++    answerState: "answered",
++  },
++};
++function local(letter = "a", revision = 4): LocalDraft {
++  return {
++    schemaVersion: 1,
++    serverRevision: attempt.revision,
++    localRevision: revision,
++    wordInputs: { q1: [letter, "", "", "", ""] },
++    passageInputs: {},
++    navigation: {
++      step: 0,
++      stage: "editing",
++      returnToOverview: false,
++      focus: null,
++    },
++  };
++}
++let scope: ReturnType<typeof effectScope>;
++function harness() {
++  const epoch = ref(1);
++  const api = {
++    getReviewSession: vi.fn().mockResolvedValue(session),
++    getReviewAttempt: vi.fn().mockResolvedValue({ state: "draft", attempt }),
++    submitReviewAttempt: vi.fn().mockResolvedValue(submitted),
++    restartReviewAttempt: vi.fn().mockResolvedValue({
++      session,
++      attempt: { ...attempt, attemptId: "attempt-2" },
++    }),
++  };
++  vi.stubGlobal("useNuxtApp", () => ({ $api: api }));
++  vi.stubGlobal("useSessionStore", () => ({
++    epoch,
++    actor: ref({ kind: "account", id: "owner-1" }),
++    refreshSecurityContext: vi.fn().mockResolvedValue(undefined),
++    invalidate: vi.fn(),
++  }));
++  for (const [name, value] of Object.entries({
++    ref,
++    shallowRef,
++    readonly,
++    watch,
++    onScopeDispose,
++    onMounted: vi.fn(),
++  }))
++    vi.stubGlobal(name, value);
++  const read = vi.spyOn(reviewDrafts, "read").mockResolvedValue(null);
++  const write = vi.spyOn(reviewDrafts, "write").mockResolvedValue(1);
++  const remove = vi.spyOn(reviewDrafts, "remove").mockResolvedValue(undefined);
++  vi.spyOn(reviewDrafts, "keys").mockResolvedValue([]);
++  scope = effectScope();
++  return {
++    api,
++    epoch,
++    read,
++    write,
++    remove,
++    store: scope.run(() => useReviewStore())!,
++  };
++}
++beforeEach(() => vi.useFakeTimers());
++afterEach(async () => {
++  scope?.stop();
++  await Promise.resolve();
++  vi.clearAllTimers();
++  vi.useRealTimers();
++  vi.restoreAllMocks();
++  vi.unstubAllGlobals();
++});
++
++describe("review when local persistence fails", () => {
++  it("keeps editing, navigation and submission in memory when IndexedDB is denied, then retries cleanup", async () => {
++    const h = harness();
++    h.read.mockRejectedValue(new DOMException("denied", "SecurityError"));
++    h.remove.mockRejectedValue(new DOMException("denied", "SecurityError"));
++    await h.store.load(session.sessionId);
++    expect(h.store.phase.value).toBe("editing");
++    expect(h.store.storageFailed.value).toBe(true);
++    h.store.word("q1", ["x", "", "", "", ""]);
++    h.store.navigate({
++      step: 0,
++      stage: "overview",
++      returnToOverview: false,
++      focus: null,
++    });
++    await h.store.flush();
++    expect(h.store.answerFor(attempt.words[0]!)).toBe("x");
++    expect(h.store.draft.value?.navigation.stage).toBe("overview");
++    await h.store.submit();
++    expect(h.api.submitReviewAttempt).toHaveBeenCalledExactlyOnceWith(
++      "attempt-1",
++      {
++        expectedRevision: "revision-1",
++        words: [{ questionId: "q1", answer: "x" }],
++        passage: [],
++      },
++    );
++    expect(h.store.phase.value).toBe("receipt");
++    expect(h.store.draft.value).toBeNull();
++    expect(h.store.storageFailed.value).toBe(true);
++    h.remove.mockResolvedValue(undefined);
++    await h.store.flush();
++    expect(h.store.storageFailed.value).toBe(false);
++    expect(h.write).not.toHaveBeenCalled();
++  });
++
++  it("rechecks unknown storage before saving the latest in-memory input after recovery", async () => {
++    const h = harness();
++    h.read.mockRejectedValueOnce(new Error("unavailable"));
++    await h.store.load(session.sessionId);
++    h.store.word("q1", ["b", "", "", "", ""]);
++    await h.store.flush();
++    expect(h.read).toHaveBeenCalledTimes(2);
++    expect(h.write).toHaveBeenCalledWith(
++      ["owner-1", "session-1", "attempt-1"],
++      expect.objectContaining({ wordInputs: { q1: ["b", "", "", "", ""] } }),
++      0,
++    );
++    expect(h.store.storageFailed.value).toBe(false);
++    expect(h.api.getReviewSession).toHaveBeenCalledTimes(1);
++  });
++
++  it.each([0, 4])(
++    "prompts before using a recovered existing draft at local revision %i",
++    async (revision) => {
++      const h = harness();
++      h.read
++        .mockRejectedValueOnce(new Error("unavailable"))
++        .mockResolvedValue(local("a", revision));
++      await h.store.load(session.sessionId);
++      h.store.word("q1", ["b", "", "", "", ""]);
++      await h.store.submit();
++      expect(h.store.restoreOpen.value).toBe(true);
++      expect(h.store.answerFor(attempt.words[0]!)).toBe("b");
++      expect(h.write).not.toHaveBeenCalled();
++      expect(h.api.submitReviewAttempt).not.toHaveBeenCalled();
++      h.store.closeRestore();
++      await h.store.flush();
++      expect(h.write).not.toHaveBeenCalled();
++      h.store.restore();
++      expect(h.store.answerFor(attempt.words[0]!)).toBe("a");
++      expect(h.store.storageFailed.value).toBe(false);
++    },
++  );
++
++  it("submits current answers despite write quota failure", async () => {
++    const h = harness();
++    await h.store.load(session.sessionId);
++    h.write.mockRejectedValue(new DOMException("full", "QuotaExceededError"));
++    h.store.word("q1", ["y", "", "", "", ""]);
++    await h.store.flush();
++    expect(h.store.phase.value).toBe("editing");
++    expect(h.store.storageFailed.value).toBe(true);
++    await h.store.submit();
++    expect(h.api.submitReviewAttempt).toHaveBeenCalledWith(
++      "attempt-1",
++      expect.objectContaining({ words: [{ questionId: "q1", answer: "y" }] }),
++    );
++    expect(h.store.storageFailed.value).toBe(false);
++  });
++
++  it.each(["invalid", "mismatch"])(
++    "protects a %s persisted record until explicit restart",
++    async (reason) => {
++      const h = harness();
++      if (reason === "invalid") h.read.mockRejectedValue(new InvalidDraft());
++      else
++        h.read.mockResolvedValue({
++          ...local(),
++          serverRevision: "old-question",
++        });
++      await h.store.load(session.sessionId);
++      await h.store.flush();
++      await h.store.submit();
++      expect(h.store.phase.value).toBe("entry");
++      expect(h.write).not.toHaveBeenCalled();
++      expect(h.remove).not.toHaveBeenCalled();
++      expect(h.api.submitReviewAttempt).not.toHaveBeenCalled();
++      h.read.mockResolvedValue(null);
++      await h.store.restart();
++      expect(h.api.restartReviewAttempt).toHaveBeenCalledExactlyOnceWith(
++        "attempt-1",
++        "revision-1",
++      );
++      expect(h.remove).toHaveBeenCalledWith([
++        "owner-1",
++        "session-1",
++        "attempt-1",
++      ]);
++      expect(h.store.phase.value).toBe("editing");
++      expect(h.store.attempt.value?.attemptId).toBe("attempt-2");
++    },
++  );
++
++  it("ignores recovery reads that finish after an account change", async () => {
++    const h = harness();
++    h.read.mockRejectedValueOnce(new Error("unavailable"));
++    await h.store.load(session.sessionId);
++    let resolve!: (value: LocalDraft) => void;
++    h.read.mockImplementationOnce(
++      () =>
++        new Promise((done) => {
++          resolve = done;
++        }),
++    );
++    h.store.word("q1", ["b", "", "", "", ""]);
++    const pending = h.store.flush();
++    h.epoch.value++;
++    resolve(local());
++    await pending;
++    expect(h.store.draft.value).toBeNull();
++    expect(h.store.restoreOpen.value).toBe(false);
++    expect(h.store.storageFailed.value).toBe(false);
++    expect(h.write).not.toHaveBeenCalled();
++  });
++
++  it("blocks submission after CAS conflict when the conflicting record cannot yet be read", async () => {
++    const h = harness();
++    await h.store.load(session.sessionId);
++    h.write.mockRejectedValue(new DraftConflict());
++    h.read.mockRejectedValueOnce(new Error("unavailable"));
++    h.store.word("q1", ["b", "", "", "", ""]);
++    await h.store.submit();
++    expect(h.store.phase.value).toBe("entry");
++    expect(h.api.submitReviewAttempt).not.toHaveBeenCalled();
++    h.read.mockResolvedValue(local());
++    await h.store.flush();
++    expect(h.store.restoreOpen.value).toBe(true);
++    expect(h.store.answerFor(attempt.words[0]!)).toBe("b");
++    expect(h.write).toHaveBeenCalledTimes(1);
++  });
++
++  it("clears the unavailable warning on retry even before any answer is entered", async () => {
++    const h = harness();
++    h.read.mockRejectedValueOnce(new Error("unavailable"));
++    await h.store.load(session.sessionId);
++    await h.store.flush();
++    expect(h.read).toHaveBeenCalledTimes(2);
++    expect(h.store.storageFailed.value).toBe(false);
++    expect(h.write).not.toHaveBeenCalled();
++  });
++});

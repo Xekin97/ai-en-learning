@@ -1,0 +1,277 @@
+--- before/frontend/app/assets/css/application.css
++++ after/frontend/app/assets/css/application.css
+@@ -1,4 +1,14 @@
+ /* Production semantics complement the approved M002-UI-22 theme. */
++/* WebKit's native menu control ignores min-height without an explicit height. */
++select {
++  height: 46px;
++}
++
++/* Keep complete point balances inside the account content column. */
++.account-content .page-head {
++  flex-wrap: wrap;
++}
++
+ [v-cloak] {
+   display: none;
+ }
+--- before/frontend/app/pages/account/growth.vue
++++ after/frontend/app/pages/account/growth.vue
+@@ -39,6 +39,32 @@
+ if (session.isLearner.value) await usePageLoader("growth", () => growth.load());
+ const { locale } = useI18n();
+ watch(locale, () => void growth.load());
++const rewards = ref<HTMLElement>();
++async function claimReward(
++  kind: "achievement" | "level",
++  id: string,
++  group?: AchievementKind,
++) {
++  if (growth.state.value.claiming) return;
++  await growth.claim(kind, id);
++  if (growth.state.value.failure) return;
++  await nextTick();
++  const target =
++    kind === "achievement"
++      ? rewards.value?.querySelector<HTMLElement>(
++          `[data-achievement-group="${group}"] summary`,
++        )
++      : [
++          ...(rewards.value?.querySelectorAll<HTMLElement>("[data-level-id]") ??
++            []),
++        ]
++          .find((row) => row.dataset.levelId === id)
++          ?.querySelector<HTMLElement>("h3");
++  if (target) {
++    if (kind === "level") target.tabIndex = -1;
++    target.focus({ preventScroll: true });
++  }
++}
+ </script>
+ <template>
+   <AccountPage
+@@ -56,7 +82,7 @@
+       {{ copy("retry") }}
+     </button>
+     <p v-if="growth.state.value.pending && !value">{{ copy("loading") }}</p>
+-    <div v-if="value" class="account-growth">
++    <div v-if="value" ref="rewards" class="account-growth">
+       <div class="growth-grid">
+         <section class="growth-banner">
+           <div class="growth-level-heading">
+@@ -156,11 +182,15 @@
+         </div>
+         <div class="achievement-grid">
+           <template v-for="group in groups" :key="group.kind"
+-            ><div v-if="group.featured" class="achievement-group">
++            ><div
++              v-if="group.featured"
++              class="achievement-group"
++              :data-achievement-group="group.kind"
++            >
+               <AchievementCard
+                 :achievement="group.featured"
+                 :pending="!!growth.state.value.claiming"
+-                @claim="growth.claim('achievement', $event)"
++                @claim="claimReward('achievement', $event, group.kind)"
+               />
+               <details class="tier-disclosure">
+                 <summary>{{ copy("g.tiers", { count: group.count }) }}</summary>
+@@ -170,7 +200,7 @@
+                     :key="item.id"
+                     :achievement="item"
+                     :pending="!!growth.state.value.claiming"
+-                    @claim="growth.claim('achievement', $event)"
++                    @claim="claimReward('achievement', $event, group.kind)"
+                   />
+                 </div>
+               </details></div
+@@ -187,6 +217,7 @@
+             v-for="award in growth.state.value.levels"
+             :key="award.id"
+             class="level-reward"
++            :data-level-id="award.levelId"
+           >
+             <span class="level-reward-symbol" aria-hidden="true"
+               ><AppIcon name="gift"
+@@ -221,7 +252,7 @@
+               :disabled="
+                 !!growth.state.value.claiming || award.state !== 'claimable'
+               "
+-              @click="growth.claim('level', award.levelId)"
++              @click="claimReward('level', award.levelId)"
+             >
+               {{
+                 copy(
+--- before/frontend/tests/unit/growth-focus.test.ts
++++ after/frontend/tests/unit/growth-focus.test.ts
+@@ -0,0 +1,169 @@
++import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
++import { flushPromises, mount, type VueWrapper } from "@vue/test-utils";
++import {
++  computed,
++  defineComponent,
++  h,
++  nextTick,
++  ref,
++  Suspense,
++  watch,
++} from "vue";
++import GrowthPage from "../../app/pages/account/growth.vue";
++import AchievementCard from "@presentation/components/AchievementCard.vue";
++import type {
++  AchievementModel,
++  LevelAwardModel,
++} from "@application/growth/models";
++
++const reward = { points: "5", experience: "10", item: null };
++const award = (id: string) => ({
++  id,
++  state: "claimable" as const,
++  blockReason: null,
++  achievedAt: "2026-09-20T00:00:00Z",
++  claimedAt: null,
++  reward,
++  settlementId: null,
++});
++const achievement = (
++  id: string,
++  kind: AchievementModel["kind"],
++): AchievementModel => ({
++  ...award(id),
++  tierId: id,
++  kind,
++  name: id,
++  title: id,
++  descriptionText: null,
++  threshold: 2,
++  progress: 4,
++});
++const makeState = () => ({
++  growth: {
++    learningDay: "2026-09-20",
++    points: "10",
++    experience: "120",
++    level: { number: 2, minExperience: "100" },
++    nextLevel: null,
++    masteredTotal: 4,
++    savedTotal: 2,
++    checkin: { signedToday: true },
++  },
++  achievements: [
++    achievement("tier-1", "saved_passages"),
++    achievement("tier-2", "saved_passages"),
++    achievement("words-1", "mastered_words"),
++  ],
++  levels: [
++    {
++      ...award("level-award"),
++      levelId: "lv2",
++      levelNumber: 2,
++      minExperience: "100",
++    },
++  ] as LevelAwardModel[],
++  calendar: { days: [] },
++  pending: false,
++  claiming: null as string | null,
++  failure: null as { code: string } | null,
++});
++let state: ReturnType<typeof ref<ReturnType<typeof makeState>>>;
++let wrapper: VueWrapper;
++let complete: () => void;
++let fail: boolean;
++const claim = vi.fn(async (kind: string, id: string) => {
++  state.value.claiming = id;
++  await new Promise<void>((resolve) => {
++    complete = resolve;
++  });
++  if (fail) state.value.failure = { code: "unavailable" };
++  else if (kind === "achievement") {
++    state.value.achievements = state.value.achievements.map((a) =>
++      a.tierId === id ? { ...a, state: "claimed" } : { ...a },
++    );
++  } else {
++    state.value.levels = state.value.levels.map((a) =>
++      a.levelId === id ? { ...a, state: "claimed" } : { ...a },
++    );
++  }
++  state.value.claiming = null;
++});
++beforeEach(async () => {
++  state = ref(makeState());
++  fail = false;
++  claim.mockClear();
++  for (const [name, fn] of Object.entries({ computed, nextTick, ref, watch }))
++    vi.stubGlobal(name, fn);
++  vi.stubGlobal("definePageMeta", vi.fn());
++  vi.stubGlobal("useSessionStore", () => ({ isLearner: ref(false) }));
++  vi.stubGlobal("useDesignCopy", () => ({ copy: (key: string) => key }));
++  vi.stubGlobal("useI18n", () => ({ locale: ref("en-US") }));
++  vi.stubGlobal("useGrowthStore", () => ({ state, claim, load: vi.fn() }));
++  wrapper = mount(
++    defineComponent({
++      setup: () => () => h(Suspense, null, { default: () => h(GrowthPage) }),
++    }),
++    {
++      attachTo: document.body,
++      global: {
++        components: { AchievementCard },
++        stubs: {
++          AccountPage: { template: "<div><slot /></div>" },
++          AppIcon: true,
++          AppError: true,
++          NuxtLink: true,
++        },
++      },
++    },
++  );
++  await flushPromises();
++});
++afterEach(() => {
++  wrapper.unmount();
++  document.body.replaceChildren();
++  vi.unstubAllGlobals();
++});
++const group = () => wrapper.get('[data-achievement-group="saved_passages"]');
++async function finish() {
++  complete();
++  await flushPromises();
++  await nextTick();
++}
++
++describe("reward claim focus after the refreshed view", () => {
++  it("advances the current achievement and keeps its expanded group with focus on summary", async () => {
++    (group().get("details").element as HTMLDetailsElement).open = true;
++    await group().get(".achievement button").trigger("click");
++    expect(claim).toHaveBeenCalledWith("achievement", "tier-1");
++    await finish();
++    expect(group().get(".achievement h3").text()).toBe("tier-2");
++    expect((group().get("details").element as HTMLDetailsElement).open).toBe(
++      true,
++    );
++    expect(document.activeElement).toBe(group().get("summary").element);
++  });
++  it("returns a claim from the expanded tier list to the same group, not another achievement", async () => {
++    (group().get("details").element as HTMLDetailsElement).open = true;
++    await group().get("details .achievement button").trigger("click");
++    expect(claim).toHaveBeenCalledWith("achievement", "tier-2");
++    await finish();
++    expect(document.activeElement).toBe(group().get("summary").element);
++    expect(group().get(".achievement h3").text()).toBe("tier-1");
++  });
++  it("returns level reward focus to the matching heading without adding a tab stop", async () => {
++    await wrapper.get(".level-reward button").trigger("click");
++    await finish();
++    const heading = wrapper.get(".level-reward h3").element as HTMLElement;
++    expect(document.activeElement).toBe(heading);
++    expect(heading.tabIndex).toBe(-1);
++  });
++  it("does not treat a failed claim as success or move focus to the success target", async () => {
++    fail = true;
++    await group().get(".achievement button").trigger("click");
++    await finish();
++    expect(group().get(".achievement h3").text()).toBe("tier-1");
++    expect(document.activeElement).not.toBe(group().get("summary").element);
++    expect(state.value.failure?.code).toBe("unavailable");
++  });
++});

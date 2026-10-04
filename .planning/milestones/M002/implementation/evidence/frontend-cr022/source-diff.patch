@@ -1,0 +1,43 @@
+--- before/frontend/app/pages/explore.vue
++++ after/frontend/app/pages/explore.vue
+@@ -6,8 +6,8 @@
+   format = useDisplayFormatters();
+ const tabs = ["all", "zh", "en", "ja"] as const;
+ type Filter = (typeof tabs)[number];
+-const filter = ref<Filter>("all"),
+-  selectedId = ref<string | null>(null),
++const filter = useState<Filter>("gallery-language-filter", () => "all"),
++  selectedId = useState<string | null>("gallery-selected-preset", () => null),
+   paused = ref(false),
+   gallery = ref<HTMLElement>();
+ const items = computed(() =>
+@@ -28,14 +28,17 @@
+     (item) => value === "all" || item.configuration.meaningLanguage === value,
+   ).length;
+ let dispose = () => {};
++let bindingVersion = 0;
+ await usePageLoader("public-presets", () => presets.load());
+ onMounted(async () => {
+   await presets.load(true);
+   await bindMotion();
+ });
+ async function bindMotion() {
++  const version = ++bindingVersion;
+   dispose();
+   await nextTick();
++  if (version !== bindingVersion) return;
+   if (gallery.value && presets.state.value.complete)
+     dispose = attachGalleryMotion(gallery.value, {
+       initialId: selectedId.value,
+@@ -49,7 +52,10 @@
+     });
+ }
+ watch([items, language], () => void bindMotion());
+-onBeforeUnmount(() => dispose());
++onBeforeUnmount(() => {
++  bindingVersion++;
++  dispose();
++});
+ async function choose(value: Filter) {
+   filter.value = value;
+   selectedId.value = null;

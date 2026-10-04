@@ -1,0 +1,23 @@
+expect(locator).toBeFocused() failed
+
+Locator:  locator('.notice-entry')
+Expected: focused
+Received: inactive
+Timeout:  5000ms
+
+Call log:
+  - Expect "to.be.focused" with timeout 5000ms
+  - waiting for locator('.notice-entry')
+    14 × locator resolved to <button type="button" class="notice-entry">…</button>
+       - unexpected value "inactive"
+
+{
+  "passed": 7,
+  "failed": [
+    {
+      "name": "FE3-V04/V05/V08 webkit 1440 en",
+      "result": "FAIL",
+      "error": "expect(locator).toBeFocused() failed\n\nLocator:  locator('.notice-entry')\nExpected: focused\nReceived: inactive\nTimeout:  5000ms\n\nCall log:\n  - Expect \"to.be.focused\" with timeout 5000ms\n  - waiting for locator('.notice-entry')\n    14 × locator resolved to <button type=\"button\" class=\"notice-entry\">…</button>\n       - unexpected value \"inactive\"\n"
+    }
+  ]
+}

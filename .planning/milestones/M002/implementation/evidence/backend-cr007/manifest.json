@@ -1,0 +1,275 @@
+{
+  "at": "2026-09-21T06:20:39.855984+00:00",
+  "milestone": "M002",
+  "role": "backend-ethan",
+  "authorization": "TRANSITION-M002-022",
+  "scope": "M002-CR-007 / QA2-F03",
+  "status": "development_checks_passed_pending_independent_quality",
+  "risk": "high",
+  "source_manifest": {
+    "path": "source.json",
+    "sha256": "e7c331f4150d8fe2401b16d6ee5e34f4da0762810e41d5d7fda57059d4eb477a",
+    "file_count": 285
+  },
+  "source_archive": {
+    "path": "backend-source.tar.gz",
+    "sha256": "90bd2c694690712820e073ca47b0544207888585bb1a236184590558ec5d2c55",
+    "round_trip_verified": true
+  },
+  "source_changes": {
+    "modified": [
+      "backend/internal/identity/service.go"
+    ],
+    "added": [
+      "backend/internal/httpapi/m002_account_deletion_integration_test.go"
+    ],
+    "production_lines_added": 7
+  },
+  "diff_sha256": "f9897240033146b9bbb180fbdadd5b700e84034e387a96916c3bae4aed7e22c7",
+  "checks": {
+    "green": {
+      "command": [
+        "go",
+        "test",
+        "-race",
+        "-tags=integration",
+        "./internal/httpapi",
+        "-run",
+        "^TestM002ClaimedAccountDeletion",
+        "-count=1",
+        "-v",
+        "-timeout=120s"
+      ],
+      "cwd": "backend",
+      "exit_code": 0,
+      "seconds": 23.17,
+      "log_sha256": "71cab82d7f8fa732d2bcc3e034943b813ac6432315e07df137674434c59f49f4",
+      "real_provider_calls": 0,
+      "record_sha256": "0b571dc27c90c15bec588469d096bbcbb1afc0551cc9d70fdf46f343bc92af21",
+      "passed_top_level_tests": 3,
+      "skipped_tests": 0
+    },
+    "integration-http": {
+      "command": [
+        "go",
+        "test",
+        "-race",
+        "-tags=integration",
+        "./internal/httpapi",
+        "-run",
+        "^(TestClaimedBatchDeletion.*|TestNoContentConsumersEnforcePrivateNoStoreResponse|TestM002AnalyticsHTTPPrivacyRolesAndBrowserDedup|TestM002ProfileWelcomeAndPrivateTitleHTTP)$",
+        "-count=1",
+        "-v",
+        "-timeout=180s"
+      ],
+      "cwd": "backend",
+      "exit_code": 0,
+      "seconds": 25.2,
+      "log_sha256": "e74cf7a75398b78b33a7a0fb954e8197dd2f3d3f5c568d954d3e3efc027cd017",
+      "real_provider_calls": 0,
+      "record_sha256": "5ee96960f69a2bcc61fc4f83db531f369c5180ae44fe1a8eaf2bd5af41670ee9",
+      "passed_top_level_tests": 7,
+      "skipped_tests": 0
+    },
+    "integration-privacy": {
+      "command": [
+        "go",
+        "test",
+        "-race",
+        "-tags=integration",
+        "./internal/analytics",
+        "-run",
+        "^TestM002ExpiredDetailsAndDeletionCannotReconnectBrowser$",
+        "-count=1",
+        "-v",
+        "-timeout=90s"
+      ],
+      "cwd": "backend",
+      "exit_code": 0,
+      "seconds": 2.88,
+      "log_sha256": "b2804c02e87a4f80748860a89ff26bf150dd170565a7530c5c5e90bb3a1acfd2",
+      "real_provider_calls": 0,
+      "record_sha256": "52164cda0252517193bd357411e643935307a5bdb2cc526732d05fc88ab1b34b",
+      "passed_top_level_tests": 1,
+      "skipped_tests": 0
+    },
+    "unit": {
+      "command": [
+        "go",
+        "test",
+        "-race",
+        "./...",
+        "-count=1",
+        "-timeout=120s"
+      ],
+      "cwd": "backend",
+      "exit_code": 0,
+      "seconds": 24.66,
+      "log_sha256": "29fd76323e9fd126e9ff96228e2e1432ce02df66f57ba93d2671497a11f7d65b",
+      "real_provider_calls": 0,
+      "record_sha256": "3071784aecccf1b5494691f9c7a624ed9a131cc4a1927999dd55798b1acec34a"
+    },
+    "vet": {
+      "command": [
+        "go",
+        "vet",
+        "./..."
+      ],
+      "cwd": "backend",
+      "exit_code": 0,
+      "seconds": 2.56,
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "real_provider_calls": 0,
+      "record_sha256": "574bd43cb371866b2b208256ce8788c84b11ee266f99af17e8266fe114219b2a"
+    },
+    "build": {
+      "command": [
+        "go",
+        "build",
+        "./..."
+      ],
+      "cwd": "backend",
+      "exit_code": 0,
+      "seconds": 3.01,
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "real_provider_calls": 0,
+      "record_sha256": "15d5b2898fafde063fecc0c97e8c6eed9c8796b70e91e99fc1be2a348a4a65b9"
+    },
+    "format": {
+      "command": [
+        "gofmt",
+        "-l",
+        "internal/identity/service.go",
+        "internal/httpapi/m002_account_deletion_integration_test.go"
+      ],
+      "cwd": "backend",
+      "exit_code": 0,
+      "seconds": 0.01,
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "real_provider_calls": 0,
+      "record_sha256": "5fbd07b304c5edffc93a46a743ebfac570a255b458cd4b6db1c1e5ef1077e2aa",
+      "no_formatting_changes_needed": true
+    },
+    "diff-check": {
+      "command": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "exit_code": 0,
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "record_sha256": "d4ef77bf65b9407d17fbaea3d9fab5ef12ddc358258cd8eccd2a4d43edfd8022"
+    }
+  },
+  "counts": {
+    "new_integration": 3,
+    "existing_related_integration": 8,
+    "skipped_integration": 0
+  },
+  "red_evidence": {
+    "initial": "red.log",
+    "initial_harness_error": "missing required card description; test fixture corrected without changing application",
+    "initial_test_source": "initial-test.go.txt",
+    "confirmed_failure": "red-confirmed.log",
+    "expected_exit": 1
+  },
+  "protected_audit": {
+    "protected_count": 5785,
+    "unexpected_changed": [],
+    "allowed_existing_changed": [
+      "backend/internal/identity/service.go",
+      ".planning/milestones/M002/implementation/backend-worktree-plan.md",
+      ".planning/milestones/M002/implementation/backend-validation.md",
+      ".planning/milestones/M002/handoffs/backend-implementation.md"
+    ],
+    "control_plane_unchanged": true,
+    "qa_report_raw_evidence_and_cr_originals_unchanged": true
+  },
+  "qa2_artifacts_unchanged": 40,
+  "cr006_raw_evidence_unchanged": 29,
+  "link_check": {
+    "documents": 3,
+    "local_links_checked": 85,
+    "missing": []
+  },
+  "documents": {
+    ".planning/milestones/M002/implementation/backend-validation.md": "24846893a940436745cecd054a6b7826169aa85e8b73c0c7ce899068809f43f1",
+    ".planning/milestones/M002/implementation/backend-worktree-plan.md": "ec9d4c58f823f0806384cd6eb327037372aaf8fe44b589d72bf24d6c32c32543",
+    ".planning/milestones/M002/handoffs/backend-implementation.md": "af5d47263d5d2eb0cefc1a274d73b571c5cfcc464d9ebd9ef0812508226d4696"
+  },
+  "document_scope_characters": {
+    ".planning/milestones/M002/implementation/backend-validation.md": {
+      "before_unicode_characters": 8423,
+      "after_unicode_characters": 9005
+    },
+    ".planning/milestones/M002/implementation/backend-worktree-plan.md": {
+      "before_unicode_characters": 3204,
+      "after_unicode_characters": 3438
+    },
+    ".planning/milestones/M002/handoffs/backend-implementation.md": {
+      "before_unicode_characters": 2587,
+      "after_unicode_characters": 2665
+    }
+  },
+  "input_tokens": "unknown",
+  "runtime_model_switch": "not_performed",
+  "real_provider_calls": 0,
+  "environment_stop": {
+    "exit_code": 0,
+    "private_temporary_data_preserved": true,
+    "existing_services_modified": false
+  },
+  "toolchain": "go version go1.26.7 darwin/arm64",
+  "postgres_version": "pg_ctl (PostgreSQL) 18.6 (Homebrew)",
+  "committed": false,
+  "deployed": false,
+  "qa_closed": false,
+  "notes": [
+    "No API/schema/dependency/frontend changes; all 13 migrations unchanged.",
+    "CR-007 remains OPEN; current implementation status is recorded in backend handoff, not by editing frozen QA originals.",
+    "CR-005/006 closure remains TRANSITION-M002-022; CR-008 still requires frontend work.",
+    "The current account-delete cases use actual PostgreSQL and restricted app-role HTTP; browser QA and complete milestone verification remain pending.",
+    "Static handoff checks only; no new-session independent agent execution."
+  ],
+  "evidence_hashes": {
+    "backend-source.tar.gz": "90bd2c694690712820e073ca47b0544207888585bb1a236184590558ec5d2c55",
+    "before-git-status.txt": "a0ad68e93c00d3bef3e3c75976885fc6fb23170c5b160aae99e1eeb0833a7930",
+    "before-owned.tar.gz": "75ac97de29709905c4eb119fef04127cedf5ecc335e1c2d5f945239d5dac9514",
+    "build.json": "15d5b2898fafde063fecc0c97e8c6eed9c8796b70e91e99fc1be2a348a4a65b9",
+    "build.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "diff-check.json": "d4ef77bf65b9407d17fbaea3d9fab5ef12ddc358258cd8eccd2a4d43edfd8022",
+    "diff-check.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "environment-start.log": "8c0779f667556d00fbf4d5b1ae46765303042271b90d331dac0772c7a71f01a0",
+    "environment-stop.json": "dedfd7a79c76332fdebf5d6edefc88991d800b2509008551987b8e4a83abcdf0",
+    "environment-stop.log": "ca19178a35ab4153b75b494963b66ce8243e1b94c173107c87b44d09db23652d",
+    "environment.json": "58ccf74f49186d9eb50609513598789c2eaf5865165bfaeba2f4be4a49488a36",
+    "format.json": "5fbd07b304c5edffc93a46a743ebfac570a255b458cd4b6db1c1e5ef1077e2aa",
+    "format.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "green.json": "0b571dc27c90c15bec588469d096bbcbb1afc0551cc9d70fdf46f343bc92af21",
+    "green.log": "71cab82d7f8fa732d2bcc3e034943b813ac6432315e07df137674434c59f49f4",
+    "initial-test.go.txt": "032a44e731c62f86218c5559d54368b1cf14275f15c76354e755a811cc3e07db",
+    "inputs.json": "9d3980ec112c9a9e3a2c39b8346e3b8275eee113e6d9062b85ade00179e975a8",
+    "integration-http.json": "5ee96960f69a2bcc61fc4f83db531f369c5180ae44fe1a8eaf2bd5af41670ee9",
+    "integration-http.log": "e74cf7a75398b78b33a7a0fb954e8197dd2f3d3f5c568d954d3e3efc027cd017",
+    "integration-privacy.json": "52164cda0252517193bd357411e643935307a5bdb2cc526732d05fc88ab1b34b",
+    "integration-privacy.log": "b2804c02e87a4f80748860a89ff26bf150dd170565a7530c5c5e90bb3a1acfd2",
+    "links.json": "9bcfae3eec3a2f9bc603ed226af4ff384c98390617680dc95f63b6bad74206be",
+    "previous-backend-validation.md": "c73c81eda9e6401b56792648b6f45cefa545ee86cf7255ff7d32823871854bd2",
+    "previous-backend-worktree-plan.md": "d638d38ffbaa81e3012c908b3386c4474994c65a0f6f16b89765a3f9fd3bcea8",
+    "previous-handoff.md": "764d47a84b2b07beed19a4a9b44f3d5e1dbd1e214a7fbb8fd2f9d9c4aba33e0f",
+    "protection.json": "02c374cfba674c88fd51c08f89cd7084052057d76abacff83ae9d4d3673910cb",
+    "red-confirmed.json": "2968ffa269532729ec8dd5132e5a3e522664aecb0ac0f98de08490a71ff039ed",
+    "red-confirmed.log": "7ef50e38dfe12a94ab0a9821a9db87ea31053eb81d58809af9c6acfe57aa1b34",
+    "red.json": "00449643b7c835a24109ce37e03d3aa8177895c2a6e33cd0b85ee1431c930e89",
+    "red.log": "fa4e61bd5edd204b50e9ef7f3f6183e8841d90935c4b35c5cd63a0669b8ab0b6",
+    "run.py": "557f3fd8eaf4e1d153edb3bd844629a6e5cf3e71e400cfdb8ac03f90e6d1cbcc",
+    "source-diff.patch": "f9897240033146b9bbb180fbdadd5b700e84034e387a96916c3bae4aed7e22c7",
+    "source.json": "e7c331f4150d8fe2401b16d6ee5e34f4da0762810e41d5d7fda57059d4eb477a",
+    "toolchain.json": "b2f304e133aa608648e104365750f91be9287d560d986924ba0002e56c54f697",
+    "toolchain.log": "b1b217d0bb4a51246bbf46c2844e09c39d598e70f5fdfe6709bbab9867c5b35b",
+    "unit.json": "3071784aecccf1b5494691f9c7a624ed9a131cc4a1927999dd55798b1acec34a",
+    "unit.log": "29fd76323e9fd126e9ff96228e2e1432ce02df66f57ba93d2671497a11f7d65b",
+    "vet.json": "574bd43cb371866b2b208256ce8788c84b11ee266f99af17e8266fe114219b2a",
+    "vet.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  }
+}

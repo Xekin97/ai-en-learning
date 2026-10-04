@@ -1,0 +1,272 @@
+{
+  "at": "2026-09-23T03:40:47.873404+00:00",
+  "milestone": "M002",
+  "role": "backend-ethan",
+  "authorization": "TRANSITION-M002-031",
+  "status": "cr013_implemented_pending_qa",
+  "risk": "high: authenticated resource visibility, persisted lifecycle and concurrent save/discard",
+  "source_manifest": "source.json",
+  "source_manifest_sha256": "c54307a04cecb3dd99cc13d64ae0fbcb6c1fca2c0538711af040d279bbe9b549",
+  "source_archive": "backend-source.tar.gz",
+  "source_archive_sha256": "889540fab85f8beb403a6353e044206717cfb864cfb1e8957a6d4776bb0e2075",
+  "source_archive_matches": true,
+  "source_file_count": 288,
+  "source_changes": [
+    "backend/internal/httpapi/draft_lifecycle_integration_test.go",
+    "backend/internal/httpapi/learning_handlers.go",
+    "backend/internal/httpapi/m002_save_state_integration_test.go",
+    "backend/internal/learning/service.go"
+  ],
+  "checks": {
+    "green": {
+      "command": [
+        "go",
+        "test",
+        "-race",
+        "-tags=integration",
+        "./internal/httpapi",
+        "-run",
+        "^TestM002SaveStateHTTP$",
+        "-count=1",
+        "-v",
+        "-timeout=120s"
+      ],
+      "cwd": "backend",
+      "exit_code": 0,
+      "seconds": 10.03,
+      "log_sha256": "4d8586ba5281596053b15a8e1ed1b5c52fd9df9c66e6024127731843d583f288",
+      "real_provider_calls": 0
+    },
+    "integration-lifecycle": {
+      "command": [
+        "go",
+        "test",
+        "-race",
+        "-tags=integration",
+        "./internal/httpapi",
+        "-run",
+        "^(TestDraftLifecycleWithoutRegistry|TestDraftHTTPAcrossProcessRestart|TestClaimedBatchDeletionHTTP|TestClaimedBatchDeletionRollback|TestClaimedBatchDeletionConcurrency|TestClaimedBatchDeletionRetention|TestM001EndToEnd)$",
+        "-count=1",
+        "-v",
+        "-timeout=180s"
+      ],
+      "cwd": "backend",
+      "exit_code": 0,
+      "seconds": 29.21,
+      "log_sha256": "790ae4d216804b06f26e74e35b0d1b80186441772d49dd5a6469ab78b2f3a420",
+      "real_provider_calls": 0
+    },
+    "unit": {
+      "command": [
+        "go",
+        "test",
+        "-race",
+        "./...",
+        "-count=1",
+        "-timeout=120s"
+      ],
+      "cwd": "backend",
+      "exit_code": 0,
+      "seconds": 24.35,
+      "log_sha256": "4ca1596b244c63da64b38d5a4dd0c70eebd9be20785fe8f1a2989c7cbd1fb51b",
+      "real_provider_calls": 0
+    },
+    "vet": {
+      "command": [
+        "go",
+        "vet",
+        "./..."
+      ],
+      "cwd": "backend",
+      "exit_code": 0,
+      "seconds": 1.75,
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "real_provider_calls": 0
+    },
+    "build": {
+      "command": [
+        "go",
+        "build",
+        "./..."
+      ],
+      "cwd": "backend",
+      "exit_code": 0,
+      "seconds": 2.31,
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "real_provider_calls": 0
+    },
+    "format": {
+      "command": [
+        "gofmt",
+        "-l",
+        "internal/learning/service.go",
+        "internal/httpapi/learning_handlers.go",
+        "internal/httpapi/draft_lifecycle_integration_test.go",
+        "internal/httpapi/m002_save_state_integration_test.go"
+      ],
+      "cwd": "backend",
+      "exit_code": 0,
+      "seconds": 0.02,
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "real_provider_calls": 0
+    },
+    "diff-check": {
+      "command": [
+        "git",
+        "diff",
+        "--check",
+        "--",
+        "internal/learning/service.go",
+        "internal/httpapi/learning_handlers.go",
+        "internal/httpapi/draft_lifecycle_integration_test.go"
+      ],
+      "cwd": "backend",
+      "exit_code": 0,
+      "seconds": 0.13,
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "real_provider_calls": 0
+    }
+  },
+  "counts": {
+    "tests": {
+      "red": {
+        "top_level_passes": 0,
+        "top_level_failures": 1,
+        "subtest_passes": 3,
+        "subtest_failures": 8,
+        "skips": 0
+      },
+      "green": {
+        "top_level_passes": 1,
+        "top_level_failures": 0,
+        "subtest_passes": 11,
+        "subtest_failures": 0,
+        "skips": 0
+      },
+      "integration-lifecycle": {
+        "top_level_passes": 7,
+        "top_level_failures": 0,
+        "subtest_passes": 17,
+        "subtest_failures": 0,
+        "skips": 0
+      }
+    },
+    "go_version": "go version go1.26.7 darwin/arm64",
+    "postgres_version": "postgres (PostgreSQL) 18.6 (Homebrew)"
+  },
+  "red_evidence": {
+    "command": [
+      "go",
+      "test",
+      "-race",
+      "-tags=integration",
+      "./internal/httpapi",
+      "-run",
+      "^TestM002SaveStateHTTP$",
+      "-count=1",
+      "-v",
+      "-timeout=120s"
+    ],
+    "cwd": "backend",
+    "exit_code": 1,
+    "seconds": 10.36,
+    "log_sha256": "49ac8086df2aac226734724a04d0a7a8b38a13a0a8032698e7fffa1a0d2d228b",
+    "real_provider_calls": 0
+  },
+  "protected_audit": {
+    "protected_count": 6482,
+    "unexpected_changed": [],
+    "owned_existing_changed": [
+      ".planning/milestones/M002/handoffs/backend-implementation.md",
+      ".planning/milestones/M002/implementation/backend-validation.md",
+      ".planning/milestones/M002/implementation/backend-worktree-plan.md",
+      "backend/internal/httpapi/draft_lifecycle_integration_test.go",
+      "backend/internal/httpapi/learning_handlers.go",
+      "backend/internal/learning/service.go"
+    ],
+    "control_plane_unchanged": true,
+    "upstream_and_qa_unchanged": true,
+    "frontend_unchanged": true,
+    "ports_after": {
+      "3300": true,
+      "3330": true,
+      "38080": true,
+      "4186": true
+    }
+  },
+  "link_check": {
+    "checked": 91,
+    "missing": []
+  },
+  "document_scope_characters": {
+    ".planning/milestones/M002/implementation/backend-worktree-plan.md": {
+      "before_chars": 3561,
+      "after_chars": 3715,
+      "after_utf8_bytes": 6553
+    },
+    ".planning/milestones/M002/implementation/backend-validation.md": {
+      "before_chars": 8897,
+      "after_chars": 9512,
+      "after_utf8_bytes": 16050
+    },
+    ".planning/milestones/M002/handoffs/backend-implementation.md": {
+      "before_chars": 2543,
+      "after_chars": 2204,
+      "after_utf8_bytes": 3500
+    }
+  },
+  "input_tokens": "unknown",
+  "runtime_model_switch": "not_performed",
+  "real_provider_calls": 0,
+  "environment_stop": {
+    "exit_code": 0,
+    "isolated_databases_remaining": [
+      "postgres"
+    ],
+    "private_temporary_data_preserved": true,
+    "existing_services_modified": false,
+    "port": 61949
+  },
+  "committed": false,
+  "deployed": false,
+  "qa_closed": false,
+  "new_session_handoff_test": "not_performed",
+  "notes": [
+    "Integration tests exercise actual HTTP and PostgreSQL with synthetic run/provider fixtures; this does not replace independent QA or browser coverage.",
+    "Old lifecycle error assertions were tightened to the approved state-conflict contract; authorization, deletion, concurrency and no-resurrection assertions remain.",
+    "No new schema, dependencies, API changes, frontend code, QA evidence or control updates."
+  ],
+  "evidence_hashes": {
+    ".planning/milestones/M002/handoffs/backend-implementation.md": "33c6e263031de595bfbe2706e99a69a66fe98d2f3cc497553a8dcff249609898",
+    ".planning/milestones/M002/implementation/backend-validation.md": "ce7b8bd5b7fd53b10d369589b59401a606f11526feab9bf1f5d5147e148376af",
+    ".planning/milestones/M002/implementation/backend-worktree-plan.md": "25103c0071320d0329ae7a2bc36a1f71ad6c0b7415f83159300882fa59ffbab4",
+    ".planning/milestones/M002/implementation/evidence/backend-cr013/README.md": "c03c8b9cab39c27e4dd0aca55b0a31ee845e02c1f8808bc237affa61223609a5",
+    ".planning/milestones/M002/implementation/evidence/backend-cr013/backend-source.tar.gz": "889540fab85f8beb403a6353e044206717cfb864cfb1e8957a6d4776bb0e2075",
+    ".planning/milestones/M002/implementation/evidence/backend-cr013/before-owned.tar.gz": "78f6f2e0efc8bef121f1fe8cfc68c7fda284e34e828185df2bef78c5bb1bfb3b",
+    ".planning/milestones/M002/implementation/evidence/backend-cr013/build.json": "5e1c9879c41d43b104015fa9bf7465646ca935aa334a375b36b43e23c4278ebc",
+    ".planning/milestones/M002/implementation/evidence/backend-cr013/build.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    ".planning/milestones/M002/implementation/evidence/backend-cr013/counts.json": "e4ed0ab4adb41ed2b1241bb2d04d24b1afa7bcb851070dbdd9a1b0eb226e82ec",
+    ".planning/milestones/M002/implementation/evidence/backend-cr013/diff-check.json": "02761eded10751f92a07ebe5cb7d09bad4a6c25b26ef6869cdb829a8d6af4c35",
+    ".planning/milestones/M002/implementation/evidence/backend-cr013/diff-check.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    ".planning/milestones/M002/implementation/evidence/backend-cr013/environment-stop.json": "ae46510236ce3b4669aec0f9da36d825b80ce52d42063afa18f2e52e5a0ebc12",
+    ".planning/milestones/M002/implementation/evidence/backend-cr013/environment-stop.log": "ca19178a35ab4153b75b494963b66ce8243e1b94c173107c87b44d09db23652d",
+    ".planning/milestones/M002/implementation/evidence/backend-cr013/format.json": "4376b1a0bb6a51187df1e099bae4b5cd2bc915e07238606cd5377b36c41df546",
+    ".planning/milestones/M002/implementation/evidence/backend-cr013/format.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    ".planning/milestones/M002/implementation/evidence/backend-cr013/green.json": "ffda4537da024d51cbdfc12e3b5ff7ea44948e428614863fa2c73af09b9bc480",
+    ".planning/milestones/M002/implementation/evidence/backend-cr013/green.log": "4d8586ba5281596053b15a8e1ed1b5c52fd9df9c66e6024127731843d583f288",
+    ".planning/milestones/M002/implementation/evidence/backend-cr013/initdb.log": "a44079fdf989b87f9480a9a251832531689bcdc9613cf2c89626ac10b01f9a7c",
+    ".planning/milestones/M002/implementation/evidence/backend-cr013/inputs.json": "568dc239a2a40994539e8e541433d824484eccbcf78e858c950e27e699210958",
+    ".planning/milestones/M002/implementation/evidence/backend-cr013/integration-lifecycle.json": "785b7c2d2b0c04cc3821a949cb3252b786dea0a6e996d25c6fb877cb0e986ce3",
+    ".planning/milestones/M002/implementation/evidence/backend-cr013/integration-lifecycle.log": "790ae4d216804b06f26e74e35b0d1b80186441772d49dd5a6469ab78b2f3a420",
+    ".planning/milestones/M002/implementation/evidence/backend-cr013/pg-start.log": "66afd0411ccc09366e99fdd99b85f21899c8d2d064f5835126859618802153ad",
+    ".planning/milestones/M002/implementation/evidence/backend-cr013/previous-backend-validation.md": "1db8f2ef4363c257f95eac58a4b179e9b4ae3bac4260f9eb6e80a9fb698905ac",
+    ".planning/milestones/M002/implementation/evidence/backend-cr013/red.json": "057c13186b4bcbde83a22bf2441b371a8161647ff80ddfe027cd0abdcd4afaa1",
+    ".planning/milestones/M002/implementation/evidence/backend-cr013/red.log": "49ac8086df2aac226734724a04d0a7a8b38a13a0a8032698e7fffa1a0d2d228b",
+    ".planning/milestones/M002/implementation/evidence/backend-cr013/source-diff.patch": "33f1755dbd01bd43717f24509ad7ce303fde2ca02a7ef6b5028cb844c00d52ca",
+    ".planning/milestones/M002/implementation/evidence/backend-cr013/source.json": "c54307a04cecb3dd99cc13d64ae0fbcb6c1fca2c0538711af040d279bbe9b549",
+    ".planning/milestones/M002/implementation/evidence/backend-cr013/unit.json": "05584a4b59d1a816378a1e57b2798a32df610a302a85fcb3bcc47a037f0073cf",
+    ".planning/milestones/M002/implementation/evidence/backend-cr013/unit.log": "4ca1596b244c63da64b38d5a4dd0c70eebd9be20785fe8f1a2989c7cbd1fb51b",
+    ".planning/milestones/M002/implementation/evidence/backend-cr013/vet.json": "b5c420bfadcb7b5e12d3fce5a5132c35aca949a33e352023cf285d2316058076",
+    ".planning/milestones/M002/implementation/evidence/backend-cr013/vet.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  }
+}

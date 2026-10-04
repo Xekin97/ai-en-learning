@@ -1,0 +1,34 @@
+--- before/frontend/app/presentation/components/GenerationWorkspace.vue
++++ after/frontend/app/presentation/components/GenerationWorkspace.vue
+@@ -426,17 +426,20 @@
+               >{{ tag }}</span
+             >
+           </div>
+-          <div class="resource-grid">
+-            <article
+-              v-for="target in generation.result.targets"
+-              :key="target.entry"
+-              class="resource-card"
+-            >
+-              <h3>{{ target.entry }}</h3>
+-              <p>{{ target.entryMeaning }}</p>
+-              <p>{{ target.hintPhrase }}</p>
+-            </article>
+-          </div>
++          <section class="study-resources">
++            <h2>{{ copy("l.resources") }}</h2>
++            <div class="resource-grid">
++              <article
++                v-for="target in generation.result.targets"
++                :key="target.entry"
++                class="resource-card"
++              >
++                <h3>{{ target.entry }}</h3>
++                <p>{{ target.entryMeaning }}</p>
++                <p class="muted">{{ target.hintPhrase }}</p>
++              </article>
++            </div>
++          </section>
+           <div class="actions">
+             <button class="btn primary" :disabled="saving" @click="save">
+               {{

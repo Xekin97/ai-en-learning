@@ -1,0 +1,124 @@
+
+> wordweave-frontend@0.1.0 test /Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/frontend
+> vitest run
+
+
+ RUN  v4.1.11 /Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/frontend
+
+ ❯ tests/unit/admin-model-references.test.ts (10 tests | 6 failed) 12ms
+     × loads only through the required page, retains retired identities, and deduplicates overlaps 7ms
+     × preserves partial progress on failure and retries the failed page 1ms
+     × restarts a stale catalog cursor ({"kind":"conflict","code":"revision_conflict","status":409,"fields":{},"retryable":false}) once and loads references 0ms
+     × restarts a stale catalog cursor ({"kind":"validation","code":"validation_failed","status":422,"fields":{"cursor":"invalid"},"retryable":false}) once and loads references 0ms
+     × reports a second invalid cursor instead of endlessly restarting 0ms
+     × does not apply a superseded catalog request 1ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 6 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/unit/admin-model-references.test.ts > existing model references across catalog pages > loads only through the required page, retains retired identities, and deduplicates overlaps
+AssertionError: expected [ undefined, 'page3' ] to deeply equal [ undefined, 'page2', 'page3' ]
+
+- Expected
++ Received
+
+  [
+    undefined,
+-   "page2",
+    "page3",
+  ]
+
+ ❯ tests/unit/admin-model-references.test.ts:51:56
+     49|     expect(store.state.value.models.map((m) => m.id)).toEqual(["a", "b…
+     50|     expect(store.state.value.models[2]?.retiredAt).not.toBeNull();
+     51|     expect(api.listModels.mock.calls.map((c) => c[0])).toEqual([
+       |                                                        ^
+     52|       undefined,
+     53|       "page2",
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/6]⎯
+
+ FAIL  tests/unit/admin-model-references.test.ts > existing model references across catalog pages > preserves partial progress on failure and retries the failed page
+AssertionError: expected [ 'b' ] to deeply equal [ 'a', 'b' ]
+
+- Expected
++ Received
+
+  [
+-   "a",
+    "b",
+  ]
+
+ ❯ tests/unit/admin-model-references.test.ts:67:55
+     65|     await store.ensureModels(["x"]);
+     66|     expect(store.state.value.status).toBe("failed");
+     67|     expect(store.state.value.models.map((m) => m.id)).toEqual(["a", "b…
+       |                                                       ^
+     68|     expect(store.state.value.nextModelCursor).toBe("page3");
+     69|     api.listModels.mockResolvedValueOnce(page(["x"]));
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/6]⎯
+
+ FAIL  tests/unit/admin-model-references.test.ts > existing model references across catalog pages > restarts a stale catalog cursor ({"kind":"conflict","code":"revision_conflict","status":409,"fields":{},"retryable":false}) once and loads references
+ FAIL  tests/unit/admin-model-references.test.ts > existing model references across catalog pages > restarts a stale catalog cursor ({"kind":"validation","code":"validation_failed","status":422,"fields":{"cursor":"invalid"},"retryable":false}) once and loads references
+AssertionError: expected [ undefined ] to deeply equal [ undefined, 'page2', undefined, …(1) ]
+
+- Expected
++ Received
+
+  [
+    undefined,
+-   "page2",
+-   undefined,
+-   "fresh2",
+  ]
+
+ ❯ tests/unit/admin-model-references.test.ts:116:58
+    114|       api.listModels.mockResolvedValueOnce(page(["x"]));
+    115|       await store.ensureModels(["x"]);
+    116|       expect(api.listModels.mock.calls.map((c) => c[0])).toEqual([
+       |                                                          ^
+    117|         undefined,
+    118|         "page2",
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/6]⎯
+
+ FAIL  tests/unit/admin-model-references.test.ts > existing model references across catalog pages > reports a second invalid cursor instead of endlessly restarting
+AssertionError: expected "vi.fn()" to be called 4 times, but got 1 times
+ ❯ tests/unit/admin-model-references.test.ts:140:28
+    138|     api.listModels.mockRejectedValueOnce(failure);
+    139|     await store.ensureModels(["x"]);
+    140|     expect(api.listModels).toHaveBeenCalledTimes(4);
+       |                            ^
+    141|     expect(store.state.value.status).toBe("failed");
+    142|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/6]⎯
+
+ FAIL  tests/unit/admin-model-references.test.ts > existing model references across catalog pages > does not apply a superseded catalog request
+AssertionError: expected [] to deeply equal [ 'fresh' ]
+
+- Expected
++ Received
+
+- [
+-   "fresh",
+- ]
++ []
+
+ ❯ tests/unit/admin-model-references.test.ts:186:55
+    184|     resolve(page(["x"]));
+    185|     await pending;
+    186|     expect(store.state.value.models.map((m) => m.id)).toEqual(["fresh"…
+       |                                                       ^
+    187|     expect(store.state.value.status).toBe("ready");
+    188|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/6]⎯
+
+
+ Test Files  1 failed | 36 passed (37)
+      Tests  6 failed | 357 passed (363)
+   Start at  20:09:30
+   Duration  2.90s (transform 4.03s, setup 0ms, import 7.14s, tests 811ms, environment 11.34s)
+
+ ELIFECYCLE  Test failed. See above for more details.

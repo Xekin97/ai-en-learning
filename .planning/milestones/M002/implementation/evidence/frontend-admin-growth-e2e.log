@@ -1,0 +1,251 @@
+
+Running 8 tests using 1 worker
+
+(node:10202) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  1 [desktop] › tests/e2e/m002-admin-growth.spec.ts:7:1 › check-in settings submit five values once and preserve next-day effective state (30.1s)
+(node:11305) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  2 [desktop] › tests/e2e/m002-admin-growth.spec.ts:10:1 › six levels save atomically and hidden edited rows remain in the submitted snapshot (30.1s)
+(node:12579) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  3 [desktop] › tests/e2e/m002-admin-growth.spec.ts:13:1 › achievement content remains plain and a field error reveals its hidden row (30.1s)
+(node:13654) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  4 [desktop] › tests/e2e/m002-admin-growth.spec.ts:16:1 › issued cards cannot be deleted and model cards send only model-time effects (30.1s)
+(node:14839) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  5 [mobile] › tests/e2e/m002-admin-growth.spec.ts:7:1 › check-in settings submit five values once and preserve next-day effective state (30.1s)
+(node:15992) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  6 [mobile] › tests/e2e/m002-admin-growth.spec.ts:10:1 › six levels save atomically and hidden edited rows remain in the submitted snapshot (30.1s)
+(node:17245) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  7 [mobile] › tests/e2e/m002-admin-growth.spec.ts:13:1 › achievement content remains plain and a field error reveals its hidden row (30.1s)
+(node:18352) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  8 [mobile] › tests/e2e/m002-admin-growth.spec.ts:16:1 › issued cards cannot be deleted and model cards send only model-time effects (30.1s)
+
+
+  1) [desktop] › tests/e2e/m002-admin-growth.spec.ts:7:1 › check-in settings submit five values once and preserve next-day effective state 
+
+    Test timeout of 30000ms exceeded.
+
+    Error: page.waitForFunction: Test timeout of 30000ms exceeded.
+
+      3 | const source=JSON.parse(readFileSync(new URL('../../../.planning/milestones/M002/design/copy.json',import.meta.url),'utf8'));
+      4 | const t=(key:string)=>(source.static[`en.${key}`]??source.templates[`en.${key}`]) as string;
+    > 5 | const ready=async(page:import('@playwright/test').Page)=>page.waitForFunction(()=>document.documentElement.dataset.appReady==='true');
+        |                                                               ^
+      6 | test.beforeEach(async({context,request})=>{await request.post('http://127.0.0.1:38080/api/v1/__test/admin-growth-reset');await context.addCookies([{name:'wordweave_session',value:'admin',url:'http://127.0.0.1:3300'}]);});
+      7 | test('check-in settings submit five values once and preserve next-day effective state',async({page},info)=>{
+      8 |  const writes:Record<string,unknown>[]=[];page.on('request',r=>{if(r.method()==='PUT'&&r.url().endsWith('/growth/settings'))writes.push(r.postDataJSON());});await page.goto('/admin/growth');await ready(page);await page.getByRole('button',{name:t('signsettings'),exact:true}).click();await page.getByLabel(t('cap'),{exact:true}).fill('15');await page.getByLabel(t('firstxp'),{exact:true}).fill('3');await page.getByRole('button',{name:t('save'),exact:true}).click();await expect(page.locator('main')).toContainText('2026-09-21');expect(writes).toEqual([{expected_revision:'growth-config-1',mastery_experience:'3',base_points:'2',step_points:'1',cap_points:'15',normal_experience:'1'}]);await page.screenshot({path:`../.planning/milestones/M002/implementation/evidence/frontend-admin-checkin-${info.project.name}.png`,fullPage:true});
+        at ready (/Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/frontend/tests/e2e/m002-admin-growth.spec.ts:5:63)
+        at /Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/frontend/tests/e2e/m002-admin-growth.spec.ts:8:197
+
+    Error Context: test-results/m002-admin-growth-check-in-37f58-ve-next-day-effective-state-desktop/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/m002-admin-growth-check-in-37f58-ve-next-day-effective-state-desktop/trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace test-results/m002-admin-growth-check-in-37f58-ve-next-day-effective-state-desktop/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [desktop] › tests/e2e/m002-admin-growth.spec.ts:10:1 › six levels save atomically and hidden edited rows remain in the submitted snapshot 
+
+    Test timeout of 30000ms exceeded.
+
+    Error: page.waitForFunction: Test timeout of 30000ms exceeded.
+
+      3 | const source=JSON.parse(readFileSync(new URL('../../../.planning/milestones/M002/design/copy.json',import.meta.url),'utf8'));
+      4 | const t=(key:string)=>(source.static[`en.${key}`]??source.templates[`en.${key}`]) as string;
+    > 5 | const ready=async(page:import('@playwright/test').Page)=>page.waitForFunction(()=>document.documentElement.dataset.appReady==='true');
+        |                                                               ^
+      6 | test.beforeEach(async({context,request})=>{await request.post('http://127.0.0.1:38080/api/v1/__test/admin-growth-reset');await context.addCookies([{name:'wordweave_session',value:'admin',url:'http://127.0.0.1:3300'}]);});
+      7 | test('check-in settings submit five values once and preserve next-day effective state',async({page},info)=>{
+      8 |  const writes:Record<string,unknown>[]=[];page.on('request',r=>{if(r.method()==='PUT'&&r.url().endsWith('/growth/settings'))writes.push(r.postDataJSON());});await page.goto('/admin/growth');await ready(page);await page.getByRole('button',{name:t('signsettings'),exact:true}).click();await page.getByLabel(t('cap'),{exact:true}).fill('15');await page.getByLabel(t('firstxp'),{exact:true}).fill('3');await page.getByRole('button',{name:t('save'),exact:true}).click();await expect(page.locator('main')).toContainText('2026-09-21');expect(writes).toEqual([{expected_revision:'growth-config-1',mastery_experience:'3',base_points:'2',step_points:'1',cap_points:'15',normal_experience:'1'}]);await page.screenshot({path:`../.planning/milestones/M002/implementation/evidence/frontend-admin-checkin-${info.project.name}.png`,fullPage:true});
+        at ready (/Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/frontend/tests/e2e/m002-admin-growth.spec.ts:5:63)
+        at /Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/frontend/tests/e2e/m002-admin-growth.spec.ts:11:195
+
+    Error Context: test-results/m002-admin-growth-six-leve-37c69-n-in-the-submitted-snapshot-desktop/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/m002-admin-growth-six-leve-37c69-n-in-the-submitted-snapshot-desktop/trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace test-results/m002-admin-growth-six-leve-37c69-n-in-the-submitted-snapshot-desktop/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3) [desktop] › tests/e2e/m002-admin-growth.spec.ts:13:1 › achievement content remains plain and a field error reveals its hidden row 
+
+    Test timeout of 30000ms exceeded.
+
+    Error: page.waitForFunction: Test timeout of 30000ms exceeded.
+
+      3 | const source=JSON.parse(readFileSync(new URL('../../../.planning/milestones/M002/design/copy.json',import.meta.url),'utf8'));
+      4 | const t=(key:string)=>(source.static[`en.${key}`]??source.templates[`en.${key}`]) as string;
+    > 5 | const ready=async(page:import('@playwright/test').Page)=>page.waitForFunction(()=>document.documentElement.dataset.appReady==='true');
+        |                                                               ^
+      6 | test.beforeEach(async({context,request})=>{await request.post('http://127.0.0.1:38080/api/v1/__test/admin-growth-reset');await context.addCookies([{name:'wordweave_session',value:'admin',url:'http://127.0.0.1:3300'}]);});
+      7 | test('check-in settings submit five values once and preserve next-day effective state',async({page},info)=>{
+      8 |  const writes:Record<string,unknown>[]=[];page.on('request',r=>{if(r.method()==='PUT'&&r.url().endsWith('/growth/settings'))writes.push(r.postDataJSON());});await page.goto('/admin/growth');await ready(page);await page.getByRole('button',{name:t('signsettings'),exact:true}).click();await page.getByLabel(t('cap'),{exact:true}).fill('15');await page.getByLabel(t('firstxp'),{exact:true}).fill('3');await page.getByRole('button',{name:t('save'),exact:true}).click();await expect(page.locator('main')).toContainText('2026-09-21');expect(writes).toEqual([{expected_revision:'growth-config-1',mastery_experience:'3',base_points:'2',step_points:'1',cap_points:'15',normal_experience:'1'}]);await page.screenshot({path:`../.planning/milestones/M002/implementation/evidence/frontend-admin-checkin-${info.project.name}.png`,fullPage:true});
+        at ready (/Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/frontend/tests/e2e/m002-admin-growth.spec.ts:5:63)
+        at /Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/frontend/tests/e2e/m002-admin-growth.spec.ts:14:194
+
+    Error Context: test-results/m002-admin-growth-achievem-cc94a-rror-reveals-its-hidden-row-desktop/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/m002-admin-growth-achievem-cc94a-rror-reveals-its-hidden-row-desktop/trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace test-results/m002-admin-growth-achievem-cc94a-rror-reveals-its-hidden-row-desktop/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  4) [desktop] › tests/e2e/m002-admin-growth.spec.ts:16:1 › issued cards cannot be deleted and model cards send only model-time effects 
+
+    Test timeout of 30000ms exceeded.
+
+    Error: page.waitForFunction: Test timeout of 30000ms exceeded.
+
+      3 | const source=JSON.parse(readFileSync(new URL('../../../.planning/milestones/M002/design/copy.json',import.meta.url),'utf8'));
+      4 | const t=(key:string)=>(source.static[`en.${key}`]??source.templates[`en.${key}`]) as string;
+    > 5 | const ready=async(page:import('@playwright/test').Page)=>page.waitForFunction(()=>document.documentElement.dataset.appReady==='true');
+        |                                                               ^
+      6 | test.beforeEach(async({context,request})=>{await request.post('http://127.0.0.1:38080/api/v1/__test/admin-growth-reset');await context.addCookies([{name:'wordweave_session',value:'admin',url:'http://127.0.0.1:3300'}]);});
+      7 | test('check-in settings submit five values once and preserve next-day effective state',async({page},info)=>{
+      8 |  const writes:Record<string,unknown>[]=[];page.on('request',r=>{if(r.method()==='PUT'&&r.url().endsWith('/growth/settings'))writes.push(r.postDataJSON());});await page.goto('/admin/growth');await ready(page);await page.getByRole('button',{name:t('signsettings'),exact:true}).click();await page.getByLabel(t('cap'),{exact:true}).fill('15');await page.getByLabel(t('firstxp'),{exact:true}).fill('3');await page.getByRole('button',{name:t('save'),exact:true}).click();await expect(page.locator('main')).toContainText('2026-09-21');expect(writes).toEqual([{expected_revision:'growth-config-1',mastery_experience:'3',base_points:'2',step_points:'1',cap_points:'15',normal_experience:'1'}]);await page.screenshot({path:`../.planning/milestones/M002/implementation/evidence/frontend-admin-checkin-${info.project.name}.png`,fullPage:true});
+        at ready (/Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/frontend/tests/e2e/m002-admin-growth.spec.ts:5:63)
+        at /Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/frontend/tests/e2e/m002-admin-growth.spec.ts:17:188
+
+    Error Context: test-results/m002-admin-growth-issued-c-b932b-end-only-model-time-effects-desktop/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/m002-admin-growth-issued-c-b932b-end-only-model-time-effects-desktop/trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace test-results/m002-admin-growth-issued-c-b932b-end-only-model-time-effects-desktop/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  5) [mobile] › tests/e2e/m002-admin-growth.spec.ts:7:1 › check-in settings submit five values once and preserve next-day effective state 
+
+    Test timeout of 30000ms exceeded.
+
+    Error: page.waitForFunction: Test timeout of 30000ms exceeded.
+
+      3 | const source=JSON.parse(readFileSync(new URL('../../../.planning/milestones/M002/design/copy.json',import.meta.url),'utf8'));
+      4 | const t=(key:string)=>(source.static[`en.${key}`]??source.templates[`en.${key}`]) as string;
+    > 5 | const ready=async(page:import('@playwright/test').Page)=>page.waitForFunction(()=>document.documentElement.dataset.appReady==='true');
+        |                                                               ^
+      6 | test.beforeEach(async({context,request})=>{await request.post('http://127.0.0.1:38080/api/v1/__test/admin-growth-reset');await context.addCookies([{name:'wordweave_session',value:'admin',url:'http://127.0.0.1:3300'}]);});
+      7 | test('check-in settings submit five values once and preserve next-day effective state',async({page},info)=>{
+      8 |  const writes:Record<string,unknown>[]=[];page.on('request',r=>{if(r.method()==='PUT'&&r.url().endsWith('/growth/settings'))writes.push(r.postDataJSON());});await page.goto('/admin/growth');await ready(page);await page.getByRole('button',{name:t('signsettings'),exact:true}).click();await page.getByLabel(t('cap'),{exact:true}).fill('15');await page.getByLabel(t('firstxp'),{exact:true}).fill('3');await page.getByRole('button',{name:t('save'),exact:true}).click();await expect(page.locator('main')).toContainText('2026-09-21');expect(writes).toEqual([{expected_revision:'growth-config-1',mastery_experience:'3',base_points:'2',step_points:'1',cap_points:'15',normal_experience:'1'}]);await page.screenshot({path:`../.planning/milestones/M002/implementation/evidence/frontend-admin-checkin-${info.project.name}.png`,fullPage:true});
+        at ready (/Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/frontend/tests/e2e/m002-admin-growth.spec.ts:5:63)
+        at /Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/frontend/tests/e2e/m002-admin-growth.spec.ts:8:197
+
+    Error Context: test-results/m002-admin-growth-check-in-37f58-ve-next-day-effective-state-mobile/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/m002-admin-growth-check-in-37f58-ve-next-day-effective-state-mobile/trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace test-results/m002-admin-growth-check-in-37f58-ve-next-day-effective-state-mobile/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  6) [mobile] › tests/e2e/m002-admin-growth.spec.ts:10:1 › six levels save atomically and hidden edited rows remain in the submitted snapshot 
+
+    Test timeout of 30000ms exceeded.
+
+    Error: page.waitForFunction: Test timeout of 30000ms exceeded.
+
+      3 | const source=JSON.parse(readFileSync(new URL('../../../.planning/milestones/M002/design/copy.json',import.meta.url),'utf8'));
+      4 | const t=(key:string)=>(source.static[`en.${key}`]??source.templates[`en.${key}`]) as string;
+    > 5 | const ready=async(page:import('@playwright/test').Page)=>page.waitForFunction(()=>document.documentElement.dataset.appReady==='true');
+        |                                                               ^
+      6 | test.beforeEach(async({context,request})=>{await request.post('http://127.0.0.1:38080/api/v1/__test/admin-growth-reset');await context.addCookies([{name:'wordweave_session',value:'admin',url:'http://127.0.0.1:3300'}]);});
+      7 | test('check-in settings submit five values once and preserve next-day effective state',async({page},info)=>{
+      8 |  const writes:Record<string,unknown>[]=[];page.on('request',r=>{if(r.method()==='PUT'&&r.url().endsWith('/growth/settings'))writes.push(r.postDataJSON());});await page.goto('/admin/growth');await ready(page);await page.getByRole('button',{name:t('signsettings'),exact:true}).click();await page.getByLabel(t('cap'),{exact:true}).fill('15');await page.getByLabel(t('firstxp'),{exact:true}).fill('3');await page.getByRole('button',{name:t('save'),exact:true}).click();await expect(page.locator('main')).toContainText('2026-09-21');expect(writes).toEqual([{expected_revision:'growth-config-1',mastery_experience:'3',base_points:'2',step_points:'1',cap_points:'15',normal_experience:'1'}]);await page.screenshot({path:`../.planning/milestones/M002/implementation/evidence/frontend-admin-checkin-${info.project.name}.png`,fullPage:true});
+        at ready (/Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/frontend/tests/e2e/m002-admin-growth.spec.ts:5:63)
+        at /Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/frontend/tests/e2e/m002-admin-growth.spec.ts:11:195
+
+    Error Context: test-results/m002-admin-growth-six-leve-37c69-n-in-the-submitted-snapshot-mobile/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/m002-admin-growth-six-leve-37c69-n-in-the-submitted-snapshot-mobile/trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace test-results/m002-admin-growth-six-leve-37c69-n-in-the-submitted-snapshot-mobile/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  7) [mobile] › tests/e2e/m002-admin-growth.spec.ts:13:1 › achievement content remains plain and a field error reveals its hidden row 
+
+    Test timeout of 30000ms exceeded.
+
+    Error: page.waitForFunction: Test timeout of 30000ms exceeded.
+
+      3 | const source=JSON.parse(readFileSync(new URL('../../../.planning/milestones/M002/design/copy.json',import.meta.url),'utf8'));
+      4 | const t=(key:string)=>(source.static[`en.${key}`]??source.templates[`en.${key}`]) as string;
+    > 5 | const ready=async(page:import('@playwright/test').Page)=>page.waitForFunction(()=>document.documentElement.dataset.appReady==='true');
+        |                                                               ^
+      6 | test.beforeEach(async({context,request})=>{await request.post('http://127.0.0.1:38080/api/v1/__test/admin-growth-reset');await context.addCookies([{name:'wordweave_session',value:'admin',url:'http://127.0.0.1:3300'}]);});
+      7 | test('check-in settings submit five values once and preserve next-day effective state',async({page},info)=>{
+      8 |  const writes:Record<string,unknown>[]=[];page.on('request',r=>{if(r.method()==='PUT'&&r.url().endsWith('/growth/settings'))writes.push(r.postDataJSON());});await page.goto('/admin/growth');await ready(page);await page.getByRole('button',{name:t('signsettings'),exact:true}).click();await page.getByLabel(t('cap'),{exact:true}).fill('15');await page.getByLabel(t('firstxp'),{exact:true}).fill('3');await page.getByRole('button',{name:t('save'),exact:true}).click();await expect(page.locator('main')).toContainText('2026-09-21');expect(writes).toEqual([{expected_revision:'growth-config-1',mastery_experience:'3',base_points:'2',step_points:'1',cap_points:'15',normal_experience:'1'}]);await page.screenshot({path:`../.planning/milestones/M002/implementation/evidence/frontend-admin-checkin-${info.project.name}.png`,fullPage:true});
+        at ready (/Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/frontend/tests/e2e/m002-admin-growth.spec.ts:5:63)
+        at /Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/frontend/tests/e2e/m002-admin-growth.spec.ts:14:194
+
+    Error Context: test-results/m002-admin-growth-achievem-cc94a-rror-reveals-its-hidden-row-mobile/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/m002-admin-growth-achievem-cc94a-rror-reveals-its-hidden-row-mobile/trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace test-results/m002-admin-growth-achievem-cc94a-rror-reveals-its-hidden-row-mobile/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  8) [mobile] › tests/e2e/m002-admin-growth.spec.ts:16:1 › issued cards cannot be deleted and model cards send only model-time effects 
+
+    Test timeout of 30000ms exceeded.
+
+    Error: page.waitForFunction: Test timeout of 30000ms exceeded.
+
+      3 | const source=JSON.parse(readFileSync(new URL('../../../.planning/milestones/M002/design/copy.json',import.meta.url),'utf8'));
+      4 | const t=(key:string)=>(source.static[`en.${key}`]??source.templates[`en.${key}`]) as string;
+    > 5 | const ready=async(page:import('@playwright/test').Page)=>page.waitForFunction(()=>document.documentElement.dataset.appReady==='true');
+        |                                                               ^
+      6 | test.beforeEach(async({context,request})=>{await request.post('http://127.0.0.1:38080/api/v1/__test/admin-growth-reset');await context.addCookies([{name:'wordweave_session',value:'admin',url:'http://127.0.0.1:3300'}]);});
+      7 | test('check-in settings submit five values once and preserve next-day effective state',async({page},info)=>{
+      8 |  const writes:Record<string,unknown>[]=[];page.on('request',r=>{if(r.method()==='PUT'&&r.url().endsWith('/growth/settings'))writes.push(r.postDataJSON());});await page.goto('/admin/growth');await ready(page);await page.getByRole('button',{name:t('signsettings'),exact:true}).click();await page.getByLabel(t('cap'),{exact:true}).fill('15');await page.getByLabel(t('firstxp'),{exact:true}).fill('3');await page.getByRole('button',{name:t('save'),exact:true}).click();await expect(page.locator('main')).toContainText('2026-09-21');expect(writes).toEqual([{expected_revision:'growth-config-1',mastery_experience:'3',base_points:'2',step_points:'1',cap_points:'15',normal_experience:'1'}]);await page.screenshot({path:`../.planning/milestones/M002/implementation/evidence/frontend-admin-checkin-${info.project.name}.png`,fullPage:true});
+        at ready (/Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/frontend/tests/e2e/m002-admin-growth.spec.ts:5:63)
+        at /Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/frontend/tests/e2e/m002-admin-growth.spec.ts:17:188
+
+    Error Context: test-results/m002-admin-growth-issued-c-b932b-end-only-model-time-effects-mobile/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/m002-admin-growth-issued-c-b932b-end-only-model-time-effects-mobile/trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace test-results/m002-admin-growth-issued-c-b932b-end-only-model-time-effects-mobile/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  8 failed
+    [desktop] › tests/e2e/m002-admin-growth.spec.ts:7:1 › check-in settings submit five values once and preserve next-day effective state 
+    [desktop] › tests/e2e/m002-admin-growth.spec.ts:10:1 › six levels save atomically and hidden edited rows remain in the submitted snapshot 
+    [desktop] › tests/e2e/m002-admin-growth.spec.ts:13:1 › achievement content remains plain and a field error reveals its hidden row 
+    [desktop] › tests/e2e/m002-admin-growth.spec.ts:16:1 › issued cards cannot be deleted and model cards send only model-time effects 
+    [mobile] › tests/e2e/m002-admin-growth.spec.ts:7:1 › check-in settings submit five values once and preserve next-day effective state 
+    [mobile] › tests/e2e/m002-admin-growth.spec.ts:10:1 › six levels save atomically and hidden edited rows remain in the submitted snapshot 
+    [mobile] › tests/e2e/m002-admin-growth.spec.ts:13:1 › achievement content remains plain and a field error reveals its hidden row 
+    [mobile] › tests/e2e/m002-admin-growth.spec.ts:16:1 › issued cards cannot be deleted and model cards send only model-time effects 
+npm notice
+npm notice New major version of npm available! 10.9.8 -> 12.0.2
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.0.2
+npm notice To update run: npm install -g npm@12.0.2
+npm notice

@@ -1,0 +1,28 @@
+=== RUN   TestModelRetirementRefundUsesCurrentPointsAndSurvivesExpiry
+    activation_integration_test.go:227: growth configuration validation failed
+--- FAIL: TestModelRetirementRefundUsesCurrentPointsAndSurvivesExpiry (0.61s)
+FAIL
+FAIL	wordweave/internal/growth	0.828s
+=== RUN   TestM002RetiredCardPriceEditingAndRefundHTTP
+2026/09/21 10:47:55 INFO http_request request_id=req_nYJ9lTGg26cKD01xPj7wrg method=GET route=/api/v1/bootstrap status=200 duration_ms=0
+2026/09/21 10:47:55 INFO http_request request_id=req_phGjIX5qDfzF_09Vjo0eAg method=POST route=/api/v1/auth/login status=200 duration_ms=79
+2026/09/21 10:47:55 INFO http_request request_id=req_tfgeQJ6qwcF93hvt2KIkLw method=GET route=/api/v1/bootstrap status=200 duration_ms=0
+2026/09/21 10:47:55 INFO http_request request_id=req_Vte8JQ5RyPSLGQOYSt_U_Q method=GET route=/api/v1/bootstrap status=200 duration_ms=0
+2026/09/21 10:47:55 INFO http_request request_id=req_JKN58DwVuRLGK0ggOugchA method=POST route=/api/v1/auth/login status=200 duration_ms=80
+2026/09/21 10:47:55 INFO http_request request_id=req_h3mcKrMXLeg13Eo993zYWQ method=GET route=/api/v1/bootstrap status=200 duration_ms=0
+2026/09/21 10:47:55 INFO http_request request_id=req_xAvX3B5ypkfcjGX89UE35w method=POST route=/api/v1/admin/growth/items status=201 duration_ms=4
+2026/09/21 10:47:55 INFO http_request request_id=req_sTdJEy51por-Q9PMhhC6tg method=PUT route=/api/v1/admin/growth/items/{item_id}/listing status=200 duration_ms=1
+2026/09/21 10:47:55 INFO http_request request_id=req_g_1f2-U_EDcswKi1YZwBnQ method=POST route=/api/v1/shop/exchanges status=200 duration_ms=6
+2026/09/21 10:47:55 INFO http_request request_id=req_vOvxfl22Q_iRN2f-4hkkPA method=POST route=/api/v1/me/items/{item_id}/activation-preview status=200 duration_ms=3
+2026/09/21 10:47:55 INFO http_request request_id=req_Y02uV-rzqcHbsn3w1PwVMQ method=POST route=/api/v1/me/items/{item_id}/activate status=200 duration_ms=4
+2026/09/21 10:47:55 INFO http_request request_id=req_syRCztzdOlQo21vR_EbwcA method=GET route=/api/v1/admin/models/{model_id}/removal-impact status=200 duration_ms=1
+2026/09/21 10:47:55 INFO http_request request_id=req_MwWo0DQZXcleHM7JulYAXQ method=DELETE route=/api/v1/admin/models/{model_id} status=200 duration_ms=1
+2026/09/21 10:47:55 INFO http_request request_id=req_0VTprXE2ZfSzVNFpQdkMqg method=POST route=/api/v1/me/items/{item_id}/refund-preview status=200 duration_ms=1
+2026/09/21 10:47:55 INFO http_request request_id=req_jRCrOY_qPYQ02SnuT_9_7w method=POST route=/api/v1/me/items/{item_id}/refund-preview status=200 duration_ms=1
+2026/09/21 10:47:55 INFO http_request request_id=req_PSbhxelNsCJUfo7xeE4f9Q method=GET route=/api/v1/admin/growth/items/{item_id} status=200 duration_ms=0
+2026/09/21 10:47:55 INFO http_request request_id=req_YkB272juypNHNPbeUUHXAA method=PUT route=/api/v1/admin/growth/items/{item_id} status=422 duration_ms=0
+    m002_item_retirement_integration_test.go:94: status=422 want=200 body={"type":"https://wordweave.example/problems/validation-failed","title":"Request could not be accepted","status":422,"code":"validation_failed","detail":"One or more fields need attention.","request_id":"req_YkB272juypNHNPbeUUHXAA","field_errors":[{"field":"/effect/model_ids","code":"invalid_reference"}]}
+--- FAIL: TestM002RetiredCardPriceEditingAndRefundHTTP (1.02s)
+FAIL
+FAIL	wordweave/internal/httpapi	1.314s
+FAIL

@@ -1,0 +1,18 @@
+{
+  "command": [
+    "go",
+    "test",
+    "-tags=integration",
+    "./internal/growth",
+    "./internal/httpapi",
+    "-run",
+    "Test(ModelRetirementRefundUsesCurrentPointsAndSurvivesExpiry|M002RetiredCardPriceEditingAndRefundHTTP)$",
+    "-count=1",
+    "-v",
+    "-timeout=120s"
+  ],
+  "exit_code": 1,
+  "seconds": 3.22,
+  "expected": "failure before implementation fix",
+  "real_provider_calls": 0
+}

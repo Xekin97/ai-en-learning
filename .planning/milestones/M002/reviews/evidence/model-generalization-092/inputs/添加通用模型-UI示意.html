@@ -1,0 +1,621 @@
+<!-- AI生成 -->
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>添加通用模型 · UI 示意</title>
+<style>
+  :root {
+    --bg: #f4f2ef;
+    --panel: #fffcf8;
+    --card: #ffffff;
+    --ink: #1c1b19;
+    --muted: #6b6560;
+    --line: #e4dfd8;
+    --accent: #2f6fed;
+    --accent-soft: #e8f0fe;
+    --danger: #c23b3b;
+    --ok: #1f7a4c;
+    --warn-bg: #fdecea;
+    --warn-ink: #8a2b2b;
+    --radius: 10px;
+    --shadow: 0 8px 28px rgba(28, 27, 25, 0.08);
+    font-family: -apple-system, "PingFang SC", "Microsoft YaHei", "Segoe UI", sans-serif;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    line-height: 1.5;
+  }
+  .page {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 32px 24px 64px;
+  }
+  header.hero {
+    margin-bottom: 28px;
+  }
+  header.hero h1 {
+    font-size: 22px;
+    font-weight: 600;
+    margin: 0 0 6px;
+  }
+  header.hero p {
+    margin: 0;
+    color: var(--muted);
+    font-size: 13px;
+    max-width: 720px;
+  }
+  .screens {
+    display: grid;
+    gap: 24px;
+    grid-template-columns: 1fr;
+  }
+  @media (min-width: 1100px) {
+    .screens { grid-template-columns: 1.2fr 1fr 1fr; align-items: start; }
+  }
+  figure.screen {
+    margin: 0;
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    box-shadow: var(--shadow);
+    overflow: hidden;
+  }
+  figure.screen > figcaption {
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--line);
+    font-size: 12px;
+    color: var(--muted);
+    background: #faf7f2;
+  }
+  figure.screen > figcaption strong {
+    display: block;
+    color: var(--ink);
+    font-size: 13px;
+    margin-bottom: 2px;
+  }
+  /* Settings shell */
+  .settings {
+    display: grid;
+    grid-template-columns: 148px 1fr;
+    min-height: 520px;
+  }
+  .nav {
+    background: #f7f3ed;
+    border-right: 1px solid var(--line);
+    padding: 16px 10px;
+    font-size: 12px;
+  }
+  .nav .item {
+    padding: 8px 10px;
+    border-radius: 8px;
+    color: var(--muted);
+    margin-bottom: 2px;
+  }
+  .nav .item.active {
+    background: var(--card);
+    color: var(--ink);
+    font-weight: 600;
+    box-shadow: 0 1px 2px rgba(0,0,0,.05);
+  }
+  .main { padding: 20px 22px 28px; }
+  .main h2 {
+    font-size: 16px;
+    margin: 0 0 14px;
+    font-weight: 600;
+  }
+  .section-label {
+    font-size: 12px;
+    color: var(--muted);
+    margin: 18px 0 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    border: 1px solid var(--line);
+    background: var(--card);
+    color: var(--ink);
+    font-size: 12px;
+    padding: 7px 12px;
+    border-radius: 8px;
+    cursor: default;
+  }
+  .btn.primary {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #fff;
+    font-weight: 600;
+  }
+  .btn.danger-text { color: var(--danger); border-color: transparent; background: transparent; }
+  .btn.ghost { background: transparent; }
+  .model-row {
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    background: var(--card);
+    padding: 14px 16px;
+    margin-bottom: 10px;
+  }
+  .model-row .title {
+    font-size: 13px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .model-row .id {
+    font-size: 11px;
+    color: var(--muted);
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    margin-top: 2px;
+  }
+  .model-row .meta {
+    font-size: 11px;
+    color: var(--muted);
+    margin-top: 4px;
+  }
+  .model-row .actions {
+    margin-top: 10px;
+    display: flex;
+    gap: 8px;
+  }
+  .star { color: #d4a017; }
+  .badge {
+    display: inline-block;
+    font-size: 10px;
+    padding: 1px 6px;
+    border-radius: 999px;
+    background: var(--accent-soft);
+    color: var(--accent);
+    margin-left: 6px;
+    vertical-align: middle;
+  }
+  .badge.anthropic {
+    background: #f3e8ff;
+    color: #7c3aed;
+  }
+  .default-box {
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    background: var(--card);
+    padding: 12px 14px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 13px;
+  }
+  /* Form drawer mock */
+  .drawer {
+    padding: 18px 18px 16px;
+  }
+  .drawer .drawer-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 14px;
+  }
+  .drawer .drawer-head h3 {
+    margin: 0;
+    font-size: 15px;
+  }
+  .close-x {
+    width: 28px;
+    height: 28px;
+    border-radius: 8px;
+    border: 1px solid var(--line);
+    background: var(--card);
+    color: var(--muted);
+    font-size: 14px;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .field { margin-bottom: 12px; }
+  .field label {
+    display: block;
+    font-size: 12px;
+    font-weight: 600;
+    margin-bottom: 5px;
+  }
+  .field .hint {
+    font-size: 11px;
+    color: var(--muted);
+    margin-top: 4px;
+  }
+  .field input, .field .fake-input {
+    width: 100%;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    background: var(--card);
+    padding: 9px 10px;
+    font-size: 13px;
+    color: var(--ink);
+  }
+  .field input:focus {
+    outline: 2px solid var(--accent-soft);
+    border-color: var(--accent);
+  }
+  .protocols {
+    display: flex;
+    gap: 8px;
+  }
+  .proto {
+    flex: 1;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 8px 10px;
+    font-size: 12px;
+    background: var(--card);
+  }
+  .proto.on {
+    border-color: var(--accent);
+    background: var(--accent-soft);
+  }
+  .proto .dot {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    border: 1.5px solid var(--muted);
+    margin-right: 6px;
+    vertical-align: -1px;
+  }
+  .proto.on .dot {
+    border-color: var(--accent);
+    background: var(--accent);
+    box-shadow: inset 0 0 0 2px #fff;
+  }
+  .advanced {
+    margin: 8px 0 12px;
+    font-size: 12px;
+    color: var(--muted);
+    border: 1px dashed var(--line);
+    border-radius: 8px;
+    padding: 8px 10px;
+  }
+  .drawer-foot {
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+    margin-top: 14px;
+    padding-top: 12px;
+    border-top: 1px solid var(--line);
+  }
+  .drawer-foot .right { display: flex; gap: 8px; }
+  .error-banner {
+    background: var(--warn-bg);
+    color: var(--warn-ink);
+    font-size: 11px;
+    padding: 8px 10px;
+    border-radius: 8px;
+    margin-bottom: 12px;
+  }
+  .field-error {
+    color: var(--danger);
+    font-size: 11px;
+    margin-top: 4px;
+  }
+  /* Picker */
+  .picker-wrap {
+    padding: 18px;
+    background: linear-gradient(180deg, #faf7f2 0%, var(--panel) 40%);
+    min-height: 520px;
+  }
+  .composer-bar {
+    border: 1px solid var(--line);
+    background: var(--card);
+    border-radius: 12px;
+    padding: 12px;
+    box-shadow: var(--shadow);
+  }
+  .composer-bar .input {
+    color: var(--muted);
+    font-size: 13px;
+    padding: 8px 4px 14px;
+    border-bottom: 1px solid var(--line);
+    margin-bottom: 10px;
+  }
+  .composer-bar .tools {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+  }
+  .chip {
+    border: 1px solid var(--line);
+    background: #faf8f5;
+    border-radius: 999px;
+    padding: 5px 10px;
+    font-size: 11px;
+    color: var(--ink);
+  }
+  .picker {
+    margin-top: 12px;
+    border: 1px solid var(--line);
+    background: var(--card);
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+    overflow: hidden;
+  }
+  .picker .ph {
+    padding: 10px 12px;
+    font-size: 11px;
+    color: var(--muted);
+    border-bottom: 1px solid var(--line);
+    display: flex;
+    justify-content: space-between;
+  }
+  .pick-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 9px 12px;
+    font-size: 12px;
+  }
+  .pick-item:hover, .pick-item.on {
+    background: var(--accent-soft);
+  }
+  .pick-item .right {
+    color: var(--muted);
+    font-size: 10px;
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  }
+  .pick-group {
+    padding: 8px 12px 2px;
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 0.02em;
+  }
+  .pick-sep {
+    height: 1px;
+    background: var(--line);
+    margin: 6px 0;
+  }
+  .radio {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    border: 1.5px solid var(--muted);
+    display: inline-block;
+    margin-right: 8px;
+    vertical-align: -2px;
+  }
+  .radio.on {
+    border-color: var(--accent);
+    background: radial-gradient(circle at center, var(--accent) 0 40%, #fff 45%);
+  }
+  .toast {
+    margin-top: 16px;
+    background: #123d28;
+    color: #e8fff2;
+    border-radius: 10px;
+    padding: 12px 14px;
+    font-size: 12px;
+    box-shadow: var(--shadow);
+  }
+  .toast .t1 { font-weight: 600; margin-bottom: 2px; }
+  .toast .t2 { opacity: 0.85; }
+  .notes {
+    margin-top: 28px;
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 18px 20px;
+  }
+  .notes h2 { margin: 0 0 10px; font-size: 15px; }
+  .notes ul { margin: 0; padding-left: 18px; color: var(--muted); font-size: 13px; }
+  .notes li { margin-bottom: 6px; }
+  .notes code {
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 12px;
+    background: #f0ebe4;
+    padding: 1px 5px;
+    border-radius: 4px;
+    color: var(--ink);
+  }
+</style>
+</head>
+<body>
+<p data-aigc-mark="1" style="margin:0 0 8px;font-size:10px;line-height:1.3;color:#6b6560;font-weight:400;">AI生成</p>
+
+  <div class="page">
+    <header class="hero">
+      <h1>添加通用模型 · UI 示意</h1>
+      <p>对齐 MiMo Desktop「设置 → 模型 / Providers」的 BYOK 自定义模型能力。三张示意：列表页、添加表单、Composer 模型选择器。实现细节以《添加通用模型-功能实现Prompt.md》为准。</p>
+    </header>
+
+    <div class="screens">
+      <!-- Screen 1: list -->
+      <figure class="screen">
+        <figcaption>
+          <strong>① 设置 → 模型 / Providers</strong>
+          列表展示已注册通用模型；主按钮添加；行内编辑 / 设为默认 / 删除
+        </figcaption>
+        <div class="settings">
+          <aside class="nav">
+            <div class="item">通用</div>
+            <div class="item">外观</div>
+            <div class="item">个性化</div>
+            <div class="item">快捷键</div>
+            <div class="item active">模型 / Providers</div>
+            <div class="item">MCP</div>
+            <div class="item">环境变量</div>
+            <div class="item">已归档</div>
+            <div class="item">关于</div>
+          </aside>
+          <div class="main">
+            <h2>模型 / Providers</h2>
+
+            <div class="section-label">默认模型</div>
+            <div class="default-box">
+              <span>MiMo V2.5 Pro</span>
+              <span class="btn ghost">更改</span>
+            </div>
+
+            <div class="section-label">
+              <span>通用模型（BYOK）</span>
+              <span class="btn primary">+ 添加通用模型</span>
+            </div>
+
+            <div class="model-row">
+              <div class="title"><span class="star">★</span> DeepSeek Chat <span class="badge">OpenAI 兼容</span></div>
+              <div class="id">custom/deepseek-chat</div>
+              <div class="meta">https://api.deepseek.com/v1 · API Key sk-****…</div>
+              <div class="actions">
+                <span class="btn">编辑</span>
+                <span class="btn">设为默认</span>
+                <span class="btn danger-text">删除</span>
+              </div>
+            </div>
+
+            <div class="model-row">
+              <div class="title">Claude Sonnet <span class="badge anthropic">Anthropic 兼容</span></div>
+              <div class="id">custom-anthropic/claude-sonnet-4-5</div>
+              <div class="meta">https://api.example.com/v1 · API Key 已配置</div>
+              <div class="actions">
+                <span class="btn">编辑</span>
+                <span class="btn">设为默认</span>
+                <span class="btn danger-text">删除</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </figure>
+
+      <!-- Screen 2: form -->
+      <figure class="screen">
+        <figcaption>
+          <strong>② 添加 / 编辑通用模型</strong>
+          抽屉或模态；协议切换只改说明文案；密钥脱敏；可测试连接
+        </figcaption>
+        <div class="drawer">
+          <div class="drawer-head">
+            <h3>添加通用模型</h3>
+            <div class="close-x">✕</div>
+          </div>
+
+          <div class="error-banner">⚠ 请修正 1 处标红字段后再保存</div>
+
+          <div class="field">
+            <label>显示名称</label>
+            <input value="DeepSeek Chat" readonly />
+            <div class="hint">在选择器和列表中显示</div>
+          </div>
+
+          <div class="field">
+            <label>模型 ID</label>
+            <input value="deepseek-chat" readonly />
+            <div class="hint">原样发给上游，区分大小写；可含 /</div>
+          </div>
+
+          <div class="field">
+            <label>API 协议</label>
+            <div class="protocols">
+              <div class="proto on"><span class="dot"></span>OpenAI 兼容</div>
+              <div class="proto"><span class="dot"></span>Anthropic 兼容</div>
+            </div>
+            <div class="hint">适用于 Chat Completions / Responses 风格端点</div>
+          </div>
+
+          <div class="field">
+            <label>Base URL</label>
+            <input value="api.deepseek.com/v1" readonly style="border-color:#e0a0a0" />
+            <div class="field-error">✗ Base URL 无效，应类似 https://api.example.com/v1</div>
+          </div>
+
+          <div class="field">
+            <label>API Key</label>
+            <div class="fake-input">sk-••••••••••••••••&nbsp;&nbsp;&nbsp;&nbsp;[显示]</div>
+            <div class="hint">仅保存在本机配置，界面与日志中脱敏</div>
+          </div>
+
+          <div class="advanced">▸ 高级选项（可选）— 上下文长度 / 输出上限 / 输入模态</div>
+
+          <div class="drawer-foot">
+            <span class="btn">测试连接</span>
+            <div class="right">
+              <span class="btn">取消</span>
+              <span class="btn primary">保存并使用</span>
+            </div>
+          </div>
+        </div>
+      </figure>
+
+      <!-- Screen 3: picker -->
+      <figure class="screen">
+        <figcaption>
+          <strong>③ Composer 模型选择器</strong>
+          保存后立即可选；recent 置顶；入口可跳回添加表单
+        </figcaption>
+        <div class="picker-wrap">
+          <div class="composer-bar">
+            <div class="input">输入消息…</div>
+            <div class="tools">
+              <span class="chip">DeepSeek Chat</span>
+              <span class="chip">中</span>
+              <span class="chip">默认权限</span>
+            </div>
+          </div>
+
+          <div class="picker">
+            <div class="ph"><span>模型</span><span>▲</span></div>
+
+            <div class="pick-group">最近使用</div>
+            <div class="pick-item on">
+              <span><span class="radio on"></span>DeepSeek Chat</span>
+              <span class="right">custom/…</span>
+            </div>
+            <div class="pick-item">
+              <span><span class="radio"></span>MiMo V2.5 Pro</span>
+              <span class="right">xiaomi/…</span>
+            </div>
+
+            <div class="pick-group">通用模型（BYOK）</div>
+            <div class="pick-item">
+              <span><span class="radio"></span>DeepSeek Chat</span>
+            </div>
+            <div class="pick-item">
+              <span><span class="radio"></span>Claude Sonnet</span>
+            </div>
+            <div class="pick-sep"></div>
+            <div class="pick-item" style="color:var(--accent)">
+              <span>+ 添加通用模型…</span>
+            </div>
+
+            <div class="pick-group">官方模型</div>
+            <div class="pick-item">
+              <span><span class="radio"></span>MiMo V2.5 Pro</span>
+            </div>
+            <div class="pick-item">
+              <span><span class="radio"></span>MiMo V2.5 Flash</span>
+            </div>
+          </div>
+
+          <div class="toast">
+            <div class="t1">✓ 已添加 DeepSeek Chat</div>
+            <div class="t2">custom/deepseek-chat 已可在模型选择器使用</div>
+          </div>
+        </div>
+      </figure>
+    </div>
+
+    <section class="notes">
+      <h2>实现要点（与 Prompt 对应）</h2>
+      <ul>
+        <li>字段命名严格使用 <code>baseURL</code> / <code>apiKey</code>，适配器 <code>@ai-sdk/openai-compatible</code> 或 <code>@ai-sdk/anthropic</code>。</li>
+        <li>Base URL 原样保存，不自动补全或归一化 <code>/v1</code>；Anthropic 模式不要填完整 <code>/v1/messages</code>。</li>
+        <li>列表与日志中 API Key 一律脱敏；配置写入全局 <code>~/.config/mimocode/mimocode.jsonc</code>。</li>
+        <li>保存成功后合并写入 <code>model.json</code> 的 <code>recent</code>（置顶、去重、上限 10），保留 <code>favorite</code> / <code>variant</code>。</li>
+        <li>「仅添加」不改顶层 <code>model</code>；「设为默认 / 保存并使用」才写默认选择。</li>
+      </ul>
+    </section>
+  </div>
+</body>
+</html>

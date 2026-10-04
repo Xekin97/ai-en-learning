@@ -1,0 +1,297 @@
+
+Running 8 tests using 1 worker
+
+(node:20728) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  1 [desktop] › tests/e2e/m002-admin-growth.spec.ts:7:1 › check-in settings submit five values once and preserve next-day effective state (1.8s)
+  ✓  2 [desktop] › tests/e2e/m002-admin-growth.spec.ts:10:1 › six levels save atomically and hidden edited rows remain in the submitted snapshot (1.1s)
+  ✓  3 [desktop] › tests/e2e/m002-admin-growth.spec.ts:13:1 › achievement content remains plain and a field error reveals its hidden row (993ms)
+  ✘  4 [desktop] › tests/e2e/m002-admin-growth.spec.ts:16:1 › issued cards cannot be deleted and model cards send only model-time effects (30.1s)
+(node:22220) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  5 [mobile] › tests/e2e/m002-admin-growth.spec.ts:7:1 › check-in settings submit five values once and preserve next-day effective state (921ms)
+  ✘  6 [mobile] › tests/e2e/m002-admin-growth.spec.ts:10:1 › six levels save atomically and hidden edited rows remain in the submitted snapshot (30.2s)
+(node:23385) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  7 [mobile] › tests/e2e/m002-admin-growth.spec.ts:13:1 › achievement content remains plain and a field error reveals its hidden row (30.1s)
+(node:24570) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  8 [mobile] › tests/e2e/m002-admin-growth.spec.ts:16:1 › issued cards cannot be deleted and model cards send only model-time effects (30.2s)
+
+
+  1) [desktop] › tests/e2e/m002-admin-growth.spec.ts:16:1 › issued cards cannot be deleted and model cards send only model-time effects 
+
+    Test timeout of 30000ms exceeded.
+
+    Error: locator.selectOption: Test timeout of 30000ms exceeded.
+    Call log:
+      - waiting for locator('dialog[open]').getByLabel('AI model', { exact: true })
+        - waiting for "http://127.0.0.1:3300/admin/growth" navigation to finish...
+        - navigated to "http://127.0.0.1:3300/admin/growth"
+
+
+      15 | });
+      16 | test('issued cards cannot be deleted and model cards send only model-time effects',async({page},info)=>{
+    > 17 |  let body:Record<string,unknown>|null=null;page.on('request',r=>{if(r.method()==='POST'&&r.url().endsWith('/growth/items'))body=r.postDataJSON();});await page.goto('/admin/growth');await ready(page);await page.getByRole('button',{name:t('delete'),exact:true}).click();await expect(page.locator('dialog[open]')).toContainText(t('delete.blocked'));await expect(page.locator('dialog[open]').getByRole('button',{name:t('delete'),exact:true})).toHaveCount(0);await page.keyboard.press('Escape');await page.getByRole('button',{name:t('newitem'),exact:true}).click();const dialog=page.locator('dialog[open]');await dialog.getByLabel(t('name.en'),{exact:true}).fill('Model time');await dialog.getByLabel(t('price'),{exact:true}).fill('20');await dialog.getByLabel(t('deadline'),{exact:true}).fill('30');await dialog.getByLabel(t('model'),{exact:true}).selectOption('model-admin');await dialog.getByLabel(t('retirementpoints'),{exact:true}).fill('40');await dialog.getByLabel(t('duration'),{exact:true}).fill('3');await dialog.getByRole('button',{name:t('save'),exact:true}).click();await expect(dialog).toHaveCount(0);expect(body).toMatchObject({kind:'model_trial',activation_ttl_seconds:2592000,effect:{kind:'model_trial',model_ids:['model-admin'],trial_seconds:259200,retirement_points:'40'}});expect(body).not.toHaveProperty('listed');expect(body?.effect).not.toHaveProperty('extra_count');await page.screenshot({path:`../.planning/milestones/M002/implementation/evidence/frontend-admin-items-${info.project.name}.png`,fullPage:true});
+         |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             ^
+      18 | });
+      19 |
+        at /Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/frontend/tests/e2e/m002-admin-growth.spec.ts:17:845
+
+    Error Context: test-results/m002-admin-growth-issued-c-b932b-end-only-model-time-effects-desktop/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/m002-admin-growth-issued-c-b932b-end-only-model-time-effects-desktop/trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace test-results/m002-admin-growth-issued-c-b932b-end-only-model-time-effects-desktop/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [mobile] › tests/e2e/m002-admin-growth.spec.ts:10:1 › six levels save atomically and hidden edited rows remain in the submitted snapshot 
+
+    Test timeout of 30000ms exceeded.
+
+    Error: locator.click: Test timeout of 30000ms exceeded.
+    Call log:
+      - waiting for getByRole('button', { name: 'Save changes', exact: true })
+        - locator resolved to <button type="submit" class="btn primary">Save changes</button>
+      - attempting click action
+        - waiting for element to be visible, enabled and stable
+        - element is visible, enabled and stable
+        - scrolling into view if needed
+        - done scrolling
+        - <p class="muted">Threshold changes recalculate levels and may lowe…</p> intercepts pointer events
+      - retrying click action
+        - waiting for element to be visible, enabled and stable
+        - element is visible, enabled and stable
+        - scrolling into view if needed
+        - done scrolling
+        - <td>…</td> from <div class="table-wrap">…</div> subtree intercepts pointer events
+      - retrying click action
+        - waiting 20ms
+        - waiting for element to be visible, enabled and stable
+        - element is visible, enabled and stable
+        - scrolling into view if needed
+        - done scrolling
+        - <div>…</div> intercepts pointer events
+      2 × retrying click action
+          - waiting 100ms
+          - waiting for element to be visible, enabled and stable
+          - element is visible, enabled and stable
+          - scrolling into view if needed
+          - done scrolling
+          - <a href="/admin" class="brand">…</a> from <header class="topbar admin-topbar">…</header> subtree intercepts pointer events
+      14 × retrying click action
+           - waiting 500ms
+           - waiting for element to be visible, enabled and stable
+           - element is visible, enabled and stable
+           - scrolling into view if needed
+           - done scrolling
+           - <td>…</td> from <div class="table-wrap">…</div> subtree intercepts pointer events
+         - retrying click action
+           - waiting 500ms
+           - waiting for element to be visible, enabled and stable
+           - element is visible, enabled and stable
+           - scrolling into view if needed
+           - done scrolling
+           - <div>…</div> intercepts pointer events
+         - retrying click action
+           - waiting 500ms
+           - waiting for element to be visible, enabled and stable
+           - element is visible, enabled and stable
+           - scrolling into view if needed
+           - done scrolling
+           - <a href="/admin" class="brand">…</a> from <header class="topbar admin-topbar">…</header> subtree intercepts pointer events
+         - retrying click action
+           - waiting 500ms
+           - waiting for element to be visible, enabled and stable
+           - element is visible, enabled and stable
+           - scrolling into view if needed
+           - done scrolling
+           - <a href="/admin" class="brand">…</a> from <header class="topbar admin-topbar">…</header> subtree intercepts pointer events
+      - retrying click action
+        - waiting 500ms
+
+
+       9 | });
+      10 | test('six levels save atomically and hidden edited rows remain in the submitted snapshot',async({page},info)=>{
+    > 11 |  const writes:Record<string,unknown>[]=[];page.on('request',r=>{if(r.method()==='PUT'&&r.url().endsWith('/growth/levels'))writes.push(r.postDataJSON());});await page.goto('/admin/growth');await ready(page);await page.getByRole('button',{name:t('levelsettings'),exact:true}).click();await page.getByLabel(t('threshold')+' 2',{exact:true}).fill('150');await page.getByRole('button',{name:t('addtier'),exact:true}).click();await page.getByLabel(t('threshold')+' 5',{exact:true}).fill('400');await page.getByRole('button',{name:t('addtier'),exact:true}).click();await page.getByLabel(t('threshold')+' 6',{exact:true}).fill('500');await page.getByLabel(t('a.tier.search'),{exact:true}).fill('Lv. 6');await page.getByRole('button',{name:t('save'),exact:true}).click();await expect(page.locator('dialog[open]')).toContainText(t('level.effect'));expect(writes).toHaveLength(0);await page.locator('dialog[open]').getByRole('button',{name:t('confirm'),exact:true}).click();await expect(page.locator('dialog[open]')).toHaveCount(0);expect(writes).toHaveLength(1);const changes=writes[0]?.changes as {id:string|null;client_key:string;value:{level_number:number}}[];expect(changes.map(c=>c.value.level_number)).toEqual([2,5,6]);expect(changes[0]?.id).toBe('level-2');expect(new Set(changes.map(c=>c.client_key)).size).toBe(3);await page.getByLabel(t('a.tier.search'),{exact:true}).fill('');await expect(page.locator('.tier-table tbody tr')).toHaveCount(6);await page.screenshot({path:`../.planning/milestones/M002/implementation/evidence/frontend-admin-levels-${info.project.name}.png`,fullPage:true});
+         |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   ^
+      12 | });
+      13 | test('achievement content remains plain and a field error reveals its hidden row',async({page,request})=>{
+      14 |  let body:Record<string,unknown>|null=null;page.on('request',r=>{if(r.method()==='PUT'&&r.url().endsWith('/growth/achievements'))body=r.postDataJSON();});await page.goto('/admin/growth');await ready(page);await page.getByRole('button',{name:t('achievementsettings'),exact:true}).click();await page.getByRole('button',{name:t('a.tier.content'),exact:true}).click();await page.getByLabel(t('a.tier.description.en'),{exact:true}).fill('<b>Literal description</b>');await page.locator('dialog[open]').getByRole('button',{name:t('save'),exact:true}).click();expect(body).toBeNull();await page.getByLabel(t('a.tier.search'),{exact:true}).fill('No matching row');await request.post('http://127.0.0.1:38080/api/v1/__test/admin-growth-row-error');await page.getByRole('button',{name:t('save'),exact:true}).click();await expect(page.getByLabel(t('a.tier.search'),{exact:true})).toHaveValue('');await expect(page.getByLabel(t('threshold')+' 1',{exact:true})).toHaveAttribute('aria-invalid','true');expect(body).toMatchObject({kind:'checkin_streak',changes:[{value:{description:{zh_CN:null,en_US:'<b>Literal description</b>'}}}]});
+        at /Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/frontend/tests/e2e/m002-admin-growth.spec.ts:11:755
+
+    Error Context: test-results/m002-admin-growth-six-leve-37c69-n-in-the-submitted-snapshot-mobile/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/m002-admin-growth-six-leve-37c69-n-in-the-submitted-snapshot-mobile/trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace test-results/m002-admin-growth-six-leve-37c69-n-in-the-submitted-snapshot-mobile/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3) [mobile] › tests/e2e/m002-admin-growth.spec.ts:13:1 › achievement content remains plain and a field error reveals its hidden row 
+
+    Test timeout of 30000ms exceeded.
+
+    Error: locator.click: Test timeout of 30000ms exceeded.
+    Call log:
+      - waiting for getByRole('button', { name: 'Edit content and title', exact: true })
+        - locator resolved to <button type="button" class="btn small">Edit content and title</button>
+      - attempting click action
+        2 × waiting for element to be visible, enabled and stable
+          - element is visible, enabled and stable
+          - scrolling into view if needed
+          - done scrolling
+          - <input required="" inputmode="numeric" aria-invalid="false" pattern="0|[1-9][0-9]*" aria-label="Threshold 1"/> from <td>…</td> subtree intercepts pointer events
+        - retrying click action
+        - waiting 20ms
+        - waiting for element to be visible, enabled and stable
+        - element is visible, enabled and stable
+        - scrolling into view if needed
+        - done scrolling
+        - <div>…</div> intercepts pointer events
+      2 × retrying click action
+          - waiting 100ms
+          - waiting for element to be visible, enabled and stable
+          - element is visible, enabled and stable
+          - scrolling into view if needed
+          - done scrolling
+          - <div class="container header-inner">…</div> from <header class="topbar admin-topbar">…</header> subtree intercepts pointer events
+      12 × retrying click action
+           - waiting 500ms
+           - waiting for element to be visible, enabled and stable
+           - element is visible, enabled and stable
+           - scrolling into view if needed
+           - done scrolling
+           - <input required="" inputmode="numeric" aria-invalid="false" pattern="0|[1-9][0-9]*" aria-label="Threshold 1"/> from <td>…</td> subtree intercepts pointer events
+         - retrying click action
+           - waiting 500ms
+           - waiting for element to be visible, enabled and stable
+           - element is visible, enabled and stable
+           - scrolling into view if needed
+           - done scrolling
+           - <div>…</div> intercepts pointer events
+         - retrying click action
+           - waiting 500ms
+           - waiting for element to be visible, enabled and stable
+           - element is visible, enabled and stable
+           - scrolling into view if needed
+           - done scrolling
+           - <div class="container header-inner">…</div> from <header class="topbar admin-topbar">…</header> subtree intercepts pointer events
+         - retrying click action
+           - waiting 500ms
+           - waiting for element to be visible, enabled and stable
+           - element is visible, enabled and stable
+           - scrolling into view if needed
+           - done scrolling
+           - <div class="container header-inner">…</div> from <header class="topbar admin-topbar">…</header> subtree intercepts pointer events
+      - retrying click action
+        - waiting 500ms
+        - waiting for element to be visible, enabled and stable
+        - element is visible, enabled and stable
+        - scrolling into view if needed
+        - done scrolling
+        - <input required="" inputmode="numeric" aria-invalid="false" pattern="0|[1-9][0-9]*" aria-label="Threshold 1"/> from <td>…</td> subtree intercepts pointer events
+      - retrying click action
+        - waiting 500ms
+        - waiting for element to be visible, enabled and stable
+        - element is visible, enabled and stable
+        - scrolling into view if needed
+        - done scrolling
+        - <div>…</div> intercepts pointer events
+      - retrying click action
+        - waiting 500ms
+        - waiting for element to be visible, enabled and stable
+        - element is visible, enabled and stable
+        - scrolling into view if needed
+        - done scrolling
+        - <div class="container header-inner">…</div> from <header class="topbar admin-topbar">…</header> subtree intercepts pointer events
+      - retrying click action
+        - waiting 500ms
+      - element was detached from the DOM, retrying
+
+
+      12 | });
+      13 | test('achievement content remains plain and a field error reveals its hidden row',async({page,request})=>{
+    > 14 |  let body:Record<string,unknown>|null=null;page.on('request',r=>{if(r.method()==='PUT'&&r.url().endsWith('/growth/achievements'))body=r.postDataJSON();});await page.goto('/admin/growth');await ready(page);await page.getByRole('button',{name:t('achievementsettings'),exact:true}).click();await page.getByRole('button',{name:t('a.tier.content'),exact:true}).click();await page.getByLabel(t('a.tier.description.en'),{exact:true}).fill('<b>Literal description</b>');await page.locator('dialog[open]').getByRole('button',{name:t('save'),exact:true}).click();expect(body).toBeNull();await page.getByLabel(t('a.tier.search'),{exact:true}).fill('No matching row');await request.post('http://127.0.0.1:38080/api/v1/__test/admin-growth-row-error');await page.getByRole('button',{name:t('save'),exact:true}).click();await expect(page.getByLabel(t('a.tier.search'),{exact:true})).toHaveValue('');await expect(page.getByLabel(t('threshold')+' 1',{exact:true})).toHaveAttribute('aria-invalid','true');expect(body).toMatchObject({kind:'checkin_streak',changes:[{value:{description:{zh_CN:null,en_US:'<b>Literal description</b>'}}}]});
+         |                                                                                                                                                                                                                                                                                                                                                                     ^
+      15 | });
+      16 | test('issued cards cannot be deleted and model cards send only model-time effects',async({page},info)=>{
+      17 |  let body:Record<string,unknown>|null=null;page.on('request',r=>{if(r.method()==='POST'&&r.url().endsWith('/growth/items'))body=r.postDataJSON();});await page.goto('/admin/growth');await ready(page);await page.getByRole('button',{name:t('delete'),exact:true}).click();await expect(page.locator('dialog[open]')).toContainText(t('delete.blocked'));await expect(page.locator('dialog[open]').getByRole('button',{name:t('delete'),exact:true})).toHaveCount(0);await page.keyboard.press('Escape');await page.getByRole('button',{name:t('newitem'),exact:true}).click();const dialog=page.locator('dialog[open]');await dialog.getByLabel(t('name.en'),{exact:true}).fill('Model time');await dialog.getByLabel(t('price'),{exact:true}).fill('20');await dialog.getByLabel(t('deadline'),{exact:true}).fill('30');await dialog.getByLabel(t('model'),{exact:true}).selectOption('model-admin');await dialog.getByLabel(t('retirementpoints'),{exact:true}).fill('40');await dialog.getByLabel(t('duration'),{exact:true}).fill('3');await dialog.getByRole('button',{name:t('save'),exact:true}).click();await expect(dialog).toHaveCount(0);expect(body).toMatchObject({kind:'model_trial',activation_ttl_seconds:2592000,effect:{kind:'model_trial',model_ids:['model-admin'],trial_seconds:259200,retirement_points:'40'}});expect(body).not.toHaveProperty('listed');expect(body?.effect).not.toHaveProperty('extra_count');await page.screenshot({path:`../.planning/milestones/M002/implementation/evidence/frontend-admin-items-${info.project.name}.png`,fullPage:true});
+        at /Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/frontend/tests/e2e/m002-admin-growth.spec.ts:14:357
+
+    Error Context: test-results/m002-admin-growth-achievem-cc94a-rror-reveals-its-hidden-row-mobile/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/m002-admin-growth-achievem-cc94a-rror-reveals-its-hidden-row-mobile/trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace test-results/m002-admin-growth-achievem-cc94a-rror-reveals-its-hidden-row-mobile/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  4) [mobile] › tests/e2e/m002-admin-growth.spec.ts:16:1 › issued cards cannot be deleted and model cards send only model-time effects 
+
+    Test timeout of 30000ms exceeded.
+
+    Error: locator.click: Test timeout of 30000ms exceeded.
+    Call log:
+      - waiting for getByRole('button', { name: 'Delete', exact: true })
+        - locator resolved to <button class="btn small danger">Delete</button>
+      - attempting click action
+        2 × waiting for element to be visible, enabled and stable
+          - element is visible, enabled and stable
+          - scrolling into view if needed
+          - done scrolling
+          - <vite-plugin-checker-error-overlay></vite-plugin-checker-error-overlay> intercepts pointer events
+        - retrying click action
+        - waiting 20ms
+        2 × waiting for element to be visible, enabled and stable
+          - element is visible, enabled and stable
+          - scrolling into view if needed
+          - done scrolling
+          - <vite-plugin-checker-error-overlay></vite-plugin-checker-error-overlay> intercepts pointer events
+        - retrying click action
+          - waiting 100ms
+        57 × waiting for element to be visible, enabled and stable
+           - element is visible, enabled and stable
+           - scrolling into view if needed
+           - done scrolling
+           - <vite-plugin-checker-error-overlay></vite-plugin-checker-error-overlay> intercepts pointer events
+         - retrying click action
+           - waiting 500ms
+
+
+      15 | });
+      16 | test('issued cards cannot be deleted and model cards send only model-time effects',async({page},info)=>{
+    > 17 |  let body:Record<string,unknown>|null=null;page.on('request',r=>{if(r.method()==='POST'&&r.url().endsWith('/growth/items'))body=r.postDataJSON();});await page.goto('/admin/growth');await ready(page);await page.getByRole('button',{name:t('delete'),exact:true}).click();await expect(page.locator('dialog[open]')).toContainText(t('delete.blocked'));await expect(page.locator('dialog[open]').getByRole('button',{name:t('delete'),exact:true})).toHaveCount(0);await page.keyboard.press('Escape');await page.getByRole('button',{name:t('newitem'),exact:true}).click();const dialog=page.locator('dialog[open]');await dialog.getByLabel(t('name.en'),{exact:true}).fill('Model time');await dialog.getByLabel(t('price'),{exact:true}).fill('20');await dialog.getByLabel(t('deadline'),{exact:true}).fill('30');await dialog.getByLabel(t('model'),{exact:true}).selectOption('model-admin');await dialog.getByLabel(t('retirementpoints'),{exact:true}).fill('40');await dialog.getByLabel(t('duration'),{exact:true}).fill('3');await dialog.getByRole('button',{name:t('save'),exact:true}).click();await expect(dialog).toHaveCount(0);expect(body).toMatchObject({kind:'model_trial',activation_ttl_seconds:2592000,effect:{kind:'model_trial',model_ids:['model-admin'],trial_seconds:259200,retirement_points:'40'}});expect(body).not.toHaveProperty('listed');expect(body?.effect).not.toHaveProperty('extra_count');await page.screenshot({path:`../.planning/milestones/M002/implementation/evidence/frontend-admin-items-${info.project.name}.png`,fullPage:true});
+         |                                                                                                                                                                                                                                                                     ^
+      18 | });
+      19 |
+        at /Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/frontend/tests/e2e/m002-admin-growth.spec.ts:17:261
+
+    Error Context: test-results/m002-admin-growth-issued-c-b932b-end-only-model-time-effects-mobile/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/m002-admin-growth-issued-c-b932b-end-only-model-time-effects-mobile/trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace test-results/m002-admin-growth-issued-c-b932b-end-only-model-time-effects-mobile/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  4 failed
+    [desktop] › tests/e2e/m002-admin-growth.spec.ts:16:1 › issued cards cannot be deleted and model cards send only model-time effects 
+    [mobile] › tests/e2e/m002-admin-growth.spec.ts:10:1 › six levels save atomically and hidden edited rows remain in the submitted snapshot 
+    [mobile] › tests/e2e/m002-admin-growth.spec.ts:13:1 › achievement content remains plain and a field error reveals its hidden row 
+    [mobile] › tests/e2e/m002-admin-growth.spec.ts:16:1 › issued cards cannot be deleted and model cards send only model-time effects 
+  4 passed (2.2m)
+npm notice
+npm notice New major version of npm available! 10.9.8 -> 12.0.2
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.0.2
+npm notice To update run: npm install -g npm@12.0.2
+npm notice

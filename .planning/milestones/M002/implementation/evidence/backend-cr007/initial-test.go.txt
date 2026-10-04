@@ -1,0 +1,226 @@
+//go:build integration
+
+package httpapi
+
+import (
+	"context"
+	"errors"
+	"net/http"
+	"net/http/httptest"
+	"testing"
+
+	"github.com/google/uuid"
+	"github.com/jackc/pgx/v5"
+	"github.com/jackc/pgx/v5/pgxpool"
+	"wordweave/internal/growth"
+	"wordweave/internal/learning"
+	"wordweave/internal/platform/business"
+	"wordweave/internal/platform/security"
+)
+
+const accountDeletePassword = "synthetic-account-delete-password"
+
+func newAccountDeleteHarness(t *testing.T) claimDeleteHarness {
+	t.Helper()
+	h := newClaimDeleteHarness(t)
+	hash, err := security.HashPassword(accountDeletePassword)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if _, err = h.pool.Exec(h.ctx, `UPDATE wordweave.accounts SET password_hash=$1 WHERE id=$2`, hash, h.actor.ID); err != nil {
+		t.Fatal(err)
+	}
+	return h
+}
+
+// CR-007: real claim consumption, account DELETE, restricted application role,
+// and PostgreSQL cascades. The provider remains unreachable in this harness.
+func TestM002ClaimedAccountDeletionHTTP(t *testing.T) {
+	h := newAccountDeleteHarness(t)
+	if _, err := h.pool.Exec(h.ctx, `INSERT INTO wordweave.growth_levels(level_no,min_experience,reward_enabled,points) VALUES(1,0,false,0);
+ INSERT INTO wordweave.checkin_rules(effective_day,base_points,step_points,cap_points,normal_experience) VALUES('2020-01-01',1,1,5,1)`); err != nil {
+		t.Fatal(err)
+	}
+	if _, err := growth.Activate(h.ctx, h.pool); err != nil {
+		t.Fatal(err)
+	}
+	first, second, pending := h.seed(t, true), h.seed(t, true), h.seed(t, false)
+	cr039AssertReview(t, h.ctx, h.api, h.actor, first.batch, h.snapshot)
+
+	hash, err := security.HashPassword(accountDeletePassword)
+	if err != nil {
+		t.Fatal(err)
+	}
+	other := h
+	other.actor.ID = insertSearchAccount(t, h.ctx, h.pool, "delete_control", hash, "learner")
+	control := other.seed(t, true)
+	admin := insertSearchAccount(t, h.ctx, h.pool, "delete_admin", hash, "admin")
+	label := "Deletion test credits"
+	definition, revision, err := h.api.growth.SaveDefinition(h.ctx, admin, uuid.Nil, "", growth.ItemInput{
+		Kind: "extra_credit", Name: business.Bilingual{EN: &label}, TTL: 86400,
+		Effect: growth.EffectInput{Kind: "extra_credit", ExtraCount: 2},
+	})
+	if err != nil {
+		t.Fatal(err)
+	}
+	if _, _, err = h.api.growth.SetDefinitionListing(h.ctx, admin, definition.ID, revision, true); err != nil {
+		t.Fatal(err)
+	}
+	receipt, err := h.api.growth.Exchange(h.ctx, h.actor.ID, uuid.New(), definition.ID, 1)
+	if err != nil {
+		t.Fatal(err)
+	}
+	preview, err := h.api.growth.ActivationPreview(h.ctx, h.actor.ID, receipt.Items[0].ID, "en-US")
+	if err != nil || preview.Token == nil {
+		t.Fatalf("card activation fixture: %v", err)
+	}
+	if _, err = h.api.growth.Activate(h.ctx, h.actor.ID, uuid.New(), receipt.Items[0].ID, "en-US", *preview.Token, false); err != nil {
+		t.Fatal(err)
+	}
+
+	config := h.pool.Config()
+	config.AfterConnect = func(ctx context.Context, c *pgx.Conn) error {
+		_, err := c.Exec(ctx, `SET ROLE wordweave_app`)
+		return err
+	}
+	appPool, err := pgxpool.NewWithConfig(h.ctx, config)
+	if err != nil {
+		t.Fatal(err)
+	}
+	t.Cleanup(appPool.Close)
+	api, err := integrationServer(t, h.api.cfg, appPool)
+	if err != nil {
+		t.Fatal(err)
+	}
+	server := httptest.NewServer(api.Handler())
+	t.Cleanup(server.Close)
+	client := loginAdminForSearch(t, server.URL, "cr039_learner", accountDeletePassword)
+	otherSession := loginAdminForSearch(t, server.URL, "cr039_learner", accountDeletePassword)
+	controlClient := loginAdminForSearch(t, server.URL, "delete_control", accountDeletePassword)
+	csrf := bootstrap(t, client, server.URL)
+	requireStatus(t, postJSON(t, client, server.URL+"/api/v1/analytics/events", csrf, map[string]any{"event_id": uuid.NewString(), "kind": "page_view", "page": "PAGE-206"}), 204)
+	endpoint := server.URL + "/api/v1/me/account"
+	for _, invalid := range []struct {
+		name, password string
+		confirmed      bool
+	}{{"wrong password", "wrong-password", true}, {"confirmation required", accountDeletePassword, false}} {
+		t.Run(invalid.name, func(t *testing.T) {
+			requireStatus(t, decodeResponse(t, rawJSONRequest(t, client, http.MethodDelete, endpoint, csrf, map[string]any{"current_password": invalid.password, "confirmed": invalid.confirmed}, nil)), 422)
+			requireStatus(t, getJSON(t, otherSession, server.URL+"/api/v1/me/batches/"+first.batch.String()), 200)
+			if _, reused, err := h.fresh().ConsumeClaim(h.ctx, h.actor, first.claim.Token); err != nil || !reused {
+				t.Fatalf("rejected deletion changed claim: %v", err)
+			}
+		})
+	}
+	// Require populated fixtures so these assertions cannot pass on empty tables.
+	owned := map[string]string{
+		"accounts": "id", "account_sessions": "account_id", "visitor_claims": "consumed_account_id",
+		"learning_batches": "owner_id", "batch_targets": "owner_id", "passage_occurrences": "owner_id",
+		"review_sessions": "owner_id", "review_attempts": "owner_id", "growth_balances": "owner_id",
+		"growth_settlements": "owner_id", "growth_ledger": "owner_id", "user_growth": "owner_id",
+		"user_learning_days": "owner_id", "user_checkins": "owner_id", "user_masteries": "owner_id",
+		"user_items": "owner_id", "extra_credit_balances": "owner_id", "analytics_events": "owner_id",
+		"traffic_session_accounts": "owner_id",
+	}
+	assertOwned := func(deleted bool) {
+		t.Helper()
+		for table, column := range owned {
+			var count int
+			query := "SELECT count(*) FROM " + pgx.Identifier{"wordweave", table}.Sanitize() + " WHERE " + pgx.Identifier{column}.Sanitize() + "=$1"
+			if err := h.pool.QueryRow(h.ctx, query, h.actor.ID).Scan(&count); err != nil {
+				t.Fatal(err)
+			}
+			if (!deleted && count == 0) || (deleted && count != 0) {
+				t.Fatalf("%s: deleted=%v count=%d", table, deleted, count)
+			}
+		}
+	}
+	assertOwned(false)
+	assertPrivateNoContentResponse(t, rawJSONRequest(t, client, http.MethodDelete, endpoint, csrf, map[string]any{"current_password": accountDeletePassword, "confirmed": true}, nil))
+	assertOwned(true)
+	for _, c := range []*http.Client{client, otherSession} {
+		requireStatus(t, getJSON(t, c, endpoint), 401)
+		requireStatus(t, getJSON(t, c, server.URL+"/api/v1/me/batches/"+first.batch.String()), 401)
+	}
+	fresh := newBrowserClient(t)
+	requireStatus(t, postJSON(t, fresh, server.URL+"/api/v1/auth/login", bootstrap(t, fresh, server.URL), map[string]any{"username": "cr039_learner", "password": accountDeletePassword, "browser_ui_locale": "en-US"}), 401)
+	for _, f := range []claimDeleteFixture{first, second} {
+		if _, _, err := h.fresh().ConsumeClaim(h.ctx, other.actor, f.claim.Token); !errors.Is(err, learning.ErrNotFound) {
+			t.Fatalf("deleted claim became reusable: %v", err)
+		}
+		if _, err := h.fresh().CreateClaim(h.ctx, f.visitor, f.run.ID.String(), f.run.Token); !errors.Is(err, learning.ErrNotFound) {
+			t.Fatalf("deleted content gained a new claim: %v", err)
+		}
+		var unlinked bool
+		if err := h.pool.QueryRow(h.ctx, `SELECT credited_account_id IS NULL FROM wordweave.generation_runs WHERE id=$1`, f.run.ID).Scan(&unlinked); err != nil || !unlinked {
+			t.Fatalf("visitor run retained account link: %v", err)
+		}
+	}
+	requireStatus(t, getJSON(t, controlClient, server.URL+"/api/v1/me/batches/"+control.batch.String()), 200)
+	if _, reused, err := other.fresh().ConsumeClaim(h.ctx, other.actor, control.claim.Token); err != nil || !reused {
+		t.Fatalf("other owner's claim changed: %v", err)
+	}
+	if _, reused, err := other.fresh().ConsumeClaim(h.ctx, other.actor, pending.claim.Token); err != nil || reused {
+		t.Fatalf("unrelated active claim was removed: %v", err)
+	}
+	var shared int
+	if err := h.pool.QueryRow(h.ctx, `SELECT count(*) FROM wordweave.item_definitions WHERE id=$1 AND ever_issued`, definition.ID).Scan(&shared); err != nil || shared != 1 {
+		t.Fatal("shared issued definition was lost")
+	}
+	clean := newBrowserClient(t)
+	registered := postJSON(t, clean, server.URL+"/api/v1/auth/register", bootstrap(t, clean, server.URL), map[string]any{"username": "delete_without_claim", "password": accountDeletePassword, "password_confirmation": accountDeletePassword, "ui_locale": "en-US"})
+	requireStatus(t, registered, 201)
+	assertPrivateNoContentResponse(t, rawJSONRequest(t, clean, http.MethodDelete, endpoint, dataString(t, registered.body, "csrf_token"), map[string]any{"current_password": accountDeletePassword, "confirmed": true}, nil))
+	requireStatus(t, getJSON(t, clean, endpoint), 401)
+}
+
+func TestM002ClaimedAccountDeletionRollback(t *testing.T) {
+	h := newAccountDeleteHarness(t)
+	f := h.seed(t, true)
+	// Fail after explicit claim cleanup, before account cascades; only this
+	// disposable test database receives the failure trigger.
+	if _, err := h.pool.Exec(h.ctx, `CREATE FUNCTION wordweave.reject_test_account_delete() RETURNS trigger LANGUAGE plpgsql AS $$ BEGIN RAISE EXCEPTION 'synthetic account deletion failure'; END $$;
+ CREATE TRIGGER reject_test_account_delete BEFORE DELETE ON wordweave.accounts FOR EACH ROW EXECUTE FUNCTION wordweave.reject_test_account_delete()`); err != nil {
+		t.Fatal(err)
+	}
+	if err := h.api.identity.DeleteAccount(h.ctx, h.actor, accountDeletePassword, true); err == nil {
+		t.Fatal("injected deletion failure committed")
+	}
+	if _, reused, err := h.fresh().ConsumeClaim(h.ctx, h.actor, f.claim.Token); err != nil || !reused {
+		t.Fatalf("rolled-back deletion lost consumed claim: %v", err)
+	}
+	if _, err := h.fresh().BatchDetail(h.ctx, h.actor.ID, f.batch); err != nil {
+		t.Fatal(err)
+	}
+	if _, err := h.pool.Exec(h.ctx, `DROP TRIGGER reject_test_account_delete ON wordweave.accounts; DROP FUNCTION wordweave.reject_test_account_delete()`); err != nil {
+		t.Fatal(err)
+	}
+	if err := h.api.identity.DeleteAccount(h.ctx, h.actor, accountDeletePassword, true); err != nil {
+		t.Fatal(err)
+	}
+}
+
+func TestM002ClaimedAccountDeletionBlocksClaimReplay(t *testing.T) {
+	h := newAccountDeleteHarness(t)
+	f := h.seed(t, true)
+	barrier := h.lockBatch(t, f.batch)
+	deleted := make(chan error, 1)
+	go func() { deleted <- h.api.identity.DeleteAccount(h.ctx, h.actor, accountDeletePassword, true) }()
+	h.waitBlocked(t, "DELETE FROM wordweave.accounts")
+	replayed := make(chan error, 1)
+	go func() { _, _, err := h.fresh().ConsumeClaim(h.ctx, h.actor, f.claim.Token); replayed <- err }()
+	h.waitBlocked(t, "SELECT id FROM wordweave.accounts")
+	if err := barrier.Rollback(h.ctx); err != nil {
+		t.Fatal(err)
+	}
+	if err := <-deleted; err != nil {
+		t.Fatal(err)
+	}
+	if err := <-replayed; err == nil {
+		t.Fatal("claim replay succeeded after account deletion")
+	}
+	var remaining int
+	if err := h.pool.QueryRow(h.ctx, `SELECT (SELECT count(*) FROM wordweave.accounts WHERE id=$1)+(SELECT count(*) FROM wordweave.learning_batches WHERE owner_id=$1)+(SELECT count(*) FROM wordweave.visitor_claims WHERE consumed_account_id=$1)`, h.actor.ID).Scan(&remaining); err != nil || remaining != 0 {
+		t.Fatalf("claim replay recreated deleted resources: %d %v", remaining, err)
+	}
+}

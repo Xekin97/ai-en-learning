@@ -1,0 +1,83 @@
+{
+  "decision_id": "TRANSITION-M002-014",
+  "status": "PASS",
+  "checks": [
+    {
+      "name": "state_changes_bounded",
+      "status": "PASS",
+      "details": [
+        "active_role",
+        "context_entries",
+        "current_handoff",
+        "last_transition",
+        "database_approval",
+        "active_agent",
+        "authorization_refs"
+      ]
+    },
+    {
+      "name": "project_synchronized",
+      "status": "PASS",
+      "details": "Only current role/agent/handoff changed; Profile lock preserved."
+    },
+    {
+      "name": "registry_synchronized",
+      "status": "PASS",
+      "details": "Unique semantic backend role active."
+    },
+    {
+      "name": "history_append_only",
+      "status": "PASS",
+      "details": "Previous history bytes unchanged; exactly one milestone transition appended."
+    },
+    {
+      "name": "exact_database_approval",
+      "status": "PASS",
+      "details": "DB03 frozen revision approved; previous authorization records retained."
+    },
+    {
+      "name": "open_items_preserved",
+      "status": "PASS",
+      "details": "CR004 still open; CR003 design closure and retained runtime checks unchanged."
+    },
+    {
+      "name": "professional_and_existing_files_protected",
+      "status": "PASS",
+      "details": {
+        "count": 5112,
+        "changed": []
+      }
+    },
+    {
+      "name": "approved_sources_still_exact",
+      "status": "PASS",
+      "details": "Professional sources, handoff, CR and frozen evidence not rewritten by gate."
+    },
+    {
+      "name": "current_entries_and_links",
+      "status": "PASS",
+      "details": {
+        "broken": []
+      }
+    },
+    {
+      "name": "no_scope_escalation",
+      "status": "PASS",
+      "details": "No implementation, full frontend approval or new backend revision approval."
+    }
+  ],
+  "active_agent": "backend-alex",
+  "stage": "technical-design",
+  "approved_version": "M002-DB-03",
+  "review_sha256": "456e71cb1d7df3b5fd114b832ec00f96a28482bd6a584bdcc285280712136407",
+  "after_controls_sha256": {
+    ".planning/workflow/state.yaml": "5ef5dcb5ff0ddb4b02319f3ab05c9beec792f8e73a0a0a367e4fd823c164ba12",
+    ".planning/workflow/history.yaml": "d3f79cd70b0168ca830de21b4613d1f37a3b2db0b26f541b95658185ee1fd745",
+    ".planning/agt/project.yaml": "9b747f616b25ffb10b2320347a1e35ba7af21c4a0bc26462b0d3976ae126a03c",
+    ".planning/agt/agents.yaml": "d8172ace6e6432fd8758b0b1829448fdffff181630c3f9364376e20480b29d9f"
+  },
+  "developer_tests_rerun": false,
+  "database_access": false,
+  "ai_calls": 0,
+  "runtime_model_switch": false
+}

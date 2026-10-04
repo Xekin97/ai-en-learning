@@ -1,0 +1,117 @@
+
+> wordweave-frontend@0.1.0 test /Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/frontend
+> vitest run
+
+
+ RUN  v4.1.11 /Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/frontend
+
+ ❯ tests/unit/auth-reader-presenters.test.ts (8 tests | 1 failed) 8ms
+     × drops unapproved query/hash fields and gives administrator routing priority 4ms
+ ❯ tests/unit/review-setup-presenter.test.ts (4 tests | 1 failed) 27ms
+   × preserves input nodes and focus while rendering every preview state and locale 24ms
+ ❯ tests/unit/auth-card-design.test.ts (20 tests | 2 failed) 73ms
+     × keeps identity form and contextual copy in separate aligned regions in en-US 7ms
+     × keeps identity form and contextual copy in separate aligned regions in zh-CN 8ms
+ ❯ tests/unit/strict-contracts.test.ts (6 tests | 1 failed) 16ms
+     × preserves anonymous same-source groups while rejecting missing/predictable raw groups 3ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 5 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/unit/auth-card-design.test.ts > M002 register identity layout > keeps identity form and contextual copy in separate aligned regions in en-US
+ FAIL  tests/unit/auth-card-design.test.ts > M002 register identity layout > keeps identity form and contextual copy in separate aligned regions in zh-CN
+Error: Missing copy: m002.register
+ ❯ translate tests/unit/auth-card-design.test.ts:24:40
+     22|       messages,
+     23|     );
+     24|   if (typeof value !== "string") throw new Error("Missing copy: " + ke…
+       |                                        ^
+     25|   return value;
+     26| }
+ ❯ tests/unit/auth-card-design.test.ts:80:56
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/5]⎯
+
+ FAIL  tests/unit/auth-reader-presenters.test.ts > semantic authentication targets > drops unapproved query/hash fields and gives administrator routing priority
+AssertionError: expected { path: '/admin', query: {} } to deeply equal { path: '/admin/models', query: {} }
+
+- Expected
++ Received
+
+  {
+-   "path": "/admin/models",
++   "path": "/admin",
+    "query": {},
+  }
+
+ ❯ tests/unit/auth-reader-presenters.test.ts:59:53
+     57|       query: { batch: "batch-1" },
+     58|     });
+     59|     expect(authenticationDestination(true, intent)).toEqual({
+       |                                                     ^
+     60|       path: "/admin/models",
+     61|       query: {},
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/5]⎯
+
+ FAIL  tests/unit/review-setup-presenter.test.ts > preserves input nodes and focus while rendering every preview state and locale
+Error: Unable to get #review-start within: <div class="page-head">
+  <div>
+    <h1>l.range</h1>
+    <p>l.range.desc</p>
+  </div><a class="btn" to="/library">l.backLibrary</a>
+</div>
+<!--v-if-->
+<app-error-stub></app-error-stub>
+<!--v-if-->
+<div class="range-editor" data-range-preview="idle">
+  <form class="panel" novalidate="">
+    <h2>l.dates</h2>
+    <p class="muted">l.dates.desc</p>
+    <div class="date-fields"><label class="field"><span>l.from</span><input type="date" required="" aria-invalid="false" aria-describedby="range-error" value="2026-08-31"></label><label class="field"><span>l.to</span><input type="date" required="" aria-invalid="false" aria-describedby="range-error" value="2026-09-06"></label></div>
+    <p id="range-error" class="bad" role="alert"></p>
+    <div class="actions"><button class="btn" type="button">l.recent</button><button class="btn primary" type="submit" disabled="">l.begin</button></div>
+  </form>
+  <aside class="range-count panel" aria-live="polite"><strong>—</strong><span>l.matches</span>
+    <p>l.matches.desc</p>
+  </aside>
+</div>
+<div id="range-feedback">
+  <p role="status">loading</p>
+</div>
+ ❯ VueWrapper.get node_modules/.pnpm/@vue+test-utils@2.5.0_@vue+compiler-dom@3.5.42_@vue+server-renderer@3.5.42_vue@3.5.42_typescript@5.9.3_/node_modules/@vue/test-utils/dist/vue-test-utils.cjs.js:7324:15
+ ❯ tests/unit/review-setup-presenter.test.ts:109:27
+    107|   });
+    108|   try {
+    109|     const first = wrapper.get("#review-start").element;
+       |                           ^
+    110|     if (!(first instanceof HTMLInputElement)) throw new Error("input");
+    111|     first.focus();
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/5]⎯
+
+ FAIL  tests/unit/strict-contracts.test.ts > strict M002 transport contracts > preserves anonymous same-source groups while rejecting missing/predictable raw groups
+AssertionError: expected true to be false // Object.is equality
+
+- Expected
++ Received
+
+- false
++ true
+
+ ❯ tests/unit/strict-contracts.test.ts:15:541
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/5]⎯
+
+
+ Test Files  4 failed | 22 passed (26)
+      Tests  5 failed | 256 passed (261)
+   Start at  18:06:08
+   Duration  1.73s (transform 2.78s, setup 0ms, import 4.36s, tests 383ms, environment 7.04s)
+
+ ELIFECYCLE  Test failed. See above for more details.
+npm notice
+npm notice New major version of npm available! 10.9.8 -> 12.0.2
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.0.2
+npm notice To update run: npm install -g npm@12.0.2
+npm notice

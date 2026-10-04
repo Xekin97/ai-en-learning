@@ -1,0 +1,62 @@
+{
+  "current": {
+    "milestone": "M002",
+    "stage": "verification",
+    "role": "quality/base",
+    "agent": "qa-quinn",
+    "status": "active"
+  },
+  "target": {
+    "stage": "implementation",
+    "role": "frontend-implementer/base",
+    "agent": "frontend-claire",
+    "scope": [
+      "M002-CR-016"
+    ]
+  },
+  "control_sha256": {
+    ".planning/workflow/state.yaml": "6851dc201e3fefc94d4a9277213ee2cda456d4d9be449d400ac34747b9857687",
+    ".planning/agt/project.yaml": "051a14ebbc1346a080970b585aab5c7fcb01a6f440a886f260ecc0d860da1ad5",
+    ".planning/agt/agents.yaml": "2c6bda59c4e0a2b67d4f2a14c7202561995fb6feed8d008c7d2ed5831df21048",
+    ".planning/workflow/history.yaml": "dc3bd0c57446dcc7d60b684605d8a79d914be0ec4699f627cfa7f7fe40c583c7"
+  },
+  "required_artifacts": [
+    ".planning/milestones/M002/verification/coverage-matrix.md",
+    ".planning/milestones/M002/verification/report.md",
+    ".planning/milestones/M002/verification/ai-evaluation.md",
+    ".planning/milestones/M002/verification/uat.md",
+    ".planning/milestones/M002/handoffs/verification.md",
+    ".planning/milestones/M002/implementation/backend-validation.md",
+    ".planning/milestones/M002/implementation/frontend-validation.md",
+    ".planning/milestones/M002/handoffs/backend-implementation.md",
+    ".planning/milestones/M002/handoffs/frontend-implementation.md"
+  ],
+  "profile_sha256": "9d9258ebc8cba13f5df2f8289fa81e973e60af9f10e5ca126fd83482aa0c050f",
+  "qa12": {
+    "manifest_sha256": "9d267c145abcd610b00d1c7477bd51f8a65c05a71b9e926c7d2fb29a36e3b841",
+    "artifacts": 110,
+    "result": "FAIL",
+    "findings": [
+      "QA2-F12",
+      "QA2-F13"
+    ],
+    "assessment": ".planning/milestones/M002/verification/evidence/qa2-012/assessment.json"
+  },
+  "source_counts": {
+    "frontend-cr014-015": 280,
+    "backend-cr013": 288
+  },
+  "protected_files": 7025,
+  "kept_open": [
+    "M002-CR-001",
+    "M002-CR-002"
+  ],
+  "new_open": [
+    "M002-CR-016"
+  ],
+  "closures": [],
+  "new_user_decisions": [],
+  "authorization": "Previous turn explicitly presented stage-gate return to frontend-claire for CR016; user replied 下一步 for that exact target.",
+  "model_switch": "not_performed",
+  "input_tokens": "unknown"
+}

@@ -1,0 +1,19 @@
+{
+  "command": [
+    "go",
+    "test",
+    "-tags=integration",
+    "./internal/growth",
+    "./internal/httpapi",
+    "-run",
+    "Test(ModelRetirementRefundUsesCurrentPointsAndSurvivesExpiry|M002RetiredCardPriceEditingAndRefundHTTP)$",
+    "-count=1",
+    "-v",
+    "-timeout=120s"
+  ],
+  "exit_code": 1,
+  "seconds": 2.3,
+  "expected": "failure at saving retirement_points before implementation fix",
+  "test_harness_correction": "Exchange requires definition_id, not item_definition_id; original red.log retained.",
+  "real_provider_calls": 0
+}

@@ -1,0 +1,96 @@
+
+Running 6 tests using 1 worker
+
+(node:75759) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  1 [desktop] › tests/e2e/m002-admin-core.spec.ts:7:1 › model removal previews impacts, sends the bound revision and confirmation once (972ms)
+  ✘  2 [desktop] › tests/e2e/m002-admin-core.spec.ts:10:1 › plan conflict keeps edits and priorities exchange as a single command (1.3s)
+(node:75865) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  3 [desktop] › tests/e2e/m002-admin-core.spec.ts:13:1 › blank user search, read-only titled story, positive grant and base-only reset remain available (1.7s)
+(node:75942) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  4 [mobile] › tests/e2e/m002-admin-core.spec.ts:7:1 › model removal previews impacts, sends the bound revision and confirmation once (979ms)
+  ✘  5 [mobile] › tests/e2e/m002-admin-core.spec.ts:10:1 › plan conflict keeps edits and priorities exchange as a single command (1.7s)
+(node:76096) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  6 [mobile] › tests/e2e/m002-admin-core.spec.ts:13:1 › blank user search, read-only titled story, positive grant and base-only reset remain available (1.6s)
+
+
+  1) [desktop] › tests/e2e/m002-admin-core.spec.ts:10:1 › plan conflict keeps edits and priorities exchange as a single command 
+
+    Error: expect(locator).toHaveValue(expected) failed
+
+    Locator: getByLabel('Tier priority', { exact: true })
+    Expected: "20"
+    Error: strict mode violation: getByLabel('Tier priority', { exact: true }) resolved to 2 elements:
+        1) <dialog class="" aria-labelledby="plan-priorities-dialog-title">…</dialog> aka locator('dialog').filter({ hasText: 'Tier' })
+        2) <input min="0" step="1" value="0" required="" type="number"/> aka getByRole('spinbutton', { name: 'Tier priority' })
+
+    Call log:
+      - Expect "toHaveValue" with timeout 5000ms
+      - waiting for getByLabel('Tier priority', { exact: true })
+
+
+       9 | });
+      10 | test('plan conflict keeps edits and priorities exchange as a single command',async({page,request},info)=>{
+    > 11 |  await page.goto('/admin/plans');await ready(page);await page.getByLabel(t('words.limit'),{exact:true}).fill('17');await request.post('http://127.0.0.1:38080/api/v1/__test/admin-conflict');await page.locator('form.panel').getByRole('button',{name:t('a.save'),exact:true}).click();await expect(page.getByRole('alert')).toBeVisible();await expect(page.getByLabel(t('words.limit'),{exact:true})).toHaveValue('17');await page.locator('form.panel').getByRole('button',{name:t('a.save'),exact:true}).click();await expect(page.locator('dialog[open]')).toBeVisible();await page.locator('dialog[open]').getByRole('button',{name:t('a.save'),exact:true}).click();await expect(page.locator('dialog[open]')).toHaveCount(0);await page.getByRole('button',{name:t('priority'),exact:true}).click();const dialog=page.locator('dialog[open]');await dialog.getByLabel(t('a.plan.basic'),{exact:true}).fill('20');await dialog.getByLabel(t('a.plan.pro'),{exact:true}).fill('10');await dialog.getByRole('button',{name:t('a.save'),exact:true}).click();await dialog.getByRole('button',{name:t('confirm'),exact:true}).click();await expect(dialog).toHaveCount(0);await page.getByRole('button',{name:t('a.plan.basic'),exact:true}).click();await expect(page.getByLabel(t('priority'),{exact:true})).toHaveValue('20');await page.screenshot({path:`../.planning/milestones/M002/implementation/evidence/frontend-admin-plans-${info.project.name}.png`,fullPage:true});
+         |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    ^
+      12 | });
+      13 | test('blank user search, read-only titled story, positive grant and base-only reset remain available',async({page,request},info)=>{
+      14 |  await page.goto('/admin/users');await ready(page);await page.getByRole('button',{name:t('a.search'),exact:true}).click();await expect(page.locator('tbody tr')).toHaveCount(2);await page.locator('tbody tr').filter({hasText:'learner_target'}).getByRole('link').click();await page.getByRole('button',{name:t('a.user.learning'),exact:true}).click();await expect(page.locator('.admin-library-row h3')).toHaveText('My edited story');await page.getByRole('button',{name:t('a.reader'),exact:true}).click();await expect(page.locator('dialog[open] .story-text')).toHaveText('Teams adapt.');await page.keyboard.press('Escape');await expect(page.locator('dialog[open]')).toHaveCount(0);
+        at /Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/frontend/tests/e2e/m002-admin-core.spec.ts:11:1268
+
+    Error Context: test-results/m002-admin-core-plan-confl-6041c-xchange-as-a-single-command-desktop/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/m002-admin-core-plan-confl-6041c-xchange-as-a-single-command-desktop/trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace test-results/m002-admin-core-plan-confl-6041c-xchange-as-a-single-command-desktop/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [mobile] › tests/e2e/m002-admin-core.spec.ts:10:1 › plan conflict keeps edits and priorities exchange as a single command 
+
+    Error: expect(locator).toHaveValue(expected) failed
+
+    Locator: getByLabel('Tier priority', { exact: true })
+    Expected: "20"
+    Error: strict mode violation: getByLabel('Tier priority', { exact: true }) resolved to 2 elements:
+        1) <dialog class="" aria-labelledby="plan-priorities-dialog-title">…</dialog> aka locator('dialog').filter({ hasText: 'Tier' })
+        2) <input min="0" step="1" value="0" required="" type="number"/> aka getByRole('spinbutton', { name: 'Tier priority' })
+
+    Call log:
+      - Expect "toHaveValue" with timeout 5000ms
+      - waiting for getByLabel('Tier priority', { exact: true })
+
+
+       9 | });
+      10 | test('plan conflict keeps edits and priorities exchange as a single command',async({page,request},info)=>{
+    > 11 |  await page.goto('/admin/plans');await ready(page);await page.getByLabel(t('words.limit'),{exact:true}).fill('17');await request.post('http://127.0.0.1:38080/api/v1/__test/admin-conflict');await page.locator('form.panel').getByRole('button',{name:t('a.save'),exact:true}).click();await expect(page.getByRole('alert')).toBeVisible();await expect(page.getByLabel(t('words.limit'),{exact:true})).toHaveValue('17');await page.locator('form.panel').getByRole('button',{name:t('a.save'),exact:true}).click();await expect(page.locator('dialog[open]')).toBeVisible();await page.locator('dialog[open]').getByRole('button',{name:t('a.save'),exact:true}).click();await expect(page.locator('dialog[open]')).toHaveCount(0);await page.getByRole('button',{name:t('priority'),exact:true}).click();const dialog=page.locator('dialog[open]');await dialog.getByLabel(t('a.plan.basic'),{exact:true}).fill('20');await dialog.getByLabel(t('a.plan.pro'),{exact:true}).fill('10');await dialog.getByRole('button',{name:t('a.save'),exact:true}).click();await dialog.getByRole('button',{name:t('confirm'),exact:true}).click();await expect(dialog).toHaveCount(0);await page.getByRole('button',{name:t('a.plan.basic'),exact:true}).click();await expect(page.getByLabel(t('priority'),{exact:true})).toHaveValue('20');await page.screenshot({path:`../.planning/milestones/M002/implementation/evidence/frontend-admin-plans-${info.project.name}.png`,fullPage:true});
+         |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    ^
+      12 | });
+      13 | test('blank user search, read-only titled story, positive grant and base-only reset remain available',async({page,request},info)=>{
+      14 |  await page.goto('/admin/users');await ready(page);await page.getByRole('button',{name:t('a.search'),exact:true}).click();await expect(page.locator('tbody tr')).toHaveCount(2);await page.locator('tbody tr').filter({hasText:'learner_target'}).getByRole('link').click();await page.getByRole('button',{name:t('a.user.learning'),exact:true}).click();await expect(page.locator('.admin-library-row h3')).toHaveText('My edited story');await page.getByRole('button',{name:t('a.reader'),exact:true}).click();await expect(page.locator('dialog[open] .story-text')).toHaveText('Teams adapt.');await page.keyboard.press('Escape');await expect(page.locator('dialog[open]')).toHaveCount(0);
+        at /Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/frontend/tests/e2e/m002-admin-core.spec.ts:11:1268
+
+    Error Context: test-results/m002-admin-core-plan-confl-6041c-xchange-as-a-single-command-mobile/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/m002-admin-core-plan-confl-6041c-xchange-as-a-single-command-mobile/trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace test-results/m002-admin-core-plan-confl-6041c-xchange-as-a-single-command-mobile/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2 failed
+    [desktop] › tests/e2e/m002-admin-core.spec.ts:10:1 › plan conflict keeps edits and priorities exchange as a single command 
+    [mobile] › tests/e2e/m002-admin-core.spec.ts:10:1 › plan conflict keeps edits and priorities exchange as a single command 
+  4 passed (10.1s)
+npm notice
+npm notice New major version of npm available! 10.9.8 -> 12.0.2
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.0.2
+npm notice To update run: npm install -g npm@12.0.2
+npm notice

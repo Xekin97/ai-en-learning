@@ -1,0 +1,219 @@
+=== RUN   TestModelCardTimesAccumulatePerModelInEitherOrder
+--- PASS: TestModelCardTimesAccumulatePerModelInEitherOrder (1.51s)
+=== RUN   TestModelCardCoverageUsesPlanOnly
+--- PASS: TestModelCardCoverageUsesPlanOnly (1.37s)
+=== RUN   TestExtraCardKeepsOriginalDeadline
+--- PASS: TestExtraCardKeepsOriginalDeadline (0.98s)
+=== RUN   TestPlanTrialExtensionReplacementAndStaleConfirmation
+--- PASS: TestPlanTrialExtensionReplacementAndStaleConfirmation (1.19s)
+=== RUN   TestModelRetirementRefundUsesCurrentPointsAndSurvivesExpiry
+--- PASS: TestModelRetirementRefundUsesCurrentPointsAndSurvivesExpiry (1.15s)
+=== RUN   TestAchievementClaimCreditsWholeBundleOnlyOnce
+--- PASS: TestAchievementClaimCreditsWholeBundleOnlyOnce (1.35s)
+=== RUN   TestLevelDowngradeBlocksUnclaimedButKeepsClaimedReceipt
+--- PASS: TestLevelDowngradeBlocksUnclaimedButKeepsClaimedReceipt (1.02s)
+=== RUN   TestLevelBulkThresholdShiftAndUnknownCommit
+--- PASS: TestLevelBulkThresholdShiftAndUnknownCommit (1.03s)
+=== RUN   TestSettingsAtomicPendingAndConcurrentEditors
+--- PASS: TestSettingsAtomicPendingAndConcurrentEditors (0.81s)
+=== RUN   TestAchievementBulkDescriptionAndRollback
+--- PASS: TestAchievementBulkDescriptionAndRollback (0.73s)
+=== RUN   TestLevelConfirmationBindsFullNormalizedChanges
+--- PASS: TestLevelConfirmationBindsFullNormalizedChanges (0.78s)
+=== RUN   TestM002DeferredConfigurationFailureRollsBackAllWrites
+--- PASS: TestM002DeferredConfigurationFailureRollsBackAllWrites (0.92s)
+=== RUN   TestExchangeIsAtomicIdempotentAndPreservesIssuedSnapshots
+--- PASS: TestExchangeIsAtomicIdempotentAndPreservesIssuedSnapshots (0.77s)
+=== RUN   TestConcurrentExchangesCannotOverdraw
+--- PASS: TestConcurrentExchangesCannotOverdraw (1.05s)
+=== RUN   TestItemDefinitionReferencesAndTypeImmutability
+--- PASS: TestItemDefinitionReferencesAndTypeImmutability (0.95s)
+=== RUN   TestMakeupUsesHistoricalRulesAndOnlyPositivePointsDifference
+--- PASS: TestMakeupUsesHistoricalRulesAndOnlyPositivePointsDifference (0.87s)
+=== RUN   TestConcurrentMakeupsUseOnlyOneCard
+--- PASS: TestConcurrentMakeupsUseOnlyOneCard (0.83s)
+=== RUN   TestM002ActivationAndMaintenanceOnlyQualifyRewards
+--- PASS: TestM002ActivationAndMaintenanceOnlyQualifyRewards (0.76s)
+=== RUN   TestCheckinCapPreventsIntermediateOverflow
+--- PASS: TestCheckinCapPreventsIntermediateOverflow (0.00s)
+PASS
+ok  	wordweave/internal/growth	19.451s
+=== RUN   TestM002ModelsRetireAndReuseProviderAsNewIdentity
+--- PASS: TestM002ModelsRetireAndReuseProviderAsNewIdentity (1.19s)
+=== RUN   TestM002PlanPrioritySwapIsAtomicAndRevisionProtected
+--- PASS: TestM002PlanPrioritySwapIsAtomicAndRevisionProtected (1.37s)
+=== RUN   TestM002CredentialCASAndRoleBoundary
+--- PASS: TestM002CredentialCASAndRoleBoundary (0.97s)
+=== RUN   TestM002BaseResetKeepsTrialUsageAndExpiry
+--- PASS: TestM002BaseResetKeepsTrialUsageAndExpiry (1.20s)
+=== RUN   TestUserCursorV2Validation
+=== PAUSE TestUserCursorV2Validation
+=== RUN   TestNormalizeUserQuery
+=== PAUSE TestNormalizeUserQuery
+=== RUN   TestAdminQuotaDatabase
+=== RUN   TestAdminQuotaDatabase/charged_facts
+=== RUN   TestAdminQuotaDatabase/reset_boundary
+=== RUN   TestAdminQuotaDatabase/window_boundary
+=== RUN   TestAdminQuotaDatabase/group_reset
+=== RUN   TestAdminQuotaDatabase/read_failure_rollback
+=== RUN   TestAdminQuotaDatabase/uncertain_commit
+=== RUN   TestAdminQuotaDatabase/deferred_commit_rollback
+=== RUN   TestAdminQuotaDatabase/canceled_request
+=== RUN   TestAdminQuotaDatabase/missing_user
+--- PASS: TestAdminQuotaDatabase (1.26s)
+    --- PASS: TestAdminQuotaDatabase/charged_facts (0.04s)
+    --- PASS: TestAdminQuotaDatabase/reset_boundary (0.02s)
+    --- PASS: TestAdminQuotaDatabase/window_boundary (0.01s)
+    --- PASS: TestAdminQuotaDatabase/group_reset (0.01s)
+    --- PASS: TestAdminQuotaDatabase/read_failure_rollback (0.01s)
+    --- PASS: TestAdminQuotaDatabase/uncertain_commit (0.01s)
+    --- PASS: TestAdminQuotaDatabase/deferred_commit_rollback (0.01s)
+    --- PASS: TestAdminQuotaDatabase/canceled_request (0.00s)
+    --- PASS: TestAdminQuotaDatabase/missing_user (0.01s)
+=== RUN   TestAdminQuotaConcurrentSnapshots
+--- PASS: TestAdminQuotaConcurrentSnapshots (1.36s)
+=== RUN   TestAdminQuotaGenerationWaitsForGroupReset
+--- PASS: TestAdminQuotaGenerationWaitsForGroupReset (1.02s)
+=== RUN   TestAdminQuotaQueryPlan
+    user_detail_integration_test.go:511: CR033_QUERY_PLAN {"execution_ms":0.17,"indexes":[{"index":"generation_charges_plan_window","loops":1,"rows":100}],"kind":"limited","total_runs":30000}
+    user_detail_integration_test.go:511: CR033_QUERY_PLAN {"execution_ms":0.088,"indexes":[{"index":"generation_charges_plan_window","loops":0,"rows":0}],"kind":"unlimited","total_runs":30000}
+    user_detail_integration_test.go:511: CR033_QUERY_PLAN {"execution_ms":0.084,"indexes":[{"index":"generation_charges_plan_window","loops":0,"rows":0}],"kind":"admin","total_runs":30000}
+--- PASS: TestAdminQuotaQueryPlan (1.84s)
+=== RUN   TestGenerationQuotaProjection
+=== PAUSE TestGenerationQuotaProjection
+=== RUN   TestUserGroupTransactionOrderingAndFailures
+=== PAUSE TestUserGroupTransactionOrderingAndFailures
+=== RUN   TestUserGroupRejectsInvalidInputBeforeDatabase
+=== PAUSE TestUserGroupRejectsInvalidInputBeforeDatabase
+=== RUN   TestUserDetailNoRowsNeverReturnsPartialUser
+=== PAUSE TestUserDetailNoRowsNeverReturnsPartialUser
+=== CONT  TestUserCursorV2Validation
+=== CONT  TestGenerationQuotaProjection
+=== RUN   TestGenerationQuotaProjection/limited
+=== CONT  TestNormalizeUserQuery
+=== CONT  TestUserGroupRejectsInvalidInputBeforeDatabase
+--- PASS: TestNormalizeUserQuery (0.00s)
+=== CONT  TestUserGroupTransactionOrderingAndFailures
+=== CONT  TestUserDetailNoRowsNeverReturnsPartialUser
+=== RUN   TestUserGroupTransactionOrderingAndFailures/failure_
+=== RUN   TestUserCursorV2Validation/unknown_version
+=== PAUSE TestGenerationQuotaProjection/limited
+=== PAUSE TestUserGroupTransactionOrderingAndFailures/failure_
+=== PAUSE TestUserCursorV2Validation/unknown_version
+=== RUN   TestGenerationQuotaProjection/exhausted
+=== RUN   TestUserGroupTransactionOrderingAndFailures/failure_configuration
+=== PAUSE TestGenerationQuotaProjection/exhausted
+=== RUN   TestUserCursorV2Validation/invalid_tier
+=== PAUSE TestUserGroupTransactionOrderingAndFailures/failure_configuration
+--- PASS: TestUserGroupRejectsInvalidInputBeforeDatabase (0.00s)
+=== RUN   TestGenerationQuotaProjection/zero_limit
+=== PAUSE TestUserCursorV2Validation/invalid_tier
+=== PAUSE TestGenerationQuotaProjection/zero_limit
+=== RUN   TestGenerationQuotaProjection/lowered_limit
+=== RUN   TestUserGroupTransactionOrderingAndFailures/failure_clock
+=== PAUSE TestUserGroupTransactionOrderingAndFailures/failure_clock
+--- PASS: TestUserDetailNoRowsNeverReturnsPartialUser (0.00s)
+=== RUN   TestUserGroupTransactionOrderingAndFailures/failure_lock
+=== PAUSE TestUserGroupTransactionOrderingAndFailures/failure_lock
+=== RUN   TestUserCursorV2Validation/tier_inconsistent_with_exact_name
+=== PAUSE TestUserCursorV2Validation/tier_inconsistent_with_exact_name
+=== PAUSE TestGenerationQuotaProjection/lowered_limit
+=== RUN   TestUserGroupTransactionOrderingAndFailures/failure_before
+=== PAUSE TestUserGroupTransactionOrderingAndFailures/failure_before
+=== RUN   TestUserCursorV2Validation/unnormalized_username
+=== RUN   TestUserGroupTransactionOrderingAndFailures/failure_update
+=== PAUSE TestUserCursorV2Validation/unnormalized_username
+=== RUN   TestGenerationQuotaProjection/bigint_used
+=== RUN   TestUserCursorV2Validation/username_outside_query
+=== PAUSE TestGenerationQuotaProjection/bigint_used
+=== PAUSE TestUserCursorV2Validation/username_outside_query
+=== RUN   TestGenerationQuotaProjection/max_remaining
+=== RUN   TestUserCursorV2Validation/username_outside_account_contract
+=== PAUSE TestUserGroupTransactionOrderingAndFailures/failure_update
+=== PAUSE TestGenerationQuotaProjection/max_remaining
+=== RUN   TestGenerationQuotaProjection/unlimited
+=== PAUSE TestGenerationQuotaProjection/unlimited
+=== PAUSE TestUserCursorV2Validation/username_outside_account_contract
+=== RUN   TestGenerationQuotaProjection/admin
+=== RUN   TestUserGroupTransactionOrderingAndFailures/failure_quota
+=== RUN   TestUserCursorV2Validation/missing_id
+=== PAUSE TestUserGroupTransactionOrderingAndFailures/failure_quota
+=== PAUSE TestGenerationQuotaProjection/admin
+=== PAUSE TestUserCursorV2Validation/missing_id
+=== RUN   TestUserGroupTransactionOrderingAndFailures/failure_detail
+=== RUN   TestGenerationQuotaProjection/missing_group
+=== PAUSE TestUserGroupTransactionOrderingAndFailures/failure_detail
+=== PAUSE TestGenerationQuotaProjection/missing_group
+=== CONT  TestUserCursorV2Validation/username_outside_query
+=== CONT  TestUserCursorV2Validation/unnormalized_username
+=== CONT  TestUserCursorV2Validation/invalid_tier
+=== RUN   TestUserGroupTransactionOrderingAndFailures/failure_commit
+=== CONT  TestUserCursorV2Validation/missing_id
+=== PAUSE TestUserGroupTransactionOrderingAndFailures/failure_commit
+=== CONT  TestUserGroupTransactionOrderingAndFailures/failure_configuration
+=== CONT  TestUserGroupTransactionOrderingAndFailures/failure_before
+=== CONT  TestUserGroupTransactionOrderingAndFailures/failure_clock
+=== CONT  TestUserGroupTransactionOrderingAndFailures/failure_lock
+=== CONT  TestUserGroupTransactionOrderingAndFailures/failure_
+=== RUN   TestGenerationQuotaProjection/admin_with_group
+=== CONT  TestUserGroupTransactionOrderingAndFailures/failure_detail
+=== CONT  TestUserCursorV2Validation/tier_inconsistent_with_exact_name
+=== CONT  TestUserCursorV2Validation/username_outside_account_contract
+=== CONT  TestUserCursorV2Validation/unknown_version
+=== CONT  TestUserGroupTransactionOrderingAndFailures/failure_commit
+=== CONT  TestUserGroupTransactionOrderingAndFailures/failure_quota
+=== CONT  TestUserGroupTransactionOrderingAndFailures/failure_update
+=== PAUSE TestGenerationQuotaProjection/admin_with_group
+=== RUN   TestGenerationQuotaProjection/unknown_role
+=== PAUSE TestGenerationQuotaProjection/unknown_role
+=== RUN   TestGenerationQuotaProjection/negative_usage
+--- PASS: TestUserCursorV2Validation (0.00s)
+    --- PASS: TestUserCursorV2Validation/username_outside_query (0.00s)
+    --- PASS: TestUserCursorV2Validation/missing_id (0.00s)
+    --- PASS: TestUserCursorV2Validation/unnormalized_username (0.00s)
+    --- PASS: TestUserCursorV2Validation/invalid_tier (0.00s)
+    --- PASS: TestUserCursorV2Validation/tier_inconsistent_with_exact_name (0.00s)
+    --- PASS: TestUserCursorV2Validation/unknown_version (0.00s)
+    --- PASS: TestUserCursorV2Validation/username_outside_account_contract (0.00s)
+=== PAUSE TestGenerationQuotaProjection/negative_usage
+=== RUN   TestGenerationQuotaProjection/negative_limit
+--- PASS: TestUserGroupTransactionOrderingAndFailures (0.00s)
+    --- PASS: TestUserGroupTransactionOrderingAndFailures/failure_configuration (0.00s)
+    --- PASS: TestUserGroupTransactionOrderingAndFailures/failure_before (0.00s)
+    --- PASS: TestUserGroupTransactionOrderingAndFailures/failure_clock (0.00s)
+    --- PASS: TestUserGroupTransactionOrderingAndFailures/failure_lock (0.00s)
+    --- PASS: TestUserGroupTransactionOrderingAndFailures/failure_ (0.00s)
+    --- PASS: TestUserGroupTransactionOrderingAndFailures/failure_detail (0.00s)
+    --- PASS: TestUserGroupTransactionOrderingAndFailures/failure_commit (0.00s)
+    --- PASS: TestUserGroupTransactionOrderingAndFailures/failure_quota (0.00s)
+    --- PASS: TestUserGroupTransactionOrderingAndFailures/failure_update (0.00s)
+=== PAUSE TestGenerationQuotaProjection/negative_limit
+=== CONT  TestGenerationQuotaProjection/limited
+=== CONT  TestGenerationQuotaProjection/unlimited
+=== CONT  TestGenerationQuotaProjection/lowered_limit
+=== CONT  TestGenerationQuotaProjection/exhausted
+=== CONT  TestGenerationQuotaProjection/max_remaining
+=== CONT  TestGenerationQuotaProjection/negative_usage
+=== CONT  TestGenerationQuotaProjection/negative_limit
+=== CONT  TestGenerationQuotaProjection/bigint_used
+=== CONT  TestGenerationQuotaProjection/unknown_role
+=== CONT  TestGenerationQuotaProjection/admin
+=== CONT  TestGenerationQuotaProjection/zero_limit
+=== CONT  TestGenerationQuotaProjection/admin_with_group
+=== CONT  TestGenerationQuotaProjection/missing_group
+--- PASS: TestGenerationQuotaProjection (0.00s)
+    --- PASS: TestGenerationQuotaProjection/lowered_limit (0.00s)
+    --- PASS: TestGenerationQuotaProjection/limited (0.00s)
+    --- PASS: TestGenerationQuotaProjection/exhausted (0.00s)
+    --- PASS: TestGenerationQuotaProjection/max_remaining (0.00s)
+    --- PASS: TestGenerationQuotaProjection/unlimited (0.00s)
+    --- PASS: TestGenerationQuotaProjection/bigint_used (0.00s)
+    --- PASS: TestGenerationQuotaProjection/unknown_role (0.00s)
+    --- PASS: TestGenerationQuotaProjection/admin (0.00s)
+    --- PASS: TestGenerationQuotaProjection/negative_usage (0.00s)
+    --- PASS: TestGenerationQuotaProjection/zero_limit (0.00s)
+    --- PASS: TestGenerationQuotaProjection/negative_limit (0.00s)
+    --- PASS: TestGenerationQuotaProjection/admin_with_group (0.00s)
+    --- PASS: TestGenerationQuotaProjection/missing_group (0.00s)
+PASS
+ok  	wordweave/internal/admin	11.577s

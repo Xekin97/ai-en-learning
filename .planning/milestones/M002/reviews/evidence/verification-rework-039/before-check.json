@@ -1,0 +1,187 @@
+{
+  "decision_id": "TRANSITION-M002-039",
+  "timestamp": "2026-09-28T07:46:25.506335+00:00",
+  "current": {
+    "milestone": "M002",
+    "stage": "verification",
+    "role": "quality/base",
+    "agent": "qa-quinn",
+    "status": "active"
+  },
+  "target": {
+    "stage": "implementation",
+    "role": "frontend-implementer/base",
+    "agent": "frontend-claire"
+  },
+  "profile": {
+    "reference": "consumer-ai-web@1.0.0",
+    "pinned_sha256": "9d9258ebc8cba13f5df2f8289fa81e973e60af9f10e5ca126fd83482aa0c050f",
+    "matches": true
+  },
+  "name_validation": {
+    "gatekeeper-owen": "valid agent name: gatekeeper-owen",
+    "frontend-claire": "valid agent name: frontend-claire"
+  },
+  "required_artifacts": {
+    "verification": [
+      ".planning/milestones/M002/verification/coverage-matrix.md",
+      ".planning/milestones/M002/verification/report.md",
+      ".planning/milestones/M002/verification/ai-evaluation.md",
+      ".planning/milestones/M002/verification/uat.md",
+      ".planning/milestones/M002/handoffs/verification.md"
+    ],
+    "implementation": [
+      ".planning/milestones/M002/implementation/backend-validation.md",
+      ".planning/milestones/M002/implementation/frontend-validation.md",
+      ".planning/milestones/M002/handoffs/backend-implementation.md",
+      ".planning/milestones/M002/handoffs/frontend-implementation.md"
+    ]
+  },
+  "source_checks": {
+    "frontend-cr016": {
+      "manifest": ".planning/milestones/M002/implementation/evidence/frontend-cr016/manifest.json",
+      "manifest_sha256": "c9a23d94af88574a30b0dfa3e4c944adfbe3d4c742ea0c632bf9e973238457f2",
+      "artifact_count": 92,
+      "artifacts_match": true,
+      "source_files": 281,
+      "source_sha256": "5731ba5406b2bf28172e00318af8e471d13c286ce0af77ae8f224abb3306a529",
+      "source_archive_matches": true
+    },
+    "backend-cr013": {
+      "manifest": ".planning/milestones/M002/implementation/evidence/backend-cr013/manifest.json",
+      "manifest_sha256": "13b5dccdeb84e1b958c0ac378b4add5ed4c6815e9024cc3cf0eb6fd19e99912d",
+      "artifact_count": 31,
+      "artifacts_match": true,
+      "source_files": 288,
+      "source_sha256": "c54307a04cecb3dd99cc13d64ae0fbcb6c1fca2c0538711af040d279bbe9b549",
+      "source_archive_matches": true
+    }
+  },
+  "qa13": {
+    "manifest": ".planning/milestones/M002/verification/evidence/qa2-013/manifest.json",
+    "manifest_sha256": "3691be754238b7fea94c0467a926274aa58e07cfc412399c241eafae1be435eb",
+    "artifact_count": 59,
+    "matches": true,
+    "overall": "FAIL",
+    "accepted_cases": 13,
+    "counts": {
+      "pass": 10,
+      "fail": 3
+    },
+    "cr016_scope": {
+      "result": "PASS_WITHIN_RETEST_SCOPE",
+      "findings": [
+        "QA2-F12",
+        "QA2-F13"
+      ],
+      "formal_status": "open_pending_gate",
+      "cases": [
+        "chromium-en-R01",
+        "chromium-en-R02",
+        "chromium-en-R03",
+        "chromium-en-R04",
+        "webkit-zh-R01",
+        "webkit-zh-R02",
+        "webkit-zh-R03"
+      ]
+    },
+    "new_findings": [
+      {
+        "id": "QA2-F14",
+        "observation": "FE2-R16-W1",
+        "change_request": "M002-CR-017",
+        "severity": "P2",
+        "case": "H01-webkit-en"
+      },
+      {
+        "id": "QA2-F15",
+        "change_request": "M002-CR-018",
+        "severity": "P3",
+        "cases": [
+          "chromium-en-C01",
+          "webkit-zh-C01"
+        ]
+      }
+    ],
+    "coverage_counts": {
+      "CAP": 49,
+      "PAGE": 25,
+      "views": 28,
+      "UIA": 119
+    },
+    "compiled_build_files": 444,
+    "compiled_build_matches": true
+  },
+  "qa12_preserved": {
+    "manifest_sha256": "9d267c145abcd610b00d1c7477bd51f8a65c05a71b9e926c7d2fb29a36e3b841",
+    "archived_owned_documents": 5,
+    "other_artifacts": 105,
+    "matches": true
+  },
+  "approval_archives": {
+    "design_approval": {
+      "version": "M002-UI-22",
+      "archive": ".planning/milestones/M002/design/evidence/M002-UI-22.tar.gz",
+      "sha256": "37df94f33a3bbc8be9f2be5bc0ef187f8d6b08e422a201aa9514732d0487b767",
+      "matches": true
+    },
+    "database_approval": {
+      "version": "M002-DB-03",
+      "archive": ".planning/milestones/M002/technical/evidence/M002-DB-03.tar.gz",
+      "sha256": "188df7f5d1d63431a9755ab6461f31c4aa94ab62eb6dd6dc92396a81f74fd527",
+      "matches": true
+    },
+    "backend_approval": {
+      "version": "M002-BE-03",
+      "archive": ".planning/milestones/M002/technical/evidence/M002-BE-03.tar.gz",
+      "sha256": "f66ec03208ef6c28a106bb6ae4ddc7047c1eb27bce353f725adcc3688fad6dbd",
+      "matches": true
+    },
+    "frontend_approval": {
+      "version": "M002-FE-02",
+      "archive": ".planning/milestones/M002/technical/evidence/M002-FE-02.tar.gz",
+      "sha256": "0e13fe1d9d3b23d415e486306a32f4d0c49b9c48b35d735c0a8a4ab8683738b4",
+      "matches": true
+    }
+  },
+  "before_control_hashes": {
+    ".planning/workflow/state.yaml": "77d87a388365f1147d379a434c76135da485d72619006049ec709d4ada2ac0de",
+    ".planning/workflow/history.yaml": "8b435ea26b06f0ee9840a335e76950bc32c8bda9aa32c3fb7affa1c5c125847f",
+    ".planning/agt/project.yaml": "b3a8a4594877cf12fcacebe7e38530c32d45b437bbb6fe4912d304e30e2ff149",
+    ".planning/agt/agents.yaml": "ac3b6628d5b2535d6f3946487e2716c6632a96044256b07c1867895133521d3f"
+  },
+  "protected_count": 7181,
+  "open_change_requests": [
+    "M002-CR-001",
+    "M002-CR-002",
+    "M002-CR-016"
+  ],
+  "pending_user_decisions": [],
+  "retained_open_items": [
+    {
+      "id": "CR039-L1",
+      "status": "open",
+      "source": ".planning/milestones/M001/changes/CR-039.md#retained-limitations"
+    },
+    {
+      "id": "CR042-L1",
+      "status": "open",
+      "source": ".planning/milestones/M001/verification/CR-042-generation-evidence.md#retained-limitations"
+    },
+    {
+      "id": "AI-QUALITY-90",
+      "status": "unverified",
+      "source": ".planning/milestones/M001/verification/ai-evaluation.md"
+    },
+    {
+      "id": "FE2-R16-W1",
+      "status": "unverified",
+      "source": ".planning/milestones/M002/implementation/frontend-validation.md#cr016"
+    }
+  ],
+  "authorization": "用户对上一轮明确提出的CR016 F12/F13限定关闭并交frontend-claire修复CR017/018回复下一步。",
+  "developer_checks_rerun": false,
+  "code_semantic_review": false,
+  "runtime_model_switch": "not_performed",
+  "input_tokens": "unknown"
+}

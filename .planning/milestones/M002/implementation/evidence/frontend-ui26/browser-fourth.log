@@ -1,0 +1,23 @@
+expect(locator).toHaveAttribute(expected) failed
+
+Locator:  getByRole('combobox', { name: 'Style', exact: true })
+Expected: "false"
+Received: "true"
+Timeout:  5000ms
+
+Call log:
+  - Expect "to.have.attribute.value" with timeout 5000ms
+  - waiting for getByRole('combobox', { name: 'Style', exact: true })
+    14 × locator resolved to <button type="button" role="combobox" aria-label="Style" aria-expanded="true" aria-required="false" aria-haspopup="listbox" class="ww-select-trigger" aria-controls="v-0-0-0-1-options" aria-activedescendant="v-0-0-0-1-option-1">…</button>
+       - unexpected value "true"
+
+{
+  "passed": 7,
+  "failed": [
+    {
+      "name": "FE3-V04/V05/V08 webkit 1440 en",
+      "result": "FAIL",
+      "error": "expect(locator).toHaveAttribute(expected) failed\n\nLocator:  getByRole('combobox', { name: 'Style', exact: true })\nExpected: \"false\"\nReceived: \"true\"\nTimeout:  5000ms\n\nCall log:\n  - Expect \"to.have.attribute.value\" with timeout 5000ms\n  - waiting for getByRole('combobox', { name: 'Style', exact: true })\n    14 × locator resolved to <button type=\"button\" role=\"combobox\" aria-label=\"Style\" aria-expanded=\"true\" aria-required=\"false\" aria-haspopup=\"listbox\" class=\"ww-select-trigger\" aria-controls=\"v-0-0-0-1-options\" aria-activedescendant=\"v-0-0-0-1-option-1\">…</button>\n       - unexpected value \"true\"\n"
+    }
+  ]
+}

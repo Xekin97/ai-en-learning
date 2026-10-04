@@ -1,0 +1,30 @@
+{
+  "results": [
+    {
+      "id": "FE10-empty-en-7",
+      "result": "FAIL",
+      "error": "Error: expect(received).toBeLessThanOrEqual(expected)\n\nExpected: <= 320\nReceived:    421"
+    },
+    {
+      "id": "FE10-empty-en-30",
+      "result": "FAIL",
+      "error": "Error: expect(received).toBeLessThanOrEqual(expected)\n\nExpected: <= 320\nReceived:    421"
+    },
+    {
+      "id": "FE10-empty-zh-7",
+      "result": "FAIL",
+      "error": "Error: expect(received).toBeGreaterThanOrEqual(expected)\n\nExpected: >= 72.359375\nReceived:    71.640625"
+    },
+    {
+      "id": "FE10-empty-zh-30",
+      "result": "FAIL",
+      "error": "Error: expect(received).toBeGreaterThanOrEqual(expected)\n\nExpected: >= 74\nReceived:    66.1484375"
+    },
+    {
+      "id": "setup",
+      "result": "FAIL",
+      "error": "Error: Command failed: /opt/homebrew/opt/postgresql@18/bin/psql postgres://fe_test@127.0.0.1:63541/wordweave_fe_m002?sslmode=disable -v ON_ERROR_STOP=1 -X -A -t -c UPDATE wordweave.growth_settings SET activated_at=clock_timestamp()-interval '60 days'; INSERT INTO wordweave.growth_levels(level_no,min_experience,reward_enabled,points) VALUES(1,0,false,0) ON CONFLICT DO NOTHING\nERROR:  ON CONFLICT does not support deferrable unique constraints/exclusion constraints as arbiters\n"
+    }
+  ],
+  "realProviderCalls": 0
+}

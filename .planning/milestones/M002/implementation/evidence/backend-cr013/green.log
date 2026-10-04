@@ -1,0 +1,87 @@
+=== RUN   TestM002SaveStateHTTP
+2026/09/23 11:37:35 INFO http_request request_id=req_1UID-m451f3X53mjLvWcOg method=GET route=/api/v1/bootstrap status=200 duration_ms=3
+2026/09/23 11:37:36 INFO http_request request_id=req_XSRxFGcTJ28mb9DVk9AQIQ method=POST route=/api/v1/auth/login status=200 duration_ms=757
+2026/09/23 11:37:36 INFO http_request request_id=req_KS4R_tEGAklNOzVEurfWpA method=GET route=/api/v1/bootstrap status=200 duration_ms=0
+2026/09/23 11:37:37 INFO http_request request_id=req_GLQdJtr3VT4oZwDt80DkSQ method=POST route=/api/v1/auth/login status=200 duration_ms=777
+2026/09/23 11:37:37 INFO http_request request_id=req_mcDoyTzDn3TFvbCEW51nVg method=GET route=/api/v1/bootstrap status=200 duration_ms=1
+2026/09/23 11:37:37 INFO http_request request_id=req_WoLBEIQvEhMfoh6p2NvRzw method=GET route=/api/v1/bootstrap status=200 duration_ms=0
+=== RUN   TestM002SaveStateHTTP/active_is_conflict_without_side_effects
+2026/09/23 11:37:37 INFO http_request request_id=req_Lnds9n5KIEV9hLni-zc0Cw method=POST route=/api/v1/generations/{run_id}/save status=409 duration_ms=2
+2026/09/23 11:37:37 INFO http_request request_id=req_34902GeeZlxYcDIUZ79qzA method=POST route=/api/v1/generations/{run_id}/save status=409 duration_ms=1
+2026/09/23 11:37:37 INFO http_request request_id=req_SwjenJPdT7iEoukBS5M0kw method=POST route=/api/v1/generations/{run_id}/save status=404 duration_ms=0
+2026/09/23 11:37:37 INFO http_request request_id=req_ryRyBjN2KjcpanYC5KpXEQ method=POST route=/api/v1/generations/{run_id}/save status=404 duration_ms=0
+2026/09/23 11:37:37 INFO http_request request_id=req_L0ao1VxDCkb9kbGEc2WbwQ method=POST route=/api/v1/generations/{run_id}/save status=404 duration_ms=1
+2026/09/23 11:37:37 INFO http_request request_id=req_i73Id0kANuj57Wd5nPIi-w method=POST route=/api/v1/generations/{run_id}/discard status=409 duration_ms=1
+=== RUN   TestM002SaveStateHTTP/provider_failed_is_conflict_without_side_effects
+2026/09/23 11:37:37 INFO http_request request_id=req_4LQsmc79tmuqB7jRsIVCLQ method=POST route=/api/v1/generations/{run_id}/save status=409 duration_ms=1
+2026/09/23 11:37:37 INFO http_request request_id=req_YkelrZ5qxRS9-awnXMDEtA method=POST route=/api/v1/generations/{run_id}/save status=409 duration_ms=1
+2026/09/23 11:37:37 INFO http_request request_id=req_W0v-k7Zr6MDbTDWpxJZlAw method=POST route=/api/v1/generations/{run_id}/save status=404 duration_ms=0
+2026/09/23 11:37:37 INFO http_request request_id=req_3-Z_OUhsaPafeAB4L0cStQ method=POST route=/api/v1/generations/{run_id}/save status=404 duration_ms=0
+2026/09/23 11:37:37 INFO http_request request_id=req_cde_5mHnOu8Onz8IrlMZoQ method=POST route=/api/v1/generations/{run_id}/save status=404 duration_ms=0
+2026/09/23 11:37:37 INFO http_request request_id=req_spkLDxOdkeFg9h9cwcGtXg method=POST route=/api/v1/generations/{run_id}/discard status=409 duration_ms=0
+=== RUN   TestM002SaveStateHTTP/server_failed_is_conflict_without_side_effects
+2026/09/23 11:37:37 INFO http_request request_id=req_kbNY0FwC4vkvKIg8lojQ3w method=POST route=/api/v1/generations/{run_id}/save status=409 duration_ms=0
+2026/09/23 11:37:37 INFO http_request request_id=req_NpETKQnH93riCpRxvp-YoA method=POST route=/api/v1/generations/{run_id}/save status=409 duration_ms=1
+2026/09/23 11:37:37 INFO http_request request_id=req_K-tpgloeMjvnRNYU1IFm-Q method=POST route=/api/v1/generations/{run_id}/save status=404 duration_ms=0
+2026/09/23 11:37:37 INFO http_request request_id=req_sNm8H95omstDwWq967YMtw method=POST route=/api/v1/generations/{run_id}/save status=404 duration_ms=0
+2026/09/23 11:37:37 INFO http_request request_id=req_g718JF5tFxqZ1NL63-82jw method=POST route=/api/v1/generations/{run_id}/save status=404 duration_ms=0
+2026/09/23 11:37:37 INFO http_request request_id=req_uNBElfCX7yI8KCm3iLlPBA method=POST route=/api/v1/generations/{run_id}/discard status=409 duration_ms=0
+=== RUN   TestM002SaveStateHTTP/stream_failed_is_conflict_without_side_effects
+2026/09/23 11:37:37 INFO http_request request_id=req_A07gxZaB9rPrQcOkA8bS9g method=POST route=/api/v1/generations/{run_id}/save status=409 duration_ms=1
+2026/09/23 11:37:37 INFO http_request request_id=req_YZie792X7WE9iC7f_fWf-g method=POST route=/api/v1/generations/{run_id}/save status=409 duration_ms=1
+2026/09/23 11:37:37 INFO http_request request_id=req_wr_oROEQDszl20oCm27Rug method=POST route=/api/v1/generations/{run_id}/save status=404 duration_ms=0
+2026/09/23 11:37:37 INFO http_request request_id=req_qluTcHcHfFJDCXjlUrMUaQ method=POST route=/api/v1/generations/{run_id}/save status=404 duration_ms=0
+2026/09/23 11:37:37 INFO http_request request_id=req_7qNN1DZLhKRYopU-rMwkeQ method=POST route=/api/v1/generations/{run_id}/save status=404 duration_ms=1
+2026/09/23 11:37:37 INFO http_request request_id=req_nHZGTKtEgCpbwaUi1KDJeg method=POST route=/api/v1/generations/{run_id}/discard status=409 duration_ms=1
+=== RUN   TestM002SaveStateHTTP/validation_failed_is_conflict_without_side_effects
+2026/09/23 11:37:37 INFO http_request request_id=req_5--E18kXctr74uOFEtqRKg method=POST route=/api/v1/generations/{run_id}/save status=409 duration_ms=1
+2026/09/23 11:37:37 INFO http_request request_id=req_CZ293UY4uznwuZ4QXmj6yg method=POST route=/api/v1/generations/{run_id}/save status=409 duration_ms=1
+2026/09/23 11:37:37 INFO http_request request_id=req_Q4u9slYeJKAc7M8JKclU0w method=POST route=/api/v1/generations/{run_id}/save status=404 duration_ms=0
+2026/09/23 11:37:37 INFO http_request request_id=req_dQFobYL5ajRzVfAB1oeQxA method=POST route=/api/v1/generations/{run_id}/save status=404 duration_ms=0
+2026/09/23 11:37:37 INFO http_request request_id=req_0G0MtcbXoeK2QDNxDohggw method=POST route=/api/v1/generations/{run_id}/save status=404 duration_ms=0
+2026/09/23 11:37:37 INFO http_request request_id=req_rChhtBEW3WrN5545I23tUw method=POST route=/api/v1/generations/{run_id}/discard status=409 duration_ms=0
+=== RUN   TestM002SaveStateHTTP/user_cancelled_is_conflict_without_side_effects
+2026/09/23 11:37:37 INFO http_request request_id=req_8Uk7yO24sB5QLhELxDTTlA method=POST route=/api/v1/generations/{run_id}/save status=409 duration_ms=0
+2026/09/23 11:37:37 INFO http_request request_id=req_CvYwr_BLRimCK7HaZsFb6g method=POST route=/api/v1/generations/{run_id}/save status=409 duration_ms=0
+2026/09/23 11:37:37 INFO http_request request_id=req_YQ7apgc43GIrJMf8TQq-ig method=POST route=/api/v1/generations/{run_id}/save status=404 duration_ms=0
+2026/09/23 11:37:37 INFO http_request request_id=req_X1Cl69YNOXWXqepskgbHsQ method=POST route=/api/v1/generations/{run_id}/save status=404 duration_ms=0
+2026/09/23 11:37:37 INFO http_request request_id=req_JqkZp-JNjepauPeXhdc7MA method=POST route=/api/v1/generations/{run_id}/save status=404 duration_ms=1
+2026/09/23 11:37:37 INFO http_request request_id=req_hwK-e9Gz7-WmL6ZceKfS_A method=POST route=/api/v1/generations/{run_id}/discard status=409 duration_ms=1
+=== RUN   TestM002SaveStateHTTP/abandoned_conflicts_and_repeated_discard_stays_idempotent
+2026/09/23 11:37:37 INFO http_request request_id=req_GwcC3oC6oO36m9GxaBd-1Q method=POST route=/api/v1/generations/{run_id}/discard status=204 duration_ms=3
+2026/09/23 11:37:37 INFO http_request request_id=req_fEODyaJqI7phnuE23THqMQ method=POST route=/api/v1/generations/{run_id}/save status=409 duration_ms=1
+2026/09/23 11:37:37 INFO http_request request_id=req_uX-lpFFYw5HtB_GMDy3r9Q method=POST route=/api/v1/generations/{run_id}/discard status=204 duration_ms=0
+2026/09/23 11:37:37 INFO http_request request_id=req_lr2ZL0-oJiXuws1N_u9iRQ method=POST route=/api/v1/generations/{run_id}/save status=409 duration_ms=1
+2026/09/23 11:37:37 INFO http_request request_id=req_DC73MaBMqE3G-n5EdW0DAA method=POST route=/api/v1/generations/{run_id}/discard status=204 duration_ms=1
+2026/09/23 11:37:37 INFO http_request request_id=req_iEy4o2nz60DYaotV5SrBxQ method=POST route=/api/v1/generations/{run_id}/save status=404 duration_ms=0
+=== RUN   TestM002SaveStateHTTP/valid_save_retries_and_deleted_batch_cannot_be_recreated
+2026/09/23 11:37:37 INFO http_request request_id=req_ZLFCOGZ3sV_23f1gFkXeOw method=POST route=/api/v1/generations/{run_id}/save status=404 duration_ms=1
+2026/09/23 11:37:37 INFO http_request request_id=req_7ZfhoCELcE36YGbkT1u-Og method=POST route=/api/v1/generations/{run_id}/save status=201 duration_ms=8
+2026/09/23 11:37:37 INFO http_request request_id=req_RLOEgmYa5rgOn_OQYZR6wg method=POST route=/api/v1/generations/{run_id}/save status=200 duration_ms=1
+2026/09/23 11:37:37 INFO http_request request_id=req_t4DK36TgnYitJvrIppV0wg method=POST route=/api/v1/generations/{run_id}/discard status=204 duration_ms=1
+2026/09/23 11:37:37 INFO http_request request_id=req_E6pRdxpyEhr0Jp6iYtpymA method=DELETE route=/api/v1/me/batches/{batch_id} status=204 duration_ms=5
+2026/09/23 11:37:37 INFO http_request request_id=req_BhoMfGhJYCM3KlSXDGXG0w method=POST route=/api/v1/generations/{run_id}/save status=404 duration_ms=1
+=== RUN   TestM002SaveStateHTTP/expired_valid_draft_and_abandoned_token_remain_gone
+2026/09/23 11:37:37 INFO http_request request_id=req_qIWr0iCFgBl3SnLLEnKqJw method=POST route=/api/v1/generations/{run_id}/save status=410 duration_ms=1
+2026/09/23 11:37:37 INFO http_request request_id=req_DzAc3whhsKQHCialNcdteg method=POST route=/api/v1/generations/{run_id}/discard status=204 duration_ms=1
+2026/09/23 11:37:37 INFO http_request request_id=req_3RSBUPPXkWNZ2Ok6zOjkNw method=POST route=/api/v1/generations/{run_id}/save status=410 duration_ms=0
+2026/09/23 11:37:37 INFO http_request request_id=req_MLUk74qY8QTqTwLllqY5dA method=POST route=/api/v1/generations/{run_id}/save status=404 duration_ms=0
+=== RUN   TestM002SaveStateHTTP/missing_run_with_valid_signature_stays_hidden
+2026/09/23 11:37:37 INFO http_request request_id=req_m9IbA5FLmD-u3OgLLPLNXA method=POST route=/api/v1/generations/{run_id}/save status=404 duration_ms=0
+=== RUN   TestM002SaveStateHTTP/invalid_visitor_claim_uses_the_shared_conflict_guard
+2026/09/23 11:37:37 INFO http_request request_id=req_bZ1YiQ1ZB_VW-XcIZP6qAA method=GET route=/api/v1/bootstrap status=200 duration_ms=0
+2026/09/23 11:37:37 INFO http_request request_id=req_gKm6p56sJrp5uF5_P7gCOg method=POST route=/api/v1/generations/{run_id}/visitor-claim status=409 duration_ms=1
+--- PASS: TestM002SaveStateHTTP (6.32s)
+    --- PASS: TestM002SaveStateHTTP/active_is_conflict_without_side_effects (0.02s)
+    --- PASS: TestM002SaveStateHTTP/provider_failed_is_conflict_without_side_effects (0.01s)
+    --- PASS: TestM002SaveStateHTTP/server_failed_is_conflict_without_side_effects (0.01s)
+    --- PASS: TestM002SaveStateHTTP/stream_failed_is_conflict_without_side_effects (0.01s)
+    --- PASS: TestM002SaveStateHTTP/validation_failed_is_conflict_without_side_effects (0.01s)
+    --- PASS: TestM002SaveStateHTTP/user_cancelled_is_conflict_without_side_effects (0.01s)
+    --- PASS: TestM002SaveStateHTTP/abandoned_conflicts_and_repeated_discard_stays_idempotent (0.02s)
+    --- PASS: TestM002SaveStateHTTP/valid_save_retries_and_deleted_batch_cannot_be_recreated (0.03s)
+    --- PASS: TestM002SaveStateHTTP/expired_valid_draft_and_abandoned_token_remain_gone (0.01s)
+    --- PASS: TestM002SaveStateHTTP/missing_run_with_valid_signature_stays_hidden (0.00s)
+    --- PASS: TestM002SaveStateHTTP/invalid_visitor_claim_uses_the_shared_conflict_guard (0.02s)
+PASS
+ok  	wordweave/internal/httpapi	7.665s

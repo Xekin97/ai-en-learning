@@ -1,0 +1,89 @@
+
+Running 16 tests using 1 worker
+
+(node:18076) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   1 [desktop] › tests/e2e/m002-review-storage.spec.ts:96:1 › denied storage preserves editing and submits the latest memory answers; cleanup retries and summary is one-time (4.1s)
+  ✓   2 [desktop] › tests/e2e/m002-review-storage.spec.ts:149:1 › a failed write retains current input and persists it on retry for confirmed restoration (1.3s)
+  ✓   3 [desktop] › tests/e2e/m002-review-storage.spec.ts:179:1 › recovering a failed read never overwrites an existing draft before restore confirmation (1.2s)
+  ✘   4 [desktop] › tests/e2e/m002-review-storage.spec.ts:206:1 › an unknown draft schema is protected until explicit restart (1.0m)
+(node:20803) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   5 [desktop] › tests/e2e/m002-review.spec.ts:87:1 › local restoration requires confirmation and never creates a new attempt on reload (1.3s)
+  ✓   6 [desktop] › tests/e2e/m002-review.spec.ts:111:1 › a lost submit response reconciles the receipt without recreating comparison (739ms)
+  ✓   7 [desktop] › tests/e2e/m002-review.spec.ts:126:1 › two tabs cannot silently overwrite the same local draft (2.2s)
+  ✓   8 [desktop] › tests/e2e/m002-review.spec.ts:157:1 › over-capacity paste is rejected as a whole and existing letters remain (700ms)
+(node:21035) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   9 [mobile] › tests/e2e/m002-review-storage.spec.ts:96:1 › denied storage preserves editing and submits the latest memory answers; cleanup retries and summary is one-time (1.7s)
+  ✓  10 [mobile] › tests/e2e/m002-review-storage.spec.ts:149:1 › a failed write retains current input and persists it on retry for confirmed restoration (1.6s)
+  ✓  11 [mobile] › tests/e2e/m002-review-storage.spec.ts:179:1 › recovering a failed read never overwrites an existing draft before restore confirmation (1.4s)
+  ✘  12 [mobile] › tests/e2e/m002-review-storage.spec.ts:206:1 › an unknown draft schema is protected until explicit restart (1.0m)
+(node:23587) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  13 [mobile] › tests/e2e/m002-review.spec.ts:87:1 › local restoration requires confirmation and never creates a new attempt on reload (1.5s)
+  ✓  14 [mobile] › tests/e2e/m002-review.spec.ts:111:1 › a lost submit response reconciles the receipt without recreating comparison (728ms)
+  ✓  15 [mobile] › tests/e2e/m002-review.spec.ts:126:1 › two tabs cannot silently overwrite the same local draft (2.3s)
+  ✓  16 [mobile] › tests/e2e/m002-review.spec.ts:157:1 › over-capacity paste is rejected as a whole and existing letters remain (668ms)
+
+
+  1) [desktop] › tests/e2e/m002-review-storage.spec.ts:206:1 › an unknown draft schema is protected until explicit restart 
+
+    Test timeout of 60000ms exceeded.
+
+    Error: locator.click: Test timeout of 60000ms exceeded.
+    Call log:
+      - waiting for getByRole('button', { name: 'Start over', exact: true })
+
+
+      243 |   await retry(page).click();
+      244 |   expect((await records(page))[0]?.schemaVersion).toBe(2);
+    > 245 |   await page.getByRole("button", { name: t("restart"), exact: true }).click();
+          |                                                                     ^
+      246 |   await expect(page.locator(".slot")).toHaveCount(5);
+      247 |   await expect(page.locator(".slot").first()).toHaveValue("");
+      248 |   expect(await records(page)).toEqual([]);
+        at /Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/frontend/tests/e2e/m002-review-storage.spec.ts:245:69
+
+    Error Context: ../.planning/milestones/M002/implementation/evidence/frontend-cr005/browser-results/m002-review-storage-an-unk-7cb14-cted-until-explicit-restart-desktop/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../.planning/milestones/M002/implementation/evidence/frontend-cr005/browser-results/m002-review-storage-an-unk-7cb14-cted-until-explicit-restart-desktop/trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace ../.planning/milestones/M002/implementation/evidence/frontend-cr005/browser-results/m002-review-storage-an-unk-7cb14-cted-until-explicit-restart-desktop/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [mobile] › tests/e2e/m002-review-storage.spec.ts:206:1 › an unknown draft schema is protected until explicit restart 
+
+    Test timeout of 60000ms exceeded.
+
+    Error: locator.click: Test timeout of 60000ms exceeded.
+    Call log:
+      - waiting for getByRole('button', { name: 'Start over', exact: true })
+
+
+      243 |   await retry(page).click();
+      244 |   expect((await records(page))[0]?.schemaVersion).toBe(2);
+    > 245 |   await page.getByRole("button", { name: t("restart"), exact: true }).click();
+          |                                                                     ^
+      246 |   await expect(page.locator(".slot")).toHaveCount(5);
+      247 |   await expect(page.locator(".slot").first()).toHaveValue("");
+      248 |   expect(await records(page)).toEqual([]);
+        at /Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/frontend/tests/e2e/m002-review-storage.spec.ts:245:69
+
+    Error Context: ../.planning/milestones/M002/implementation/evidence/frontend-cr005/browser-results/m002-review-storage-an-unk-7cb14-cted-until-explicit-restart-mobile/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../.planning/milestones/M002/implementation/evidence/frontend-cr005/browser-results/m002-review-storage-an-unk-7cb14-cted-until-explicit-restart-mobile/trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace ../.planning/milestones/M002/implementation/evidence/frontend-cr005/browser-results/m002-review-storage-an-unk-7cb14-cted-until-explicit-restart-mobile/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2 failed
+    [desktop] › tests/e2e/m002-review-storage.spec.ts:206:1 › an unknown draft schema is protected until explicit restart 
+    [mobile] › tests/e2e/m002-review-storage.spec.ts:206:1 › an unknown draft schema is protected until explicit restart 
+  14 passed (2.4m)

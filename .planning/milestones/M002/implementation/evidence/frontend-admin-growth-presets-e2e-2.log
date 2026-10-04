@@ -1,0 +1,104 @@
+
+Running 14 tests using 1 worker
+
+(node:39005) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   1 [desktop] › tests/e2e/m002-admin-growth.spec.ts:7:1 › check-in settings submit five values once and preserve next-day effective state (772ms)
+  ✓   2 [desktop] › tests/e2e/m002-admin-growth.spec.ts:10:1 › six levels save atomically and hidden edited rows remain in the submitted snapshot (1.1s)
+  ✓   3 [desktop] › tests/e2e/m002-admin-growth.spec.ts:13:1 › achievement content remains plain and a field error reveals its hidden row (784ms)
+  ✘   4 [desktop] › tests/e2e/m002-admin-growth.spec.ts:16:1 › issued cards cannot be deleted and model cards send only model-time effects (5.9s)
+(node:39311) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   5 [desktop] › tests/e2e/m002-admin-presets.spec.ts:7:1 › draft, validated preview and explicit publish remain distinct (1.1s)
+  ✓   6 [desktop] › tests/e2e/m002-admin-presets.spec.ts:8:1 › unavailable credential and load failure retain configurable models without quota (927ms)
+  ✓   7 [desktop] › tests/e2e/m002-admin-presets.spec.ts:9:1 › explicit cancellation uses preview capability without user quota commands (813ms)
+(node:39482) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   8 [mobile] › tests/e2e/m002-admin-growth.spec.ts:7:1 › check-in settings submit five values once and preserve next-day effective state (769ms)
+  ✓   9 [mobile] › tests/e2e/m002-admin-growth.spec.ts:10:1 › six levels save atomically and hidden edited rows remain in the submitted snapshot (1.2s)
+  ✓  10 [mobile] › tests/e2e/m002-admin-growth.spec.ts:13:1 › achievement content remains plain and a field error reveals its hidden row (706ms)
+  ✘  11 [mobile] › tests/e2e/m002-admin-growth.spec.ts:16:1 › issued cards cannot be deleted and model cards send only model-time effects (6.1s)
+(node:39787) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  12 [mobile] › tests/e2e/m002-admin-presets.spec.ts:7:1 › draft, validated preview and explicit publish remain distinct (1.2s)
+  ✓  13 [mobile] › tests/e2e/m002-admin-presets.spec.ts:8:1 › unavailable credential and load failure retain configurable models without quota (905ms)
+  ✓  14 [mobile] › tests/e2e/m002-admin-presets.spec.ts:9:1 › explicit cancellation uses preview capability without user quota commands (769ms)
+
+
+  1) [desktop] › tests/e2e/m002-admin-growth.spec.ts:16:1 › issued cards cannot be deleted and model cards send only model-time effects 
+
+    Error: expect(locator).toHaveCount(expected) failed
+
+    Locator:  locator('dialog[open]')
+    Expected: 0
+    Received: 1
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveCount" with timeout 5000ms
+      - waiting for locator('dialog[open]')
+        14 × locator resolved to 1 element
+           - unexpected value "1"
+
+
+      15 | });
+      16 | test('issued cards cannot be deleted and model cards send only model-time effects',async({page},info)=>{
+    > 17 |  let body:Record<string,unknown>|null=null;page.on('request',r=>{if(r.method()==='POST'&&r.url().endsWith('/growth/items'))body=r.postDataJSON();});await page.goto('/admin/growth');await ready(page);await page.getByRole('button',{name:t('delete'),exact:true}).click();await expect(page.locator('dialog[open]')).toContainText(t('delete.blocked'));await expect(page.locator('dialog[open]').getByRole('button',{name:t('delete'),exact:true})).toHaveCount(0);await page.keyboard.press('Escape');await page.getByRole('button',{name:t('newitem'),exact:true}).click();const dialog=page.locator('dialog[open]');await dialog.getByLabel(t('name.en'),{exact:true}).fill('Model time');await dialog.getByLabel(t('price'),{exact:true}).fill('20');await dialog.getByLabel(t('deadline'),{exact:true}).fill('30');await dialog.getByRole('listbox',{name:t('model'),exact:true}).selectOption('model-admin');await dialog.getByLabel(t('retirementpoints'),{exact:true}).fill('40');await dialog.getByLabel(t('duration'),{exact:true}).fill('3');await dialog.getByRole('button',{name:t('save'),exact:true}).click();await expect(dialog).toHaveCount(0);expect(body).toMatchObject({kind:'model_trial',activation_ttl_seconds:2592000,effect:{kind:'model_trial',model_ids:['model-admin'],trial_seconds:259200,retirement_points:'40'}});expect(body).not.toHaveProperty('listed');expect(body?.effect).not.toHaveProperty('extra_count');await page.screenshot({path:`../.planning/milestones/M002/implementation/evidence/frontend-admin-items-${info.project.name}.png`,fullPage:true});
+         |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      ^
+      18 | });
+      19 |
+        at /Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/frontend/tests/e2e/m002-admin-growth.spec.ts:17:1110
+
+    Error Context: test-results/m002-admin-growth-issued-c-b932b-end-only-model-time-effects-desktop/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/m002-admin-growth-issued-c-b932b-end-only-model-time-effects-desktop/trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace test-results/m002-admin-growth-issued-c-b932b-end-only-model-time-effects-desktop/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [mobile] › tests/e2e/m002-admin-growth.spec.ts:16:1 › issued cards cannot be deleted and model cards send only model-time effects 
+
+    Error: expect(locator).toHaveCount(expected) failed
+
+    Locator:  locator('dialog[open]')
+    Expected: 0
+    Received: 1
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveCount" with timeout 5000ms
+      - waiting for locator('dialog[open]')
+        14 × locator resolved to 1 element
+           - unexpected value "1"
+
+
+      15 | });
+      16 | test('issued cards cannot be deleted and model cards send only model-time effects',async({page},info)=>{
+    > 17 |  let body:Record<string,unknown>|null=null;page.on('request',r=>{if(r.method()==='POST'&&r.url().endsWith('/growth/items'))body=r.postDataJSON();});await page.goto('/admin/growth');await ready(page);await page.getByRole('button',{name:t('delete'),exact:true}).click();await expect(page.locator('dialog[open]')).toContainText(t('delete.blocked'));await expect(page.locator('dialog[open]').getByRole('button',{name:t('delete'),exact:true})).toHaveCount(0);await page.keyboard.press('Escape');await page.getByRole('button',{name:t('newitem'),exact:true}).click();const dialog=page.locator('dialog[open]');await dialog.getByLabel(t('name.en'),{exact:true}).fill('Model time');await dialog.getByLabel(t('price'),{exact:true}).fill('20');await dialog.getByLabel(t('deadline'),{exact:true}).fill('30');await dialog.getByRole('listbox',{name:t('model'),exact:true}).selectOption('model-admin');await dialog.getByLabel(t('retirementpoints'),{exact:true}).fill('40');await dialog.getByLabel(t('duration'),{exact:true}).fill('3');await dialog.getByRole('button',{name:t('save'),exact:true}).click();await expect(dialog).toHaveCount(0);expect(body).toMatchObject({kind:'model_trial',activation_ttl_seconds:2592000,effect:{kind:'model_trial',model_ids:['model-admin'],trial_seconds:259200,retirement_points:'40'}});expect(body).not.toHaveProperty('listed');expect(body?.effect).not.toHaveProperty('extra_count');await page.screenshot({path:`../.planning/milestones/M002/implementation/evidence/frontend-admin-items-${info.project.name}.png`,fullPage:true});
+         |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      ^
+      18 | });
+      19 |
+        at /Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/frontend/tests/e2e/m002-admin-growth.spec.ts:17:1110
+
+    Error Context: test-results/m002-admin-growth-issued-c-b932b-end-only-model-time-effects-mobile/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/m002-admin-growth-issued-c-b932b-end-only-model-time-effects-mobile/trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace test-results/m002-admin-growth-issued-c-b932b-end-only-model-time-effects-mobile/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2 failed
+    [desktop] › tests/e2e/m002-admin-growth.spec.ts:16:1 › issued cards cannot be deleted and model cards send only model-time effects 
+    [mobile] › tests/e2e/m002-admin-growth.spec.ts:16:1 › issued cards cannot be deleted and model cards send only model-time effects 
+  12 passed (24.8s)
+npm notice
+npm notice New major version of npm available! 10.9.8 -> 12.0.2
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.0.2
+npm notice To update run: npm install -g npm@12.0.2
+npm notice
