@@ -1,0 +1,174 @@
+{
+  "version": "M002-UI-14",
+  "scope": "Homepage float, animated layering, reading interruption, motion preference, responsive animation bounds and lifecycle.",
+  "checks": [
+    {
+      "name": "Real idle float and automatic 8-second layered turn; reading stops movement",
+      "status": "FAIL",
+      "error": "locator.hover: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('.home-paper-back h2')\u001b[22m\n\u001b[2m    - locator resolved to <h2 lang=\"en\" id=\"home-story-0\">A story around the corner.</h2>\u001b[22m\n\u001b[2m  - attempting hover action\u001b[22m\n\u001b[2m    2 × waiting for element to be visible and stable\u001b[22m\n\u001b[2m      - element is not stable\u001b[22m\n\u001b[2m    - retrying hover action\u001b[22m\n\u001b[2m    - waiting 20ms\u001b[22m\n\u001b[2m    2 × waiting for element to be visible and stable\u001b[22m\n\u001b[2m      - element is not stable\u001b[22m\n\u001b[2m    - retrying hover action\u001b[22m\n\u001b[2m      - waiting 100ms\u001b[22m\n\u001b[2m    58 × waiting for element to be visible and stable\u001b[22m\n\u001b[2m       - element is not stable\u001b[22m\n\u001b[2m     - retrying hover action\u001b[22m\n\u001b[2m       - waiting 500ms\u001b[22m\n",
+      "errors": []
+    },
+    {
+      "name": "Manual layering, rapid keyboard changes, live reduced-motion and reentry cleanup",
+      "status": "PASS"
+    },
+    {
+      "name": "Animated phone bounds, tap-to-read, unchanged stories and accessible layout",
+      "status": "FAIL",
+      "error": "locator.tap: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('.home-paper-back')\u001b[22m\n\u001b[2m    - locator resolved to <article tabindex=\"0\" aria-labelledby=\"home-story-0\" class=\"home-paper home-paper-back\">…</article>\u001b[22m\n\u001b[2m  - attempting tap action\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is not stable\u001b[22m\n\u001b[2m    - retrying tap action\u001b[22m\n\u001b[2m    - waiting 20ms\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is not stable\u001b[22m\n\u001b[2m    - retrying tap action\u001b[22m\n\u001b[2m      - waiting 100ms\u001b[22m\n\u001b[2m    58 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m       - element is not stable\u001b[22m\n\u001b[2m     - retrying tap action\u001b[22m\n\u001b[2m       - waiting 500ms\u001b[22m\n",
+      "errors": []
+    },
+    {
+      "name": "Offscreen animation pauses and resumes only when visible",
+      "status": "PASS"
+    }
+  ],
+  "observations": [
+    {
+      "name": "Float frames 1.3s apart",
+      "start": [
+        {
+          "translate": "0px",
+          "transform": "matrix(0.997564, -0.0697565, 0.0697565, 0.997564, 0, 0)",
+          "animations": [
+            {
+              "playState": "running",
+              "currentTime": 0
+            }
+          ]
+        },
+        {
+          "translate": "0px -6px",
+          "transform": "matrix(0.99863, 0.052336, -0.052336, 0.99863, 0, 0)",
+          "animations": [
+            {
+              "playState": "running",
+              "currentTime": 0
+            }
+          ]
+        }
+      ],
+      "floated": [
+        {
+          "translate": "0px -2.34815px",
+          "transform": "matrix(0.997564, -0.0697565, 0.0697565, 0.997564, 0, 0)",
+          "animations": [
+            {
+              "playState": "running",
+              "currentTime": 1309.008000639975
+            }
+          ]
+        },
+        {
+          "translate": "0px -3.65185px",
+          "transform": "matrix(0.99863, 0.052336, -0.052336, 0.99863, 0, 0)",
+          "animations": [
+            {
+              "playState": "running",
+              "currentTime": 1309.008000639975
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Real first automatic turn",
+      "during": [
+        {
+          "translate": "0px -4.53871px",
+          "transform": "matrix(0.997023, -0.0771049, 0.0771049, 0.997023, -10.1323, -3.37742)",
+          "animations": [
+            {
+              "playState": "running",
+              "currentTime": 41.60000000000075
+            },
+            {
+              "playState": "paused",
+              "currentTime": 7974.918000639976
+            },
+            {
+              "playState": "running",
+              "currentTime": 333.23100020885477
+            }
+          ]
+        },
+        {
+          "translate": "0px -1.46129px",
+          "transform": "matrix(0.998217, 0.0596928, -0.0596928, 0.998217, 10.1323, -3.37742)",
+          "animations": [
+            {
+              "playState": "running",
+              "currentTime": 41.60000000000075
+            },
+            {
+              "playState": "paused",
+              "currentTime": 7974.918000639976
+            },
+            {
+              "playState": "running",
+              "currentTime": 333.23100020885477
+            }
+          ]
+        }
+      ],
+      "settled": [
+        {
+          "translate": "0px -4.78933px",
+          "transform": "matrix(0.997564, -0.0697565, 0.0697565, 0.997564, 0, 0)",
+          "animations": [
+            {
+              "playState": "running",
+              "currentTime": 8066.530000631809
+            }
+          ]
+        },
+        {
+          "translate": "0px -1.21067px",
+          "transform": "matrix(0.99863, 0.052336, -0.052336, 0.99863, 0, 0)",
+          "animations": [
+            {
+              "playState": "running",
+              "currentTime": 8066.530000631809
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Manual turn intermediate transform",
+      "cards": [
+        {
+          "translate": "0px",
+          "transform": "matrix(0.997426, -0.0717006, 0.0717006, 0.997426, -2.68006, -0.893355)",
+          "animations": [
+            {
+              "playState": "paused",
+              "currentTime": 0
+            },
+            {
+              "playState": "running",
+              "currentTime": 141.59800018060207
+            }
+          ]
+        },
+        {
+          "translate": "0px -6px",
+          "transform": "matrix(0.998526, 0.0542822, -0.0542822, 0.998526, 2.68006, -0.893355)",
+          "animations": [
+            {
+              "playState": "paused",
+              "currentTime": 0
+            },
+            {
+              "playState": "running",
+              "currentTime": 141.59800018060207
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "layouts": [],
+  "axe": [],
+  "status": "FAIL"
+}

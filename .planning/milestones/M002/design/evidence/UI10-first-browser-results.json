@@ -1,0 +1,263 @@
+{
+  "version": "M002-UI-10",
+  "scope": "Home composition, shared local icons, affected navigation and accessible labels; prototype only.",
+  "checks": [
+    {
+      "name": "HOME10: bilingual example, text labels, guest actions and zero external requests",
+      "status": "PASS"
+    },
+    {
+      "name": "ICON10: SVG click targets preserve user/admin navigation, random/remove and gallery arrows",
+      "status": "PASS"
+    },
+    {
+      "name": "ICON10: review shape groups, localized accessible labels and editing affordance",
+      "status": "FAIL",
+      "error": "locator.click: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('[data-action=\"learn-skip\"]')\u001b[22m\n",
+      "errors": [],
+      "external": []
+    },
+    {
+      "name": "HOME10: restrained word motion, hover pause and reduced-motion static layout",
+      "status": "PASS"
+    },
+    {
+      "name": "ICON10: all views parse and render; small-screen home and affected surfaces fit",
+      "status": "FAIL",
+      "error": "locator.waitFor: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('main h1:visible,main h2:visible').first() to be visible\u001b[22m\n",
+      "errors": [
+        "Unknown UI icon: trash-2"
+      ],
+      "external": []
+    },
+    {
+      "name": "HOME10 / ICON10: representative axe audit",
+      "status": "FAIL",
+      "error": "bag\n\nexpect(received).toEqual(expected) // deep equality\n\n- Expected  -  1\n+ Received  + 35\n\n- Array []\n+ Array [\n+   Object {\n+     \"description\": \"Ensure the order of headings is semantically correct\",\n+     \"help\": \"Heading levels should only increase by one\",\n+     \"helpUrl\": \"https://dequeuniversity.com/rules/axe/4.11/heading-order?application=playwright\",\n+     \"id\": \"heading-order\",\n+     \"impact\": \"moderate\",\n+     \"nodes\": Array [\n+       Object {\n+         \"all\": Array [],\n+         \"any\": Array [\n+           Object {\n+             \"data\": null,\n+             \"id\": \"heading-order\",\n+             \"impact\": \"moderate\",\n+             \"message\": \"Heading order invalid\",\n+             \"relatedNodes\": Array [],\n+           },\n+         ],\n+         \"failureSummary\": \"Fix any of the following:\n+   Heading order invalid\",\n+         \"html\": \"<h3>补签卡</h3>\",\n+         \"impact\": \"moderate\",\n+         \"none\": Array [],\n+         \"target\": Array [\n+           \"article:nth-child(1) > h3\",\n+         ],\n+       },\n+     ],\n+     \"tags\": Array [\n+       \"cat.semantics\",\n+       \"best-practice\",\n+     ],\n+   },\n+ ]",
+      "errors": [],
+      "external": []
+    }
+  ],
+  "layouts": [
+    {
+      "width": 1440,
+      "lang": "zh",
+      "route": "home",
+      "overflow": false,
+      "unlabeled": 0,
+      "badIcons": 0
+    },
+    {
+      "width": 1440,
+      "lang": "zh",
+      "route": "login",
+      "overflow": false,
+      "unlabeled": 0,
+      "badIcons": 0
+    },
+    {
+      "width": 1440,
+      "lang": "zh",
+      "route": "register",
+      "overflow": false,
+      "unlabeled": 0,
+      "badIcons": 0
+    },
+    {
+      "width": 1440,
+      "lang": "zh",
+      "route": "create",
+      "overflow": false,
+      "unlabeled": 0,
+      "badIcons": 0
+    },
+    {
+      "width": 1440,
+      "lang": "zh",
+      "route": "library",
+      "overflow": false,
+      "unlabeled": 0,
+      "badIcons": 0
+    },
+    {
+      "width": 1440,
+      "lang": "zh",
+      "route": "batch",
+      "overflow": false,
+      "unlabeled": 0,
+      "badIcons": 0
+    },
+    {
+      "width": 1440,
+      "lang": "zh",
+      "route": "range",
+      "overflow": false,
+      "unlabeled": 0,
+      "badIcons": 0
+    },
+    {
+      "width": 1440,
+      "lang": "zh",
+      "route": "review",
+      "overflow": false,
+      "unlabeled": 0,
+      "badIcons": 0
+    },
+    {
+      "width": 1440,
+      "lang": "zh",
+      "route": "overview",
+      "overflow": false,
+      "unlabeled": 0,
+      "badIcons": 0
+    },
+    {
+      "width": 1440,
+      "lang": "zh",
+      "route": "summary",
+      "overflow": false,
+      "unlabeled": 0,
+      "badIcons": 0
+    },
+    {
+      "width": 1440,
+      "lang": "zh",
+      "route": "sessiondone",
+      "overflow": false,
+      "unlabeled": 0,
+      "badIcons": 0
+    },
+    {
+      "width": 1440,
+      "lang": "zh",
+      "route": "profile",
+      "overflow": false,
+      "unlabeled": 0,
+      "badIcons": 0
+    },
+    {
+      "width": 1440,
+      "lang": "zh",
+      "route": "notices",
+      "overflow": false,
+      "unlabeled": 0,
+      "badIcons": 0
+    },
+    {
+      "width": 1440,
+      "lang": "zh",
+      "route": "growth",
+      "overflow": false,
+      "unlabeled": 0,
+      "badIcons": 0
+    },
+    {
+      "width": 1440,
+      "lang": "zh",
+      "route": "bag",
+      "overflow": false,
+      "unlabeled": 0,
+      "badIcons": 0
+    },
+    {
+      "width": 1440,
+      "lang": "zh",
+      "route": "shop",
+      "overflow": false,
+      "unlabeled": 0,
+      "badIcons": 0
+    },
+    {
+      "width": 1440,
+      "lang": "zh",
+      "route": "adminhome",
+      "overflow": false,
+      "unlabeled": 0,
+      "badIcons": 0
+    },
+    {
+      "width": 1440,
+      "lang": "zh",
+      "route": "metrics",
+      "overflow": false,
+      "unlabeled": 0,
+      "badIcons": 0
+    },
+    {
+      "width": 1440,
+      "lang": "zh",
+      "route": "models",
+      "overflow": false,
+      "unlabeled": 0,
+      "badIcons": 0
+    },
+    {
+      "width": 1440,
+      "lang": "zh",
+      "route": "plans",
+      "overflow": false,
+      "unlabeled": 0,
+      "badIcons": 0
+    },
+    {
+      "width": 1440,
+      "lang": "zh",
+      "route": "users",
+      "overflow": false,
+      "unlabeled": 0,
+      "badIcons": 0
+    },
+    {
+      "width": 1440,
+      "lang": "zh",
+      "route": "userdetail",
+      "overflow": false,
+      "unlabeled": 0,
+      "badIcons": 0
+    }
+  ],
+  "axe": [
+    {
+      "route": "home",
+      "width": 1440,
+      "lang": "zh",
+      "violations": []
+    },
+    {
+      "route": "home",
+      "width": 320,
+      "lang": "en",
+      "violations": []
+    },
+    {
+      "route": "login",
+      "width": 390,
+      "lang": "zh",
+      "violations": []
+    },
+    {
+      "route": "create",
+      "width": 390,
+      "lang": "zh",
+      "violations": []
+    },
+    {
+      "route": "bag",
+      "width": 1440,
+      "lang": "zh",
+      "violations": [
+        {
+          "id": "heading-order",
+          "impact": "moderate",
+          "nodes": [
+            [
+              "article:nth-child(1) > h3"
+            ]
+          ]
+        }
+      ]
+    }
+  ],
+  "browser": "151.0.7922.34",
+  "status": "FAIL"
+}

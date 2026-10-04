@@ -1,0 +1,107 @@
+{
+  "version": "M002-UI-06",
+  "scope": "Local prototype only; synthetic content and sessionStorage, no real API or authorization verification.",
+  "checks": [
+    {
+      "name": "UIA-PAGE-006-02: default, cancel, blank, save, focus, language, reload and data isolation",
+      "status": "PASS"
+    },
+    {
+      "name": "UIA-PAGE-005-02: new title, original target-only search, order and six statistics",
+      "status": "PASS"
+    },
+    {
+      "name": "UIA-PAGE-006-03: failed save, retry, paused batch, plain text and denied save",
+      "status": "FAIL",
+      "error": "page.selectOption: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('#demo-state')\u001b[22m\n\u001b[2m    - locator resolved to <select id=\"demo-state\" aria-label=\"状态场景\">…</select>\u001b[22m\n\u001b[2m  - attempting select option action\u001b[22m\n\u001b[2m    2 × waiting for element to be visible and enabled\u001b[22m\n\u001b[2m      - element is not visible\u001b[22m\n\u001b[2m    - retrying select option action\u001b[22m\n\u001b[2m    - waiting 20ms\u001b[22m\n\u001b[2m    2 × waiting for element to be visible and enabled\u001b[22m\n\u001b[2m      - element is not visible\u001b[22m\n\u001b[2m    - retrying select option action\u001b[22m\n\u001b[2m      - waiting 100ms\u001b[22m\n\u001b[2m    60 × waiting for element to be visible and enabled\u001b[22m\n\u001b[2m       - element is not visible\u001b[22m\n\u001b[2m     - retrying select option action\u001b[22m\n\u001b[2m       - waiting 500ms\u001b[22m\n"
+    },
+    {
+      "name": "UIA-PAGE-103-02: same learner title in admin list/reader; other user independent",
+      "status": "FAIL",
+      "error": "page.selectOption: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('#demo-page')\u001b[22m\n\u001b[2m    - locator resolved to <select id=\"demo-page\" aria-label=\"Page\">…</select>\u001b[22m\n\u001b[2m  - attempting select option action\u001b[22m\n\u001b[2m    2 × waiting for element to be visible and enabled\u001b[22m\n\u001b[2m      - element is not visible\u001b[22m\n\u001b[2m    - retrying select option action\u001b[22m\n\u001b[2m    - waiting 20ms\u001b[22m\n\u001b[2m    2 × waiting for element to be visible and enabled\u001b[22m\n\u001b[2m      - element is not visible\u001b[22m\n\u001b[2m    - retrying select option action\u001b[22m\n\u001b[2m      - waiting 100ms\u001b[22m\n\u001b[2m    60 × waiting for element to be visible and enabled\u001b[22m\n\u001b[2m       - element is not visible\u001b[22m\n\u001b[2m     - retrying select option action\u001b[22m\n\u001b[2m       - waiting 500ms\u001b[22m\n"
+    },
+    {
+      "name": "UIA-PAGE-212-02 / PAGE-217-02 / PAGE-216-02: one title, no descriptions, draft vs published, no preview for title-only edit",
+      "status": "FAIL",
+      "error": "page.selectOption: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('#demo-page')\u001b[22m\n\u001b[2m    - locator resolved to <select id=\"demo-page\" aria-label=\"Page\">…</select>\u001b[22m\n\u001b[2m  - attempting select option action\u001b[22m\n\u001b[2m    2 × waiting for element to be visible and enabled\u001b[22m\n\u001b[2m      - element is not visible\u001b[22m\n\u001b[2m    - retrying select option action\u001b[22m\n\u001b[2m    - waiting 20ms\u001b[22m\n\u001b[2m    2 × waiting for element to be visible and enabled\u001b[22m\n\u001b[2m      - element is not visible\u001b[22m\n\u001b[2m    - retrying select option action\u001b[22m\n\u001b[2m      - waiting 100ms\u001b[22m\n\u001b[2m    60 × waiting for element to be visible and enabled\u001b[22m\n\u001b[2m       - element is not visible\u001b[22m\n\u001b[2m     - retrying select option action\u001b[22m\n\u001b[2m       - waiting 500ms\u001b[22m\n"
+    },
+    {
+      "name": "UIA-PAGE-212-03: blank title refused, new preset needs preview, parameter changes invalidate preview",
+      "status": "PASS"
+    },
+    {
+      "name": "UIA-PAGE-216-03: preset generation and collection retain word default; review does not expose edited title",
+      "status": "PASS"
+    },
+    {
+      "name": "UIA-PAGE-006-04: mobile/desktop long titles, keyboard editing, reduced motion and axe",
+      "status": "FAIL",
+      "error": "expect(received).toEqual(expected) // deep equality\n\n- Expected  -  1\n+ Received  + 45\n\n- Array []\n+ Array [\n+   Object {\n+     \"description\": \"Ensure landmarks are unique\",\n+     \"help\": \"Landmarks should have a unique role or role/label/title (i.e. accessible name) combination\",\n+     \"helpUrl\": \"https://dequeuniversity.com/rules/axe/4.11/landmark-unique?application=playwright\",\n+     \"id\": \"landmark-unique\",\n+     \"impact\": \"moderate\",\n+     \"nodes\": Array [\n+       Object {\n+         \"all\": Array [],\n+         \"any\": Array [\n+           Object {\n+             \"data\": Object {\n+               \"accessibleText\": null,\n+               \"role\": \"complementary\",\n+             },\n+             \"id\": \"landmark-is-unique\",\n+             \"impact\": \"moderate\",\n+             \"message\": \"The landmark must have a unique aria-label, aria-labelledby, or title to make landmarks distinguishable\",\n+             \"relatedNodes\": Array [\n+               Object {\n+                 \"html\": \"<aside id=\\\"demo\\\">\",\n+                 \"target\": Array [\n+                   \"#demo\",\n+                 ],\n+               },\n+             ],\n+           },\n+         ],\n+         \"failureSummary\": \"Fix any of the following:\n+   The landmark must have a unique aria-label, aria-labelledby, or title to make landmarks distinguishable\",\n+         \"html\": \"<aside>\",\n+         \"impact\": \"moderate\",\n+         \"none\": Array [],\n+         \"target\": Array [\n+           \".batch-detail > aside\",\n+         ],\n+       },\n+     ],\n+     \"tags\": Array [\n+       \"cat.semantics\",\n+       \"best-practice\",\n+     ],\n+   },\n+ ]"
+    }
+  ],
+  "screens": [
+    "UI06-batch-1440.png",
+    "UI06-title-error-1440.png",
+    "UI06-library-1440.png",
+    "UI06-failure-3.png",
+    "UI06-failure-4.png",
+    "UI06-failure-5.png",
+    "UI06-long-title-390.png",
+    "UI06-title-edit-390.png",
+    "UI06-batch-390.png",
+    "UI06-failure-8.png"
+  ],
+  "axe": [
+    {
+      "route": "batch",
+      "width": 390,
+      "violations": [
+        {
+          "id": "landmark-unique",
+          "impact": "moderate"
+        }
+      ]
+    }
+  ],
+  "routes": [
+    {
+      "route": "home",
+      "status": "PASS"
+    },
+    {
+      "route": "login",
+      "status": "PASS"
+    },
+    {
+      "route": "register",
+      "status": "PASS"
+    },
+    {
+      "route": "create",
+      "status": "PASS"
+    },
+    {
+      "route": "library",
+      "status": "PASS"
+    },
+    {
+      "route": "batch",
+      "status": "PASS"
+    },
+    {
+      "route": "range",
+      "status": "PASS"
+    },
+    {
+      "route": "review",
+      "status": "PASS"
+    },
+    {
+      "route": "overview",
+      "status": "PASS"
+    }
+  ],
+  "browser": "151.0.7922.34",
+  "status": "FAIL",
+  "error": "expect(locator).toBeVisible() failed\n\nLocator: locator('h1')\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n  - Expect \"to.be.visible\" with timeout 5000ms\n  - waiting for locator('h1')\n"
+}

@@ -1,0 +1,763 @@
+{
+  "version": "M002-UI-09",
+  "scope": "Local design prototype: copy, alignment, responsive layouts and retained interactions. No live API.",
+  "checks": [
+    {
+      "name": "Authentication alignment, registration hints, validation and Enter login",
+      "status": "PASS"
+    },
+    {
+      "name": "Guest story claim remains visible on mobile login and collects on authentication",
+      "status": "FAIL",
+      "error": "expect(locator).toBeVisible() failed\n\nLocator: locator('.auth-intent')\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n  - Expect \"to.be.visible\" with timeout 5000ms\n  - waiting for locator('.auth-intent')\n",
+      "errors": []
+    },
+    {
+      "name": "Admin field alignment, user search, model editing and plan confirmation",
+      "status": "FAIL",
+      "error": "expect(locator).toBeVisible() failed\n\nLocator:  locator('#dialog')\nExpected: visible\nReceived: hidden\nTimeout:  5000ms\n\nCall log:\n  - Expect \"to.be.visible\" with timeout 5000ms\n  - waiting for locator('#dialog')\n    14 × locator resolved to <dialog id=\"dialog\" aria-labelledby=\"dialog-title\"></dialog>\n       - unexpected value \"hidden\"\n",
+      "errors": []
+    },
+    {
+      "name": "Preset draft/publication and language filtering retain complete source and locked settings",
+      "status": "PASS"
+    },
+    {
+      "name": "Review incorrect-but-nonempty navigation, return/edit, overview and summary",
+      "status": "FAIL",
+      "error": "expect(locator).toContainText(expected) failed\n\nLocator: locator('.result-word').first()\nExpected substring: \"resilient\"\nReceived string:    \"zweave错误\"\nTimeout: 5000ms\n\nCall log:\n  - Expect \"to.have.text\" with timeout 5000ms\n  - waiting for locator('.result-word').first()\n    10 × locator resolved to <span class=\"result-word\">…</span>\n       - unexpected value \"zweave错误\"\n",
+      "errors": []
+    },
+    {
+      "name": "All 28 views: 390/768/1440 Chinese and 1440 English, no page overflow or runtime errors",
+      "status": "PASS"
+    },
+    {
+      "name": "Representative authentication, workspace, gallery and admin accessibility",
+      "status": "PASS"
+    }
+  ],
+  "layouts": [
+    {
+      "route": "home",
+      "width": 390,
+      "language": "zh",
+      "overflow": false
+    },
+    {
+      "route": "login",
+      "width": 390,
+      "language": "zh",
+      "overflow": false
+    },
+    {
+      "route": "register",
+      "width": 390,
+      "language": "zh",
+      "overflow": false
+    },
+    {
+      "route": "create",
+      "width": 390,
+      "language": "zh",
+      "overflow": false
+    },
+    {
+      "route": "library",
+      "width": 390,
+      "language": "zh",
+      "overflow": false
+    },
+    {
+      "route": "batch",
+      "width": 390,
+      "language": "zh",
+      "overflow": false
+    },
+    {
+      "route": "range",
+      "width": 390,
+      "language": "zh",
+      "overflow": false
+    },
+    {
+      "route": "review",
+      "width": 390,
+      "language": "zh",
+      "overflow": false
+    },
+    {
+      "route": "overview",
+      "width": 390,
+      "language": "zh",
+      "overflow": false
+    },
+    {
+      "route": "summary",
+      "width": 390,
+      "language": "zh",
+      "overflow": false
+    },
+    {
+      "route": "sessiondone",
+      "width": 390,
+      "language": "zh",
+      "overflow": false
+    },
+    {
+      "route": "profile",
+      "width": 390,
+      "language": "zh",
+      "overflow": false
+    },
+    {
+      "route": "notices",
+      "width": 390,
+      "language": "zh",
+      "overflow": false
+    },
+    {
+      "route": "growth",
+      "width": 390,
+      "language": "zh",
+      "overflow": false
+    },
+    {
+      "route": "bag",
+      "width": 390,
+      "language": "zh",
+      "overflow": false
+    },
+    {
+      "route": "shop",
+      "width": 390,
+      "language": "zh",
+      "overflow": false
+    },
+    {
+      "route": "adminhome",
+      "width": 390,
+      "language": "zh",
+      "overflow": false
+    },
+    {
+      "route": "metrics",
+      "width": 390,
+      "language": "zh",
+      "overflow": false
+    },
+    {
+      "route": "models",
+      "width": 390,
+      "language": "zh",
+      "overflow": false
+    },
+    {
+      "route": "plans",
+      "width": 390,
+      "language": "zh",
+      "overflow": false
+    },
+    {
+      "route": "users",
+      "width": 390,
+      "language": "zh",
+      "overflow": false
+    },
+    {
+      "route": "userdetail",
+      "width": 390,
+      "language": "zh",
+      "overflow": false
+    },
+    {
+      "route": "operations",
+      "width": 390,
+      "language": "zh",
+      "overflow": false
+    },
+    {
+      "route": "credits",
+      "width": 390,
+      "language": "zh",
+      "overflow": false
+    },
+    {
+      "route": "messages",
+      "width": 390,
+      "language": "zh",
+      "overflow": false
+    },
+    {
+      "route": "presets",
+      "width": 390,
+      "language": "zh",
+      "overflow": false
+    },
+    {
+      "route": "explore",
+      "width": 390,
+      "language": "zh",
+      "overflow": false
+    },
+    {
+      "route": "trial",
+      "width": 390,
+      "language": "zh",
+      "overflow": false
+    },
+    {
+      "route": "home",
+      "width": 768,
+      "language": "zh",
+      "overflow": false
+    },
+    {
+      "route": "login",
+      "width": 768,
+      "language": "zh",
+      "overflow": false
+    },
+    {
+      "route": "register",
+      "width": 768,
+      "language": "zh",
+      "overflow": false
+    },
+    {
+      "route": "create",
+      "width": 768,
+      "language": "zh",
+      "overflow": false
+    },
+    {
+      "route": "library",
+      "width": 768,
+      "language": "zh",
+      "overflow": false
+    },
+    {
+      "route": "batch",
+      "width": 768,
+      "language": "zh",
+      "overflow": false
+    },
+    {
+      "route": "range",
+      "width": 768,
+      "language": "zh",
+      "overflow": false
+    },
+    {
+      "route": "review",
+      "width": 768,
+      "language": "zh",
+      "overflow": false
+    },
+    {
+      "route": "overview",
+      "width": 768,
+      "language": "zh",
+      "overflow": false
+    },
+    {
+      "route": "summary",
+      "width": 768,
+      "language": "zh",
+      "overflow": false
+    },
+    {
+      "route": "sessiondone",
+      "width": 768,
+      "language": "zh",
+      "overflow": false
+    },
+    {
+      "route": "profile",
+      "width": 768,
+      "language": "zh",
+      "overflow": false
+    },
+    {
+      "route": "notices",
+      "width": 768,
+      "language": "zh",
+      "overflow": false
+    },
+    {
+      "route": "growth",
+      "width": 768,
+      "language": "zh",
+      "overflow": false
+    },
+    {
+      "route": "bag",
+      "width": 768,
+      "language": "zh",
+      "overflow": false
+    },
+    {
+      "route": "shop",
+      "width": 768,
+      "language": "zh",
+      "overflow": false
+    },
+    {
+      "route": "adminhome",
+      "width": 768,
+      "language": "zh",
+      "overflow": false
+    },
+    {
+      "route": "metrics",
+      "width": 768,
+      "language": "zh",
+      "overflow": false
+    },
+    {
+      "route": "models",
+      "width": 768,
+      "language": "zh",
+      "overflow": false
+    },
+    {
+      "route": "plans",
+      "width": 768,
+      "language": "zh",
+      "overflow": false
+    },
+    {
+      "route": "users",
+      "width": 768,
+      "language": "zh",
+      "overflow": false
+    },
+    {
+      "route": "userdetail",
+      "width": 768,
+      "language": "zh",
+      "overflow": false
+    },
+    {
+      "route": "operations",
+      "width": 768,
+      "language": "zh",
+      "overflow": false
+    },
+    {
+      "route": "credits",
+      "width": 768,
+      "language": "zh",
+      "overflow": false
+    },
+    {
+      "route": "messages",
+      "width": 768,
+      "language": "zh",
+      "overflow": false
+    },
+    {
+      "route": "presets",
+      "width": 768,
+      "language": "zh",
+      "overflow": false
+    },
+    {
+      "route": "explore",
+      "width": 768,
+      "language": "zh",
+      "overflow": false
+    },
+    {
+      "route": "trial",
+      "width": 768,
+      "language": "zh",
+      "overflow": false
+    },
+    {
+      "route": "home",
+      "width": 1440,
+      "language": "zh",
+      "overflow": false
+    },
+    {
+      "route": "login",
+      "width": 1440,
+      "language": "zh",
+      "overflow": false
+    },
+    {
+      "route": "register",
+      "width": 1440,
+      "language": "zh",
+      "overflow": false
+    },
+    {
+      "route": "create",
+      "width": 1440,
+      "language": "zh",
+      "overflow": false
+    },
+    {
+      "route": "library",
+      "width": 1440,
+      "language": "zh",
+      "overflow": false
+    },
+    {
+      "route": "batch",
+      "width": 1440,
+      "language": "zh",
+      "overflow": false
+    },
+    {
+      "route": "range",
+      "width": 1440,
+      "language": "zh",
+      "overflow": false
+    },
+    {
+      "route": "review",
+      "width": 1440,
+      "language": "zh",
+      "overflow": false
+    },
+    {
+      "route": "overview",
+      "width": 1440,
+      "language": "zh",
+      "overflow": false
+    },
+    {
+      "route": "summary",
+      "width": 1440,
+      "language": "zh",
+      "overflow": false
+    },
+    {
+      "route": "sessiondone",
+      "width": 1440,
+      "language": "zh",
+      "overflow": false
+    },
+    {
+      "route": "profile",
+      "width": 1440,
+      "language": "zh",
+      "overflow": false
+    },
+    {
+      "route": "notices",
+      "width": 1440,
+      "language": "zh",
+      "overflow": false
+    },
+    {
+      "route": "growth",
+      "width": 1440,
+      "language": "zh",
+      "overflow": false
+    },
+    {
+      "route": "bag",
+      "width": 1440,
+      "language": "zh",
+      "overflow": false
+    },
+    {
+      "route": "shop",
+      "width": 1440,
+      "language": "zh",
+      "overflow": false
+    },
+    {
+      "route": "adminhome",
+      "width": 1440,
+      "language": "zh",
+      "overflow": false
+    },
+    {
+      "route": "metrics",
+      "width": 1440,
+      "language": "zh",
+      "overflow": false
+    },
+    {
+      "route": "models",
+      "width": 1440,
+      "language": "zh",
+      "overflow": false
+    },
+    {
+      "route": "plans",
+      "width": 1440,
+      "language": "zh",
+      "overflow": false
+    },
+    {
+      "route": "users",
+      "width": 1440,
+      "language": "zh",
+      "overflow": false
+    },
+    {
+      "route": "userdetail",
+      "width": 1440,
+      "language": "zh",
+      "overflow": false
+    },
+    {
+      "route": "operations",
+      "width": 1440,
+      "language": "zh",
+      "overflow": false
+    },
+    {
+      "route": "credits",
+      "width": 1440,
+      "language": "zh",
+      "overflow": false
+    },
+    {
+      "route": "messages",
+      "width": 1440,
+      "language": "zh",
+      "overflow": false
+    },
+    {
+      "route": "presets",
+      "width": 1440,
+      "language": "zh",
+      "overflow": false
+    },
+    {
+      "route": "explore",
+      "width": 1440,
+      "language": "zh",
+      "overflow": false
+    },
+    {
+      "route": "trial",
+      "width": 1440,
+      "language": "zh",
+      "overflow": false
+    },
+    {
+      "route": "home",
+      "width": 1440,
+      "language": "en",
+      "overflow": false
+    },
+    {
+      "route": "login",
+      "width": 1440,
+      "language": "en",
+      "overflow": false
+    },
+    {
+      "route": "register",
+      "width": 1440,
+      "language": "en",
+      "overflow": false
+    },
+    {
+      "route": "create",
+      "width": 1440,
+      "language": "en",
+      "overflow": false
+    },
+    {
+      "route": "library",
+      "width": 1440,
+      "language": "en",
+      "overflow": false
+    },
+    {
+      "route": "batch",
+      "width": 1440,
+      "language": "en",
+      "overflow": false
+    },
+    {
+      "route": "range",
+      "width": 1440,
+      "language": "en",
+      "overflow": false
+    },
+    {
+      "route": "review",
+      "width": 1440,
+      "language": "en",
+      "overflow": false
+    },
+    {
+      "route": "overview",
+      "width": 1440,
+      "language": "en",
+      "overflow": false
+    },
+    {
+      "route": "summary",
+      "width": 1440,
+      "language": "en",
+      "overflow": false
+    },
+    {
+      "route": "sessiondone",
+      "width": 1440,
+      "language": "en",
+      "overflow": false
+    },
+    {
+      "route": "profile",
+      "width": 1440,
+      "language": "en",
+      "overflow": false
+    },
+    {
+      "route": "notices",
+      "width": 1440,
+      "language": "en",
+      "overflow": false
+    },
+    {
+      "route": "growth",
+      "width": 1440,
+      "language": "en",
+      "overflow": false
+    },
+    {
+      "route": "bag",
+      "width": 1440,
+      "language": "en",
+      "overflow": false
+    },
+    {
+      "route": "shop",
+      "width": 1440,
+      "language": "en",
+      "overflow": false
+    },
+    {
+      "route": "adminhome",
+      "width": 1440,
+      "language": "en",
+      "overflow": false
+    },
+    {
+      "route": "metrics",
+      "width": 1440,
+      "language": "en",
+      "overflow": false
+    },
+    {
+      "route": "models",
+      "width": 1440,
+      "language": "en",
+      "overflow": false
+    },
+    {
+      "route": "plans",
+      "width": 1440,
+      "language": "en",
+      "overflow": false
+    },
+    {
+      "route": "users",
+      "width": 1440,
+      "language": "en",
+      "overflow": false
+    },
+    {
+      "route": "userdetail",
+      "width": 1440,
+      "language": "en",
+      "overflow": false
+    },
+    {
+      "route": "operations",
+      "width": 1440,
+      "language": "en",
+      "overflow": false
+    },
+    {
+      "route": "credits",
+      "width": 1440,
+      "language": "en",
+      "overflow": false
+    },
+    {
+      "route": "messages",
+      "width": 1440,
+      "language": "en",
+      "overflow": false
+    },
+    {
+      "route": "presets",
+      "width": 1440,
+      "language": "en",
+      "overflow": false
+    },
+    {
+      "route": "explore",
+      "width": 1440,
+      "language": "en",
+      "overflow": false
+    },
+    {
+      "route": "trial",
+      "width": 1440,
+      "language": "en",
+      "overflow": false
+    }
+  ],
+  "axe": [
+    {
+      "route": "login",
+      "width": 1440,
+      "violations": []
+    },
+    {
+      "route": "register",
+      "width": 390,
+      "violations": []
+    },
+    {
+      "route": "create",
+      "width": 390,
+      "violations": []
+    },
+    {
+      "route": "review",
+      "width": 390,
+      "violations": []
+    },
+    {
+      "route": "users",
+      "width": 1440,
+      "violations": []
+    },
+    {
+      "route": "plans",
+      "width": 1440,
+      "violations": []
+    },
+    {
+      "route": "messages",
+      "width": 390,
+      "violations": []
+    },
+    {
+      "route": "presets",
+      "width": 1440,
+      "violations": []
+    },
+    {
+      "route": "explore",
+      "width": 390,
+      "violations": []
+    }
+  ],
+  "browser": "151.0.7922.34",
+  "status": "FAIL"
+}

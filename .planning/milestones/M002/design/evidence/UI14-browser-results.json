@@ -1,0 +1,186 @@
+{
+  "version": "M002-UI-14",
+  "scope": "Homepage float, animated layering, reading interruption, motion preference, responsive animation bounds and lifecycle.",
+  "checks": [
+    {
+      "name": "Manual layering, rapid keyboard changes, live reduced-motion and reentry cleanup",
+      "status": "PASS"
+    },
+    {
+      "name": "Offscreen animation pauses and resumes only when visible",
+      "status": "PASS"
+    },
+    {
+      "name": "Real idle float and automatic 8-second layered turn; reading stops movement",
+      "status": "PASS"
+    },
+    {
+      "name": "Animated phone bounds, tap-to-read, unchanged stories and accessible layout",
+      "status": "PASS"
+    }
+  ],
+  "observations": [
+    {
+      "name": "Float frames 1.3s apart",
+      "start": [
+        {
+          "translate": "0px",
+          "transform": "matrix(0.997564, -0.0697565, 0.0697565, 0.997564, 0, 0)",
+          "animations": [
+            {
+              "playState": "running",
+              "currentTime": 0
+            }
+          ]
+        },
+        {
+          "translate": "0px -6px",
+          "transform": "matrix(0.99863, 0.052336, -0.052336, 0.99863, 0, 0)",
+          "animations": [
+            {
+              "playState": "running",
+              "currentTime": 0
+            }
+          ]
+        }
+      ],
+      "floated": [
+        {
+          "translate": "0px -2.29022px",
+          "transform": "matrix(0.997564, -0.0697565, 0.0697565, 0.997564, 0, 0)",
+          "animations": [
+            {
+              "playState": "running",
+              "currentTime": 1291.6270003979803
+            }
+          ]
+        },
+        {
+          "translate": "0px -3.70978px",
+          "transform": "matrix(0.99863, 0.052336, -0.052336, 0.99863, 0, 0)",
+          "animations": [
+            {
+              "playState": "running",
+              "currentTime": 1291.6270003979803
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Real first automatic turn",
+      "during": [
+        {
+          "translate": "0px -4.54776px",
+          "transform": "matrix(0.996926, -0.0783473, 0.0783473, 0.996926, -11.8457, -3.94858)",
+          "animations": [
+            {
+              "playState": "running",
+              "currentTime": 8.399999999999963
+            },
+            {
+              "playState": "paused",
+              "currentTime": 7978.1030003979795
+            },
+            {
+              "playState": "running",
+              "currentTime": 299.2370002418756
+            }
+          ]
+        },
+        {
+          "translate": "0px -1.45224px",
+          "transform": "matrix(0.998142, 0.0609366, -0.0609366, 0.998142, 11.8457, -3.94858)",
+          "animations": [
+            {
+              "playState": "running",
+              "currentTime": 8.399999999999963
+            },
+            {
+              "playState": "paused",
+              "currentTime": 7978.1030003979795
+            },
+            {
+              "playState": "running",
+              "currentTime": 299.2370002418756
+            }
+          ]
+        }
+      ],
+      "settled": [
+        {
+          "translate": "0px -4.70837px",
+          "transform": "matrix(0.997564, -0.0697565, 0.0697565, 0.997564, 0, 0)",
+          "animations": [
+            {
+              "playState": "running",
+              "currentTime": 8036.098000256299
+            }
+          ]
+        },
+        {
+          "translate": "0px -1.29163px",
+          "transform": "matrix(0.99863, 0.052336, -0.052336, 0.99863, 0, 0)",
+          "animations": [
+            {
+              "playState": "running",
+              "currentTime": 8036.098000256299
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "layouts": [
+    {
+      "width": 320,
+      "lang": "zh",
+      "frames": 92,
+      "noOverflow": true
+    },
+    {
+      "width": 320,
+      "lang": "en",
+      "frames": 92,
+      "noOverflow": true
+    },
+    {
+      "width": 390,
+      "lang": "zh",
+      "frames": 92,
+      "noOverflow": true
+    },
+    {
+      "width": 390,
+      "lang": "en",
+      "frames": 92,
+      "noOverflow": true
+    },
+    {
+      "width": 768,
+      "lang": "zh",
+      "frames": 92,
+      "noOverflow": true
+    },
+    {
+      "width": 1440,
+      "lang": "en",
+      "frames": 92,
+      "noOverflow": true
+    }
+  ],
+  "axe": [
+    {
+      "width": 390,
+      "lang": "zh",
+      "violations": []
+    },
+    {
+      "width": 1440,
+      "lang": "en",
+      "violations": []
+    }
+  ],
+  "retained_from": "UI14-first-browser-results.json",
+  "status": "PASS"
+}

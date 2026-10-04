@@ -1,0 +1,52 @@
+const {chromium,expect}=require('../../../../../frontend/node_modules/@playwright/test');
+const {default:AxeBuilder}=require('../../../../../frontend/node_modules/@axe-core/playwright');
+const fs=require('node:fs'),path=require('node:path');
+const report={version:'M002-UI-17',scope:'Four personal prototype views: visual/responsive hierarchy and retained interactions; no live backend.',checks:[],layouts:[],axe:[]};
+const visit=async(p,page,extra={})=>{await p.goto('http://127.0.0.1:4174/prototype/?'+new URLSearchParams({page,role:'learner',lang:'zh',v:report.version,...extra}));await p.locator('main h1').waitFor()};
+const click=(p,a)=>p.locator(`[data-action="${a}"]:visible`).first().click();
+const account=(p,route)=>p.locator(`.account-nav [data-go="${route}"]`).click();
+const points=p=>p.locator('.growth-banner .stats strong').first();
+(async()=>{const b=await chromium.launch();report.browser=b.version();
+async function check(name,fn){const c=await b.newContext({viewport:{width:1440,height:1000},reducedMotion:'reduce'}),p=await c.newPage(),errors=[];p.on('pageerror',e=>errors.push(e.message));p.on('console',m=>{if(m.type()==='error')errors.push(m.text())});try{await fn(p);expect(errors).toEqual([]);report.checks.push({name,status:'PASS'})}catch(e){report.checks.push({name,status:'FAIL',error:e.message,errors});await p.screenshot({path:path.join(__dirname,`UI17-failure-${report.checks.length}.png`),fullPage:true})}await c.close();console.log(name,report.checks.at(-1).status)}
+await check('Four pages in both languages at 320, 390, 768 and 1440; accessible layout',async p=>{
+ for(const width of [320,390,768,1440])for(const lang of ['zh','en'])for(const route of ['profile','growth','bag','shop']){
+  await p.setViewportSize({width,height:1000});await visit(p,route,{lang});await expect(p.locator('.account-nav a')).toHaveCount(4);await expect(p.locator('.account-nav [aria-current]')).toHaveAttribute('data-go',route);expect(await p.evaluate(()=>document.documentElement.scrollWidth>innerWidth)).toBe(false);
+  if(route==='profile')await expect(p.locator('.security-row')).toHaveCount(3);
+  if(route==='growth'){await expect(p.locator('.achievement-group')).toHaveCount(4);await expect(p.locator('.level-reward')).toHaveCount(3)}
+  if(route==='bag'||route==='shop'){await expect(p.locator('.item')).toHaveCount(4);await expect(p.locator('.account-balance strong')).toHaveText('320')}
+  report.layouts.push({width,lang,route,overflow:false});
+  if((lang==='zh'&&[390,1440].includes(width))||(width===320&&lang==='en'))await p.screenshot({path:path.join(__dirname,`UI17-${route}-${width}-${lang}.png`),fullPage:true});
+  if((width===390&&lang==='zh')||(width===1440&&lang==='en')){const a=await new AxeBuilder({page:p}).analyze();report.axe.push({width,lang,route,violations:a.violations});expect(a.violations).toEqual([])}
+ }
+});
+await check('Profile saves, language draft, empty-name fallback, failures and account safety dialogs',async p=>{
+ await visit(p,'profile');await p.fill('#nickname','林间读者');await p.selectOption('#gender','female');await click(p,'language');await expect(p.locator('#nickname')).toHaveValue('林间读者');await click(p,'profile-save');await expect(p.locator('.account-identity h2')).toHaveText('林间读者');await account(p,'shop');await expect(p.locator('.account-identity h2')).toHaveText('林间读者');await account(p,'profile');await expect(p.locator('#gender')).toHaveValue('female');await p.fill('#nickname','');await click(p,'profile-save');await expect(p.locator('.account-identity h2')).toHaveText('learner');
+ await click(p,'password');await expect(p.locator('#current-password')).toBeVisible();await p.fill('#current-password','example-current');await p.fill('#new-password','example-new');await p.fill('#confirm-password','does-not-match');await click(p,'identity-password-save');await expect(p.locator('#identity-error')).toBeVisible();await click(p,'cancel');await expect(p.locator('#dialog')).not.toBeVisible();await expect(p.locator('[data-action="password"]')).toBeFocused();
+ await click(p,'delete-account');await expect(p.locator('#delete-password')).toBeVisible();await expect(p.locator('#delete-understood')).not.toBeChecked();await click(p,'cancel');await expect(p.locator('[data-action="delete-account"]')).toBeFocused();
+ await visit(p,'profile',{state:'save-error'});await p.fill('#nickname','保留这个输入');await click(p,'profile-save');await expect(p.locator('#toast')).toContainText('失败');await expect(p.locator('#nickname')).toHaveValue('保留这个输入');await expect(p.locator('.account-identity h2')).toHaveText('小涟');
+ await visit(p,'profile');await p.fill('#nickname','A-very-long-nickname-without-any-breaks-at-all');await click(p,'profile-save');await p.setViewportSize({width:320,height:1000});expect(await p.evaluate(()=>document.documentElement.scrollWidth>innerWidth)).toBe(false);
+});
+await check('Manual growth rewards, disclosure/focus, level reward and make-up remain operable',async p=>{
+ await visit(p,'growth');await expect(points(p)).toHaveText('320');const group=p.locator('[data-achievement-group="signin"]');await group.locator('summary').focus();await p.keyboard.press('Enter');expect(await group.locator('details').evaluate(e=>e.open)).toBe(true);await click(p,'growth-claim:0');await expect(points(p)).toHaveText('335');expect(await group.locator('details').evaluate(e=>e.open)).toBe(true);await expect(group.locator('summary')).toBeFocused();await expect(p.locator('[data-action="growth-claim:0"]')).toBeDisabled();await account(p,'bag');await expect(p.locator('.item')).toHaveCount(5);
+ await account(p,'growth');await click(p,'growth-level:2');await expect(points(p)).toHaveText('355');await expect(p.locator('[data-action="growth-level:2"]')).toBeDisabled();await expect(p.locator('[data-level="3"] h3')).toBeFocused();await account(p,'bag');await expect(p.locator('.item')).toHaveCount(6);
+ await visit(p,'growth');await click(p,'makeup');await click(p,'makeup-day:14');await click(p,'makeup-confirm');await expect(p.locator('[data-day="14"]')).toHaveClass(/signed/);await expect(points(p)).toHaveText('326');await expect(p.locator('.growth-banner')).toContainText('260 / 300');await account(p,'bag');await expect(p.locator('.item').first()).toContainText('已使用');await expect(p.locator('.item').first().locator('button')).toBeDisabled();
+});
+await check('Blocked/disabled/demoted rewards, failed claim, max level and empty state',async p=>{
+ for(const state of ['blocked','disabled','demoted']){await visit(p,'growth',{state});await expect(p.locator('[data-action="growth-level:2"]')).toBeDisabled();await expect(points(p)).toHaveText('320')}
+ await visit(p,'growth',{state:'claim-error'});await click(p,'growth-level:2');await expect(points(p)).toHaveText('320');await expect(p.locator('#toast')).toContainText('领取失败');
+ await visit(p,'growth',{state:'maxlevel'});await expect(p.locator('.growth-banner')).toContainText('已达当前最高等级');
+ await visit(p,'growth',{state:'empty'});await expect(p.locator('.growth-banner .stats strong').nth(1)).toHaveText('0');await expect(p.locator('[data-action="growth-level:2"]')).toBeDisabled();
+ for(const route of ['bag','shop']){await visit(p,route,{state:'empty'});await expect(p.locator('.empty')).toBeVisible();await expect(p.locator('.item')).toHaveCount(0)}
+});
+await check('Redeeming, activating, per-model time extension, plan coverage and retirement refund',async p=>{
+ await visit(p,'shop');await click(p,'redeem:2');await expect(p.locator('#dialog')).toContainText('80 积分');await click(p,'cancel');await expect(p.locator('.account-balance strong')).toHaveText('320');await click(p,'redeem:2');await click(p,'redeem-confirm:2');await expect(p.locator('.account-balance strong')).toHaveText('240');await account(p,'bag');await expect(p.locator('.item')).toHaveCount(5);
+ await click(p,'use:2');await expect(p.locator('#dialog')).toContainText('2026-09-20 12:00');await expect(p.locator('#dialog')).toContainText('2026-09-23 12:00');await click(p,'benefit-confirm:2');await expect(p.locator('.item').nth(2)).toContainText('生效中');await click(p,'use:4');await expect(p.locator('#dialog')).toContainText('2026-09-26 12:00');await click(p,'benefit-confirm:4');await expect(p.locator('.item').last()).toContainText('2026-09-26');
+ await visit(p,'bag');await click(p,'use:3');await click(p,'benefit-confirm:3');await expect(p.locator('.account-plan').last()).toContainText('Pro');await expect(p.locator('[data-action="use:2"]')).toBeDisabled();await expect(p.locator('.item-model')).toContainText('当前计划已满足该模型卡提供的所有模型');
+ await visit(p,'bag',{state:'retired'});await click(p,'refund:2');await expect(p.locator('#dialog')).toContainText('40 积分');await click(p,'refund-confirm:2');await expect(p.locator('.account-balance strong')).toHaveText('360');await expect(p.locator('[data-action="refund:2"]')).toHaveCount(0);await expect(p.locator('.item-model')).toContainText('已退');
+ await visit(p,'shop',{state:'insufficient'});await click(p,'redeem:3');await expect(p.locator('#dialog')).not.toBeVisible();await expect(p.locator('#toast')).toContainText('积分不足');await expect(p.locator('.account-balance strong')).toHaveText('320');
+ await visit(p,'bag',{state:'expired'});expect(await p.locator('.item button').evaluateAll(es=>es.every(e=>e.disabled))).toBe(true);
+});
+await check('Shared header menu routes, normal creation and locked trial remain intact',async p=>{
+ await visit(p,'profile');await p.locator('.account-dropdown summary').click();await expect(p.locator('.account-popover a')).toHaveCount(4);await p.locator('.account-popover [data-go="growth"]').click();await expect(p.locator('main')).toHaveAttribute('data-page','PAGE-214');await p.locator('.nav [data-go="create"]').click();await expect(p.locator('.creation-settings select')).toHaveCount(4);await expect(p.locator('#model')).toHaveValue('');await expect(p.locator('#style')).toHaveValue('story');await visit(p,'trial',{role:'guest'});await expect(p.locator('.trial-settings select')).toHaveCount(0);await expect(p.locator('.trial-settings dd')).toHaveText(['Model A','故事','简短','中文']);
+});
+await b.close();report.status=report.checks.every(x=>x.status==='PASS')?'PASS':'FAIL';fs.writeFileSync(path.join(__dirname,'UI17-browser-results.json'),JSON.stringify(report,null,2)+'\n');console.log(JSON.stringify({status:report.status,checks:report.checks,layouts:report.layouts.length,axe:report.axe.length}));process.exitCode=report.status==='PASS'?0:1})().catch(e=>{console.error(e);process.exit(1)});

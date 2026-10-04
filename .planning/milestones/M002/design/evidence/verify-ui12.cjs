@@ -1,0 +1,14 @@
+const {chromium}=require('../../../../../frontend/node_modules/@playwright/test');
+const {default:AxeBuilder}=require('../../../../../frontend/node_modules/@axe-core/playwright');
+const fs=require('node:fs'),path=require('node:path');
+(async()=>{const b=await chromium.launch(),c=await b.newContext({reducedMotion:'reduce'}),p=await c.newPage();const out={version:'M002-UI-12',scope:'Expanded homepage sample: content, responsive reading and accessibility only.',checks:[],layouts:[],axe:[],errors:[]};p.on('pageerror',e=>out.errors.push(e.message));
+for(const width of [320,390,768,1440])for(const lang of ['zh','en']){
+ await p.setViewportSize({width,height:900});await p.goto('http://127.0.0.1:4174/prototype/?'+new URLSearchParams({page:'home',role:'guest',lang,v:'M002-UI-12'}));await p.locator('.home-story').last().waitFor();
+ const record=await p.evaluate(()=>{const box=s=>{const r=document.querySelector(s).getBoundingClientRect();return {x:r.x,y:r.y,width:r.width,height:r.height}};return {overflow:document.documentElement.scrollWidth>innerWidth,words:[...document.querySelectorAll('.home-word')].map(e=>e.textContent),highlights:[...document.querySelectorAll('.home-story mark')].map(e=>e.textContent),paragraphs:document.querySelectorAll('.home-story').length,wordCount:[...document.querySelectorAll('.home-story')].map(e=>e.textContent).join(' ').split(/\s+/).length,fontSize:getComputedStyle(document.querySelector('.home-story')).fontSize,main:box('main'),intro:box('.home-intro'),example:box('.home-example')}});
+ record.width=width;record.lang=lang;out.layouts.push(record);
+ const ok=!record.overflow&&record.words.length===8&&record.paragraphs===2&&record.wordCount===94&&JSON.stringify(record.words)===JSON.stringify(record.highlights)&&(width>1100?record.example.x>record.intro.x:record.example.y>=record.intro.y+record.intro.height);
+ out.checks.push({name:`Home ${width}px ${lang}: complete story, all selected words highlighted, readable layout`,status:ok?'PASS':'FAIL'});
+ if(lang==='zh'||width===320)await p.screenshot({path:path.join(__dirname,`UI12-home-${width}-${lang}.png`),fullPage:true});
+ if((width===390&&lang==='zh')||(width===1440&&lang==='en')){const a=await new AxeBuilder({page:p}).analyze();out.axe.push({width,lang,violations:a.violations});out.checks.push({name:`Home accessibility ${width}px ${lang}`,status:a.violations.length?'FAIL':'PASS'});}
+}
+out.checks.push({name:'No browser runtime errors',status:out.errors.length?'FAIL':'PASS'});out.status=out.checks.every(x=>x.status==='PASS')?'PASS':'FAIL';fs.writeFileSync(path.join(__dirname,'UI12-browser-results.json'),JSON.stringify(out,null,2)+'\n');await b.close();console.log(JSON.stringify({status:out.status,checks:out.checks,layouts:out.layouts.length,axe:out.axe.length}));process.exitCode=out.status==='PASS'?0:1})().catch(e=>{console.error(e);process.exit(1)});

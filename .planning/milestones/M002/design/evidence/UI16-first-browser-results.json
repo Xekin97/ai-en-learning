@@ -1,0 +1,75 @@
+{
+  "version": "M002-UI-16",
+  "scope": "Editable normal creation settings hierarchy, responsive controls, continuous editing and retained constraints.",
+  "checks": [
+    {
+      "name": "Bilingual responsive controls, original defaults and stable editing focus",
+      "status": "PASS"
+    },
+    {
+      "name": "Changing settings, UI language, random words and generation preserve configuration",
+      "status": "FAIL",
+      "error": "expect(locator).toHaveValue(expected) failed\n\nLocator:  locator('#style')\nExpected: \"business\"\nReceived: \"news\"\nTimeout:  5000ms\n\nCall log:\n  - Expect \"to.have.value\" with timeout 5000ms\n  - waiting for locator('#style')\n    14 × locator resolved to <select id=\"style\">…</select>\n       - unexpected value \"news\"\n",
+      "errors": []
+    },
+    {
+      "name": "Unavailable constraints, long model labels and read-only trial panel retained",
+      "status": "PASS"
+    }
+  ],
+  "layouts": [
+    {
+      "width": 320,
+      "lang": "zh",
+      "overflow": false
+    },
+    {
+      "width": 320,
+      "lang": "en",
+      "overflow": false
+    },
+    {
+      "width": 390,
+      "lang": "zh",
+      "overflow": false
+    },
+    {
+      "width": 390,
+      "lang": "en",
+      "overflow": false
+    },
+    {
+      "width": 768,
+      "lang": "zh",
+      "overflow": false
+    },
+    {
+      "width": 768,
+      "lang": "en",
+      "overflow": false
+    },
+    {
+      "width": 1440,
+      "lang": "zh",
+      "overflow": false
+    },
+    {
+      "width": 1440,
+      "lang": "en",
+      "overflow": false
+    }
+  ],
+  "axe": [
+    {
+      "width": 390,
+      "lang": "zh",
+      "violations": []
+    },
+    {
+      "width": 1440,
+      "lang": "en",
+      "violations": []
+    }
+  ],
+  "status": "FAIL"
+}

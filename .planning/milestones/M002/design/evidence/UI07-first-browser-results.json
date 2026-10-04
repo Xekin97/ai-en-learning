@@ -1,0 +1,87 @@
+{
+  "version": "M002-UI-07",
+  "scope": "Local design prototype only; no real AI, APIs or authorization",
+  "checks": [
+    {
+      "name": "UIA-PAGE-217-03 / 05: full published stories and all settings; correct selected locked workspace; no generation on entry",
+      "status": "FAIL",
+      "error": "expect(locator).toContainText(expected) failed\n\nLocator: locator('.quota-detail')\nExpected substring: \"5\"\nReceived string:    \"计划剩余 3 次 · 额外 0 次\"\nTimeout: 5000ms\n\nCall log:\n  - Expect \"to.have.text\" with timeout 5000ms\n  - waiting for locator('.quota-detail')\n    14 × locator resolved to <small class=\"quota-detail\">计划剩余 3 次 · 额外 0 次</small>\n       - unexpected value \"计划剩余 3 次 · 额外 0 次\"\n"
+    },
+    {
+      "name": "UIA-PAGE-217-04: keyboard, reduced motion, empty and single preset",
+      "status": "PASS"
+    },
+    {
+      "name": "UIA-PAGE-217-03 / 04: responsive complete content and axe",
+      "status": "PASS"
+    },
+    {
+      "name": "UIA-PAGE-217-05: administrator draft/preview isolated; publish switches full sample and configuration together",
+      "status": "FAIL",
+      "error": "page.selectOption: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('#demo-page')\u001b[22m\n\u001b[2m    - locator resolved to <select id=\"demo-page\" aria-label=\"Page\">…</select>\u001b[22m\n\u001b[2m  - attempting select option action\u001b[22m\n\u001b[2m    2 × waiting for element to be visible and enabled\u001b[22m\n\u001b[2m      - element is not visible\u001b[22m\n\u001b[2m    - retrying select option action\u001b[22m\n\u001b[2m    - waiting 20ms\u001b[22m\n\u001b[2m    2 × waiting for element to be visible and enabled\u001b[22m\n\u001b[2m      - element is not visible\u001b[22m\n\u001b[2m    - retrying select option action\u001b[22m\n\u001b[2m      - waiting 100ms\u001b[22m\n\u001b[2m    60 × waiting for element to be visible and enabled\u001b[22m\n\u001b[2m       - element is not visible\u001b[22m\n\u001b[2m     - retrying select option action\u001b[22m\n\u001b[2m       - waiting 500ms\u001b[22m\n"
+    },
+    {
+      "name": "UIA-PAGE-006-02 retained: private title save remains functional",
+      "status": "PASS"
+    },
+    {
+      "name": "UIA-PAGE-217-04: actual timed automatic movement, wrap, hover and focus pause, explicit resume and leave cleanup",
+      "status": "PASS"
+    }
+  ],
+  "responsive": [
+    {
+      "width": 320,
+      "lang": "zh",
+      "status": "PASS"
+    },
+    {
+      "width": 320,
+      "lang": "en",
+      "status": "PASS"
+    },
+    {
+      "width": 390,
+      "lang": "zh",
+      "status": "PASS"
+    },
+    {
+      "width": 390,
+      "lang": "en",
+      "status": "PASS"
+    },
+    {
+      "width": 768,
+      "lang": "zh",
+      "status": "PASS"
+    },
+    {
+      "width": 768,
+      "lang": "en",
+      "status": "PASS"
+    },
+    {
+      "width": 1440,
+      "lang": "zh",
+      "status": "PASS"
+    },
+    {
+      "width": 1440,
+      "lang": "en",
+      "status": "PASS"
+    }
+  ],
+  "axe": [
+    {
+      "width": 390,
+      "violations": []
+    },
+    {
+      "width": 1440,
+      "violations": []
+    }
+  ],
+  "errors": [],
+  "browser": "151.0.7922.34",
+  "status": "FAIL"
+}

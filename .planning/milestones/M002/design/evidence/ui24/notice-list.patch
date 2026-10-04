@@ -1,0 +1,324 @@
+--- a/.planning/milestones/M002/design/design-spec.md
++++ b/.planning/milestones/M002/design/design-spec.md
+@@ -3,14 +3,23 @@
+ stage: uiux-design
+ role: uiux/base
+ agent_name: designer-tony
+-status: awaiting_user_review
+-version: M002-UI-23
+-design_version: M002-UI-23
++status: staged_unverified
++version: M002-UI-24
++design_version: M002-UI-24
+ approval: pending_new_visual_review
+ date: 2026-10-01
+ ---
+ 
+ # 二期设计规格 · M002-UI-23
++
++## UI24 平台消息列表修订（暂存，未写回）
++
++用户指出宽屏列表既未与版心对齐，铺满整页也缺乏美感。PAGE-207 / CAP-210 / DATA-205 / UIA-PAGE-207-LIST24：标题和列表共享居中 880px 最大宽度的 `.notices-page`，以同一暖白纸面容纳全部条目，细线分隔。每条铺满自身列表宽度，按日期、标题/登录提醒标记、箭头排列。手机日期移至标题上方；标题完整换行，无无意义的最小屏高。选择这一方向是为了兼顾宽屏构图与消息的阅读长度，不增加正文摘要、未读状态或操作。
++
++prototype/app.js 的 notices()、theme.css 的 UI24 规则、traceability.json 为本轮来源；copy.json 复用既有文案，无新文案键。原有列表排序、可见性、消息对应关系、阅读弹窗和欢迎提示不变。正式应用后续定位为 frontend/app/pages/notices.vue（写回前应核对路径）。
++
++当前仅存在于 /private/tmp/wordweave-ui24-notice-list；UI23 正式原型和冻结证据均未改。浏览器启动被本轮环境权限拒绝，视觉与响应式实际结果尚未验证；不得据此批准设计。
++
+ 
+ ## 当前目标与有效范围
+ 
+--- a/.planning/milestones/M002/design/frontend-delta.md
++++ b/.planning/milestones/M002/design/frontend-delta.md
+@@ -3,14 +3,19 @@
+ stage: uiux-design
+ role: uiux/base
+ agent_name: designer-tony
+-status: awaiting_user_review
+-version: M002-UI-23
+-design_version: M002-UI-23
++status: staged_unverified
++version: M002-UI-24
++design_version: M002-UI-24
+ approval: pending_new_visual_review
+ date: 2026-10-01
+ ---
+ 
+ # M001 → M002 与 UI22 → UI23 前端设计差异明细
++
++## UI23 → UI24 消息列表增量（暂存）
++
++仅 PAGE-207 列表重构：旧标题大版心 + 靠左限宽列表 → 标题和列表一起居中限宽880px。列表为单一纸面与分隔行，日期/标题/箭头有稳定对齐，手机切为日期上置。沿用 UI23 消息正文弹窗、Markdown、下拉框、预设释义与首页介绍。新增定位 UIA-PAGE-207-LIST24，源为 notices() / `.notices-page`；不增加API、字段、摘要或未读语义。代码暂存在临时目录，未写入产品仓库且浏览器结果未验证。
++
+ 
+ ## 使用范围与来源
+ 
+--- a/.planning/milestones/M002/design/interactions.md
++++ b/.planning/milestones/M002/design/interactions.md
+@@ -3,9 +3,9 @@
+ stage: uiux-design
+ role: uiux/base
+ agent_name: designer-tony
+-status: awaiting_user_review
+-version: M002-UI-23
+-design_version: M002-UI-23
++status: staged_unverified
++version: M002-UI-24
++design_version: M002-UI-24
+ approval: pending_new_visual_review
+ date: 2026-10-01
+ ---
+@@ -13,6 +13,11 @@
+ # 二期交互与状态规范
+ 
+ 输入为 [M002-PRODUCT-04](../handoffs/product.md)，接收门 TRANSITION-M002-062。UI23 是待用户验收的五项追加设计；原 UI22 批准仅继续覆盖未变更范围。规则来源：[产品能力](../product/abilities.md)、[设计规格](./design-spec.md)，文案读取 copy.json，样式读取 theme.css。
++
++## UI24 消息列表
++
++整行按钮可点击，Enter/Space 打开同一消息弹窗，保留原 data-action 消息索引。日期使用 time/datetime，标题为可访问按钮文本，装饰箭头不获焦。标记仍表示登录提醒，不能理解为未读或新增置顶功能。过滤与排序仍按可见、提醒优先和时间顺序；关闭弹窗仍回到触发条目。空列表沿用现有空态；不新增列表内滚动或分页。
++
+ 
+ ## 消息、选择器、释义与首页 · UI-23
+ 
+--- a/.planning/milestones/M002/design/prototype/app.js
++++ b/.planning/milestones/M002/design/prototype/app.js
+@@ -1,16 +1,16 @@
+-import { createSelectDesign } from "./select.js?v=M002-UI-23";
+-import { renderMarkdown } from "./markdown.js?v=M002-UI-23";
+-import { createHomeMotion } from "./home-motion.js?v=M002-UI-23";
+-import { icon, routeIcons, actionIcons } from "./icons.js?v=M002-UI-23";
+-import { createPresetGallery } from "./gallery.js?v=M002-UI-23";
+-import { createBenefitsDesign } from "./benefits.js?v=M002-UI-23";
+-import { createGrowthDesign } from "./growth.js?v=M002-UI-23";
+-import { createLearningDesign } from "./learning.js?v=M002-UI-23";
+-import { createIdentityDesign } from "./identity.js?v=M002-UI-23";
+-import { createPresetDesign } from "./presets.js?v=M002-UI-23";
+-import { createOperationsDesign } from "./operations.js?v=M002-UI-23";
+-import { createAdminDesign } from "./admin.js?v=M002-UI-23";
+-const DESIGN_VERSION = "M002-UI-23";
++import { createSelectDesign } from "./select.js?v=M002-UI-24";
++import { renderMarkdown } from "./markdown.js?v=M002-UI-24";
++import { createHomeMotion } from "./home-motion.js?v=M002-UI-24";
++import { icon, routeIcons, actionIcons } from "./icons.js?v=M002-UI-24";
++import { createPresetGallery } from "./gallery.js?v=M002-UI-24";
++import { createBenefitsDesign } from "./benefits.js?v=M002-UI-24";
++import { createGrowthDesign } from "./growth.js?v=M002-UI-24";
++import { createLearningDesign } from "./learning.js?v=M002-UI-24";
++import { createIdentityDesign } from "./identity.js?v=M002-UI-24";
++import { createPresetDesign } from "./presets.js?v=M002-UI-24";
++import { createOperationsDesign } from "./operations.js?v=M002-UI-24";
++import { createAdminDesign } from "./admin.js?v=M002-UI-24";
++const DESIGN_VERSION = "M002-UI-24";
+ const [COPY, F, TRACE] = await Promise.all(
+   ["../copy.json", "fixtures.json", "../traceability.json"].map((u) =>
+     fetch(`${u}?v=${DESIGN_VERSION}`, { cache: "no-store" }).then((r) => {
+@@ -463,22 +463,14 @@
+   return `${heading("profile.title", "profile.desc")}<div class="profile-sections"><section class="panel profile-form-panel"><div class="account-section-head">${icon("user")}<h2>${esc(t("account.details"))}</h2></div><form id="profile-form"><div class="form-grid">${field("nickname", "nickname", S.nickname, "text", 'autocomplete="nickname" aria-describedby="nickname-hint"')}${select("gender", "gender", ["unspecified", "female", "male"], S.gender || "unspecified")}</div><div class="profile-save-row"><p id="nickname-hint" class="field-help">${esc(t("account.nickname.hint"))}</p>${B("save", "profile-save", "primary")}</div></form></section><section class="panel profile-security"><div class="account-section-head">${icon("lock-keyhole")}<h2>${esc(t("account.security"))}</h2></div>${[["password", "account.password.hint", "password", "lock-keyhole"], ["logout", "account.logout.hint", "logout", "log-out"], ["deleteaccount", "deleteaccount.desc", "delete-account", "trash"]].map(([title, desc, action, glyph]) => `<div class="security-row ${action === "delete-account" ? "security-delete" : ""}"><span class="security-icon" aria-hidden="true">${icon(glyph)}</span><div><h3>${esc(t(title))}</h3><p>${esc(t(desc))}</p></div>${B(title, action, action === "delete-account" ? "danger quiet" : "")}</div>`).join("")}</section></div>`;
+ }
+ function notices() {
+-  return `${heading("notices.title")}<section class="notice-list">${
+-    scene === "empty"
+-      ? empty()
+-      : F.notices
+-          .filter((n) => n.visible)
+-          .sort(
+-            (a, b) =>
+-              Number(b.remind) - Number(a.remind) ||
+-              b.date.localeCompare(a.date),
+-          )
+-          .map(
+-            (n, i) =>
+-              `<button class="notice-entry" data-action="notice:${F.notices.indexOf(n)}">${n.remind ? badge("notice.reminder") : ""}<h3>${esc(L(n.title))}${icon("chevron-right")}</h3><small>${n.date}</small></button>`,
+-          )
+-          .join("")
+-  }</section>`;
++  const rows = F.notices
++    .filter(n => n.visible)
++    .sort((a, b) => Number(b.remind) - Number(a.remind) || b.date.localeCompare(a.date));
++  return `<div class="notices-page" data-region="notice-index">${heading("notices.title").replace('<h1 ', '<h1 id="notice-index-title" ')}${
++    scene === "empty" || !rows.length
++      ? `<section class="notice-empty">${empty()}</section>`
++      : `<ul class="notice-list" aria-labelledby="notice-index-title">${rows.map(n => `<li><button type="button" class="notice-entry" data-action="notice:${F.notices.indexOf(n)}"><time class="notice-entry-date" datetime="${esc(n.date)}">${esc(n.date)}</time><span class="notice-entry-copy"><span class="notice-entry-title">${esc(L(n.title))}</span>${n.remind ? badge("notice.reminder", "notice-entry-badge") : ""}</span>${icon("chevron-right", "notice-entry-arrow")}</button></li>`).join("")}</ul>`
++  }</div>`;
+ }
+ function noticeDialog(i) {
+   const pool = F.notices
+--- a/.planning/milestones/M002/design/prototype/index.html
++++ b/.planning/milestones/M002/design/prototype/index.html
+@@ -4,9 +4,9 @@
+     <meta charset="utf-8" />
+     <meta name="viewport" content="width=device-width, initial-scale=1" />
+     <meta name="color-scheme" content="light" />
+-    <title>词涟 · M002-UI-23</title>
+-    <link rel="stylesheet" href="../theme.css?v=M002-UI-23" />
+-    <script type="module" src="app.js?v=M002-UI-23"></script>
++    <title>词涟 · M002-UI-24</title>
++    <link rel="stylesheet" href="../theme.css?v=M002-UI-24" />
++    <script type="module" src="app.js?v=M002-UI-24"></script>
+   </head>
+   <body>
+     <div id="app"></div>
+--- a/.planning/milestones/M002/design/responsive-accessibility.md
++++ b/.planning/milestones/M002/design/responsive-accessibility.md
+@@ -3,14 +3,19 @@
+ stage: uiux-design
+ role: uiux/base
+ agent_name: designer-tony
+-status: awaiting_user_review
+-version: M002-UI-23
+-design_version: M002-UI-23
++status: staged_unverified
++version: M002-UI-24
++design_version: M002-UI-24
+ approval: pending_new_visual_review
+ date: 2026-10-01
+ ---
+ 
+ # 响应式与可访问性
++
++## UI24 消息列表
++
++标题与列表共同限定为 max-width:880px、margin-inline:auto，列表与纸面等宽；桌面三列 100px / 弹性标题 / 22px，间隔24px、条目内边距24px。≤600px 日期在上、标题在下、箭头在右，内边距18px，长标题完整换行。按钮保留清晰焦点圈、整行热区与减少动效；外层页面自然滚动，不增加内部滚动区。计划核验 1440/1920 与 390/320px、中英文、长标题/空态及键盘往返；当前浏览器权限阻断，以上为待验证规格。
++
+ 
+ ## UI-23 新增与替换规则
+ 
+--- a/.planning/milestones/M002/design/theme.css
++++ b/.planning/milestones/M002/design/theme.css
+@@ -2609,3 +2609,31 @@
+ @media (max-width: 760px) {
+   #dialog.notice-dialog .dialog-close { top: 8px; right: 10px; min-height: 32px; padding: 4px 10px; }
+ }
++
++/* UI24 — a centered, bounded notice index; rows fill their shared reading surface. */
++.notices-page { width: 100%; max-width: 880px; margin-inline: auto; }
++.notices-page .page-head { margin-bottom: 24px; }
++.notices-page .notice-list { max-width: none; margin: 0; padding: 0; list-style: none; background: var(--paper); border: 1px solid var(--line); border-radius: 20px; }
++.notices-page .notice-list > li { margin: 0; padding: 0; list-style: none; }
++.notices-page .notice-list > li + li { border-top: 1px solid var(--line); }
++.notices-page .notice-entry { display: grid; grid-template-columns: 100px minmax(0,1fr) 22px; align-items: center; gap: 24px; width: 100%; min-height: 104px; padding: 24px; margin: 0; border: 0; border-radius: 0; background: transparent; color: var(--ink); text-align: left; cursor: pointer; transition: background-color var(--motion) var(--ease); }
++.notices-page li:first-child .notice-entry { border-radius: 19px 19px 0 0; }
++.notices-page li:last-child .notice-entry { border-radius: 0 0 19px 19px; }
++.notices-page li:only-child .notice-entry { border-radius: 19px; }
++.notices-page .notice-entry:hover { background: #f0f4e7; }
++.notices-page .notice-entry:focus-visible { outline: 3px solid var(--green); outline-offset: -4px; background: #f0f4e7; }
++.notice-entry-date { color: var(--muted); font-size: 13px; font-variant-numeric: tabular-nums; white-space: nowrap; }
++.notice-entry-copy { display: flex; flex-direction: column; align-items: flex-start; gap: 9px; min-width: 0; }
++.notice-entry-title { font-size: 18px; line-height: 1.6; font-weight: 650; overflow-wrap: anywhere; }
++.notices-page .notice-entry-badge { padding: 3px 9px; font-size: 11px; line-height: 1.5; font-weight: 500; }
++.notice-entry-arrow.ui-icon { width: 20px; height: 20px; color: var(--green); }
++.notice-empty { padding: 12px; background: var(--paper); border: 1px solid var(--line); border-radius: 20px; }
++@media (max-width: 600px) {
++  .notices-page .page-head { margin-bottom: 18px; }
++  .notices-page .notice-entry { grid-template-columns: minmax(0,1fr) 20px; gap: 9px 14px; min-height: 0; padding: 18px; }
++  .notice-entry-date { grid-column: 1; grid-row: 1; font-size: 12px; }
++  .notice-entry-copy { grid-column: 1; grid-row: 2; gap: 8px; }
++  .notice-entry-arrow.ui-icon { grid-column: 2; grid-row: 1 / span 2; }
++  .notice-entry-title { font-size: 17px; }
++}
++@media (prefers-reduced-motion: reduce) { .notices-page .notice-entry { transition: none; } }
+--- a/.planning/milestones/M002/design/traceability.json
++++ b/.planning/milestones/M002/design/traceability.json
+@@ -547,7 +547,8 @@
+       "UIA-PAGE-207-NAV11",
+       "UIA-PAGE-207-TOAST19",
+       "UIA-GLOBAL-SELECT23",
+-      "UIA-PAGE-207-NOTICE23"
++      "UIA-PAGE-207-NOTICE23",
++      "UIA-PAGE-207-LIST24"
+     ]
+   },
+   {
+--- a/.planning/milestones/M002/design/validation.md
++++ b/.planning/milestones/M002/design/validation.md
+@@ -1,55 +1,15 @@
+ ---
+-milestone: M002
+-stage: uiux-design
+-role: uiux/base
+-agent_name: designer-tony
+-status: awaiting_user_review
+-version: M002-UI-23
+-design_version: M002-UI-23
+-approval: pending_new_visual_review
+-date: 2026-10-01
++version: M002-UI-24
++status: staged_unverified
++owner: designer-tony
+ ---
+ 
+-# M002 设计交付验证
++# UI24 消息列表检查
+ 
+-UI23 是 [CR025](../changes/CR-025.md) 的五项追加设计，由 designer-tony 自检，等待用户视觉验收。输入 PRODUCT04 / TRANSITION-M002-062；旧 UI22/H01、原用户 UAT 与里程碑收尾原件保留。本报告只覆盖可运行原型及设计交接，不代表正式应用已经升级或独立 QA 通过。
++范围仅 UIA-PAGE-207-LIST24：居中共享阅读栏、纸面分隔行、日期/标题/箭头响应式排列。copy.json 未变；原UI23所有其他功能不改。
+ 
+-## 范围与实际检查
++当前会话只允许写 agt-coding-v2 与临时目录，ai-en-learning 为只读，因此改稿与补丁仅存临时目录，没有更新原型服务4186或产品仓库。Chrome 启动实际失败：bootstrap_check_in MachPortRendezvousServer Permission denied (1100)。未尝试绕过沙箱；无截图、无视觉通过或独立QA声明。
+ 
+-静态服务为 `http://127.0.0.1:4186/prototype/`，根为本 design；使用现有本地 Playwright + Chromium，Node 24，默认减少动效，未发真实模型请求。除最后发现并修复的消息边界外，没有重复业务单元测试、生产构建或后台联调。
++静态检查覆盖修改JS语法、源码列表的过滤/排序/索引、双语常规与空态结构以及正式原型摘要未变。结果见 staging-check.json。离线HTML由本轮 notices() 及共享theme.css、copy和fixtures直接导出，便于审阅，但不替代浏览器验收。
+ 
+-| 检查 | 实际证据 / 结果 |
+-|---|---|
+-| 首页、消息、精选、学习和后台首轮渲染 | [smoke.json](./evidence/ui23/smoke.json)：8 个主要入口无 pageerror，选择器均接管，页面无横溢；长消息正文 515px、内容 906px，具备独立滚动。 |
+-| 全站布局与选择器覆盖 | [boundaries-attempt2.json](./evidence/ui23/boundaries-attempt2.json)：28 视图 × 中英文 × 1440×1000 / 390×844 / 320×568，共 168 布局检查均通过；每页业务 select 数量等于统一 trigger 数量，业务区没有可见原生 select。演示工具条不属于产品 UI。 |
+-| 消息固定区 | 同报告：正常/长标题 × 中英文 × 三尺寸，12 组标题/底部边界与正文滚动、Escape 检查通过。后续短屏样式细化以最终复测为准。 |
+-| 选择器真实操作 | 同报告与 [focused.json](./evidence/ui23/focused.json)：键盘打开/首尾定位/选择/重绘回焦、Escape/Tab、实际语言切换；合成长选项列表的局部滚动/视口边界/禁用、父弹窗内 Escape 隔离。合成 fixture 只证明组件边界，不冒充某条已有业务流程。 |
+-| 预设与 Markdown | focused：精选三个原词均有释义；切英文 UI 保持中文样本释义；后台改日语时旧预览保留、立即提示过期并禁用发布，重新模拟预览才一起换成日语资源；新预设显示等待文案。Markdown 标题、引用、嵌套列表、表格、代码实际渲染；HTML/危险协议不激活，长代码局部横滚。 |
+-| 欢迎 Toast 与消息 | 首次 focused 发现 320×568 重叠；[final-boundary.json](./evidence/ui23/final-boundary.json) 12 项修复复测通过。人工看截图后进一步上移窄屏关闭按钮，避免与标题相碰；[最终复测](./evidence/ui23/final-boundary-after-close.json) 16 项通过，包含三尺寸双语正文主体比例、Toast ≥12px 间隔、短屏可见正文与关闭按钮无标题碰撞。 |
+-| 文档与未变更源 | [UI23-static.json](./evidence/UI23-static.json)：生产前后端交付摘要、PRODUCT04 接收快照、UI22 归档保留、25 PAGE / 28 视图 / 49 CAP、双语新文案、JS 语法、本地引用与版本一致性。 |
+-
+-## 已发现问题和处理
+-
+-1. 首轮脚本误把原有语言选项 `EN` 写成 `English`；第二轮又将现有日语选项误写成“日文”，并猜错英文页首文案。这是验证脚本定位错误；原 [首次错误](./evidence/ui23/boundaries-attempt1-error.json)、[第二次错误](./evidence/ui23/boundaries-attempt2-error.json) 和已保存观察保留，focused 用实际文案定向补测。未用错误定位推断产品失败，也未改产品文案迎合测试。
+-2. UI23 的 `inset:0` 覆盖了 UI21 欢迎避让位置。修复为消息专用 `.with-toast-space` 同时限制高度与底部 inset；保留原十秒时限与动画。focused 的失败记录保留，最终复测通过。
+-3. 320px 短屏截图显示关闭文字与主标题邻接过近。关闭按钮移到眉题同一行，短屏标题使用 18px，完整保留长标题；最终 geometry 与截图验证。
+-
+-4. 文档检查发现跨期差异表沿用已迁移的 account.vue 路径，已指向当前 account/index.vue；保留 [首次静态结果](./evidence/UI23-static-first.json)，修正后全部本地引用复核通过。
+-
+-## 视觉审阅记录
+-
+-实际查看了 8 张浏览器截图：初始预算 6 张；因上述 Toast 与关闭按钮的具体问题增补 2 张复测，未扩大为重复整站截图。
+-
+-- [首页桌面](./evidence/ui23/01-home-desktop.png)：原叠卡、学习路径和新增三项优势同一主题；没有新增成长入口。
+-- [消息桌面](./evidence/ui23/02-notice-desktop.png)、[手机长标题](./evidence/ui23/03-notice-mobile.png)：正文为主要阅读区，标题和动作分隔明确；窄屏关闭位置后以第 8 张为准。
+-- [精选](./evidence/ui23/04-picks-desktop.png)、[日语预设预览](./evidence/ui23/05-admin-preset.png)：词义完整，配置与正文/释义关系清楚。后台示例仍是原型模拟生成。
+-- [手机选择器](./evidence/ui23/06-select-mobile.png)：浅绿选中、勾选、圆角浮层与原配置风格一致。
+-- [Toast 避让复测](./evidence/ui23/07-toast-clearance-retest.png)、[最终短屏](./evidence/ui23/08-short-screen-final.png)：欢迎提示与固定操作分离，关闭文字不压标题。第 7 张保留已发现的关闭位置问题。
+-
+-## 交付、恢复与边界
+-
+-当前源与证据清单：[design-manifest.json](./evidence/design-manifest.json)；不可变交付：[UI23 清单](./evidence/M002-UI-23-manifest.json) / [UI23 快照](./evidence/M002-UI-23.tar.gz)；回改前：[UI23-before](./evidence/M002-UI-23-before.tar.gz)。冻结核对见 [UI23-freeze.json](./evidence/UI23-freeze.json)。脚本及失败/成功结果均位于 evidence/ui23，不复写 UI22/H01 历史检查。
+-
+-本次未测试真实移动设备、Safari/Firefox 或人工读屏，未做新视觉用户验收、生产实现或独立 QA；浏览器支持和正式表单组件集成由下游技术/前端接收验证。原 UI22 的未变更区域不因本轮局部检查而获得新的通过声明。CR039-L1、CR042-L1、AI-QUALITY-90、W01、QA26-MINIMAX 保持原状态；本轮不修改既有计量/权益/草稿/账号规则。
+-
+-未修改正式应用、计划/模型配置、数据库或测试账号；未提交/推送/部署。未开启多 agent 或独立接收会话。实际模型 token 用量未知。当前阶段仍 uiux-design，视觉批准字段仍只指 UI22，UI23 等待用户审阅。
++下一动作：恢复产品目录写权限及本地浏览器运行能力；对照基线摘要应用notice-list.patch，在实际浏览器检查宽屏/手机、长标题、空态、键盘打开与关闭回焦；通过后再冻结 UI24。原UI23冻结记录必须保留，不以暂存文件替代批准。
+--- a/.planning/milestones/M002/handoffs/uiux.md
++++ b/.planning/milestones/M002/handoffs/uiux.md
+@@ -3,9 +3,9 @@
+ stage: uiux-design
+ role: uiux/base
+ agent_name: designer-tony
+-status: awaiting_user_review
+-version: M002-UI-23
+-design_version: M002-UI-23
++status: staged_unverified
++version: M002-UI-24
++design_version: M002-UI-24
+ approval: pending_new_visual_review
+ date: 2026-10-01
+ ---
+@@ -15,6 +15,12 @@
+ **当前交付为 UI23 五项追加改稿，等待用户视觉验收。** 输入 [PRODUCT04](./product.md)，来源 [CR025](../changes/CR-025.md)，接收门 [TRANSITION-M002-062](../reviews/product-design-062.md)。旧 UI22/H01 已验收记录与 M002 UAT/收尾原件保持；本版只替换五项受影响设计，未修改正式应用。Profile 和锁定 agt revision 保持。
+ 
+ 先读 [UI22→UI23 差异及 M001 继承表](../design/frontend-delta.md)，再按验收 ID 定位 [设计规格](../design/design-spec.md)、[交互](../design/interactions.md)、[响应式](../design/responsive-accessibility.md)、[copy.json](../design/copy.json) 和 [theme.css](../design/theme.css)。[验证结果](../design/validation.md)、[当前清单](../design/evidence/design-manifest.json)、[完整快照](../design/evidence/M002-UI-23.tar.gz) 为同一交付。
++
++## UI24 消息列表改稿（当前暂存）
++
++本轮只处理用户对平台消息列表的宽屏构图反馈，增加 UIA-PAGE-207-LIST24；共享居中880px阅读栏、日期/标题/箭头分列、单纸面细分隔、窄屏日期上置。详见设计规格、交互、响应式和增量表。仅文件级暂存，UI23与正式应用没有更新，4186仍是UI23。
++
++环境阻塞：ai-en-learning只读；Chromium MachPortRendezvousServer被权限拒绝。代码与文档在临时目录完成，静态检查可运行，视觉检查仍待执行。恢复权限后先核对原UI23摘要、应用补丁，再做针对性浏览器复测和冻结；本次没有视觉批准、阶段迁移或新的产品决定。旧UI23设计交接以下内容作为未变更范围继续参考。
+ 
+ ## 预览与变更
+ 
