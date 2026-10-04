@@ -6,7 +6,7 @@ const { t, te } = useI18n();
 </script>
 
 <template>
-  <div v-if="failure" class="notice notice-danger app-error" role="alert">
+  <div v-if="failure" class="notice error app-error" role="alert">
     <AppIcon name="alert" />
     <div>
       {{

@@ -6,6 +6,9 @@ import RegisterPage from "../../app/pages/register.vue";
 import en from "../../i18n/locales/en-US.json";
 import zh from "../../i18n/locales/zh-CN.json";
 
+vi.mock("@runtime/stores/analytics-events", () => ({
+  useAnalyticsEvents: () => ({ action: vi.fn() }),
+}));
 const wrappers: VueWrapper[] = [];
 const route = reactive<{ query: Record<string, unknown> }>({ query: {} });
 const locale = ref<"en-US" | "zh-CN">("en-US");
@@ -28,6 +31,9 @@ beforeEach(() => {
   locale.value = "en-US";
   claim.value = false;
   sessionState.value = { failure: null };
+  vi.stubGlobal("useDesignCopy", () => ({
+    copy: (key: string) => translate("m002." + key.replaceAll(".", "__")),
+  }));
   vi.stubGlobal("ref", ref);
   vi.stubGlobal("computed", computed);
   vi.stubGlobal("definePageMeta", vi.fn());
@@ -70,28 +76,23 @@ for (const [name, component] of [
     wrappers.push(wrapper);
     return wrapper;
   };
-  describe("CR037 " + name + " card order", () => {
+  describe("M002 " + name + " identity layout", () => {
     it.each(["en-US", "zh-CN"] as const)(
-      "places a live status before the title for each safe target in %s",
+      "keeps identity form and contextual copy in separate aligned regions in %s",
       async (language) => {
         locale.value = language;
-        const targets = [
-          ["/review", "review"],
-          ["/library", "library"],
-          ["/library/batch-example", "story"],
-          ["/account", "account"],
-        ] as const;
-        for (const [path, target] of targets) {
-          route.query = { redirect: path };
-          const wrapper = render();
-          const card = wrapper.get(".auth-card");
-          const hint = card.get(".auth-intent");
-          expect(hint.text()).toBe(translate("auth.continue." + target));
-          expect(hint.attributes("role")).toBe("status");
-          expect(card.element.firstElementChild).toBe(hint.element);
-          expect(hint.element.nextElementSibling?.tagName).toBe("H2");
-          await wrapper.vm.$nextTick();
-        }
+        route.query = { redirect: "/library" };
+        const wrapper = render();
+        expect(wrapper.get(".auth-layout").classes()).toContain("has-context");
+        expect(wrapper.get(".auth-intent .notice").text()).toBe(
+          translate("auth.continue.library"),
+        );
+        expect(wrapper.get(".auth-form h1").text()).toBe(
+          translate("m002." + (name === "register" ? "i__register" : name)),
+        );
+        expect(
+          wrapper.get('input[name="username"]').attributes("autocomplete"),
+        ).toBe("username");
       },
     );
     it.each([
@@ -100,39 +101,34 @@ for (const [name, component] of [
       "https://outside.test",
       "/admin/users",
       ["/review", "/account"],
-    ])("omits a hint for an absent or unsafe target: %j", (redirect) => {
+    ])("omits unsafe return notice for %j", (redirect) => {
       route.query = { redirect };
-      expect(render().find(".auth-intent").exists()).toBe(false);
+      expect(render().find(".auth-intent .notice").exists()).toBe(false);
     });
-    it("gives a valid visitor claim its own leading notice", () => {
+    it("prioritizes an available visitor claim and preserves the credential inputs across locale changes", async () => {
       route.query = { redirect: "/review", claim: "1" };
       claim.value = true;
       const wrapper = render();
-      expect(wrapper.find(".auth-intent").exists()).toBe(false);
-      expect(wrapper.get(".auth-card").element.firstElementChild).toBe(
-        wrapper.get(".notice-warning").element,
+      expect(wrapper.get(".auth-intent .notice").text()).toBe(
+        translate("m002.i__claim__note"),
       );
+      const username = wrapper.get('input[name="username"]');
+      await username.setValue("reader");
+      const node = username.element;
+      locale.value = "zh-CN";
+      await wrapper.vm.$nextTick();
+      expect(wrapper.get('input[name="username"]').element).toBe(node);
+      expect((node as HTMLInputElement).value).toBe("reader");
     });
-    it("does not let a stale claim suppress a safe return hint", () => {
+    it("shows a safe lost-claim notice without obscuring the return route", () => {
       route.query = { redirect: "/review", claim: "1" };
       const wrapper = render();
-      expect(wrapper.find(".notice-warning").exists()).toBe(false);
-      expect(wrapper.get(".auth-card").element.firstElementChild).toBe(
-        wrapper.get(".auth-intent").element,
+      expect(wrapper.get(".auth-intent .notice").text()).toBe(
+        translate("auth.continue.review"),
       );
-    });
-    it("keeps the hint first while language, target and error change", async () => {
-      route.query = { redirect: "/review" };
-      const wrapper = render();
-      locale.value = "zh-CN";
-      route.query = { redirect: "/account" };
-      sessionState.value.failure = { kind: "invalid_credentials" };
-      await wrapper.vm.$nextTick();
-      expect(wrapper.get(".auth-intent").text()).toBe(zh.auth.continue.account);
-      expect(wrapper.get(".auth-card").element.firstElementChild).toBe(
-        wrapper.get(".auth-intent").element,
+      expect(wrapper.get(".auth-form").text()).toContain(
+        translate("m002.i__claim__lost"),
       );
-      expect(wrapper.get(".app-error").attributes("role")).toBe("alert");
     });
   });
 }

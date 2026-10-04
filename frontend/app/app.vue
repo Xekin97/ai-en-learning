@@ -1,6 +1,8 @@
 <script setup lang="ts">
 const session = useSessionStore();
 await session.load();
+const account = useAccountStore();
+if (session.isLearner.value) await account.load();
 const localeController = useApplicationLocale();
 await localeController.initialize();
 const nuxtApp = useNuxtApp();
@@ -19,5 +21,6 @@ useHead({
 </script>
 
 <template>
-  <NuxtLayout><NuxtPage /></NuxtLayout>
+  <NuxtLayout><NuxtPage /></NuxtLayout
+  ><ClientOnly><ToastHost /><NoticeHost /></ClientOnly>
 </template>

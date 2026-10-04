@@ -57,6 +57,7 @@ export function listEnvelopeSchema<T extends z.ZodType>(item: T) {
 }
 
 export const problemSchema = z.strictObject({
+  context: z.record(z.string(), z.unknown()).optional(),
   type: nonEmptyStringSchema,
   title: nonEmptyStringSchema,
   status: z.number().int().min(400).max(599),

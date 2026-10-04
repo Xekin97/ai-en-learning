@@ -1,4 +1,18 @@
 export class TokenVault {
+  #confirmations = new Map<string, string>();
+  setConfirmation(id: string, token: string | null) {
+    if (token) this.#confirmations.set(id, token);
+    else this.#confirmations.delete(id);
+  }
+  confirmation(id: string) {
+    const token = this.#confirmations.get(id);
+    if (!token) throw new Error("Confirmation unavailable");
+    return token;
+  }
+  clearConfirmationsFor(id: string) {
+    for (const key of this.#confirmations.keys())
+      if (key.endsWith(":" + id)) this.#confirmations.delete(key);
+  }
   #csrf: string | null = null;
   #generation = new Map<string, string>();
   #claim: string | null = null;
@@ -51,6 +65,7 @@ export class TokenVault {
   }
 
   clearAll(): void {
+    this.#confirmations.clear();
     this.#csrf = null;
     this.#generation.clear();
     this.#claim = null;

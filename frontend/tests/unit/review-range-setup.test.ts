@@ -10,18 +10,23 @@ import type {
   ActiveRangeModel,
   AppFailure,
   ReviewRangePreviewModel,
-  ReviewSessionCreatedModel,
 } from "@application/shared/models";
 import {
   reviewRangePreviewEnvelopeSchema,
   activeRangeEnvelopeSchema,
   reviewSessionCreatedEnvelopeSchema,
 } from "@infrastructure/http/schemas/review";
-import {
-  mapReviewRangePreviewDto,
-  mapActiveRangeDto,
-  mapReviewSessionCreatedDto,
-} from "@infrastructure/http/mappers";
+import { mapSession } from "@infrastructure/http/mappers/review-mapper";
+import { sessionDto } from "../fixtures/m002";
+const mapReviewRangePreviewDto = (d: {
+  batch_count: number;
+  entry_count: number;
+  empty: boolean;
+}) => ({
+  batchCount: d.batch_count,
+  entryCount: d.entry_count,
+  empty: d.empty,
+});
 
 const query = {
   startDate: "2026-08-31",
@@ -47,11 +52,13 @@ const progress = {
   total_batches: 5,
   successful_batches: 2,
   unsuccessful_batches: 0,
+  skipped_batches: 0,
 };
 function active(): ActiveRangeModel {
   const dto = activeRangeEnvelopeSchema.parse({
     data: {
       session: {
+        ...sessionDto(),
         session_id: "old-range",
         mode: "range",
         status: "active",
@@ -66,32 +73,29 @@ function active(): ActiveRangeModel {
     meta: { request_id: "req-active" },
   }).data.session;
   if (!dto) throw new Error("fixture");
-  return mapActiveRangeDto(dto);
+  return mapSession(dto);
 }
-function created(): ReviewSessionCreatedModel {
-  return mapReviewSessionCreatedDto(
-    reviewSessionCreatedEnvelopeSchema.parse({
-      data: {
+function created() {
+  const dto = reviewSessionCreatedEnvelopeSchema.parse({
+    data: {
+      session: {
+        ...sessionDto(),
         session_id: "old-range",
         mode: "range",
-        status: "active",
-        reused: true,
         date_range: {
           start_date: "2026-08-01",
           end_date: "2026-08-31",
           timezone: "UTC",
         },
         progress,
-        current_batch: {
-          batch_id: "batch-old",
-          saved_at: "2026-08-20T12:00:00Z",
-          scenario: "story",
-        },
       },
-      meta: { request_id: "req-created" },
-    }).data,
-  );
+      reused: true,
+    },
+    meta: { request_id: "req-created" },
+  }).data;
+  return { session: mapSession(dto.session), reused: dto.reused };
 }
+
 const network: AppFailure = {
   kind: "network",
   code: "network_error",
@@ -124,6 +128,8 @@ function harness() {
       active(),
     ),
     createReviewSession: vi.fn(async () => created()),
+    getReviewSession: vi.fn(async () => created().session),
+    replaceReviewSession: vi.fn(async () => created().session),
   };
   const refreshSecurity = vi.fn(async () => {});
   const authenticationRequired = vi.fn(() => {
@@ -447,7 +453,7 @@ describe("create guard and reconciliation", () => {
     const h = harness();
     h.init();
     await h.actions.preview(h.owner);
-    const pending = deferred<ReviewSessionCreatedModel>();
+    const pending = deferred<ReturnType<typeof created>>();
     h.api.createReviewSession.mockReturnValueOnce(pending.promise);
     const first = h.actions.start(h.owner);
     await Promise.resolve();
@@ -465,7 +471,7 @@ describe("create guard and reconciliation", () => {
       const h = harness();
       h.init();
       await h.actions.preview(h.owner);
-      const pending = deferred<ReviewSessionCreatedModel>();
+      const pending = deferred<ReturnType<typeof created>>();
       h.api.createReviewSession.mockReturnValueOnce(pending.promise);
       const first = h.actions.start(h.owner);
       await Promise.resolve();

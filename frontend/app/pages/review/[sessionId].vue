@@ -1,393 +1,482 @@
 <script setup lang="ts">
-import { useLearnerAccess } from "@presentation/controllers/learner-access";
-import { ClozeGroupStyleRegistry } from "@presentation/review/cloze-group-style-registry";
 import {
-  buildPassageAnswer,
-  passageGroupRefs,
-  presentPassageCloze,
-} from "@presentation/review/passage-cloze-presenter";
-import { presentReviewSummary } from "@presentation/review/review-summary-presenter";
-const access = useLearnerAccess();
-
-definePageMeta({ middleware: "learner" });
-const route = useRoute();
-const review = useReviewStore();
-const format = useDisplayFormatters();
-const { t } = useI18n();
-const sessionId = String(route.params.sessionId);
-const sourceBatchId =
-  typeof route.query.batch === "string" ? route.query.batch : null;
-const spellingAnswer = ref("");
-const clozeAnswers = ref<Record<string, string>>({});
-const activeBlankId = ref<string | null>(null);
-const groupRegistry = shallowRef<ClozeGroupStyleRegistry | null>(null);
-const showHint = ref(false);
-const restartPending = ref(false);
-const isSingleBatch = computed(
-  () => review.state.value.session?.mode === "single_batch",
-);
-const returnPath = computed(() =>
-  isSingleBatch.value ? "/library" : "/review",
-);
-const progressPercent = computed(() => {
-  const session = review.state.value.session;
-  const attempt = review.attempt.value;
-  if (!session || session.status !== "active") return 100;
-  const total = Math.max(session.progress.totalBatches, 1);
-  const itemShare = attempt
-    ? (attempt.progress.itemNumber /
-        Math.max(attempt.progress.itemsInStage, 1)) *
-      0.8
-    : 0;
-  return Math.min(
-    100,
-    ((session.progress.completedBatches + itemShare) / total) * 100,
-  );
-});
-const summaryView = computed(() => {
-  const current = review.state.value.session;
-  return current?.status === "completed"
-    ? presentReviewSummary(current, (key, parameters) =>
-        String(t(key, parameters ?? {})),
+  stableClozeRegistry,
+  CLOZE_TONES,
+} from "@presentation/review/cloze-group-style-registry";
+import type { ClozeGroupRef } from "@application/shared/models";
+import { useLearnerAccess } from "@presentation/controllers/learner-access";
+import type { DeepReadonly } from "vue";
+import type { WordQuestion } from "@application/review/models";
+const access = useLearnerAccess(),
+  review = useReviewStore(),
+  route = useRoute(),
+  { copy } = useDesignCopy(),
+  format = useDisplayFormatters();
+const id = String(route.params.sessionId),
+  hint = ref(false);
+const attempt = computed(() => review.attempt.value),
+  draft = computed(() => review.draft.value),
+  comparison = computed(() => review.comparison.value),
+  session = computed(() => review.session.value);
+const navigation = computed(() => draft.value?.navigation),
+  step = computed(() => navigation.value?.step ?? 0),
+  word = computed(() => attempt.value?.words[step.value]);
+const overview = computed(() => navigation.value?.stage === "overview"),
+  result = computed(() => review.phase.value === "comparison");
+const answered = computed(() =>
+  word.value
+    ? (draft.value?.wordInputs[word.value.questionId] ?? []).some((v) =>
+        v.trim(),
       )
-    : null;
-});
-
-await access.initialize(async () => {
-  await usePageLoader(`review-session:${sessionId}`, () =>
-    review.loadSession(sessionId, sourceBatchId),
-  );
-});
-onMounted(() => {
-  if (access.isLearner.value) void review.ensureAttempt();
-});
-onBeforeUnmount(() => {
-  groupRegistry.value = null;
+    : Object.values(draft.value?.passageInputs ?? {}).some((v) => v.trim()),
+);
+const symbols = [
+  "circle",
+  "diamond",
+  "triangle",
+  "square",
+  "star",
+  "hexagon",
+] as const;
+const registry = computed(() =>
+  attempt.value
+    ? stableClozeRegistry(
+        attempt.value.attemptId,
+        attempt.value.passage.flatMap((s) =>
+          s.kind === "blank" ? [s.groupRef] : [],
+        ),
+      )
+    : null,
+);
+const activeGroup = ref<ClozeGroupRef | null>(null);
+function groupIndex(ref: ClozeGroupRef) {
+  const style = registry.value?.styleFor(ref);
+  return style ? CLOZE_TONES.indexOf(style.toneToken) : 0;
+}
+function groupClasses(ref: ClozeGroupRef) {
+  const style = registry.value?.styleFor(ref);
+  return [
+    `group-${groupIndex(ref) % 3}`,
+    `cloze-pattern-${style?.patternToken ?? "solid"}`,
+    { "cloze-muted": activeGroup.value !== null && activeGroup.value !== ref },
+  ];
+}
+const groups = computed(
+  () =>
+    attempt.value?.passage.flatMap((s) => (s.kind === "blank" ? [s] : [])) ??
+    [],
+);
+function answer(w: DeepReadonly<WordQuestion>) {
+  return review.answerFor(w as WordQuestion);
+}
+function goto(index: number, fromOverview = overview.value) {
+  if (!navigation.value) return;
+  review.navigate({
+    ...navigation.value,
+    step: index,
+    stage: "editing",
+    returnToOverview: fromOverview,
+  });
+  hint.value = false;
+}
+function showOverview() {
+  if (navigation.value)
+    review.navigate({ ...navigation.value, stage: "overview" });
+}
+function next(skip = false) {
+  if (!attempt.value || !navigation.value) return;
+  if (skip) {
+    if (word.value)
+      review.word(
+        word.value.questionId,
+        (draft.value?.wordInputs[word.value.questionId] ?? []).map(() => ""),
+      );
+    else groups.value.forEach((g) => review.passage(g.blankId, ""));
+  }
+  if (
+    navigation.value.returnToOverview ||
+    step.value >= attempt.value.words.length
+  )
+    showOverview();
+  else goto(step.value + 1, false);
+}
+async function advance() {
+  if (session.value?.status === "active") await review.begin();
+  else
+    await navigateTo(session.value?.mode === "range" ? "/review" : "/library");
+}
+await access.initialize(async () => {});
+onMounted(async () => {
+  if (access.isLearner.value) {
+    const start = route.query.start === "1";
+    if (start)
+      await navigateTo(
+        {
+          path: route.path,
+          query: { ...(route.query.batch ? { batch: route.query.batch } : {}) },
+        },
+        { replace: true },
+      );
+    await review.load(id, start);
+  }
 });
 useLocalizedHead("common.review");
-
-watch(
-  () => {
-    const attempt = review.attempt.value;
-    return attempt ? `${attempt.attemptId}:${attempt.item.itemId}` : null;
-  },
-  () => {
-    spellingAnswer.value = "";
-    showHint.value = false;
-    clozeAnswers.value = {};
-    activeBlankId.value = null;
-  },
-);
-
-watch(
-  () => {
-    const attempt = review.attempt.value;
-    return attempt?.item.stage === "passage_cloze"
-      ? `${attempt.attemptId}:${attempt.item.itemId}`
-      : null;
-  },
-  (itemKey) => {
-    const attempt = review.attempt.value;
-    if (!itemKey || attempt?.item.stage !== "passage_cloze") {
-      groupRegistry.value = null;
-      return;
-    }
-    if (groupRegistry.value?.itemKey === itemKey) return;
-    groupRegistry.value = new ClozeGroupStyleRegistry(
-      itemKey,
-      passageGroupRefs(attempt.item),
-    );
-  },
-  { immediate: true },
-);
-
-const passageView = computed(() => {
-  const attempt = review.attempt.value;
-  if (attempt?.item.stage !== "passage_cloze" || !groupRegistry.value)
-    return null;
-  return presentPassageCloze({
-    item: attempt.item,
-    registry: groupRegistry.value,
-    answers: clozeAnswers.value,
-    incorrectBlankIds: review.state.value.incorrectBlankIds,
-    activeBlankId: activeBlankId.value,
-  });
-});
-
-function actionId(): string {
-  return crypto.randomUUID();
-}
-
-async function submit() {
-  const attempt = review.attempt.value;
-  if (!attempt) return;
-  if (attempt.item.stage === "spelling") {
-    await review.act({
-      actionId: actionId(),
-      itemId: attempt.item.itemId,
-      action: "answer",
-      answer: spellingAnswer.value,
-    });
-    return;
-  }
-  await review.act(
-    buildPassageAnswer(attempt.item, clozeAnswers.value, actionId()),
-  );
-}
-
-async function skip() {
-  const item = review.attempt.value?.item;
-  if (!item) return;
-  await review.act({
-    actionId: actionId(),
-    itemId: item.itemId,
-    action: "skip",
-  });
-}
-
-async function restart() {
-  const mode = summaryView.value?.mode;
-  if (!mode || restartPending.value) return;
-  restartPending.value = true;
-  try {
-    const nextSessionId = await review.restartCompletedSession();
-    if (!nextSessionId) return;
-    await review.ensureAttempt();
-    await navigateTo({
-      path: `/review/${encodeURIComponent(nextSessionId)}`,
-      query:
-        mode === "single_batch" && sourceBatchId
-          ? { batch: sourceBatchId }
-          : {},
-    });
-  } finally {
-    restartPending.value = false;
-  }
-}
 </script>
-
 <template>
-  <section class="container page-section">
-    <LearnerPageBoundary :view="access.view.value" @retry="access.retry">
-      <div class="review-shell">
-        <template v-if="review.state.value.session?.status === 'active'">
-          <div class="review-context">
-            <div class="review-context-copy">
-              <span class="status-badge status-info review-source-badge">{{
-                isSingleBatch
-                  ? $t("review.singleSource")
-                  : $t("review.rangeSource")
-              }}</span>
-              <span
-                v-if="
-                  review.state.value.session.status === 'active' &&
-                  isSingleBatch
-                "
-                class="review-context-detail"
-                >{{
-                  format.date(review.state.value.session.currentBatch.savedAt)
-                }}
-                ·
-                {{
-                  format.scenario(
-                    review.state.value.session.currentBatch.scenario,
-                  )
-                }}</span
-              >
-              <span
-                v-else-if="review.state.value.session.dateRange"
-                class="review-context-detail"
-                >{{ review.state.value.session.dateRange.startDate }} —
-                {{ review.state.value.session.dateRange.endDate }}</span
-              >
-            </div>
-            <NuxtLink
-              class="button button-quiet button-small"
-              :to="returnPath"
-              >{{
-                isSingleBatch
-                  ? $t("review.backToLibrary")
-                  : $t("review.backToSetup")
-              }}</NuxtLink
-            >
-          </div>
-          <div
-            v-if="review.state.value.session.status === 'active'"
-            class="review-progress"
-          >
-            <div
-              class="progress-labels"
-              :aria-label="
-                $t('review.batchProgress', {
-                  current: review.state.value.session.progress.completedBatches,
-                  total: review.state.value.session.progress.totalBatches,
-                })
-              "
-            >
-              <span>{{
-                isSingleBatch
-                  ? $t("review.storyProgress", { current: 1, total: 1 })
-                  : $t("review.roundProgress", {
-                      current:
-                        review.state.value.session.progress.completedBatches +
-                        1,
-                      total: review.state.value.session.progress.totalBatches,
-                    })
-              }}</span>
-              <span v-if="review.attempt.value">{{
-                review.attempt.value.item.stage === "spelling"
-                  ? $t("review.wordStep", {
-                      current: review.attempt.value.progress.itemNumber,
-                      total: review.attempt.value.progress.itemsInStage,
-                    })
-                  : $t("review.storyStep")
-              }}</span>
-            </div>
-            <div class="progress-track">
-              <span :style="{ width: `${progressPercent}%` }" />
-            </div>
-          </div>
-        </template>
-
-        <AppError :failure="review.state.value.failure" />
-
-        <article
-          v-if="review.state.value.session?.status === 'completed'"
-          class="review-card review-summary-card"
+  <LearnerPageBoundary :view="access.view.value" @retry="access.retry"
+    ><div class="page-head">
+      <div>
+        <h1>
+          {{
+            copy(
+              result
+                ? review.receipt.value?.successful
+                  ? "summary.good"
+                  : "summary.retry"
+                : overview
+                  ? "overview.title"
+                  : "review.title",
+            )
+          }}
+        </h1>
+        <p v-if="overview">{{ copy("overview.desc") }}</p>
+      </div>
+    </div>
+    <AppError :failure="review.failure.value" />
+    <p v-if="review.storageFailed.value" class="note error" role="alert">
+      {{ copy("failed") }}
+      <button class="btn small" @click="review.flush">
+        {{ copy("retry") }}
+      </button>
+    </p>
+    <div v-if="session" class="review-context">
+      <span
+        >{{ session.progress.completedBatches }} /
+        {{ session.progress.totalBatches
+        }}<template v-if="session.currentBatch">
+          · {{ format.date(session.currentBatch.savedAt) }}</template
+        ></span
+      ><NuxtLink
+        class="btn quiet"
+        :to="session.mode === 'range' ? '/review' : '/library'"
+        >{{
+          copy(session.mode === "range" ? "l.backRange" : "l.backLibrary")
+        }}</NuxtLink
+      >
+    </div>
+    <p v-if="result && review.receipt.value?.successful" class="notice">
+      {{ copy("newmastery", { count: review.newMasteries() }) }}
+    </p>
+    <div
+      v-if="(attempt && draft && review.phase.value === 'editing') || result"
+      class="review-layout"
+    >
+      <aside class="review-steps">
+        <button
+          v-for="(key, index) in [
+            'wordanswers',
+            'passageanswers',
+            'overview',
+            ...(result ? ['summary'] : []),
+          ]"
+          :key="key"
+          class="btn"
+          :class="{
+            current: result
+              ? index === 3
+              : overview
+                ? index === 2
+                : word
+                  ? index === 0
+                  : index === 1,
+          }"
+          :disabled="result"
+          @click="
+            index === 0
+              ? goto(0)
+              : index === 1
+                ? goto(attempt!.words.length)
+                : showOverview()
+          "
         >
-          <div v-if="summaryView" class="empty-symbol" aria-hidden="true">
-            {{ summaryView.symbol }}
-          </div>
-          <p v-if="summaryView" class="eyebrow">{{ summaryView.eyebrow }}</p>
-          <h1 v-if="summaryView" class="page-title">{{ summaryView.title }}</h1>
-          <p v-if="summaryView" class="page-description">
-            {{ summaryView.description }}
-          </p>
-          <div class="stats-grid review-summary-stats">
-            <div class="stat-card">
-              <div class="stat-value">
-                {{ summaryView?.completed }}
-              </div>
-              <div class="stat-label">{{ $t("review.completedCount") }}</div>
-            </div>
-            <div class="stat-card">
-              <div class="stat-value">
-                {{ summaryView?.mastered }}
-              </div>
-              <div class="stat-label">{{ $t("review.masteredCount") }}</div>
-            </div>
-            <div class="stat-card">
-              <div class="stat-value">
-                {{ summaryView?.revisit }}
-              </div>
-              <div class="stat-label">{{ $t("review.revisitCount") }}</div>
-            </div>
-          </div>
-          <div class="inline-actions review-summary-actions">
-            <NuxtLink class="button button-secondary" to="/library">{{
-              summaryView?.returnLabel
-            }}</NuxtLink
-            ><button
-              class="button button-primary"
-              type="button"
-              :disabled="restartPending"
-              @click="restart"
-            >
-              {{ summaryView?.restartLabel }}
-            </button>
-          </div>
-        </article>
-
-        <article v-else-if="review.attempt.value" class="review-card">
-          <template v-if="review.attempt.value.item.stage === 'spelling'">
-            <span class="review-stage">{{ $t("review.recall") }}</span>
-            <div class="review-prompt">
-              {{ review.attempt.value.item.entryMeaning }}
-            </div>
-            <div class="hint-row">
-              <label class="switch"
-                ><input v-model="showHint" type="checkbox" /><span
-                  class="switch-track"
-                  aria-hidden="true"
-                /><span>{{ $t("review.hint") }}</span></label
-              >
-            </div>
-            <p v-if="showHint" id="review-hint" class="hint-phrase">
-              <template
-                v-for="(segment, index) in review.attempt.value.item
-                  .hintSegments"
+          {{ copy(key) }}
+        </button>
+      </aside>
+      <div class="review-main">
+        <template v-if="overview || result"
+          ><section class="review-paper">
+            <h2>{{ copy("wordanswers") }}</h2>
+            <template v-if="result && comparison"
+              ><div
+                v-for="(item, index) in comparison.words"
                 :key="index"
-                ><span
-                  v-if="segment.kind === 'blank'"
-                  class="blank"
-                  aria-hidden="true"
-                  >••••••</span
-                ><span v-else>{{ segment.text }}</span></template
+                class="answer-row"
+              >
+                <span class="muted">{{ index + 1 }}</span
+                ><ReviewComparison :answer="item" /></div></template
+            ><template v-else
+              ><div
+                v-for="(question, index) in attempt?.words"
+                :key="question.questionId"
+                class="answer-row"
+              >
+                <span class="muted">{{ index + 1 }}</span
+                ><button class="answer-link" @click="goto(index, true)">
+                  {{ answer(question) || copy("unanswered")
+                  }}<AppIcon name="pencil" />
+                </button></div
+            ></template>
+            <h2 class="section">{{ copy("passageanswers") }}</h2>
+            <p class="story-text" data-region="passage">
+              <template v-if="result && comparison"
+                ><template
+                  v-for="(segment, index) in comparison.passage"
+                  :key="index"
+                  ><template v-if="segment.kind === 'text'">{{
+                    segment.text
+                  }}</template
+                  ><ReviewComparison
+                    v-else
+                    :answer="segment" /></template></template
+              ><template v-else
+                ><template
+                  v-for="(segment, index) in attempt?.passage"
+                  :key="index"
+                  ><template v-if="segment.kind === 'text'">{{
+                    segment.text
+                  }}</template
+                  ><button
+                    v-else
+                    class="answer-link"
+                    :class="groupClasses(segment.groupRef)"
+                    @click="goto(attempt!.words.length, true)"
+                  >
+                    {{
+                      draft?.passageInputs[segment.blankId] ||
+                      copy("unanswered")
+                    }}
+                  </button></template
+                ></template
               >
             </p>
-            <label class="sr-only" for="review-spelling-answer">{{
-              $t("review.spell")
-            }}</label>
-            <input
-              id="review-spelling-answer"
-              v-model="spellingAnswer"
-              class="text-input review-answer"
-              :placeholder="$t('review.spell')"
-              :aria-describedby="showHint ? 'review-hint' : undefined"
-              autocomplete="off"
-              autocapitalize="none"
-              spellcheck="false"
-              @keyup.enter="submit"
-            />
-          </template>
-          <template v-else>
-            <span class="review-stage">{{ $t("review.complete") }}</span>
-            <p class="helper">{{ $t("review.completeCopy") }}</p>
-            <PassageClozeQuestion
-              v-if="passageView"
-              :model="passageView"
-              @answer-changed="
-                (blankId, value) => (clozeAnswers[blankId] = value)
-              "
-              @blank-focused="activeBlankId = $event"
-              @blank-blurred="activeBlankId = null"
-            />
-          </template>
-          <div
-            v-if="
-              review.state.value.status === 'ready' &&
-              review.state.value.incorrect
-            "
-            class="feedback feedback-error"
-            role="alert"
-          >
-            {{ $t("review.incorrect") }}
-          </div>
-          <footer class="card-footer review-card-actions">
+            <p v-if="result" class="note">{{ copy("summary.note") }}</p>
+          </section>
+          <div class="review-footer">
             <button
-              class="button button-quiet"
-              type="button"
-              :disabled="review.state.value.status === 'submitting'"
-              @click="skip"
+              class="btn"
+              @click="result ? review.restart() : goto(step, false)"
             >
-              {{ $t("common.skip") }}
-            </button>
-            <button
-              class="button button-primary"
-              type="button"
-              :disabled="review.state.value.status === 'submitting'"
-              @click="submit"
+              {{ copy(result ? "restart" : "back") }}</button
+            ><button
+              class="btn primary"
+              @click="result ? advance() : review.submit()"
             >
               {{
-                review.attempt.value.item.stage === "spelling"
-                  ? $t("review.check")
-                  : $t("review.finish")
+                copy(
+                  result
+                    ? session?.status === "active"
+                      ? "nextbatch"
+                      : "finish"
+                    : "submit",
+                )
               }}
             </button>
-          </footer>
-        </article>
-        <div v-else class="skeleton" :aria-label="$t('common.loading')" />
+          </div></template
+        >
+        <template v-else-if="attempt && draft"
+          ><section v-if="word" class="review-paper">
+            <p class="eyebrow">
+              {{
+                copy("step", { index: step + 1, total: attempt.words.length })
+              }}
+            </p>
+            <h2>{{ copy("review.spell") }}</h2>
+            <LetterSlots
+              :key="word.questionId"
+              :slots="word.slots"
+              :values="draft.wordInputs[word.questionId] ?? []"
+              @change="review.word(word!.questionId, $event)"
+            />
+            <section class="hint">
+              <small>{{ copy("review.translation") }}</small>
+              <p>{{ word.entryMeaning }}</p>
+            </section>
+            <section class="hint">
+              <div class="actions">
+                <small>{{ copy("review.phrase") }}</small
+                ><button
+                  class="btn quiet small"
+                  :aria-expanded="hint"
+                  @click="hint = !hint"
+                >
+                  {{ copy(hint ? "hide" : "show") }}
+                </button>
+              </div>
+              <p v-if="hint" class="story-text">
+                <template v-for="(segment, index) in word.hint" :key="index">{{
+                  segment.kind === "text" ? segment.text : "________"
+                }}</template>
+              </p>
+            </section>
+          </section>
+          <section v-else class="review-paper">
+            <h2>{{ copy("review.passage") }}</h2>
+            <p class="muted">{{ copy("l.groups") }}</p>
+            <p class="story-text" data-region="passage">
+              <template v-for="(segment, index) in attempt.passage" :key="index"
+                ><template v-if="segment.kind === 'text'">{{
+                  segment.text
+                }}</template
+                ><span
+                  v-else
+                  class="gap-wrap"
+                  :class="groupClasses(segment.groupRef)"
+                  ><span aria-hidden="true"
+                    ><AppIcon
+                      :name="
+                        symbols[groupIndex(segment.groupRef) % 6]!
+                      " /></span
+                  ><input
+                    class="gap"
+                    :value="draft.passageInputs[segment.blankId] ?? ''"
+                    :aria-label="`${copy('gap', { index: groups.findIndex((g) => g.blankId === segment.blankId) + 1 })} · ${copy('l.group', { symbol: registry?.styleFor(segment.groupRef).anonymousName ?? '' })}`"
+                    autocomplete="off"
+                    :spellcheck="false"
+                    autocapitalize="none"
+                    @focus="activeGroup = segment.groupRef"
+                    @blur="activeGroup = null"
+                    @input="
+                      review.passage(
+                        segment.blankId,
+                        ($event.target as HTMLInputElement).value,
+                      )
+                    " /></span
+              ></template>
+            </p>
+          </section>
+          <div class="review-footer">
+            <button
+              class="btn"
+              :disabled="step === 0"
+              @click="goto(step - 1, false)"
+            >
+              {{ copy("previous") }}
+            </button>
+            <div class="actions">
+              <button class="btn quiet" @click="next(true)">
+                {{ copy("skip") }}</button
+              ><button
+                class="btn primary"
+                :disabled="!answered"
+                @click="next()"
+              >
+                {{ copy("next") }}
+              </button>
+            </div>
+          </div></template
+        >
       </div>
-    </LearnerPageBoundary>
-  </section>
+    </div>
+    <p
+      v-else-if="
+        review.phase.value === 'loading' || review.phase.value === 'submitting'
+      "
+      role="status"
+    >
+      {{ copy("loading") }}
+    </p>
+    <section
+      v-else-if="
+        session?.status === 'completed' && review.phase.value === 'receipt'
+      "
+      class="panel session-totals"
+    >
+      <h2>{{ copy("l.sessiondone") }}</h2>
+      <dl class="stats">
+        <div>
+          <dt>{{ copy("l.total.completed") }}</dt>
+          <dd>
+            {{ session.progress.completedBatches }} /
+            {{ session.progress.totalBatches }}
+          </dd>
+        </div>
+        <div>
+          <dt>{{ copy("l.total.success") }}</dt>
+          <dd>{{ session.progress.successfulBatches }}</dd>
+        </div>
+        <div>
+          <dt>{{ copy("l.total.failed") }}</dt>
+          <dd>{{ session.progress.unsuccessfulBatches }}</dd>
+        </div>
+        <div>
+          <dt>{{ copy("l.total.skipped") }}</dt>
+          <dd>{{ session.progress.skippedBatches }}</dd>
+        </div>
+      </dl>
+      <p class="muted">{{ copy("l.summary.unavailable") }}</p>
+      <div class="actions">
+        <button v-if="review.receipt.value" class="btn" @click="review.restart">
+          {{ copy("restart") }}</button
+        ><NuxtLink
+          class="btn primary"
+          :to="session.mode === 'range' ? '/review' : '/library'"
+          >{{
+            copy(session.mode === "range" ? "l.backRange" : "l.backLibrary")
+          }}</NuxtLink
+        >
+      </div>
+    </section>
+    <section v-else class="empty">
+      <h2>
+        {{
+          copy(
+            review.phase.value === "receipt"
+              ? "finish"
+              : review.phase.value === "unavailable"
+                ? "l.unavailable"
+                : "review.title",
+          )
+        }}
+      </h2>
+      <p v-if="review.phase.value === 'receipt'">
+        {{ copy("l.summary.unavailable") }}
+      </p>
+      <div class="actions">
+        <button
+          v-if="session?.status === 'active' && !review.attempt.value"
+          class="btn primary"
+          @click="review.begin"
+        >
+          {{ copy("start") }}</button
+        ><button
+          v-if="review.attempt.value"
+          class="btn"
+          @click="review.load(id)"
+        >
+          {{ copy("resume") }}</button
+        ><button
+          v-if="review.attempt.value"
+          class="btn"
+          @click="review.restart()"
+        >
+          {{ copy("restart") }}</button
+        ><NuxtLink class="btn" to="/library">{{
+          copy("l.backLibrary")
+        }}</NuxtLink>
+      </div>
+    </section>
+    <AppDialog
+      id="restore-draft"
+      :open="review.restoreOpen.value"
+      :title="copy('resume.title')"
+      @close="review.closeRestore"
+      ><p>{{ copy("l.resume.desc") }}</p>
+      <template #footer
+        ><button class="btn" @click="review.restart">{{ copy("fresh") }}</button
+        ><button class="btn primary" @click="review.restore">
+          {{ copy("resume") }}
+        </button></template
+      ></AppDialog
+    >
+  </LearnerPageBoundary>
 </template>

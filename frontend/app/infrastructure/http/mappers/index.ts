@@ -1,33 +1,27 @@
 import type {
   AccountModel,
-  ActiveRangeModel,
   AdminModelModel,
   AdminUserDetailModel,
   AdminUserSummaryModel,
   AuthSessionResult,
   BatchDetailModel,
   BatchSummaryModel,
-  CredentialStatusModel,
+  ModelConnectionModel,
   GenerationOptionsModel,
   GenerationResultModel,
   GroupPolicyModel,
   LearningSummaryModel,
   PageModel,
-  ReviewActionOutcomeModel,
-  ReviewAttemptModel,
-  ReviewBatchProjectionModel,
-  ReviewItemModel,
-  ReviewItemProgressModel,
-  ReviewProgressModel,
-  ReviewRangePreviewModel,
-  ReviewSessionCreatedModel,
-  ReviewSessionModel,
-  ClozeGroupRef,
   SessionSnapshot,
   UserGroupChangeModel,
   VocabularyResultModel,
 } from "@application/shared/models";
-import type { BootstrapDto, AuthDto, AccountDto } from "../schemas/session";
+import type {
+  BootstrapDto,
+  AuthDto,
+  LoginDto,
+  AccountDto,
+} from "../schemas/session";
 import type {
   GenerationOptionsDto,
   GenerationValidatedEventDto,
@@ -38,21 +32,13 @@ import type {
   BatchSummaryDto,
   LearningSummaryDto,
 } from "../schemas/learning";
-import type {
-  ActiveRangeDto,
-  ReviewActionOutcomeDto,
-  ReviewAttemptDto,
-  ReviewItemDto,
-  ReviewRangePreviewDto,
-  ReviewSessionCreatedDto,
-  ReviewSessionDto,
-} from "../schemas/review";
+
 import type {
   AdminGroupDto,
   AdminModelDto,
   AdminUserDetailDto,
   AdminUserSummaryDto,
-  CredentialDto,
+  ModelConnectionDto,
 } from "../schemas/admin";
 import {
   mapCodePointSpansToSegments,
@@ -66,19 +52,30 @@ export function mapBootstrapDto(dto: BootstrapDto): SessionSnapshot {
         ? { kind: "visitor", username: null, role: null, planCode: null }
         : {
             kind: "account",
+            id: dto.actor.id,
             username: dto.actor.username,
             role: dto.actor.role,
             planCode: dto.actor.plan_code,
           },
     accountLocale: dto.ui_locale,
-    supportedLocales: [...dto.supported_ui_locales],
+    supportedLocales: ["zh-CN", "en-US"],
   };
 }
 
-export function mapAuthDto(dto: AuthDto): AuthSessionResult {
+export function mapAuthDto(dto: AuthDto | LoginDto): AuthSessionResult {
+  const welcome = "welcome" in dto ? dto.welcome : null;
   return {
+    welcome: welcome
+      ? {
+          kind: welcome.kind,
+          displayName: welcome.display_name,
+          daysSinceLearning: welcome.days_since_learning,
+          previousLearningAt: welcome.previous_learning_at,
+        }
+      : null,
     actor: {
       kind: "account",
+      id: dto.actor.id,
       username: dto.actor.username,
       role: dto.actor.role,
       planCode: dto.actor.plan_code,
@@ -89,10 +86,17 @@ export function mapAuthDto(dto: AuthDto): AuthSessionResult {
 }
 
 export function mapAccountDto(dto: AccountDto): AccountModel {
+  const a = dto.account;
   return {
-    username: dto.username,
-    planCode: dto.plan_code,
-    uiLocale: dto.ui_locale,
+    username: a.username,
+    nickname: a.nickname,
+    displayName: a.display_name,
+    gender: a.gender,
+    planCode: a.base_plan_code,
+    effectivePlanCode: a.effective_plan_code,
+    uiLocale: a.ui_locale,
+    lastLoginAt: a.last_login_at,
+    lastLearningAt: a.last_learning_at,
   };
 }
 
@@ -111,11 +115,24 @@ export function mapGenerationOptionsDto(
       id: model.id,
       name: model.name,
       description: model.description,
+      access: {
+        fromPlan: model.access.from_plan,
+        cardEndsAt: model.access.card_ends_at,
+      },
     })),
     meaningLanguages: [...dto.meaning_languages],
     scenarios: [...dto.scenarios],
     lengths: [...dto.lengths],
     maxEntries: dto.max_entries,
+    effectivePlan: {
+      code: dto.effective_plan.code,
+      origin: dto.effective_plan.origin,
+      trialEndsAt: dto.effective_plan.trial_ends_at,
+    },
+    extraQuota: {
+      remaining: dto.extra_quota.remaining,
+      earliestExpiresAt: dto.extra_quota.earliest_expires_at,
+    },
     availability: dto.availability.can_generate
       ? { canGenerate: true, reason: null }
       : { canGenerate: false, reason: dto.availability.reason },
@@ -132,10 +149,10 @@ export function mapGenerationOptionsDto(
   };
 }
 
-export function mapGenerationValidatedDto(
-  dto: GenerationValidatedEventDto,
+export function mapGenerationResultDto(
+  result: GenerationValidatedEventDto["result"],
 ): GenerationResultModel {
-  const targets = dto.result.targets.map((target) => ({
+  const targets = result.targets.map((target) => ({
     entry: target.entry,
     entryMeaning: target.entry_meaning,
     hintPhrase: target.hint_phrase,
@@ -145,14 +162,20 @@ export function mapGenerationValidatedDto(
     ),
   }));
   return {
-    passage: dto.result.passage,
+    passage: result.passage,
     passageSegments: mergePassageOccurrences(
-      dto.result.passage,
-      dto.result.targets.map((target) => target.occurrences),
+      result.passage,
+      result.targets.map((target) => target.occurrences),
     ),
-    tags: [...dto.result.tags],
+    tags: [...result.tags],
     targets,
   };
+}
+
+export function mapGenerationValidatedDto(
+  dto: GenerationValidatedEventDto,
+): GenerationResultModel {
+  return mapGenerationResultDto(dto.result);
 }
 
 export function mapLearningSummaryDto(
@@ -171,6 +194,8 @@ export function mapLearningSummaryDto(
 export function mapBatchSummaryDto(dto: BatchSummaryDto): BatchSummaryModel {
   return {
     id: dto.id,
+    title: dto.title,
+    titleRevision: dto.title_revision,
     savedAt: dto.saved_at,
     passagePreview: dto.passage_preview,
     tags: [...dto.tags],
@@ -204,7 +229,10 @@ export function mapBatchPageDto(
 export function mapBatchDetailDto(dto: BatchDetailDto): BatchDetailModel {
   return {
     id: dto.id,
+    title: dto.title,
+    titleRevision: dto.title_revision,
     savedAt: dto.saved_at,
+    titleMaxLength: dto.title_max_length,
     configuration: {
       modelName: dto.configuration.model.name,
       meaningLanguage: dto.configuration.meaning_language,
@@ -235,231 +263,33 @@ export function mapBatchDetailDto(dto: BatchDetailDto): BatchDetailModel {
   };
 }
 
-function mapProgress(dto: {
-  completed_batches: number;
-  total_batches: number;
-  successful_batches: number;
-  unsuccessful_batches: number;
-}): ReviewProgressModel {
+export function mapModelConnectionDto(
+  dto: ModelConnectionDto,
+): ModelConnectionModel {
   return {
-    completedBatches: dto.completed_batches,
-    totalBatches: dto.total_batches,
-    successfulBatches: dto.successful_batches,
-    unsuccessfulBatches: dto.unsuccessful_batches,
-  };
-}
-
-function mapDateRange(dto: {
-  start_date: string;
-  end_date: string;
-  timezone: string;
-}) {
-  return {
-    startDate: dto.start_date,
-    endDate: dto.end_date,
-    timezone: dto.timezone,
-  };
-}
-
-function mapBatchProjection(dto: {
-  batch_id: string;
-  saved_at: string;
-  scenario: ReviewBatchProjectionModel["scenario"];
-}): ReviewBatchProjectionModel {
-  return {
-    batchId: dto.batch_id,
-    savedAt: dto.saved_at,
-    scenario: dto.scenario,
-  };
-}
-
-function mapSummary(dto: {
-  total_batches: number;
-  successful_batches: number;
-  unsuccessful_batches: number;
-  skipped_batches: number;
-}) {
-  return {
-    totalBatches: dto.total_batches,
-    successfulBatches: dto.successful_batches,
-    unsuccessfulBatches: dto.unsuccessful_batches,
-    skippedBatches: dto.skipped_batches,
-  };
-}
-
-export function mapReviewRangePreviewDto(
-  dto: ReviewRangePreviewDto,
-): ReviewRangePreviewModel {
-  return {
-    batchCount: dto.batch_count,
-    entryCount: dto.entry_count,
-    empty: dto.empty,
-  };
-}
-
-export function mapActiveRangeDto(dto: ActiveRangeDto): ActiveRangeModel {
-  return {
-    sessionId: dto.session_id,
-    dateRange: mapDateRange(dto.date_range),
-    progress: mapProgress(dto.progress),
-  };
-}
-
-export function mapReviewSessionDto(dto: ReviewSessionDto): ReviewSessionModel {
-  if (dto.status === "active") {
-    return {
-      sessionId: dto.session_id,
-      mode: dto.mode,
-      status: "active",
-      dateRange: dto.date_range ? mapDateRange(dto.date_range) : null,
-      progress: mapProgress(dto.progress),
-      currentBatch: mapBatchProjection(dto.current_batch),
-      summary: null,
-    };
-  }
-  return {
-    sessionId: dto.session_id,
-    mode: dto.mode,
-    status: "completed",
-    dateRange: dto.date_range ? mapDateRange(dto.date_range) : null,
-    progress: mapProgress(dto.progress),
-    currentBatch: null,
-    summary: mapSummary(dto.summary),
-  };
-}
-
-export function mapReviewSessionCreatedDto(
-  dto: ReviewSessionCreatedDto,
-): ReviewSessionCreatedModel {
-  return {
-    reused: dto.reused,
-    session: {
-      sessionId: dto.session_id,
-      mode: dto.mode,
-      status: "active",
-      dateRange: dto.date_range ? mapDateRange(dto.date_range) : null,
-      progress: mapProgress(dto.progress),
-      currentBatch: mapBatchProjection(dto.current_batch),
-      summary: null,
-    },
-  };
-}
-
-export function mapReviewItemDto(dto: ReviewItemDto): ReviewItemModel {
-  if (dto.stage === "spelling") {
-    return {
-      stage: "spelling",
-      itemId: dto.item_id,
-      entryMeaning: dto.entry_meaning,
-      hintSegments: dto.hint.segments.map((segment) =>
-        segment.kind === "text"
-          ? { kind: "text" as const, text: segment.text }
-          : { kind: "blank" as const, lengthHint: segment.length_hint },
-      ),
-    };
-  }
-  const localGroups = new Map<string, ClozeGroupRef>();
-  const groupRefFor = (transportKey: string): ClozeGroupRef => {
-    const existing = localGroups.get(transportKey);
-    if (existing) return existing;
-    const localRef = `cloze-group-${localGroups.size}` as ClozeGroupRef;
-    localGroups.set(transportKey, localRef);
-    return localRef;
-  };
-  return {
-    stage: "passage_cloze",
-    itemId: dto.item_id,
-    passageSegments: dto.passage_segments.map((segment) =>
-      segment.kind === "text"
-        ? { kind: "text" as const, text: segment.text }
-        : {
-            kind: "blank" as const,
-            blankId: segment.blank_id,
-            groupRef: groupRefFor(segment.group_key),
-          },
-    ),
-  };
-}
-
-function mapItemProgress(dto: {
-  stage: "spelling" | "passage_cloze";
-  item_number: number;
-  items_in_stage: number;
-}): ReviewItemProgressModel {
-  return {
-    stage: dto.stage,
-    itemNumber: dto.item_number,
-    itemsInStage: dto.items_in_stage,
-  };
-}
-
-export function mapReviewAttemptDto(dto: ReviewAttemptDto): ReviewAttemptModel {
-  return {
-    attemptId: dto.attempt_id,
-    item: mapReviewItemDto(dto.item),
-    progress: mapItemProgress(dto.progress),
-  };
-}
-
-export function mapReviewActionDto(
-  dto: ReviewActionOutcomeDto,
-): ReviewActionOutcomeModel {
-  switch (dto.outcome) {
-    case "retry":
-      return {
-        outcome: "retry",
-        item: mapReviewItemDto(dto.item),
-        progress: mapItemProgress(dto.progress),
-        incorrectBlankIds: dto.incorrect_blank_ids,
-      };
-    case "advanced":
-      return {
-        outcome: "advanced",
-        result: dto.result,
-        item: mapReviewItemDto(dto.item),
-        progress: mapItemProgress(dto.progress),
-      };
-    case "batch_completed":
-      return {
-        outcome: "batch_completed",
-        batchResult: {
-          batchId: dto.batch_result.batch_id,
-          successful: dto.batch_result.successful,
-          errorCount: dto.batch_result.error_count,
-          skipCount: dto.batch_result.skip_count,
-        },
-        sessionProgress: mapProgress(dto.session_progress),
-        nextBatch: mapBatchProjection(dto.next_batch),
-      };
-    case "session_completed":
-      return {
-        outcome: "session_completed",
-        batchResult: {
-          batchId: dto.batch_result.batch_id,
-          successful: dto.batch_result.successful,
-          errorCount: dto.batch_result.error_count,
-          skipCount: dto.batch_result.skip_count,
-        },
-        sessionProgress: mapProgress(dto.session_progress),
-        sessionSummary: mapSummary(dto.session_summary),
-      };
-  }
-}
-
-export function mapCredentialDto(dto: CredentialDto): CredentialStatusModel {
-  return {
-    configured: dto.configured,
+    id: dto.id,
+    name: dto.name,
+    protocol: dto.protocol,
+    baseUrl: dto.base_url,
+    credentialConfigured: dto.credential_configured,
     maskedHint: dto.masked_hint,
-    updatedAt: dto.updated_at,
   };
 }
 
-export function mapAdminModelDto(dto: AdminModelDto): AdminModelModel {
+export function mapAdminModelDto(
+  dto: AdminModelDto,
+  revision: string,
+): AdminModelModel {
   return {
     id: dto.id,
     displayName: dto.display_name,
     description: dto.description,
-    openRouterModelId: dto.openrouter_model_id,
+    revision,
+    retiredAt: dto.retired_at,
+    providerModelId: dto.provider_model_id,
+    connection: mapModelConnectionDto(dto.connection),
+    maxOutputTokens: dto.max_output_tokens,
+    outputMode: dto.output_mode,
     enabled: dto.enabled,
     assignedGroupCodes: [...dto.assigned_group_codes],
     createdAt: dto.created_at,
@@ -467,9 +297,14 @@ export function mapAdminModelDto(dto: AdminModelDto): AdminModelModel {
   };
 }
 
-export function mapGroupDto(dto: AdminGroupDto): GroupPolicyModel {
+export function mapGroupDto(
+  dto: AdminGroupDto,
+  revision: string,
+): GroupPolicyModel {
   return {
     code: dto.code,
+    priority: dto.priority,
+    revision,
     rolling24hLimit: dto.rolling_24h_limit,
     maxEntries: dto.max_entries,
     allowedLengths: [...dto.allowed_lengths],
@@ -500,6 +335,21 @@ export function mapAdminUserDetailDto(
   return {
     ...mapAdminUserSummaryDto(dto),
     uiLocale: dto.ui_locale,
+    nickname: dto.nickname,
+    gender: dto.gender,
+    lastLoginAt: dto.last_login_at,
+    lastLearningAt: dto.last_learning_at,
+    baseRevision: dto.base_revision,
+    effectivePlanCode: dto.effective_plan_code,
+    growth: dto.growth
+      ? {
+          levelNumber: dto.growth.level_number,
+          points: dto.growth.points,
+          experience: dto.growth.experience,
+          masteredTotal: dto.growth.mastered_total,
+          savedTotal: dto.growth.saved_total,
+        }
+      : null,
     learningBatchCount: dto.learning_batch_count,
     generationQuota:
       dto.role === "admin"

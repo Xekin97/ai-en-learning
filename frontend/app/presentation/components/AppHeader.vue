@@ -1,62 +1,108 @@
 <script setup lang="ts">
 const session = useSessionStore();
+const account = useAccountStore();
 const route = useRoute();
-const { locale } = useI18n();
-const menuOpen = ref(false);
-
-async function signOut() {
-  await session.logout();
-  await navigateTo("/");
-}
-
-function current(path: string) {
+const { copy } = useDesignCopy();
+const dropdown = ref<HTMLDetailsElement | null>(null);
+let pendingAccountPath: string | null = null;
+const navigation = [
+  { path: "/", key: "home" },
+  { path: "/explore", key: "explore" },
+  { path: "/create", key: "create" },
+  { path: "/review", key: "range" },
+  { path: "/library", key: "library" },
+];
+const accountLinks = [
+  { path: "/account", key: "profile", icon: "user" },
+  { path: "/account/growth", key: "growth", icon: "trophy" },
+  { path: "/account/items", key: "bag", icon: "shopping-bag" },
+  { path: "/account/exchange", key: "shop", icon: "store" },
+] as const;
+const name = computed(() =>
+  session.actor.value?.kind === "account"
+    ? (account.state.value.account?.displayName ?? session.actor.value.username)
+    : "",
+);
+function active(path: string) {
+  if (path === "/explore" && route.path.startsWith("/trial/")) return "page";
   return route.path === path ||
-    (path !== "/" && route.path.startsWith(`${path}/`))
+    (path !== "/" && route.path.startsWith(path + "/"))
     ? "page"
     : undefined;
 }
-
-const brandLocaleClass = computed(() =>
-  locale.value === "zh-CN" ? "brand-name-zh" : "brand-name-en",
-);
-
-const identityInitial = computed(() => {
-  const actor = session.actor.value;
-  return actor?.kind === "account"
-    ? actor.username.charAt(0).toUpperCase()
-    : "";
+function closeDropdown() {
+  if (dropdown.value) dropdown.value.open = false;
+}
+function closeFromOutside(event: Event) {
+  if (
+    dropdown.value?.open &&
+    event.target instanceof Node &&
+    !dropdown.value.contains(event.target)
+  ) {
+    closeDropdown();
+  }
+}
+function escapeDropdown(event: KeyboardEvent) {
+  if (!dropdown.value?.open) return;
+  event.preventDefault();
+  event.stopPropagation();
+  closeDropdown();
+  dropdown.value.querySelector("summary")?.focus();
+}
+async function focusAccountHeading(path: string) {
+  await nextTick();
+  if (!dropdown.value || route.path !== path) return;
+  const heading = document.querySelector<HTMLElement>(".account-content h1");
+  if (heading) {
+    heading.tabIndex = -1;
+    heading.focus();
+  }
+}
+function selectAccount(event: MouseEvent, path: string) {
+  // NuxtLink owns navigation, including modified clicks that open another tab.
+  if (
+    event.button !== 0 ||
+    event.metaKey ||
+    event.ctrlKey ||
+    event.shiftKey ||
+    event.altKey
+  )
+    return;
+  closeDropdown();
+  pendingAccountPath = route.path === path ? null : path;
+  if (route.path === path) void focusAccountHeading(path);
+}
+onMounted(() => {
+  document.addEventListener("click", closeFromOutside);
+  document.addEventListener("focusin", closeFromOutside);
 });
+onBeforeUnmount(() => {
+  document.removeEventListener("click", closeFromOutside);
+  document.removeEventListener("focusin", closeFromOutside);
+});
+watch(
+  () => route.fullPath,
+  () => {
+    closeDropdown();
+    const path = pendingAccountPath;
+    pendingAccountPath = null;
+    // Nuxt's route changes after the destination page has finished rendering.
+    if (path === route.path) void focusAccountHeading(path);
+  },
+  { flush: "post" },
+);
 </script>
-
 <template>
-  <header class="app-header">
-    <div class="container app-header-inner">
-      <NuxtLink to="/" class="brand" :aria-label="$t('brand')">
-        <BrandMark />
-        <span class="brand-copy">
-          <span class="brand-name" :class="brandLocaleClass">{{
-            $t("brand")
-          }}</span>
-        </span>
-      </NuxtLink>
-      <nav class="main-nav" :aria-label="$t('common.mainNavigation')">
+  <header class="topbar">
+    <div class="container header-inner">
+      <NuxtLink class="brand" to="/"><BrandMark />{{ copy("brand") }}</NuxtLink>
+      <nav class="nav" :aria-label="copy('mainnav')">
         <NuxtLink
-          class="nav-link"
-          to="/create"
-          :aria-current="current('/create')"
-          >{{ $t("common.create") }}</NuxtLink
-        >
-        <NuxtLink
-          class="nav-link"
-          to="/review"
-          :aria-current="current('/review')"
-          >{{ $t("common.review") }}</NuxtLink
-        >
-        <NuxtLink
-          class="nav-link"
-          to="/library"
-          :aria-current="current('/library')"
-          >{{ $t("common.library") }}</NuxtLink
+          v-for="item in navigation"
+          :key="item.path"
+          :to="item.path"
+          :aria-current="active(item.path)"
+          >{{ copy("nav." + item.key) }}</NuxtLink
         >
       </nav>
       <div class="header-actions">
@@ -64,81 +110,48 @@ const identityInitial = computed(() => {
         <template v-if="session.actor.value?.kind === 'account'">
           <NuxtLink
             v-if="session.isAdmin.value"
-            class="button button-quiet button-small"
-            to="/admin/models"
-            >{{ $t("admin.title") }}</NuxtLink
+            class="btn quiet"
+            to="/admin"
+            >{{ copy("admin") }}</NuxtLink
           >
-          <NuxtLink v-else class="identity-pill" to="/account">
-            <span class="identity-avatar" aria-hidden="true">{{
-              identityInitial
-            }}</span>
-            <span>{{ session.actor.value.username }}</span>
-          </NuxtLink>
+          <template v-else>
+            <NuxtLink class="btn quiet" to="/notices">{{
+              copy("notices")
+            }}</NuxtLink>
+            <details
+              ref="dropdown"
+              class="account-dropdown"
+              @keydown.esc="escapeDropdown"
+            >
+              <summary :aria-label="copy('accountmenu')">
+                <span class="avatar" aria-hidden="true">{{
+                  name.slice(0, 1)
+                }}</span
+                ><span class="user-name">{{ name }}</span
+                ><AppIcon name="chevron-down" class="dropdown-chevron" />
+              </summary>
+              <nav class="account-popover" :aria-label="copy('accountmenu')">
+                <NuxtLink
+                  v-for="item in accountLinks"
+                  :key="item.path"
+                  :to="item.path"
+                  :aria-current="route.path === item.path ? 'page' : undefined"
+                  @click="selectAccount($event, item.path)"
+                  ><AppIcon :name="item.icon" />{{ copy(item.key) }}</NuxtLink
+                >
+              </nav>
+            </details>
+          </template>
         </template>
-        <template v-else>
-          <NuxtLink class="button button-quiet button-small" to="/login">{{
-            $t("common.login")
-          }}</NuxtLink>
-          <NuxtLink class="button button-primary button-small" to="/register">{{
-            $t("common.register")
-          }}</NuxtLink>
-        </template>
+        <template v-else
+          ><NuxtLink class="btn primary" to="/login">{{
+            copy("login")
+          }}</NuxtLink
+          ><NuxtLink class="btn quiet" to="/register">{{
+            copy("i.register")
+          }}</NuxtLink></template
+        >
       </div>
-      <button
-        class="mobile-nav-toggle"
-        type="button"
-        :aria-expanded="menuOpen"
-        :aria-label="
-          menuOpen ? $t('common.closeNavigation') : $t('common.openNavigation')
-        "
-        @click="menuOpen = !menuOpen"
-      >
-        <AppIcon name="menu" />
-      </button>
-    </div>
-    <div v-if="menuOpen" class="container mobile-menu-list">
-      <NuxtLink
-        class="button button-quiet"
-        to="/create"
-        @click="menuOpen = false"
-        >{{ $t("common.create") }}</NuxtLink
-      >
-      <NuxtLink
-        class="button button-quiet"
-        to="/review"
-        @click="menuOpen = false"
-        >{{ $t("common.review") }}</NuxtLink
-      >
-      <NuxtLink
-        class="button button-quiet"
-        to="/library"
-        @click="menuOpen = false"
-        >{{ $t("common.library") }}</NuxtLink
-      >
-      <NuxtLink
-        v-if="session.isLearner.value"
-        class="button button-quiet"
-        to="/account"
-        @click="menuOpen = false"
-        >{{ $t("common.account") }}</NuxtLink
-      >
-      <template v-if="session.actor.value?.kind !== 'account'">
-        <NuxtLink
-          class="button button-quiet"
-          to="/login"
-          @click="menuOpen = false"
-          >{{ $t("common.login") }}</NuxtLink
-        >
-        <NuxtLink
-          class="button button-primary"
-          to="/register"
-          @click="menuOpen = false"
-          >{{ $t("common.register") }}</NuxtLink
-        >
-      </template>
-      <button v-else class="button button-quiet" type="button" @click="signOut">
-        {{ $t("common.logout") }}
-      </button>
     </div>
   </header>
 </template>

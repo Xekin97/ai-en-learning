@@ -11,10 +11,13 @@ const localeController = useApplicationLocale();
 const username = ref("");
 const password = ref("");
 const pending = ref(false);
+const authenticated = ref(false);
+const claimPending = ref(false);
 const hasClaim = computed(
   () => route.query.claim === "1" && session.hasVisitorClaim(),
 );
 const { t } = useI18n();
+const { copy } = useDesignCopy();
 const continueHint = computed(() =>
   returnIntent.value
     ? String(t(`auth.continue.${returnIntent.value.target}`))
@@ -39,14 +42,15 @@ async function submit() {
       password: password.value,
       locale: localeController.locale.value as "zh-CN" | "en-US",
     });
+    authenticated.value = true;
     await localeController.initialize();
     if (session.isAdmin.value) {
-      await navigateTo("/admin/models");
+      await navigateTo("/admin");
       return;
     }
     if (hasClaim.value) {
-      const batchId = await session.consumeVisitorClaim();
-      await navigateTo(`/library/${encodeURIComponent(batchId)}`);
+      claimPending.value = true;
+      await finishClaim();
       return;
     }
     await navigateTo(
@@ -55,75 +59,103 @@ async function submit() {
   } catch {
     // The store exposes a localized-safe failure model.
   } finally {
+    password.value = "";
+    pending.value = false;
+    if (authenticated.value && !claimPending.value)
+      session.presentAuthenticationFeedback();
+  }
+}
+async function finishClaim() {
+  pending.value = true;
+  try {
+    const batchId = await session.consumeVisitorClaim();
+    claimPending.value = false;
+    await navigateTo(`/library/${encodeURIComponent(batchId)}`);
+    session.presentAuthenticationFeedback();
+  } catch {
+    /* Retain the same claim for explicit retry. */
+  } finally {
     pending.value = false;
   }
 }
+async function endClaim() {
+  claimPending.value = false;
+  await navigateTo(
+    authenticationDestination(session.isAdmin.value, returnIntent.value),
+  );
+  session.presentAuthenticationFeedback();
+}
 </script>
-
 <template>
-  <section class="container auth-layout">
-    <div class="auth-message">
-      <p class="eyebrow">
-        {{ hasClaim ? $t("auth.claimEyebrow") : $t("auth.storyEyebrow") }}
-      </p>
-      <h1>{{ hasClaim ? $t("auth.claimTitle") : $t("auth.loginStory") }}</h1>
-      <p class="page-description">
-        {{ hasClaim ? $t("auth.claimCopy") : $t("auth.storyCopy") }}
-      </p>
-    </div>
-    <div class="auth-card">
-      <p v-if="!hasClaim && continueHint" class="auth-intent" role="status">
-        {{ continueHint }}
-      </p>
-      <div v-if="hasClaim" class="notice notice-warning">
-        <AppIcon name="alert" />
+  <div
+    class="auth-layout"
+    :class="{ 'has-context': hasClaim || !!returnIntent }"
+  >
+    <section class="auth-intent">
+      <span class="auth-symbol" aria-hidden="true"
+        ><AppIcon name="book-open"
+      /></span>
+      <h2>{{ copy(hasClaim ? "i.claim.title" : "i.story.title") }}</h2>
+      <p>{{ copy(hasClaim ? "i.claim.desc" : "i.story.desc") }}</p>
+      <p v-if="hasClaim" class="notice">{{ copy("i.claim.note") }}</p>
+      <p v-else-if="returnIntent" class="notice">{{ continueHint }}</p>
+    </section>
+    <section class="auth-form">
+      <div class="page-head">
         <div>
-          <strong class="notice-title">{{ $t("auth.claimNotice") }}</strong
-          >{{ $t("auth.claimLogin") }}
+          <h1 tabindex="-1">{{ copy("login") }}</h1>
+          <p>{{ copy("i.login.desc") }}</p>
         </div>
       </div>
-      <hr v-if="hasClaim" class="divider" />
-      <h2>{{ $t("auth.welcome") }}</h2>
-      <p class="card-subtitle">{{ $t("auth.loginCopy") }}</p>
       <AppError :failure="session.state.value.failure" />
-      <form :aria-label="$t('auth.loginSubmit')" @submit.prevent="submit">
+      <p
+        v-if="route.query.claim === '1' && !hasClaim && !authenticated"
+        class="notice"
+      >
+        {{ copy("i.claim.lost") }}
+      </p>
+      <div v-if="claimPending" class="actions">
+        <button class="btn primary" :disabled="pending" @click="finishClaim">
+          {{ copy("retry") }}</button
+        ><button class="btn" :disabled="pending" @click="endClaim">
+          {{ copy("close") }}
+        </button>
+      </div>
+      <form v-else @submit.prevent="submit">
         <label class="field"
-          ><span class="field-label">{{ $t("auth.username") }}</span
+          ><span>{{ copy("i.username") }}</span
           ><input
             v-model="username"
-            class="text-input"
+            name="username"
             autocomplete="username"
             required
             minlength="3"
             maxlength="32"
-          /><span class="helper">{{ $t("auth.usernameHelper") }}</span></label
-        >
+            pattern="[A-Za-z0-9_]{3,32}"
+        /></label>
+
         <label class="field"
-          ><span class="field-label">{{ $t("auth.password") }}</span
+          ><span>{{ copy("i.password") }}</span
           ><input
             v-model="password"
-            class="text-input"
+            name="password"
             type="password"
             autocomplete="current-password"
             required
             minlength="8"
             maxlength="128"
-          /><span class="helper">{{ $t("auth.passwordHelper") }}</span></label
-        >
-        <button
-          class="button button-primary auth-submit"
-          :disabled="pending"
-          type="submit"
-        >
-          {{ pending ? $t("common.loading") : $t("auth.loginSubmit") }}
+        /></label>
+
+        <button class="btn primary" type="submit" :disabled="pending">
+          {{ copy(pending ? "loading" : "login") }}
         </button>
       </form>
-      <p class="auth-alt">
-        {{ $t("auth.newHere") }}
-        <NuxtLink class="button button-quiet button-small" :to="registerTo">{{
-          $t("auth.goRegister")
+      <div v-if="!claimPending" class="auth-switch">
+        <span>{{ copy("i.new") }}</span
+        ><NuxtLink class="btn quiet" :to="registerTo">{{
+          copy("i.register")
         }}</NuxtLink>
-      </p>
-    </div>
-  </section>
+      </div>
+    </section>
+  </div>
 </template>

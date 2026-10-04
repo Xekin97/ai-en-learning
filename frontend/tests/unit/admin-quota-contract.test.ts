@@ -1,3 +1,4 @@
+import { userEnvelope } from "../fixtures/m002";
 import { createHash } from "node:crypto";
 import { readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
@@ -11,11 +12,15 @@ import { createApiRepository } from "@infrastructure/http/repositories/api-repos
 import { TokenVault } from "@runtime/session/token-vault";
 import { normalizeFailure } from "@application/shared/failure";
 import manifest from "../contracts/v1.4/manifest.json";
-import limited from "../contracts/v1.4/user-limited.json";
-import admin from "../contracts/v1.4/user-admin.json";
-import changed from "../contracts/v1.4/group-limited.json";
+import limitedLegacy from "../contracts/v1.4/user-limited.json";
+import adminLegacy from "../contracts/v1.4/user-admin.json";
+import changedLegacy from "../contracts/v1.4/group-limited.json";
 
-describe("API v1.4 shared raw contracts", () => {
+const limited = userEnvelope(limitedLegacy),
+  admin = userEnvelope(adminLegacy),
+  changed = userEnvelope(changedLegacy);
+
+describe("M001 quota invariants inherited by M002", () => {
   it.each(manifest.fixtures)(
     "validates backend-owned bytes and strict schema: $file",
     (fixture) => {
@@ -29,7 +34,7 @@ describe("API v1.4 shared raw contracts", () => {
         fixture.method === "GET"
           ? adminUserEnvelopeSchema
           : userGroupChangeEnvelopeSchema;
-      const envelope = schema.parse(JSON.parse(raw.toString()));
+      const envelope = schema.parse(userEnvelope(JSON.parse(raw.toString())));
       const model = mapAdminUserDetailDto(envelope.data.user);
       expect(JSON.stringify(model)).not.toContain("generation_quota");
       expect(JSON.stringify(model)).not.toContain("quota_reset");
@@ -90,6 +95,13 @@ describe("API v1.4 shared raw contracts", () => {
       }).success,
     ).toBe(false);
     const {
+      nickname: _nickname,
+      gender: _gender,
+      last_login_at: _lastLogin,
+      last_learning_at: _lastLearning,
+      base_revision: _baseRevision,
+      effective_plan_code: _effective,
+      growth: _growth,
       ui_locale: _locale,
       learning_batch_count: _count,
       generation_quota: quota,

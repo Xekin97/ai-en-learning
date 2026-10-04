@@ -23,181 +23,111 @@ const {
   search,
 } = await useAdminUserSearchController();
 useLocalizedHead("admin.users");
+const { copy } = useDesignCopy(),
+  admin = useAdminStore(),
+  format = useDisplayFormatters();
 </script>
 
 <template>
   <div>
-    <header class="page-heading">
-      <div>
-        <p class="eyebrow">{{ $t("admin.title") }}</p>
-        <h1 class="page-title">{{ $t("admin.users") }}</h1>
-        <p class="page-description">{{ $t("admin.usersCopy") }}</p>
-      </div>
-    </header>
-
-    <AdminUserSearchForm
-      v-model:draft="draftQuery"
-      :pending="view.isInitialLoading"
-      @submit="search"
-    />
-
-    <section
-      v-if="!view.hasSearched"
-      class="empty-state card admin-user-empty"
-      aria-labelledby="user-search-start-title"
-    >
-      <span class="empty-symbol" aria-hidden="true">
-        <AppIcon name="search" />
-      </span>
-      <h2 id="user-search-start-title">{{ $t("admin.searchStartTitle") }}</h2>
-      <p>{{ $t("admin.searchStartCopy") }}</p>
+    <div class="section-head">
+      <h1>{{ copy("a.users") }}</h1>
+    </div>
+    <form class="toolbar panel" @submit.prevent="search">
+      <label class="field"
+        ><span>{{ copy("a.username") }}</span
+        ><input
+          v-model="draftQuery"
+          type="search"
+          :disabled="view.isInitialLoading" /></label
+      ><button class="btn primary" :disabled="view.isInitialLoading">
+        {{ copy("a.search") }}
+      </button>
+    </form>
+    <p v-if="!view.hasSearched" class="muted search-help">
+      {{ copy("a.users.start") }}
+    </p>
+    <p v-else-if="view.isInitialLoading" role="status" aria-busy="true">
+      {{ $t("common.loading") }}
+    </p>
+    <section v-else-if="view.showInitialFailure" class="panel">
+      <p ref="resultHeading" class="notice error" tabindex="-1" role="alert">
+        {{ copy("a.search.error") }}
+      </p>
+      <button class="btn" @click="retrySearch">{{ copy("a.retry") }}</button>
     </section>
-
-    <section
-      v-else-if="view.isInitialLoading"
-      class="card admin-user-results"
-      aria-busy="true"
-      aria-live="polite"
-    >
-      <header class="card-header">
-        <div>
-          <h2 class="card-title">{{ $t("admin.searchingTitle") }}</h2>
-          <p class="card-subtitle">{{ $t("admin.searchingCopy") }}</p>
-        </div>
-        <span class="spinner" aria-hidden="true" />
-      </header>
-      <div class="card-body">
-        <div
-          v-for="index in 3"
-          :key="index"
-          class="user-skeleton"
-          aria-hidden="true"
-        >
-          <span /><span /><span />
-        </div>
-      </div>
-    </section>
-
-    <section
-      v-else-if="view.showInitialFailure"
-      class="card"
-      aria-live="polite"
-    >
-      <div class="card-body">
-        <div class="notice notice-danger" role="alert">
-          <AppIcon name="alert" />
-          <div>
-            <strong ref="resultHeading" class="notice-title" tabindex="-1">{{
-              $t("admin.searchError")
-            }}</strong>
-            <span>{{ $t("admin.searchErrorCopy") }}</span>
-            <div class="admin-user-retry">
-              <button
-                class="button button-secondary button-small"
-                type="button"
-                @click="retrySearch"
+    <section v-else-if="view.showResults" class="panel">
+      <h2 ref="resultHeading" tabindex="-1">{{ copy("a.users.results") }}</h2>
+      <div class="table-wrap" tabindex="0">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th
+                v-for="key in [
+                  'a.username',
+                  'a.role',
+                  'a.baseplan',
+                  'a.created',
+                  'a.actions',
+                ]"
+                :key="key"
               >
-                {{ $t("admin.retrySearch") }}
-              </button>
-            </div>
-          </div>
-        </div>
+                {{ copy(key) }}
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              v-for="user in admin.state.value.userSearch.items"
+              :key="user.id"
+              :data-result-id="user.id"
+            >
+              <td>
+                <strong>{{ user.username }}</strong>
+              </td>
+              <td>{{ copy("a.role." + user.role) }}</td>
+              <td>
+                {{ user.planCode ? copy("a.plan." + user.planCode) : "—" }}
+              </td>
+              <td>{{ format.dateTime(user.createdAt) }}</td>
+              <td>
+                <NuxtLink
+                  class="btn small"
+                  :to="{
+                    path: '/admin/users/' + user.id,
+                    query: view.submittedQuery
+                      ? { q: view.submittedQuery }
+                      : { all: '1' },
+                  }"
+                  :data-user-id="user.id"
+                  @click="rememberPosition(user.id)"
+                  >{{ copy("a.view") }}</NuxtLink
+                >
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </div>
-    </section>
-
-    <section
-      v-else-if="view.showResults"
-      class="card admin-user-results"
-      :aria-busy="view.isAppending"
-      aria-labelledby="admin-user-results-title"
-    >
-      <header class="card-header">
-        <div>
-          <h2
-            id="admin-user-results-title"
-            ref="resultHeading"
-            class="card-title"
-            tabindex="-1"
-          >
-            {{ $t("admin.searchResults") }}
-          </h2>
-          <p class="card-subtitle" aria-live="polite">
-            {{ view.resultCount }}
-          </p>
-        </div>
-        <span class="helper">{{ $t("admin.sortedByUsername") }}</span>
-      </header>
-      <div class="admin-user-result-list" role="list">
-        <article
-          v-for="row in view.rows"
-          :key="row.id"
-          class="admin-user-result"
-          role="listitem"
-          :data-result-id="row.id"
-        >
-          <div class="admin-user-identity">
-            <span class="admin-avatar" aria-hidden="true">{{
-              row.initial
-            }}</span>
-            <div>
-              <h3 class="user-name">{{ row.username }}</h3>
-              <p class="user-meta">{{ row.meta }}</p>
-            </div>
-          </div>
-          <div class="admin-user-plan">
-            <span class="helper">{{ $t("admin.group") }}</span>
-            <strong>{{ row.plan }}</strong>
-          </div>
-          <span class="status-badge status-success">{{ row.status }}</span>
-          <NuxtLink
-            class="button button-secondary button-small"
-            :to="row.href"
-            :aria-label="row.openLabel"
-            :data-user-id="row.id"
-            @click="rememberPosition(row.id)"
-          >
-            {{ $t("admin.view") }}
-          </NuxtLink>
-        </article>
-      </div>
-      <footer
+      <p v-if="view.showAppendFailure" class="notice error" role="alert">
+        {{ copy("a.search.error") }}
+      </p>
+      <button
         v-if="view.showPagination"
-        class="card-footer admin-user-pagination"
+        ref="loadMoreButton"
+        class="btn"
+        :disabled="view.isAppending"
+        @click="loadMore"
       >
-        <div>
-          <span class="helper">{{ view.shownCount }}</span>
-          <p
-            v-if="view.showAppendFailure"
-            class="admin-user-append-error"
-            role="alert"
-          >
-            {{ $t("admin.appendError") }}
-          </p>
-        </div>
-        <button
-          ref="loadMoreButton"
-          class="button button-secondary"
-          :class="{ 'button-loading': view.isAppending }"
-          type="button"
-          :disabled="view.isAppending"
-          @click="loadMore"
-        >
-          <span v-if="view.isAppending" class="spinner" aria-hidden="true" />
-          {{ view.appendButtonLabel }}
-        </button>
-      </footer>
+        {{ copy(view.showAppendFailure ? "a.retry" : "a.more") }}
+      </button>
     </section>
-
-    <section
+    <p
       v-else-if="view.showEmpty"
-      class="empty-state card admin-user-empty"
-      aria-live="polite"
+      ref="resultHeading"
+      class="notice"
+      tabindex="-1"
     >
-      <span class="empty-symbol" aria-hidden="true">0</span>
-      <h2 ref="resultHeading" tabindex="-1">
-        {{ $t("admin.noUsers") }}
-      </h2>
-      <p>{{ $t("admin.noUsersCopy") }}</p>
-    </section>
+      {{ copy("a.users.empty") }}
+    </p>
   </div>
 </template>

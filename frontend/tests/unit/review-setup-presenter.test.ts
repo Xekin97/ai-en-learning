@@ -85,6 +85,7 @@ it("reader uses its own approved retry without changing generic actions", () => 
   expect(en.reader.retry).toBe("Try again");
 });
 it("preserves input nodes and focus while rendering every preview state and locale", async () => {
+  vi.stubGlobal("useDesignCopy", () => ({ copy: (key: string) => key }));
   vi.stubGlobal("ref", ref);
   const state = createReviewSetupState();
   state.draft = {
@@ -105,7 +106,7 @@ it("preserves input nodes and focus while rendering every preview state and loca
     },
   });
   try {
-    const first = wrapper.get("#review-start").element;
+    const first = wrapper.get(".date-fields label:first-child input").element;
     if (!(first instanceof HTMLInputElement)) throw new Error("input");
     first.focus();
     for (const kind of ["empty", "ready"] as const) {
@@ -125,9 +126,15 @@ it("preserves input nodes and focus while rendering every preview state and loca
       await wrapper.setProps({
         view: presentReviewSetup(state, true, translate(en)),
       });
-      expect(wrapper.get("#review-start").element).toBe(first);
+      expect(wrapper.get(".date-fields label:first-child input").element).toBe(
+        first,
+      );
       expect(document.activeElement).toBe(first);
-      expect(wrapper.get("#review-end").attributes("required")).toBeDefined();
+      expect(
+        wrapper
+          .get(".date-fields label:last-child input")
+          .attributes("required"),
+      ).toBeDefined();
     }
     state.preview = {
       kind: "invalid",
@@ -136,20 +143,24 @@ it("preserves input nodes and focus while rendering every preview state and loca
     await wrapper.setProps({
       view: presentReviewSetup(state, true, translate(zh)),
     });
-    expect(wrapper.get("#review-start").element).toBe(first);
-    expect(wrapper.get("#review-start").attributes("aria-describedby")).toBe(
-      "range-date-error",
+    expect(wrapper.get(".date-fields label:first-child input").element).toBe(
+      first,
     );
     expect(
-      wrapper.get("#review-end").attributes("aria-describedby"),
-    ).toBeUndefined();
-    expect(wrapper.get("#range-announcement").text()).toBe(
-      zh.review.range.missing,
-    );
+      wrapper
+        .get(".date-fields label:first-child input")
+        .attributes("aria-describedby"),
+    ).toBe("range-error");
+    expect(
+      wrapper
+        .get(".date-fields label:last-child input")
+        .attributes("aria-describedby"),
+    ).toBe("range-error");
+    expect(wrapper.get("#range-error").text()).toBe("l.dateerror");
     expect(
       wrapper.get('button[type="submit"]').attributes("disabled"),
     ).toBeDefined();
-    await wrapper.get("#review-start").setValue("");
+    await wrapper.get(".date-fields label:first-child input").setValue("");
     expect(wrapper.emitted("changeStart")?.at(-1)).toEqual([""]);
   } finally {
     wrapper.unmount();

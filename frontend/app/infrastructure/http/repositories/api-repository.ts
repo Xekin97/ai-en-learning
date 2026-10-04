@@ -1,16 +1,27 @@
+import { mapAdminProviderDto } from "../mappers/admin-provider-mapper";
+import { createAdminPresetsRepository } from "./admin-presets-repository";
+import { createAdminItemsRepository } from "./admin-items-repository";
+import { createAdminGrowthRepository } from "./admin-growth-repository";
+import { createAnalyticsRepository } from "./analytics-repository";
+import { createAdminNoticesRepository } from "./admin-notices-repository";
+import { createAdminUserBenefitsRepository } from "./admin-user-benefits-repository";
+import { createAdminConfigurationRepository } from "./admin-configuration-repository";
+import { createBenefitsRepository } from "./benefits-repository";
+import { createGrowthRepository } from "./growth-repository";
+import { createReviewRepository } from "./review-repository";
 import { createParser, type EventSourceMessage } from "eventsource-parser";
 import { normalizeFailure } from "@application/shared/failure";
-import type { z } from "zod";
 import type { ApiPort } from "@application/shared/ports";
 import type {
   GenerationEventModel,
-  ReviewAnswerModel,
+  ModelConfigurationInput,
 } from "@application/shared/models";
 import type { TokenVault } from "@runtime/session/token-vault";
 import type { RawHttpTransport } from "../transports/transport";
 import {
   accountEnvelopeSchema,
   authEnvelopeSchema,
+  loginEnvelopeSchema,
   bootstrapEnvelopeSchema,
   localeEnvelopeSchema,
 } from "../schemas/session";
@@ -26,37 +37,34 @@ import {
   generationValidatedEventSchema,
   passageDeltaEventSchema,
   vocabularyEnvelopeSchema,
+  randomEntryEnvelopeSchema,
 } from "../schemas/generation";
 import {
   batchDetailEnvelopeSchema,
+  batchTitleEnvelopeSchema,
   batchListEnvelopeSchema,
   learningSummaryEnvelopeSchema,
   participationEnvelopeSchema,
 } from "../schemas/learning";
-import {
-  activeRangeEnvelopeSchema,
-  reviewActionEnvelopeSchema,
-  reviewAttemptEnvelopeSchema,
-  reviewRangePreviewEnvelopeSchema,
-  reviewSessionCreatedEnvelopeSchema,
-  reviewSessionEnvelopeSchema,
-} from "../schemas/review";
+
 import {
   adminBatchDetailEnvelopeSchema,
   adminBatchListEnvelopeSchema,
   adminGroupEnvelopeSchema,
   adminGroupsEnvelopeSchema,
   adminModelEnvelopeSchema,
+  adminModelBatchEnvelopeSchema,
+  adminProviderEnvelopeSchema,
+  adminProviderListEnvelopeSchema,
   adminModelListEnvelopeSchema,
   adminUserEnvelopeSchema,
   adminUsersEnvelopeSchema,
-  credentialEnvelopeSchema,
+  modelConnectionsEnvelopeSchema,
+  modelConnectionTestEnvelopeSchema,
   userGroupChangeEnvelopeSchema,
 } from "../schemas/admin";
-import { problemSchema } from "../schemas/common";
 import {
   mapAccountDto,
-  mapActiveRangeDto,
   mapAdminModelDto,
   mapAdminUserDetailDto,
   mapAdminUserSummaryDto,
@@ -64,20 +72,22 @@ import {
   mapBatchDetailDto,
   mapBatchPageDto,
   mapBootstrapDto,
-  mapCredentialDto,
+  mapModelConnectionDto,
   mapGenerationOptionsDto,
   mapGenerationValidatedDto,
   mapGroupDto,
   mapLearningSummaryDto,
-  mapReviewActionDto,
-  mapReviewAttemptDto,
-  mapReviewRangePreviewDto,
-  mapReviewSessionCreatedDto,
-  mapReviewSessionDto,
   mapUserGroupChangeDto,
   mapVocabularyDto,
 } from "../mappers";
-import { mapProblemDto } from "../mappers/problem-mapper";
+import {
+  json,
+  noContent,
+  problemFromResponse,
+  contractFailure,
+} from "./repository-support";
+import { createPresetsRepository } from "./presets-repository";
+import { createNoticesRepository } from "./notices-repository";
 
 export function createApiRepository(
   transport: RawHttpTransport,
@@ -92,6 +102,18 @@ export function createApiRepository(
   };
 
   const api: ApiPort = {
+    ...createAdminItemsRepository(transport, vault),
+    ...createAdminPresetsRepository(transport, vault),
+    ...createAdminGrowthRepository(transport, vault),
+    ...createAnalyticsRepository(transport, vault),
+    ...createAdminNoticesRepository(transport, vault),
+    ...createAdminUserBenefitsRepository(transport, vault),
+    ...createAdminConfigurationRepository(transport, vault),
+    ...createNoticesRepository(transport),
+    ...createPresetsRepository(transport),
+    ...createReviewRepository(transport, vault),
+    ...createGrowthRepository(transport, vault),
+    ...createBenefitsRepository(transport, vault),
     async bootstrap() {
       const envelope = await json(
         transport,
@@ -137,7 +159,7 @@ export function createApiRepository(
       const envelope = await json(
         transport,
         "/api/v1/auth/login",
-        authEnvelopeSchema,
+        loginEnvelopeSchema,
         {
           method: "POST",
           headers: mutation(),
@@ -164,6 +186,22 @@ export function createApiRepository(
         transport,
         "/api/v1/me/account",
         accountEnvelopeSchema,
+      );
+      return mapAccountDto(envelope.data);
+    },
+    async updateAccount(input) {
+      const envelope = await json(
+        transport,
+        "/api/v1/me/account",
+        accountEnvelopeSchema,
+        {
+          method: "PATCH",
+          headers: mutation(),
+          body: JSON.stringify({
+            nickname: input.nickname,
+            gender: input.gender,
+          }),
+        },
       );
       return mapAccountDto(envelope.data);
     },
@@ -198,6 +236,20 @@ export function createApiRepository(
         signal ? { signal } : undefined,
       );
       return mapVocabularyDto(envelope.data);
+    },
+    async randomEntry(entries) {
+      return (
+        await json(
+          transport,
+          "/api/v1/vocabulary/random",
+          randomEntryEnvelopeSchema,
+          {
+            method: "POST",
+            headers: mutation(),
+            body: JSON.stringify({ selected_entries: entries }),
+          },
+        )
+      ).data;
     },
     async getGenerationOptions() {
       const envelope = await json(
@@ -314,6 +366,26 @@ export function createApiRepository(
       );
       return envelope.data.participates_in_range_review;
     },
+    async updateBatchTitle(batchId, input) {
+      const { data } = await json(
+        transport,
+        `/api/v1/me/batches/${encodeURIComponent(batchId)}`,
+        batchTitleEnvelopeSchema,
+        {
+          method: "PATCH",
+          headers: mutation(),
+          body: JSON.stringify({
+            title: input.title,
+            expected_title_revision: input.expectedTitleRevision,
+          }),
+        },
+      );
+      return {
+        batchId: data.batch_id,
+        title: data.title,
+        titleRevision: data.title_revision,
+      };
+    },
     async deleteBatch(batchId) {
       await noContent(
         transport,
@@ -322,109 +394,75 @@ export function createApiRepository(
       );
     },
 
-    async previewReviewRange(input, signal) {
-      const query = new URLSearchParams({
-        start_date: input.startDate,
-        end_date: input.endDate,
-        timezone: input.timezone,
-      });
+    async listModelProviders() {
       const envelope = await json(
         transport,
-        `/api/v1/me/review-range/preview?${query}`,
-        reviewRangePreviewEnvelopeSchema,
-        signal ? { signal } : undefined,
+        "/api/v1/admin/model-providers",
+        adminProviderListEnvelopeSchema,
       );
-      return mapReviewRangePreviewDto(envelope.data);
+      return {
+        items: envelope.data.items.map((p) =>
+          mapAdminProviderDto(p, envelope.data.revision),
+        ),
+        revision: envelope.data.revision,
+      };
     },
-    async getActiveRange() {
+    async saveModelProvider(providerId, input) {
       const envelope = await json(
         transport,
-        "/api/v1/me/review-sessions/active-range",
-        activeRangeEnvelopeSchema,
+        "/api/v1/admin/model-providers" +
+          (providerId ? "/" + encodeURIComponent(providerId) : ""),
+        adminProviderEnvelopeSchema,
+        {
+          method: providerId ? "PATCH" : "POST",
+          headers: mutation(),
+          body: JSON.stringify({
+            connection: {
+              name: input.connection.name,
+              protocol: input.connection.protocol,
+              base_url: input.connection.baseUrl,
+              api_key: input.connection.apiKey,
+            },
+            expected_revision: input.expectedRevision,
+            models: input.models.map((m) => ({
+              id: m.id,
+              display_name: m.displayName,
+              description: m.description,
+              provider_model_id: m.providerModelId,
+              max_output_tokens: m.maxOutputTokens,
+              output_mode: m.outputMode,
+              enabled: m.enabled,
+            })),
+          }),
+        },
       );
-      return envelope.data.session
-        ? mapActiveRangeDto(envelope.data.session)
-        : null;
+      return {
+        provider: mapAdminProviderDto(
+          envelope.data.provider,
+          envelope.data.revision,
+        ),
+        revision: envelope.data.revision,
+      };
     },
-    async createReviewSession(input) {
-      const body =
-        input.mode === "range"
-          ? {
-              mode: "range",
-              start_date: input.startDate,
-              end_date: input.endDate,
-              timezone: input.timezone,
-            }
-          : { mode: "single_batch", batch_id: input.batchId };
+    async listModelConnections() {
       const envelope = await json(
         transport,
-        "/api/v1/me/review-sessions",
-        reviewSessionCreatedEnvelopeSchema,
-        { method: "POST", headers: mutation(), body: JSON.stringify(body) },
+        "/api/v1/admin/model-connections",
+        modelConnectionsEnvelopeSchema,
       );
-      return mapReviewSessionCreatedDto(envelope.data);
+      return envelope.data.items.map(mapModelConnectionDto);
     },
-    async getReviewSession(sessionId) {
-      const envelope = await json(
+    async testModelConnection(input) {
+      await json(
         transport,
-        `/api/v1/me/review-sessions/${encodeURIComponent(sessionId)}`,
-        reviewSessionEnvelopeSchema,
-      );
-      return mapReviewSessionDto(envelope.data.session);
-    },
-    async startReviewAttempt(sessionId) {
-      const envelope = await json(
-        transport,
-        `/api/v1/me/review-sessions/${encodeURIComponent(sessionId)}/attempts`,
-        reviewAttemptEnvelopeSchema,
-        { method: "POST", headers: mutation(), body: "{}" },
-      );
-      vault.setAttempt(envelope.data.attempt_id, envelope.data.attempt_token);
-      return mapReviewAttemptDto(envelope.data);
-    },
-    async actOnReview(attemptId, input) {
-      const headers = mutation({
-        "x-review-attempt-token": vault.attempt(attemptId),
-      });
-      const envelope = await json(
-        transport,
-        `/api/v1/me/review-attempts/${encodeURIComponent(attemptId)}/actions`,
-        reviewActionEnvelopeSchema,
+        "/api/v1/admin/model-connection-test",
+        modelConnectionTestEnvelopeSchema,
         {
           method: "POST",
-          headers,
-          body: JSON.stringify(mapReviewActionRequest(input)),
-        },
-      );
-      const outcome = mapReviewActionDto(envelope.data);
-      if (
-        outcome.outcome === "batch_completed" ||
-        outcome.outcome === "session_completed"
-      )
-        vault.clearAttempt(attemptId);
-      return outcome;
-    },
-
-    async getCredential() {
-      const envelope = await json(
-        transport,
-        "/api/v1/admin/openrouter-credential",
-        credentialEnvelopeSchema,
-      );
-      return mapCredentialDto(envelope.data);
-    },
-    async putCredential(apiKey) {
-      const envelope = await json(
-        transport,
-        "/api/v1/admin/openrouter-credential",
-        credentialEnvelopeSchema,
-        {
-          method: "PUT",
           headers: mutation(),
-          body: JSON.stringify({ api_key: apiKey, confirmed: true }),
+          body: JSON.stringify(modelBody(input)),
         },
       );
-      return mapCredentialDto(envelope.data);
     },
     async listModels(cursor) {
       const query = new URLSearchParams({ limit: "20" });
@@ -435,7 +473,10 @@ export function createApiRepository(
         adminModelListEnvelopeSchema,
       );
       return {
-        items: envelope.data.items.map(mapAdminModelDto),
+        revision: envelope.data.revision,
+        items: envelope.data.items.map((item) =>
+          mapAdminModelDto(item, envelope.data.revision),
+        ),
         nextCursor: envelope.meta.next_cursor,
         hasMore: envelope.meta.has_more,
       };
@@ -448,39 +489,73 @@ export function createApiRepository(
         {
           method: "POST",
           headers: mutation(),
+          body: JSON.stringify(modelBody(input)),
+        },
+      );
+      return mapAdminModelDto(envelope.data.model, envelope.data.revision);
+    },
+    async createModels(input) {
+      const shared = modelBody({
+        ...input,
+        displayName: "",
+        description: null,
+        providerModelId: "",
+        maxOutputTokens: null,
+        outputMode: "prompt",
+        enabled: false,
+      });
+      const envelope = await json(
+        transport,
+        "/api/v1/admin/models/batch",
+        adminModelBatchEnvelopeSchema,
+        {
+          method: "POST",
+          headers: mutation(),
           body: JSON.stringify({
-            display_name: input.displayName,
-            description: input.description,
-            openrouter_model_id: input.openRouterModelId,
+            connection_id: shared.connection_id,
+            connection: shared.connection,
+            expected_revision: input.expectedRevision,
+            models: input.models.map((model) => ({
+              display_name: model.displayName,
+              description: model.description,
+              provider_model_id: model.providerModelId,
+              max_output_tokens: model.maxOutputTokens,
+              output_mode: model.outputMode,
+              enabled: model.enabled,
+            })),
           }),
         },
       );
-      return mapAdminModelDto(envelope.data.model);
+      return {
+        items: envelope.data.items.map((model) =>
+          mapAdminModelDto(model, envelope.data.revision),
+        ),
+        revision: envelope.data.revision,
+      };
     },
-    async updateModel(modelId, input) {
-      const body: Record<string, string | null> = {};
-      if (input.displayName !== undefined)
-        body.display_name = input.displayName;
-      if (input.description !== undefined) body.description = input.description;
-      if (input.openRouterModelId !== undefined)
-        body.openrouter_model_id = input.openRouterModelId;
+    async updateModel(modelId, input, expectedRevision) {
+      const body = modelBody({ ...input, expectedRevision });
       const envelope = await json(
         transport,
         `/api/v1/admin/models/${encodeURIComponent(modelId)}`,
         adminModelEnvelopeSchema,
         { method: "PATCH", headers: mutation(), body: JSON.stringify(body) },
       );
-      return mapAdminModelDto(envelope.data.model);
+      return mapAdminModelDto(envelope.data.model, envelope.data.revision);
     },
-    async setModelEnabled(modelId, enabled) {
+    async setModelEnabled(modelId, enabled, expectedRevision) {
       const action = enabled ? "enable" : "disable";
       const envelope = await json(
         transport,
         `/api/v1/admin/models/${encodeURIComponent(modelId)}/${action}`,
         adminModelEnvelopeSchema,
-        { method: "POST", headers: mutation(), body: "{}" },
+        {
+          method: "POST",
+          headers: mutation(),
+          body: JSON.stringify({ expected_revision: expectedRevision }),
+        },
       );
-      return mapAdminModelDto(envelope.data.model);
+      return mapAdminModelDto(envelope.data.model, envelope.data.revision);
     },
     async listGroups() {
       const envelope = await json(
@@ -488,7 +563,9 @@ export function createApiRepository(
         "/api/v1/admin/groups",
         adminGroupsEnvelopeSchema,
       );
-      return envelope.data.items.map(mapGroupDto);
+      return envelope.data.items.map((item) =>
+        mapGroupDto(item, envelope.data.revision),
+      );
     },
     async putGroup(code, input) {
       const envelope = await json(
@@ -499,6 +576,8 @@ export function createApiRepository(
           method: "PUT",
           headers: mutation(),
           body: JSON.stringify({
+            expected_revision: input.expectedRevision,
+            priority: input.priority,
             rolling_24h_limit: input.rolling24hLimit,
             max_entries: input.maxEntries,
             allowed_lengths: input.allowedLengths,
@@ -506,7 +585,7 @@ export function createApiRepository(
           }),
         },
       );
-      return mapGroupDto(envelope.data.group);
+      return mapGroupDto(envelope.data.group, envelope.data.revision);
     },
     async listUsers(input = {}) {
       const query = new URLSearchParams({ limit: "20" });
@@ -534,7 +613,7 @@ export function createApiRepository(
       if (envelope.data.user.id !== userId) throw contractFailure();
       return mapAdminUserDetailDto(envelope.data.user);
     },
-    async changeUserGroup(userId, groupCode) {
+    async changeUserGroup(userId, groupCode, expectedBaseRevision) {
       const envelope = await json(
         transport,
         `/api/v1/admin/users/${encodeURIComponent(userId)}/group`,
@@ -542,7 +621,11 @@ export function createApiRepository(
         {
           method: "PUT",
           headers: mutation(),
-          body: JSON.stringify({ group_code: groupCode, confirmed: true }),
+          body: JSON.stringify({
+            group_code: groupCode,
+            confirmed: true,
+            expected_base_revision: expectedBaseRevision,
+          }),
         },
       );
       if (
@@ -593,29 +676,6 @@ export function createApiRepository(
   return api;
 }
 
-function mapReviewActionRequest(
-  input: ReviewAnswerModel,
-): Record<string, unknown> {
-  if (input.action === "skip")
-    return { action_id: input.actionId, item_id: input.itemId, action: "skip" };
-  if ("answer" in input)
-    return {
-      action_id: input.actionId,
-      item_id: input.itemId,
-      action: "answer",
-      answer: input.answer,
-    };
-  return {
-    action_id: input.actionId,
-    item_id: input.itemId,
-    action: "answer",
-    answers: input.answers.map((answer) => ({
-      blank_id: answer.blankId,
-      answer: answer.answer,
-    })),
-  };
-}
-
 async function streamGeneration(
   transport: RawHttpTransport,
   vault: TokenVault,
@@ -624,21 +684,31 @@ async function streamGeneration(
   signal: AbortSignal,
 ): Promise<void> {
   signal.throwIfAborted();
-  const response = await transport.send("/api/v1/generations/stream", {
-    method: "POST",
-    signal,
-    headers: {
-      "content-type": "application/json",
-      "x-csrf-token": vault.csrf(),
+  const preset = "presetId" in input;
+  const response = await transport.send(
+    preset
+      ? `/api/v1/presets/${encodeURIComponent(input.presetId)}/generations/stream`
+      : "/api/v1/generations/stream",
+    {
+      method: "POST",
+      signal,
+      headers: {
+        "content-type": "application/json",
+        "x-csrf-token": vault.csrf(),
+      },
+      body: JSON.stringify(
+        preset
+          ? { published_version: input.publishedVersion }
+          : {
+              model_id: input.modelId,
+              meaning_language: input.meaningLanguage,
+              scenario: input.scenario,
+              length: input.length,
+              entries: input.entries,
+            },
+      ),
     },
-    body: JSON.stringify({
-      model_id: input.modelId,
-      meaning_language: input.meaningLanguage,
-      scenario: input.scenario,
-      length: input.length,
-      entries: input.entries,
-    }),
-  });
+  );
   const requestId = response.headers.get("x-request-id");
   if (!response.ok) throw await problemFromResponse(response);
   if (
@@ -767,48 +837,23 @@ function mapStreamMessage(
   }
 }
 
-async function json<T extends z.ZodType>(
-  transport: RawHttpTransport,
-  path: string,
-  schema: T,
-  init?: RequestInit,
-): Promise<z.infer<T>> {
-  const response = await transport.send(path, init);
-  if (!response.ok) throw await problemFromResponse(response);
-  if (!response.headers.get("content-type")?.startsWith("application/json"))
-    throw contractFailure();
-  return schema.parse(await response.json());
-}
-
-async function noContent(
-  transport: RawHttpTransport,
-  path: string,
-  init: RequestInit,
-): Promise<void> {
-  const response = await transport.send(path, init);
-  if (!response.ok) throw await problemFromResponse(response);
-  if (response.status !== 204 || (await response.text()).length !== 0)
-    throw contractFailure();
-}
-
-async function problemFromResponse(response: Response) {
-  if (
-    !response.headers
-      .get("content-type")
-      ?.startsWith("application/problem+json")
-  )
-    return contractFailure();
-  const parsed = problemSchema.safeParse(await response.json());
-  return parsed.success ? mapProblemDto(parsed.data) : contractFailure();
-}
-
-function contractFailure() {
+function modelBody(input: ModelConfigurationInput) {
   return {
-    kind: "contract_violation",
-    code: "contract_violation",
-    status: null,
-    requestId: null,
-    fields: {},
-    retryable: true,
-  } as const;
+    display_name: input.displayName,
+    description: input.description,
+    provider_model_id: input.providerModelId,
+    connection_id: input.connectionId,
+    connection: input.connection
+      ? {
+          name: input.connection.name,
+          protocol: input.connection.protocol,
+          base_url: input.connection.baseUrl,
+          api_key: input.connection.apiKey,
+        }
+      : null,
+    max_output_tokens: input.maxOutputTokens,
+    output_mode: input.outputMode,
+    enabled: input.enabled,
+    expected_revision: input.expectedRevision,
+  };
 }

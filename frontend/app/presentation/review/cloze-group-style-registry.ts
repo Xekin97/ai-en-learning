@@ -92,3 +92,22 @@ export function anonymousName(index: number): string {
   }
   return result;
 }
+
+/** An attempt keeps the same anonymous palette after reload or locale changes. */
+export function stableClozeRegistry(
+  attemptId: string,
+  refs: readonly ClozeGroupRef[],
+): ClozeGroupStyleRegistry {
+  const groups = [...new Set(refs)].sort();
+  let seed = 2166136261;
+  for (const char of attemptId + "|" + groups.join("|")) {
+    seed ^= char.charCodeAt(0);
+    seed = Math.imul(seed, 16777619) >>> 0;
+  }
+  return new ClozeGroupStyleRegistry(attemptId, groups, {
+    nextInt(max) {
+      seed = (Math.imul(seed, 1664525) + 1013904223) >>> 0;
+      return seed % max;
+    },
+  });
+}

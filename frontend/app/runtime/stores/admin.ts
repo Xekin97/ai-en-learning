@@ -1,3 +1,8 @@
+import type {
+  GroupDraft,
+  ModelRemovalImpact,
+  GroupImpact,
+} from "@application/admin/configuration";
 import { registerPrivateState } from "@runtime/session/private-state";
 import { normalizeFailure } from "@application/shared/failure";
 import {
@@ -15,144 +20,242 @@ import type {
   AdminModelModel,
   AdminUserDetailModel,
   AppFailure,
-  CredentialStatusModel,
+  ModelConnectionModel,
+  ModelConfigurationInput,
+  ModelBatchConfigurationInput,
+  AdminProviderModel,
+  ProviderConfigurationInput,
   GroupCode,
   GroupPolicyModel,
-  PassageLength,
 } from "@application/shared/models";
 
 interface AdminState {
-  credential: CredentialStatusModel | null;
+  providers: AdminProviderModel[];
+  connections: ModelConnectionModel[];
+  modelRevision: string;
   models: AdminModelModel[];
   groups: GroupPolicyModel[];
   userSearch: AdminUserSearchState;
   nextModelCursor: string | null;
   status: "idle" | "loading" | "ready" | "saving" | "failed";
   failure: AppFailure | null;
+  request: number;
+  lastSavedModelId: string | null;
 }
 
 export function useAdminStore() {
   const api = useNuxtApp().$api;
-  const session = useSessionStore();
+  const session = useSessionStore(),
+    feedback = useFeedbackStore();
   const initial = (): AdminState => ({
-    credential: null,
+    providers: [],
+    connections: [],
+    modelRevision: "",
     models: [],
     groups: [],
     userSearch: createAdminUserSearchState(),
     nextModelCursor: null,
     status: "idle",
     failure: null,
+    request: 0,
+    lastSavedModelId: null,
   });
   const state = useState<AdminState>("admin", initial);
   registerPrivateState(useNuxtApp(), "admin", state, initial);
 
-  async function loadModels(): Promise<void> {
-    await run(async () => {
-      const [credential, page] = await Promise.all([
-        api.getCredential(),
-        api.listModels(),
+  async function loadModelProviders() {
+    await run(async (accept) => {
+      const result = await api.listModelProviders();
+      if (!accept()) return;
+      state.value.providers = result.items;
+      state.value.connections = result.items.map((p) => p.connection);
+      state.value.models = result.items.flatMap((p) => p.models);
+      state.value.modelRevision = result.revision;
+      state.value.nextModelCursor = null;
+    });
+  }
+  async function saveModelProvider(
+    id: string | null,
+    input: ProviderConfigurationInput,
+  ) {
+    await run(async (accept) => {
+      const result = await api.saveModelProvider(id, input);
+      if (!accept()) return;
+      const index = state.value.providers.findIndex(
+        (p) => p.connection.id === result.provider.connection.id,
+      );
+      if (index >= 0) state.value.providers[index] = result.provider;
+      else state.value.providers.push(result.provider);
+      state.value.connections = state.value.providers.map((p) => p.connection);
+      state.value.models = state.value.providers.flatMap((p) => p.models);
+      state.value.modelRevision = result.revision;
+    }, true);
+  }
+  async function loadModels(more = false): Promise<void> {
+    await run(async (accept) => {
+      const [connections, page] = await Promise.all([
+        api.listModelConnections(),
+        api.listModels(
+          more ? (state.value.nextModelCursor ?? undefined) : undefined,
+        ),
       ]);
-      state.value.credential = credential;
-      state.value.models = page.items;
+      if (!accept()) return;
+      state.value.connections = connections;
+      state.value.modelRevision = page.revision;
+      state.value.models = more
+        ? [...state.value.models, ...page.items]
+        : page.items;
       state.value.nextModelCursor = page.nextCursor;
     });
   }
-
-  async function saveCredential(apiKey: string): Promise<void> {
-    await run(async () => {
-      state.value.credential = await api.putCredential(apiKey);
-    }, true);
-  }
-
-  async function createModel(input: {
-    displayName: string;
-    description: string | null;
-    openRouterModelId: string;
-  }): Promise<void> {
-    await run(async () => {
-      state.value.models.unshift(await api.createModel(input));
-    }, true);
-  }
-
-  async function saveModelDraft(input: {
-    modelId: string | null;
-    displayName: string;
-    description: string | null;
-    openRouterModelId: string;
-    enabled: boolean;
-  }): Promise<void> {
-    await run(async () => {
-      let model = input.modelId
-        ? await api.updateModel(input.modelId, {
-            displayName: input.displayName,
-            description: input.description,
-            openRouterModelId: input.openRouterModelId,
-          })
-        : await api.createModel({
-            displayName: input.displayName,
-            description: input.description,
-            openRouterModelId: input.openRouterModelId,
-          });
-
-      replaceModel(model, !input.modelId);
-      if (model.enabled !== input.enabled) {
-        model = await api.setModelEnabled(model.id, input.enabled);
-        replaceModel(model);
+  async function ensureModels(ids: readonly string[]): Promise<void> {
+    const missing = () =>
+      ids.some((id) => !state.value.models.some((model) => model.id === id));
+    if (!missing()) return;
+    await run(async (accept) => {
+      let cursor = state.value.models.length
+        ? state.value.nextModelCursor
+        : undefined;
+      const seen = new Set<string | undefined>();
+      let restarted = false,
+        replace = false;
+      const restart = () => {
+        cursor = undefined;
+        restarted = true;
+        replace = true;
+        seen.clear();
+      };
+      while (missing()) {
+        if (cursor === null && !restarted) restart();
+        if (cursor === null || seen.has(cursor))
+          throw new Error("Referenced models could not be loaded");
+        seen.add(cursor);
+        let page;
+        try {
+          page = await api.listModels(cursor);
+        } catch (error) {
+          if (!accept()) return;
+          const failure = normalizeFailure(error);
+          const staleCursor =
+            (failure.status === 409 && failure.code === "revision_conflict") ||
+            (failure.status === 422 &&
+              failure.code === "validation_failed" &&
+              failure.fields.cursor === "invalid");
+          if (cursor && !restarted && staleCursor) {
+            restart();
+            continue;
+          }
+          throw error;
+        }
+        if (!accept()) return;
+        state.value.models = [
+          ...new Map(
+            [...(replace ? [] : state.value.models), ...page.items].map(
+              (model) => [model.id, model],
+            ),
+          ).values(),
+        ];
+        state.value.nextModelCursor = page.nextCursor;
+        replace = false;
+        cursor = page.nextCursor;
       }
+    });
+  }
+  async function saveModelDraft(
+    input: ModelConfigurationInput & { modelId: string | null },
+  ) {
+    await run(async (accept) => {
+      state.value.lastSavedModelId = null;
+      const model = input.modelId
+        ? await api.updateModel(input.modelId, input, input.expectedRevision)
+        : await api.createModel(input);
+      if (!accept()) return;
+      replaceModel(model, !input.modelId);
+      state.value.lastSavedModelId = model.id;
+      state.value.modelRevision = model.revision;
     }, true);
   }
-
-  async function toggleModel(
-    model: Pick<AdminModelModel, "id" | "enabled">,
-  ): Promise<void> {
-    await run(async () => {
-      const updated = await api.setModelEnabled(model.id, !model.enabled);
-      replaceModel(updated);
+  async function saveModelBatch(input: ModelBatchConfigurationInput) {
+    await run(async (accept) => {
+      state.value.lastSavedModelId = null;
+      const result = await api.createModels(input);
+      if (!accept()) return;
+      for (const model of result.items) replaceModel(model, true);
+      state.value.modelRevision = result.revision;
+      state.value.lastSavedModelId = result.items[0]?.id ?? null;
     }, true);
   }
-
-  async function updateModel(
-    modelId: string,
-    input: {
-      displayName?: string;
-      description?: string | null;
-      openRouterModelId?: string;
-    },
-  ): Promise<void> {
-    await run(async () => {
-      replaceModel(await api.updateModel(modelId, input));
-    }, true);
+  async function testModelConnection(input: ModelConfigurationInput) {
+    await session.refreshSecurityContext();
+    await api.testModelConnection(input);
   }
-
-  function replaceModel(model: AdminModelModel, append = false): void {
-    const index = state.value.models.findIndex(
-      (candidate) => candidate.id === model.id,
-    );
+  function replaceModel(model: AdminModelModel, append = false) {
+    const index = state.value.models.findIndex((m) => m.id === model.id);
     if (index >= 0) state.value.models[index] = model;
     else if (append) state.value.models.push(model);
   }
-
-  async function loadGroups(): Promise<void> {
-    await run(async () => {
-      state.value.groups = await api.listGroups();
+  async function loadGroups() {
+    await run(async (accept) => {
+      const groups = await api.listGroups();
+      if (accept()) state.value.groups = groups;
     });
   }
-
-  async function saveGroup(
-    code: GroupCode,
-    input: {
-      rolling24hLimit: number | null;
-      maxEntries: number;
-      allowedLengths: PassageLength[];
-      modelIds: string[];
-    },
-  ): Promise<void> {
-    await run(async () => {
+  async function saveGroup(code: GroupCode, input: GroupDraft) {
+    await run(async (accept) => {
       const updated = await api.putGroup(code, input);
-      const index = state.value.groups.findIndex(
-        (group) => group.code === code,
-      );
-      if (index >= 0) state.value.groups[index] = updated;
+      if (accept()) {
+        const index = state.value.groups.findIndex((g) => g.code === code);
+        if (index >= 0) state.value.groups[index] = updated;
+      }
+    }, true);
+  }
+  async function previewGroup(code: GroupCode, input: GroupDraft) {
+    let result: GroupImpact | null = null;
+    await run(async (accept) => {
+      await session.refreshSecurityContext();
+      if (!accept()) return;
+      const value = await api.previewGroup(code, input);
+      if (accept()) result = value;
+    });
+    return result;
+  }
+  async function previewRemoval(id: string) {
+    let result: ModelRemovalImpact | null = null;
+    await run(async (accept) => {
+      const value = await api.previewModelRemoval(id);
+      if (accept()) result = value;
+    });
+    return result;
+  }
+  async function removeModel(id: string, revision: string) {
+    await run(async (accept) => {
+      const model = await api.removeModel(id, revision);
+      if (accept()) replaceModel(model);
+    }, true);
+  }
+  function clearRemoval(id: string) {
+    api.clearModelRemoval(id);
+  }
+  async function previewPriorities(
+    priorities: { code: GroupCode; priority: number }[],
+    revision: string,
+  ) {
+    let result: Awaited<ReturnType<typeof api.previewPriorities>> | null = null;
+    await run(async (accept) => {
+      await session.refreshSecurityContext();
+      if (!accept()) return;
+      const value = await api.previewPriorities(priorities, revision);
+      if (accept()) result = value;
+    });
+    return result;
+  }
+  async function savePriorities(
+    priorities: { code: GroupCode; priority: number }[],
+    revision: string,
+  ) {
+    await run(async (accept) => {
+      const groups = await api.savePriorities(priorities, revision);
+      if (accept()) state.value.groups = groups;
     }, true);
   }
 
@@ -303,32 +406,52 @@ export function useAdminStore() {
   }
 
   async function run(
-    operation: () => Promise<void>,
+    operation: (accept: () => boolean) => Promise<void>,
     saving = false,
-  ): Promise<void> {
+  ) {
+    const epoch = session.epoch.value,
+      request = ++state.value.request,
+      accept = () =>
+        epoch === session.epoch.value && request === state.value.request;
     state.value.status = saving ? "saving" : "loading";
+    state.value.failure = null;
     try {
       if (saving) await session.refreshSecurityContext();
-      await operation();
-      state.value.failure = null;
+      if (!accept()) return;
+      await operation(accept);
+      if (!accept()) return;
       state.value.status = "ready";
+      if (saving) feedback.show("saved");
     } catch (error) {
-      state.value.failure = normalizeFailure(error);
+      if (!accept()) return;
+      const failure = normalizeFailure(error);
+      state.value.failure = failure;
       state.value.status = "failed";
-      if (saving) throw state.value.failure;
+      if (failure.status === 401) session.invalidate();
+      if (saving) {
+        feedback.show("failed");
+        throw failure;
+      }
     }
   }
 
   return {
     state: readonly(state),
     loadModels,
-    saveCredential,
-    createModel,
+    loadModelProviders,
+    saveModelProvider,
+    ensureModels,
     saveModelDraft,
-    toggleModel,
-    updateModel,
+    saveModelBatch,
+    testModelConnection,
     loadGroups,
     saveGroup,
+    previewGroup,
+    previewRemoval,
+    removeModel,
+    clearRemoval,
+    previewPriorities,
+    savePriorities,
     loadUsers,
     loadMoreUsers,
     resetUserSearch,

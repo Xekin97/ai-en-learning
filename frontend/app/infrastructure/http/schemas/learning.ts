@@ -33,6 +33,8 @@ const singleReviewSchema = z.union([
 export const batchSummarySchema = z.strictObject({
   id: nonEmptyStringSchema,
   saved_at: rfc3339Schema,
+  title: nonEmptyStringSchema,
+  title_revision: nonEmptyStringSchema,
   passage_preview: nonEmptyStringSchema,
   tags: z.array(nonEmptyStringSchema).min(1).max(3),
   entries: z.array(nonEmptyStringSchema).min(1),
@@ -48,7 +50,10 @@ export const batchListEnvelopeSchema = listEnvelopeSchema(batchSummarySchema);
 export const batchDetailSchema = z
   .strictObject({
     id: nonEmptyStringSchema,
+    title_max_length: z.number().int().min(200),
     saved_at: rfc3339Schema,
+    title: nonEmptyStringSchema,
+    title_revision: nonEmptyStringSchema,
     configuration: z.strictObject({
       model: z.strictObject({ name: nonEmptyStringSchema }),
       meaning_language: meaningLanguageSchema,
@@ -103,3 +108,11 @@ export type LearningSummaryDto = z.infer<
 >["data"];
 export type BatchSummaryDto = z.infer<typeof batchSummarySchema>;
 export type BatchDetailDto = z.infer<typeof batchDetailSchema>;
+
+export const batchTitleEnvelopeSchema = successEnvelopeSchema(
+  z.strictObject({
+    batch_id: nonEmptyStringSchema,
+    title: nonEmptyStringSchema,
+    title_revision: nonEmptyStringSchema,
+  }),
+);

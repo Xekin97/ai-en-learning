@@ -1,17 +1,14 @@
+import { draftDto } from "../fixtures/m002";
+import { mapDraft } from "@infrastructure/http/mappers/review-mapper";
 import { describe, expect, it } from "vitest";
 import { entryMeaningSchema } from "@infrastructure/http/schemas/common";
 import { generationValidatedEventSchema } from "@infrastructure/http/schemas/generation";
 import { batchDetailSchema } from "@infrastructure/http/schemas/learning";
 import { adminBatchDetailEnvelopeSchema } from "@infrastructure/http/schemas/admin";
-import {
-  reviewAttemptEnvelopeSchema,
-  reviewActionEnvelopeSchema,
-} from "@infrastructure/http/schemas/review";
+import { reviewAttemptEnvelopeSchema } from "@infrastructure/http/schemas/review";
 import {
   mapGenerationValidatedDto,
   mapBatchDetailDto,
-  mapReviewAttemptDto,
-  mapReviewActionDto,
 } from "@infrastructure/http/mappers";
 import { presentAdminBatchReader } from "@presentation/admin/admin-user-detail-presenter";
 import { normalizeFailure } from "@application/shared/failure";
@@ -34,6 +31,9 @@ const generation = {
 };
 const batch = {
   id: "batch-current",
+  title: "vulnerable",
+  title_revision: "title-1",
+  title_max_length: 200,
   saved_at: "2026-09-09T00:00:00Z",
   configuration: {
     model: { name: "Synthetic" },
@@ -49,30 +49,10 @@ const batch = {
     last_completed_at: null,
   },
 };
-const spellingItem = {
-  stage: "spelling",
-  item_id: "item-current",
-  entry_meaning: meaning,
-  hint: { segments: [{ kind: "blank", length_hint: 8 }] },
-};
-const progress = { stage: "spelling", item_number: 1, items_in_stage: 2 };
 const meta = { request_id: "req-current" };
+const spellingItem = { ...draftDto().words[0]!, entry_meaning: meaning };
 const attempt = {
-  data: {
-    attempt_id: "attempt-current",
-    attempt_token: "synthetic-private-token",
-    item: spellingItem,
-    progress,
-  },
-  meta,
-};
-const nextItem = {
-  data: {
-    outcome: "advanced",
-    result: "correct",
-    item: spellingItem,
-    progress,
-  },
+  data: { attempt: { ...draftDto(), words: [spellingItem] } },
   meta,
 };
 
@@ -99,7 +79,7 @@ describe("CR-040 original-entry meaning", () => {
     }
   });
 
-  it("maps generation, shared learner/admin detail, first and next spelling items", () => {
+  it("maps generation, shared learner/admin detail, the complete editable spelling draft", () => {
     const generated = mapGenerationValidatedDto(
       generationValidatedEventSchema.parse(generation),
     );
@@ -108,24 +88,14 @@ describe("CR-040 original-entry meaning", () => {
       adminBatchDetailEnvelopeSchema.parse({ data: { batch }, meta }).data
         .batch,
     );
-    const first = mapReviewAttemptDto(
-      reviewAttemptEnvelopeSchema.parse(attempt).data,
-    );
-    const next = mapReviewActionDto(
-      reviewActionEnvelopeSchema.parse(nextItem).data,
+    const first = mapDraft(
+      reviewAttemptEnvelopeSchema.parse(attempt).data.attempt,
     );
     expect(generated.targets[0]?.entryMeaning).toBe(meaning);
     expect(detail.targets[0]?.entryMeaning).toBe(meaning);
     expect(admin).toEqual(detail);
-    expect(first.item).toMatchObject({
-      stage: "spelling",
-      entryMeaning: meaning,
-    });
-    expect(next).toMatchObject({
-      outcome: "advanced",
-      item: { entryMeaning: meaning },
-    });
-    for (const state of [generated, detail, admin, first, next]) {
+    expect(first.words[0]?.entryMeaning).toBe(meaning);
+    for (const state of [generated, detail, admin, first]) {
       const serialized = JSON.stringify(state);
       expect(serialized).not.toContain("entry_meaning");
       expect(serialized).not.toContain("contextual");
@@ -188,11 +158,7 @@ describe("CR-040 original-entry meaning", () => {
         }),
         reviewAttemptEnvelopeSchema.safeParse({
           ...attempt,
-          data: { ...attempt.data, item: invalidItem },
-        }),
-        reviewActionEnvelopeSchema.safeParse({
-          ...nextItem,
-          data: { ...nextItem.data, item: invalidItem },
+          data: { attempt: { ...attempt.data.attempt, words: [invalidItem] } },
         }),
       ];
       for (const result of checks) {

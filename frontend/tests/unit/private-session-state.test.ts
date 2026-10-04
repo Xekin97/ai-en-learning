@@ -1,3 +1,4 @@
+import { onScopeDispose } from "vue";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { effectScope, readonly, ref, shallowRef, watch, type Ref } from "vue";
 import { useLibraryStore } from "@runtime/stores/library";
@@ -30,6 +31,7 @@ function harness(api: object) {
   const states = new Map<string, Ref<unknown>>();
   const epoch = ref(1);
   const invalidate = vi.fn();
+  vi.stubGlobal("useFeedbackStore", () => ({ show: vi.fn() }));
   vi.stubGlobal("useNuxtApp", () => app);
   vi.stubGlobal("useSessionStore", () => ({
     epoch,
@@ -56,6 +58,10 @@ function harness(api: object) {
   };
 }
 afterEach(() => vi.unstubAllGlobals());
+
+vi.mock("@runtime/stores/analytics-events", () => ({
+  useAnalyticsEvents: () => ({ action: vi.fn() }),
+}));
 
 describe("private request lifetime", () => {
   it("does not append an old account library page after identity changes", async () => {
@@ -99,30 +105,22 @@ describe("private request lifetime", () => {
       expect(store.state.value.failure).toBeNull();
     },
   );
-  it("drops review attempts and ignores late answers after logout", async () => {
+  it("ignores a late review read after logout", async () => {
     const reply = deferred<never>();
-    const h = harness({
-      startReviewAttempt: async () => ({
-        attemptId: "old-attempt",
-        item: { stage: "word_recall" },
-      }),
-      actOnReview: () => reply.promise,
-    });
+    const h = harness({ getReviewSession: () => reply.promise });
+    vi.stubGlobal("ref", ref);
+    vi.stubGlobal("onScopeDispose", onScopeDispose);
+    vi.stubGlobal("onMounted", vi.fn());
     const scope = effectScope();
     try {
       const store = scope.run(() => useReviewStore())!;
-      Object.assign(h.states.get("review")!.value as object, {
-        session: { sessionId: "old-session", status: "active" },
-      });
-      await store.ensureAttempt();
-      const pending = store.act({ action: "skip" });
-      await Promise.resolve();
+      const pending = store.load("old-session");
       h.changeIdentity();
       reply.reject(authFailure);
       await pending;
       expect(store.attempt.value).toBeNull();
-      expect(store.state.value.session).toBeNull();
-      expect(store.state.value.status).toBe("idle");
+      expect(store.session.value).toBeNull();
+      expect(store.failure.value).toBeNull();
       expect(h.invalidate).not.toHaveBeenCalled();
     } finally {
       scope.stop();

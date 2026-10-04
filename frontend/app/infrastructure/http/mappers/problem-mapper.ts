@@ -18,6 +18,10 @@ const failureKinds: Record<string, FailureKind> = {
   not_found: "not_found",
   capability_expired: "capability_expired",
   conflict: "conflict",
+  revision_conflict: "conflict",
+  state_conflict: "conflict",
+  idempotency_conflict: "conflict",
+  temporarily_unavailable: "service_unavailable",
   service_unavailable: "service_unavailable",
   internal_error: "service_unavailable",
 };

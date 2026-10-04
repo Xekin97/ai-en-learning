@@ -41,9 +41,12 @@ export function safeReturnIntent(value: unknown): LearnerReturnIntent | null {
     if (segments.some((s) => !safePathSegment(s))) return null;
     const [area, id] = segments;
     if (
-      !["library", "review", "account"].includes(area ?? "") ||
+      !["library", "review", "account", "notices"].includes(area ?? "") ||
       segments.length > 2 ||
-      (area === "account" && id)
+      (area === "account" &&
+        id &&
+        !["growth", "items", "exchange"].includes(id)) ||
+      (area === "notices" && id)
     )
       return null;
     const query: Record<string, string> = {};
@@ -80,6 +83,6 @@ export function authenticationDestination(
   intent: LearnerReturnIntent | null,
 ) {
   return isAdmin
-    ? { path: "/admin/models", query: {} }
+    ? { path: "/admin", query: {} }
     : (intent?.to ?? { path: "/library", query: {} });
 }

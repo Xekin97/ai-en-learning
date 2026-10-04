@@ -1,9 +1,12 @@
+import { createVocabularySearch } from "@application/generation/vocabulary-search";
+import { useAnalyticsEvents } from "@runtime/stores/analytics-events";
 import { registerPrivateState } from "@runtime/session/private-state";
 import { normalizeFailure } from "@application/shared/failure";
 import {
   initialGenerationState,
   type AppFailure,
   type GenerationInputModel,
+  type GenerationRequestModel,
   type GenerationOptionsModel,
   type GenerationStateModel,
   type MeaningLanguage,
@@ -18,6 +21,8 @@ interface GenerationWorkspaceState {
   options: GenerationOptionsModel | null;
   optionsStatus: "idle" | "loading" | "ready" | "failed";
   optionsFailure: AppFailure | null;
+  randomPending: boolean;
+  selectionRevision: number;
   query: string;
   candidates: string[];
   searchStatus: "idle" | "loading" | "ready" | "empty" | "failed";
@@ -34,9 +39,12 @@ interface GenerationRequest {
   epoch: number;
   cancelRequested: boolean;
   cancellation: Promise<void> | null;
+  frame: number | null;
+  buffer: string;
 }
 
 interface WorkspaceRuntime {
+  vocabularySearch?: ReturnType<typeof createVocabularySearch>;
   vocabularyController: AbortController | null;
   searchSequence: number;
   optionsSequence: number;
@@ -47,6 +55,7 @@ interface WorkspaceRuntime {
 const workspaces = new WeakMap<object, WorkspaceRuntime>();
 
 export function useGenerationStore() {
+  const analytics = useAnalyticsEvents();
   const app = useNuxtApp();
   const api = app.$api;
   let existing = workspaces.get(app);
@@ -60,13 +69,16 @@ export function useGenerationStore() {
     workspaces.set(app, existing);
   }
   const runtime = existing;
-  const session = useSessionStore();
+  const session = useSessionStore(),
+    feedback = useFeedbackStore();
   const state = useState<GenerationWorkspaceState>(
     "generation-workspace",
     () => ({
       options: null,
       optionsStatus: "idle",
       optionsFailure: null,
+      randomPending: false,
+      selectionRevision: 0,
       query: "",
       candidates: [],
       searchStatus: "idle",
@@ -77,6 +89,14 @@ export function useGenerationStore() {
       length: null,
       generation: initialGenerationState(),
     }),
+  );
+
+  runtime.vocabularySearch ??= createVocabularySearch(
+    (q, signal) => api.searchVocabulary(q, signal),
+    () => session.epoch.value,
+    (next) => {
+      Object.assign(state.value, next);
+    },
   );
 
   registerPrivateState<GenerationWorkspaceState>(
@@ -90,6 +110,8 @@ export function useGenerationStore() {
         options: null,
         optionsStatus: "idle",
         optionsFailure: null,
+        randomPending: false,
+        selectionRevision: 0,
         query: "",
         candidates: [],
         searchStatus: "idle",
@@ -107,9 +129,11 @@ export function useGenerationStore() {
     const previous = runtime.generation;
     runtime.generation = null;
     previous?.controller.abort();
+    if (previous?.frame != null) cancelAnimationFrame(previous.frame);
     runtime.vocabularyController?.abort();
     runtime.vocabularyController = null;
     runtime.searchSequence++;
+    runtime.vocabularySearch?.reset();
     runtime.optionsSequence++;
   }
 
@@ -142,14 +166,12 @@ export function useGenerationStore() {
         state.value.meaningLanguage,
         options.meaningLanguages,
       );
-      state.value.scenario = retainAvailableSelection(
-        state.value.scenario,
-        options.scenarios,
-      );
-      state.value.length = retainAvailableSelection(
-        state.value.length,
-        options.lengths,
-      );
+      state.value.scenario =
+        retainAvailableSelection(state.value.scenario, options.scenarios) ??
+        (options.scenarios.includes("story") ? "story" : null);
+      state.value.length =
+        retainAvailableSelection(state.value.length, options.lengths) ??
+        (options.lengths.includes("short") ? "short" : null);
       state.value.optionsFailure = null;
       state.value.optionsStatus = "ready";
     } catch (error) {
@@ -160,51 +182,35 @@ export function useGenerationStore() {
     }
   }
 
-  async function searchVocabulary(query: string): Promise<void> {
-    state.value.query = query;
-    runtime.vocabularyController?.abort();
-    const sequence = ++runtime.searchSequence;
-    if (!query.trim()) {
-      state.value.candidates = [];
-      state.value.searchStatus = "idle";
-      return;
-    }
-    const controller = new AbortController();
-    runtime.vocabularyController = controller;
-    state.value.searchStatus = "loading";
-    try {
-      const result = await api.searchVocabulary(
-        query.trim(),
-        controller.signal,
-      );
-      if (sequence !== runtime.searchSequence) return;
-      state.value.candidates = result.entries.filter(
-        (entry) => !state.value.selectedEntries.includes(entry),
-      );
-      state.value.searchStatus = state.value.candidates.length
-        ? "ready"
-        : "empty";
-    } catch {
-      if (sequence !== runtime.searchSequence || controller.signal.aborted)
-        return;
-      state.value.searchStatus = "failed";
-    }
-  }
+  const searchVocabulary = (query: string) =>
+    runtime.vocabularySearch!.search(query);
+  const setVocabularyQuery = (query: string) =>
+    runtime.vocabularySearch!.setQuery(query);
 
-  function addEntry(entry: string): void {
+  function addEntry(entry: string, fromRandom = false): void {
     const max = state.value.options?.maxEntries ?? 0;
     if (
-      state.value.selectedEntries.includes(entry) ||
+      ["streaming", "valid"].includes(state.value.generation.phase) ||
+      (!fromRandom &&
+        (state.value.searchStatus !== "ready" ||
+          !state.value.candidates.includes(entry))) ||
+      state.value.selectedEntries.some(
+        (x) => x.toLowerCase() === entry.toLowerCase(),
+      ) ||
       state.value.selectedEntries.length >= max
     )
       return;
+    runtime.vocabularySearch?.reset();
+    state.value.selectionRevision++;
     state.value.selectedEntries.push(entry);
+    analytics.action("select_word");
     state.value.query = "";
     state.value.candidates = [];
     state.value.searchStatus = "idle";
   }
 
   function removeEntry(entry: string): void {
+    state.value.selectionRevision++;
     state.value.selectedEntries = state.value.selectedEntries.filter(
       (candidate) => candidate !== entry,
     );
@@ -229,15 +235,34 @@ export function useGenerationStore() {
     };
   }
 
-  async function generate(): Promise<boolean> {
-    const inputModel = input();
+  function flushDeltas(request: GenerationRequest) {
+    if (request.frame !== null) cancelAnimationFrame(request.frame);
+    request.frame = null;
+    if (
+      owns(request) &&
+      request.buffer &&
+      state.value.generation.phase === "streaming"
+    )
+      state.value.generation = reduceGeneration(state.value.generation, {
+        kind: "delta",
+        text: request.buffer,
+      });
+    request.buffer = "";
+  }
+  async function generate(
+    preset?: Extract<GenerationRequestModel, { kind: "preset" }>,
+  ): Promise<boolean> {
+    const inputModel = preset ?? input();
     if (!inputModel || state.value.generation.phase === "streaming")
       return false;
+    analytics.action("start_generation");
     const request: GenerationRequest = {
       controller: new AbortController(),
       epoch: session.epoch.value,
       cancelRequested: false,
       cancellation: null,
+      frame: null,
+      buffer: "",
     };
     runtime.generation?.controller.abort();
     runtime.generation = request;
@@ -252,6 +277,13 @@ export function useGenerationStore() {
         inputModel,
         (event) => {
           if (!owns(request) || request.controller.signal.aborted) return;
+          if (event.kind === "delta") {
+            request.buffer += event.text;
+            if (request.frame === null)
+              request.frame = requestAnimationFrame(() => flushDeltas(request));
+            return;
+          }
+          flushDeltas(request);
           state.value.generation = reduceGeneration(
             state.value.generation,
             event,
@@ -274,6 +306,7 @@ export function useGenerationStore() {
       }
     } catch (error) {
       if (!owns(request)) return false;
+      flushDeltas(request);
       // A committed terminal event cannot be replaced by a late transport error.
       if (state.value.generation.phase === "streaming") {
         state.value.generation = {
@@ -284,6 +317,7 @@ export function useGenerationStore() {
         };
       }
     } finally {
+      if (request.frame !== null) cancelAnimationFrame(request.frame);
       if (owns(request)) runtime.generation = null;
     }
     return state.value.generation.phase === "valid";
@@ -388,11 +422,42 @@ export function useGenerationStore() {
     state.value.selectedEntries = [];
     state.value.modelId = null;
     state.value.meaningLanguage = null;
-    state.value.scenario = null;
-    state.value.length = null;
+    state.value.selectionRevision++;
+    state.value.scenario = state.value.options?.scenarios.includes("story")
+      ? "story"
+      : null;
+    state.value.length = state.value.options?.lengths.includes("short")
+      ? "short"
+      : null;
     state.value.generation = initialGenerationState();
   }
 
+  async function randomEntry(): Promise<void> {
+    if (state.value.randomPending) return;
+    const revision = state.value.selectionRevision,
+      epoch = session.epoch.value;
+    state.value.randomPending = true;
+    try {
+      await session.refreshSecurityContext();
+      if (epoch !== session.epoch.value) return;
+      const result = await api.randomEntry([...state.value.selectedEntries]);
+      if (
+        epoch !== session.epoch.value ||
+        revision !== state.value.selectionRevision
+      )
+        return;
+      if (result.entry) addEntry(result.entry, true);
+      else
+        feedback.show(
+          result.reason === "limit_reached" ? "word.limit" : "random.none",
+        );
+    } catch (error) {
+      if (epoch === session.epoch.value)
+        state.value.optionsFailure = normalizeFailure(error);
+    } finally {
+      if (epoch === session.epoch.value) state.value.randomPending = false;
+    }
+  }
   function modelById(id: string | null): ModelOptionModel | null {
     return state.value.options?.models.find((model) => model.id === id) ?? null;
   }
@@ -402,12 +467,15 @@ export function useGenerationStore() {
     canSubmit: computed(
       () =>
         input() !== null &&
+        state.value.optionsStatus === "ready" &&
         state.value.options?.availability.canGenerate === true &&
         state.value.generation.phase !== "streaming",
     ),
     selectedModel: computed(() => modelById(state.value.modelId)),
     loadOptions,
     searchVocabulary,
+    setVocabularyQuery,
+    randomEntry,
     addEntry,
     removeEntry,
     generate,

@@ -1,27 +1,38 @@
+import type { AdminPresetsPort } from "@application/admin/presets";
+import type { AdminItemsPort } from "@application/admin/items";
+import type { AdminGrowthPort } from "@application/admin/growth";
+import type { AnalyticsPort } from "@application/analytics/models";
+import type { AdminNoticesPort } from "@application/admin/notices";
+import type { AdminUserBenefitsPort } from "@application/admin/user-benefits";
+import type {
+  AdminConfigurationPort,
+  GroupDraft,
+} from "@application/admin/configuration";
+import type { BenefitsPort } from "@application/benefits/models";
+import type { GrowthPort } from "@application/growth/models";
+import type { ReviewPort } from "@application/review/models";
+import type { PresetsPort } from "@application/presets/models";
+import type { NoticesPort } from "@application/notices/models";
 import type {
   AccountModel,
-  ActiveRangeModel,
   AdminModelModel,
   AdminUserDetailModel,
   AdminUserSummaryModel,
   AuthSessionResult,
   BatchDetailModel,
   BatchSummaryModel,
-  CredentialStatusModel,
+  ModelConnectionModel,
+  ModelConfigurationInput,
+  ModelBatchConfigurationInput,
+  AdminProviderModel,
+  ProviderConfigurationInput,
   GenerationEventModel,
-  GenerationInputModel,
+  GenerationRequestModel,
   GenerationOptionsModel,
   GroupCode,
   GroupPolicyModel,
   LearningSummaryModel,
   PageModel,
-  PassageLength,
-  ReviewActionOutcomeModel,
-  ReviewAnswerModel,
-  ReviewAttemptModel,
-  ReviewRangePreviewModel,
-  ReviewSessionCreatedModel,
-  ReviewSessionModel,
   SavedBatchResult,
   SessionSnapshot,
   UiLocale,
@@ -30,7 +41,20 @@ import type {
   VocabularyResultModel,
 } from "./models";
 
-export interface ApiPort {
+export interface ApiPort
+  extends
+    AdminPresetsPort,
+    AdminItemsPort,
+    AdminGrowthPort,
+    AnalyticsPort,
+    AdminNoticesPort,
+    AdminUserBenefitsPort,
+    AdminConfigurationPort,
+    NoticesPort,
+    PresetsPort,
+    ReviewPort,
+    GrowthPort,
+    BenefitsPort {
   bootstrap(): Promise<SessionSnapshot>;
   updateLocale(locale: UiLocale): Promise<UiLocale>;
   register(input: {
@@ -46,6 +70,10 @@ export interface ApiPort {
   }): Promise<AuthSessionResult>;
   logout(): Promise<void>;
   getAccount(): Promise<AccountModel>;
+  updateAccount(input: {
+    nickname: string | null;
+    gender: "female" | "male" | null;
+  }): Promise<AccountModel>;
   changePassword(input: {
     currentPassword: string;
     newPassword: string;
@@ -60,9 +88,13 @@ export interface ApiPort {
     query: string,
     signal?: AbortSignal,
   ): Promise<VocabularyResultModel>;
+  randomEntry(entries: string[]): Promise<{
+    entry: string | null;
+    reason: "limit_reached" | "no_candidates" | null;
+  }>;
   getGenerationOptions(): Promise<GenerationOptionsModel>;
   streamGeneration(
-    input: GenerationInputModel,
+    input: GenerationRequestModel,
     onEvent: (event: GenerationEventModel) => void,
     signal: AbortSignal,
   ): Promise<void>;
@@ -82,52 +114,41 @@ export interface ApiPort {
     batchId: string,
     participates: boolean,
   ): Promise<boolean>;
+  updateBatchTitle(
+    batchId: string,
+    input: { title: string; expectedTitleRevision: string },
+  ): Promise<{ batchId: string; title: string; titleRevision: string }>;
   deleteBatch(batchId: string): Promise<void>;
 
-  previewReviewRange(
-    input: { startDate: string; endDate: string; timezone: string },
-    signal?: AbortSignal,
-  ): Promise<ReviewRangePreviewModel>;
-  getActiveRange(): Promise<ActiveRangeModel | null>;
-  createReviewSession(
-    input:
-      | { mode: "range"; startDate: string; endDate: string; timezone: string }
-      | { mode: "single_batch"; batchId: string },
-  ): Promise<ReviewSessionCreatedModel>;
-  getReviewSession(sessionId: string): Promise<ReviewSessionModel>;
-  startReviewAttempt(sessionId: string): Promise<ReviewAttemptModel>;
-  actOnReview(
-    attemptId: string,
-    input: ReviewAnswerModel,
-  ): Promise<ReviewActionOutcomeModel>;
-
-  getCredential(): Promise<CredentialStatusModel>;
-  putCredential(apiKey: string): Promise<CredentialStatusModel>;
-  listModels(cursor?: string): Promise<PageModel<AdminModelModel>>;
-  createModel(input: {
-    displayName: string;
-    description: string | null;
-    openRouterModelId: string;
-  }): Promise<AdminModelModel>;
+  listModelProviders(): Promise<{
+    items: AdminProviderModel[];
+    revision: string;
+  }>;
+  saveModelProvider(
+    providerId: string | null,
+    input: ProviderConfigurationInput,
+  ): Promise<{ provider: AdminProviderModel; revision: string }>;
+  listModelConnections(): Promise<ModelConnectionModel[]>;
+  testModelConnection(input: ModelConfigurationInput): Promise<void>;
+  listModels(
+    cursor?: string,
+  ): Promise<PageModel<AdminModelModel> & { revision: string }>;
+  createModel(input: ModelConfigurationInput): Promise<AdminModelModel>;
+  createModels(
+    input: ModelBatchConfigurationInput,
+  ): Promise<{ items: AdminModelModel[]; revision: string }>;
   updateModel(
     modelId: string,
-    input: {
-      displayName?: string;
-      description?: string | null;
-      openRouterModelId?: string;
-    },
+    input: ModelConfigurationInput,
+    expectedRevision: string,
   ): Promise<AdminModelModel>;
-  setModelEnabled(modelId: string, enabled: boolean): Promise<AdminModelModel>;
+  setModelEnabled(
+    modelId: string,
+    enabled: boolean,
+    expectedRevision: string,
+  ): Promise<AdminModelModel>;
   listGroups(): Promise<GroupPolicyModel[]>;
-  putGroup(
-    code: GroupCode,
-    input: {
-      rolling24hLimit: number | null;
-      maxEntries: number;
-      allowedLengths: PassageLength[];
-      modelIds: string[];
-    },
-  ): Promise<GroupPolicyModel>;
+  putGroup(code: GroupCode, input: GroupDraft): Promise<GroupPolicyModel>;
   listUsers(input?: {
     username?: string;
     cursor?: string;
@@ -136,6 +157,7 @@ export interface ApiPort {
   changeUserGroup(
     userId: string,
     groupCode: Exclude<GroupCode, "visitor">,
+    expectedBaseRevision: string,
   ): Promise<UserGroupChangeModel>;
   resetUserPassword(
     userId: string,

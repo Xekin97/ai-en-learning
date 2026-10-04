@@ -118,15 +118,20 @@ export function createAdminDetailActions(input: {
       unauthorized(failure);
     }
   }
-  async function readLibrary(id: string): Promise<void> {
+  async function readLibrary(id: string, more = false): Promise<void> {
     const revision = ++libraryRevision,
       epoch = input.sessionEpoch();
     input.state().libraryStatus = "loading";
     input.state().libraryFailure = null;
     try {
-      const page = await input.api.listUserBatches(id);
+      const page = await input.api.listUserBatches(
+        id,
+        more ? (input.state().library.nextCursor ?? undefined) : undefined,
+      );
       if (!current(id, epoch) || revision !== libraryRevision) return;
-      input.state().library = page;
+      input.state().library = more
+        ? { ...page, items: [...input.state().library.items, ...page.items] }
+        : page;
       input.state().libraryStatus = "ready";
     } catch (error) {
       if (!current(id, epoch) || revision !== libraryRevision) return;
@@ -193,7 +198,11 @@ export function createAdminDetailActions(input: {
       if (!current(id, epoch) || revision !== mutationRevision)
         return { kind: "ignored" };
       sent = true;
-      const result = await input.api.changeUserGroup(id, plan);
+      const result = await input.api.changeUserGroup(
+        id,
+        plan,
+        input.state().user!.baseRevision!,
+      );
       if (!current(id, epoch) || revision !== mutationRevision)
         return { kind: "ignored" };
       if (
@@ -219,7 +228,7 @@ export function createAdminDetailActions(input: {
       const uncertain =
         sent && (failure.status === null || failure.status >= 500);
       input.state().mutationFailure = failure;
-      if (uncertain) {
+      if (uncertain || failure.code === "base_plan_changed") {
         input.state().needsReconciliation = true;
         await readUser(id, true); // Never replay the non-idempotent reset.
         if (!current(id, epoch) || revision !== mutationRevision)

@@ -1,3 +1,4 @@
+import { reviewDrafts } from "@infrastructure/storage/review-drafts";
 import { normalizeFailure } from "@application/shared/failure";
 import type { AccountModel, AppFailure } from "@application/shared/models";
 
@@ -11,7 +12,8 @@ interface AccountState {
 
 export function useAccountStore() {
   const api = useNuxtApp().$api;
-  const session = useSessionStore();
+  const session = useSessionStore(),
+    feedback = useFeedbackStore();
   const state = usePrivateState<AccountState>("account", () => ({
     account: null,
     status: "idle",
@@ -20,7 +22,8 @@ export function useAccountStore() {
     notice: null,
   }));
 
-  async function load(): Promise<void> {
+  async function load(force = false): Promise<void> {
+    if (!force && state.value.status === "ready") return;
     const epoch = session.epoch.value;
     state.value.status = "loading";
     try {
@@ -35,6 +38,28 @@ export function useAccountStore() {
       if (state.value.failure.kind === "authentication_required")
         session.invalidate();
       state.value.status = "failed";
+    }
+  }
+
+  async function saveProfile(input: {
+    nickname: string | null;
+    gender: "female" | "male" | null;
+  }) {
+    const epoch = session.epoch.value;
+    state.value.status = "saving";
+    state.value.failure = null;
+    try {
+      await session.refreshSecurityContext();
+      if (epoch !== session.epoch.value) return;
+      const account = await api.updateAccount(input);
+      if (epoch !== session.epoch.value) return;
+      state.value.account = account;
+      state.value.status = "ready";
+    } catch (error) {
+      if (epoch !== session.epoch.value) return;
+      state.value.failure = normalizeFailure(error);
+      state.value.status = "failed";
+      throw state.value.failure;
     }
   }
 
@@ -78,7 +103,16 @@ export function useAccountStore() {
     try {
       await session.refreshSecurityContext();
       if (epoch !== session.epoch.value) return;
+      const accountId =
+        session.actor.value?.kind === "account" ? session.actor.value.id : null;
       await api.deleteAccount({ currentPassword, confirmed });
+      if (accountId && import.meta.client) {
+        try {
+          await reviewDrafts.clearAccount(accountId);
+        } catch {
+          feedback.show("failed");
+        }
+      }
       if (epoch !== session.epoch.value) return;
       await session.load(true);
     } catch (error) {
@@ -94,6 +128,7 @@ export function useAccountStore() {
   return {
     state: readonly(state),
     load,
+    saveProfile,
     changePassword,
     clearPasswordFailure,
     deleteAccount,

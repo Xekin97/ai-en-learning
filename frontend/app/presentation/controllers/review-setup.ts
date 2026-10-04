@@ -1,4 +1,7 @@
-import type { RangeVisit } from "@application/review/range-setup";
+import {
+  localSevenDayRange,
+  type RangeVisit,
+} from "@application/review/range-setup";
 import { presentReviewSetup } from "@presentation/review/review-setup-presenter";
 import { useLearnerAccess } from "./learner-access";
 
@@ -9,6 +12,7 @@ export function useReviewSetupController() {
   const store = useReviewSetupStore();
   const router = useRouter();
   const { t } = useI18n();
+  const replacementOpen = ref(false);
   const editor = ref<{ focusStart: () => void } | null>(null);
   let owner: RangeVisit | null = null;
   let mounted = false;
@@ -62,9 +66,16 @@ export function useReviewSetupController() {
   async function start() {
     if (!owner) return;
     const lease = owner;
+    if (store.state.value.resume.session) {
+      replacementOpen.value = await store.prepareReplacement(lease);
+      return;
+    }
     const sessionId = await store.start(lease);
     if (sessionId && store.current(lease))
-      await router.push("/review/" + encodeURIComponent(sessionId));
+      await router.push({
+        path: "/review/" + encodeURIComponent(sessionId),
+        query: { start: "1" },
+      });
   }
   async function resume() {
     if (!owner) return;
@@ -79,6 +90,30 @@ export function useReviewSetupController() {
       );
   }
   return {
+    replacementOpen,
+    async confirmReplacement() {
+      if (!owner) return;
+      replacementOpen.value = false;
+      const id = await store.replace(owner);
+      if (id)
+        await router.push({
+          path: "/review/" + encodeURIComponent(id),
+          query: { start: "1" },
+        });
+    },
+    cancelReplacement() {
+      replacementOpen.value = false;
+      store.cancelReplacement();
+    },
+    recent() {
+      if (!owner) return;
+      const value = localSevenDayRange(
+        new Date(),
+        Intl.DateTimeFormat().resolvedOptions().timeZone,
+      );
+      store.changeDate(owner, "startDate", value.startDate);
+      store.changeDate(owner, "endDate", value.endDate);
+    },
     access,
     editor,
     initialize,

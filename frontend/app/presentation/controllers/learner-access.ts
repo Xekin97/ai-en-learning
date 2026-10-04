@@ -29,7 +29,7 @@ export function useLearnerAccess() {
     loader = load;
     await session.load();
     if (session.isAdmin.value) {
-      await router.replace("/admin/models");
+      await router.replace("/admin");
       return;
     }
     if (session.isLearner.value) await app.runWithContext(load);
@@ -44,7 +44,7 @@ export function useLearnerAccess() {
   watch(session.epoch, async () => {
     if (!mounted) return;
     await nextTick();
-    if (session.isAdmin.value) await router.replace("/admin/models");
+    if (session.isAdmin.value) await router.replace("/admin");
     else if (session.isLearner.value)
       await app.runWithContext(() => loader?.());
   });

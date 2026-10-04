@@ -52,7 +52,11 @@ export async function useAdminUserSearchController() {
     );
   });
 
-  if (!initialQuery) {
+  if (
+    !initialQuery &&
+    route.query.all !== "1" &&
+    !navigation.value.focusedUserId
+  ) {
     admin.resetUserSearch();
   } else if (
     admin.state.value.userSearch.submittedQuery !== initialQuery ||
@@ -65,8 +69,11 @@ export async function useAdminUserSearchController() {
 
   async function search(): Promise<void> {
     const query = draftQuery.value.trim();
-    if (!query || view.value.isInitialLoading) return;
-    await router.replace({ path: "/admin/users", query: { q: query } });
+    if (view.value.isInitialLoading) return;
+    await router.replace({
+      path: "/admin/users",
+      query: query ? { q: query } : { all: "1" },
+    });
     const outcome = await admin.loadUsers(query);
     if (outcome.kind !== "applied") return;
     await nextTick();

@@ -1,3 +1,4 @@
+import { authenticationFeedbackFor } from "@runtime/session/authentication-feedback";
 import type {
   AppFailure,
   SessionSnapshot,
@@ -15,6 +16,7 @@ interface SessionState {
 
 export function useSessionStore() {
   const app = useNuxtApp();
+  const authFeedback = authenticationFeedbackFor(app);
   const epoch = useState("session-epoch", () => 0);
   const revision = useState("session-request-revision", () => 0);
   const state = useState<SessionState>("session", () => ({
@@ -65,6 +67,7 @@ export function useSessionStore() {
       });
       revision.value++;
       setSnapshot(snapshot, true);
+      authFeedback.queue(snapshot, "login");
       state.value.status = "ready";
       state.value.failure = null;
     } catch (error) {
@@ -89,6 +92,7 @@ export function useSessionStore() {
       });
       revision.value++;
       setSnapshot(snapshot, true);
+      authFeedback.queue(snapshot, "register");
       state.value.status = "ready";
       state.value.failure = null;
     } catch (error) {
@@ -102,13 +106,19 @@ export function useSessionStore() {
     if (
       force ||
       previous?.kind !== snapshot.actor.kind ||
-      previous?.username !== snapshot.actor.username ||
+      (previous?.kind === "account" ? previous.id : null) !==
+        (snapshot.actor.kind === "account" ? snapshot.actor.id : null) ||
       previous?.role !== snapshot.actor.role
     ) {
       epoch.value++;
       resetPrivateStates(app);
+      authFeedback.clear();
     }
-    state.value.snapshot = snapshot;
+    state.value.snapshot = {
+      actor: snapshot.actor,
+      accountLocale: snapshot.accountLocale,
+      supportedLocales: snapshot.supportedLocales,
+    };
   }
 
   function invalidate() {
@@ -133,8 +143,14 @@ export function useSessionStore() {
 
   async function consumeVisitorClaim(): Promise<string> {
     await refreshSecurityContext();
-    const result = await api.consumeVisitorClaim();
-    return result.batchId;
+    try {
+      const result = await api.consumeVisitorClaim();
+      state.value.failure = null;
+      return result.batchId;
+    } catch (error) {
+      state.value.failure = normalizeFailure(error);
+      throw state.value.failure;
+    }
   }
 
   return {
@@ -159,5 +175,6 @@ export function useSessionStore() {
     register,
     logout,
     consumeVisitorClaim,
+    presentAuthenticationFeedback: authFeedback.present,
   };
 }

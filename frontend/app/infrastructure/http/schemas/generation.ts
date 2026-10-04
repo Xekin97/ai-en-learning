@@ -1,6 +1,7 @@
 import { z } from "zod";
 import {
   meaningLanguageSchema,
+  groupCodeSchema,
   nonEmptyStringSchema,
   entryMeaningSchema,
   nullableStringSchema,
@@ -59,18 +60,45 @@ const availabilityReasonSchema = z.enum([
   "generation_in_progress",
 ]);
 
+export const quotaSchema = z.discriminatedUnion("kind", [
+  limitedQuotaSchema,
+  unlimitedQuotaSchema,
+]);
+export const extraQuotaSchema = z.strictObject({
+  remaining: z.number().int().min(0),
+  earliest_expires_at: rfc3339Schema.nullable(),
+});
+export const randomEntryEnvelopeSchema = successEnvelopeSchema(
+  z.union([
+    z.strictObject({ entry: nonEmptyStringSchema, reason: z.null() }),
+    z.strictObject({
+      entry: z.null(),
+      reason: z.enum(["limit_reached", "no_candidates"]),
+    }),
+  ]),
+);
 const generationOptionsDataSchema = z.strictObject({
   models: z.array(
     z.strictObject({
       id: nonEmptyStringSchema,
       name: nonEmptyStringSchema,
       description: nullableStringSchema,
+      access: z.strictObject({
+        from_plan: z.boolean(),
+        card_ends_at: rfc3339Schema.nullable(),
+      }),
     }),
   ),
   meaning_languages: z.array(meaningLanguageSchema).min(1),
   scenarios: z.array(scenarioSchema).min(1),
   lengths: z.array(passageLengthSchema),
   max_entries: z.number().int().positive(),
+  effective_plan: z.strictObject({
+    code: groupCodeSchema,
+    origin: z.enum(["base", "trial", "visitor"]),
+    trial_ends_at: rfc3339Schema.nullable(),
+  }),
+  extra_quota: extraQuotaSchema,
   availability: z.union([
     z.strictObject({ can_generate: z.literal(true), reason: z.null() }),
     z.strictObject({
@@ -131,6 +159,7 @@ export const batchCreatedEnvelopeSchema = successEnvelopeSchema(
   z.strictObject({
     batch_id: nonEmptyStringSchema,
     saved_at: rfc3339Schema,
+    title: nonEmptyStringSchema,
   }),
 );
 export const claimEnvelopeSchema = successEnvelopeSchema(
@@ -143,6 +172,7 @@ export const claimConsumedEnvelopeSchema = successEnvelopeSchema(
   z.strictObject({
     batch_id: nonEmptyStringSchema,
     claimed: z.literal(true),
+    title: nonEmptyStringSchema,
   }),
 );
 

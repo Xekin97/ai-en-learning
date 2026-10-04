@@ -10,6 +10,7 @@ export type ActorModel =
   | { kind: "visitor"; username: null; role: null; planCode: null }
   | {
       kind: "account";
+      id: string;
       username: string;
       role: ActorRole;
       planCode: PlanCode | null;
@@ -21,7 +22,15 @@ export interface SessionSnapshot {
   supportedLocales: UiLocale[];
 }
 
-export type AuthSessionResult = SessionSnapshot;
+export interface WelcomeModel {
+  kind: "no_learning" | "same_day" | "returning";
+  displayName: string;
+  daysSinceLearning: number | null;
+  previousLearningAt: string | null;
+}
+export interface AuthSessionResult extends SessionSnapshot {
+  welcome: WelcomeModel | null;
+}
 
 export type RequestStatus = "idle" | "loading" | "ready" | "empty" | "failed";
 
@@ -76,7 +85,15 @@ export type GenerationAvailabilityReason =
   | "generation_in_progress";
 
 export interface GenerationOptionsModel {
-  models: ModelOptionModel[];
+  models: (ModelOptionModel & {
+    access: { fromPlan: boolean; cardEndsAt: string | null };
+  })[];
+  effectivePlan: {
+    code: GroupCode;
+    origin: "base" | "trial" | "visitor";
+    trialEndsAt: string | null;
+  };
+  extraQuota: { remaining: number; earliestExpiresAt: string | null };
   meaningLanguages: MeaningLanguage[];
   scenarios: Scenario[];
   lengths: PassageLength[];
@@ -125,6 +142,10 @@ export interface GenerationInputModel {
   length: PassageLength;
   entries: string[];
 }
+
+export type GenerationRequestModel =
+  | GenerationInputModel
+  | { kind: "preset"; presetId: string; publishedVersion: string };
 
 export type GenerationEventModel =
   | { kind: "started"; runId: string }
@@ -180,6 +201,8 @@ export interface SingleBatchReviewModel {
 }
 
 export interface BatchSummaryModel {
+  title: string;
+  titleRevision: string;
   id: string;
   savedAt: string;
   passagePreview: string;
@@ -207,6 +230,9 @@ export interface BatchTargetModel {
 }
 
 export interface BatchDetailModel {
+  title: string;
+  titleRevision: string;
+  titleMaxLength: number;
   id: string;
   savedAt: string;
   configuration: {
@@ -229,8 +255,14 @@ export interface BatchDetailModel {
 
 export interface AccountModel {
   username: string;
+  nickname: string | null;
+  displayName: string;
+  gender: "female" | "male" | null;
   planCode: PlanCode;
+  effectivePlanCode: PlanCode;
   uiLocale: UiLocale;
+  lastLoginAt: string | null;
+  lastLearningAt: string | null;
 }
 
 export interface ReviewProgressModel {
@@ -376,17 +408,69 @@ export type ReviewActionOutcomeModel =
       sessionSummary: ReviewSummaryModel;
     };
 
-export interface CredentialStatusModel {
-  configured: boolean;
+export type ModelProtocol =
+  "openai_chat" | "openai_responses" | "anthropic_messages";
+export interface ModelConnectionModel {
+  id: string;
+  name: string;
+  protocol: ModelProtocol;
+  baseUrl: string;
+  credentialConfigured: boolean;
   maskedHint: string | null;
-  updatedAt: string | null;
+}
+export interface ModelConfigurationInput {
+  displayName: string;
+  description: string | null;
+  providerModelId: string;
+  connectionId: string | null;
+  connection: {
+    name: string;
+    protocol: ModelProtocol;
+    baseUrl: string;
+    apiKey: string;
+  } | null;
+  maxOutputTokens: number | null;
+  outputMode: "prompt" | "json_schema";
+  enabled: boolean;
+  expectedRevision: string;
+}
+
+export type NewModelConfiguration = Pick<
+  ModelConfigurationInput,
+  | "displayName"
+  | "description"
+  | "providerModelId"
+  | "maxOutputTokens"
+  | "outputMode"
+  | "enabled"
+>;
+export interface ModelBatchConfigurationInput {
+  connectionId: string | null;
+  connection: ModelConfigurationInput["connection"];
+  expectedRevision: string;
+  models: NewModelConfiguration[];
+}
+
+export interface AdminProviderModel {
+  connection: ModelConnectionModel;
+  models: AdminModelModel[];
+}
+export interface ProviderConfigurationInput {
+  connection: NonNullable<ModelConfigurationInput["connection"]>;
+  models: Array<NewModelConfiguration & { id: string | null }>;
+  expectedRevision: string;
 }
 
 export interface AdminModelModel {
+  revision: string;
+  retiredAt: string | null;
   id: string;
   displayName: string;
   description: string | null;
-  openRouterModelId: string;
+  providerModelId: string;
+  connection: ModelConnectionModel;
+  maxOutputTokens: number | null;
+  outputMode: "prompt" | "json_schema";
   enabled: boolean;
   assignedGroupCodes: GroupCode[];
   createdAt: string;
@@ -394,6 +478,8 @@ export interface AdminModelModel {
 }
 
 export interface GroupPolicyModel {
+  revision: string;
+  priority: number;
   code: GroupCode;
   rolling24hLimit: number | null;
   maxEntries: number;
@@ -416,6 +502,19 @@ export type AdminGenerationQuotaModel =
   | { kind: "not_applicable" };
 
 export interface AdminUserDetailModel extends AdminUserSummaryModel {
+  nickname: string | null;
+  gender: "male" | "female" | null;
+  lastLoginAt: string | null;
+  lastLearningAt: string | null;
+  baseRevision: string | null;
+  effectivePlanCode: PlanCode | null;
+  growth: {
+    levelNumber: number;
+    points: string;
+    experience: string;
+    masteredTotal: number;
+    savedTotal: number;
+  } | null;
   uiLocale: UiLocale | null;
   learningBatchCount: number;
   generationQuota: AdminGenerationQuotaModel;

@@ -4,6 +4,10 @@ import { useGenerationStore } from "@runtime/stores/generation";
 import { resetPrivateStates } from "@runtime/session/private-state";
 import type { GenerationEventModel } from "@application/shared/models";
 
+vi.mock("@runtime/stores/analytics-events", () => ({
+  useAnalyticsEvents: () => ({ action: vi.fn() }),
+}));
+
 function deferred<T>() {
   let resolve!: (value: T) => void;
   let reject!: (error: unknown) => void;
@@ -37,6 +41,10 @@ function harness() {
   const savedReply = deferred<{ batchId: string; savedAt: string }>();
   const discardedReply = deferred<undefined>();
   const api = {
+    searchVocabulary: vi.fn(async () => ({
+      entries: ["learn"],
+      version: "test",
+    })),
     saveGeneration: vi.fn(() => savedReply.promise),
     discardGeneration: vi.fn(() => discardedReply.promise),
     streamGeneration: vi.fn((_input, emit, signal) => {
@@ -58,6 +66,7 @@ function harness() {
   const app = { $api: api };
   const states = new Map<string, Ref<unknown>>();
   const epoch = ref(1);
+  vi.stubGlobal("useFeedbackStore", () => ({ show: vi.fn() }));
   vi.stubGlobal("useNuxtApp", () => app);
   vi.stubGlobal("useSessionStore", () => ({
     epoch,
@@ -79,6 +88,7 @@ function harness() {
     store.setMeaningLanguage("en");
     store.setScenario("story");
     store.setLength("short");
+    await store.searchVocabulary("learn");
     store.addEntry("learn");
   }
   return {

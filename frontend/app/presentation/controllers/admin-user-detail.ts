@@ -13,7 +13,8 @@ export function useAdminUserDetailController() {
   const route = useRoute(),
     router = useRouter(),
     f = useDisplayFormatters();
-  const { t } = useI18n();
+  const { t } = useI18n(),
+    feedback = useFeedbackStore();
   const userId = safePathSegment(route.params.userId) ?? "";
   const query = computed(() => safeSearchQuery(route.query.q));
   const draft = ref(query.value);
@@ -48,7 +49,9 @@ export function useAdminUserDetailController() {
   );
   const backToResults = computed(() => ({
     path: "/admin/users",
-    query: query.value ? { q: query.value, focus: userId } : {},
+    query: query.value
+      ? { q: query.value, focus: userId }
+      : { all: "1", focus: userId },
   }));
   watch(query, (value) => {
     draft.value = value;
@@ -146,17 +149,23 @@ export function useAdminUserDetailController() {
     confirmation.value = "";
   }
   async function saveGroup() {
-    if ((await detail.changeGroup(userId, group.value)).kind === "applied")
+    if ((await detail.changeGroup(userId, group.value)).kind === "applied") {
       groupOpen.value = false;
+      feedback.show("saved");
+    }
   }
   async function resetPassword() {
     if (
       (await detail.resetPassword(userId, password.value, confirmation.value))
         .kind === "applied"
-    )
+    ) {
       closePassword();
+      feedback.show("saved");
+    }
   }
   return {
+    detail,
+    userId,
     view,
     reader,
     draft,

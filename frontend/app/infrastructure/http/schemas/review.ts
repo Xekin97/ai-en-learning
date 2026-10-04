@@ -1,65 +1,60 @@
 import { z } from "zod";
 import {
   dateSchema,
-  nonEmptyStringSchema,
+  nonEmptyStringSchema as str,
   entryMeaningSchema,
   rfc3339Schema,
   scenarioSchema,
   successEnvelopeSchema,
 } from "./common";
-
-const progressSchema = z
+export const progressSchema = z
   .strictObject({
     completed_batches: z.number().int().min(0),
     total_batches: z.number().int().positive(),
     successful_batches: z.number().int().min(0),
     unsuccessful_batches: z.number().int().min(0),
-  })
-  .superRefine((value, context) => {
-    if (
-      value.completed_batches !==
-        value.successful_batches + value.unsuccessful_batches ||
-      value.completed_batches > value.total_batches
-    ) {
-      context.addIssue({
-        code: "custom",
-        message: "review progress is inconsistent",
-      });
-    }
-  });
-
-const dateRangeSchema = z.strictObject({
-  start_date: dateSchema,
-  end_date: dateSchema,
-  timezone: nonEmptyStringSchema,
-});
-
-const batchProjectionSchema = z.strictObject({
-  batch_id: nonEmptyStringSchema,
-  saved_at: rfc3339Schema,
-  scenario: scenarioSchema,
-});
-
-const summarySchema = z
-  .strictObject({
-    total_batches: z.number().int().positive(),
-    successful_batches: z.number().int().min(0),
-    unsuccessful_batches: z.number().int().min(0),
     skipped_batches: z.number().int().min(0),
   })
-  .superRefine((value, context) => {
-    if (
-      value.successful_batches + value.unsuccessful_batches !==
-        value.total_batches ||
-      value.skipped_batches > value.unsuccessful_batches
-    ) {
-      context.addIssue({
-        code: "custom",
-        message: "review summary is inconsistent",
-      });
-    }
-  });
-
+  .refine(
+    (v) =>
+      v.successful_batches + v.unsuccessful_batches === v.completed_batches &&
+      v.completed_batches <= v.total_batches &&
+      v.skipped_batches <= v.unsuccessful_batches,
+  );
+const rangeSchema = z.strictObject({
+  start_date: dateSchema,
+  end_date: dateSchema,
+  timezone: str,
+});
+export const reviewSessionSchema = z
+  .strictObject({
+    session_id: str,
+    mode: z.enum(["range", "single_batch"]),
+    status: z.enum(["active", "completed", "abandoned"]),
+    date_range: rangeSchema.nullable(),
+    progress: progressSchema,
+    current_batch: z
+      .strictObject({
+        batch_id: str,
+        saved_at: rfc3339Schema,
+        scenario: scenarioSchema,
+      })
+      .nullable(),
+    current_attempt: z
+      .strictObject({
+        attempt_id: str,
+        revision: str,
+        state: z.literal("draft"),
+      })
+      .nullable(),
+  })
+  .refine(
+    (v) =>
+      (v.mode === "range") === (v.date_range !== null) &&
+      (v.status === "active"
+        ? v.current_batch !== null
+        : v.current_batch === null && v.current_attempt === null),
+  );
 export const reviewRangePreviewEnvelopeSchema = successEnvelopeSchema(
   z
     .strictObject({
@@ -67,244 +62,155 @@ export const reviewRangePreviewEnvelopeSchema = successEnvelopeSchema(
       entry_count: z.number().int().min(0),
       empty: z.boolean(),
     })
-    .superRefine((value, context) => {
-      if (value.empty !== (value.batch_count === 0 && value.entry_count === 0))
-        context.addIssue({ code: "custom", message: "empty is inconsistent" });
-    }),
+    .refine((v) => v.empty === (v.batch_count === 0 && v.entry_count === 0)),
 );
-
-const activeRangeSchema = z.strictObject({
-  session_id: nonEmptyStringSchema,
-  mode: z.literal("range"),
-  status: z.literal("active"),
-  date_range: dateRangeSchema,
-  progress: progressSchema,
-});
 export const activeRangeEnvelopeSchema = successEnvelopeSchema(
-  z.strictObject({ session: activeRangeSchema.nullable() }),
+  z.strictObject({
+    session: reviewSessionSchema
+      .refine((v) => v.mode === "range" && v.status === "active")
+      .nullable(),
+  }),
 );
-
-const activeSessionSchema = z.strictObject({
-  session_id: nonEmptyStringSchema,
-  mode: z.enum(["range", "single_batch"]),
-  status: z.literal("active"),
-  date_range: dateRangeSchema.nullable(),
-  progress: progressSchema,
-  current_batch: batchProjectionSchema,
-  summary: z.null(),
-});
-
-const completedSessionSchema = z.strictObject({
-  session_id: nonEmptyStringSchema,
-  mode: z.enum(["range", "single_batch"]),
-  status: z.literal("completed"),
-  date_range: dateRangeSchema.nullable(),
-  progress: progressSchema,
-  current_batch: z.null(),
-  summary: summarySchema,
-});
-
-function validateModeDateRange(
-  value: { mode: "range" | "single_batch"; date_range: unknown },
-  context: z.RefinementCtx,
-) {
-  if ((value.mode === "range") !== (value.date_range !== null))
-    context.addIssue({
-      code: "custom",
-      path: ["date_range"],
-      message: "mode and date_range disagree",
-    });
-}
-
-export const reviewSessionSchema = z
-  .discriminatedUnion("status", [activeSessionSchema, completedSessionSchema])
-  .superRefine(validateModeDateRange);
 export const reviewSessionEnvelopeSchema = successEnvelopeSchema(
-  z.strictObject({ session: reviewSessionSchema }),
+  z.strictObject({ session: reviewSessionSchema, session_revision: str }),
 );
-
 export const reviewSessionCreatedEnvelopeSchema = successEnvelopeSchema(
-  z
-    .strictObject({
-      session_id: nonEmptyStringSchema,
-      mode: z.enum(["range", "single_batch"]),
-      status: z.literal("active"),
-      reused: z.boolean(),
-      date_range: dateRangeSchema.nullable(),
-      progress: progressSchema,
-      current_batch: batchProjectionSchema,
-    })
-    .superRefine(validateModeDateRange),
+  z.strictObject({ session: reviewSessionSchema, reused: z.boolean() }),
 );
-
-const hintTextSegmentSchema = z.strictObject({
-  kind: z.literal("text"),
-  text: nonEmptyStringSchema,
-});
-const hintBlankSegmentSchema = z.strictObject({
-  kind: z.literal("blank"),
-  length_hint: z.literal(8),
-});
-const passageTextSegmentSchema = z.strictObject({
-  kind: z.literal("text"),
-  text: nonEmptyStringSchema,
-});
-const passageBlankSegmentSchema = z.strictObject({
-  kind: z.literal("blank"),
-  blank_id: nonEmptyStringSchema,
-  group_key: z.string().regex(/^grp_[A-Za-z0-9_-]{22}$/),
-});
-
-const spellingItemSchema = z
+export const reviewReplaceEnvelopeSchema = successEnvelopeSchema(
+  z.strictObject({ session: reviewSessionSchema, replaced_session_id: str }),
+);
+const text = z.strictObject({ kind: z.literal("text"), text: z.string() });
+const slot = z.discriminatedUnion("kind", [
+  z.strictObject({
+    kind: z.literal("letters"),
+    count: z.number().int().positive(),
+  }),
+  z.strictObject({ kind: z.literal("separator"), text: str }),
+]);
+const word = z
   .strictObject({
-    stage: z.literal("spelling"),
-    item_id: nonEmptyStringSchema,
+    question_id: str,
     entry_meaning: entryMeaningSchema,
+    slots: z.array(slot).min(1),
     hint: z.strictObject({
       segments: z
-        .array(z.union([hintTextSegmentSchema, hintBlankSegmentSchema]))
+        .array(
+          z.discriminatedUnion("kind", [
+            text,
+            z.strictObject({ kind: z.literal("blank") }),
+          ]),
+        )
         .min(1),
     }),
   })
-  .superRefine((value, context) => {
-    if (!value.hint.segments.some((segment) => segment.kind === "blank"))
-      context.addIssue({
-        code: "custom",
-        message: "spelling hint has no blank",
-      });
-  });
-
-const passageItemSchema = z
+  .refine(
+    (v) =>
+      v.slots.some((s) => s.kind === "letters") &&
+      v.hint.segments.some((s) => s.kind === "blank"),
+  );
+export const draftAttemptSchema = z
   .strictObject({
-    stage: z.literal("passage_cloze"),
-    item_id: nonEmptyStringSchema,
-    passage_segments: z
-      .array(z.union([passageTextSegmentSchema, passageBlankSegmentSchema]))
-      .min(1),
-  })
-  .superRefine((value, context) => {
-    const ids = value.passage_segments
-      .filter((segment) => segment.kind === "blank")
-      .map((segment) => segment.blank_id);
-    if (ids.length === 0 || new Set(ids).size !== ids.length)
-      context.addIssue({
-        code: "custom",
-        message: "passage blanks are missing or duplicated",
-      });
-  });
-
-export const reviewItemSchema = z.discriminatedUnion("stage", [
-  spellingItemSchema,
-  passageItemSchema,
-]);
-const itemProgressSchema = z
-  .strictObject({
-    stage: z.enum(["spelling", "passage_cloze"]),
-    item_number: z.number().int().positive(),
-    items_in_stage: z.number().int().positive(),
-  })
-  .superRefine((value, context) => {
-    if (value.item_number > value.items_in_stage)
-      context.addIssue({
-        code: "custom",
-        message: "item progress is inconsistent",
-      });
-  });
-
-export const reviewAttemptEnvelopeSchema = successEnvelopeSchema(
-  z
-    .strictObject({
-      attempt_id: nonEmptyStringSchema,
-      attempt_token: nonEmptyStringSchema,
-      item: reviewItemSchema,
-      progress: itemProgressSchema,
-    })
-    .superRefine((value, context) => {
-      if (value.item.stage !== value.progress.stage)
-        context.addIssue({
-          code: "custom",
-          message: "item and progress stage disagree",
-        });
+    attempt_id: str,
+    session_id: str,
+    batch_id: str,
+    revision: str,
+    attempt_token: str,
+    token_expires_at: rfc3339Schema,
+    words: z.array(word).min(1),
+    passage: z.strictObject({
+      segments: z
+        .array(
+          z.discriminatedUnion("kind", [
+            text,
+            z.strictObject({
+              kind: z.literal("blank"),
+              blank_id: str,
+              group_key: z.string().regex(/^grp_[A-Za-z0-9_-]{22}$/),
+            }),
+          ]),
+        )
+        .min(1),
     }),
+  })
+  .refine(
+    (v) =>
+      new Set(v.words.map((w) => w.question_id)).size === v.words.length &&
+      new Set(
+        v.passage.segments.flatMap((s) =>
+          s.kind === "blank" ? [s.blank_id] : [],
+        ),
+      ).size === v.passage.segments.filter((s) => s.kind === "blank").length,
+  );
+export const reviewAttemptEnvelopeSchema = successEnvelopeSchema(
+  z.strictObject({ attempt: draftAttemptSchema }),
 );
-
-const batchResultSchema = z
-  .strictObject({
-    batch_id: nonEmptyStringSchema,
-    successful: z.boolean(),
-    error_count: z.number().int().min(0),
-    skip_count: z.number().int().min(0),
-  })
-  .superRefine((value, context) => {
-    if (value.successful && value.skip_count !== 0)
-      context.addIssue({
-        code: "custom",
-        message: "successful result has skips",
-      });
-  });
-
-const retryOutcomeSchema = z
-  .strictObject({
-    outcome: z.literal("retry"),
-    result: z.literal("incorrect"),
-    item: reviewItemSchema,
-    progress: itemProgressSchema,
-    incorrect_blank_ids: z.array(nonEmptyStringSchema).min(1).nullable(),
-  })
-  .superRefine((value, context) => {
-    if (
-      (value.item.stage === "spelling") !==
-      (value.incorrect_blank_ids === null)
+export const receiptSchema = z.strictObject({
+  attempt_id: str,
+  batch_id: str,
+  revision: str,
+  submitted_at: rfc3339Schema,
+  successful: z.boolean(),
+  has_answer: z.boolean().nullable(),
+});
+const answer = {
+  input: z.string(),
+  correct: str,
+  result: z.enum(["correct", "incorrect", "unanswered"]),
+};
+export const comparisonSchema = z.strictObject({
+  words: z.array(z.strictObject({ question_id: str, ...answer })).min(1),
+  passage_segments: z
+    .array(
+      z.discriminatedUnion("kind", [
+        text,
+        z.strictObject({ kind: z.literal("answer"), blank_id: str, ...answer }),
+      ]),
     )
-      context.addIssue({
-        code: "custom",
-        message: "incorrect blank ids disagree with stage",
-      });
-  });
-
-const advancedOutcomeSchema = z.strictObject({
-  outcome: z.literal("advanced"),
-  result: z.enum(["correct", "skipped"]),
-  item: reviewItemSchema,
-  progress: itemProgressSchema,
+    .min(1),
 });
-
-const batchCompletedOutcomeSchema = z.strictObject({
-  outcome: z.literal("batch_completed"),
-  batch_result: batchResultSchema,
-  session_progress: progressSchema,
-  next_batch: batchProjectionSchema,
-});
-
-const sessionCompletedOutcomeSchema = z.strictObject({
-  outcome: z.literal("session_completed"),
-  batch_result: batchResultSchema,
-  session_progress: progressSchema,
-  next_batch: z.null(),
-  session_summary: summarySchema,
-});
-
-export const reviewActionEnvelopeSchema = successEnvelopeSchema(
+const amount = z
+  .string()
+  .regex(/^(0|[1-9]\d*)$/)
+  .refine((value) => BigInt(value) <= 9223372036854775807n);
+export const reviewSubmitEnvelopeSchema = successEnvelopeSchema(
   z.discriminatedUnion("outcome", [
-    retryOutcomeSchema,
-    advancedOutcomeSchema,
-    batchCompletedOutcomeSchema,
-    sessionCompletedOutcomeSchema,
+    z.strictObject({
+      outcome: z.literal("submitted"),
+      receipt: receiptSchema,
+      session: reviewSessionSchema,
+      comparison: comparisonSchema,
+      growth: z.strictObject({
+        new_masteries: z.number().int().min(0),
+        experience_added: amount,
+        points_added: amount,
+      }),
+    }),
+    z.strictObject({
+      outcome: z.literal("already_submitted"),
+      receipt: receiptSchema,
+      session: reviewSessionSchema,
+    }),
   ]),
 );
-
-export type ReviewRangePreviewDto = z.infer<
-  typeof reviewRangePreviewEnvelopeSchema
->["data"];
-export type ActiveRangeDto = z.infer<typeof activeRangeSchema>;
-export type ReviewSessionDto = z.infer<typeof reviewSessionSchema>;
-export type ReviewSessionCreatedDto = z.infer<
-  typeof reviewSessionCreatedEnvelopeSchema
->["data"];
-export type ReviewAttemptDto = z.infer<
-  typeof reviewAttemptEnvelopeSchema
->["data"];
-export type ReviewItemDto = z.infer<typeof reviewItemSchema>;
-export type ReviewActionOutcomeDto = z.infer<
-  typeof reviewActionEnvelopeSchema
->["data"];
+export const reviewReadEnvelopeSchema = successEnvelopeSchema(
+  z.discriminatedUnion("state", [
+    z.strictObject({ state: z.literal("draft"), attempt: draftAttemptSchema }),
+    z.strictObject({
+      state: z.literal("submitted"),
+      receipt: receiptSchema,
+      session: reviewSessionSchema,
+    }),
+    z.strictObject({
+      state: z.literal("restarted"),
+      session: reviewSessionSchema,
+    }),
+  ]),
+);
+export const reviewRestartEnvelopeSchema = successEnvelopeSchema(
+  z.strictObject({ attempt: draftAttemptSchema, session: reviewSessionSchema }),
+);
+export type SessionDto = z.infer<typeof reviewSessionSchema>;
+export type DraftAttemptDto = z.infer<typeof draftAttemptSchema>;
+export type ReceiptDto = z.infer<typeof receiptSchema>;
+export type SubmitDto = z.infer<typeof reviewSubmitEnvelopeSchema>["data"];

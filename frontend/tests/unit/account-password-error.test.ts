@@ -33,6 +33,7 @@ const pageFailure: AppFailure = {
 
 function harness(api: object) {
   const state = ref<unknown>();
+  vi.stubGlobal("useFeedbackStore", () => ({ show: vi.fn() }));
   vi.stubGlobal("useNuxtApp", () => ({ $api: api }));
   vi.stubGlobal("useSessionStore", () => ({
     epoch: ref(1),

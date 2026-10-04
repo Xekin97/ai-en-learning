@@ -67,7 +67,7 @@ export default defineNuxtConfig({
     head: {
       meta: [
         { name: "viewport", content: "width=device-width, initial-scale=1" },
-        { name: "theme-color", content: "#f4efe5" },
+        { name: "theme-color", content: "#f8f6ef" },
       ],
     },
   },

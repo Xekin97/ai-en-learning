@@ -1,3 +1,4 @@
+import { userEnvelope } from "../fixtures/m002";
 import { describe, expect, it, vi } from "vitest";
 import {
   createAdminDetailActions,
@@ -11,9 +12,11 @@ import type {
   BatchDetailModel,
 } from "@application/shared/models";
 import { presentAdminUserDetail } from "@presentation/admin/admin-user-detail-presenter";
-import raw from "../contracts/v1.4/user-limited.json";
+import legacy from "../contracts/v1.4/user-limited.json";
 import en from "../../i18n/locales/en-US.json";
 import zh from "../../i18n/locales/zh-CN.json";
+
+const raw = userEnvelope(legacy);
 
 function user(id = "A"): AdminUserDetailModel {
   return {

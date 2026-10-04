@@ -12,7 +12,11 @@ await navigateTo(
   userId && batchId
     ? {
         path: `/admin/users/${encodeURIComponent(userId)}`,
-        query: { batch: batchId, ...(q ? { q } : {}) },
+        query: {
+          batch: batchId,
+          ...(q ? { q } : {}),
+          ...(route.query.all === "1" ? { all: "1" } : {}),
+        },
       }
     : "/admin/users",
   { replace: true },

@@ -135,13 +135,19 @@ export function createReviewSetupActions(input: {
   state: () => ReviewSetupState;
   api: Pick<
     ApiPort,
-    "previewReviewRange" | "getActiveRange" | "createReviewSession"
+    | "previewReviewRange"
+    | "getActiveRange"
+    | "createReviewSession"
+    | "getReviewSession"
+    | "replaceReviewSession"
   >;
   epoch: () => number;
   isLearner: () => boolean;
   refreshSecurity: () => Promise<void>;
   authenticationRequired: () => void;
 }) {
+  let replacement: { id: string; revision: string; range: RangeQuery } | null =
+    null;
   let visitNumber = 0,
     previewRevision = 0,
     resumeRevision = 0,
@@ -348,6 +354,64 @@ export function createReviewSetupActions(input: {
         input.state().create = { status: "idle", failure: null };
     }
   }
+  async function prepareReplacement(owner: RangeVisit): Promise<boolean> {
+    const range = queryOf(input.state().draft),
+      id = input.state().resume.session?.sessionId;
+    if (
+      !current(owner) ||
+      !range ||
+      !id ||
+      !canStartRange(input.state(), input.isLearner())
+    )
+      return false;
+    try {
+      const session = await input.api.getReviewSession(id);
+      if (!current(owner) || session.status !== "active" || !session.revision)
+        return false;
+      replacement = { id, revision: session.revision, range };
+      return true;
+    } catch (error) {
+      if (!current(owner)) return false;
+      input.state().create = {
+        status: "failed",
+        failure: normalizeFailure(error),
+      };
+      return false;
+    }
+  }
+  async function replace(owner: RangeVisit): Promise<string | null> {
+    const snapshot = replacement;
+    replacement = null;
+    if (!snapshot || !current(owner)) return null;
+    input.state().create = { status: "submitting", failure: null };
+    try {
+      await input.refreshSecurity();
+      if (!current(owner)) return null;
+      const session = await input.api.replaceReviewSession(
+        snapshot.id,
+        snapshot.revision,
+        snapshot.range,
+      );
+      if (!current(owner)) return null;
+      return session.sessionId;
+    } catch (error) {
+      if (current(owner)) {
+        input.state().create = {
+          status: "failed",
+          failure: normalizeFailure(error),
+        };
+        await loadResume(owner);
+        await preview(owner);
+      }
+      return null;
+    } finally {
+      if (current(owner) && input.state().create.status === "submitting")
+        input.state().create = { status: "idle", failure: null };
+    }
+  }
+  function cancelReplacement() {
+    replacement = null;
+  }
   function resumeTarget(owner: RangeVisit): string | null {
     if (!current(owner) || input.state().resume.status !== "ready") return null;
     return input.state().resume.session?.sessionId ?? null;
@@ -362,5 +426,8 @@ export function createReviewSetupActions(input: {
     loadResume,
     start,
     resumeTarget,
+    prepareReplacement,
+    replace,
+    cancelReplacement,
   };
 }

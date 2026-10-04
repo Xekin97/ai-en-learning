@@ -8,161 +8,100 @@ const emit = defineEmits<{
   retryResume: [];
   start: [];
   resume: [];
+  recent: [];
 }>();
-const startInput = ref<HTMLInputElement | null>(null);
+const startInput = ref<HTMLInputElement>(),
+  { copy } = useDesignCopy();
 defineExpose({ focusStart: () => startInput.value?.focus() });
-function change(event: Event, field: "start" | "end") {
-  if (!(event.target instanceof HTMLInputElement)) return;
-  if (field === "start") emit("changeStart", event.target.value);
-  else emit("changeEnd", event.target.value);
-}
-function retry(event: MouseEvent) {
-  if (event.currentTarget instanceof HTMLElement)
-    emit("retry", event.currentTarget);
-}
 </script>
-
 <template>
-  <header class="page-heading">
+  <div class="page-head">
     <div>
-      <p class="eyebrow">{{ view.eyebrow }}</p>
-      <h1 class="page-title">{{ view.title }}</h1>
-      <p class="page-description">{{ view.description }}</p>
+      <h1>{{ copy("l.range") }}</h1>
+      <p>{{ copy("l.range.desc") }}</p>
     </div>
-  </header>
-  <section v-if="view.resume" class="notice notice-info range-resume">
-    <AppIcon name="clock" />
+    <NuxtLink class="btn" to="/library">{{ copy("l.backLibrary") }}</NuxtLink>
+  </div>
+  <section v-if="view.resume" class="notice range-resume">
     <div>
-      <strong class="notice-title">{{ view.resume.title }}</strong>
+      <strong>{{ copy("l.unfinished") }}</strong>
       <p>{{ view.resume.copy }}</p>
-      <div class="inline-actions">
-        <button
-          class="button button-secondary button-small"
-          type="button"
-          @click="emit('resume')"
-        >
-          {{ view.resume.action }}
-        </button>
-      </div>
     </div>
-  </section>
-  <section v-if="view.resumeFailure" class="review-resume-error">
-    <AppError :failure="view.resumeFailure" />
-    <button
-      class="button button-secondary button-small"
-      type="button"
-      @click="emit('retryResume')"
-    >
-      {{ view.retry }}
+    <button class="btn primary" @click="emit('resume')">
+      {{ copy("l.continueRange") }}
     </button>
   </section>
-  <AppError :failure="view.createFailure" />
-  <section class="review-setup range-editor" :data-range-preview="view.status">
-    <form class="card" novalidate @submit.prevent="emit('start')">
-      <div class="card-header">
-        <div>
-          <h2 class="card-title">{{ view.rangeTitle }}</h2>
-          <p class="card-subtitle">{{ view.rangeCopy }}</p>
-        </div>
+  <AppError :failure="view.resumeFailure || view.createFailure" /><button
+    v-if="view.resumeFailure"
+    class="btn"
+    @click="emit('retryResume')"
+  >
+    {{ copy("retry") }}
+  </button>
+  <div class="range-editor" :data-range-preview="view.status">
+    <form class="panel" novalidate @submit.prevent="emit('start')">
+      <h2>{{ copy("l.dates") }}</h2>
+      <p class="muted">{{ copy("l.dates.desc") }}</p>
+      <div class="date-fields">
+        <label class="field"
+          ><span>{{ copy("l.from") }}</span
+          ><input
+            ref="startInput"
+            type="date"
+            :value="view.startDate"
+            required
+            :aria-invalid="view.startInvalid"
+            aria-describedby="range-error"
+            @input="
+              emit('changeStart', ($event.target as HTMLInputElement).value)
+            " /></label
+        ><label class="field"
+          ><span>{{ copy("l.to") }}</span
+          ><input
+            type="date"
+            :value="view.endDate"
+            required
+            :aria-invalid="view.endInvalid"
+            aria-describedby="range-error"
+            @input="
+              emit('changeEnd', ($event.target as HTMLInputElement).value)
+            "
+        /></label>
       </div>
-      <div class="card-body">
-        <div class="date-range">
-          <div class="field">
-            <label for="review-start" class="field-label">{{ view.from }}</label
-            ><input
-              id="review-start"
-              ref="startInput"
-              class="text-input date-input"
-              type="date"
-              required
-              :value="view.startDate"
-              :aria-invalid="view.startInvalid"
-              :aria-describedby="
-                view.startInvalid ? 'range-date-error' : undefined
-              "
-              @input="change($event, 'start')"
-            />
-          </div>
-          <div class="field">
-            <label for="review-end" class="field-label">{{ view.to }}</label
-            ><input
-              id="review-end"
-              class="text-input date-input"
-              type="date"
-              required
-              :value="view.endDate"
-              :aria-invalid="view.endInvalid"
-              :aria-describedby="
-                view.endInvalid ? 'range-date-error' : undefined
-              "
-              @input="change($event, 'end')"
-            />
-          </div>
-        </div>
-        <p
-          id="range-date-error"
-          class="range-field-error"
-          :hidden="!view.fieldError"
-        >
-          {{ view.fieldError }}
-        </p>
-      </div>
-      <div class="card-footer">
-        <button
-          class="button button-primary"
-          type="submit"
-          :disabled="!view.canStart"
-        >
-          {{ view.start }} <AppIcon name="arrow" />
+      <p id="range-error" class="bad" role="alert">
+        {{ view.fieldError ? copy("l.dateerror") : "" }}
+      </p>
+      <div class="actions">
+        <button class="btn" type="button" @click="emit('recent')">
+          {{ copy("l.recent") }}</button
+        ><button class="btn primary" type="submit" :disabled="!view.canStart">
+          {{ copy("l.begin") }}
         </button>
       </div>
     </form>
-    <aside class="count-card range-count" :aria-busy="view.loading">
-      <span class="count-number" :aria-hidden="!view.countKnown || undefined">{{
-        view.count
-      }}</span
-      ><strong v-if="view.countKnown">{{ view.stories }}</strong>
-      <p class="helper">{{ view.countHint }}</p>
+    <aside class="range-count panel" aria-live="polite">
+      <strong>{{ view.count }}</strong
+      ><span>{{ copy("l.matches") }}</span>
     </aside>
-  </section>
-  <p
-    id="range-announcement"
-    class="sr-only"
-    role="status"
-    aria-live="polite"
-    aria-atomic="true"
-  >
-    {{ view.announcement }}
-  </p>
-  <div class="range-feedback">
-    <section v-if="view.empty" class="empty-state card">
-      <span class="empty-symbol" aria-hidden="true"
-        ><AppIcon name="book"
-      /></span>
-      <h2>{{ view.emptyTitle }}</h2>
-      <p>{{ view.emptyCopy }}</p>
-      <div class="inline-actions">
-        <NuxtLink class="button button-secondary" to="/library">{{
-          view.library
-        }}</NuxtLink
-        ><NuxtLink class="button button-primary" to="/create">{{
-          view.create
-        }}</NuxtLink>
-      </div>
-    </section>
-    <section v-else-if="view.failed" class="notice notice-danger">
-      <AppIcon name="alert" />
-      <div>
-        <strong class="notice-title">{{ view.errorTitle }}</strong>
-        <p>{{ view.errorCopy }}</p>
-        <button
-          class="button button-secondary button-small"
-          type="button"
-          @click="retry"
-        >
-          {{ view.retry }}
-        </button>
-      </div>
-    </section>
+  </div>
+  <div id="range-feedback">
+    <p v-if="view.loading" role="status">{{ copy("loading") }}</p>
+    <template v-else-if="view.failed"
+      ><p class="note error">{{ copy("l.preview.error") }}</p>
+      <button
+        class="btn"
+        @click="emit('retry', $event.currentTarget as HTMLElement)"
+      >
+        {{ copy("retry") }}
+      </button></template
+    >
+    <div v-else-if="view.empty" class="empty">
+      <h2>{{ copy("l.nomatch") }}</h2>
+      <p>{{ copy("l.nomatch.desc") }}</p>
+      <NuxtLink class="btn" to="/library">{{ copy("l.backLibrary") }}</NuxtLink
+      ><NuxtLink class="btn primary" to="/create">{{
+        copy("create")
+      }}</NuxtLink>
+    </div>
   </div>
 </template>

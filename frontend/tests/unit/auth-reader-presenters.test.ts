@@ -57,7 +57,7 @@ describe("semantic authentication targets", () => {
       query: { batch: "batch-1" },
     });
     expect(authenticationDestination(true, intent)).toEqual({
-      path: "/admin/models",
+      path: "/admin",
       query: {},
     });
     expect(authenticationDestination(false, null)).toEqual({
