@@ -1,0 +1,1262 @@
+{
+  "version": "M002-BE-03",
+  "scope": "Synthetic contract examples; no live requests, seeds, SQL or application verification",
+  "description_cases": [
+    {
+      "input": {
+        "zh_CN": null,
+        "en_US": null
+      },
+      "locale": "zh-CN",
+      "stored": {
+        "zh_CN": null,
+        "en_US": null
+      },
+      "projection": null
+    },
+    {
+      "input": {
+        "zh_CN": "说明",
+        "en_US": null
+      },
+      "locale": "en-US",
+      "stored": {
+        "zh_CN": "说明",
+        "en_US": null
+      },
+      "projection": "说明"
+    },
+    {
+      "input": {
+        "zh_CN": null,
+        "en_US": "Description"
+      },
+      "locale": "zh-CN",
+      "stored": {
+        "zh_CN": null,
+        "en_US": "Description"
+      },
+      "projection": "Description"
+    },
+    {
+      "input": {
+        "zh_CN": "说明",
+        "en_US": "Description"
+      },
+      "locale": "en-US",
+      "stored": {
+        "zh_CN": "说明",
+        "en_US": "Description"
+      },
+      "projection": "Description"
+    },
+    {
+      "input": {
+        "zh_CN": " \n\t",
+        "en_US": null
+      },
+      "locale": "en-US",
+      "stored": {
+        "zh_CN": null,
+        "en_US": null
+      },
+      "projection": null
+    },
+    {
+      "input": {
+        "zh_CN": "<b>文字</b>",
+        "en_US": null
+      },
+      "locale": "zh-CN",
+      "stored": {
+        "zh_CN": "<b>文字</b>",
+        "en_US": null
+      },
+      "projection": "<b>文字</b>"
+    }
+  ],
+  "description_invalid_cases": [
+    {
+      "value": null,
+      "reason": "object_required"
+    },
+    {
+      "value": {
+        "zh_CN": null
+      },
+      "reason": "missing_key"
+    },
+    {
+      "value": {
+        "zh_CN": null,
+        "en_US": false
+      },
+      "reason": "wrong_type"
+    }
+  ],
+  "settings": {
+    "request": {
+      "mastery_experience": "5",
+      "base_points": "2",
+      "step_points": "1",
+      "cap_points": "10",
+      "normal_experience": "3",
+      "expected_revision": "cfg_before"
+    },
+    "response": {
+      "data": {
+        "learning_day": "2026-09-20",
+        "mastery_experience": "5",
+        "growth_started_at": "2026-09-19T20:00:00Z",
+        "current": {
+          "effective_day": "2026-09-20",
+          "base_points": "1",
+          "step_points": "0",
+          "cap_points": "1",
+          "normal_experience": "1"
+        },
+        "pending": {
+          "effective_day": "2026-09-21",
+          "base_points": "2",
+          "step_points": "1",
+          "cap_points": "10",
+          "normal_experience": "3"
+        },
+        "revision": "cfg_after"
+      },
+      "meta": {
+        "request_id": "req_fixture"
+      }
+    },
+    "uninitialized": {
+      "data": {
+        "learning_day": "2026-09-20",
+        "mastery_experience": "0",
+        "growth_started_at": null,
+        "current": null,
+        "pending": null,
+        "revision": "cfg_uninitialized"
+      },
+      "meta": {
+        "request_id": "req_fixture"
+      }
+    }
+  },
+  "level_save": {
+    "before": {
+      "items": [
+        {
+          "id": "lv_1",
+          "level_number": 1,
+          "min_experience": "0",
+          "reward_enabled": false,
+          "reward": {
+            "points": "0",
+            "item_definition_id": null,
+            "item_count": 0
+          }
+        },
+        {
+          "id": "lv_2",
+          "level_number": 2,
+          "min_experience": "100",
+          "reward_enabled": true,
+          "reward": {
+            "points": "10",
+            "item_definition_id": null,
+            "item_count": 0
+          }
+        },
+        {
+          "id": "lv_3",
+          "level_number": 3,
+          "min_experience": "200",
+          "reward_enabled": true,
+          "reward": {
+            "points": "10",
+            "item_definition_id": null,
+            "item_count": 0
+          }
+        },
+        {
+          "id": "lv_4",
+          "level_number": 4,
+          "min_experience": "300",
+          "reward_enabled": true,
+          "reward": {
+            "points": "10",
+            "item_definition_id": null,
+            "item_count": 0
+          }
+        }
+      ],
+      "revision": "cfg_before"
+    },
+    "account_experience_fixture": [
+      "50",
+      "150",
+      "250",
+      "350"
+    ],
+    "preview_request": {
+      "expected_revision": "cfg_before",
+      "changes": [
+        {
+          "client_key": "00000000-0000-4000-8000-000000000002",
+          "id": "lv_2",
+          "value": {
+            "level_number": 2,
+            "min_experience": "200",
+            "reward_enabled": true,
+            "reward": {
+              "points": "10",
+              "item_definition_id": null,
+              "item_count": 0
+            }
+          }
+        },
+        {
+          "client_key": "00000000-0000-4000-8000-000000000003",
+          "id": "lv_3",
+          "value": {
+            "level_number": 3,
+            "min_experience": "300",
+            "reward_enabled": true,
+            "reward": {
+              "points": "10",
+              "item_definition_id": null,
+              "item_count": 0
+            }
+          }
+        },
+        {
+          "client_key": "00000000-0000-4000-8000-000000000004",
+          "id": "lv_4",
+          "value": {
+            "level_number": 4,
+            "min_experience": "400",
+            "reward_enabled": true,
+            "reward": {
+              "points": "10",
+              "item_definition_id": null,
+              "item_count": 0
+            }
+          }
+        },
+        {
+          "client_key": "00000000-0000-4000-8000-000000000005",
+          "id": null,
+          "value": {
+            "level_number": 5,
+            "min_experience": "500",
+            "reward_enabled": true,
+            "reward": {
+              "points": "10",
+              "item_definition_id": null,
+              "item_count": 0
+            }
+          }
+        },
+        {
+          "client_key": "00000000-0000-4000-8000-000000000006",
+          "id": null,
+          "value": {
+            "level_number": 6,
+            "min_experience": "600",
+            "reward_enabled": true,
+            "reward": {
+              "points": "10",
+              "item_definition_id": null,
+              "item_count": 0
+            }
+          }
+        }
+      ]
+    },
+    "preview_response": {
+      "data": {
+        "may_downgrade": true,
+        "affected_users": 3,
+        "rewards_use_latest_config": true,
+        "confirmation_token": "token_fixture",
+        "expires_at": "2026-09-20T06:05:00Z",
+        "revision": "cfg_before"
+      },
+      "meta": {
+        "request_id": "req_fixture"
+      }
+    },
+    "request": {
+      "expected_revision": "cfg_before",
+      "changes": [
+        {
+          "client_key": "00000000-0000-4000-8000-000000000002",
+          "id": "lv_2",
+          "value": {
+            "level_number": 2,
+            "min_experience": "200",
+            "reward_enabled": true,
+            "reward": {
+              "points": "10",
+              "item_definition_id": null,
+              "item_count": 0
+            }
+          }
+        },
+        {
+          "client_key": "00000000-0000-4000-8000-000000000003",
+          "id": "lv_3",
+          "value": {
+            "level_number": 3,
+            "min_experience": "300",
+            "reward_enabled": true,
+            "reward": {
+              "points": "10",
+              "item_definition_id": null,
+              "item_count": 0
+            }
+          }
+        },
+        {
+          "client_key": "00000000-0000-4000-8000-000000000004",
+          "id": "lv_4",
+          "value": {
+            "level_number": 4,
+            "min_experience": "400",
+            "reward_enabled": true,
+            "reward": {
+              "points": "10",
+              "item_definition_id": null,
+              "item_count": 0
+            }
+          }
+        },
+        {
+          "client_key": "00000000-0000-4000-8000-000000000005",
+          "id": null,
+          "value": {
+            "level_number": 5,
+            "min_experience": "500",
+            "reward_enabled": true,
+            "reward": {
+              "points": "10",
+              "item_definition_id": null,
+              "item_count": 0
+            }
+          }
+        },
+        {
+          "client_key": "00000000-0000-4000-8000-000000000006",
+          "id": null,
+          "value": {
+            "level_number": 6,
+            "min_experience": "600",
+            "reward_enabled": true,
+            "reward": {
+              "points": "10",
+              "item_definition_id": null,
+              "item_count": 0
+            }
+          }
+        }
+      ],
+      "confirmation_token": "token_fixture",
+      "confirmed": true
+    },
+    "response": {
+      "data": {
+        "configuration": {
+          "items": [
+            {
+              "id": "lv_1",
+              "level_number": 1,
+              "min_experience": "0",
+              "reward_enabled": false,
+              "reward": {
+                "points": "0",
+                "item_definition_id": null,
+                "item_count": 0
+              }
+            },
+            {
+              "id": "lv_2",
+              "level_number": 2,
+              "min_experience": "200",
+              "reward_enabled": true,
+              "reward": {
+                "points": "10",
+                "item_definition_id": null,
+                "item_count": 0
+              }
+            },
+            {
+              "id": "lv_3",
+              "level_number": 3,
+              "min_experience": "300",
+              "reward_enabled": true,
+              "reward": {
+                "points": "10",
+                "item_definition_id": null,
+                "item_count": 0
+              }
+            },
+            {
+              "id": "lv_4",
+              "level_number": 4,
+              "min_experience": "400",
+              "reward_enabled": true,
+              "reward": {
+                "points": "10",
+                "item_definition_id": null,
+                "item_count": 0
+              }
+            },
+            {
+              "id": "lv_5",
+              "level_number": 5,
+              "min_experience": "500",
+              "reward_enabled": true,
+              "reward": {
+                "points": "10",
+                "item_definition_id": null,
+                "item_count": 0
+              }
+            },
+            {
+              "id": "lv_6",
+              "level_number": 6,
+              "min_experience": "600",
+              "reward_enabled": true,
+              "reward": {
+                "points": "10",
+                "item_definition_id": null,
+                "item_count": 0
+              }
+            }
+          ],
+          "revision": "cfg_after"
+        },
+        "saved_rows": [
+          {
+            "client_key": "00000000-0000-4000-8000-000000000002",
+            "id": "lv_2"
+          },
+          {
+            "client_key": "00000000-0000-4000-8000-000000000003",
+            "id": "lv_3"
+          },
+          {
+            "client_key": "00000000-0000-4000-8000-000000000004",
+            "id": "lv_4"
+          },
+          {
+            "client_key": "00000000-0000-4000-8000-000000000005",
+            "id": "lv_5"
+          },
+          {
+            "client_key": "00000000-0000-4000-8000-000000000006",
+            "id": "lv_6"
+          }
+        ]
+      },
+      "meta": {
+        "request_id": "req_fixture"
+      }
+    }
+  },
+  "achievement_save": {
+    "before": {
+      "kind": "mastered_words",
+      "items": [
+        {
+          "id": "ac_1",
+          "kind": "mastered_words",
+          "threshold": 10,
+          "enabled": true,
+          "name": {
+            "zh_CN": "掌握 10 词",
+            "en_US": null
+          },
+          "title": {
+            "zh_CN": "积少成多",
+            "en_US": null
+          },
+          "description": {
+            "zh_CN": "继续积累词汇。",
+            "en_US": null
+          },
+          "reward": {
+            "points": "10",
+            "item_definition_id": null,
+            "item_count": 0,
+            "experience": "5"
+          }
+        },
+        {
+          "id": "ac_2",
+          "kind": "mastered_words",
+          "threshold": 20,
+          "enabled": true,
+          "name": {
+            "zh_CN": "掌握 20 词",
+            "en_US": null
+          },
+          "title": {
+            "zh_CN": "积少成多",
+            "en_US": null
+          },
+          "description": {
+            "zh_CN": "继续积累词汇。",
+            "en_US": null
+          },
+          "reward": {
+            "points": "10",
+            "item_definition_id": null,
+            "item_count": 0,
+            "experience": "5"
+          }
+        },
+        {
+          "id": "ac_3",
+          "kind": "mastered_words",
+          "threshold": 30,
+          "enabled": true,
+          "name": {
+            "zh_CN": "掌握 30 词",
+            "en_US": null
+          },
+          "title": {
+            "zh_CN": "积少成多",
+            "en_US": null
+          },
+          "description": {
+            "zh_CN": "继续积累词汇。",
+            "en_US": null
+          },
+          "reward": {
+            "points": "10",
+            "item_definition_id": null,
+            "item_count": 0,
+            "experience": "5"
+          }
+        },
+        {
+          "id": "ac_4",
+          "kind": "mastered_words",
+          "threshold": 40,
+          "enabled": true,
+          "name": {
+            "zh_CN": "掌握 40 词",
+            "en_US": null
+          },
+          "title": {
+            "zh_CN": "积少成多",
+            "en_US": null
+          },
+          "description": {
+            "zh_CN": "继续积累词汇。",
+            "en_US": null
+          },
+          "reward": {
+            "points": "10",
+            "item_definition_id": null,
+            "item_count": 0,
+            "experience": "5"
+          }
+        }
+      ],
+      "revision": "cfg_before"
+    },
+    "request": {
+      "kind": "mastered_words",
+      "expected_revision": "cfg_before",
+      "changes": [
+        {
+          "client_key": "00000000-0000-4000-8000-000000000102",
+          "id": "ac_2",
+          "value": {
+            "threshold": 25,
+            "enabled": true,
+            "name": {
+              "zh_CN": "掌握 25 词",
+              "en_US": null
+            },
+            "title": {
+              "zh_CN": "积少成多",
+              "en_US": null
+            },
+            "description": {
+              "zh_CN": null,
+              "en_US": "Master more words."
+            },
+            "reward": {
+              "points": "10",
+              "item_definition_id": null,
+              "item_count": 0,
+              "experience": "5"
+            }
+          }
+        },
+        {
+          "client_key": "00000000-0000-4000-8000-000000000105",
+          "id": null,
+          "value": {
+            "threshold": 50,
+            "enabled": true,
+            "name": {
+              "zh_CN": "掌握 50 词",
+              "en_US": null
+            },
+            "title": {
+              "zh_CN": "积少成多",
+              "en_US": null
+            },
+            "description": {
+              "zh_CN": "继续积累词汇。",
+              "en_US": null
+            },
+            "reward": {
+              "points": "10",
+              "item_definition_id": null,
+              "item_count": 0,
+              "experience": "5"
+            }
+          }
+        },
+        {
+          "client_key": "00000000-0000-4000-8000-000000000106",
+          "id": null,
+          "value": {
+            "threshold": 60,
+            "enabled": true,
+            "name": {
+              "zh_CN": "掌握 60 词",
+              "en_US": null
+            },
+            "title": {
+              "zh_CN": "积少成多",
+              "en_US": null
+            },
+            "description": {
+              "zh_CN": "继续积累词汇。",
+              "en_US": null
+            },
+            "reward": {
+              "points": "10",
+              "item_definition_id": null,
+              "item_count": 0,
+              "experience": "5"
+            }
+          }
+        }
+      ]
+    },
+    "response": {
+      "data": {
+        "configuration": {
+          "kind": "mastered_words",
+          "items": [
+            {
+              "id": "ac_1",
+              "kind": "mastered_words",
+              "threshold": 10,
+              "enabled": true,
+              "name": {
+                "zh_CN": "掌握 10 词",
+                "en_US": null
+              },
+              "title": {
+                "zh_CN": "积少成多",
+                "en_US": null
+              },
+              "description": {
+                "zh_CN": "继续积累词汇。",
+                "en_US": null
+              },
+              "reward": {
+                "points": "10",
+                "item_definition_id": null,
+                "item_count": 0,
+                "experience": "5"
+              }
+            },
+            {
+              "id": "ac_2",
+              "kind": "mastered_words",
+              "threshold": 25,
+              "enabled": true,
+              "name": {
+                "zh_CN": "掌握 25 词",
+                "en_US": null
+              },
+              "title": {
+                "zh_CN": "积少成多",
+                "en_US": null
+              },
+              "description": {
+                "zh_CN": null,
+                "en_US": "Master more words."
+              },
+              "reward": {
+                "points": "10",
+                "item_definition_id": null,
+                "item_count": 0,
+                "experience": "5"
+              }
+            },
+            {
+              "id": "ac_3",
+              "kind": "mastered_words",
+              "threshold": 30,
+              "enabled": true,
+              "name": {
+                "zh_CN": "掌握 30 词",
+                "en_US": null
+              },
+              "title": {
+                "zh_CN": "积少成多",
+                "en_US": null
+              },
+              "description": {
+                "zh_CN": "继续积累词汇。",
+                "en_US": null
+              },
+              "reward": {
+                "points": "10",
+                "item_definition_id": null,
+                "item_count": 0,
+                "experience": "5"
+              }
+            },
+            {
+              "id": "ac_4",
+              "kind": "mastered_words",
+              "threshold": 40,
+              "enabled": true,
+              "name": {
+                "zh_CN": "掌握 40 词",
+                "en_US": null
+              },
+              "title": {
+                "zh_CN": "积少成多",
+                "en_US": null
+              },
+              "description": {
+                "zh_CN": "继续积累词汇。",
+                "en_US": null
+              },
+              "reward": {
+                "points": "10",
+                "item_definition_id": null,
+                "item_count": 0,
+                "experience": "5"
+              }
+            },
+            {
+              "id": "ac_5",
+              "kind": "mastered_words",
+              "threshold": 50,
+              "enabled": true,
+              "name": {
+                "zh_CN": "掌握 50 词",
+                "en_US": null
+              },
+              "title": {
+                "zh_CN": "积少成多",
+                "en_US": null
+              },
+              "description": {
+                "zh_CN": "继续积累词汇。",
+                "en_US": null
+              },
+              "reward": {
+                "points": "10",
+                "item_definition_id": null,
+                "item_count": 0,
+                "experience": "5"
+              }
+            },
+            {
+              "id": "ac_6",
+              "kind": "mastered_words",
+              "threshold": 60,
+              "enabled": true,
+              "name": {
+                "zh_CN": "掌握 60 词",
+                "en_US": null
+              },
+              "title": {
+                "zh_CN": "积少成多",
+                "en_US": null
+              },
+              "description": {
+                "zh_CN": "继续积累词汇。",
+                "en_US": null
+              },
+              "reward": {
+                "points": "10",
+                "item_definition_id": null,
+                "item_count": 0,
+                "experience": "5"
+              }
+            }
+          ],
+          "revision": "cfg_after"
+        },
+        "saved_rows": [
+          {
+            "client_key": "00000000-0000-4000-8000-000000000102",
+            "id": "ac_2"
+          },
+          {
+            "client_key": "00000000-0000-4000-8000-000000000105",
+            "id": "ac_5"
+          },
+          {
+            "client_key": "00000000-0000-4000-8000-000000000106",
+            "id": "ac_6"
+          }
+        ]
+      },
+      "meta": {
+        "request_id": "req_fixture"
+      }
+    }
+  },
+  "row_error": {
+    "request": {
+      "kind": "mastered_words",
+      "expected_revision": "cfg_before",
+      "changes": [
+        {
+          "client_key": "00000000-0000-4000-8000-000000000102",
+          "id": "ac_2",
+          "value": {
+            "threshold": 25,
+            "enabled": true,
+            "name": {
+              "zh_CN": "掌握 25 词",
+              "en_US": null
+            },
+            "title": {
+              "zh_CN": "积少成多",
+              "en_US": null
+            },
+            "description": {
+              "zh_CN": null,
+              "en_US": "Master more words."
+            },
+            "reward": {
+              "points": "10",
+              "item_definition_id": null,
+              "item_count": 0,
+              "experience": "5"
+            }
+          }
+        },
+        {
+          "client_key": "00000000-0000-4000-8000-000000000105",
+          "id": null,
+          "value": {
+            "threshold": 30,
+            "enabled": true,
+            "name": {
+              "zh_CN": "掌握 50 词",
+              "en_US": null
+            },
+            "title": {
+              "zh_CN": "积少成多",
+              "en_US": null
+            },
+            "description": {
+              "zh_CN": "继续积累词汇。",
+              "en_US": null
+            },
+            "reward": {
+              "points": "10",
+              "item_definition_id": null,
+              "item_count": 0,
+              "experience": "5"
+            }
+          }
+        }
+      ]
+    },
+    "http_status": 422,
+    "response": {
+      "type": "https://wordweave.example/problems/validation-failed",
+      "title": "Request could not be accepted",
+      "status": 422,
+      "code": "validation_failed",
+      "detail": "The request could not be completed.",
+      "request_id": "req_fixture",
+      "field_errors": [
+        {
+          "field": "/changes/1/value/threshold",
+          "code": "duplicate_threshold"
+        }
+      ]
+    },
+    "state_after": {
+      "kind": "mastered_words",
+      "items": [
+        {
+          "id": "ac_1",
+          "kind": "mastered_words",
+          "threshold": 10,
+          "enabled": true,
+          "name": {
+            "zh_CN": "掌握 10 词",
+            "en_US": null
+          },
+          "title": {
+            "zh_CN": "积少成多",
+            "en_US": null
+          },
+          "description": {
+            "zh_CN": "继续积累词汇。",
+            "en_US": null
+          },
+          "reward": {
+            "points": "10",
+            "item_definition_id": null,
+            "item_count": 0,
+            "experience": "5"
+          }
+        },
+        {
+          "id": "ac_2",
+          "kind": "mastered_words",
+          "threshold": 20,
+          "enabled": true,
+          "name": {
+            "zh_CN": "掌握 20 词",
+            "en_US": null
+          },
+          "title": {
+            "zh_CN": "积少成多",
+            "en_US": null
+          },
+          "description": {
+            "zh_CN": "继续积累词汇。",
+            "en_US": null
+          },
+          "reward": {
+            "points": "10",
+            "item_definition_id": null,
+            "item_count": 0,
+            "experience": "5"
+          }
+        },
+        {
+          "id": "ac_3",
+          "kind": "mastered_words",
+          "threshold": 30,
+          "enabled": true,
+          "name": {
+            "zh_CN": "掌握 30 词",
+            "en_US": null
+          },
+          "title": {
+            "zh_CN": "积少成多",
+            "en_US": null
+          },
+          "description": {
+            "zh_CN": "继续积累词汇。",
+            "en_US": null
+          },
+          "reward": {
+            "points": "10",
+            "item_definition_id": null,
+            "item_count": 0,
+            "experience": "5"
+          }
+        },
+        {
+          "id": "ac_4",
+          "kind": "mastered_words",
+          "threshold": 40,
+          "enabled": true,
+          "name": {
+            "zh_CN": "掌握 40 词",
+            "en_US": null
+          },
+          "title": {
+            "zh_CN": "积少成多",
+            "en_US": null
+          },
+          "description": {
+            "zh_CN": "继续积累词汇。",
+            "en_US": null
+          },
+          "reward": {
+            "points": "10",
+            "item_definition_id": null,
+            "item_count": 0,
+            "experience": "5"
+          }
+        }
+      ],
+      "revision": "cfg_before"
+    }
+  },
+  "unknown_commit": {
+    "request_expected_revision": "cfg_before",
+    "retry_http_status": 409,
+    "retry_response": {
+      "type": "https://wordweave.example/problems/revision-conflict",
+      "title": "Request could not be accepted",
+      "status": 409,
+      "code": "revision_conflict",
+      "detail": "The request could not be completed.",
+      "request_id": "req_fixture",
+      "field_errors": [],
+      "context": {
+        "current_revision": "cfg_after"
+      }
+    },
+    "read_after": {
+      "data": {
+        "items": [
+          {
+            "id": "lv_1",
+            "level_number": 1,
+            "min_experience": "0",
+            "reward_enabled": false,
+            "reward": {
+              "points": "0",
+              "item_definition_id": null,
+              "item_count": 0
+            }
+          },
+          {
+            "id": "lv_2",
+            "level_number": 2,
+            "min_experience": "200",
+            "reward_enabled": true,
+            "reward": {
+              "points": "10",
+              "item_definition_id": null,
+              "item_count": 0
+            }
+          },
+          {
+            "id": "lv_3",
+            "level_number": 3,
+            "min_experience": "300",
+            "reward_enabled": true,
+            "reward": {
+              "points": "10",
+              "item_definition_id": null,
+              "item_count": 0
+            }
+          },
+          {
+            "id": "lv_4",
+            "level_number": 4,
+            "min_experience": "400",
+            "reward_enabled": true,
+            "reward": {
+              "points": "10",
+              "item_definition_id": null,
+              "item_count": 0
+            }
+          },
+          {
+            "id": "lv_5",
+            "level_number": 5,
+            "min_experience": "500",
+            "reward_enabled": true,
+            "reward": {
+              "points": "10",
+              "item_definition_id": null,
+              "item_count": 0
+            }
+          },
+          {
+            "id": "lv_6",
+            "level_number": 6,
+            "min_experience": "600",
+            "reward_enabled": true,
+            "reward": {
+              "points": "10",
+              "item_definition_id": null,
+              "item_count": 0
+            }
+          }
+        ],
+        "revision": "cfg_after"
+      },
+      "meta": {
+        "request_id": "req_fixture"
+      }
+    },
+    "rule": "Read current configuration; not a replay receipt; no automatic resubmission with a newer revision."
+  },
+  "admin_options_cases": [
+    {
+      "case": "ready",
+      "credential_configured_fixture": true,
+      "response": {
+        "data": {
+          "models": [
+            {
+              "id": "mdl_fixture",
+              "name": "Demo model",
+              "description": null
+            }
+          ],
+          "meaning_languages": [
+            "zh",
+            "en",
+            "ja"
+          ],
+          "scenarios": [
+            "discussion",
+            "story",
+            "business",
+            "news"
+          ],
+          "lengths": [
+            "short",
+            "medium",
+            "long",
+            "xlong"
+          ],
+          "vocabulary_version": "words_fixture",
+          "revision": "cfg_fixture",
+          "availability": {
+            "can_preview": true,
+            "reason": null
+          }
+        },
+        "meta": {
+          "request_id": "req_fixture"
+        }
+      }
+    },
+    {
+      "case": "credential_missing",
+      "credential_configured_fixture": false,
+      "response": {
+        "data": {
+          "models": [
+            {
+              "id": "mdl_fixture",
+              "name": "Demo model",
+              "description": null
+            }
+          ],
+          "meaning_languages": [
+            "zh",
+            "en",
+            "ja"
+          ],
+          "scenarios": [
+            "discussion",
+            "story",
+            "business",
+            "news"
+          ],
+          "lengths": [
+            "short",
+            "medium",
+            "long",
+            "xlong"
+          ],
+          "vocabulary_version": "words_fixture",
+          "revision": "cfg_fixture",
+          "availability": {
+            "can_preview": false,
+            "reason": "credential_missing"
+          }
+        },
+        "meta": {
+          "request_id": "req_fixture"
+        }
+      }
+    },
+    {
+      "case": "no_models",
+      "credential_configured_fixture": true,
+      "response": {
+        "data": {
+          "models": [],
+          "meaning_languages": [
+            "zh",
+            "en",
+            "ja"
+          ],
+          "scenarios": [
+            "discussion",
+            "story",
+            "business",
+            "news"
+          ],
+          "lengths": [
+            "short",
+            "medium",
+            "long",
+            "xlong"
+          ],
+          "vocabulary_version": "words_fixture",
+          "revision": "cfg_fixture",
+          "availability": {
+            "can_preview": false,
+            "reason": "no_models"
+          }
+        },
+        "meta": {
+          "request_id": "req_fixture"
+        }
+      }
+    },
+    {
+      "case": "both_missing",
+      "credential_configured_fixture": false,
+      "response": {
+        "data": {
+          "models": [],
+          "meaning_languages": [
+            "zh",
+            "en",
+            "ja"
+          ],
+          "scenarios": [
+            "discussion",
+            "story",
+            "business",
+            "news"
+          ],
+          "lengths": [
+            "short",
+            "medium",
+            "long",
+            "xlong"
+          ],
+          "vocabulary_version": "words_fixture",
+          "revision": "cfg_fixture",
+          "availability": {
+            "can_preview": false,
+            "reason": "credential_missing"
+          }
+        },
+        "meta": {
+          "request_id": "req_fixture"
+        }
+      }
+    }
+  ],
+  "admin_options_failure": {
+    "http_status": 503,
+    "response": {
+      "type": "https://wordweave.example/problems/temporarily-unavailable",
+      "title": "Request could not be accepted",
+      "status": 503,
+      "code": "temporarily_unavailable",
+      "detail": "The request could not be completed.",
+      "request_id": "req_fixture",
+      "field_errors": []
+    }
+  }
+}

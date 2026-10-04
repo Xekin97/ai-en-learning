@@ -1,0 +1,518 @@
+{
+  "version": "M002-BE-02",
+  "checker_sha256": "07f5ff92b60f8b24625d0d213994047c3e56c2a936295dea79fbfadb21a3f3ae",
+  "checked_at": "2026-09-20T04:14:16.181119+00:00",
+  "result": "PASS_STATIC_AWAITING_REVIEW",
+  "checks": [
+    {
+      "name": "protected_upstream_controls_and_application",
+      "pass": true,
+      "detail": {
+        "files": 5066,
+        "changed": []
+      }
+    },
+    {
+      "name": "one_trace_row_per_capability",
+      "pass": true,
+      "detail": {
+        "expected": 49,
+        "actual": 49,
+        "missing": [],
+        "extra": []
+      }
+    },
+    {
+      "name": "data_indices_inherited",
+      "pass": true,
+      "detail": {
+        "expected": 32,
+        "missing": [],
+        "replaced": [
+          "DATA-015"
+        ]
+      }
+    },
+    {
+      "name": "current_pages_referenced",
+      "pass": true,
+      "detail": {
+        "expected": 25,
+        "missing": []
+      }
+    },
+    {
+      "name": "existing_router_inventory",
+      "pass": true,
+      "detail": {
+        "count": 45,
+        "routes": [
+          {
+            "method": "GET",
+            "source_path": "/health/live",
+            "disposition": "retained_or_expanded",
+            "documented_path": true
+          },
+          {
+            "method": "GET",
+            "source_path": "/health/ready",
+            "disposition": "retained_or_expanded",
+            "documented_path": true
+          },
+          {
+            "method": "GET",
+            "source_path": "/bootstrap",
+            "disposition": "retained_or_expanded",
+            "documented_path": true
+          },
+          {
+            "method": "GET",
+            "source_path": "/vocabulary/search",
+            "disposition": "retained_or_expanded",
+            "documented_path": true
+          },
+          {
+            "method": "GET",
+            "source_path": "/generation-options",
+            "disposition": "retained_or_expanded",
+            "documented_path": true
+          },
+          {
+            "method": "POST",
+            "source_path": "/auth/register",
+            "disposition": "retained_or_expanded",
+            "documented_path": true
+          },
+          {
+            "method": "POST",
+            "source_path": "/auth/login",
+            "disposition": "retained_or_expanded",
+            "documented_path": true
+          },
+          {
+            "method": "POST",
+            "source_path": "/auth/logout",
+            "disposition": "retained_or_expanded",
+            "documented_path": true
+          },
+          {
+            "method": "POST",
+            "source_path": "/generations/stream",
+            "disposition": "retained_or_expanded",
+            "documented_path": true
+          },
+          {
+            "method": "POST",
+            "source_path": "/generations/{run_id}/cancel",
+            "disposition": "retained_or_expanded",
+            "documented_path": true
+          },
+          {
+            "method": "POST",
+            "source_path": "/generations/{run_id}/save",
+            "disposition": "retained_or_expanded",
+            "documented_path": true
+          },
+          {
+            "method": "POST",
+            "source_path": "/generations/{run_id}/discard",
+            "disposition": "retained_or_expanded",
+            "documented_path": true
+          },
+          {
+            "method": "POST",
+            "source_path": "/generations/{run_id}/visitor-claim",
+            "disposition": "retained_or_expanded",
+            "documented_path": true
+          },
+          {
+            "method": "POST",
+            "source_path": "/visitor-claims/consume",
+            "disposition": "retained_or_expanded",
+            "documented_path": true
+          },
+          {
+            "method": "PATCH",
+            "source_path": "/me/batches/{batch_id}",
+            "disposition": "retained_or_expanded",
+            "documented_path": true
+          },
+          {
+            "method": "DELETE",
+            "source_path": "/me/batches/{batch_id}",
+            "disposition": "retained_or_expanded",
+            "documented_path": true
+          },
+          {
+            "method": "POST",
+            "source_path": "/me/review-sessions",
+            "disposition": "retained_or_expanded",
+            "documented_path": true
+          },
+          {
+            "method": "POST",
+            "source_path": "/me/review-sessions/{session_id}/attempts",
+            "disposition": "retained_or_expanded",
+            "documented_path": true
+          },
+          {
+            "method": "POST",
+            "source_path": "/me/review-attempts/{attempt_id}/actions",
+            "disposition": "replaced_by_whole_attempt_submit",
+            "documented_path": true
+          },
+          {
+            "method": "PUT",
+            "source_path": "/me/ui-locale",
+            "disposition": "retained_or_expanded",
+            "documented_path": true
+          },
+          {
+            "method": "PUT",
+            "source_path": "/me/password",
+            "disposition": "retained_or_expanded",
+            "documented_path": true
+          },
+          {
+            "method": "DELETE",
+            "source_path": "/me/account",
+            "disposition": "retained_or_expanded",
+            "documented_path": true
+          },
+          {
+            "method": "GET",
+            "source_path": "/me/account",
+            "disposition": "retained_or_expanded",
+            "documented_path": true
+          },
+          {
+            "method": "GET",
+            "source_path": "/me/learning-summary",
+            "disposition": "retained_or_expanded",
+            "documented_path": true
+          },
+          {
+            "method": "GET",
+            "source_path": "/me/batches",
+            "disposition": "retained_or_expanded",
+            "documented_path": true
+          },
+          {
+            "method": "GET",
+            "source_path": "/me/batches/{batch_id}",
+            "disposition": "retained_or_expanded",
+            "documented_path": true
+          },
+          {
+            "method": "GET",
+            "source_path": "/me/review-range/preview",
+            "disposition": "retained_or_expanded",
+            "documented_path": true
+          },
+          {
+            "method": "GET",
+            "source_path": "/me/review-sessions/active-range",
+            "disposition": "retained_or_expanded",
+            "documented_path": true
+          },
+          {
+            "method": "GET",
+            "source_path": "/me/review-sessions/{session_id}",
+            "disposition": "retained_or_expanded",
+            "documented_path": true
+          },
+          {
+            "method": "GET",
+            "source_path": "/openrouter-credential",
+            "disposition": "retained_or_expanded",
+            "documented_path": true
+          },
+          {
+            "method": "GET",
+            "source_path": "/models",
+            "disposition": "retained_or_expanded",
+            "documented_path": true
+          },
+          {
+            "method": "GET",
+            "source_path": "/groups",
+            "disposition": "retained_or_expanded",
+            "documented_path": true
+          },
+          {
+            "method": "GET",
+            "source_path": "/users",
+            "disposition": "retained_or_expanded",
+            "documented_path": true
+          },
+          {
+            "method": "GET",
+            "source_path": "/users/{user_id}",
+            "disposition": "retained_or_expanded",
+            "documented_path": true
+          },
+          {
+            "method": "GET",
+            "source_path": "/users/{user_id}/batches",
+            "disposition": "retained_or_expanded",
+            "documented_path": true
+          },
+          {
+            "method": "GET",
+            "source_path": "/users/{user_id}/batches/{batch_id}",
+            "disposition": "retained_or_expanded",
+            "documented_path": true
+          },
+          {
+            "method": "PUT",
+            "source_path": "/openrouter-credential",
+            "disposition": "retained_or_expanded",
+            "documented_path": true
+          },
+          {
+            "method": "POST",
+            "source_path": "/models",
+            "disposition": "retained_or_expanded",
+            "documented_path": true
+          },
+          {
+            "method": "PATCH",
+            "source_path": "/models/{model_id}",
+            "disposition": "retained_or_expanded",
+            "documented_path": true
+          },
+          {
+            "method": "POST",
+            "source_path": "/models/{model_id}/enable",
+            "disposition": "retained_or_expanded",
+            "documented_path": true
+          },
+          {
+            "method": "POST",
+            "source_path": "/models/{model_id}/disable",
+            "disposition": "retained_or_expanded",
+            "documented_path": true
+          },
+          {
+            "method": "PUT",
+            "source_path": "/groups/{group_code}",
+            "disposition": "retained_or_expanded",
+            "documented_path": true
+          },
+          {
+            "method": "PUT",
+            "source_path": "/users/{user_id}/group",
+            "disposition": "retained_or_expanded",
+            "documented_path": true
+          },
+          {
+            "method": "PUT",
+            "source_path": "/users/{user_id}/password",
+            "disposition": "retained_or_expanded",
+            "documented_path": true
+          },
+          {
+            "method": "GET",
+            "source_path": "/internal/metrics",
+            "disposition": "retained_or_expanded",
+            "documented_path": true
+          }
+        ]
+      }
+    },
+    {
+      "name": "relative_links_and_anchors",
+      "pass": true,
+      "detail": {
+        "checked": 91,
+        "broken": [],
+        "bad_anchors": [],
+        "deferred_freeze_outputs": [
+          ".planning/milestones/M002/technical/evidence/M002-BE-02-freeze-results.json",
+          ".planning/milestones/M002/technical/evidence/M002-BE-02-manifest.json",
+          ".planning/milestones/M002/technical/evidence/M002-BE-02.tar.gz"
+        ]
+      }
+    },
+    {
+      "name": "approved_database_and_active_backend",
+      "pass": true,
+      "detail": {
+        "database_approval": "TRANSITION-M002-011",
+        "role_activation": "TRANSITION-M002-011"
+      }
+    },
+    {
+      "name": "pending_backend_review_not_self_approved",
+      "pass": true,
+      "detail": {
+        "data_dependency": "received",
+        "CR003_formal_status": "open",
+        "backend": "awaiting_user_review"
+      }
+    },
+    {
+      "name": "CR003_1_minimal_facts_and_legacy_null",
+      "pass": true,
+      "detail": {
+        "scope": "Static contract coverage; no SQL/HTTP tests",
+        "mapped": "DB2-R07 / BE2-V05"
+      }
+    },
+    {
+      "name": "CR003_2_replacement_transaction_and_write_precedence",
+      "pass": true,
+      "detail": {
+        "mapped": "DB2-R08 / BE2-V05",
+        "old_session_receipt": "read-only GET remains allowed"
+      }
+    },
+    {
+      "name": "CR003_3_notice_pair_atomicity_and_fallback",
+      "pass": true,
+      "detail": {
+        "mapped": "DB2-R09 / BE2-V12",
+        "scope": "Documentation alignment, not sanitizer/runtime validation"
+      }
+    },
+    {
+      "name": "no_stale_DBA_blocker_in_active_contracts",
+      "pass": true,
+      "detail": {
+        "scope": "Removed former data dependency only; BE-02 approval and implementation verification remain pending"
+      }
+    },
+    {
+      "name": "approved_DB_and_frozen_history_unchanged",
+      "pass": true,
+      "detail": {
+        "DB02_archive": "7771a8a773c370524e79414a0882580879933c1dc72c9a33173ab84642b3a9c7",
+        "BE01_archive": "d17a465be2317b7fddb75472ceaf7b5182cb2da92749ec4050cf6f4d5cd06a0f",
+        "mutable_CR": "Only current resolution evolves; DB02 original CR recoverable in archive"
+      }
+    },
+    {
+      "name": "unrelated_architecture_and_inheritance_preserved",
+      "pass": true,
+      "detail": {
+        "changed_outside_scope": [],
+        "unchanged_API_files": 3
+      }
+    },
+    {
+      "name": "stable_validation_ids",
+      "pass": true,
+      "detail": {
+        "retained": 17,
+        "expanded": [
+          "BE2-V05",
+          "BE2-V12"
+        ],
+        "runtime_results": "not_run"
+      }
+    },
+    {
+      "name": "no_openapi_artifact",
+      "pass": true,
+      "detail": {
+        "format": "Markdown only"
+      }
+    },
+    {
+      "name": "standing_boundaries",
+      "pass": true,
+      "detail": {
+        "runtime_tests": "not_run",
+        "database": "not_connected",
+        "real_ai_calls": 0
+      }
+    },
+    {
+      "name": "new_files_scoped_to_reception_evidence",
+      "pass": true,
+      "detail": {
+        "unexpected": []
+      }
+    }
+  ],
+  "source_files": 11,
+  "source_characters": 83193,
+  "source_bytes": 138705,
+  "independent_handoff_test": "not_run",
+  "blocking_alignment": null,
+  "CR003_status": "open_ready_for_review",
+  "runtime_tests": false,
+  "database_connected": false,
+  "source_sha256": {
+    ".planning/milestones/M002/technical/backend.md": "01e3c93d0ae56976eaa10840f0c5f47b3949920a732043a94b0d76c17165f4f7",
+    ".planning/milestones/M002/technical/ai-integration.md": "70875381dd8161455fb32f0334c8c9836798c8f8544014fa7a45e36a2ccc5838",
+    ".planning/milestones/M002/handoffs/backend-architecture.md": "a707c8a5a7612225b187e42ac4fdcb3ef2df73de855f23ff8ab946aa3a3e2f3c",
+    ".planning/milestones/M002/changes/CR-003.md": "bab3e484146bb620095b03a279b406351f6c61312e5cad6f2dc1663e5feeb51b",
+    ".planning/milestones/M002/technical/api/administration.md": "45486fec4d7f37c811336ef1172e1ae517ee6115ad29701a845ecfff3fa7b201",
+    ".planning/milestones/M002/technical/api/analytics.md": "d1c2771f5407b20cfd0eade2d3b7000602790bef0206bf93f47a0ebcdfef5397",
+    ".planning/milestones/M002/technical/api/generation-presets.md": "98640d7f6012f5747591f090874b95b1c34748859ecb9ea5c2248c2ec2f41d55",
+    ".planning/milestones/M002/technical/api/growth-benefits.md": "cfa2ec786e747237cc240c3ea0a840fbdaebef5cb45d6ae15a41d3e92c0e7aa1",
+    ".planning/milestones/M002/technical/api/identity-library.md": "de446976b0a7d1aa820bbad8e881ea3a7136d3c2aeaa8ba09f63be0cf0ceac3a",
+    ".planning/milestones/M002/technical/api/index.md": "4dee4dbf20187ce81c4e9a805e66ea68acf74ee56b07179e636cfa297e18f080",
+    ".planning/milestones/M002/technical/api/review.md": "83f4a3a34c29419bdcfd078cdf3326610c970897f6621e0481d1770b1e220fbe"
+  },
+  "size_comparison": {
+    ".planning/milestones/M002/technical/backend.md": {
+      "before_unicode_characters": 15327,
+      "after_unicode_characters": 16983,
+      "after_utf8_bytes": 31144
+    },
+    ".planning/milestones/M002/technical/ai-integration.md": {
+      "before_unicode_characters": 4846,
+      "after_unicode_characters": 4922,
+      "after_utf8_bytes": 9454
+    },
+    ".planning/milestones/M002/handoffs/backend-architecture.md": {
+      "before_unicode_characters": 4056,
+      "after_unicode_characters": 4796,
+      "after_utf8_bytes": 8673
+    },
+    ".planning/milestones/M002/changes/CR-003.md": {
+      "before_unicode_characters": 2535,
+      "after_unicode_characters": 3265,
+      "after_utf8_bytes": 5726
+    },
+    ".planning/milestones/M002/technical/api/administration.md": {
+      "before_unicode_characters": 13365,
+      "after_unicode_characters": 13908,
+      "after_utf8_bytes": 19857
+    },
+    ".planning/milestones/M002/technical/api/analytics.md": {
+      "before_unicode_characters": 4947,
+      "after_unicode_characters": 4947,
+      "after_utf8_bytes": 8170
+    },
+    ".planning/milestones/M002/technical/api/generation-presets.md": {
+      "before_unicode_characters": 7167,
+      "after_unicode_characters": 7167,
+      "after_utf8_bytes": 11455
+    },
+    ".planning/milestones/M002/technical/api/growth-benefits.md": {
+      "before_unicode_characters": 9289,
+      "after_unicode_characters": 9611,
+      "after_utf8_bytes": 14532
+    },
+    ".planning/milestones/M002/technical/api/identity-library.md": {
+      "before_unicode_characters": 5363,
+      "after_unicode_characters": 5363,
+      "after_utf8_bytes": 8530
+    },
+    ".planning/milestones/M002/technical/api/index.md": {
+      "before_unicode_characters": 4526,
+      "after_unicode_characters": 4657,
+      "after_utf8_bytes": 8262
+    },
+    ".planning/milestones/M002/technical/api/review.md": {
+      "before_unicode_characters": 6113,
+      "after_unicode_characters": 7574,
+      "after_utf8_bytes": 12902
+    }
+  },
+  "size_scope": "Same 11 delivery files once each; not cumulative runtime input or billed tokens",
+  "actual_tokens": "unknown"
+}

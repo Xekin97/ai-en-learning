@@ -1,0 +1,2301 @@
+{
+  "version": "M002-FE-04",
+  "status": "ready_for_implementation",
+  "product": "M002-PRODUCT-04 plus D2-89; CR026 draft excluded",
+  "design": "M002-UI-26",
+  "api": "M002-BE-04",
+  "pages": [
+    {
+      "page": "PAGE-002",
+      "title": "注册",
+      "product_source": "../product/pages/index.md#page-002",
+      "design_source": "../design/design-spec.md",
+      "capabilities": [
+        "CAP-002",
+        "CAP-003",
+        "CAP-011",
+        "CAP-021"
+      ],
+      "data": [
+        "DATA-003",
+        "DATA-004",
+        "DATA-012",
+        "DATA-013",
+        "DATA-016",
+        "DATA-017",
+        "DATA-018",
+        "DATA-204",
+        "DATA-205",
+        "DATA-206",
+        "DATA-208"
+      ],
+      "states": "默认、字段错误、用户名占用、提交中、成功；承接仍有效/已丢失。",
+      "ui_acceptance": [
+        "UIA-PAGE-002-01",
+        "UIA-PAGE-002-COPY09",
+        "UIA-PAGE-002-ICON10",
+        "UIA-PAGE-002-NAV11",
+        "UIA-GLOBAL-SELECT23",
+        "UIA-GLOBAL-COPY25"
+      ],
+      "views": [
+        {
+          "prototype_view": "register",
+          "route": "/register",
+          "components": [
+            "AuthForm"
+          ],
+          "application_models": [
+            "AuthIntent"
+          ],
+          "apis": [
+            "API-002",
+            "API-006"
+          ],
+          "plan": "frontend.md#generation",
+          "verification": [
+            "FE2-V07",
+            "FE3-V01",
+            "FE3-V03",
+            "FE3-V08"
+          ],
+          "incremental_plan": "frontend.md#ui26"
+        }
+      ]
+    },
+    {
+      "page": "PAGE-003",
+      "title": "登录",
+      "product_source": "../product/pages/index.md#page-003",
+      "design_source": "../design/design-spec.md",
+      "capabilities": [
+        "CAP-002",
+        "CAP-003",
+        "CAP-011",
+        "CAP-021"
+      ],
+      "data": [
+        "DATA-003",
+        "DATA-004",
+        "DATA-012",
+        "DATA-013",
+        "DATA-016",
+        "DATA-017",
+        "DATA-018",
+        "DATA-204",
+        "DATA-205",
+        "DATA-206",
+        "DATA-208"
+      ],
+      "states": "默认、凭据错误、提交中、成功、待保存结果已丢失。",
+      "ui_acceptance": [
+        "UIA-PAGE-003-01",
+        "UIA-PAGE-003-COPY09",
+        "UIA-PAGE-003-ICON10",
+        "UIA-PAGE-003-NAV11",
+        "UIA-PAGE-003-TOAST19",
+        "UIA-GLOBAL-SELECT23",
+        "UIA-GLOBAL-COPY25"
+      ],
+      "views": [
+        {
+          "prototype_view": "login",
+          "route": "/login",
+          "components": [
+            "AuthForm"
+          ],
+          "application_models": [
+            "Session",
+            "Welcome"
+          ],
+          "apis": [
+            "API-002",
+            "API-006",
+            "API-205"
+          ],
+          "plan": "frontend.md#notices",
+          "verification": [
+            "FE2-V07",
+            "FE2-V12",
+            "FE3-V01",
+            "FE3-V03",
+            "FE3-V08"
+          ],
+          "incremental_plan": "frontend.md#ui26"
+        }
+      ]
+    },
+    {
+      "page": "PAGE-005",
+      "title": "学习记录",
+      "product_source": "../product/pages/index.md#page-005",
+      "design_source": "../design/design-spec.md",
+      "capabilities": [
+        "CAP-012",
+        "CAP-013",
+        "CAP-015",
+        "CAP-016",
+        "CAP-020",
+        "CAP-021",
+        "CAP-022",
+        "CAP-220"
+      ],
+      "data": [
+        "DATA-002",
+        "DATA-009",
+        "DATA-012",
+        "DATA-013",
+        "DATA-014",
+        "DATA-016",
+        "DATA-017",
+        "DATA-018",
+        "DATA-201",
+        "DATA-202",
+        "DATA-203",
+        "DATA-208"
+      ],
+      "states": "首次空状态、正常列表、搜索无结果、参与状态切换、单批次新建/恢复/不可用、删除确认、删除成功/失败。；本人标题编辑、保存/取消、空白/失败/无权，列表最新标题",
+      "ui_acceptance": [
+        "UIA-PAGE-005-01",
+        "UIA-PAGE-005-02",
+        "UIA-PAGE-005-COPY09",
+        "UIA-PAGE-005-ICON10",
+        "UIA-PAGE-005-NAV11",
+        "UIA-PAGE-005-LIBRARY18",
+        "UIA-GLOBAL-SELECT23",
+        "UIA-GLOBAL-COPY25"
+      ],
+      "views": [
+        {
+          "prototype_view": "library",
+          "route": "/library",
+          "components": [
+            "LibraryStats",
+            "LibraryRow"
+          ],
+          "application_models": [
+            "LibraryPage"
+          ],
+          "apis": [
+            "API-007",
+            "API-008"
+          ],
+          "plan": "frontend.md#generation",
+          "verification": [
+            "FE2-V08",
+            "FE3-V01",
+            "FE3-V03",
+            "FE3-V08"
+          ],
+          "incremental_plan": "frontend.md#ui26"
+        }
+      ]
+    },
+    {
+      "page": "PAGE-006",
+      "title": "批次详情",
+      "product_source": "../product/pages/index.md#page-006",
+      "design_source": "../design/design-spec.md",
+      "capabilities": [
+        "CAP-014",
+        "CAP-015",
+        "CAP-016",
+        "CAP-021",
+        "CAP-220"
+      ],
+      "data": [
+        "DATA-009",
+        "DATA-012",
+        "DATA-013",
+        "DATA-014",
+        "DATA-016",
+        "DATA-017",
+        "DATA-018",
+        "DATA-201",
+        "DATA-202",
+        "DATA-203",
+        "DATA-208"
+      ],
+      "states": "正常、无权访问、已删除/不存在、操作确认。；本人标题编辑、保存/取消、空白/失败/无权，列表最新标题",
+      "ui_acceptance": [
+        "UIA-PAGE-006-01",
+        "UIA-PAGE-006-02",
+        "UIA-PAGE-006-03",
+        "UIA-PAGE-006-04",
+        "UIA-PAGE-006-COPY09",
+        "UIA-PAGE-006-ICON10",
+        "UIA-PAGE-006-NAV11",
+        "UIA-PAGE-006-SETTINGS22",
+        "UIA-GLOBAL-SELECT23",
+        "UIA-GLOBAL-COPY25"
+      ],
+      "views": [
+        {
+          "prototype_view": "batch",
+          "route": "/library/:batchId",
+          "components": [
+            "TitleEditor",
+            "SavedPassage",
+            "ReadOnlyConfiguration"
+          ],
+          "application_models": [
+            "BatchDetail"
+          ],
+          "apis": [
+            "API-007",
+            "API-008"
+          ],
+          "plan": "frontend.md#generation",
+          "verification": [
+            "FE2-V08",
+            "FE2-V13",
+            "FE3-V01",
+            "FE3-V03",
+            "FE3-V08"
+          ],
+          "incremental_plan": "frontend.md#ui26"
+        }
+      ]
+    },
+    {
+      "page": "PAGE-007",
+      "title": "复习范围",
+      "product_source": "../product/pages/index.md#page-007",
+      "design_source": "../design/design-spec.md",
+      "capabilities": [
+        "CAP-017",
+        "CAP-020",
+        "CAP-021"
+      ],
+      "data": [
+        "DATA-012",
+        "DATA-014",
+        "DATA-016",
+        "DATA-018",
+        "DATA-201",
+        "DATA-202"
+      ],
+      "states": "有可复习批次、无命中、无学习记录、日期错误、有可恢复会话。",
+      "ui_acceptance": [
+        "UIA-PAGE-007-01",
+        "UIA-PAGE-007-COPY09",
+        "UIA-PAGE-007-ICON10",
+        "UIA-PAGE-007-NAV11",
+        "UIA-GLOBAL-SELECT23",
+        "UIA-GLOBAL-COPY25"
+      ],
+      "views": [
+        {
+          "prototype_view": "range",
+          "route": "/review",
+          "components": [
+            "ReviewRangeSetup"
+          ],
+          "application_models": [
+            "RangeSetup",
+            "ActiveRange"
+          ],
+          "apis": [
+            "API-008"
+          ],
+          "plan": "frontend.md#review",
+          "verification": [
+            "FE2-V04",
+            "FE2-V05",
+            "FE2-V08",
+            "FE3-V01",
+            "FE3-V03",
+            "FE3-V08"
+          ],
+          "incremental_plan": "frontend.md#ui26"
+        }
+      ]
+    },
+    {
+      "page": "PAGE-008",
+      "title": "复习会话容器与结束",
+      "product_source": "../product/pages/index.md#page-008",
+      "design_source": "../design/design-spec.md",
+      "capabilities": [
+        "CAP-018",
+        "CAP-019",
+        "CAP-020",
+        "CAP-021",
+        "CAP-022",
+        "CAP-201",
+        "CAP-202",
+        "CAP-203",
+        "CAP-204"
+      ],
+      "data": [
+        "DATA-012",
+        "DATA-013",
+        "DATA-014",
+        "DATA-016",
+        "DATA-018",
+        "DATA-201",
+        "DATA-202"
+      ],
+      "states": "单批/日期范围、未提交恢复确认、当前批次删除或无权、提交失败可重试、还有下一批、全部完成；重来不回退已结算成长，不重复发放掌握奖励。",
+      "ui_acceptance": [
+        "UIA-PAGE-008-01",
+        "UIA-PAGE-008-COPY09",
+        "UIA-PAGE-008-ICON10",
+        "UIA-PAGE-008-NAV11",
+        "UIA-GLOBAL-SELECT23",
+        "UIA-GLOBAL-COPY25"
+      ],
+      "views": [
+        {
+          "prototype_view": "sessiondone",
+          "route": "/review/:sessionId",
+          "components": [
+            "SessionTotals"
+          ],
+          "application_models": [
+            "ReviewSession"
+          ],
+          "apis": [
+            "API-008"
+          ],
+          "plan": "frontend.md#review",
+          "verification": [
+            "FE2-V05",
+            "FE3-V01",
+            "FE3-V03",
+            "FE3-V08"
+          ],
+          "incremental_plan": "frontend.md#ui26"
+        }
+      ]
+    },
+    {
+      "page": "PAGE-103",
+      "title": "用户管理",
+      "product_source": "../product/pages/index.md#page-103",
+      "design_source": "../design/design-spec.md",
+      "capabilities": [
+        "CAP-003",
+        "CAP-021",
+        "CAP-104",
+        "CAP-105",
+        "CAP-106",
+        "CAP-107"
+      ],
+      "data": [
+        "DATA-003",
+        "DATA-004",
+        "DATA-006",
+        "DATA-009",
+        "DATA-012",
+        "DATA-013",
+        "DATA-017",
+        "DATA-018",
+        "DATA-202",
+        "DATA-204",
+        "DATA-205",
+        "DATA-207",
+        "DATA-208",
+        "DATA-211"
+      ],
+      "states": "无结果、用户详情、调整基础计划确认/成功、重置密码确认/成功、学习库空状态、只读详情。",
+      "ui_acceptance": [
+        "UIA-PAGE-103-01",
+        "UIA-PAGE-103-02",
+        "UIA-PAGE-103-COPY09",
+        "UIA-PAGE-103-ICON10",
+        "UIA-GLOBAL-SELECT23"
+      ],
+      "views": [
+        {
+          "prototype_view": "users",
+          "route": "/admin/users",
+          "components": [
+            "UserSearch"
+          ],
+          "application_models": [
+            "UserSearchPage"
+          ],
+          "apis": [
+            "API-103"
+          ],
+          "plan": "frontend.md#growth",
+          "verification": [
+            "FE2-V10",
+            "FE3-V01",
+            "FE3-V03"
+          ],
+          "incremental_plan": "frontend.md#ui26"
+        },
+        {
+          "prototype_view": "userdetail",
+          "route": "/admin/users/:userId",
+          "components": [
+            "UserDetailSections",
+            "AdminBatchReader"
+          ],
+          "application_models": [
+            "UserDetail"
+          ],
+          "apis": [
+            "API-103"
+          ],
+          "plan": "frontend.md#growth",
+          "verification": [
+            "FE2-V10",
+            "FE3-V01",
+            "FE3-V03"
+          ],
+          "incremental_plan": "frontend.md#ui26"
+        }
+      ]
+    },
+    {
+      "page": "PAGE-201",
+      "title": "复习填写",
+      "product_source": "../product/pages/index.md#page-201",
+      "design_source": "../design/design-spec.md",
+      "capabilities": [
+        "CAP-019",
+        "CAP-201",
+        "CAP-204",
+        "CAP-206"
+      ],
+      "data": [
+        "DATA-012",
+        "DATA-013",
+        "DATA-014",
+        "DATA-201",
+        "DATA-202"
+      ],
+      "states": "非空错误可前进；全空跳过；返回保留；不可访问批次；草稿恢复/重来",
+      "ui_acceptance": [
+        "UIA-PAGE-201-01",
+        "UIA-PAGE-201-COPY09",
+        "UIA-PAGE-201-ICON10",
+        "UIA-PAGE-201-NAV11",
+        "UIA-GLOBAL-SELECT23",
+        "UIA-GLOBAL-COPY25"
+      ],
+      "views": [
+        {
+          "prototype_view": "review",
+          "route": "/review/:sessionId",
+          "components": [
+            "LetterSlots",
+            "PassageCloze"
+          ],
+          "application_models": [
+            "Draft",
+            "ReviewSession"
+          ],
+          "apis": [
+            "API-008"
+          ],
+          "plan": "frontend.md#review",
+          "verification": [
+            "FE2-V03",
+            "FE2-V04",
+            "FE2-V05",
+            "FE3-V01",
+            "FE3-V03",
+            "FE3-V08"
+          ],
+          "incremental_plan": "frontend.md#ui26"
+        }
+      ]
+    },
+    {
+      "page": "PAGE-202",
+      "title": "当前批次概览",
+      "product_source": "../product/pages/index.md#page-202",
+      "design_source": "../design/design-spec.md",
+      "capabilities": [
+        "CAP-202"
+      ],
+      "data": [
+        "DATA-201"
+      ],
+      "states": "未答/已答；不显示标准答案；保存中/提交失败可重试",
+      "ui_acceptance": [
+        "UIA-PAGE-202-01",
+        "UIA-PAGE-202-COPY09",
+        "UIA-PAGE-202-ICON10",
+        "UIA-PAGE-202-NAV11",
+        "UIA-GLOBAL-SELECT23",
+        "UIA-GLOBAL-COPY25"
+      ],
+      "views": [
+        {
+          "prototype_view": "overview",
+          "route": "/review/:sessionId",
+          "components": [
+            "AnswerOverview"
+          ],
+          "application_models": [
+            "Draft"
+          ],
+          "apis": [
+            "API-008"
+          ],
+          "plan": "frontend.md#review",
+          "verification": [
+            "FE2-V03",
+            "FE2-V05",
+            "FE3-V01",
+            "FE3-V03",
+            "FE3-V08"
+          ],
+          "incremental_plan": "frontend.md#ui26"
+        }
+      ]
+    },
+    {
+      "page": "PAGE-203",
+      "title": "提交后总结",
+      "product_source": "../product/pages/index.md#page-203",
+      "design_source": "../design/design-spec.md",
+      "capabilities": [
+        "CAP-203",
+        "CAP-213"
+      ],
+      "data": [
+        "DATA-202",
+        "DATA-203",
+        "DATA-208"
+      ],
+      "states": "正确、错误、未答；单批/多批最后一批；当次总结离开后不再保存或回看；成长数值反馈",
+      "ui_acceptance": [
+        "UIA-PAGE-203-01",
+        "UIA-PAGE-203-COPY09",
+        "UIA-PAGE-203-ICON10",
+        "UIA-PAGE-203-NAV11",
+        "UIA-GLOBAL-SELECT23",
+        "UIA-GLOBAL-COPY25"
+      ],
+      "views": [
+        {
+          "prototype_view": "summary",
+          "route": "/review/:sessionId",
+          "components": [
+            "AttemptSummary"
+          ],
+          "application_models": [
+            "EphemeralComparison",
+            "Receipt"
+          ],
+          "apis": [
+            "API-008"
+          ],
+          "plan": "frontend.md#review",
+          "verification": [
+            "FE2-V05",
+            "FE3-V01",
+            "FE3-V03",
+            "FE3-V08"
+          ],
+          "incremental_plan": "frontend.md#ui26"
+        }
+      ]
+    },
+    {
+      "page": "PAGE-204",
+      "title": "造文工具台",
+      "product_source": "../product/pages/index.md#page-204",
+      "design_source": "../design/design-spec.md",
+      "capabilities": [
+        "CAP-006",
+        "CAP-007",
+        "CAP-008",
+        "CAP-009",
+        "CAP-010",
+        "CAP-011",
+        "CAP-021",
+        "CAP-206",
+        "CAP-208",
+        "CAP-216"
+      ],
+      "data": [
+        "DATA-001",
+        "DATA-002",
+        "DATA-005",
+        "DATA-006",
+        "DATA-008",
+        "DATA-009",
+        "DATA-010",
+        "DATA-011",
+        "DATA-012",
+        "DATA-013",
+        "DATA-016",
+        "DATA-017",
+        "DATA-018",
+        "DATA-203",
+        "DATA-206",
+        "DATA-208",
+        "DATA-210",
+        "DATA-211",
+        "DATA-214"
+      ],
+      "states": "无模型/无合法长度/无额度（含模型卡尚有效但无生成次数）；达到词数上限/无随机候选；流式、失败、取消、有效完成",
+      "ui_acceptance": [
+        "UIA-PAGE-204-01",
+        "UIA-PAGE-204-COPY09",
+        "UIA-PAGE-204-ICON10",
+        "UIA-PAGE-204-NAV11",
+        "UIA-PAGE-204-SETTINGS16",
+        "UIA-GLOBAL-SELECT23",
+        "UIA-GLOBAL-COPY25",
+        "UIA-PAGE-204-WORDS26"
+      ],
+      "views": [
+        {
+          "prototype_view": "create",
+          "route": "/create",
+          "components": [
+            "CreationWorkspace",
+            "EditableConfiguration",
+            "WordPicker",
+            "AppSelect"
+          ],
+          "application_models": [
+            "GenerationWorkspace",
+            "VocabularyResultModel"
+          ],
+          "apis": [
+            "API-004",
+            "API-005",
+            "API-006"
+          ],
+          "plan": "frontend.md#generation",
+          "verification": [
+            "FE2-V06",
+            "FE2-V07",
+            "FE3-V01",
+            "FE3-V03",
+            "FE3-V08",
+            "FE3-V02",
+            "FE3-V06",
+            "FE3-V09"
+          ],
+          "incremental_plan": "frontend.md#ui26"
+        }
+      ]
+    },
+    {
+      "page": "PAGE-205",
+      "title": "简洁首页",
+      "product_source": "../product/pages/index.md#page-205",
+      "design_source": "../design/design-spec.md",
+      "capabilities": [
+        "CAP-001",
+        "CAP-003",
+        "CAP-021",
+        "CAP-207"
+      ],
+      "data": [
+        "DATA-003",
+        "DATA-004",
+        "DATA-017",
+        "DATA-018",
+        "DATA-204",
+        "DATA-205",
+        "DATA-212"
+      ],
+      "states": "访客/学习者分流；无私有内容；不增加学习成长导航；浏览不触发模型调用；试用入口进入 PAGE-217",
+      "ui_acceptance": [
+        "UIA-PAGE-205-01",
+        "UIA-PAGE-205-COPY09",
+        "UIA-PAGE-205-ICON10",
+        "UIA-PAGE-205-HOME10",
+        "UIA-PAGE-205-NAV11",
+        "UIA-PAGE-205-STACK13",
+        "UIA-PAGE-205-MOTION14",
+        "UIA-GLOBAL-SELECT23",
+        "UIA-PAGE-205-WHY23",
+        "UIA-GLOBAL-COPY25"
+      ],
+      "views": [
+        {
+          "prototype_view": "home",
+          "route": "/",
+          "components": [
+            "HomeStoryStack"
+          ],
+          "application_models": [
+            "PublicHomeSamples"
+          ],
+          "apis": [
+            "API-001",
+            "API-209"
+          ],
+          "plan": "frontend.md#design",
+          "verification": [
+            "FE2-V13",
+            "FE2-V15",
+            "FE3-V01",
+            "FE3-V03",
+            "FE3-V08"
+          ],
+          "incremental_plan": "frontend.md#ui26"
+        }
+      ]
+    },
+    {
+      "page": "PAGE-206",
+      "title": "个人资料",
+      "product_source": "../product/pages/index.md#page-206",
+      "design_source": "../design/design-spec.md",
+      "capabilities": [
+        "CAP-003",
+        "CAP-004",
+        "CAP-005",
+        "CAP-021",
+        "CAP-209"
+      ],
+      "data": [
+        "DATA-003",
+        "DATA-004",
+        "DATA-009",
+        "DATA-012",
+        "DATA-017",
+        "DATA-018",
+        "DATA-201",
+        "DATA-204",
+        "DATA-205"
+      ],
+      "states": "未填写、保存中/成功/失败；D2-76 昵称可修改、性别选填、空昵称回退用户名；欢迎天数按北京时间 04:00 学习日差，具体文案交设计",
+      "ui_acceptance": [
+        "UIA-PAGE-206-01",
+        "UIA-PAGE-206-COPY09",
+        "UIA-PAGE-206-ICON10",
+        "UIA-PAGE-206-NAV11",
+        "UIA-PAGE-206-ACCOUNT17",
+        "UIA-GLOBAL-SELECT23",
+        "UIA-GLOBAL-COPY25"
+      ],
+      "views": [
+        {
+          "prototype_view": "profile",
+          "route": "/account",
+          "components": [
+            "AccountShell",
+            "ProfileForm",
+            "AccountSecurity"
+          ],
+          "application_models": [
+            "Account"
+          ],
+          "apis": [
+            "API-003",
+            "API-201"
+          ],
+          "plan": "frontend.md#growth",
+          "verification": [
+            "FE2-V07",
+            "FE3-V01",
+            "FE3-V03",
+            "FE3-V08"
+          ],
+          "incremental_plan": "frontend.md#ui26"
+        }
+      ]
+    },
+    {
+      "page": "PAGE-207",
+      "title": "消息列表与正文弹窗",
+      "product_source": "../product/pages/index.md#page-207",
+      "design_source": "../design/design-spec.md",
+      "capabilities": [
+        "CAP-210"
+      ],
+      "data": [
+        "DATA-205"
+      ],
+      "states": "无消息、隐藏过滤、Markdown 展示、1/N 切换；D2-76 仅明确登录成功自动提醒，刷新/续期不触发，访客先完成收录再提醒；无已读未读",
+      "ui_acceptance": [
+        "UIA-PAGE-207-01",
+        "UIA-PAGE-207-COPY09",
+        "UIA-PAGE-207-ICON10",
+        "UIA-PAGE-207-NAV11",
+        "UIA-PAGE-207-TOAST19",
+        "UIA-GLOBAL-SELECT23",
+        "UIA-PAGE-207-NOTICE23",
+        "UIA-PAGE-207-LIST24",
+        "UIA-GLOBAL-COPY25",
+        "UIA-PAGE-207-COPY25"
+      ],
+      "views": [
+        {
+          "prototype_view": "notices",
+          "route": "/notices",
+          "components": [
+            "NoticeList",
+            "SafeNoticeBody",
+            "NoticeReadingDialog"
+          ],
+          "application_models": [
+            "NoticeCollection"
+          ],
+          "apis": [
+            "API-205"
+          ],
+          "plan": "frontend.md#notices",
+          "verification": [
+            "FE2-V12",
+            "FE3-V01",
+            "FE3-V03",
+            "FE3-V08",
+            "FE3-V04",
+            "FE3-V05"
+          ],
+          "incremental_plan": "frontend.md#ui26"
+        }
+      ]
+    },
+    {
+      "page": "PAGE-208",
+      "title": "模型管理、计划管理（两个独立模块）",
+      "product_source": "../product/pages/index.md#page-208",
+      "design_source": "../design/design-spec.md",
+      "capabilities": [
+        "CAP-101",
+        "CAP-102",
+        "CAP-103",
+        "CAP-205",
+        "CAP-206",
+        "CAP-216"
+      ],
+      "data": [
+        "DATA-006",
+        "DATA-007",
+        "DATA-008",
+        "DATA-210",
+        "DATA-211",
+        "DATA-212"
+      ],
+      "states": "无模型计划警示；删除取消/确认；保存反馈；不同计划优先级重复时拒绝保存；调整优先级展示影响，生效计划按较高档更新；修改计划权益展示对基础用户/体验用户的影响，体验权益同步最新配置，已用次数与体验到期时间不变",
+      "ui_acceptance": [
+        "UIA-PAGE-208-01",
+        "UIA-PAGE-208-COPY09",
+        "UIA-PAGE-208-ICON10",
+        "UIA-GLOBAL-SELECT23"
+      ],
+      "views": [
+        {
+          "prototype_view": "models",
+          "route": "/admin/models",
+          "components": [
+            "CredentialForm",
+            "ModelEditor",
+            "RemovalImpact"
+          ],
+          "application_models": [
+            "AdminModels"
+          ],
+          "apis": [
+            "API-101"
+          ],
+          "plan": "frontend.md#growth",
+          "verification": [
+            "FE2-V10",
+            "FE3-V01",
+            "FE3-V03"
+          ],
+          "incremental_plan": "frontend.md#ui26"
+        },
+        {
+          "prototype_view": "plans",
+          "route": "/admin/plans",
+          "components": [
+            "PlanEditor",
+            "PriorityEditor"
+          ],
+          "application_models": [
+            "Plans"
+          ],
+          "apis": [
+            "API-102"
+          ],
+          "plan": "frontend.md#growth",
+          "verification": [
+            "FE2-V10",
+            "FE3-V01",
+            "FE3-V03"
+          ],
+          "incremental_plan": "frontend.md#ui26"
+        }
+      ]
+    },
+    {
+      "page": "PAGE-209",
+      "title": "平台消息管理",
+      "product_source": "../product/pages/index.md#page-209",
+      "design_source": "../design/design-spec.md",
+      "capabilities": [
+        "CAP-210"
+      ],
+      "data": [
+        "DATA-205"
+      ],
+      "states": "编辑未保存/成功/失败、空消息、隐藏；不增加个人收发流程",
+      "ui_acceptance": [
+        "UIA-PAGE-209-01",
+        "UIA-PAGE-209-COPY09",
+        "UIA-PAGE-209-ICON10",
+        "UIA-GLOBAL-SELECT23",
+        "UIA-PAGE-209-MARKDOWN23"
+      ],
+      "views": [
+        {
+          "prototype_view": "messages",
+          "route": "/admin/notices",
+          "components": [
+            "NoticeEditor",
+            "MarkdownPreview",
+            "NoticeReadingDialog"
+          ],
+          "application_models": [
+            "AdminNotices"
+          ],
+          "apis": [
+            "API-207"
+          ],
+          "plan": "frontend.md#notices",
+          "verification": [
+            "FE2-V10",
+            "FE2-V12",
+            "FE3-V01",
+            "FE3-V03",
+            "FE3-V04",
+            "FE3-V05"
+          ],
+          "incremental_plan": "frontend.md#ui26"
+        }
+      ]
+    },
+    {
+      "page": "PAGE-210",
+      "title": "成长运营配置",
+      "product_source": "../product/pages/index.md#page-210",
+      "design_source": "../design/design-spec.md",
+      "capabilities": [
+        "CAP-214",
+        "CAP-215",
+        "CAP-217"
+      ],
+      "data": [
+        "DATA-206",
+        "DATA-207",
+        "DATA-208",
+        "DATA-209",
+        "DATA-210"
+      ],
+      "states": "按类型限制可配字段，无模型卡次数或自定义计划权益；D2-67 商城下架仅停新兑换，有效奖励与已有卡保持，与模型下架分开；D2-68 仅无兑换/发放历史且无奖励引用时可删除，否则说明原因并保留编辑/下架；D2-74 新建默认未上架，首次保存后类型不可改，所属类型参数可编辑；支持名称/类型/上下架筛选和奖励引用查看；D2-71 提高经验门槛后重新计算等级并可能降级，已领奖励保留；D2-75 降低门槛/新增更高等级按已有经验自动重算等级和待领奖励，不自动发奖；支持第 5 档及更多成就档位；大量配置可查找维护；合法性和保存反馈；显示签到下一日生效、下架积分即时生效与其他既有权益保持规则",
+      "ui_acceptance": [
+        "UIA-PAGE-210-01",
+        "UIA-PAGE-210-COPY09",
+        "UIA-PAGE-210-ICON10",
+        "UIA-GLOBAL-SELECT23"
+      ],
+      "views": [
+        {
+          "prototype_view": "operations",
+          "route": "/admin/growth",
+          "components": [
+            "CheckinSettings",
+            "LevelEditor",
+            "AchievementEditor",
+            "ItemDefinitionEditor",
+            "TierContentDialog"
+          ],
+          "application_models": [
+            "OperationsDraft",
+            "GrowthSettingsForm",
+            "LevelTableDraft",
+            "AchievementTableDraft",
+            "LocalizedEditorText"
+          ],
+          "apis": [
+            "API-206"
+          ],
+          "plan": "frontend.md#growth",
+          "verification": [
+            "FE2-V10",
+            "FE2-V18",
+            "FE2-V19",
+            "FE3-V01",
+            "FE3-V03"
+          ],
+          "incremental_plan": "frontend.md#ui26"
+        }
+      ],
+      "contract_reception": "frontend.md#cr004"
+    },
+    {
+      "page": "PAGE-211",
+      "title": "用户管理内的积分操作",
+      "product_source": "../product/pages/index.md#page-211",
+      "design_source": "../design/design-spec.md",
+      "capabilities": [
+        "CAP-104",
+        "CAP-217"
+      ],
+      "data": [
+        "DATA-003",
+        "DATA-006",
+        "DATA-012",
+        "DATA-013",
+        "DATA-202",
+        "DATA-204",
+        "DATA-206",
+        "DATA-207",
+        "DATA-208",
+        "DATA-209",
+        "DATA-210"
+      ],
+      "states": "用户定位、无效金额、提交中/成功/失败；重试不重复补发；不连带改经验/等级；正常兑换扣积分保持",
+      "ui_acceptance": [
+        "UIA-PAGE-211-01",
+        "UIA-PAGE-211-COPY09",
+        "UIA-PAGE-211-ICON10",
+        "UIA-GLOBAL-SELECT23"
+      ],
+      "views": [
+        {
+          "prototype_view": "credits",
+          "route": "/admin/users/:userId#points",
+          "components": [
+            "PointsLedger",
+            "PointGrantForm"
+          ],
+          "application_models": [
+            "UserLedger"
+          ],
+          "apis": [
+            "API-103"
+          ],
+          "plan": "frontend.md#growth",
+          "verification": [
+            "FE2-V10",
+            "FE3-V01",
+            "FE3-V03"
+          ],
+          "incremental_plan": "frontend.md#ui26"
+        }
+      ]
+    },
+    {
+      "page": "PAGE-212",
+      "title": "热门预设管理",
+      "product_source": "../product/pages/index.md#page-212",
+      "design_source": "../design/design-spec.md",
+      "capabilities": [
+        "CAP-218"
+      ],
+      "data": [
+        "DATA-010",
+        "DATA-212",
+        "DATA-214"
+      ],
+      "states": "平台支持的全部配置可用，不套游客计划限制；预览不限次数且单独计量；新建/参数变更须成功预览才能发布；草稿待预览、预览成功待发布、线上已发布且有修改草稿、已下架；保存/预览不自动上线；仅标题单独修改无需重新生成但须发布；流式失败/取消；无效引用/下架；用量未知明确标注；单标题（不分语言），无预设说明字段，保留样文",
+      "ui_acceptance": [
+        "UIA-PAGE-212-01",
+        "UIA-PAGE-212-02",
+        "UIA-PAGE-212-03",
+        "UIA-PAGE-212-COPY09",
+        "UIA-PAGE-212-ICON10",
+        "UIA-GLOBAL-SELECT23",
+        "UIA-PAGE-212-MEANINGS23",
+        "UIA-PAGE-212-WORDS26"
+      ],
+      "views": [
+        {
+          "prototype_view": "presets",
+          "route": "/admin/presets",
+          "components": [
+            "PresetEditor",
+            "PreviewWorkspace",
+            "PublishConfirmation",
+            "WordPicker",
+            "AppSelect",
+            "PresetWordMeanings"
+          ],
+          "application_models": [
+            "PresetDraft",
+            "AdminPreviewOptions",
+            "VocabularyResultModel"
+          ],
+          "apis": [
+            "API-208",
+            "API-202"
+          ],
+          "plan": "frontend.md#generation",
+          "verification": [
+            "FE2-V11",
+            "FE2-V20",
+            "FE3-V01",
+            "FE3-V03",
+            "FE3-V02",
+            "FE3-V06",
+            "FE3-V09",
+            "FE3-V07"
+          ],
+          "incremental_plan": "frontend.md#ui26"
+        }
+      ],
+      "contract_reception": "frontend.md#cr004"
+    },
+    {
+      "page": "PAGE-213",
+      "title": "数据分析",
+      "product_source": "../product/pages/index.md#page-213",
+      "design_source": "../design/design-spec.md",
+      "capabilities": [
+        "CAP-219"
+      ],
+      "data": [
+        "DATA-213",
+        "DATA-214"
+      ],
+      "states": "无数据、观察期未满、统计延迟、部分来源不可用；管理员预览与学习者生成区分",
+      "ui_acceptance": [
+        "UIA-PAGE-213-01",
+        "UIA-PAGE-213-COPY09",
+        "UIA-PAGE-213-ICON10",
+        "UIA-GLOBAL-SELECT23"
+      ],
+      "views": [
+        {
+          "prototype_view": "metrics",
+          "route": "/admin/analytics",
+          "components": [
+            "MetricTile",
+            "MetricChart"
+          ],
+          "application_models": [
+            "AnalyticsDashboard"
+          ],
+          "apis": [
+            "API-209"
+          ],
+          "plan": "frontend.md#quality",
+          "verification": [
+            "FE2-V16",
+            "FE3-V01",
+            "FE3-V03"
+          ],
+          "incremental_plan": "frontend.md#ui26"
+        }
+      ]
+    },
+    {
+      "page": "PAGE-214",
+      "title": "账号成长",
+      "product_source": "../product/pages/index.md#page-214",
+      "design_source": "../design/design-spec.md",
+      "capabilities": [
+        "CAP-211",
+        "CAP-212",
+        "CAP-213",
+        "CAP-214"
+      ],
+      "data": [
+        "DATA-202",
+        "DATA-203",
+        "DATA-206",
+        "DATA-207",
+        "DATA-208",
+        "DATA-209",
+        "DATA-210"
+      ],
+      "states": "已签/未签/可补/不可补；签到自动到账；成就/等级已达成待领取、奖品不可用或档位停用时暂不可领、领取成功/失败/已领取；显示原因；商品仅从商城下架不阻止有效奖励领取；重新启用后恢复手动领取；首次解锁；无佩戴操作；D2-71 按新经验门槛展示重算后的当前等级与进度，可能降级但经验及已领奖励保持；D2-72 降级后当前等级以上的未领奖励保留记录、显示等级不足并禁止领取，重新达标恢复手动领取且展示最新奖励，仍检查档位和奖品可用性；D2-75 跨级奖励逐档显示待领取，初始等级无升级奖；最高配置等级仍累计并展示经验，新增更高等级后按已有经验更新等级和待领奖励；无历史数据；补签积分补差但不补签到经验",
+      "ui_acceptance": [
+        "UIA-PAGE-214-01",
+        "UIA-PAGE-214-COPY09",
+        "UIA-PAGE-214-ICON10",
+        "UIA-PAGE-214-NAV11",
+        "UIA-PAGE-214-ACCOUNT17",
+        "UIA-GLOBAL-SELECT23",
+        "UIA-GLOBAL-COPY25"
+      ],
+      "views": [
+        {
+          "prototype_view": "growth",
+          "route": "/account/growth",
+          "components": [
+            "AccountShell",
+            "CheckinCalendar",
+            "AchievementGroup",
+            "LevelAwardList",
+            "AchievementCard"
+          ],
+          "application_models": [
+            "Growth",
+            "Achievement"
+          ],
+          "apis": [
+            "API-203"
+          ],
+          "plan": "frontend.md#growth",
+          "verification": [
+            "FE2-V09",
+            "FE2-V10",
+            "FE2-V18",
+            "FE3-V01",
+            "FE3-V03",
+            "FE3-V08"
+          ],
+          "incremental_plan": "frontend.md#ui26"
+        }
+      ],
+      "contract_reception": "frontend.md#cr004"
+    },
+    {
+      "page": "PAGE-215",
+      "title": "道具卡、兑换中心（两个视图）",
+      "product_source": "../product/pages/index.md#page-215",
+      "design_source": "../design/design-spec.md",
+      "capabilities": [
+        "CAP-215",
+        "CAP-216"
+      ],
+      "data": [
+        "DATA-207",
+        "DATA-210",
+        "DATA-211"
+      ],
+      "states": "无余额/兑换成功失败；D2-73 明确模型体验时长与可生成次数分开，模型卡有效不代表有免费次数；商品下架拒绝新兑换，已有有效卡及体验保持；未用/生效中/已结束或过期/可退积分/已退；低档不可覆盖、高档明确作废提醒；D2-69 当前生效计划已覆盖卡内全部模型时暂不可启用，卡片标注“当前计划已满足该模型卡提供的所有模型”，保留原启用截止时间；D2-70 已启用后被计划覆盖仍展示原模型体验结束时间，不显示暂停或补时；当前下架积分/退换确认/实际到账/成功失败，不区分已用或来源；金额按 D2-51 即时配置；D2-63 已获得退换资格的卡过期后仍展示入口，下架前已过期的卡不适用",
+      "ui_acceptance": [
+        "UIA-PAGE-215-01",
+        "UIA-PAGE-215-COPY09",
+        "UIA-PAGE-215-ICON10",
+        "UIA-PAGE-215-NAV11",
+        "UIA-PAGE-215-ACCOUNT17",
+        "UIA-GLOBAL-SELECT23",
+        "UIA-GLOBAL-COPY25"
+      ],
+      "views": [
+        {
+          "prototype_view": "bag",
+          "route": "/account/items",
+          "components": [
+            "AccountShell",
+            "OwnedItemCard",
+            "EffectPreview"
+          ],
+          "application_models": [
+            "OwnedItem"
+          ],
+          "apis": [
+            "API-204"
+          ],
+          "plan": "frontend.md#growth",
+          "verification": [
+            "FE2-V09",
+            "FE3-V01",
+            "FE3-V03",
+            "FE3-V08"
+          ],
+          "incremental_plan": "frontend.md#ui26"
+        },
+        {
+          "prototype_view": "shop",
+          "route": "/account/exchange",
+          "components": [
+            "AccountShell",
+            "ShopItemCard"
+          ],
+          "application_models": [
+            "Catalog"
+          ],
+          "apis": [
+            "API-204"
+          ],
+          "plan": "frontend.md#growth",
+          "verification": [
+            "FE2-V09",
+            "FE3-V01",
+            "FE3-V03",
+            "FE3-V08"
+          ],
+          "incremental_plan": "frontend.md#ui26"
+        }
+      ]
+    },
+    {
+      "page": "PAGE-216",
+      "title": "独立预设造文工作台",
+      "product_source": "../product/pages/index.md#page-216",
+      "design_source": "../design/design-spec.md",
+      "capabilities": [
+        "CAP-218"
+      ],
+      "data": [
+        "DATA-005",
+        "DATA-010",
+        "DATA-212",
+        "DATA-214"
+      ],
+      "states": "加载/可开始/额度不足/预设失效；进入页面不自动生成；流式/取消/失败/有效完成；双方配置均可超出自身计划限制；游客扣原访客次数、已登录者扣本人账号额度；无可用次数时不能生成；无随机选词、配置编辑或静默替换；单标题（不分语言），无预设说明字段，保留样文",
+      "ui_acceptance": [
+        "UIA-PAGE-216-01",
+        "UIA-PAGE-216-02",
+        "UIA-PAGE-216-03",
+        "UIA-PAGE-216-COPY09",
+        "UIA-PAGE-216-ICON10",
+        "UIA-PAGE-216-NAV11",
+        "UIA-PAGE-216-SETTINGS15",
+        "UIA-GLOBAL-SELECT23",
+        "UIA-GLOBAL-COPY25"
+      ],
+      "views": [
+        {
+          "prototype_view": "trial",
+          "route": "/trial/:presetId",
+          "components": [
+            "PresetWorkspace",
+            "ReadOnlyConfiguration"
+          ],
+          "application_models": [
+            "PublishedPreset",
+            "GenerationWorkspace"
+          ],
+          "apis": [
+            "API-202",
+            "API-005",
+            "API-006"
+          ],
+          "plan": "frontend.md#generation",
+          "verification": [
+            "FE2-V06",
+            "FE2-V07",
+            "FE2-V11",
+            "FE3-V01",
+            "FE3-V03",
+            "FE3-V08"
+          ],
+          "incremental_plan": "frontend.md#ui26"
+        }
+      ]
+    },
+    {
+      "page": "PAGE-217",
+      "title": "独立试用目录",
+      "product_source": "../product/pages/index.md#page-217",
+      "design_source": "../design/design-spec.md",
+      "capabilities": [
+        "CAP-001",
+        "CAP-021",
+        "CAP-218"
+      ],
+      "data": [
+        "DATA-018",
+        "DATA-212",
+        "DATA-214"
+      ],
+      "states": "完整已发布配置与样文；横向自动/暂停/手动/触控；减少动效；空列表/单条/多条；标题单值无说明；跳转锁定工作台。释义语言 Tab：全部/中文/英语/日语、数量、无匹配、筛选后首项、正确预设跳转。",
+      "ui_acceptance": [
+        "UIA-PAGE-217-01",
+        "UIA-PAGE-217-02",
+        "UIA-PAGE-217-03",
+        "UIA-PAGE-217-04",
+        "UIA-PAGE-217-05",
+        "UIA-PAGE-217-06",
+        "UIA-PAGE-217-COPY09",
+        "UIA-PAGE-217-ICON10",
+        "UIA-PAGE-217-NAV11",
+        "UIA-PAGE-217-CAR11",
+        "UIA-GLOBAL-SELECT23",
+        "UIA-PAGE-217-MEANINGS23",
+        "UIA-GLOBAL-COPY25"
+      ],
+      "views": [
+        {
+          "prototype_view": "explore",
+          "route": "/explore",
+          "components": [
+            "MeaningLanguageTabs",
+            "PresetGallery",
+            "PresetWordMeanings"
+          ],
+          "application_models": [
+            "PublishedPresetCollection"
+          ],
+          "apis": [
+            "API-202",
+            "API-209"
+          ],
+          "plan": "frontend.md#generation",
+          "verification": [
+            "FE2-V11",
+            "FE2-V15",
+            "FE3-V01",
+            "FE3-V03",
+            "FE3-V08",
+            "FE3-V07"
+          ],
+          "incremental_plan": "frontend.md#ui26"
+        }
+      ]
+    },
+    {
+      "page": "PAGE-218",
+      "title": "后台概览",
+      "product_source": "../product/pages/index.md#page-218",
+      "design_source": "../design/design-spec.md",
+      "capabilities": [
+        "CAP-003",
+        "CAP-021",
+        "CAP-219"
+      ],
+      "data": [
+        "DATA-003",
+        "DATA-004",
+        "DATA-017",
+        "DATA-018",
+        "DATA-204",
+        "DATA-205",
+        "DATA-213",
+        "DATA-214"
+      ],
+      "states": "加载/无样本/观察中/统计延迟/部分不可用；摘要与数据分析同口径，不虚构新指标或展示用户私有内容",
+      "ui_acceptance": [
+        "UIA-PAGE-218-01",
+        "UIA-PAGE-218-COPY09",
+        "UIA-PAGE-218-ICON10",
+        "UIA-GLOBAL-SELECT23"
+      ],
+      "views": [
+        {
+          "prototype_view": "adminhome",
+          "route": "/admin",
+          "components": [
+            "OverviewMetrics",
+            "ModuleLinks"
+          ],
+          "application_models": [
+            "AdminOverview"
+          ],
+          "apis": [
+            "API-209"
+          ],
+          "plan": "frontend.md#growth",
+          "verification": [
+            "FE2-V16",
+            "FE3-V01",
+            "FE3-V03"
+          ],
+          "incremental_plan": "frontend.md#ui26"
+        }
+      ]
+    }
+  ],
+  "capabilities": [
+    {
+      "capability": "CAP-001",
+      "behavior": "首页/试用入口保留，静态首页不触发AI",
+      "backend_source": "backend.md#3-全量继承与用例追踪",
+      "apis_source_notation": "API-001/202",
+      "data_source_notation": "DATA-018/212",
+      "pages": [
+        "PAGE-205",
+        "PAGE-217"
+      ]
+    },
+    {
+      "capability": "CAP-002",
+      "behavior": "注册basic、轮换会话",
+      "backend_source": "backend.md#3-全量继承与用例追踪",
+      "apis_source_notation": "API-002",
+      "data_source_notation": "DATA-003/004/018",
+      "pages": [
+        "PAGE-002",
+        "PAGE-003"
+      ]
+    },
+    {
+      "capability": "CAP-003",
+      "behavior": "登录退出/角色路由",
+      "backend_source": "backend.md#3-全量继承与用例追踪",
+      "apis_source_notation": "API-002",
+      "data_source_notation": "DATA-003/004/204",
+      "pages": [
+        "PAGE-002",
+        "PAGE-003",
+        "PAGE-103",
+        "PAGE-205",
+        "PAGE-206",
+        "PAGE-218"
+      ]
+    },
+    {
+      "capability": "CAP-004",
+      "behavior": "本人改密/撤其他会话",
+      "backend_source": "backend.md#3-全量继承与用例追踪",
+      "apis_source_notation": "API-003",
+      "data_source_notation": "DATA-003/004",
+      "pages": [
+        "PAGE-206"
+      ]
+    },
+    {
+      "capability": "CAP-005",
+      "behavior": "注销全个人数据",
+      "backend_source": "backend.md#3-全量继承与用例追踪",
+      "apis_source_notation": "API-003",
+      "data_source_notation": "DATA-003/004/009–018/201–211/213",
+      "pages": [
+        "PAGE-206"
+      ]
+    },
+    {
+      "capability": "CAP-006",
+      "behavior": "词表精确合法选词",
+      "backend_source": "backend.md#3-全量继承与用例追踪",
+      "apis_source_notation": "API-004",
+      "data_source_notation": "DATA-001/002",
+      "pages": [
+        "PAGE-204"
+      ]
+    },
+    {
+      "capability": "CAP-007",
+      "behavior": "一份有效计划、合并模型、分别次数",
+      "backend_source": "backend.md#3-全量继承与用例追踪",
+      "apis_source_notation": "API-004",
+      "data_source_notation": "DATA-005/006/008/009/211",
+      "pages": [
+        "PAGE-204"
+      ]
+    },
+    {
+      "capability": "CAP-008",
+      "behavior": "流生成/严格完整结果",
+      "backend_source": "backend.md#3-全量继承与用例追踪",
+      "apis_source_notation": "API-005",
+      "data_source_notation": "DATA-007/009/010/011",
+      "pages": [
+        "PAGE-204"
+      ]
+    },
+    {
+      "capability": "CAP-009",
+      "behavior": "取消/系统失败原来源退款",
+      "backend_source": "backend.md#3-全量继承与用例追踪",
+      "apis_source_notation": "API-005",
+      "data_source_notation": "DATA-009/010/011/211",
+      "pages": [
+        "PAGE-204"
+      ]
+    },
+    {
+      "capability": "CAP-010",
+      "behavior": "完整收录/放弃、默认标题",
+      "backend_source": "backend.md#3-全量继承与用例追踪",
+      "apis_source_notation": "API-006",
+      "data_source_notation": "DATA-009/011/012/013/208",
+      "pages": [
+        "PAGE-204"
+      ]
+    },
+    {
+      "capability": "CAP-011",
+      "behavior": "访客认证claim一次绑定",
+      "backend_source": "backend.md#3-全量继承与用例追踪",
+      "apis_source_notation": "API-006",
+      "data_source_notation": "DATA-005/017/012/013/206",
+      "pages": [
+        "PAGE-002",
+        "PAGE-003",
+        "PAGE-204"
+      ]
+    },
+    {
+      "capability": "CAP-012",
+      "behavior": "原六项统计/旧到新库列表",
+      "backend_source": "backend.md#3-全量继承与用例追踪",
+      "apis_source_notation": "API-007",
+      "data_source_notation": "DATA-012/016/202",
+      "pages": [
+        "PAGE-005"
+      ]
+    },
+    {
+      "capability": "CAP-013",
+      "behavior": "完整目标词搜索，不搜标题",
+      "backend_source": "backend.md#3-全量继承与用例追踪",
+      "apis_source_notation": "API-007",
+      "data_source_notation": "DATA-002/012/013",
+      "pages": [
+        "PAGE-005"
+      ]
+    },
+    {
+      "capability": "CAP-014",
+      "behavior": "完整正文/词义/位置详情",
+      "backend_source": "backend.md#3-全量继承与用例追踪",
+      "apis_source_notation": "API-007",
+      "data_source_notation": "DATA-012/013",
+      "pages": [
+        "PAGE-006"
+      ]
+    },
+    {
+      "capability": "CAP-015",
+      "behavior": "参与范围开关，仅影响新会话",
+      "backend_source": "backend.md#3-全量继承与用例追踪",
+      "apis_source_notation": "API-007",
+      "data_source_notation": "DATA-012/014",
+      "pages": [
+        "PAGE-005",
+        "PAGE-006"
+      ]
+    },
+    {
+      "capability": "CAP-016",
+      "behavior": "永久删批次/claim，不回退成长",
+      "backend_source": "backend.md#3-全量继承与用例追踪",
+      "apis_source_notation": "API-007",
+      "data_source_notation": "DATA-012/013/014/017/202",
+      "pages": [
+        "PAGE-005",
+        "PAGE-006"
+      ]
+    },
+    {
+      "capability": "CAP-017",
+      "behavior": "浏览器日期范围/固定随机安排",
+      "backend_source": "backend.md#3-全量继承与用例追踪",
+      "apis_source_notation": "API-008",
+      "data_source_notation": "DATA-012/013/014",
+      "pages": [
+        "PAGE-007"
+      ]
+    },
+    {
+      "capability": "CAP-018",
+      "behavior": "替代索引→CAP-201原词填空",
+      "backend_source": "backend.md#3-全量继承与用例追踪",
+      "apis_source_notation": "API-008",
+      "data_source_notation": "DATA-013/201",
+      "pages": [
+        "PAGE-008"
+      ]
+    },
+    {
+      "capability": "CAP-019",
+      "behavior": "替代索引→CAP-201逐occurrence填空",
+      "backend_source": "backend.md#3-全量继承与用例追踪",
+      "apis_source_notation": "API-008",
+      "data_source_notation": "DATA-013/201",
+      "pages": [
+        "PAGE-008",
+        "PAGE-201"
+      ]
+    },
+    {
+      "capability": "CAP-020",
+      "behavior": "独立会话恢复/最小完成概况（DB2-R07/08 已接收）",
+      "backend_source": "backend.md#3-全量继承与用例追踪",
+      "apis_source_notation": "API-008",
+      "data_source_notation": "DATA-014/015/201/202",
+      "pages": [
+        "PAGE-005",
+        "PAGE-007",
+        "PAGE-008"
+      ]
+    },
+    {
+      "capability": "CAP-021",
+      "behavior": "账号语言持久/访客本机语言",
+      "backend_source": "backend.md#3-全量继承与用例追踪",
+      "apis_source_notation": "API-001",
+      "data_source_notation": "DATA-018",
+      "pages": [
+        "PAGE-002",
+        "PAGE-003",
+        "PAGE-005",
+        "PAGE-006",
+        "PAGE-007",
+        "PAGE-008",
+        "PAGE-103",
+        "PAGE-204",
+        "PAGE-205",
+        "PAGE-206",
+        "PAGE-217",
+        "PAGE-218"
+      ]
+    },
+    {
+      "capability": "CAP-022",
+      "behavior": "单批复习，忽略参与开关",
+      "backend_source": "backend.md#3-全量继承与用例追踪",
+      "apis_source_notation": "API-008",
+      "data_source_notation": "DATA-012/014/202",
+      "pages": [
+        "PAGE-005",
+        "PAGE-008"
+      ]
+    },
+    {
+      "capability": "CAP-101",
+      "behavior": "凭据脱敏/加密替换/探针",
+      "backend_source": "backend.md#3-全量继承与用例追踪",
+      "apis_source_notation": "API-101",
+      "data_source_notation": "DATA-007",
+      "pages": [
+        "PAGE-208"
+      ]
+    },
+    {
+      "capability": "CAP-102",
+      "behavior": "模型新增编辑启停，完整保留",
+      "backend_source": "backend.md#3-全量继承与用例追踪",
+      "apis_source_notation": "API-101",
+      "data_source_notation": "DATA-008",
+      "pages": [
+        "PAGE-208"
+      ]
+    },
+    {
+      "capability": "CAP-103",
+      "behavior": "四基础计划全权益配置",
+      "backend_source": "backend.md#3-全量继承与用例追踪",
+      "apis_source_notation": "API-102",
+      "data_source_notation": "DATA-006/008",
+      "pages": [
+        "PAGE-208"
+      ]
+    },
+    {
+      "capability": "CAP-104",
+      "behavior": "用户查询/详情/成长读投影",
+      "backend_source": "backend.md#3-全量继承与用例追踪",
+      "apis_source_notation": "API-103",
+      "data_source_notation": "DATA-003/006/009/204/207/208",
+      "pages": [
+        "PAGE-103",
+        "PAGE-211"
+      ]
+    },
+    {
+      "capability": "CAP-105",
+      "behavior": "指定用户base调整重置",
+      "backend_source": "backend.md#3-全量继承与用例追踪",
+      "apis_source_notation": "API-103",
+      "data_source_notation": "DATA-003/006/009/211",
+      "pages": [
+        "PAGE-103"
+      ]
+    },
+    {
+      "capability": "CAP-106",
+      "behavior": "管理员重置密码/撤会话",
+      "backend_source": "backend.md#3-全量继承与用例追踪",
+      "apis_source_notation": "API-103",
+      "data_source_notation": "DATA-003/004",
+      "pages": [
+        "PAGE-103"
+      ]
+    },
+    {
+      "capability": "CAP-107",
+      "behavior": "管理员只读学习库",
+      "backend_source": "backend.md#3-全量继承与用例追踪",
+      "apis_source_notation": "API-103",
+      "data_source_notation": "DATA-012/013/016",
+      "pages": [
+        "PAGE-103"
+      ]
+    },
+    {
+      "capability": "CAP-201",
+      "behavior": "整份匿名题面/本机移动/整批提交",
+      "backend_source": "backend.md#3-全量继承与用例追踪",
+      "apis_source_notation": "API-008",
+      "data_source_notation": "DATA-013/201/202",
+      "pages": [
+        "PAGE-008",
+        "PAGE-201"
+      ]
+    },
+    {
+      "capability": "CAP-202",
+      "behavior": "本机概览/最新完整草稿提交",
+      "backend_source": "backend.md#3-全量继承与用例追踪",
+      "apis_source_notation": "API-008",
+      "data_source_notation": "DATA-201/202",
+      "pages": [
+        "PAGE-008",
+        "PAGE-202"
+      ]
+    },
+    {
+      "capability": "CAP-203",
+      "behavior": "当次对照/最小结算/重来",
+      "backend_source": "backend.md#3-全量继承与用例追踪",
+      "apis_source_notation": "API-008",
+      "data_source_notation": "DATA-014/202/203/208",
+      "pages": [
+        "PAGE-008",
+        "PAGE-203"
+      ]
+    },
+    {
+      "capability": "CAP-204",
+      "behavior": "校验服务端状态后本机恢复",
+      "backend_source": "backend.md#3-全量继承与用例追踪",
+      "apis_source_notation": "API-008",
+      "data_source_notation": "DATA-014/201/202",
+      "pages": [
+        "PAGE-008",
+        "PAGE-201"
+      ]
+    },
+    {
+      "capability": "CAP-205",
+      "behavior": "模型正式移除/计划解引用/卡资格",
+      "backend_source": "backend.md#3-全量继承与用例追踪",
+      "apis_source_notation": "API-101/204",
+      "data_source_notation": "DATA-006/008/210/211/212",
+      "pages": [
+        "PAGE-208"
+      ]
+    },
+    {
+      "capability": "CAP-206",
+      "behavior": "设计布局/真实成功失败toast",
+      "backend_source": "backend.md#3-全量继承与用例追踪",
+      "apis_source_notation": "API-004及各命令",
+      "data_source_notation": "DATA-006/211；无额外UI表",
+      "pages": [
+        "PAGE-201",
+        "PAGE-204",
+        "PAGE-208"
+      ]
+    },
+    {
+      "capability": "CAP-207",
+      "behavior": "首页示例/动效前端，公开预设读",
+      "backend_source": "backend.md#3-全量继承与用例追踪",
+      "apis_source_notation": "API-202",
+      "data_source_notation": "DATA-212",
+      "pages": [
+        "PAGE-205"
+      ]
+    },
+    {
+      "capability": "CAP-208",
+      "behavior": "排除已选/当前库的随机词",
+      "backend_source": "backend.md#3-全量继承与用例追踪",
+      "apis_source_notation": "API-004",
+      "data_source_notation": "DATA-002/013/203",
+      "pages": [
+        "PAGE-204"
+      ]
+    },
+    {
+      "capability": "CAP-209",
+      "behavior": "本人资料/登录欢迎事实",
+      "backend_source": "backend.md#3-全量继承与用例追踪",
+      "apis_source_notation": "API-002/201",
+      "data_source_notation": "DATA-003/204",
+      "pages": [
+        "PAGE-206"
+      ]
+    },
+    {
+      "capability": "CAP-210",
+      "behavior": "独立平台消息/登录提醒（DB2-R09 标题已接收）",
+      "backend_source": "backend.md#3-全量继承与用例追踪",
+      "apis_source_notation": "API-205/207",
+      "data_source_notation": "DATA-205",
+      "pages": [
+        "PAGE-207",
+        "PAGE-209"
+      ]
+    },
+    {
+      "capability": "CAP-211",
+      "behavior": "04:00学习日/有效生成自动签到",
+      "backend_source": "backend.md#3-全量继承与用例追踪",
+      "apis_source_notation": "API-005/006/203",
+      "data_source_notation": "DATA-206/207/208",
+      "pages": [
+        "PAGE-214"
+      ]
+    },
+    {
+      "capability": "CAP-212",
+      "behavior": "补签/历史规则后续差额",
+      "backend_source": "backend.md#3-全量继承与用例追踪",
+      "apis_source_notation": "API-203",
+      "data_source_notation": "DATA-206/207/210",
+      "pages": [
+        "PAGE-214"
+      ]
+    },
+    {
+      "capability": "CAP-213",
+      "behavior": "owner+lexeme首次掌握/累计",
+      "backend_source": "backend.md#3-全量继承与用例追踪",
+      "apis_source_notation": "API-008/203",
+      "data_source_notation": "DATA-202/203/207/208",
+      "pages": [
+        "PAGE-203",
+        "PAGE-214"
+      ]
+    },
+    {
+      "capability": "CAP-214",
+      "behavior": "动态等级/成就/手动全或无领取",
+      "backend_source": "backend.md#3-全量继承与用例追踪",
+      "apis_source_notation": "API-203",
+      "data_source_notation": "DATA-207/208/209/210",
+      "pages": [
+        "PAGE-210",
+        "PAGE-214"
+      ]
+    },
+    {
+      "capability": "CAP-215",
+      "behavior": "兑换/库存/手动下架退积分",
+      "backend_source": "backend.md#3-全量继承与用例追踪",
+      "apis_source_notation": "API-204",
+      "data_source_notation": "DATA-207/210/211",
+      "pages": [
+        "PAGE-210",
+        "PAGE-215"
+      ]
+    },
+    {
+      "capability": "CAP-216",
+      "behavior": "逐模型加时/计划体验/额度组合",
+      "backend_source": "backend.md#3-全量继承与用例追踪",
+      "apis_source_notation": "API-004/204",
+      "data_source_notation": "DATA-006/009/210/211",
+      "pages": [
+        "PAGE-204",
+        "PAGE-208",
+        "PAGE-215"
+      ]
+    },
+    {
+      "capability": "CAP-217",
+      "behavior": "成长配置/类型道具/正数补分",
+      "backend_source": "backend.md#3-全量继承与用例追踪",
+      "apis_source_notation": "API-103/206",
+      "data_source_notation": "DATA-206/207/208/209/210",
+      "pages": [
+        "PAGE-210",
+        "PAGE-211"
+      ]
+    },
+    {
+      "capability": "CAP-218",
+      "behavior": "预设目录/固定台/草稿预览发布",
+      "backend_source": "backend.md#3-全量继承与用例追踪",
+      "apis_source_notation": "API-202/208",
+      "data_source_notation": "DATA-010/011/012/212/214",
+      "pages": [
+        "PAGE-212",
+        "PAGE-216",
+        "PAGE-217"
+      ]
+    },
+    {
+      "capability": "CAP-219",
+      "behavior": "访问/学习漏斗/留存/概览",
+      "backend_source": "backend.md#3-全量继承与用例追踪",
+      "apis_source_notation": "API-209/900",
+      "data_source_notation": "DATA-009/202/213/214",
+      "pages": [
+        "PAGE-213",
+        "PAGE-218"
+      ]
+    },
+    {
+      "capability": "CAP-220",
+      "behavior": "本人新旧批次标题编辑",
+      "backend_source": "backend.md#3-全量继承与用例追踪",
+      "apis_source_notation": "API-007",
+      "data_source_notation": "DATA-012",
+      "pages": [
+        "PAGE-005",
+        "PAGE-006"
+      ]
+    }
+  ],
+  "m001_pages": {
+    "PAGE-001": [
+      "PAGE-205"
+    ],
+    "PAGE-002": [
+      "PAGE-002"
+    ],
+    "PAGE-003": [
+      "PAGE-003"
+    ],
+    "PAGE-004": [
+      "PAGE-204"
+    ],
+    "PAGE-005": [
+      "PAGE-005"
+    ],
+    "PAGE-006": [
+      "PAGE-006"
+    ],
+    "PAGE-007": [
+      "PAGE-007"
+    ],
+    "PAGE-008": [
+      "PAGE-008",
+      "PAGE-201",
+      "PAGE-202",
+      "PAGE-203"
+    ],
+    "PAGE-009": [
+      "PAGE-206"
+    ],
+    "PAGE-101": [
+      "PAGE-208"
+    ],
+    "PAGE-102": [
+      "PAGE-208"
+    ],
+    "PAGE-103": [
+      "PAGE-103"
+    ]
+  },
+  "design_deltas": [
+    {
+      "id": "FDE-01",
+      "source": "../design/frontend-delta.md",
+      "plan": "frontend.md#routes",
+      "source_section": "FDE-01"
+    },
+    {
+      "id": "FDE-02",
+      "source": "../design/frontend-delta.md",
+      "plan": "frontend.md#design",
+      "source_section": "FDE-02"
+    },
+    {
+      "id": "FDE-03",
+      "source": "../design/frontend-delta.md",
+      "plan": "frontend.md#generation",
+      "source_section": "FDE-03"
+    },
+    {
+      "id": "FDE-04",
+      "source": "../design/frontend-delta.md",
+      "plan": "frontend.md#review",
+      "source_section": "FDE-04"
+    },
+    {
+      "id": "FDE-05",
+      "source": "../design/frontend-delta.md",
+      "plan": "frontend.md#generation",
+      "source_section": "FDE-05"
+    },
+    {
+      "id": "FDE-06",
+      "source": "../design/frontend-delta.md",
+      "plan": "frontend.md#growth",
+      "source_section": "FDE-06"
+    },
+    {
+      "id": "FDE-07",
+      "source": "../design/frontend-delta.md",
+      "plan": "frontend.md#notices",
+      "source_section": "FDE-07"
+    },
+    {
+      "id": "FDE-08",
+      "source": "../design/frontend-delta.md",
+      "plan": "frontend.md#generation",
+      "source_section": "FDE-08"
+    },
+    {
+      "id": "FDE-09",
+      "source": "../design/frontend-delta.md",
+      "plan": "frontend.md#growth",
+      "source_section": "FDE-09"
+    }
+  ],
+  "active_data": [
+    "DATA-001",
+    "DATA-002",
+    "DATA-003",
+    "DATA-004",
+    "DATA-005",
+    "DATA-006",
+    "DATA-007",
+    "DATA-008",
+    "DATA-009",
+    "DATA-010",
+    "DATA-011",
+    "DATA-012",
+    "DATA-013",
+    "DATA-014",
+    "DATA-016",
+    "DATA-017",
+    "DATA-018",
+    "DATA-201",
+    "DATA-202",
+    "DATA-203",
+    "DATA-204",
+    "DATA-205",
+    "DATA-206",
+    "DATA-207",
+    "DATA-208",
+    "DATA-209",
+    "DATA-210",
+    "DATA-211",
+    "DATA-212",
+    "DATA-213",
+    "DATA-214"
+  ],
+  "replaced_data": [
+    {
+      "id": "DATA-015",
+      "replacement": "DATA-202",
+      "rule": "Only minimal facts; no historic answers",
+      "plan": "frontend.md#review"
+    }
+  ],
+  "contract_gaps": [
+    {
+      "id": "FE2-G01",
+      "pages": [
+        "PAGE-210",
+        "PAGE-214"
+      ],
+      "source": "../changes/CR-004.md",
+      "status": "design_closed",
+      "plan": "frontend.md#cr004",
+      "backend_version": "M002-BE-03",
+      "change_request_status": "closed_by_TRANSITION-M002-016",
+      "closure_source": "../reviews/technical-design.md"
+    },
+    {
+      "id": "FE2-G02",
+      "pages": [
+        "PAGE-210"
+      ],
+      "source": "../changes/CR-004.md",
+      "status": "design_closed",
+      "plan": "frontend.md#cr004",
+      "backend_version": "M002-BE-03",
+      "change_request_status": "closed_by_TRANSITION-M002-016",
+      "closure_source": "../reviews/technical-design.md"
+    },
+    {
+      "id": "FE2-G03",
+      "pages": [
+        "PAGE-212"
+      ],
+      "source": "../changes/CR-004.md",
+      "status": "design_closed",
+      "plan": "frontend.md#cr004",
+      "backend_version": "M002-BE-03",
+      "change_request_status": "closed_by_TRANSITION-M002-016",
+      "closure_source": "../reviews/technical-design.md"
+    },
+    {
+      "id": "FE3-G01",
+      "pages": [
+        "PAGE-212"
+      ],
+      "source": "../changes/CR-027.md",
+      "status": "contract_received",
+      "plan": "frontend.md#ui26",
+      "affected_api": "API-004",
+      "owner": "frontend-bob",
+      "blocked_scope": null,
+      "backend_version": "M002-BE-04",
+      "remaining": "BE4-I01 implementation and BE4-V01–03 runtime verification; CR027 remains open"
+    }
+  ],
+  "contract_alignment": "ALIGNED_BE04",
+  "design_approval": "APPROVAL-M002-065",
+  "ui26_incremental_tasks": [
+    {
+      "id": "FE3-I01",
+      "plan": "frontend.md#delivery",
+      "status": "planned"
+    },
+    {
+      "id": "FE3-I02",
+      "plan": "frontend.md#delivery",
+      "status": "planned"
+    },
+    {
+      "id": "FE3-I03",
+      "plan": "frontend.md#delivery",
+      "status": "planned"
+    },
+    {
+      "id": "FE3-I04",
+      "plan": "frontend.md#delivery",
+      "status": "planned"
+    },
+    {
+      "id": "FE3-I05",
+      "plan": "frontend.md#delivery",
+      "status": "planned"
+    },
+    {
+      "id": "FE3-I06",
+      "plan": "frontend.md#delivery",
+      "status": "planned"
+    }
+  ],
+  "ui26_verification": [
+    {
+      "id": "FE3-V01",
+      "plan": "frontend.md#ui26",
+      "status": "not_executed_on_production"
+    },
+    {
+      "id": "FE3-V02",
+      "plan": "frontend.md#ui26",
+      "status": "not_executed_on_production"
+    },
+    {
+      "id": "FE3-V03",
+      "plan": "frontend.md#ui26",
+      "status": "not_executed_on_production"
+    },
+    {
+      "id": "FE3-V04",
+      "plan": "frontend.md#ui26",
+      "status": "not_executed_on_production"
+    },
+    {
+      "id": "FE3-V05",
+      "plan": "frontend.md#ui26",
+      "status": "not_executed_on_production"
+    },
+    {
+      "id": "FE3-V06",
+      "plan": "frontend.md#ui26",
+      "status": "not_executed_on_production"
+    },
+    {
+      "id": "FE3-V07",
+      "plan": "frontend.md#ui26",
+      "status": "not_executed_on_production"
+    },
+    {
+      "id": "FE3-V08",
+      "plan": "frontend.md#ui26",
+      "status": "not_executed_on_production"
+    },
+    {
+      "id": "FE3-V09",
+      "plan": "frontend.md#ui26",
+      "status": "not_executed_on_production"
+    }
+  ]
+}

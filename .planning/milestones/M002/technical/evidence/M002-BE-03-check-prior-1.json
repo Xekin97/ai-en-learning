@@ -1,0 +1,171 @@
+{
+  "version": "M002-BE-03",
+  "status": "FAIL",
+  "checked_at": "2026-09-20T05:50:56.827187+00:00",
+  "checks": [
+    {
+      "name": "authorized_role_and_database",
+      "status": "PASS",
+      "details": "014 approves DB03 and backend reception only."
+    },
+    {
+      "name": "proposed_version_open_cr",
+      "status": "PASS",
+      "details": "No self approval, stage change, or premature CR closure."
+    },
+    {
+      "name": "protected_files",
+      "status": "PASS",
+      "details": {
+        "count": 5112,
+        "changed": []
+      }
+    },
+    {
+      "name": "head_unchanged",
+      "status": "PASS",
+      "details": "No application commit."
+    },
+    {
+      "name": "before_snapshot_intact",
+      "status": "PASS",
+      "details": "Eight pre-edit sources exactly recoverable."
+    },
+    {
+      "name": "cr_diagnosis_preserved",
+      "status": "PASS",
+      "details": "Only resolution status/receiving owner updated."
+    },
+    {
+      "name": "frozen_archives",
+      "status": "PASS",
+      "details": {
+        "archives": {
+          "M002-BE-02": 16,
+          "M002-DB-03": 8,
+          "M002-FE-01": 15
+        },
+        "failures": []
+      }
+    },
+    {
+      "name": "bounded_architecture_changes",
+      "status": "PASS",
+      "details": {
+        "changed": [
+          "## 1. 当前结论、输入与边界",
+          "### 1.2 BE2-D01 数据接收完成（后端修订待审）",
+          "### 1.3 有实际取舍的技术选择",
+          "### 1.4 BE2-D02 CR-004 专业接收（本版待审）",
+          "## 2. 模块与内部调用",
+          "### 4.2 业务原子边界",
+          "### 4.5 成长配置命令接收",
+          "## 5. 安全、数据与输入",
+          "## 7. 发布、配置和回滚",
+          "## 8. 实施验证清单（尚未运行）",
+          "## 9. 本轮交付证据与交接"
+        ],
+        "unexpected": []
+      }
+    },
+    {
+      "name": "unrelated_api_semantics_preserved",
+      "status": "FAIL",
+      "details": {
+        "sections": 13,
+        "changed": [
+          [
+            "technical/api/administration.md",
+            "## 3. API-103 用户管理完整继承",
+            false
+          ]
+        ]
+      }
+    },
+    {
+      "name": "ai_body_unchanged",
+      "status": "PASS",
+      "details": "Only version/database reference and final reception status updated; prompt/runtime unchanged."
+    },
+    {
+      "name": "complete_capability_mapping",
+      "status": "PASS",
+      "details": "49 CAP and inherited DATA/PAGE mappings unchanged."
+    },
+    {
+      "name": "stable_validation_ids",
+      "status": "PASS",
+      "details": "V01–17 retained; V18–21 added; R01–08 remain locatable."
+    },
+    {
+      "name": "three_gaps_traceable",
+      "status": "PASS",
+      "details": "Backend completion distinct from frontend acceptance."
+    },
+    {
+      "name": "description_contract",
+      "status": "PASS",
+      "details": "Nullable separate fields and learner projection with current description/old honor."
+    },
+    {
+      "name": "atomic_commands_and_recovery",
+      "status": "PASS",
+      "details": "Three domain commands, complete reads, stable IDs, indexed errors, safe unknown commit."
+    },
+    {
+      "name": "whole_change_confirmation",
+      "status": "PASS",
+      "details": "Confirmation binds full normalized change set and actor/session/config, not frozen user progress."
+    },
+    {
+      "name": "admin_options_contract",
+      "status": "PASS",
+      "details": "Exact admin-safe DTO and failure distinction; no plan/quota/secret exposure."
+    },
+    {
+      "name": "synthetic_contract_examples",
+      "status": "PASS",
+      "details": {
+        "errors": [],
+        "description_cases": 6,
+        "invalid_descriptions": 3,
+        "admin_option_cases": 4,
+        "tiers_each": 6,
+        "runtime_execution": false
+      }
+    },
+    {
+      "name": "local_file_links",
+      "status": "PASS",
+      "details": {
+        "broken": [],
+        "new_explicit_anchor": "api-206-growth-config"
+      }
+    }
+  ],
+  "scope": "Static document/protocol-example validation only; no production implementation, HTTP, token signature or database/concurrency tests",
+  "professional_reception": "BACKEND_COMPLETED_PENDING_APPROVAL_AND_FRONTEND",
+  "CR004_status": "open",
+  "application_tests": false,
+  "database_access": false,
+  "real_ai_calls": 0,
+  "workflow_changed": false,
+  "document_maintenance": {
+    "same_source_set": [
+      "technical/backend.md",
+      "technical/ai-integration.md",
+      "handoffs/backend-architecture.md",
+      "technical/api/index.md",
+      "technical/api/administration.md",
+      "technical/api/generation-presets.md",
+      "technical/api/growth-benefits.md",
+      "changes/CR-004.md"
+    ],
+    "before_chars": 65589,
+    "after_chars": 76762,
+    "before_bytes": 110124,
+    "after_bytes": 129335,
+    "new_session_reception": "not_performed",
+    "tokens": "unknown"
+  }
+}

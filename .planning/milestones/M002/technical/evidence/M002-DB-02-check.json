@@ -1,0 +1,174 @@
+{
+  "version": "M002-DB-02",
+  "created_at": "2026-09-20T04:01:59.153370+00:00",
+  "result": "PASS_STATIC_AWAITING_REVIEW",
+  "source_sha256": {
+    ".planning/milestones/M002/technical/database.md": "4059b370e8cee63401c3e6721f5019604a496fbaced693eb8c32b98753677a03",
+    ".planning/milestones/M002/handoffs/database.md": "1054f43af44a139917e00cc9e0c146da11c80967f2249474abb5f863a81ac683",
+    ".planning/milestones/M002/changes/CR-003.md": "aa18f709105d26fc99effae052ad8ee467dedcfe3af1b17403dfb2e473e73c55"
+  },
+  "checks": [
+    {
+      "name": "active_role_and_historical_approval",
+      "status": "PASS",
+      "details": "Same technical-design role; DB-02 not approved; DB-01 historical approval retained."
+    },
+    {
+      "name": "proposed_revision_and_open_cr",
+      "status": "PASS",
+      "details": "DBA delivered proposal; approval and backend reception pending."
+    },
+    {
+      "name": "protected_files",
+      "status": "PASS",
+      "details": {
+        "count": 5061,
+        "changed": [],
+        "includes": "workflow controls, product/UI, BE-01, DB-01 evidence, M001 and application sources"
+      }
+    },
+    {
+      "name": "frozen_history_recoverable",
+      "status": "PASS",
+      "details": {
+        "failures": [],
+        "DB01_members_verified": 6,
+        "BE01_archive_sha_verified": true
+      }
+    },
+    {
+      "name": "cr_origin_preserved",
+      "status": "PASS",
+      "details": "Original backend problem/evidence/proposal intact; only DBA resolution progress appended."
+    },
+    {
+      "name": "bounded_revision",
+      "status": "PASS",
+      "details": {
+        "changed_sections": [
+          "## 1. 当前范围、确认与依据",
+          "### 1.1 需求确认记录",
+          "### 1.2 实测事实与容量假设",
+          "### 4.3 平台通知",
+          "### 5.1 表、关系与状态",
+          "### 5.2 提交、重试与恢复",
+          "### 5.3 一期事实承接",
+          "### 5.4 完成概况的读取边界",
+          "### 5.5 确认替换未完成日期范围",
+          "### 11.2 用例事务表",
+          "### 12.1 数据保留与变更策略",
+          "### 13.1 查询与索引依据",
+          "## 14. 验证计划与交接",
+          "### 14.1 已知未决与接收条件",
+          "### 14.2 文档自检边界"
+        ],
+        "unexpected": [],
+        "unchanged": "DATA mapping, word/account data, growth, cards/quota, presets/analytics, locks, backup, deletion/operations"
+      }
+    },
+    {
+      "name": "inherited_data_and_capabilities",
+      "status": "PASS",
+      "details": {
+        "data_count": 32,
+        "cap_count": 49,
+        "meaning": "Reference coverage, not feature acceptance"
+      }
+    },
+    {
+      "name": "stable_transaction_migration_validation_ids",
+      "status": "PASS",
+      "details": {
+        "expected": {
+          "T": 14,
+          "M": 7,
+          "V": 19
+        },
+        "missing": []
+      }
+    },
+    {
+      "name": "existing_schema_evidence",
+      "status": "PASS",
+      "details": "Read actual 0002 source; no live database measurement or migration."
+    },
+    {
+      "name": "CR003_1_minimal_overview",
+      "status": "PASS",
+      "details": {
+        "missing": [],
+        "scope": "Design requirements and validation paths present; not executed SQL tests"
+      }
+    },
+    {
+      "name": "CR003_2_atomic_replacement",
+      "status": "PASS",
+      "details": {
+        "missing": [],
+        "scope": "Design requirements and validation paths present; not executed SQL tests"
+      }
+    },
+    {
+      "name": "CR003_3_bilingual_title",
+      "status": "PASS",
+      "details": {
+        "missing": [],
+        "scope": "Design requirements and validation paths present; not executed SQL tests"
+      }
+    },
+    {
+      "name": "prior_decisions_and_runtime_limits",
+      "status": "PASS",
+      "details": "No new cross-device drafts, no runtime quality claims; existing open items preserved."
+    },
+    {
+      "name": "local_links",
+      "status": "PASS",
+      "details": {
+        "count": 56,
+        "failures": [],
+        "deferred_until_freeze": [
+          ".planning/milestones/M002/technical/evidence/M002-DB-02-check.json",
+          ".planning/milestones/M002/technical/evidence/M002-DB-02-freeze-results.json",
+          ".planning/milestones/M002/technical/evidence/M002-DB-02-manifest.json",
+          ".planning/milestones/M002/technical/evidence/M002-DB-02.tar.gz"
+        ]
+      }
+    },
+    {
+      "name": "new_files_limited_to_evidence",
+      "status": "PASS",
+      "details": {
+        "unexpected": []
+      }
+    }
+  ],
+  "size_comparison": {
+    ".planning/milestones/M002/technical/database.md": {
+      "before_unicode_characters": 38497,
+      "after_unicode_characters": 44299,
+      "after_utf8_bytes": 82597
+    },
+    ".planning/milestones/M002/handoffs/database.md": {
+      "before_unicode_characters": 3789,
+      "after_unicode_characters": 3444,
+      "after_utf8_bytes": 5665
+    },
+    ".planning/milestones/M002/changes/CR-003.md": {
+      "before_unicode_characters": 1964,
+      "after_unicode_characters": 2535,
+      "after_utf8_bytes": 4621
+    }
+  },
+  "size_scope": "Same three canonical files once each; not actual cumulative input or billed tokens",
+  "actual_tokens": "unknown",
+  "runtime_tests": false,
+  "database_connected": false,
+  "independent_handoff_test": false,
+  "workflow_transition": false,
+  "pending": [
+    "DB-02 user approval",
+    "backend reception and CR-003 resolution",
+    "DB2-V01–19 implementation verification"
+  ]
+}

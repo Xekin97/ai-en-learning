@@ -1,0 +1,166 @@
+{
+  "version": "M002-BE-04",
+  "scope": "static documents and existing source inspection",
+  "status": "PASS",
+  "checks": [
+    {
+      "check": "role_and_stage",
+      "result": "PASS",
+      "detail": null
+    },
+    {
+      "check": "protected_files_unchanged",
+      "result": "PASS",
+      "detail": {
+        "count": 602,
+        "changed": []
+      }
+    },
+    {
+      "check": "old_sources_recoverable",
+      "result": "PASS",
+      "detail": null
+    },
+    {
+      "check": "API004_admin_scope_explicit",
+      "result": "PASS",
+      "detail": null
+    },
+    {
+      "check": "API004_only_search_section_changed",
+      "result": "PASS",
+      "detail": null
+    },
+    {
+      "check": "common_API_contract_unchanged",
+      "result": "PASS",
+      "detail": null
+    },
+    {
+      "check": "canonical_entry_response_retained",
+      "result": "PASS",
+      "detail": null
+    },
+    {
+      "check": "read_only_and_no_privilege_expansion",
+      "result": "PASS",
+      "detail": null
+    },
+    {
+      "check": "inherited_stable_BE_ids_retained",
+      "result": "PASS",
+      "detail": {
+        "missing": []
+      }
+    },
+    {
+      "check": "all_original_capabilities_retained",
+      "result": "PASS",
+      "detail": null
+    },
+    {
+      "check": "CR027_followups_visible",
+      "result": "PASS",
+      "detail": null
+    },
+    {
+      "check": "excluded_and_retained_work_preserved",
+      "result": "PASS",
+      "detail": null
+    },
+    {
+      "check": "static_shared_route_and_read_query",
+      "result": "PASS",
+      "detail": null
+    },
+    {
+      "check": "static_admin_random_is_denied",
+      "result": "PASS",
+      "detail": null
+    },
+    {
+      "check": "limit_narrowing_finding_evidenced",
+      "result": "PASS",
+      "detail": {
+        "method": "static source inspection plus signed-int32 arithmetic illustration; no HTTP",
+        "input": 4294967297,
+        "after_int32": 1
+      }
+    },
+    {
+      "check": "added_local_links_and_anchors",
+      "result": "PASS",
+      "detail": {
+        "checked": 28,
+        "missing": []
+      }
+    }
+  ],
+  "source_hashes": {
+    "technical/backend.md": "fa0bcda960791759879fffdf3aea85d248b1a41fc25b1ac227eb56ee356ea00d",
+    "technical/api/index.md": "64ff82a0031449de1b62660d0c50b90a2ae4886dfdcc29ac9ded34ff4f9fa1b0",
+    "technical/api/generation-presets.md": "485bd3e5df6f12a9eb9f526e94e463e0582d28464d7822ec486330db468652d1",
+    "handoffs/backend-architecture.md": "f4544d0b88581a94f5d74b75df1a71e200d254987aefe8336435f91149f66476",
+    "changes/CR-027.md": "cfd97e111dba1ef5ed3bfaa330775f87728eb8fc3b4dfbe83f99ce4d0205d34a"
+  },
+  "document_sizes": {
+    "before": {
+      "technical/backend.md": {
+        "chars": 19612,
+        "bytes": 36381
+      },
+      "technical/api/index.md": {
+        "chars": 5677,
+        "bytes": 9992
+      },
+      "technical/api/generation-presets.md": {
+        "chars": 9681,
+        "bytes": 15427
+      },
+      "handoffs/backend-architecture.md": {
+        "chars": 4400,
+        "bytes": 7565
+      },
+      "changes/CR-027.md": {
+        "chars": 1495,
+        "bytes": 2749
+      }
+    },
+    "after": {
+      "technical/backend.md": {
+        "chars": 21543,
+        "bytes": 40151
+      },
+      "technical/api/index.md": {
+        "chars": 5971,
+        "bytes": 10423
+      },
+      "technical/api/generation-presets.md": {
+        "chars": 10700,
+        "bytes": 17604
+      },
+      "handoffs/backend-architecture.md": {
+        "chars": 2212,
+        "bytes": 3804
+      },
+      "changes/CR-027.md": {
+        "chars": 2093,
+        "bytes": 3692
+      }
+    }
+  },
+  "not_run": [
+    "actual HTTP with admin/visitor/learner",
+    "application unit/integration tests",
+    "DB writes or migrations",
+    "provider calls",
+    "independent new-session handoff"
+  ],
+  "unresolved": [
+    "frontend FE3-G01 reception",
+    "BE4-I01 code correction",
+    "BE4-V01–03 runtime verification"
+  ],
+  "application_modified": false,
+  "real_ai_calls": 0
+}

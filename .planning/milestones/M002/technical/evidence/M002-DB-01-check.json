@@ -1,0 +1,218 @@
+{
+  "version": "M002-DB-01",
+  "agent_name": "dba-diana",
+  "status": "PASS",
+  "checked_at": "2026-09-20T03:10:05.208134+00:00",
+  "method": "Read-only structural/source/link/hash verification plus in-document design analysis; no SQL/runtime tests",
+  "checks": [
+    {
+      "check": "role_and_stage",
+      "status": "PASS",
+      "detail": "Uses TRANSITION-M002-008; no role switch"
+    },
+    {
+      "check": "draft_review_state",
+      "status": "PASS",
+      "detail": "Design proposed; recorded requirement clarifications closed"
+    },
+    {
+      "check": "protected_inputs_unchanged",
+      "status": "PASS",
+      "detail": {
+        "protected_files": 4872,
+        "changed": []
+      }
+    },
+    {
+      "check": "data_asset_mapping",
+      "status": "PASS",
+      "detail": {
+        "expected": [
+          "DATA-001",
+          "DATA-002",
+          "DATA-003",
+          "DATA-004",
+          "DATA-005",
+          "DATA-006",
+          "DATA-007",
+          "DATA-008",
+          "DATA-009",
+          "DATA-010",
+          "DATA-011",
+          "DATA-012",
+          "DATA-013",
+          "DATA-014",
+          "DATA-015",
+          "DATA-016",
+          "DATA-017",
+          "DATA-018",
+          "DATA-201",
+          "DATA-202",
+          "DATA-203",
+          "DATA-204",
+          "DATA-205",
+          "DATA-206",
+          "DATA-207",
+          "DATA-208",
+          "DATA-209",
+          "DATA-210",
+          "DATA-211",
+          "DATA-212",
+          "DATA-213",
+          "DATA-214"
+        ],
+        "mapped": [
+          "DATA-001",
+          "DATA-002",
+          "DATA-003",
+          "DATA-004",
+          "DATA-005",
+          "DATA-006",
+          "DATA-007",
+          "DATA-008",
+          "DATA-009",
+          "DATA-010",
+          "DATA-011",
+          "DATA-012",
+          "DATA-013",
+          "DATA-014",
+          "DATA-015",
+          "DATA-016",
+          "DATA-017",
+          "DATA-018",
+          "DATA-201",
+          "DATA-202",
+          "DATA-203",
+          "DATA-204",
+          "DATA-205",
+          "DATA-206",
+          "DATA-207",
+          "DATA-208",
+          "DATA-209",
+          "DATA-210",
+          "DATA-211",
+          "DATA-212",
+          "DATA-213",
+          "DATA-214"
+        ],
+        "replacement_index": "DATA-015"
+      }
+    },
+    {
+      "check": "capability_references",
+      "status": "PASS",
+      "detail": {
+        "missing": [],
+        "unknown": [],
+        "count": 49,
+        "scope": "ID coverage, not functional acceptance"
+      }
+    },
+    {
+      "check": "local_links",
+      "status": "PASS",
+      "detail": {
+        "links": 35,
+        "failures": [],
+        "deferred_delivery_artifacts": [
+          ".planning/milestones/M002/technical/evidence/M002-DB-01-check.json",
+          ".planning/milestones/M002/technical/evidence/M002-DB-01-manifest.json",
+          ".planning/milestones/M002/technical/evidence/M002-DB-01.tar.gz"
+        ]
+      }
+    },
+    {
+      "check": "existing_vocabulary_fact",
+      "status": "PASS",
+      "detail": "Read-only file count/bytes/hash; no database measurement"
+    },
+    {
+      "check": "existing_schema_fact",
+      "status": "PASS",
+      "detail": {
+        "declared_tables": [
+          "schema_migrations",
+          "vocabulary_snapshots",
+          "vocabulary_entries",
+          "entitlement_groups",
+          "accounts",
+          "account_sessions",
+          "visitor_identities",
+          "ai_models",
+          "group_models",
+          "group_lengths",
+          "openrouter_credentials",
+          "generation_runs",
+          "generation_run_entries",
+          "generation_drafts",
+          "learning_batches",
+          "batch_targets",
+          "passage_occurrences",
+          "visitor_claims",
+          "review_sessions",
+          "review_session_batches",
+          "review_session_targets",
+          "review_results",
+          "hint_occurrences"
+        ],
+        "live_schema": "not_read"
+      }
+    },
+    {
+      "check": "requirement_corrections_recorded",
+      "status": "PASS",
+      "detail": "Local draft scope corrected; separate quota and 90-day analytics explicitly confirmed"
+    },
+    {
+      "check": "no_stale_pending_semantics",
+      "status": "PASS",
+      "detail": "Withdrawn cross-device scope not frozen as an execution requirement"
+    },
+    {
+      "check": "verification_scope_marked",
+      "status": "PASS",
+      "detail": "Migration/concurrency/performance/recovery remain planned, not passed"
+    },
+    {
+      "check": "retained_items",
+      "status": "PASS",
+      "detail": "Existing constraints and unresolved product verification remain reachable"
+    }
+  ],
+  "source_sha256": {
+    ".planning/milestones/M002/technical/database.md": "b180ed396cdc3a1e3ae61d7d2dda481a223ec4b4b6f60aa8a2d84e00297fc1a0",
+    ".planning/milestones/M002/handoffs/database.md": "9a9b77da4290e5ec98fce75a9c4c3d4a84de0bdd0ee052616aec1c54249bbd3c"
+  },
+  "planning_footprint": {
+    "selected_full_file_characters": {
+      ".planning/milestones/M002/product/overview.md": 7107,
+      ".planning/milestones/M002/product/data-assets.md": 14108,
+      ".planning/milestones/M002/product/abilities.md": 38283,
+      ".planning/milestones/M002/decisions/product-decisions.md": 14244,
+      ".planning/milestones/M002/handoffs/uiux.md": 2324,
+      ".planning/milestones/M001/technical/database.md": 37789
+    },
+    "plan_characters": 38497,
+    "handoff_characters": 3789,
+    "unit": "Unicode characters, static file size only; selected files sometimes read by section",
+    "actual_runtime_input_tokens": "unknown",
+    "actual_usage": "unknown",
+    "over_soft_budget_reason": "32 data indices / 49 capabilities and prior schema, ownership, lifecycle and concurrency inheritance"
+  },
+  "not_executed": [
+    "database_connection",
+    "SQL_migrations",
+    "application_changes",
+    "runtime_tests",
+    "concurrency_tests",
+    "EXPLAIN",
+    "restore_drill",
+    "independent_handoff_session",
+    "live_AI",
+    "deployment"
+  ],
+  "workflow_controls_modified": false,
+  "profile_modified": false,
+  "approved": false,
+  "initial_check_note": "Initial verification marker expected 未连接 rather than the document's 没有连接; corrected literal matcher. Original FAIL retained in M002-DB-01-check-initial.json. No design scope changed for this correction."
+}
