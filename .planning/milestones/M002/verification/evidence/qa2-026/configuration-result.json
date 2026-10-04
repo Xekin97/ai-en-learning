@@ -1,0 +1,192 @@
+{
+  "result": "PARTIAL",
+  "steps": [
+    {
+      "step": "disable-local-model",
+      "result": "PASS"
+    },
+    {
+      "step": "real-credential-and-endpoint",
+      "result": "PASS",
+      "endpoint": "https://openrouter.ai/api/v1"
+    },
+    {
+      "step": "enable-real-model",
+      "provider_model": "minimax/minimax-m3",
+      "id": "01a0eafa-f36c-7b77-9e14-c48c0aafdc15",
+      "compatibility_probe": true,
+      "result": "FAIL",
+      "error": "/admin/models/01a0eafa-f36c-7b77-9e14-c48c0aafdc15/enable HTTP 422 model_incompatible"
+    },
+    {
+      "step": "enable-real-model",
+      "provider_model": "deepseek/deepseek-v4-flash-0731",
+      "id": "01a0ec18-4b64-7195-8647-92926c3a9e6c",
+      "compatibility_probe": true,
+      "result": "PASS"
+    },
+    {
+      "step": "enable-real-model",
+      "provider_model": "z-ai/glm-5.3-flash",
+      "id": "01a0ec18-c7c4-7ecb-a32e-441323e466fe",
+      "compatibility_probe": true,
+      "result": "PASS"
+    }
+  ],
+  "after": {
+    "models": {
+      "items": [
+        {
+          "id": "01a0eafa-f36c-7b77-9e14-c48c0aafdc15",
+          "display_name": "MiniMax",
+          "description": "good",
+          "openrouter_model_id": "minimax/minimax-m3",
+          "enabled": false,
+          "retired_at": null,
+          "assigned_group_codes": [
+            "visitor",
+            "basic",
+            "pro"
+          ],
+          "created_at": "2026-09-29T10:25:09.996448+08:00",
+          "updated_at": "2026-09-29T15:36:41.043578+08:00"
+        },
+        {
+          "id": "01a0ec18-4b64-7195-8647-92926c3a9e6c",
+          "display_name": "DeepSeek V4 Flash 0731",
+          "description": "Structured English-learning passages via OpenRouter",
+          "openrouter_model_id": "deepseek/deepseek-v4-flash-0731",
+          "enabled": true,
+          "retired_at": null,
+          "assigned_group_codes": [
+            "visitor",
+            "basic",
+            "pro"
+          ],
+          "created_at": "2026-09-29T15:36:50.275834+08:00",
+          "updated_at": "2026-09-29T15:37:22.108364+08:00"
+        },
+        {
+          "id": "01a0ec18-c7c4-7ecb-a32e-441323e466fe",
+          "display_name": "GLM",
+          "description": "great",
+          "openrouter_model_id": "z-ai/glm-5.3-flash",
+          "enabled": true,
+          "retired_at": null,
+          "assigned_group_codes": [
+            "visitor",
+            "basic",
+            "pro"
+          ],
+          "created_at": "2026-09-29T15:37:22.116716+08:00",
+          "updated_at": "2026-09-29T15:37:53.71383+08:00"
+        }
+      ],
+      "revision": "NP-i7Bxbpo1wEI3PxV9QYBcqLsViLfqfNV_kAJE0WjU"
+    },
+    "groups": {
+      "items": [
+        {
+          "code": "visitor",
+          "priority": 0,
+          "rolling_24h_limit": 50,
+          "max_entries": 3,
+          "allowed_lengths": [
+            "short",
+            "medium"
+          ],
+          "models": [
+            {
+              "id": "01a0ec18-4b64-7195-8647-92926c3a9e6c",
+              "display_name": "DeepSeek V4 Flash 0731",
+              "enabled": true
+            },
+            {
+              "id": "01a0ec18-c7c4-7ecb-a32e-441323e466fe",
+              "display_name": "GLM",
+              "enabled": true
+            },
+            {
+              "id": "01a0eafa-f36c-7b77-9e14-c48c0aafdc15",
+              "display_name": "MiniMax",
+              "enabled": false
+            }
+          ]
+        },
+        {
+          "code": "basic",
+          "priority": 1,
+          "rolling_24h_limit": 50,
+          "max_entries": 3,
+          "allowed_lengths": [
+            "short",
+            "medium"
+          ],
+          "models": [
+            {
+              "id": "01a0ec18-4b64-7195-8647-92926c3a9e6c",
+              "display_name": "DeepSeek V4 Flash 0731",
+              "enabled": true
+            },
+            {
+              "id": "01a0ec18-c7c4-7ecb-a32e-441323e466fe",
+              "display_name": "GLM",
+              "enabled": true
+            },
+            {
+              "id": "01a0eafa-f36c-7b77-9e14-c48c0aafdc15",
+              "display_name": "MiniMax",
+              "enabled": false
+            }
+          ]
+        },
+        {
+          "code": "pro",
+          "priority": 2,
+          "rolling_24h_limit": 50,
+          "max_entries": 3,
+          "allowed_lengths": [
+            "short",
+            "medium",
+            "long",
+            "xlong"
+          ],
+          "models": [
+            {
+              "id": "01a0ec18-4b64-7195-8647-92926c3a9e6c",
+              "display_name": "DeepSeek V4 Flash 0731",
+              "enabled": true
+            },
+            {
+              "id": "01a0ec18-c7c4-7ecb-a32e-441323e466fe",
+              "display_name": "GLM",
+              "enabled": true
+            },
+            {
+              "id": "01a0eafa-f36c-7b77-9e14-c48c0aafdc15",
+              "display_name": "MiniMax",
+              "enabled": false
+            }
+          ]
+        },
+        {
+          "code": "plus",
+          "priority": 3,
+          "rolling_24h_limit": null,
+          "max_entries": 5,
+          "allowed_lengths": [
+            "short",
+            "medium",
+            "long",
+            "xlong"
+          ],
+          "models": []
+        }
+      ],
+      "revision": "NP-i7Bxbpo1wEI3PxV9QYBcqLsViLfqfNV_kAJE0WjU"
+    },
+    "credentialConfigured": true
+  },
+  "learnerGenerationCalls": 0,
+  "qualityBatch": false
+}

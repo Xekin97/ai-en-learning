@@ -1,0 +1,34 @@
+{
+  "application_changed": false,
+  "preserved_raw_runs": [
+    "results.json",
+    "control/results.json",
+    "keyboard-control/results.json"
+  ],
+  "changes": [
+    {
+      "scope": "N17 320 outside pointer",
+      "cause": "Chosen h1 center was covered by the legitimately expanded menu. Timeout did not prove a product click failure.",
+      "correction": "Choose a real viewport point and assert elementFromPoint is outside dropdown; normal mouse click, never force/dispatchEvent.",
+      "source": "control/entry-flows.mjs"
+    },
+    {
+      "scope": "M17 float",
+      "cause": "Approved animation changes independent CSS translate; transform only contains fixed rotation.",
+      "correction": "Sample actual translate plus bounding Y for 9.2 real seconds; visible change and amplitude <=6.1px (0.1px measurement tolerance).",
+      "source": "control/entry-flows.mjs"
+    },
+    {
+      "scope": "W17 WebKit timeline",
+      "cause": "First sample pending with startTime null; resolved startTime incorrectly classified as restart.",
+      "correction": "Wait for same animation to resolve startTime, then require node/animation identity, constant start and monotonic time. Fade frames still sampled before login.",
+      "source": "control/entry-flows.mjs"
+    },
+    {
+      "scope": "N17 WebKit keyboard",
+      "cause": "Native Tab skipped anchors in both prototype and implementation; Escape observation started after focus left menu.",
+      "correction": "Alt+Tab for Mac WebKit full link navigation. Both versions reach first link; Escape closes both, production still loses focus. Same four product mismatches persist.",
+      "source": "keyboard-control/entry-flows.mjs"
+    }
+  ]
+}

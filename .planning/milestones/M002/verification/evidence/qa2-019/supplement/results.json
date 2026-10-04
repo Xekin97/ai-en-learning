@@ -1,0 +1,497 @@
+[
+  {
+    "id": "D19-zh-320",
+    "engine": "webkit",
+    "lang": "zh",
+    "width": 320,
+    "checks": [
+      {
+        "name": "approved prototype achievement focus confirms expected behavior",
+        "pass": true
+      },
+      {
+        "name": "no runtime warning/error",
+        "pass": true,
+        "actual": []
+      }
+    ],
+    "observations": {
+      "select": {
+        "original": {
+          "height": 22,
+          "min": "18px",
+          "cssHeight": "22px",
+          "appearance": "auto"
+        },
+        "explicitHeight": {
+          "height": 46,
+          "min": "18px",
+          "cssHeight": "46px",
+          "appearance": "auto"
+        },
+        "withoutNativeAppearance": {
+          "height": 46.390625,
+          "min": "46px",
+          "cssHeight": "46.390625px",
+          "appearance": "none"
+        }
+      },
+      "shop": {
+        "width": 768,
+        "scrollWidth": 768,
+        "overflow": []
+      },
+      "prototypeSelect": {
+        "height": 22,
+        "min": "18px",
+        "appearance": "auto"
+      },
+      "prototypeClaim": {
+        "summary": true,
+        "tag": "SUMMARY"
+      }
+    },
+    "runtime": [],
+    "requests": [
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:3300/api/v1/bootstrap"
+      },
+      {
+        "method": "POST",
+        "url": "http://127.0.0.1:3300/api/v1/analytics/events"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:3300/api/v1/bootstrap"
+      },
+      {
+        "method": "POST",
+        "url": "http://127.0.0.1:3300/api/v1/analytics/events"
+      }
+    ],
+    "status": "PASS"
+  },
+  {
+    "id": "R19-zh-320",
+    "engine": "webkit",
+    "lang": "zh",
+    "width": 320,
+    "checks": [
+      {
+        "name": "level reward returns focus to corresponding level heading",
+        "pass": false,
+        "actual": {
+          "focused": false,
+          "tag": "MAIN",
+          "text": "llearner_e2e@learner_e2e基础计划基础生效计划基础上次登录2026年9月20日 13:00上次学习2026年9月15日 13:00个人信息"
+        }
+      },
+      {
+        "name": "no runtime warning/error",
+        "pass": true,
+        "actual": []
+      }
+    ],
+    "observations": {
+      "level": {
+        "focused": false,
+        "tag": "MAIN",
+        "text": "llearner_e2e@learner_e2e基础计划基础生效计划基础上次登录2026年9月20日 13:00上次学习2026年9月15日 13:00个人信息"
+      }
+    },
+    "runtime": [],
+    "requests": [
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:3300/api/v1/bootstrap"
+      },
+      {
+        "method": "POST",
+        "url": "http://127.0.0.1:3300/api/v1/analytics/events"
+      },
+      {
+        "method": "POST",
+        "url": "http://127.0.0.1:3300/api/v1/analytics/events"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:3300/api/v1/me/growth"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:3300/api/v1/me/growth/achievements?limit=100"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:3300/api/v1/me/growth/level-rewards?limit=100"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:3300/api/v1/me/growth/checkins?start_date=2026-09-14&end_date=2026-09-20"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:3300/api/v1/bootstrap"
+      },
+      {
+        "method": "POST",
+        "url": "http://127.0.0.1:3300/api/v1/me/growth/level-rewards/lv2/claim"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:3300/api/v1/me/growth"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:3300/api/v1/me/growth/achievements?limit=100"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:3300/api/v1/me/growth/level-rewards?limit=100"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:3300/api/v1/me/growth/checkins?start_date=2026-09-14&end_date=2026-09-20"
+      }
+    ],
+    "status": "FAIL"
+  },
+  {
+    "id": "R19-zh-1440",
+    "engine": "chromium",
+    "lang": "zh",
+    "width": 1440,
+    "checks": [
+      {
+        "name": "level reward returns focus to corresponding level heading",
+        "pass": false,
+        "actual": {
+          "focused": false,
+          "tag": "BODY",
+          "text": "跳到主要内容词涟首页精选学习复习书架英文平台消息llearner_e2e个人信息账号成长道具卡兑换中心llearner_e2e@learner_e2e基础计划基"
+        }
+      },
+      {
+        "name": "no runtime warning/error",
+        "pass": true,
+        "actual": []
+      }
+    ],
+    "observations": {
+      "level": {
+        "focused": false,
+        "tag": "BODY",
+        "text": "跳到主要内容词涟首页精选学习复习书架英文平台消息llearner_e2e个人信息账号成长道具卡兑换中心llearner_e2e@learner_e2e基础计划基"
+      }
+    },
+    "runtime": [],
+    "requests": [
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:3300/api/v1/bootstrap"
+      },
+      {
+        "method": "POST",
+        "url": "http://127.0.0.1:3300/api/v1/analytics/events"
+      },
+      {
+        "method": "POST",
+        "url": "http://127.0.0.1:3300/api/v1/analytics/events"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:3300/api/v1/me/growth"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:3300/api/v1/me/growth/achievements?limit=100"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:3300/api/v1/me/growth/level-rewards?limit=100"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:3300/api/v1/me/growth/checkins?start_date=2026-09-14&end_date=2026-09-20"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:3300/api/v1/bootstrap"
+      },
+      {
+        "method": "POST",
+        "url": "http://127.0.0.1:3300/api/v1/me/growth/level-rewards/lv2/claim"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:3300/api/v1/me/growth"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:3300/api/v1/me/growth/achievements?limit=100"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:3300/api/v1/me/growth/level-rewards?limit=100"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:3300/api/v1/me/growth/checkins?start_date=2026-09-14&end_date=2026-09-20"
+      }
+    ],
+    "status": "FAIL"
+  },
+  {
+    "id": "D19-en-320",
+    "engine": "webkit",
+    "lang": "en",
+    "width": 320,
+    "checks": [
+      {
+        "name": "approved prototype achievement focus confirms expected behavior",
+        "pass": true
+      },
+      {
+        "name": "no runtime warning/error",
+        "pass": true,
+        "actual": []
+      }
+    ],
+    "observations": {
+      "select": {
+        "original": {
+          "height": 22,
+          "min": "18px",
+          "cssHeight": "22px",
+          "appearance": "auto"
+        },
+        "explicitHeight": {
+          "height": 46,
+          "min": "18px",
+          "cssHeight": "46px",
+          "appearance": "auto"
+        },
+        "withoutNativeAppearance": {
+          "height": 46.390625,
+          "min": "46px",
+          "cssHeight": "46.390625px",
+          "appearance": "none"
+        }
+      },
+      "shop": {
+        "width": 768,
+        "scrollWidth": 770,
+        "overflow": [
+          {
+            "tag": "DIV",
+            "cls": "account-balance",
+            "text": "Available points9007199254740993",
+            "x": 432.21875,
+            "right": 769.5,
+            "width": 337.28125
+          }
+        ]
+      },
+      "prototypeSelect": {
+        "height": 22,
+        "min": "18px",
+        "appearance": "auto"
+      },
+      "prototypeClaim": {
+        "summary": true,
+        "tag": "SUMMARY"
+      }
+    },
+    "runtime": [],
+    "requests": [
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:3300/api/v1/bootstrap"
+      },
+      {
+        "method": "POST",
+        "url": "http://127.0.0.1:3300/api/v1/analytics/events"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:3300/api/v1/bootstrap"
+      },
+      {
+        "method": "POST",
+        "url": "http://127.0.0.1:3300/api/v1/analytics/events"
+      }
+    ],
+    "status": "PASS"
+  },
+  {
+    "id": "R19-en-320",
+    "engine": "webkit",
+    "lang": "en",
+    "width": 320,
+    "checks": [
+      {
+        "name": "level reward returns focus to corresponding level heading",
+        "pass": false,
+        "actual": {
+          "focused": false,
+          "tag": "MAIN",
+          "text": "llearner_e2e@learner_e2eBase planBasicActive planBasicLast loginSep 20, 2026, 1:"
+        }
+      },
+      {
+        "name": "no runtime warning/error",
+        "pass": true,
+        "actual": []
+      }
+    ],
+    "observations": {
+      "level": {
+        "focused": false,
+        "tag": "MAIN",
+        "text": "llearner_e2e@learner_e2eBase planBasicActive planBasicLast loginSep 20, 2026, 1:"
+      }
+    },
+    "runtime": [],
+    "requests": [
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:3300/api/v1/bootstrap"
+      },
+      {
+        "method": "POST",
+        "url": "http://127.0.0.1:3300/api/v1/analytics/events"
+      },
+      {
+        "method": "POST",
+        "url": "http://127.0.0.1:3300/api/v1/analytics/events"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:3300/api/v1/me/growth"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:3300/api/v1/me/growth/achievements?limit=100"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:3300/api/v1/me/growth/level-rewards?limit=100"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:3300/api/v1/me/growth/checkins?start_date=2026-09-14&end_date=2026-09-20"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:3300/api/v1/bootstrap"
+      },
+      {
+        "method": "POST",
+        "url": "http://127.0.0.1:3300/api/v1/me/growth/level-rewards/lv2/claim"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:3300/api/v1/me/growth"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:3300/api/v1/me/growth/achievements?limit=100"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:3300/api/v1/me/growth/level-rewards?limit=100"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:3300/api/v1/me/growth/checkins?start_date=2026-09-14&end_date=2026-09-20"
+      }
+    ],
+    "status": "FAIL"
+  },
+  {
+    "id": "R19-en-1440",
+    "engine": "chromium",
+    "lang": "en",
+    "width": 1440,
+    "checks": [
+      {
+        "name": "level reward returns focus to corresponding level heading",
+        "pass": false,
+        "actual": {
+          "focused": false,
+          "tag": "BODY",
+          "text": "Skip to main contentWordWeaveHomePicksLearnReviewLibraryChineseUpdatesllearner_e"
+        }
+      },
+      {
+        "name": "no runtime warning/error",
+        "pass": true,
+        "actual": []
+      }
+    ],
+    "observations": {
+      "level": {
+        "focused": false,
+        "tag": "BODY",
+        "text": "Skip to main contentWordWeaveHomePicksLearnReviewLibraryChineseUpdatesllearner_e"
+      }
+    },
+    "runtime": [],
+    "requests": [
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:3300/api/v1/bootstrap"
+      },
+      {
+        "method": "POST",
+        "url": "http://127.0.0.1:3300/api/v1/analytics/events"
+      },
+      {
+        "method": "POST",
+        "url": "http://127.0.0.1:3300/api/v1/analytics/events"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:3300/api/v1/me/growth"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:3300/api/v1/me/growth/achievements?limit=100"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:3300/api/v1/me/growth/level-rewards?limit=100"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:3300/api/v1/me/growth/checkins?start_date=2026-09-14&end_date=2026-09-20"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:3300/api/v1/bootstrap"
+      },
+      {
+        "method": "POST",
+        "url": "http://127.0.0.1:3300/api/v1/me/growth/level-rewards/lv2/claim"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:3300/api/v1/me/growth"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:3300/api/v1/me/growth/achievements?limit=100"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:3300/api/v1/me/growth/level-rewards?limit=100"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:3300/api/v1/me/growth/checkins?start_date=2026-09-14&end_date=2026-09-20"
+      }
+    ],
+    "status": "FAIL"
+  }
+]

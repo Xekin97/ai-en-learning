@@ -1,0 +1,1294 @@
+{
+  "results": [
+    {
+      "id": "A01",
+      "name": "Real registration links anonymous traffic; retries deduplicate and another browser remains a distinct UV",
+      "result": "PASS"
+    },
+    {
+      "id": "A02",
+      "name": "Generate, save, start and resume write server facts once and browser events cannot forge results",
+      "result": "PASS"
+    },
+    {
+      "id": "A03",
+      "name": "Minute aggregation reflects real registration/generation/save/start while active traffic sessions are excluded from bounce",
+      "result": "PASS"
+    },
+    {
+      "id": "A04",
+      "name": "D1/D7/D30 and activation use specified learning days; empty submissions do not make a learner active",
+      "result": "PASS"
+    },
+    {
+      "id": "A05",
+      "name": "While maintenance is paused expired detail is physically present but range UV is unavailable; historical daily totals remain usable",
+      "result": "PASS"
+    },
+    {
+      "id": "A06",
+      "name": "Unavailable historical WAU is not reconstructed from retained personal growth facts",
+      "result": "PASS"
+    },
+    {
+      "id": "A07",
+      "name": "Real maintenance physically purges expired events/sessions/cohorts and preserves recent detail, accounts and anonymous totals",
+      "result": "PASS"
+    },
+    {
+      "id": "A08",
+      "name": "Late real submission after analytics expiry updates its original start cohort; recovery/replay does not create another event",
+      "result": "PASS"
+    },
+    {
+      "id": "A09",
+      "name": "Account deletion erases linked shared-browser analytics and personal facts while preserving another account and anonymous historical aggregates",
+      "result": "FAIL",
+      "error": "Error: /auth/register 422 {\"type\":\"https://wordweave.example/problems/validation-failed\",\"title\":\"Request could not be accepted\",\"status\":422,\"code\":\"validation_failed\",\"detail\":\"One or more fields need attention.\",\"request_id\":\"req_EDN7BpMz6GxP3E-zzD8zxA\"}"
+    },
+    {
+      "id": "A10",
+      "name": "Provider availability is not application readiness and private metrics are absent from the public API listener",
+      "result": "PASS"
+    }
+  ],
+  "samples": [
+    {
+      "id": "A01",
+      "events": [
+        {
+          "event_kind": "page_view",
+          "event_outcome": "anonymous",
+          "has_owner": false,
+          "has_session": true
+        },
+        {
+          "event_kind": "registered",
+          "event_outcome": null,
+          "has_owner": true,
+          "has_session": true
+        },
+        {
+          "event_kind": "page_view",
+          "event_outcome": "account",
+          "has_owner": true,
+          "has_session": true
+        },
+        {
+          "event_kind": "page_view",
+          "event_outcome": "account",
+          "has_owner": true,
+          "has_session": true
+        }
+      ],
+      "expected": {
+        "pv": 3,
+        "uv": 2,
+        "registered": 1
+      },
+      "crossBrowserWithoutFingerprint": true
+    },
+    {
+      "id": "A02",
+      "counts": [
+        {
+          "event_kind": "generation_started",
+          "n": 1
+        },
+        {
+          "event_kind": "generation_valid",
+          "n": 1
+        },
+        {
+          "event_kind": "passage_saved",
+          "n": 1
+        },
+        {
+          "event_kind": "registered",
+          "n": 1
+        },
+        {
+          "event_kind": "review_started",
+          "n": 1
+        }
+      ],
+      "forgedSubmission": 422,
+      "run": "01a0e688-e613-7b8b-ae60-698205c12fd9",
+      "batch": "01a0e688-e625-7318-8ee6-47441a5a94e0",
+      "attempt": "01a0e688-e637-7150-98e3-34117fa7b500",
+      "localCallsIncludingProbe": 2
+    },
+    {
+      "id": "A03",
+      "traffic": {
+        "range": {
+          "start_day": "2026-09-28",
+          "end_day": "2026-09-28"
+        },
+        "learning_day": "2026-09-28",
+        "updated_at": "2026-09-28T13:42:45.6915+08:00",
+        "freshness": "current",
+        "detail_available_from": "2026-06-30T13:42:46.503674+08:00",
+        "pv": {
+          "value": 3,
+          "numerator": null,
+          "denominator": null,
+          "status": "ready",
+          "reason": null
+        },
+        "uv": {
+          "value": 2,
+          "numerator": null,
+          "denominator": null,
+          "status": "ready",
+          "reason": null
+        },
+        "bounce_rate": {
+          "value": null,
+          "numerator": 0,
+          "denominator": 0,
+          "status": "no_sample",
+          "reason": null
+        },
+        "series": [
+          {
+            "day": "2026-09-28",
+            "pv": {
+              "value": 3,
+              "numerator": null,
+              "denominator": null,
+              "status": "ready",
+              "reason": null
+            },
+            "uv": {
+              "value": 2,
+              "numerator": null,
+              "denominator": null,
+              "status": "ready",
+              "reason": null
+            },
+            "bounce_rate": {
+              "value": null,
+              "numerator": 0,
+              "denominator": 0,
+              "status": "no_sample",
+              "reason": null
+            }
+          }
+        ],
+        "channels": [
+          {
+            "source_type": "utm",
+            "pv": {
+              "value": 2,
+              "numerator": null,
+              "denominator": null,
+              "status": "ready",
+              "reason": null
+            },
+            "uv": {
+              "value": 1,
+              "numerator": null,
+              "denominator": null,
+              "status": "ready",
+              "reason": null
+            }
+          },
+          {
+            "source_type": "referrer",
+            "pv": {
+              "value": 0,
+              "numerator": null,
+              "denominator": null,
+              "status": "ready",
+              "reason": null
+            },
+            "uv": {
+              "value": 0,
+              "numerator": null,
+              "denominator": null,
+              "status": "ready",
+              "reason": null
+            }
+          },
+          {
+            "source_type": "direct_unknown",
+            "pv": {
+              "value": 1,
+              "numerator": null,
+              "denominator": null,
+              "status": "ready",
+              "reason": null
+            },
+            "uv": {
+              "value": 1,
+              "numerator": null,
+              "denominator": null,
+              "status": "ready",
+              "reason": null
+            }
+          }
+        ],
+        "clarity": {
+          "available": false,
+          "url": null
+        }
+      },
+      "funnel": {
+        "range": {
+          "start_day": "2026-09-28",
+          "end_day": "2026-09-28"
+        },
+        "learning_day": "2026-09-28",
+        "updated_at": "2026-09-28T13:42:45.6915+08:00",
+        "freshness": "current",
+        "detail_available_from": "2026-06-30T13:42:46.50765+08:00",
+        "registration": {
+          "converted_visitor_uv": {
+            "value": 1,
+            "numerator": null,
+            "denominator": null,
+            "status": "ready",
+            "reason": null
+          },
+          "anonymous_uv": {
+            "value": 1,
+            "numerator": null,
+            "denominator": null,
+            "status": "ready",
+            "reason": null
+          },
+          "rate": {
+            "value": 1,
+            "numerator": 1,
+            "denominator": 1,
+            "status": "ready",
+            "reason": null
+          },
+          "new_accounts": {
+            "value": 1,
+            "numerator": null,
+            "denominator": null,
+            "status": "ready",
+            "reason": null
+          },
+          "unattributed_accounts": {
+            "value": 0,
+            "numerator": null,
+            "denominator": null,
+            "status": "ready",
+            "reason": null
+          }
+        },
+        "activation": {
+          "within_7_days": {
+            "value": null,
+            "numerator": 1,
+            "denominator": 1,
+            "status": "observing",
+            "reason": null
+          },
+          "same_day": {
+            "value": null,
+            "numerator": 1,
+            "denominator": 1,
+            "status": "observing",
+            "reason": null
+          },
+          "cohorts": [
+            {
+              "registration_day": "2026-09-28",
+              "rate": {
+                "value": null,
+                "numerator": 1,
+                "denominator": 1,
+                "status": "observing",
+                "reason": null
+              }
+            }
+          ]
+        },
+        "review": {
+          "started": {
+            "value": 1,
+            "numerator": null,
+            "denominator": null,
+            "status": "ready",
+            "reason": null
+          },
+          "submitted": {
+            "value": 0,
+            "numerator": null,
+            "denominator": null,
+            "status": "ready",
+            "reason": null
+          },
+          "successful": {
+            "value": 0,
+            "numerator": null,
+            "denominator": null,
+            "status": "ready",
+            "reason": null
+          },
+          "completion_rate": {
+            "value": 0,
+            "numerator": 0,
+            "denominator": 1,
+            "status": "ready",
+            "reason": null
+          },
+          "success_rate": {
+            "value": null,
+            "numerator": 0,
+            "denominator": 0,
+            "status": "no_sample",
+            "reason": null
+          }
+        },
+        "generation": {
+          "valid": {
+            "value": 1,
+            "numerator": null,
+            "denominator": null,
+            "status": "ready",
+            "reason": null
+          },
+          "failed": {
+            "value": 0,
+            "numerator": null,
+            "denominator": null,
+            "status": "ready",
+            "reason": null
+          },
+          "cancelled": {
+            "value": 0,
+            "numerator": null,
+            "denominator": null,
+            "status": "ready",
+            "reason": null
+          },
+          "ongoing": {
+            "value": 0,
+            "numerator": null,
+            "denominator": null,
+            "status": "ready",
+            "reason": null
+          },
+          "precheck_rejected": {
+            "value": 0,
+            "numerator": null,
+            "denominator": null,
+            "status": "ready",
+            "reason": null
+          },
+          "failure_rate": {
+            "value": 0,
+            "numerator": 0,
+            "denominator": 1,
+            "status": "ready",
+            "reason": null
+          }
+        }
+      },
+      "retention": {
+        "range": {
+          "start_day": "2026-09-28",
+          "end_day": "2026-09-28"
+        },
+        "learning_day": "2026-09-28",
+        "updated_at": "2026-09-28T13:42:45.6915+08:00",
+        "freshness": "current",
+        "detail_available_from": "2026-06-30T13:42:46.509753+08:00",
+        "cohorts": [
+          {
+            "registration_day": "2026-09-28",
+            "accounts": 1,
+            "d1": {
+              "value": null,
+              "numerator": 0,
+              "denominator": 1,
+              "status": "observing",
+              "reason": null
+            },
+            "d7": {
+              "value": null,
+              "numerator": 0,
+              "denominator": 1,
+              "status": "observing",
+              "reason": null
+            },
+            "d30": {
+              "value": null,
+              "numerator": 0,
+              "denominator": 1,
+              "status": "observing",
+              "reason": null
+            }
+          }
+        ],
+        "series": [
+          {
+            "day": "2026-09-28",
+            "wau": {
+              "value": 1,
+              "numerator": null,
+              "denominator": null,
+              "status": "ready",
+              "reason": null
+            },
+            "valid_generations": {
+              "value": 1,
+              "numerator": null,
+              "denominator": null,
+              "status": "ready",
+              "reason": null
+            },
+            "saved_passages": {
+              "value": 1,
+              "numerator": null,
+              "denominator": null,
+              "status": "ready",
+              "reason": null
+            },
+            "review_submissions": {
+              "value": 0,
+              "numerator": null,
+              "denominator": null,
+              "status": "ready",
+              "reason": null
+            },
+            "successful_reviews": {
+              "value": 0,
+              "numerator": null,
+              "denominator": null,
+              "status": "ready",
+              "reason": null
+            },
+            "reviews_per_active_learner": {
+              "value": 0,
+              "numerator": 0,
+              "denominator": 1,
+              "status": "ready",
+              "reason": null
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "A04",
+      "funnel": {
+        "range": {
+          "start_day": "2026-08-19",
+          "end_day": "2026-08-19"
+        },
+        "learning_day": "2026-09-28",
+        "updated_at": "2026-09-28T13:42:45.6915+08:00",
+        "freshness": "current",
+        "detail_available_from": "2026-06-30T13:42:46.51318+08:00",
+        "registration": {
+          "converted_visitor_uv": {
+            "value": 0,
+            "numerator": null,
+            "denominator": null,
+            "status": "ready",
+            "reason": null
+          },
+          "anonymous_uv": {
+            "value": 0,
+            "numerator": null,
+            "denominator": null,
+            "status": "ready",
+            "reason": null
+          },
+          "rate": {
+            "value": null,
+            "numerator": 0,
+            "denominator": 0,
+            "status": "no_sample",
+            "reason": null
+          },
+          "new_accounts": {
+            "value": 2,
+            "numerator": null,
+            "denominator": null,
+            "status": "ready",
+            "reason": null
+          },
+          "unattributed_accounts": {
+            "value": 2,
+            "numerator": null,
+            "denominator": null,
+            "status": "ready",
+            "reason": null
+          }
+        },
+        "activation": {
+          "within_7_days": {
+            "value": 0.5,
+            "numerator": 1,
+            "denominator": 2,
+            "status": "ready",
+            "reason": null
+          },
+          "same_day": {
+            "value": 0.5,
+            "numerator": 1,
+            "denominator": 2,
+            "status": "ready",
+            "reason": null
+          },
+          "cohorts": [
+            {
+              "registration_day": "2026-08-19",
+              "rate": {
+                "value": 0.5,
+                "numerator": 1,
+                "denominator": 2,
+                "status": "ready",
+                "reason": null
+              }
+            }
+          ]
+        },
+        "review": {
+          "started": {
+            "value": 0,
+            "numerator": null,
+            "denominator": null,
+            "status": "ready",
+            "reason": null
+          },
+          "submitted": {
+            "value": 0,
+            "numerator": null,
+            "denominator": null,
+            "status": "ready",
+            "reason": null
+          },
+          "successful": {
+            "value": 0,
+            "numerator": null,
+            "denominator": null,
+            "status": "ready",
+            "reason": null
+          },
+          "completion_rate": {
+            "value": null,
+            "numerator": 0,
+            "denominator": 0,
+            "status": "no_sample",
+            "reason": null
+          },
+          "success_rate": {
+            "value": null,
+            "numerator": 0,
+            "denominator": 0,
+            "status": "no_sample",
+            "reason": null
+          }
+        },
+        "generation": {
+          "valid": {
+            "value": 0,
+            "numerator": null,
+            "denominator": null,
+            "status": "ready",
+            "reason": null
+          },
+          "failed": {
+            "value": 0,
+            "numerator": null,
+            "denominator": null,
+            "status": "ready",
+            "reason": null
+          },
+          "cancelled": {
+            "value": 0,
+            "numerator": null,
+            "denominator": null,
+            "status": "ready",
+            "reason": null
+          },
+          "ongoing": {
+            "value": 0,
+            "numerator": null,
+            "denominator": null,
+            "status": "ready",
+            "reason": null
+          },
+          "precheck_rejected": {
+            "value": 0,
+            "numerator": null,
+            "denominator": null,
+            "status": "ready",
+            "reason": null
+          },
+          "failure_rate": {
+            "value": null,
+            "numerator": 0,
+            "denominator": 0,
+            "status": "no_sample",
+            "reason": null
+          }
+        }
+      },
+      "cohort": {
+        "registration_day": "2026-08-19",
+        "accounts": 2,
+        "d1": {
+          "value": 0.5,
+          "numerator": 1,
+          "denominator": 2,
+          "status": "ready",
+          "reason": null
+        },
+        "d7": {
+          "value": 0.5,
+          "numerator": 1,
+          "denominator": 2,
+          "status": "ready",
+          "reason": null
+        },
+        "d30": {
+          "value": 0.5,
+          "numerator": 1,
+          "denominator": 2,
+          "status": "ready",
+          "reason": null
+        }
+      },
+      "activity": {
+        "day": "2026-09-18",
+        "wau": {
+          "value": 1,
+          "numerator": null,
+          "denominator": null,
+          "status": "ready",
+          "reason": null
+        },
+        "valid_generations": {
+          "value": 1,
+          "numerator": null,
+          "denominator": null,
+          "status": "ready",
+          "reason": null
+        },
+        "saved_passages": {
+          "value": 0,
+          "numerator": null,
+          "denominator": null,
+          "status": "ready",
+          "reason": null
+        },
+        "review_submissions": {
+          "value": 1,
+          "numerator": null,
+          "denominator": null,
+          "status": "ready",
+          "reason": null
+        },
+        "successful_reviews": {
+          "value": 0,
+          "numerator": null,
+          "denominator": null,
+          "status": "ready",
+          "reason": null
+        },
+        "reviews_per_active_learner": {
+          "value": 1,
+          "numerator": 1,
+          "denominator": 1,
+          "status": "ready",
+          "reason": null
+        }
+      },
+      "fixture": "Actual registered accounts; historical activity facts/timestamps explicitly seeded"
+    },
+    {
+      "id": "A05",
+      "traffic": {
+        "range": {
+          "start_day": "2026-06-28",
+          "end_day": "2026-06-29"
+        },
+        "learning_day": "2026-09-28",
+        "updated_at": "2026-09-28T13:37:46.547573+08:00",
+        "freshness": "delayed",
+        "detail_available_from": "2026-06-30T13:42:46.651451+08:00",
+        "pv": {
+          "value": 3,
+          "numerator": null,
+          "denominator": null,
+          "status": "ready",
+          "reason": null
+        },
+        "uv": {
+          "value": null,
+          "numerator": null,
+          "denominator": null,
+          "status": "unavailable",
+          "reason": "detail_expired"
+        },
+        "bounce_rate": {
+          "value": 0.5,
+          "numerator": 1,
+          "denominator": 2,
+          "status": "ready",
+          "reason": null
+        },
+        "series": [
+          {
+            "day": "2026-06-28",
+            "pv": {
+              "value": 2,
+              "numerator": null,
+              "denominator": null,
+              "status": "ready",
+              "reason": null
+            },
+            "uv": {
+              "value": 1,
+              "numerator": null,
+              "denominator": null,
+              "status": "ready",
+              "reason": null
+            },
+            "bounce_rate": {
+              "value": 0,
+              "numerator": 0,
+              "denominator": 1,
+              "status": "ready",
+              "reason": null
+            }
+          },
+          {
+            "day": "2026-06-29",
+            "pv": {
+              "value": 1,
+              "numerator": null,
+              "denominator": null,
+              "status": "ready",
+              "reason": null
+            },
+            "uv": {
+              "value": 1,
+              "numerator": null,
+              "denominator": null,
+              "status": "ready",
+              "reason": null
+            },
+            "bounce_rate": {
+              "value": 1,
+              "numerator": 1,
+              "denominator": 1,
+              "status": "ready",
+              "reason": null
+            }
+          }
+        ],
+        "channels": [
+          {
+            "source_type": "utm",
+            "pv": {
+              "value": 2,
+              "numerator": null,
+              "denominator": null,
+              "status": "ready",
+              "reason": null
+            },
+            "uv": {
+              "value": null,
+              "numerator": null,
+              "denominator": null,
+              "status": "unavailable",
+              "reason": "detail_expired"
+            }
+          },
+          {
+            "source_type": "referrer",
+            "pv": {
+              "value": 0,
+              "numerator": null,
+              "denominator": null,
+              "status": "ready",
+              "reason": null
+            },
+            "uv": {
+              "value": null,
+              "numerator": null,
+              "denominator": null,
+              "status": "unavailable",
+              "reason": "detail_expired"
+            }
+          },
+          {
+            "source_type": "direct_unknown",
+            "pv": {
+              "value": 1,
+              "numerator": null,
+              "denominator": null,
+              "status": "ready",
+              "reason": null
+            },
+            "uv": {
+              "value": null,
+              "numerator": null,
+              "denominator": null,
+              "status": "unavailable",
+              "reason": "detail_expired"
+            }
+          }
+        ],
+        "clarity": {
+          "available": false,
+          "url": null
+        }
+      },
+      "retention": {
+        "range": {
+          "start_day": "2026-06-20",
+          "end_day": "2026-06-20"
+        },
+        "learning_day": "2026-09-28",
+        "updated_at": "2026-09-28T13:37:46.547573+08:00",
+        "freshness": "delayed",
+        "detail_available_from": "2026-06-30T13:42:46.653109+08:00",
+        "cohorts": [
+          {
+            "registration_day": "2026-06-20",
+            "accounts": 2,
+            "d1": {
+              "value": 0.5,
+              "numerator": 1,
+              "denominator": 2,
+              "status": "ready",
+              "reason": null
+            },
+            "d7": {
+              "value": 0.5,
+              "numerator": 1,
+              "denominator": 2,
+              "status": "ready",
+              "reason": null
+            },
+            "d30": {
+              "value": 0.5,
+              "numerator": 1,
+              "denominator": 2,
+              "status": "ready",
+              "reason": null
+            }
+          }
+        ],
+        "series": [
+          {
+            "day": "2026-06-20",
+            "wau": {
+              "value": 0,
+              "numerator": null,
+              "denominator": null,
+              "status": "ready",
+              "reason": null
+            },
+            "valid_generations": {
+              "value": 0,
+              "numerator": null,
+              "denominator": null,
+              "status": "ready",
+              "reason": null
+            },
+            "saved_passages": {
+              "value": 0,
+              "numerator": null,
+              "denominator": null,
+              "status": "ready",
+              "reason": null
+            },
+            "review_submissions": {
+              "value": 0,
+              "numerator": null,
+              "denominator": null,
+              "status": "ready",
+              "reason": null
+            },
+            "successful_reviews": {
+              "value": 0,
+              "numerator": null,
+              "denominator": null,
+              "status": "ready",
+              "reason": null
+            },
+            "reviews_per_active_learner": {
+              "value": null,
+              "numerator": 0,
+              "denominator": 0,
+              "status": "no_sample",
+              "reason": null
+            }
+          }
+        ]
+      },
+      "expiredRowsBeforePurge": 9,
+      "note": "No simulated 90-day wall-clock wait; preserved precomputed aggregates aged in isolated DB"
+    },
+    {
+      "id": "A06",
+      "historicalWAU": {
+        "value": null,
+        "numerator": null,
+        "denominator": null,
+        "status": "unavailable",
+        "reason": "source_unavailable"
+      },
+      "growthFactPresent": true
+    },
+    {
+      "id": "A07",
+      "expiredSessionCount": 2,
+      "expiredDetailRows": 0,
+      "insideBoundaryRetained": 1,
+      "cohortCopiesRemoved": 2,
+      "realAccountsPreserved": 2,
+      "anonymousMetricRowsUnchanged": 85,
+      "traffic": {
+        "range": {
+          "start_day": "2026-06-28",
+          "end_day": "2026-06-29"
+        },
+        "learning_day": "2026-09-28",
+        "updated_at": "2026-09-28T13:43:45.692916+08:00",
+        "freshness": "current",
+        "detail_available_from": "2026-06-30T13:43:47.468317+08:00",
+        "pv": {
+          "value": 3,
+          "numerator": null,
+          "denominator": null,
+          "status": "ready",
+          "reason": null
+        },
+        "uv": {
+          "value": null,
+          "numerator": null,
+          "denominator": null,
+          "status": "unavailable",
+          "reason": "detail_expired"
+        },
+        "bounce_rate": {
+          "value": 0.5,
+          "numerator": 1,
+          "denominator": 2,
+          "status": "ready",
+          "reason": null
+        },
+        "series": [
+          {
+            "day": "2026-06-28",
+            "pv": {
+              "value": 2,
+              "numerator": null,
+              "denominator": null,
+              "status": "ready",
+              "reason": null
+            },
+            "uv": {
+              "value": 1,
+              "numerator": null,
+              "denominator": null,
+              "status": "ready",
+              "reason": null
+            },
+            "bounce_rate": {
+              "value": 0,
+              "numerator": 0,
+              "denominator": 1,
+              "status": "ready",
+              "reason": null
+            }
+          },
+          {
+            "day": "2026-06-29",
+            "pv": {
+              "value": 1,
+              "numerator": null,
+              "denominator": null,
+              "status": "ready",
+              "reason": null
+            },
+            "uv": {
+              "value": 1,
+              "numerator": null,
+              "denominator": null,
+              "status": "ready",
+              "reason": null
+            },
+            "bounce_rate": {
+              "value": 1,
+              "numerator": 1,
+              "denominator": 1,
+              "status": "ready",
+              "reason": null
+            }
+          }
+        ],
+        "channels": [
+          {
+            "source_type": "utm",
+            "pv": {
+              "value": 2,
+              "numerator": null,
+              "denominator": null,
+              "status": "ready",
+              "reason": null
+            },
+            "uv": {
+              "value": null,
+              "numerator": null,
+              "denominator": null,
+              "status": "unavailable",
+              "reason": "detail_expired"
+            }
+          },
+          {
+            "source_type": "referrer",
+            "pv": {
+              "value": 0,
+              "numerator": null,
+              "denominator": null,
+              "status": "ready",
+              "reason": null
+            },
+            "uv": {
+              "value": null,
+              "numerator": null,
+              "denominator": null,
+              "status": "unavailable",
+              "reason": "detail_expired"
+            }
+          },
+          {
+            "source_type": "direct_unknown",
+            "pv": {
+              "value": 1,
+              "numerator": null,
+              "denominator": null,
+              "status": "ready",
+              "reason": null
+            },
+            "uv": {
+              "value": null,
+              "numerator": null,
+              "denominator": null,
+              "status": "unavailable",
+              "reason": "detail_expired"
+            }
+          }
+        ],
+        "clarity": {
+          "available": false,
+          "url": null
+        }
+      },
+      "retention": {
+        "range": {
+          "start_day": "2026-06-20",
+          "end_day": "2026-06-20"
+        },
+        "learning_day": "2026-09-28",
+        "updated_at": "2026-09-28T13:43:45.692916+08:00",
+        "freshness": "current",
+        "detail_available_from": "2026-06-30T13:43:47.47077+08:00",
+        "cohorts": [
+          {
+            "registration_day": "2026-06-20",
+            "accounts": 2,
+            "d1": {
+              "value": 0.5,
+              "numerator": 1,
+              "denominator": 2,
+              "status": "ready",
+              "reason": null
+            },
+            "d7": {
+              "value": 0.5,
+              "numerator": 1,
+              "denominator": 2,
+              "status": "ready",
+              "reason": null
+            },
+            "d30": {
+              "value": 0.5,
+              "numerator": 1,
+              "denominator": 2,
+              "status": "ready",
+              "reason": null
+            }
+          }
+        ],
+        "series": [
+          {
+            "day": "2026-06-20",
+            "wau": {
+              "value": 0,
+              "numerator": null,
+              "denominator": null,
+              "status": "ready",
+              "reason": null
+            },
+            "valid_generations": {
+              "value": 0,
+              "numerator": null,
+              "denominator": null,
+              "status": "ready",
+              "reason": null
+            },
+            "saved_passages": {
+              "value": 0,
+              "numerator": null,
+              "denominator": null,
+              "status": "ready",
+              "reason": null
+            },
+            "review_submissions": {
+              "value": 0,
+              "numerator": null,
+              "denominator": null,
+              "status": "ready",
+              "reason": null
+            },
+            "successful_reviews": {
+              "value": 0,
+              "numerator": null,
+              "denominator": null,
+              "status": "ready",
+              "reason": null
+            },
+            "reviews_per_active_learner": {
+              "value": null,
+              "numerator": 0,
+              "denominator": 0,
+              "status": "no_sample",
+              "reason": null
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "A08",
+      "receipt": {
+        "attempt_id": "01a0e688-e637-7150-98e3-34117fa7b500",
+        "batch_id": "01a0e688-e625-7318-8ee6-47441a5a94e0",
+        "revision": "egPHBosqlsjBU9bDxJgG4z_LUq33LmDMKWpvDXND6ks",
+        "submitted_at": "2026-09-28T13:43:47.477199+08:00",
+        "successful": false,
+        "has_answer": true
+      },
+      "replayStatus": 200,
+      "originalCohort": {
+        "started": {
+          "value": 1,
+          "numerator": null,
+          "denominator": null,
+          "status": "ready",
+          "reason": null
+        },
+        "submitted": {
+          "value": 1,
+          "numerator": null,
+          "denominator": null,
+          "status": "ready",
+          "reason": null
+        },
+        "successful": {
+          "value": 0,
+          "numerator": null,
+          "denominator": null,
+          "status": "ready",
+          "reason": null
+        },
+        "completion_rate": {
+          "value": 1,
+          "numerator": 1,
+          "denominator": 1,
+          "status": "ready",
+          "reason": null
+        },
+        "success_rate": {
+          "value": 0,
+          "numerator": 0,
+          "denominator": 1,
+          "status": "ready",
+          "reason": null
+        }
+      },
+      "submissionDay": {
+        "day": "2026-09-28",
+        "wau": {
+          "value": 1,
+          "numerator": null,
+          "denominator": null,
+          "status": "ready",
+          "reason": null
+        },
+        "valid_generations": {
+          "value": 1,
+          "numerator": null,
+          "denominator": null,
+          "status": "ready",
+          "reason": null
+        },
+        "saved_passages": {
+          "value": 1,
+          "numerator": null,
+          "denominator": null,
+          "status": "ready",
+          "reason": null
+        },
+        "review_submissions": {
+          "value": 1,
+          "numerator": null,
+          "denominator": null,
+          "status": "ready",
+          "reason": null
+        },
+        "successful_reviews": {
+          "value": 0,
+          "numerator": null,
+          "denominator": null,
+          "status": "ready",
+          "reason": null
+        },
+        "reviews_per_active_learner": {
+          "value": 1,
+          "numerator": 1,
+          "denominator": 1,
+          "status": "ready",
+          "reason": null
+        }
+      },
+      "startDetailRemainsAbsent": true
+    },
+    {
+      "id": "A10",
+      "live": 200,
+      "ready": 200,
+      "publicMetrics": 404,
+      "note": "Provider unavailable mode; no provider call used for readiness; production network ACL not tested"
+    }
+  ],
+  "localProviderCalls": 2,
+  "providerRequests": [
+    {
+      "number": 1,
+      "mode": "valid",
+      "probe": true
+    },
+    {
+      "number": 2,
+      "mode": "valid",
+      "probe": false
+    }
+  ],
+  "realProviderCalls": 0
+}

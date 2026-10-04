@@ -1,8 +1,10 @@
 # WordWeave
 
-Agent continuation starts at [workflow state](.planning/workflow/state.yaml) and the [current M001 handoff](.planning/milestones/M001/handoffs/verification.md). Read task-specific contracts and verification routes from that handoff; retrieve historical experiments by ID through its archive index. M002 has not started.
+Agent continuation starts at [workflow state](.planning/workflow/state.yaml) and the [M002 accepted delivery handoff](.planning/milestones/M002/handoffs/verification.md). M002's final increments were accepted on 2026-10-04: provider-based model management and featured-trial word meanings. CR029 is closed and no specialist is active. [Acceptance](.planning/milestones/M002/verification/uat.md) and [retained limitations](.planning/milestones/M002/verification/report.md#保留事项) define the scope. The latest delivered local environment is [3302](http://127.0.0.1:3302), with schema 0016; use the [current delivery and recovery instructions](.planning/milestones/M002/delivery/gallery-meanings-3302-20261002/README.md). No M003 or production release is started.
 
-M001 was accepted in local UAT on 2026-09-12 and closed on 2026-09-16. The delivered UAT entry is `http://localhost:6001`; the development stack below defaults to port 3000. See the [delivery report](.planning/milestones/M001/verification/report.md), [retained limitations](.planning/milestones/M001/verification/report.md#收尾核对与保留事项), and [workflow state](.planning/workflow/state.yaml). Milestone closeout does not approve a production release.
+The accepted M002 workspace is now archived in Git; see the [commit and validation record](.planning/milestones/M002/delivery/git-archive-20261004.md).
+
+M001 was accepted in local UAT on 2026-09-12 and closed on 2026-09-16. Its historical UAT entry was `http://localhost:6001`; current M002 local-environment notes are in the M002 handoff above; the development stack below defaults to port 3000. See the [delivery report](.planning/milestones/M001/verification/report.md), [retained limitations](.planning/milestones/M001/verification/report.md#收尾核对与保留事项), and [workflow state](.planning/workflow/state.yaml). Milestone closeout does not approve a production release.
 
 WordWeave is a single repository with independently built backend, frontend, and edge applications.
 

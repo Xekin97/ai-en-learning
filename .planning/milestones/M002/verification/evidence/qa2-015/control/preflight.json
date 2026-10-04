@@ -1,0 +1,9 @@
+{
+  "attempt": 1,
+  "stage": "port availability before service start",
+  "result": "OSError Errno48 Address already in use",
+  "listener_check": "lsof -nP specified local ports -sTCP:LISTEN returned no listeners",
+  "diagnosis": "Post-close socket reuse restriction; no live listener and no database/service started",
+  "correction": "SO_REUSEADDR for temporary bind probe; still fails on a live non-reusable listener",
+  "product_tests_executed": 0
+}

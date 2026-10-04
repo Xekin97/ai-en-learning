@@ -1,0 +1,31 @@
+{
+  "approved_design_matches_qa17": {
+    ".planning/milestones/M002/design/copy.json": true,
+    ".planning/milestones/M002/design/design-spec.md": true,
+    ".planning/milestones/M002/design/interactions.md": true,
+    ".planning/milestones/M002/design/responsive-accessibility.md": true,
+    ".planning/milestones/M002/design/theme.css": true,
+    ".planning/milestones/M002/design/prototype/app.js": true,
+    ".planning/milestones/M002/design/prototype/home-motion.js": true,
+    ".planning/milestones/M002/design/prototype/fixtures.json": true,
+    ".planning/milestones/M002/design/prototype/icons.js": true
+  },
+  "frontend_changed_since_qa17": [
+    "frontend/app/presentation/components/AppHeader.vue",
+    "frontend/tests/unit/account-menu.test.ts"
+  ],
+  "backend_files_unchanged": 288,
+  "retained_qa17_passes": {
+    "H17": 8,
+    "M17": 2,
+    "W17": 4
+  },
+  "retested_qa17_failures": "N17 four menu cases superseded by N18 four PASS; original FAIL evidence unchanged",
+  "justification": "Only AppHeader event/focus handling and its developer test changed. No home, toast, message, design, style, API or business source changed. Existing evidence is retained, not represented as newly executed.",
+  "source": "inputs.json verified manifests and frontend-cr020/source-diff.patch",
+  "limits": [
+    "No new real Go/DB or provider execution",
+    "No whole-milestone or user acceptance claim",
+    "Historical W01 remains unlocated"
+  ]
+}

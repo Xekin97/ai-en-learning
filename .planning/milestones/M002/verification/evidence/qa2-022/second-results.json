@@ -1,0 +1,53 @@
+{
+  "results": [
+    {
+      "id": "INT22-01",
+      "name": "Guest generation, browser registration and one persisted batch/check-in",
+      "result": "PASS",
+      "duration_ms": 865
+    },
+    {
+      "id": "INT22-02",
+      "name": "Persist title, edit partial review through overview, settle and discard comparisons",
+      "result": "PASS",
+      "duration_ms": 1385
+    },
+    {
+      "id": "INT22-03",
+      "name": "Admin model edit persists, live options update, saved snapshot and permissions remain",
+      "result": "FAIL",
+      "duration_ms": 653,
+      "error": "Error: expect(received).toBe(expected) // Object.is equality\n\nExpected: \"Local sample model\"\nReceived: \"Local sample model — updated\""
+    }
+  ],
+  "runtime": [],
+  "samples": [
+    {
+      "action": "INT22-01",
+      "batchId": "01a0eafd-725d-7d4b-8ed2-ea58427b4877",
+      "accountId": "01a0eafd-724b-7384-af1a-28982f0c99fe",
+      "savedBatches": 1,
+      "guestCharge": 1,
+      "learnerRemaining": 50,
+      "signedToday": true,
+      "reloadPersisted": true,
+      "authExtraProviderCalls": 0
+    },
+    {
+      "action": "INT22-02",
+      "titlePersistedAcrossSession": true,
+      "partialAndWrongAdvanced": true,
+      "overviewEdited": true,
+      "attemptId": "01a0eafd-75fa-7b12-a991-9237b007c2ab",
+      "newMasteries": 3,
+      "successfulCount": 1,
+      "comparisonsAbsentAfterReload": true
+    }
+  ],
+  "screenshotsSaved": 0,
+  "imagesSentToModel": 0,
+  "provider": {
+    "localProviderCalls": 5,
+    "realProviderCalls": 0
+  }
+}

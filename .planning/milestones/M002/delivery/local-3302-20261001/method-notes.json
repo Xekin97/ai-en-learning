@@ -1,0 +1,13 @@
+{
+  "preflight_corrections": [
+    "First active-generation guard used one status column for two tables; both unsuccessful attempts stopped before service stop or database writes. Final guard uses generation_runs.call_status and preset_preview_runs.status."
+  ],
+  "data_comparison": "All 59 application tables matched immediately after migration, excluding the added notice column. Subsequent smoke and background maintenance changed login/session/analytics tables. Restored COPY output inspection confirmed growth_settings only changed analytics aggregation timestamps; growth configuration unchanged.",
+  "evidence_scope": "6 deployment smoke cases, not a new product QA gate or new user UAT; existing acceptance remains effective.",
+  "not_executed": [
+    "live inference",
+    "full backup restore drill",
+    "stop/resume exercise",
+    "production deployment"
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "method": "real browser, production frontend, contract API mock, injected IDBFactory.open SecurityError; no app modifications",
+  "observations": [
+    {
+      "point": "storage denied before first attempt",
+      "slots": 0,
+      "text": "Spelling review\n\nCould not save. Your edits are kept. Please retry. Retry\n\n0 / 1 · Sep 20, 2026\nBack to library\nSpelling review\nResume review\nTry this batch again\nBack to library"
+    },
+    {
+      "point": "retry while denied",
+      "slots": 0
+    },
+    {
+      "point": "explicit restart while denied",
+      "slots": 0
+    },
+    {
+      "point": "storage restored; resume",
+      "slots": 5
+    }
+  ],
+  "pageErrors": [],
+  "expected": "Storage failure is visible; current answers remain editable and submittable (FE-02 §6.2).",
+  "result": "FAIL"
+}

@@ -1,0 +1,36 @@
+{
+  "original_results": [
+    "initial-results.json",
+    "second-results.json"
+  ],
+  "current_effective_results": {
+    "INT22-01": "second-results.json",
+    "INT22-02": "second-results.json",
+    "INT22-03": "results.json, CASE_FOCUS=admin"
+  },
+  "corrections": [
+    {
+      "finding": "Registration test entered fields while SPA was transitioning from login to register",
+      "evidence": "Initial URL timeout and no learner account in SQL; diagnostic fillURL was /login before register inputs completed; diagnostic replay did not reproduce invalidity every time",
+      "change": "Wait for register URL, register heading and two new-password fields before filling; assert username value",
+      "result": "INT22-01 passed with same product source; no app change"
+    },
+    {
+      "finding": "Initial admin permission check returned 401 because preceding registration had not succeeded",
+      "classification": "Dependent test lacked authenticated learner; not proof of application permission bug",
+      "result": "Authenticated learner returns expected403 in final run"
+    },
+    {
+      "finding": "Model name fixture changed in initial admin UI attempt; second attempt compared old fixture name to newer saved batch snapshot",
+      "change": "Capture existing batch model name and current live model name before a distinct new UI edit; compare saved snapshot unchanged and live options changed",
+      "result": "INT22-03 passed; no widened tolerance or app change"
+    },
+    {
+      "finding": "Two diagnostic fixture reset attempts used unsupported GET /admin/models/{id}, returned405 before any write",
+      "result": "No fixture reset performed; final test uses published collection/UI and records actual pre-change value"
+    }
+  ],
+  "additional_diagnosis": "One reproduction reached a disabled Register button because fields were filled across the transition; terminal tool timeout retained in conversation, subsequent structured registration-method-diagnosis.json records non-universal reproduction",
+  "method_failures_not_product_defects": true,
+  "real_provider_calls": 0
+}

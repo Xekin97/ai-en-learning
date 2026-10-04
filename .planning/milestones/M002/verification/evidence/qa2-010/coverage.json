@@ -1,0 +1,2065 @@
+{
+  "source": ".planning/milestones/M002/technical/frontend-traceability.json",
+  "capabilities": [
+    {
+      "capability": "CAP-001",
+      "behavior": "首页/试用入口保留，静态首页不触发AI",
+      "backend_source": "backend.md#3-全量继承与用例追踪",
+      "apis_source_notation": "API-001/202",
+      "data_source_notation": "DATA-018/212",
+      "pages": [
+        "PAGE-205",
+        "PAGE-217"
+      ],
+      "qa_status": "PARTIAL",
+      "evidence": "U01/U02"
+    },
+    {
+      "capability": "CAP-002",
+      "behavior": "注册basic、轮换会话",
+      "backend_source": "backend.md#3-全量继承与用例追踪",
+      "apis_source_notation": "API-002",
+      "data_source_notation": "DATA-003/004/018",
+      "pages": [
+        "PAGE-002",
+        "PAGE-003"
+      ],
+      "qa_status": "PARTIAL",
+      "evidence": "SETUP/Q03；S03 真实访客注册收录；QA10 A01实际注册关联及浏览器去重"
+    },
+    {
+      "capability": "CAP-003",
+      "behavior": "登录退出/角色路由",
+      "backend_source": "backend.md#3-全量继承与用例追踪",
+      "apis_source_notation": "API-002",
+      "data_source_notation": "DATA-003/004/204",
+      "pages": [
+        "PAGE-002",
+        "PAGE-003",
+        "PAGE-103",
+        "PAGE-205",
+        "PAGE-206",
+        "PAGE-218"
+      ],
+      "qa_status": "PARTIAL",
+      "evidence": "SETUP/Q09；S03 注销后两会话及旧登录失效"
+    },
+    {
+      "capability": "CAP-004",
+      "behavior": "本人改密/撤其他会话",
+      "backend_source": "backend.md#3-全量继承与用例追踪",
+      "apis_source_notation": "API-003",
+      "data_source_notation": "DATA-003/004",
+      "pages": [
+        "PAGE-206"
+      ],
+      "qa_status": "PARTIAL",
+      "evidence": "R07 前置改密/多会话断言；S02–04 注销部分另见 CAP-005"
+    },
+    {
+      "capability": "CAP-005",
+      "behavior": "注销全个人数据",
+      "backend_source": "backend.md#3-全量继承与用例追踪",
+      "apis_source_notation": "API-003",
+      "data_source_notation": "DATA-003/004/009–018/201–211/213",
+      "pages": [
+        "PAGE-206"
+      ],
+      "qa_status": "PARTIAL",
+      "evidence": "S02–04：确认/错密/19 类非空关联表清除/多会话/他人隔离；F03 原缺陷复验通过；并发/回滚复用 DEV；QA10 A09控制：注销三条已关联浏览器访问链/分析身份/最小复习事实，保留同浏览器他人业务事实及匿名汇总"
+    },
+    {
+      "capability": "CAP-006",
+      "behavior": "词表精确合法选词",
+      "backend_source": "backend.md#3-全量继承与用例追踪",
+      "apis_source_notation": "API-004",
+      "data_source_notation": "DATA-001/002",
+      "pages": [
+        "PAGE-204"
+      ],
+      "qa_status": "PARTIAL",
+      "evidence": "DEV；G01 大小写查词与非法/重复词预检，零调用/零扣次"
+    },
+    {
+      "capability": "CAP-007",
+      "behavior": "一份有效计划、合并模型、分别次数",
+      "backend_source": "backend.md#3-全量继承与用例追踪",
+      "apis_source_notation": "API-004",
+      "data_source_notation": "DATA-005/006/008/009/211",
+      "pages": [
+        "PAGE-204"
+      ],
+      "qa_status": "PARTIAL",
+      "evidence": "U04（布局）；V09/10 模型卡不改quota，计划覆盖与逐模型独立时长；QA09 P04/05预设例外不放开普通模型权限"
+    },
+    {
+      "capability": "CAP-008",
+      "behavior": "流生成/严格完整结果",
+      "backend_source": "backend.md#3-全量继承与用例追踪",
+      "apis_source_notation": "API-005",
+      "data_source_notation": "DATA-007/009/010/011",
+      "pages": [
+        "PAGE-204"
+      ],
+      "qa_status": "PARTIAL",
+      "evidence": "SETUP；G01/02 预检与单活跃请求；G03/04 失败和断流；QA09 P03完整校验及U02真实浏览器失败/重试"
+    },
+    {
+      "capability": "CAP-009",
+      "behavior": "取消/系统失败原来源退款",
+      "backend_source": "backend.md#3-全量继承与用例追踪",
+      "apis_source_notation": "API-005",
+      "data_source_notation": "DATA-009/010/011/211",
+      "pages": [
+        "PAGE-204"
+      ],
+      "qa_status": "PARTIAL",
+      "evidence": "QA06 G02–06取消计次/基础与次数卡退款；QA07 G01–10复验且新增过期卡退款不复活；QA09 R01–04补visitor/trial失败退款；生产代理仍待验；QA09 R01–04访客/体验原来源退款、取消计次、在途base调整仍退trial；U02浏览器退款与重试"
+    },
+    {
+      "capability": "CAP-010",
+      "behavior": "完整收录/放弃、默认标题",
+      "backend_source": "backend.md#3-全量继承与用例追踪",
+      "apis_source_notation": "API-006",
+      "data_source_notation": "DATA-009/011/012/013/208",
+      "pages": [
+        "PAGE-204"
+      ],
+      "qa_status": "PARTIAL",
+      "evidence": "原SETUP/G05；QA06 G07/QA2-F09失败→QA07 G07四终态409 state_conflict，G08保存201/200、404隐私/删除，G09草稿410；CR013沿034限定关闭；QA09 P04/05与U02预设收录/默认标题/完整正文；QA10 A02实际生成/收录重试只写一次分析事实"
+    },
+    {
+      "capability": "CAP-011",
+      "behavior": "访客认证claim一次绑定",
+      "backend_source": "backend.md#3-全量继承与用例追踪",
+      "apis_source_notation": "API-006",
+      "data_source_notation": "DATA-005/017/012/013/206",
+      "pages": [
+        "PAGE-002",
+        "PAGE-003",
+        "PAGE-204"
+      ],
+      "qa_status": "PARTIAL",
+      "evidence": "SETUP；S01/S03 两个真实访客注册 claim；QA09 P04 claim201/200同批且账号额度不扣；U02真实浏览器注册承接"
+    },
+    {
+      "capability": "CAP-012",
+      "behavior": "原六项统计/旧到新库列表",
+      "backend_source": "backend.md#3-全量继承与用例追踪",
+      "apis_source_notation": "API-007",
+      "data_source_notation": "DATA-012/016/202",
+      "pages": [
+        "PAGE-005"
+      ],
+      "qa_status": "PARTIAL",
+      "evidence": "原Q/L统计/分页；QA07 J01–04返回通过；QA08 K01–03/05–08全库统计、分页焦点、失败与延迟响应通过，F10/F11沿036限定关闭"
+    },
+    {
+      "capability": "CAP-013",
+      "behavior": "完整目标词搜索，不搜标题",
+      "backend_source": "backend.md#3-全量继承与用例追踪",
+      "apis_source_notation": "API-007",
+      "data_source_notation": "DATA-002/012/013",
+      "pages": [
+        "PAGE-005"
+      ],
+      "qa_status": "PARTIAL",
+      "evidence": "L01/02/03/05/06搜索规范化正确，CR011沿031关闭；QA08 K01/09按钮/Enter/空/清除回输入、旧分页不污染新搜索通过，F10沿036限定关闭"
+    },
+    {
+      "capability": "CAP-014",
+      "behavior": "完整正文/词义/位置详情",
+      "backend_source": "backend.md#3-全量继承与用例追踪",
+      "apis_source_notation": "API-007",
+      "data_source_notation": "DATA-012/013",
+      "pages": [
+        "PAGE-006"
+      ],
+      "qa_status": "PARTIAL",
+      "evidence": "Q01/Q02；QA07 J01–04详情返回查询/加载/位置/标题通过，CR012沿034限定关闭"
+    },
+    {
+      "capability": "CAP-015",
+      "behavior": "参与范围开关，仅影响新会话",
+      "backend_source": "backend.md#3-全量继承与用例追踪",
+      "apis_source_notation": "API-007",
+      "data_source_notation": "DATA-012/014",
+      "pages": [
+        "PAGE-005",
+        "PAGE-006"
+      ],
+      "qa_status": "PARTIAL",
+      "evidence": "Q10/V05快照；QA08 K03/05–08参与双向切换焦点/统计/失败恢复通过；B01未来日期预览变化、已建23篇快照不变，F10/F11沿036限定关闭"
+    },
+    {
+      "capability": "CAP-016",
+      "behavior": "永久删批次/claim，不回退成长",
+      "backend_source": "backend.md#3-全量继承与用例追踪",
+      "apis_source_notation": "API-007",
+      "data_source_notation": "DATA-012/013/014/017/202",
+      "pages": [
+        "PAGE-005",
+        "PAGE-006"
+      ],
+      "qa_status": "PARTIAL",
+      "evidence": "Q11；V08 删库保留掌握，随机重新允许已删原词"
+    },
+    {
+      "capability": "CAP-017",
+      "behavior": "浏览器日期范围/固定随机安排",
+      "backend_source": "backend.md#3-全量继承与用例追踪",
+      "apis_source_notation": "API-008",
+      "data_source_notation": "DATA-012/013/014",
+      "pages": [
+        "PAGE-007"
+      ],
+      "qa_status": "PARTIAL",
+      "evidence": "Q10/U04；V05/V07 洛杉矶日期边界、多批快照、空/旧版本替换保护；QA08 B01动态日期预览与固定快照；B03/04真实替换竞争"
+    },
+    {
+      "capability": "CAP-018",
+      "behavior": "替代索引→CAP-201原词填空",
+      "backend_source": "backend.md#3-全量继承与用例追踪",
+      "apis_source_notation": "API-008",
+      "data_source_notation": "DATA-013/201",
+      "pages": [
+        "PAGE-008"
+      ],
+      "qa_status": "PARTIAL",
+      "evidence": "Q04/Q05"
+    },
+    {
+      "capability": "CAP-019",
+      "behavior": "替代索引→CAP-201逐occurrence填空",
+      "backend_source": "backend.md#3-全量继承与用例追踪",
+      "apis_source_notation": "API-008",
+      "data_source_notation": "DATA-013/201",
+      "pages": [
+        "PAGE-008",
+        "PAGE-201"
+      ],
+      "qa_status": "PARTIAL",
+      "evidence": "Q04/Q05"
+    },
+    {
+      "capability": "CAP-020",
+      "behavior": "独立会话恢复/最小完成概况（DB2-R07/08 已接收）",
+      "backend_source": "backend.md#3-全量继承与用例追踪",
+      "apis_source_notation": "API-008",
+      "data_source_notation": "DATA-014/015/201/202",
+      "pages": [
+        "PAGE-005",
+        "PAGE-007",
+        "PAGE-008"
+      ],
+      "qa_status": "PARTIAL",
+      "evidence": "Q06/Q07；V06/V07 多批进度、完成最小概况和旧替换会话失效；QA08 B02重复提交最小回执；B03–05替换并发与旧会话失效；QA10 A02/A08恢复不重复开始、过90天迟交归原队列且无历史答案"
+    },
+    {
+      "capability": "CAP-021",
+      "behavior": "账号语言持久/访客本机语言",
+      "backend_source": "backend.md#3-全量继承与用例追踪",
+      "apis_source_notation": "API-001",
+      "data_source_notation": "DATA-018",
+      "pages": [
+        "PAGE-002",
+        "PAGE-003",
+        "PAGE-005",
+        "PAGE-006",
+        "PAGE-007",
+        "PAGE-008",
+        "PAGE-103",
+        "PAGE-204",
+        "PAGE-205",
+        "PAGE-206",
+        "PAGE-217",
+        "PAGE-218"
+      ],
+      "qa_status": "PARTIAL",
+      "evidence": "DEV；V13语言刷新/新浏览器保持；QA07 J08切换语言保留已提交查询与21行加载范围"
+    },
+    {
+      "capability": "CAP-022",
+      "behavior": "单批复习，忽略参与开关",
+      "backend_source": "backend.md#3-全量继承与用例追踪",
+      "apis_source_notation": "API-008",
+      "data_source_notation": "DATA-012/014/202",
+      "pages": [
+        "PAGE-005",
+        "PAGE-008"
+      ],
+      "qa_status": "PARTIAL",
+      "evidence": "Q07/Q10；QA08 B01暂停批次仍可单篇复习"
+    },
+    {
+      "capability": "CAP-101",
+      "behavior": "凭据脱敏/加密替换/探针",
+      "backend_source": "backend.md#3-全量继承与用例追踪",
+      "apis_source_notation": "API-101",
+      "data_source_notation": "DATA-007",
+      "pages": [
+        "PAGE-208"
+      ],
+      "qa_status": "PARTIAL",
+      "evidence": "SETUP"
+    },
+    {
+      "capability": "CAP-102",
+      "behavior": "模型新增编辑启停，完整保留",
+      "backend_source": "backend.md#3-全量继承与用例追踪",
+      "apis_source_notation": "API-101",
+      "data_source_notation": "DATA-008",
+      "pages": [
+        "PAGE-208"
+      ],
+      "qa_status": "PARTIAL",
+      "evidence": "SETUP/C05"
+    },
+    {
+      "capability": "CAP-103",
+      "behavior": "四基础计划全权益配置",
+      "backend_source": "backend.md#3-全量继承与用例追踪",
+      "apis_source_notation": "API-102",
+      "data_source_notation": "DATA-006/008",
+      "pages": [
+        "PAGE-208"
+      ],
+      "qa_status": "PARTIAL",
+      "evidence": "SETUP/C04"
+    },
+    {
+      "capability": "CAP-104",
+      "behavior": "用户查询/详情/成长读投影",
+      "backend_source": "backend.md#3-全量继承与用例追踪",
+      "apis_source_notation": "API-103",
+      "data_source_notation": "DATA-003/006/009/204/207/208",
+      "pages": [
+        "PAGE-103",
+        "PAGE-211"
+      ],
+      "qa_status": "PARTIAL",
+      "evidence": "Q03/C04；V12/V14 实际用户库与密码管理"
+    },
+    {
+      "capability": "CAP-105",
+      "behavior": "指定用户base调整重置",
+      "backend_source": "backend.md#3-全量继承与用例追踪",
+      "apis_source_notation": "API-103",
+      "data_source_notation": "DATA-003/006/009/211",
+      "pages": [
+        "PAGE-103"
+      ],
+      "qa_status": "PARTIAL",
+      "evidence": "C04；QA09 R04试用在途时base调整重置不改trial退款来源/到期"
+    },
+    {
+      "capability": "CAP-106",
+      "behavior": "管理员重置密码/撤会话",
+      "backend_source": "backend.md#3-全量继承与用例追踪",
+      "apis_source_notation": "API-103",
+      "data_source_notation": "DATA-003/004",
+      "pages": [
+        "PAGE-103"
+      ],
+      "qa_status": "PARTIAL",
+      "evidence": "DEV；V14 确认校验/取消/实际重置撤目标两会话、旧密失效、新密有效"
+    },
+    {
+      "capability": "CAP-107",
+      "behavior": "管理员只读学习库",
+      "backend_source": "backend.md#3-全量继承与用例追踪",
+      "apis_source_notation": "API-103",
+      "data_source_notation": "DATA-012/013/016",
+      "pages": [
+        "PAGE-103"
+      ],
+      "qa_status": "PARTIAL",
+      "evidence": "DEV；V12 列表与完整阅读、无编辑动作、直接写/代复习拒绝及owner隔离"
+    },
+    {
+      "capability": "CAP-201",
+      "behavior": "整份匿名题面/本机移动/整批提交",
+      "backend_source": "backend.md#3-全量继承与用例追踪",
+      "apis_source_notation": "API-008",
+      "data_source_notation": "DATA-013/201/202",
+      "pages": [
+        "PAGE-008",
+        "PAGE-201"
+      ],
+      "qa_status": "PARTIAL",
+      "evidence": "Q04/Q05；R01/R02；V05/V06 两批题面与填写至完成；QA08 B02/04真实提交竞争一次结算"
+    },
+    {
+      "capability": "CAP-202",
+      "behavior": "本机概览/最新完整草稿提交",
+      "backend_source": "backend.md#3-全量继承与用例追踪",
+      "apis_source_notation": "API-008",
+      "data_source_notation": "DATA-201/202",
+      "pages": [
+        "PAGE-008",
+        "PAGE-202"
+      ],
+      "qa_status": "PARTIAL",
+      "evidence": "Q04/Q05/Q07；R01/R02；V06 两批概览提交；QA08 B02重复提交只一次完整对照"
+    },
+    {
+      "capability": "CAP-203",
+      "behavior": "当次对照/最小结算/重来",
+      "backend_source": "backend.md#3-全量继承与用例追踪",
+      "apis_source_notation": "API-008",
+      "data_source_notation": "DATA-014/202/203/208",
+      "pages": [
+        "PAGE-008",
+        "PAGE-203"
+      ],
+      "qa_status": "PARTIAL",
+      "evidence": "Q04/Q05/Q06；R01/R02/R04；V06 最终提交后刷新无答案、2批最小概况；QA08 B02重试/读取无答案对照；B04竞争不重复成功"
+    },
+    {
+      "capability": "CAP-204",
+      "behavior": "校验服务端状态后本机恢复",
+      "backend_source": "backend.md#3-全量继承与用例追踪",
+      "apis_source_notation": "API-008",
+      "data_source_notation": "DATA-014/201/202",
+      "pages": [
+        "PAGE-008",
+        "PAGE-201"
+      ],
+      "qa_status": "PARTIAL",
+      "evidence": "Q07；R01–05，F01 复验通过；V07 替换后旧草稿start/restart拒绝；QA08 B05替换后旧start/submit/restart均拒绝"
+    },
+    {
+      "capability": "CAP-205",
+      "behavior": "模型正式移除/计划解引用/卡资格",
+      "backend_source": "backend.md#3-全量继承与用例追踪",
+      "apis_source_notation": "API-101/204",
+      "data_source_notation": "DATA-006/008/210/211/212",
+      "pages": [
+        "PAGE-208"
+      ],
+      "qa_status": "PARTIAL",
+      "evidence": "C05；S05–07；T01–04 跨页下架引用、新建限制与即时退款"
+    },
+    {
+      "capability": "CAP-206",
+      "behavior": "设计布局/真实成功失败toast",
+      "backend_source": "backend.md#3-全量继承与用例追踪",
+      "apis_source_notation": "API-004及各命令",
+      "data_source_notation": "DATA-006/211；无额外UI表",
+      "pages": [
+        "PAGE-201",
+        "PAGE-204",
+        "PAGE-208"
+      ],
+      "qa_status": "PARTIAL",
+      "evidence": "U01/U03/U04；QA09 U01配置准确文案/只读/折叠/四视口；U02失败反馈"
+    },
+    {
+      "capability": "CAP-207",
+      "behavior": "首页示例/动效前端，公开预设读",
+      "backend_source": "backend.md#3-全量继承与用例追踪",
+      "apis_source_notation": "API-202",
+      "data_source_notation": "DATA-212",
+      "pages": [
+        "PAGE-205"
+      ],
+      "qa_status": "PARTIAL",
+      "evidence": "U01/U02"
+    },
+    {
+      "capability": "CAP-208",
+      "behavior": "排除已选/当前库的随机词",
+      "backend_source": "backend.md#3-全量继承与用例追踪",
+      "apis_source_notation": "API-004",
+      "data_source_notation": "DATA-002/013/203",
+      "pages": [
+        "PAGE-204"
+      ],
+      "qa_status": "PARTIAL",
+      "evidence": "R06：排除/上限/统计；未直接核对额度；V08 穷尽候选/他人及访客/无效词/实际额度账与成长不变/删库后可再随机"
+    },
+    {
+      "capability": "CAP-209",
+      "behavior": "本人资料/登录欢迎事实",
+      "backend_source": "backend.md#3-全量继承与用例追踪",
+      "apis_source_notation": "API-002/201",
+      "data_source_notation": "DATA-003/204",
+      "pages": [
+        "PAGE-206"
+      ],
+      "qa_status": "PARTIAL",
+      "evidence": "Q05/Q09"
+    },
+    {
+      "capability": "CAP-210",
+      "behavior": "独立平台消息/登录提醒（DB2-R09 标题已接收）",
+      "backend_source": "backend.md#3-全量继承与用例追踪",
+      "apis_source_notation": "API-205/207",
+      "data_source_notation": "DATA-205",
+      "pages": [
+        "PAGE-207",
+        "PAGE-209"
+      ],
+      "qa_status": "PARTIAL",
+      "evidence": "Q09"
+    },
+    {
+      "capability": "CAP-211",
+      "behavior": "04:00学习日/有效生成自动签到",
+      "backend_source": "backend.md#3-全量继承与用例追踪",
+      "apis_source_notation": "API-005/006/203",
+      "data_source_notation": "DATA-206/207/208",
+      "pages": [
+        "PAGE-214"
+      ],
+      "qa_status": "PARTIAL",
+      "evidence": "S01；G02/03取消失败不签到、G05有效未收录已自动签到；04:00边界仍待独立验；QA09 P04/U02同学习日访客claim认领签到；R03失败不签到"
+    },
+    {
+      "capability": "CAP-212",
+      "behavior": "补签/历史规则后续差额",
+      "backend_source": "backend.md#3-全量继承与用例追踪",
+      "apis_source_notation": "API-203",
+      "data_source_notation": "DATA-206/207/210",
+      "pages": [
+        "PAGE-214"
+      ],
+      "qa_status": "PARTIAL",
+      "evidence": "T08–10 跨月/历史差额/不补XP/复习不变/成就待领/幂等/30日与注册边界；04:00实时时点与其余并发仍待验"
+    },
+    {
+      "capability": "CAP-213",
+      "behavior": "owner+lexeme首次掌握/累计",
+      "backend_source": "backend.md#3-全量继承与用例追踪",
+      "apis_source_notation": "API-008/203",
+      "data_source_notation": "DATA-202/203/207/208",
+      "pages": [
+        "PAGE-203",
+        "PAGE-214"
+      ],
+      "qa_status": "PARTIAL",
+      "evidence": "Q04/Q11；S01 单 lexeme/三词形正确后 mastered_total=1；V06/V08 两批同lexeme仅新增1掌握、删库不回退；QA08 B02重复并发提交仅首次掌握加1"
+    },
+    {
+      "capability": "CAP-214",
+      "behavior": "动态等级/成就/手动全或无领取",
+      "backend_source": "backend.md#3-全量继承与用例追踪",
+      "apis_source_notation": "API-203",
+      "data_source_notation": "DATA-207/208/209/210",
+      "pages": [
+        "PAGE-210",
+        "PAGE-214"
+      ],
+      "qa_status": "PARTIAL",
+      "evidence": "S09–12 手动奖励全或无；T09 补签新成就达成但7分/11XP仍待手动领取"
+    },
+    {
+      "capability": "CAP-215",
+      "behavior": "兑换/库存/手动下架退积分",
+      "backend_source": "backend.md#3-全量继承与用例追踪",
+      "apis_source_notation": "API-204",
+      "data_source_notation": "DATA-207/210/211",
+      "pages": [
+        "PAGE-210",
+        "PAGE-215"
+      ],
+      "qa_status": "PARTIAL",
+      "evidence": "C01–05/C07；R09/R10；S05–07；T01–07 F05修复、当前退款及跨页编辑通过；未扩大为全权益通过"
+    },
+    {
+      "capability": "CAP-216",
+      "behavior": "逐模型加时/计划体验/额度组合",
+      "backend_source": "backend.md#3-全量继承与用例追踪",
+      "apis_source_notation": "API-004/204",
+      "data_source_notation": "DATA-006/009/210/211",
+      "pages": [
+        "PAGE-204",
+        "PAGE-208",
+        "PAGE-215"
+      ],
+      "qa_status": "PARTIAL",
+      "evidence": "C02/C04、V09/10模型时间/计划覆盖；G06计划0仍用次数卡；QA07 G10在途卡过期后退款原卡、到期不变、可用0且新请求429；QA09 P04/05访客/账号配置例外各扣自身来源；R03/04体验与base分账"
+    },
+    {
+      "capability": "CAP-217",
+      "behavior": "成长配置/类型道具/正数补分",
+      "backend_source": "backend.md#3-全量继承与用例追踪",
+      "apis_source_notation": "API-103/206",
+      "data_source_notation": "DATA-206/207/208/209/210",
+      "pages": [
+        "PAGE-210",
+        "PAGE-211"
+      ],
+      "qa_status": "PARTIAL",
+      "evidence": "C03；R09/R10；S05–07/S06-live/S09–12；T01–07 F05分页修复、增删/失败/并发保护通过"
+    },
+    {
+      "capability": "CAP-218",
+      "behavior": "预设目录/固定台/草稿预览发布",
+      "backend_source": "backend.md#3-全量继承与用例追踪",
+      "apis_source_notation": "API-202/208",
+      "data_source_notation": "DATA-010/011/012/212/214",
+      "pages": [
+        "PAGE-212",
+        "PAGE-216",
+        "PAGE-217"
+      ],
+      "qa_status": "PARTIAL",
+      "evidence": "SETUP/Q01；QA09 P01–07后台预览/手动发布/快照与新请求权限；U01–04目录全文/释义Tab/锁定台/错误与认证收录"
+    },
+    {
+      "capability": "CAP-219",
+      "behavior": "访问/学习漏斗/留存/概览",
+      "backend_source": "backend.md#3-全量继承与用例追踪",
+      "apis_source_notation": "API-209/900",
+      "data_source_notation": "DATA-009/202/213/214",
+      "pages": [
+        "PAGE-213",
+        "PAGE-218"
+      ],
+      "qa_status": "PARTIAL",
+      "evidence": "T11–14 数值/聚合/权限/显示及周期切换通过；F06/T15 30天图表撑宽320/390px页面；V01–04 CR010图表修复通过：26组、三引擎、7/30天、完整数据/日期与无溢出；QA10 A01–11：真实业务链、成熟留存、90天读取与实际清理、匿名汇总、迟交队列、注销关联和聚合停滞保护"
+    },
+    {
+      "capability": "CAP-220",
+      "behavior": "本人新旧批次标题编辑",
+      "backend_source": "backend.md#3-全量继承与用例追踪",
+      "apis_source_notation": "API-007",
+      "data_source_notation": "DATA-012",
+      "pages": [
+        "PAGE-005",
+        "PAGE-006"
+      ],
+      "qa_status": "PARTIAL",
+      "evidence": "Q01/Q02；QA07 J04改标题返回立即显示新标题、保留原词/查询/21行/焦点；QA09 P04/U02预设用户批次仍取原词默认标题，不继承预设标题"
+    }
+  ],
+  "pages": [
+    {
+      "page": "PAGE-002",
+      "views": [
+        {
+          "prototype_view": "register",
+          "route": "/register",
+          "components": [
+            "AuthForm"
+          ],
+          "application_models": [
+            "AuthIntent"
+          ],
+          "apis": [
+            "API-002",
+            "API-006"
+          ],
+          "plan": "frontend.md#generation",
+          "verification": [
+            "FE2-V07"
+          ]
+        }
+      ],
+      "qa_evidence": [
+        "DEV, SETUP/Q03/Q09；S01/S03 真实访客注册收录；QA09 U02实际注册并一次收录"
+      ],
+      "ui_acceptance": [
+        {
+          "id": "UIA-PAGE-002-01",
+          "status": "NOT_FULLY_VERIFIED"
+        },
+        {
+          "id": "UIA-PAGE-002-COPY09",
+          "status": "NOT_FULLY_VERIFIED"
+        },
+        {
+          "id": "UIA-PAGE-002-ICON10",
+          "status": "NOT_FULLY_VERIFIED"
+        },
+        {
+          "id": "UIA-PAGE-002-NAV11",
+          "status": "NOT_FULLY_VERIFIED"
+        }
+      ]
+    },
+    {
+      "page": "PAGE-003",
+      "views": [
+        {
+          "prototype_view": "login",
+          "route": "/login",
+          "components": [
+            "AuthForm"
+          ],
+          "application_models": [
+            "Session",
+            "Welcome"
+          ],
+          "apis": [
+            "API-002",
+            "API-006",
+            "API-205"
+          ],
+          "plan": "frontend.md#notices",
+          "verification": [
+            "FE2-V07",
+            "FE2-V12"
+          ]
+        }
+      ],
+      "qa_evidence": [
+        "DEV, SETUP/Q03/Q09；S03 删除后旧登录失效；QA09 U02待收录登录转注册保留意图"
+      ],
+      "ui_acceptance": [
+        {
+          "id": "UIA-PAGE-003-01",
+          "status": "NOT_FULLY_VERIFIED"
+        },
+        {
+          "id": "UIA-PAGE-003-COPY09",
+          "status": "NOT_FULLY_VERIFIED"
+        },
+        {
+          "id": "UIA-PAGE-003-ICON10",
+          "status": "NOT_FULLY_VERIFIED"
+        },
+        {
+          "id": "UIA-PAGE-003-NAV11",
+          "status": "NOT_FULLY_VERIFIED"
+        },
+        {
+          "id": "UIA-PAGE-003-TOAST19",
+          "status": "PARTIAL"
+        }
+      ]
+    },
+    {
+      "page": "PAGE-005",
+      "views": [
+        {
+          "prototype_view": "library",
+          "route": "/library",
+          "components": [
+            "LibraryStats",
+            "LibraryRow"
+          ],
+          "application_models": [
+            "LibraryPage"
+          ],
+          "apis": [
+            "API-007",
+            "API-008"
+          ],
+          "plan": "frontend.md#generation",
+          "verification": [
+            "FE2-V08"
+          ]
+        }
+      ],
+      "qa_evidence": [
+        "原搜索/返回证据保留；QA08 K01–10焦点/统计/失败与稳定态axe通过"
+      ],
+      "ui_acceptance": [
+        {
+          "id": "UIA-PAGE-005-01",
+          "status": "PARTIAL",
+          "finding": "QA2-F10/QA2-F11 closed via APPROVAL-M002-036",
+          "evidence": "qa2-008/library-results.json"
+        },
+        {
+          "id": "UIA-PAGE-005-02",
+          "status": "PARTIAL",
+          "finding": "QA2-F10/QA2-F11 closed via APPROVAL-M002-036",
+          "evidence": "qa2-008/library-results.json"
+        },
+        {
+          "id": "UIA-PAGE-005-COPY09",
+          "status": "NOT_FULLY_VERIFIED"
+        },
+        {
+          "id": "UIA-PAGE-005-ICON10",
+          "status": "NOT_FULLY_VERIFIED"
+        },
+        {
+          "id": "UIA-PAGE-005-NAV11",
+          "status": "NOT_FULLY_VERIFIED"
+        },
+        {
+          "id": "UIA-PAGE-005-LIBRARY18",
+          "status": "PARTIAL",
+          "finding": "QA2-F10/QA2-F11 closed via APPROVAL-M002-036",
+          "evidence": "qa2-008/library-results.json"
+        }
+      ]
+    },
+    {
+      "page": "PAGE-006",
+      "views": [
+        {
+          "prototype_view": "batch",
+          "route": "/library/:batchId",
+          "components": [
+            "TitleEditor",
+            "SavedPassage",
+            "ReadOnlyConfiguration"
+          ],
+          "application_models": [
+            "BatchDetail"
+          ],
+          "apis": [
+            "API-007",
+            "API-008"
+          ],
+          "plan": "frontend.md#generation",
+          "verification": [
+            "FE2-V08",
+            "FE2-V13"
+          ]
+        }
+      ],
+      "qa_evidence": [
+        "DEV, Q01/Q02, Q10, Q11；QA07 J01–04返回及标题通过；QA08 K04/05返回回归及共享参与控件"
+      ],
+      "ui_acceptance": [
+        {
+          "id": "UIA-PAGE-006-01",
+          "status": "NOT_FULLY_VERIFIED"
+        },
+        {
+          "id": "UIA-PAGE-006-02",
+          "status": "NOT_FULLY_VERIFIED"
+        },
+        {
+          "id": "UIA-PAGE-006-03",
+          "status": "NOT_FULLY_VERIFIED"
+        },
+        {
+          "id": "UIA-PAGE-006-04",
+          "status": "NOT_FULLY_VERIFIED"
+        },
+        {
+          "id": "UIA-PAGE-006-COPY09",
+          "status": "NOT_FULLY_VERIFIED"
+        },
+        {
+          "id": "UIA-PAGE-006-ICON10",
+          "status": "NOT_FULLY_VERIFIED"
+        },
+        {
+          "id": "UIA-PAGE-006-NAV11",
+          "status": "NOT_FULLY_VERIFIED"
+        },
+        {
+          "id": "UIA-PAGE-006-SETTINGS22",
+          "status": "NOT_FULLY_VERIFIED"
+        }
+      ]
+    },
+    {
+      "page": "PAGE-007",
+      "views": [
+        {
+          "prototype_view": "range",
+          "route": "/review",
+          "components": [
+            "ReviewRangeSetup"
+          ],
+          "application_models": [
+            "RangeSetup",
+            "ActiveRange"
+          ],
+          "apis": [
+            "API-008"
+          ],
+          "plan": "frontend.md#review",
+          "verification": [
+            "FE2-V04",
+            "FE2-V05",
+            "FE2-V08"
+          ]
+        }
+      ],
+      "qa_evidence": [
+        "DEV, Q06/Q07, Q10/U04 ；V05/V07 日期边界/多批/替换保护；QA08 B01/03–05预览快照/并发替换"
+      ],
+      "ui_acceptance": [
+        {
+          "id": "UIA-PAGE-007-01",
+          "status": "NOT_FULLY_VERIFIED"
+        },
+        {
+          "id": "UIA-PAGE-007-COPY09",
+          "status": "NOT_FULLY_VERIFIED"
+        },
+        {
+          "id": "UIA-PAGE-007-ICON10",
+          "status": "NOT_FULLY_VERIFIED"
+        },
+        {
+          "id": "UIA-PAGE-007-NAV11",
+          "status": "NOT_FULLY_VERIFIED"
+        }
+      ]
+    },
+    {
+      "page": "PAGE-008",
+      "views": [
+        {
+          "prototype_view": "sessiondone",
+          "route": "/review/:sessionId",
+          "components": [
+            "SessionTotals"
+          ],
+          "application_models": [
+            "ReviewSession"
+          ],
+          "apis": [
+            "API-008"
+          ],
+          "plan": "frontend.md#review",
+          "verification": [
+            "FE2-V05"
+          ]
+        }
+      ],
+      "qa_evidence": [
+        "DEV, Q04–07, Q10；R01–05 ；V05–07 多批复习/最小概况；QA08 B02–05并发与最小读取"
+      ],
+      "ui_acceptance": [
+        {
+          "id": "UIA-PAGE-008-01",
+          "status": "NOT_FULLY_VERIFIED"
+        },
+        {
+          "id": "UIA-PAGE-008-COPY09",
+          "status": "NOT_FULLY_VERIFIED"
+        },
+        {
+          "id": "UIA-PAGE-008-ICON10",
+          "status": "NOT_FULLY_VERIFIED"
+        },
+        {
+          "id": "UIA-PAGE-008-NAV11",
+          "status": "NOT_FULLY_VERIFIED"
+        }
+      ]
+    },
+    {
+      "page": "PAGE-103",
+      "views": [
+        {
+          "prototype_view": "users",
+          "route": "/admin/users",
+          "components": [
+            "UserSearch"
+          ],
+          "application_models": [
+            "UserSearchPage"
+          ],
+          "apis": [
+            "API-103"
+          ],
+          "plan": "frontend.md#growth",
+          "verification": [
+            "FE2-V10"
+          ]
+        },
+        {
+          "prototype_view": "userdetail",
+          "route": "/admin/users/:userId",
+          "components": [
+            "UserDetailSections",
+            "AdminBatchReader"
+          ],
+          "application_models": [
+            "UserDetail"
+          ],
+          "apis": [
+            "API-103"
+          ],
+          "plan": "frontend.md#growth",
+          "verification": [
+            "FE2-V10"
+          ]
+        }
+      ],
+      "qa_evidence": [
+        "C04, DEV, Q03/C04, SETUP/Q09 ；V12只读学习库及写权限；V14重置密码撤旧会话"
+      ],
+      "ui_acceptance": [
+        {
+          "id": "UIA-PAGE-103-01",
+          "status": "NOT_FULLY_VERIFIED"
+        },
+        {
+          "id": "UIA-PAGE-103-02",
+          "status": "NOT_FULLY_VERIFIED"
+        },
+        {
+          "id": "UIA-PAGE-103-COPY09",
+          "status": "NOT_FULLY_VERIFIED"
+        },
+        {
+          "id": "UIA-PAGE-103-ICON10",
+          "status": "NOT_FULLY_VERIFIED"
+        }
+      ]
+    },
+    {
+      "page": "PAGE-201",
+      "views": [
+        {
+          "prototype_view": "review",
+          "route": "/review/:sessionId",
+          "components": [
+            "LetterSlots",
+            "PassageCloze"
+          ],
+          "application_models": [
+            "Draft",
+            "ReviewSession"
+          ],
+          "apis": [
+            "API-008"
+          ],
+          "plan": "frontend.md#review",
+          "verification": [
+            "FE2-V03",
+            "FE2-V04",
+            "FE2-V05"
+          ]
+        }
+      ],
+      "qa_evidence": [
+        "Q04/Q05/Q07；R01–05 ；V05/V06 多批填写"
+      ],
+      "ui_acceptance": [
+        {
+          "id": "UIA-PAGE-201-01",
+          "status": "NOT_FULLY_VERIFIED"
+        },
+        {
+          "id": "UIA-PAGE-201-COPY09",
+          "status": "NOT_FULLY_VERIFIED"
+        },
+        {
+          "id": "UIA-PAGE-201-ICON10",
+          "status": "NOT_FULLY_VERIFIED"
+        },
+        {
+          "id": "UIA-PAGE-201-NAV11",
+          "status": "NOT_FULLY_VERIFIED"
+        }
+      ]
+    },
+    {
+      "page": "PAGE-202",
+      "views": [
+        {
+          "prototype_view": "overview",
+          "route": "/review/:sessionId",
+          "components": [
+            "AnswerOverview"
+          ],
+          "application_models": [
+            "Draft"
+          ],
+          "apis": [
+            "API-008"
+          ],
+          "plan": "frontend.md#review",
+          "verification": [
+            "FE2-V03",
+            "FE2-V05"
+          ]
+        }
+      ],
+      "qa_evidence": [
+        "Q04/Q05/Q07；R01/R02 ；V06 两批概览提交"
+      ],
+      "ui_acceptance": [
+        {
+          "id": "UIA-PAGE-202-01",
+          "status": "NOT_FULLY_VERIFIED"
+        },
+        {
+          "id": "UIA-PAGE-202-COPY09",
+          "status": "NOT_FULLY_VERIFIED"
+        },
+        {
+          "id": "UIA-PAGE-202-ICON10",
+          "status": "NOT_FULLY_VERIFIED"
+        },
+        {
+          "id": "UIA-PAGE-202-NAV11",
+          "status": "NOT_FULLY_VERIFIED"
+        }
+      ]
+    },
+    {
+      "page": "PAGE-203",
+      "views": [
+        {
+          "prototype_view": "summary",
+          "route": "/review/:sessionId",
+          "components": [
+            "AttemptSummary"
+          ],
+          "application_models": [
+            "EphemeralComparison",
+            "Receipt"
+          ],
+          "apis": [
+            "API-008"
+          ],
+          "plan": "frontend.md#review",
+          "verification": [
+            "FE2-V05"
+          ]
+        }
+      ],
+      "qa_evidence": [
+        "Q04/Q05/Q06/Q11；R01/R02/R04 ；V06 多批总结、唯一掌握、刷新不可回看；QA08 B02/04一次结算"
+      ],
+      "ui_acceptance": [
+        {
+          "id": "UIA-PAGE-203-01",
+          "status": "NOT_FULLY_VERIFIED"
+        },
+        {
+          "id": "UIA-PAGE-203-COPY09",
+          "status": "NOT_FULLY_VERIFIED"
+        },
+        {
+          "id": "UIA-PAGE-203-ICON10",
+          "status": "NOT_FULLY_VERIFIED"
+        },
+        {
+          "id": "UIA-PAGE-203-NAV11",
+          "status": "NOT_FULLY_VERIFIED"
+        }
+      ]
+    },
+    {
+      "page": "PAGE-204",
+      "views": [
+        {
+          "prototype_view": "create",
+          "route": "/create",
+          "components": [
+            "CreationWorkspace",
+            "EditableConfiguration",
+            "WordPicker"
+          ],
+          "application_models": [
+            "GenerationWorkspace"
+          ],
+          "apis": [
+            "API-004",
+            "API-005",
+            "API-006"
+          ],
+          "plan": "frontend.md#generation",
+          "verification": [
+            "FE2-V06",
+            "FE2-V07"
+          ]
+        }
+      ],
+      "qa_evidence": [
+        "原C/R/V证据；QA07 G01–10计量/协议/边界通过，CR013沿034限定关闭；QA09 R01–04原来源退款API，U02为共享生成状态浏览器验证"
+      ],
+      "ui_acceptance": [
+        {
+          "id": "UIA-PAGE-204-01",
+          "status": "NOT_FULLY_VERIFIED"
+        },
+        {
+          "id": "UIA-PAGE-204-COPY09",
+          "status": "NOT_FULLY_VERIFIED"
+        },
+        {
+          "id": "UIA-PAGE-204-ICON10",
+          "status": "NOT_FULLY_VERIFIED"
+        },
+        {
+          "id": "UIA-PAGE-204-NAV11",
+          "status": "NOT_FULLY_VERIFIED"
+        },
+        {
+          "id": "UIA-PAGE-204-SETTINGS16",
+          "status": "NOT_FULLY_VERIFIED"
+        }
+      ]
+    },
+    {
+      "page": "PAGE-205",
+      "views": [
+        {
+          "prototype_view": "home",
+          "route": "/",
+          "components": [
+            "HomeStoryStack"
+          ],
+          "application_models": [
+            "PublicHomeSamples"
+          ],
+          "apis": [
+            "API-001",
+            "API-209"
+          ],
+          "plan": "frontend.md#design",
+          "verification": [
+            "FE2-V13",
+            "FE2-V15"
+          ]
+        }
+      ],
+      "qa_evidence": [
+        "DEV, SETUP/Q09, U01/U02"
+      ],
+      "ui_acceptance": [
+        {
+          "id": "UIA-PAGE-205-01",
+          "status": "PARTIAL"
+        },
+        {
+          "id": "UIA-PAGE-205-COPY09",
+          "status": "PARTIAL"
+        },
+        {
+          "id": "UIA-PAGE-205-ICON10",
+          "status": "PARTIAL"
+        },
+        {
+          "id": "UIA-PAGE-205-HOME10",
+          "status": "PARTIAL"
+        },
+        {
+          "id": "UIA-PAGE-205-NAV11",
+          "status": "PARTIAL"
+        },
+        {
+          "id": "UIA-PAGE-205-STACK13",
+          "status": "PARTIAL"
+        },
+        {
+          "id": "UIA-PAGE-205-MOTION14",
+          "status": "PARTIAL"
+        }
+      ]
+    },
+    {
+      "page": "PAGE-206",
+      "views": [
+        {
+          "prototype_view": "profile",
+          "route": "/account",
+          "components": [
+            "AccountShell",
+            "ProfileForm",
+            "AccountSecurity"
+          ],
+          "application_models": [
+            "Account"
+          ],
+          "apis": [
+            "API-003",
+            "API-201"
+          ],
+          "plan": "frontend.md#growth",
+          "verification": [
+            "FE2-V07"
+          ]
+        }
+      ],
+      "qa_evidence": [
+        "DEV, Q05/Q09；R07 改密前置；S02–04 注销复验；W01 未定位 console 观察",
+        "QA10 A01–11 API/数据验收；本轮不新增UI通过声明"
+      ],
+      "ui_acceptance": [
+        {
+          "id": "UIA-PAGE-206-01",
+          "status": "NOT_FULLY_VERIFIED"
+        },
+        {
+          "id": "UIA-PAGE-206-COPY09",
+          "status": "NOT_FULLY_VERIFIED"
+        },
+        {
+          "id": "UIA-PAGE-206-ICON10",
+          "status": "NOT_FULLY_VERIFIED"
+        },
+        {
+          "id": "UIA-PAGE-206-NAV11",
+          "status": "NOT_FULLY_VERIFIED"
+        },
+        {
+          "id": "UIA-PAGE-206-ACCOUNT17",
+          "status": "NOT_FULLY_VERIFIED"
+        }
+      ]
+    },
+    {
+      "page": "PAGE-207",
+      "views": [
+        {
+          "prototype_view": "notices",
+          "route": "/notices",
+          "components": [
+            "NoticeList",
+            "SafeNoticeBody"
+          ],
+          "application_models": [
+            "NoticeCollection"
+          ],
+          "apis": [
+            "API-205"
+          ],
+          "plan": "frontend.md#notices",
+          "verification": [
+            "FE2-V12"
+          ]
+        }
+      ],
+      "qa_evidence": [
+        "Q09"
+      ],
+      "ui_acceptance": [
+        {
+          "id": "UIA-PAGE-207-01",
+          "status": "NOT_FULLY_VERIFIED"
+        },
+        {
+          "id": "UIA-PAGE-207-COPY09",
+          "status": "NOT_FULLY_VERIFIED"
+        },
+        {
+          "id": "UIA-PAGE-207-ICON10",
+          "status": "NOT_FULLY_VERIFIED"
+        },
+        {
+          "id": "UIA-PAGE-207-NAV11",
+          "status": "NOT_FULLY_VERIFIED"
+        },
+        {
+          "id": "UIA-PAGE-207-TOAST19",
+          "status": "PARTIAL"
+        }
+      ]
+    },
+    {
+      "page": "PAGE-208",
+      "views": [
+        {
+          "prototype_view": "models",
+          "route": "/admin/models",
+          "components": [
+            "CredentialForm",
+            "ModelEditor",
+            "RemovalImpact"
+          ],
+          "application_models": [
+            "AdminModels"
+          ],
+          "apis": [
+            "API-101"
+          ],
+          "plan": "frontend.md#growth",
+          "verification": [
+            "FE2-V10"
+          ]
+        },
+        {
+          "prototype_view": "plans",
+          "route": "/admin/plans",
+          "components": [
+            "PlanEditor",
+            "PriorityEditor"
+          ],
+          "application_models": [
+            "Plans"
+          ],
+          "apis": [
+            "API-102"
+          ],
+          "plan": "frontend.md#growth",
+          "verification": [
+            "FE2-V10"
+          ]
+        }
+      ],
+      "qa_evidence": [
+        "C02/C04, C05, SETUP, SETUP/C04, SETUP/C05, U01/U03/U04"
+      ],
+      "ui_acceptance": [
+        {
+          "id": "UIA-PAGE-208-01",
+          "status": "NOT_FULLY_VERIFIED"
+        },
+        {
+          "id": "UIA-PAGE-208-COPY09",
+          "status": "NOT_FULLY_VERIFIED"
+        },
+        {
+          "id": "UIA-PAGE-208-ICON10",
+          "status": "NOT_FULLY_VERIFIED"
+        }
+      ]
+    },
+    {
+      "page": "PAGE-209",
+      "views": [
+        {
+          "prototype_view": "messages",
+          "route": "/admin/notices",
+          "components": [
+            "NoticeEditor",
+            "MarkdownPreview"
+          ],
+          "application_models": [
+            "AdminNotices"
+          ],
+          "apis": [
+            "API-207"
+          ],
+          "plan": "frontend.md#notices",
+          "verification": [
+            "FE2-V10",
+            "FE2-V12"
+          ]
+        }
+      ],
+      "qa_evidence": [
+        "Q09"
+      ],
+      "ui_acceptance": [
+        {
+          "id": "UIA-PAGE-209-01",
+          "status": "NOT_FULLY_VERIFIED"
+        },
+        {
+          "id": "UIA-PAGE-209-COPY09",
+          "status": "NOT_FULLY_VERIFIED"
+        },
+        {
+          "id": "UIA-PAGE-209-ICON10",
+          "status": "NOT_FULLY_VERIFIED"
+        }
+      ]
+    },
+    {
+      "page": "PAGE-210",
+      "views": [
+        {
+          "prototype_view": "operations",
+          "route": "/admin/growth",
+          "components": [
+            "CheckinSettings",
+            "LevelEditor",
+            "AchievementEditor",
+            "ItemDefinitionEditor",
+            "TierContentDialog"
+          ],
+          "application_models": [
+            "OperationsDraft",
+            "GrowthSettingsForm",
+            "LevelTableDraft",
+            "AchievementTableDraft",
+            "LocalizedEditorText"
+          ],
+          "apis": [
+            "API-206"
+          ],
+          "plan": "frontend.md#growth",
+          "verification": [
+            "FE2-V10",
+            "FE2-V18",
+            "FE2-V19"
+          ]
+        }
+      ],
+      "qa_evidence": [
+        "C01/C02/C03/C05/C07；R09/R10；S05–07/S06-live；S09–12；T01–07 F05修复通过"
+      ],
+      "ui_acceptance": [
+        {
+          "id": "UIA-PAGE-210-01",
+          "status": "NOT_FULLY_VERIFIED"
+        },
+        {
+          "id": "UIA-PAGE-210-COPY09",
+          "status": "NOT_FULLY_VERIFIED"
+        },
+        {
+          "id": "UIA-PAGE-210-ICON10",
+          "status": "NOT_FULLY_VERIFIED"
+        }
+      ]
+    },
+    {
+      "page": "PAGE-211",
+      "views": [
+        {
+          "prototype_view": "credits",
+          "route": "/admin/users/:userId#points",
+          "components": [
+            "PointsLedger",
+            "PointGrantForm"
+          ],
+          "application_models": [
+            "UserLedger"
+          ],
+          "apis": [
+            "API-103"
+          ],
+          "plan": "frontend.md#growth",
+          "verification": [
+            "FE2-V10"
+          ]
+        }
+      ],
+      "qa_evidence": [
+        "C03, Q03/C04"
+      ],
+      "ui_acceptance": [
+        {
+          "id": "UIA-PAGE-211-01",
+          "status": "NOT_FULLY_VERIFIED"
+        },
+        {
+          "id": "UIA-PAGE-211-COPY09",
+          "status": "NOT_FULLY_VERIFIED"
+        },
+        {
+          "id": "UIA-PAGE-211-ICON10",
+          "status": "NOT_FULLY_VERIFIED"
+        }
+      ]
+    },
+    {
+      "page": "PAGE-212",
+      "views": [
+        {
+          "prototype_view": "presets",
+          "route": "/admin/presets",
+          "components": [
+            "PresetEditor",
+            "PreviewWorkspace",
+            "PublishConfirmation"
+          ],
+          "application_models": [
+            "PresetDraft",
+            "AdminPreviewOptions"
+          ],
+          "apis": [
+            "API-208",
+            "API-202"
+          ],
+          "plan": "frontend.md#generation",
+          "verification": [
+            "FE2-V11",
+            "FE2-V20"
+          ]
+        }
+      ],
+      "qa_evidence": [
+        "SETUP/Q01；QA09 P01–03/06发布生命周期API（不冒充全部后台UI）"
+      ],
+      "ui_acceptance": [
+        {
+          "id": "UIA-PAGE-212-01",
+          "status": "NOT_FULLY_VERIFIED"
+        },
+        {
+          "id": "UIA-PAGE-212-02",
+          "status": "NOT_FULLY_VERIFIED"
+        },
+        {
+          "id": "UIA-PAGE-212-03",
+          "status": "NOT_FULLY_VERIFIED"
+        },
+        {
+          "id": "UIA-PAGE-212-COPY09",
+          "status": "NOT_FULLY_VERIFIED"
+        },
+        {
+          "id": "UIA-PAGE-212-ICON10",
+          "status": "NOT_FULLY_VERIFIED"
+        }
+      ]
+    },
+    {
+      "page": "PAGE-213",
+      "views": [
+        {
+          "prototype_view": "metrics",
+          "route": "/admin/analytics",
+          "components": [
+            "MetricTile",
+            "MetricChart"
+          ],
+          "application_models": [
+            "AnalyticsDashboard"
+          ],
+          "apis": [
+            "API-209"
+          ],
+          "plan": "frontend.md#quality",
+          "verification": [
+            "FE2-V16"
+          ]
+        }
+      ],
+      "qa_evidence": [
+        "T11–14；F06/T15 ；V01–04 CR010独立复验通过",
+        "QA10 A01–11 API/数据验收；本轮不新增UI通过声明"
+      ],
+      "ui_acceptance": [
+        {
+          "id": "UIA-PAGE-213-01",
+          "status": "NOT_FULLY_VERIFIED"
+        },
+        {
+          "id": "UIA-PAGE-213-COPY09",
+          "status": "NOT_FULLY_VERIFIED",
+          "finding": "QA2-F06 verified_pending_gate",
+          "evidence": "qa2-005/analytics-results.json"
+        },
+        {
+          "id": "UIA-PAGE-213-ICON10",
+          "status": "NOT_FULLY_VERIFIED"
+        }
+      ]
+    },
+    {
+      "page": "PAGE-214",
+      "views": [
+        {
+          "prototype_view": "growth",
+          "route": "/account/growth",
+          "components": [
+            "AccountShell",
+            "CheckinCalendar",
+            "AchievementGroup",
+            "LevelAwardList",
+            "AchievementCard"
+          ],
+          "application_models": [
+            "Growth",
+            "Achievement"
+          ],
+          "apis": [
+            "API-203"
+          ],
+          "plan": "frontend.md#growth",
+          "verification": [
+            "FE2-V09",
+            "FE2-V10",
+            "FE2-V18"
+          ]
+        }
+      ],
+      "qa_evidence": [
+        "DEV, Q04/Q11；S01 自动签到与掌握；S09–12 手动奖励/全或无/称号；T08–10 补签/成就待领"
+      ],
+      "ui_acceptance": [
+        {
+          "id": "UIA-PAGE-214-01",
+          "status": "NOT_FULLY_VERIFIED"
+        },
+        {
+          "id": "UIA-PAGE-214-COPY09",
+          "status": "NOT_FULLY_VERIFIED"
+        },
+        {
+          "id": "UIA-PAGE-214-ICON10",
+          "status": "NOT_FULLY_VERIFIED"
+        },
+        {
+          "id": "UIA-PAGE-214-NAV11",
+          "status": "NOT_FULLY_VERIFIED"
+        },
+        {
+          "id": "UIA-PAGE-214-ACCOUNT17",
+          "status": "NOT_FULLY_VERIFIED"
+        }
+      ]
+    },
+    {
+      "page": "PAGE-215",
+      "views": [
+        {
+          "prototype_view": "bag",
+          "route": "/account/items",
+          "components": [
+            "AccountShell",
+            "OwnedItemCard",
+            "EffectPreview"
+          ],
+          "application_models": [
+            "OwnedItem"
+          ],
+          "apis": [
+            "API-204"
+          ],
+          "plan": "frontend.md#growth",
+          "verification": [
+            "FE2-V09"
+          ]
+        },
+        {
+          "prototype_view": "shop",
+          "route": "/account/exchange",
+          "components": [
+            "AccountShell",
+            "ShopItemCard"
+          ],
+          "application_models": [
+            "Catalog"
+          ],
+          "apis": [
+            "API-204"
+          ],
+          "plan": "frontend.md#growth",
+          "verification": [
+            "FE2-V09"
+          ]
+        }
+      ],
+      "qa_evidence": [
+        "C01–05/C07；R09/R10；S05；T01–07 分页/改价退款通过；T08–10补签 ；V09逐模型到期展示，V09/V10卡重叠/覆盖API"
+      ],
+      "ui_acceptance": [
+        {
+          "id": "UIA-PAGE-215-01",
+          "status": "NOT_FULLY_VERIFIED"
+        },
+        {
+          "id": "UIA-PAGE-215-COPY09",
+          "status": "NOT_FULLY_VERIFIED"
+        },
+        {
+          "id": "UIA-PAGE-215-ICON10",
+          "status": "NOT_FULLY_VERIFIED"
+        },
+        {
+          "id": "UIA-PAGE-215-NAV11",
+          "status": "NOT_FULLY_VERIFIED"
+        },
+        {
+          "id": "UIA-PAGE-215-ACCOUNT17",
+          "status": "NOT_FULLY_VERIFIED"
+        }
+      ]
+    },
+    {
+      "page": "PAGE-216",
+      "views": [
+        {
+          "prototype_view": "trial",
+          "route": "/trial/:presetId",
+          "components": [
+            "PresetWorkspace",
+            "ReadOnlyConfiguration"
+          ],
+          "application_models": [
+            "PublishedPreset",
+            "GenerationWorkspace"
+          ],
+          "apis": [
+            "API-202",
+            "API-005",
+            "API-006"
+          ],
+          "plan": "frontend.md#generation",
+          "verification": [
+            "FE2-V06",
+            "FE2-V07",
+            "FE2-V11"
+          ]
+        }
+      ],
+      "qa_evidence": [
+        "SETUP/Q01；QA09 U01–04中英四宽度锁定设置/错误/注册收录及局部axe；P04–07配置例外/计量/失效"
+      ],
+      "ui_acceptance": [
+        {
+          "id": "UIA-PAGE-216-01",
+          "status": "PARTIAL",
+          "evidence": "qa2-009/ui-results.json",
+          "limitation": "Scoped content/settings/tab/claim/error/accessibility only; full motion/device states not completed"
+        },
+        {
+          "id": "UIA-PAGE-216-02",
+          "status": "PARTIAL",
+          "evidence": "qa2-009/ui-results.json",
+          "limitation": "Scoped content/settings/tab/claim/error/accessibility only; full motion/device states not completed"
+        },
+        {
+          "id": "UIA-PAGE-216-03",
+          "status": "PARTIAL",
+          "evidence": "qa2-009/ui-results.json",
+          "limitation": "Scoped content/settings/tab/claim/error/accessibility only; full motion/device states not completed"
+        },
+        {
+          "id": "UIA-PAGE-216-COPY09",
+          "status": "PARTIAL",
+          "evidence": "qa2-009/ui-results.json",
+          "limitation": "Scoped content/settings/tab/claim/error/accessibility only; full motion/device states not completed"
+        },
+        {
+          "id": "UIA-PAGE-216-ICON10",
+          "status": "PARTIAL",
+          "evidence": "qa2-009/ui-results.json",
+          "limitation": "Scoped content/settings/tab/claim/error/accessibility only; full motion/device states not completed"
+        },
+        {
+          "id": "UIA-PAGE-216-NAV11",
+          "status": "PARTIAL",
+          "evidence": "qa2-009/ui-results.json",
+          "limitation": "Scoped content/settings/tab/claim/error/accessibility only; full motion/device states not completed"
+        },
+        {
+          "id": "UIA-PAGE-216-SETTINGS15",
+          "status": "PARTIAL",
+          "evidence": "qa2-009/ui-results.json",
+          "limitation": "Scoped content/settings/tab/claim/error/accessibility only; full motion/device states not completed"
+        }
+      ]
+    },
+    {
+      "page": "PAGE-217",
+      "views": [
+        {
+          "prototype_view": "explore",
+          "route": "/explore",
+          "components": [
+            "MeaningLanguageTabs",
+            "PresetGallery"
+          ],
+          "application_models": [
+            "PublishedPresetCollection"
+          ],
+          "apis": [
+            "API-202",
+            "API-209"
+          ],
+          "plan": "frontend.md#generation",
+          "verification": [
+            "FE2-V11",
+            "FE2-V15"
+          ]
+        }
+      ],
+      "qa_evidence": [
+        "DEV, SETUP/Q01, U01/U02；QA09 U01完整样文/配置/释义筛选/键盘/身份跳转；U04区域axe"
+      ],
+      "ui_acceptance": [
+        {
+          "id": "UIA-PAGE-217-01",
+          "status": "PARTIAL",
+          "evidence": "qa2-009/ui-results.json",
+          "limitation": "Scoped content/settings/tab/claim/error/accessibility only; full motion/device states not completed"
+        },
+        {
+          "id": "UIA-PAGE-217-02",
+          "status": "PARTIAL",
+          "evidence": "qa2-009/ui-results.json",
+          "limitation": "Scoped content/settings/tab/claim/error/accessibility only; full motion/device states not completed"
+        },
+        {
+          "id": "UIA-PAGE-217-03",
+          "status": "PARTIAL",
+          "evidence": "qa2-009/ui-results.json",
+          "limitation": "Scoped content/settings/tab/claim/error/accessibility only; full motion/device states not completed"
+        },
+        {
+          "id": "UIA-PAGE-217-04",
+          "status": "PARTIAL",
+          "evidence": "qa2-009/ui-results.json",
+          "limitation": "Scoped content/settings/tab/claim/error/accessibility only; full motion/device states not completed"
+        },
+        {
+          "id": "UIA-PAGE-217-05",
+          "status": "PARTIAL",
+          "evidence": "qa2-009/ui-results.json",
+          "limitation": "Scoped content/settings/tab/claim/error/accessibility only; full motion/device states not completed"
+        },
+        {
+          "id": "UIA-PAGE-217-06",
+          "status": "PARTIAL",
+          "evidence": "qa2-009/ui-results.json",
+          "limitation": "Scoped content/settings/tab/claim/error/accessibility only; full motion/device states not completed"
+        },
+        {
+          "id": "UIA-PAGE-217-COPY09",
+          "status": "PARTIAL",
+          "evidence": "qa2-009/ui-results.json",
+          "limitation": "Scoped content/settings/tab/claim/error/accessibility only; full motion/device states not completed"
+        },
+        {
+          "id": "UIA-PAGE-217-ICON10",
+          "status": "PARTIAL",
+          "evidence": "qa2-009/ui-results.json",
+          "limitation": "Scoped content/settings/tab/claim/error/accessibility only; full motion/device states not completed"
+        },
+        {
+          "id": "UIA-PAGE-217-NAV11",
+          "status": "PARTIAL",
+          "evidence": "qa2-009/ui-results.json",
+          "limitation": "Scoped content/settings/tab/claim/error/accessibility only; full motion/device states not completed"
+        },
+        {
+          "id": "UIA-PAGE-217-CAR11",
+          "status": "PARTIAL",
+          "evidence": "qa2-009/ui-results.json",
+          "limitation": "Scoped content/settings/tab/claim/error/accessibility only; full motion/device states not completed"
+        }
+      ]
+    },
+    {
+      "page": "PAGE-218",
+      "views": [
+        {
+          "prototype_view": "adminhome",
+          "route": "/admin",
+          "components": [
+            "OverviewMetrics",
+            "ModuleLinks"
+          ],
+          "application_models": [
+            "AdminOverview"
+          ],
+          "apis": [
+            "API-209"
+          ],
+          "plan": "frontend.md#growth",
+          "verification": [
+            "FE2-V16"
+          ]
+        }
+      ],
+      "qa_evidence": [
+        "DEV, SETUP/Q09",
+        "QA10 A01–11 API/数据验收；本轮不新增UI通过声明"
+      ],
+      "ui_acceptance": [
+        {
+          "id": "UIA-PAGE-218-01",
+          "status": "NOT_FULLY_VERIFIED"
+        },
+        {
+          "id": "UIA-PAGE-218-COPY09",
+          "status": "NOT_FULLY_VERIFIED"
+        },
+        {
+          "id": "UIA-PAGE-218-ICON10",
+          "status": "NOT_FULLY_VERIFIED"
+        }
+      ]
+    }
+  ],
+  "active_data": [
+    "DATA-001",
+    "DATA-002",
+    "DATA-003",
+    "DATA-004",
+    "DATA-005",
+    "DATA-006",
+    "DATA-007",
+    "DATA-008",
+    "DATA-009",
+    "DATA-010",
+    "DATA-011",
+    "DATA-012",
+    "DATA-013",
+    "DATA-014",
+    "DATA-016",
+    "DATA-017",
+    "DATA-018",
+    "DATA-201",
+    "DATA-202",
+    "DATA-203",
+    "DATA-204",
+    "DATA-205",
+    "DATA-206",
+    "DATA-207",
+    "DATA-208",
+    "DATA-209",
+    "DATA-210",
+    "DATA-211",
+    "DATA-212",
+    "DATA-213",
+    "DATA-214"
+  ],
+  "replaced_data": [
+    {
+      "id": "DATA-015",
+      "replacement": "DATA-202",
+      "rule": "Only minimal facts; no historic answers",
+      "plan": "frontend.md#review"
+    }
+  ],
+  "design_deltas": [
+    {
+      "id": "FDE-01",
+      "source": "../design/frontend-delta.md",
+      "plan": "frontend.md#routes",
+      "source_section": "FDE-01"
+    },
+    {
+      "id": "FDE-02",
+      "source": "../design/frontend-delta.md",
+      "plan": "frontend.md#design",
+      "source_section": "FDE-02"
+    },
+    {
+      "id": "FDE-03",
+      "source": "../design/frontend-delta.md",
+      "plan": "frontend.md#generation",
+      "source_section": "FDE-03"
+    },
+    {
+      "id": "FDE-04",
+      "source": "../design/frontend-delta.md",
+      "plan": "frontend.md#review",
+      "source_section": "FDE-04"
+    },
+    {
+      "id": "FDE-05",
+      "source": "../design/frontend-delta.md",
+      "plan": "frontend.md#generation",
+      "source_section": "FDE-05"
+    },
+    {
+      "id": "FDE-06",
+      "source": "../design/frontend-delta.md",
+      "plan": "frontend.md#growth",
+      "source_section": "FDE-06"
+    },
+    {
+      "id": "FDE-07",
+      "source": "../design/frontend-delta.md",
+      "plan": "frontend.md#notices",
+      "source_section": "FDE-07"
+    },
+    {
+      "id": "FDE-08",
+      "source": "../design/frontend-delta.md",
+      "plan": "frontend.md#generation",
+      "source_section": "FDE-08"
+    },
+    {
+      "id": "FDE-09",
+      "source": "../design/frontend-delta.md",
+      "plan": "frontend.md#growth",
+      "source_section": "FDE-09"
+    }
+  ],
+  "ui_count": 119,
+  "limitations": [
+    "QA10最终11项PASS；原主轮9PASS/1测试账号长度FAIL保留，仅定向控制A09；无新增产品CR，UAT未执行。",
+    "QA10真实Go/PG与HTTP业务链；历史日期和部分事实为显式SQL夹具，等待实际分钟维护，无真实90天等待。停止聚合用advisory lock并回拨检查点，真实任务日志已验。Mac隔离库不代表生产Linux/权限部署/容量或第三方告警送达。",
+    "本地provider2次，真实0；保留其余已有UI/运行环境覆盖与AI质量限制。后续应对照批准验收收敛有限缺口，不能以“更多组合”无限扩展。"
+  ],
+  "version": "M002-QA-10",
+  "previous_round": "qa2-009/manifest.json"
+}

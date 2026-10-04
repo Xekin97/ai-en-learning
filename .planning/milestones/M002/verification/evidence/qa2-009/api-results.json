@@ -1,0 +1,407 @@
+{
+  "results": [
+    {
+      "id": "P01",
+      "name": "Admin previews have separate usage without learner quota and never auto-publish",
+      "result": "FAIL",
+      "error": "Error: /admin/presets/4330dc08-4fe2-4b24-8c7f-6641ed4b5ca2/publish 422 {\"type\":\"https://wordweave.example/problems/preview-required\",\"title\":\"Preset unavailable\",\"status\":422,\"code\":\"preview_required\",\"detail\":\"Refresh the preset and check its configuration.\",\"request_id\":\"req_2wD_mdntmatSFuX9pE7Qmw\"}"
+    },
+    {
+      "id": "P02",
+      "name": "Title-only draft preserves online version, reuses preview and rejects stale start",
+      "result": "PASS"
+    },
+    {
+      "id": "P03",
+      "name": "Changed generation parameters require a new successful preview; failed preview preserves published snapshot",
+      "result": "PASS"
+    },
+    {
+      "id": "P04",
+      "name": "Visitor preset overrides configuration restrictions but charges visitor once; claim preserves content and basic quota",
+      "result": "PASS"
+    },
+    {
+      "id": "P05",
+      "name": "Learner preset charges account base quota only, leaves ordinary permissions restricted and rejects exhausted quota",
+      "result": "PASS"
+    },
+    {
+      "id": "P06",
+      "name": "In-flight preset survives unpublish with original snapshot; new requests see unavailable",
+      "result": "PASS"
+    },
+    {
+      "id": "P07",
+      "name": "Disabled preset model preserves public full sample, blocks new generation without substitution or charge",
+      "result": "FAIL",
+      "error": "Error: /admin/models/01a0e628-ba0f-7653-99cb-c6ee6d5eb7f1 405 {\"type\":\"https://wordweave.example/problems/method-not-allowed\",\"title\":\"Method not allowed\",\"status\":405,\"code\":\"method_not_allowed\",\"detail\":\"This method is not available for the requested resource.\",\"request_id\":\"req_qcoa7kAK86JekIzG0YEvDg\"}"
+    },
+    {
+      "id": "R01",
+      "name": "Visitor provider/validation failures refund the original visitor source exactly once",
+      "result": "PASS"
+    },
+    {
+      "id": "R02",
+      "name": "Visitor explicit cancel consumes once; transport interruption refunds and repeated terminal requests do not alter quota",
+      "result": "PASS"
+    },
+    {
+      "id": "R03",
+      "name": "Trial provider/validation/transport failures refund trial, preserving base quota and trial expiry",
+      "result": "PASS"
+    },
+    {
+      "id": "R04",
+      "name": "Admin base reset during in-flight trial failure cannot redirect refund or change trial expiry",
+      "result": "PASS"
+    }
+  ],
+  "samples": [
+    {
+      "action": "P02",
+      "oldVersion": "79280d69-668d-4379-b4d7-e265ca733109",
+      "newVersion": "ae9c43d9-2ffa-4e5f-9dc5-53fffe3d8dae",
+      "staleCode": "preset_changed",
+      "noGeneration": true
+    },
+    {
+      "action": "P03",
+      "invalidPublish": "preview_required",
+      "failedPreviewKeptOnline": true,
+      "newVersion": "ee50dcf3-ac99-498f-9b42-6f18a2f3458e"
+    },
+    {
+      "action": "P04",
+      "run": "01a0e628-bbd3-7b83-b864-9bc7190cb1d0",
+      "charge": {
+        "run_id": "01a0e628-bbd3-7b83-b864-9bc7190cb1d0",
+        "source_kind": "visitor",
+        "plan_code": null,
+        "origin": null,
+        "item_id": null,
+        "state": "consumed",
+        "units": 1
+      },
+      "claimedUser": "01a0e628-bc36-7f10-8df8-e68614bde879",
+      "batch": "01a0e628-bc40-7d0e-9f8a-e4326ab539e1",
+      "title": "learn · weave · book",
+      "providerCalls": 1,
+      "basicQuotaUnchanged": true
+    },
+    {
+      "action": "P05",
+      "run": "01a0e628-bc83-704c-b100-c41c34e0eda5",
+      "charge": {
+        "run_id": "01a0e628-bc83-704c-b100-c41c34e0eda5",
+        "source_kind": "plan",
+        "plan_code": "registered",
+        "origin": "base",
+        "item_id": null,
+        "state": "consumed",
+        "units": 1
+      },
+      "visitorLedgerUnchanged": true,
+      "noQuotaStatus": 429
+    },
+    {
+      "action": "P06",
+      "run": "01a0e628-bcde-7c87-89ea-e95416caa906",
+      "batch": "01a0e628-bcec-70a3-afad-055a14603096",
+      "saveStatus": 201,
+      "newEntryStatus": 404,
+      "targets": [
+        "learn",
+        "weave",
+        "book"
+      ]
+    },
+    {
+      "action": "R01",
+      "kind": "http-failure",
+      "run": "01a0e628-bd0c-74f2-b342-72818dffb148",
+      "status": 503,
+      "code": "generation_unavailable",
+      "charge": {
+        "run_id": "01a0e628-bd0c-74f2-b342-72818dffb148",
+        "source_kind": "visitor",
+        "plan_code": null,
+        "origin": null,
+        "item_id": null,
+        "state": "refunded",
+        "units": 1
+      },
+      "quotaUnchanged": true
+    },
+    {
+      "action": "R01",
+      "kind": "invalid",
+      "run": "01a0e628-bd6c-7a78-aa09-54d2e7aac274",
+      "charge": {
+        "run_id": "01a0e628-bd6c-7a78-aa09-54d2e7aac274",
+        "source_kind": "visitor",
+        "plan_code": null,
+        "origin": null,
+        "item_id": null,
+        "state": "refunded",
+        "units": 1
+      },
+      "quotaUnchanged": true
+    },
+    {
+      "action": "R02",
+      "kind": "hold",
+      "run": "01a0e628-bde0-78ae-97a1-577ff7a5e08c",
+      "charge": {
+        "run_id": "01a0e628-bde0-78ae-97a1-577ff7a5e08c",
+        "source_kind": "visitor",
+        "plan_code": null,
+        "origin": null,
+        "item_id": null,
+        "state": "refunded",
+        "units": 1
+      },
+      "quotaUnchanged": true
+    },
+    {
+      "action": "R02",
+      "cancelledRun": "01a0e628-bdb5-7189-b2b9-f0d30a4e44b7",
+      "charge": {
+        "run_id": "01a0e628-bdb5-7189-b2b9-f0d30a4e44b7",
+        "source_kind": "visitor",
+        "plan_code": null,
+        "origin": null,
+        "item_id": null,
+        "state": "consumed",
+        "units": 1
+      },
+      "consumedOnce": true
+    },
+    {
+      "action": "R03",
+      "kind": "http-failure",
+      "run": "01a0e628-be7a-74ae-b6d3-7e7dd1dff17b",
+      "status": 503,
+      "code": "generation_unavailable",
+      "charge": {
+        "run_id": "01a0e628-be7a-74ae-b6d3-7e7dd1dff17b",
+        "source_kind": "plan",
+        "plan_code": "pro",
+        "origin": "trial",
+        "item_id": null,
+        "state": "refunded",
+        "units": 1
+      },
+      "quotaUnchanged": true
+    },
+    {
+      "action": "R03",
+      "kind": "invalid",
+      "run": "01a0e628-bedf-7c88-a30d-5dc1b1386e9e",
+      "charge": {
+        "run_id": "01a0e628-bedf-7c88-a30d-5dc1b1386e9e",
+        "source_kind": "plan",
+        "plan_code": "pro",
+        "origin": "trial",
+        "item_id": null,
+        "state": "refunded",
+        "units": 1
+      },
+      "quotaUnchanged": true
+    },
+    {
+      "action": "R03",
+      "kind": "hold",
+      "run": "01a0e628-bf57-745a-bd73-0c62500826e9",
+      "charge": {
+        "run_id": "01a0e628-bf57-745a-bd73-0c62500826e9",
+        "source_kind": "plan",
+        "plan_code": "pro",
+        "origin": "trial",
+        "item_id": null,
+        "state": "refunded",
+        "units": 1
+      },
+      "quotaUnchanged": true
+    },
+    {
+      "action": "R03",
+      "baseAndTrialQuotaUnchanged": true,
+      "trialEnd": "2026-09-29T11:57:04.98828+08:00"
+    },
+    {
+      "action": "R04",
+      "run": "01a0e628-bfb5-7854-b608-1d70d8a10d1a",
+      "charge": {
+        "run_id": "01a0e628-bfb5-7854-b608-1d70d8a10d1a",
+        "source_kind": "plan",
+        "plan_code": "pro",
+        "origin": "trial",
+        "item_id": null,
+        "state": "refunded",
+        "units": 1
+      },
+      "before": {
+        "base_plan": {
+          "code": "basic",
+          "quota": {
+            "kind": "limited",
+            "limit": 4,
+            "remaining": 4,
+            "window_hours": 24,
+            "refreshes_at": null
+          }
+        },
+        "trial": {
+          "code": "pro",
+          "ends_at": "2026-09-29T11:57:04.98828+08:00",
+          "quota": {
+            "kind": "limited",
+            "limit": 4,
+            "remaining": 4,
+            "window_hours": 24,
+            "refreshes_at": null
+          }
+        },
+        "effective_origin": "trial",
+        "extra_quota": {
+          "remaining": 0,
+          "earliest_expires_at": null
+        }
+      },
+      "after": {
+        "base_plan": {
+          "code": "pro",
+          "quota": {
+            "kind": "limited",
+            "limit": 4,
+            "remaining": 4,
+            "window_hours": 24,
+            "refreshes_at": null
+          }
+        },
+        "trial": {
+          "code": "pro",
+          "ends_at": "2026-09-29T11:57:04.98828+08:00",
+          "quota": {
+            "kind": "limited",
+            "limit": 4,
+            "remaining": 4,
+            "window_hours": 24,
+            "refreshes_at": null
+          }
+        },
+        "effective_origin": "base",
+        "extra_quota": {
+          "remaining": 0,
+          "earliest_expires_at": null
+        }
+      }
+    }
+  ],
+  "providerRequests": [
+    {
+      "number": 1,
+      "mode": "valid",
+      "probe": true
+    },
+    {
+      "number": 2,
+      "mode": "valid",
+      "probe": true
+    },
+    {
+      "number": 3,
+      "mode": "valid",
+      "probe": false
+    },
+    {
+      "number": 4,
+      "mode": "valid",
+      "probe": false
+    },
+    {
+      "number": 5,
+      "mode": "valid",
+      "probe": false
+    },
+    {
+      "number": 6,
+      "mode": "valid",
+      "probe": false
+    },
+    {
+      "number": 7,
+      "mode": "valid",
+      "probe": false
+    },
+    {
+      "number": 8,
+      "mode": "invalid",
+      "probe": false
+    },
+    {
+      "number": 9,
+      "mode": "valid",
+      "probe": false
+    },
+    {
+      "number": 10,
+      "mode": "valid",
+      "probe": false
+    },
+    {
+      "number": 11,
+      "mode": "valid",
+      "probe": false
+    },
+    {
+      "number": 12,
+      "mode": "hold",
+      "probe": false
+    },
+    {
+      "number": 13,
+      "mode": "http-failure",
+      "probe": false
+    },
+    {
+      "number": 14,
+      "mode": "invalid",
+      "probe": false
+    },
+    {
+      "number": 15,
+      "mode": "hold",
+      "probe": false
+    },
+    {
+      "number": 16,
+      "mode": "hold",
+      "probe": false
+    },
+    {
+      "number": 17,
+      "mode": "http-failure",
+      "probe": false
+    },
+    {
+      "number": 18,
+      "mode": "invalid",
+      "probe": false
+    },
+    {
+      "number": 19,
+      "mode": "hold",
+      "probe": false
+    },
+    {
+      "number": 20,
+      "mode": "hold",
+      "probe": false
+    }
+  ],
+  "localProviderCalls": 20,
+  "realProviderCalls": 0
+}

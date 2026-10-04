@@ -1,0 +1,2018 @@
+{
+  "source": ".planning/milestones/M002/technical/frontend-traceability.json",
+  "capabilities": [
+    {
+      "capability": "CAP-001",
+      "behavior": "首页/试用入口保留，静态首页不触发AI",
+      "backend_source": "backend.md#3-全量继承与用例追踪",
+      "apis_source_notation": "API-001/202",
+      "data_source_notation": "DATA-018/212",
+      "pages": [
+        "PAGE-205",
+        "PAGE-217"
+      ],
+      "qa_status": "PARTIAL",
+      "evidence": "U01/U02"
+    },
+    {
+      "capability": "CAP-002",
+      "behavior": "注册basic、轮换会话",
+      "backend_source": "backend.md#3-全量继承与用例追踪",
+      "apis_source_notation": "API-002",
+      "data_source_notation": "DATA-003/004/018",
+      "pages": [
+        "PAGE-002",
+        "PAGE-003"
+      ],
+      "qa_status": "PARTIAL",
+      "evidence": "SETUP/Q03；S03 真实访客注册收录"
+    },
+    {
+      "capability": "CAP-003",
+      "behavior": "登录退出/角色路由",
+      "backend_source": "backend.md#3-全量继承与用例追踪",
+      "apis_source_notation": "API-002",
+      "data_source_notation": "DATA-003/004/204",
+      "pages": [
+        "PAGE-002",
+        "PAGE-003",
+        "PAGE-103",
+        "PAGE-205",
+        "PAGE-206",
+        "PAGE-218"
+      ],
+      "qa_status": "PARTIAL",
+      "evidence": "SETUP/Q09；S03 注销后两会话及旧登录失效"
+    },
+    {
+      "capability": "CAP-004",
+      "behavior": "本人改密/撤其他会话",
+      "backend_source": "backend.md#3-全量继承与用例追踪",
+      "apis_source_notation": "API-003",
+      "data_source_notation": "DATA-003/004",
+      "pages": [
+        "PAGE-206"
+      ],
+      "qa_status": "PARTIAL",
+      "evidence": "R07 前置改密/多会话断言；S02–04 注销部分另见 CAP-005"
+    },
+    {
+      "capability": "CAP-005",
+      "behavior": "注销全个人数据",
+      "backend_source": "backend.md#3-全量继承与用例追踪",
+      "apis_source_notation": "API-003",
+      "data_source_notation": "DATA-003/004/009–018/201–211/213",
+      "pages": [
+        "PAGE-206"
+      ],
+      "qa_status": "PARTIAL",
+      "evidence": "S02–04：确认/错密/19 类非空关联表清除/多会话/他人隔离；F03 原缺陷复验通过；并发/回滚复用 DEV"
+    },
+    {
+      "capability": "CAP-006",
+      "behavior": "词表精确合法选词",
+      "backend_source": "backend.md#3-全量继承与用例追踪",
+      "apis_source_notation": "API-004",
+      "data_source_notation": "DATA-001/002",
+      "pages": [
+        "PAGE-204"
+      ],
+      "qa_status": "DEV_ONLY",
+      "evidence": "DEV"
+    },
+    {
+      "capability": "CAP-007",
+      "behavior": "一份有效计划、合并模型、分别次数",
+      "backend_source": "backend.md#3-全量继承与用例追踪",
+      "apis_source_notation": "API-004",
+      "data_source_notation": "DATA-005/006/008/009/211",
+      "pages": [
+        "PAGE-204"
+      ],
+      "qa_status": "PARTIAL",
+      "evidence": "U04（布局）"
+    },
+    {
+      "capability": "CAP-008",
+      "behavior": "流生成/严格完整结果",
+      "backend_source": "backend.md#3-全量继承与用例追踪",
+      "apis_source_notation": "API-005",
+      "data_source_notation": "DATA-007/009/010/011",
+      "pages": [
+        "PAGE-204"
+      ],
+      "qa_status": "PARTIAL",
+      "evidence": "SETUP"
+    },
+    {
+      "capability": "CAP-009",
+      "behavior": "取消/系统失败原来源退款",
+      "backend_source": "backend.md#3-全量继承与用例追踪",
+      "apis_source_notation": "API-005",
+      "data_source_notation": "DATA-009/010/011/211",
+      "pages": [
+        "PAGE-204"
+      ],
+      "qa_status": "DEV_ONLY",
+      "evidence": "DEV"
+    },
+    {
+      "capability": "CAP-010",
+      "behavior": "完整收录/放弃、默认标题",
+      "backend_source": "backend.md#3-全量继承与用例追踪",
+      "apis_source_notation": "API-006",
+      "data_source_notation": "DATA-009/011/012/013/208",
+      "pages": [
+        "PAGE-204"
+      ],
+      "qa_status": "PARTIAL",
+      "evidence": "SETUP"
+    },
+    {
+      "capability": "CAP-011",
+      "behavior": "访客认证claim一次绑定",
+      "backend_source": "backend.md#3-全量继承与用例追踪",
+      "apis_source_notation": "API-006",
+      "data_source_notation": "DATA-005/017/012/013/206",
+      "pages": [
+        "PAGE-002",
+        "PAGE-003",
+        "PAGE-204"
+      ],
+      "qa_status": "PARTIAL",
+      "evidence": "SETUP；S01/S03 两个真实访客注册 claim"
+    },
+    {
+      "capability": "CAP-012",
+      "behavior": "原六项统计/旧到新库列表",
+      "backend_source": "backend.md#3-全量继承与用例追踪",
+      "apis_source_notation": "API-007",
+      "data_source_notation": "DATA-012/016/202",
+      "pages": [
+        "PAGE-005"
+      ],
+      "qa_status": "PARTIAL",
+      "evidence": "Q01/Q04/Q05/Q11"
+    },
+    {
+      "capability": "CAP-013",
+      "behavior": "完整目标词搜索，不搜标题",
+      "backend_source": "backend.md#3-全量继承与用例追踪",
+      "apis_source_notation": "API-007",
+      "data_source_notation": "DATA-002/012/013",
+      "pages": [
+        "PAGE-005"
+      ],
+      "qa_status": "DEV_ONLY",
+      "evidence": "DEV"
+    },
+    {
+      "capability": "CAP-014",
+      "behavior": "完整正文/词义/位置详情",
+      "backend_source": "backend.md#3-全量继承与用例追踪",
+      "apis_source_notation": "API-007",
+      "data_source_notation": "DATA-012/013",
+      "pages": [
+        "PAGE-006"
+      ],
+      "qa_status": "PARTIAL",
+      "evidence": "Q01/Q02"
+    },
+    {
+      "capability": "CAP-015",
+      "behavior": "参与范围开关，仅影响新会话",
+      "backend_source": "backend.md#3-全量继承与用例追踪",
+      "apis_source_notation": "API-007",
+      "data_source_notation": "DATA-012/014",
+      "pages": [
+        "PAGE-005",
+        "PAGE-006"
+      ],
+      "qa_status": "PARTIAL",
+      "evidence": "Q10"
+    },
+    {
+      "capability": "CAP-016",
+      "behavior": "永久删批次/claim，不回退成长",
+      "backend_source": "backend.md#3-全量继承与用例追踪",
+      "apis_source_notation": "API-007",
+      "data_source_notation": "DATA-012/013/014/017/202",
+      "pages": [
+        "PAGE-005",
+        "PAGE-006"
+      ],
+      "qa_status": "PARTIAL",
+      "evidence": "Q11"
+    },
+    {
+      "capability": "CAP-017",
+      "behavior": "浏览器日期范围/固定随机安排",
+      "backend_source": "backend.md#3-全量继承与用例追踪",
+      "apis_source_notation": "API-008",
+      "data_source_notation": "DATA-012/013/014",
+      "pages": [
+        "PAGE-007"
+      ],
+      "qa_status": "PARTIAL",
+      "evidence": "Q10/U04"
+    },
+    {
+      "capability": "CAP-018",
+      "behavior": "替代索引→CAP-201原词填空",
+      "backend_source": "backend.md#3-全量继承与用例追踪",
+      "apis_source_notation": "API-008",
+      "data_source_notation": "DATA-013/201",
+      "pages": [
+        "PAGE-008"
+      ],
+      "qa_status": "PARTIAL",
+      "evidence": "Q04/Q05"
+    },
+    {
+      "capability": "CAP-019",
+      "behavior": "替代索引→CAP-201逐occurrence填空",
+      "backend_source": "backend.md#3-全量继承与用例追踪",
+      "apis_source_notation": "API-008",
+      "data_source_notation": "DATA-013/201",
+      "pages": [
+        "PAGE-008",
+        "PAGE-201"
+      ],
+      "qa_status": "PARTIAL",
+      "evidence": "Q04/Q05"
+    },
+    {
+      "capability": "CAP-020",
+      "behavior": "独立会话恢复/最小完成概况（DB2-R07/08 已接收）",
+      "backend_source": "backend.md#3-全量继承与用例追踪",
+      "apis_source_notation": "API-008",
+      "data_source_notation": "DATA-014/015/201/202",
+      "pages": [
+        "PAGE-005",
+        "PAGE-007",
+        "PAGE-008"
+      ],
+      "qa_status": "PARTIAL",
+      "evidence": "Q06/Q07"
+    },
+    {
+      "capability": "CAP-021",
+      "behavior": "账号语言持久/访客本机语言",
+      "backend_source": "backend.md#3-全量继承与用例追踪",
+      "apis_source_notation": "API-001",
+      "data_source_notation": "DATA-018",
+      "pages": [
+        "PAGE-002",
+        "PAGE-003",
+        "PAGE-005",
+        "PAGE-006",
+        "PAGE-007",
+        "PAGE-008",
+        "PAGE-103",
+        "PAGE-204",
+        "PAGE-205",
+        "PAGE-206",
+        "PAGE-217",
+        "PAGE-218"
+      ],
+      "qa_status": "DEV_ONLY",
+      "evidence": "DEV"
+    },
+    {
+      "capability": "CAP-022",
+      "behavior": "单批复习，忽略参与开关",
+      "backend_source": "backend.md#3-全量继承与用例追踪",
+      "apis_source_notation": "API-008",
+      "data_source_notation": "DATA-012/014/202",
+      "pages": [
+        "PAGE-005",
+        "PAGE-008"
+      ],
+      "qa_status": "PARTIAL",
+      "evidence": "Q07/Q10"
+    },
+    {
+      "capability": "CAP-101",
+      "behavior": "凭据脱敏/加密替换/探针",
+      "backend_source": "backend.md#3-全量继承与用例追踪",
+      "apis_source_notation": "API-101",
+      "data_source_notation": "DATA-007",
+      "pages": [
+        "PAGE-208"
+      ],
+      "qa_status": "PARTIAL",
+      "evidence": "SETUP"
+    },
+    {
+      "capability": "CAP-102",
+      "behavior": "模型新增编辑启停，完整保留",
+      "backend_source": "backend.md#3-全量继承与用例追踪",
+      "apis_source_notation": "API-101",
+      "data_source_notation": "DATA-008",
+      "pages": [
+        "PAGE-208"
+      ],
+      "qa_status": "PARTIAL",
+      "evidence": "SETUP/C05"
+    },
+    {
+      "capability": "CAP-103",
+      "behavior": "四基础计划全权益配置",
+      "backend_source": "backend.md#3-全量继承与用例追踪",
+      "apis_source_notation": "API-102",
+      "data_source_notation": "DATA-006/008",
+      "pages": [
+        "PAGE-208"
+      ],
+      "qa_status": "PARTIAL",
+      "evidence": "SETUP/C04"
+    },
+    {
+      "capability": "CAP-104",
+      "behavior": "用户查询/详情/成长读投影",
+      "backend_source": "backend.md#3-全量继承与用例追踪",
+      "apis_source_notation": "API-103",
+      "data_source_notation": "DATA-003/006/009/204/207/208",
+      "pages": [
+        "PAGE-103",
+        "PAGE-211"
+      ],
+      "qa_status": "PARTIAL",
+      "evidence": "Q03/C04"
+    },
+    {
+      "capability": "CAP-105",
+      "behavior": "指定用户base调整重置",
+      "backend_source": "backend.md#3-全量继承与用例追踪",
+      "apis_source_notation": "API-103",
+      "data_source_notation": "DATA-003/006/009/211",
+      "pages": [
+        "PAGE-103"
+      ],
+      "qa_status": "PARTIAL",
+      "evidence": "C04"
+    },
+    {
+      "capability": "CAP-106",
+      "behavior": "管理员重置密码/撤会话",
+      "backend_source": "backend.md#3-全量继承与用例追踪",
+      "apis_source_notation": "API-103",
+      "data_source_notation": "DATA-003/004",
+      "pages": [
+        "PAGE-103"
+      ],
+      "qa_status": "DEV_ONLY",
+      "evidence": "DEV"
+    },
+    {
+      "capability": "CAP-107",
+      "behavior": "管理员只读学习库",
+      "backend_source": "backend.md#3-全量继承与用例追踪",
+      "apis_source_notation": "API-103",
+      "data_source_notation": "DATA-012/013/016",
+      "pages": [
+        "PAGE-103"
+      ],
+      "qa_status": "DEV_ONLY",
+      "evidence": "DEV"
+    },
+    {
+      "capability": "CAP-201",
+      "behavior": "整份匿名题面/本机移动/整批提交",
+      "backend_source": "backend.md#3-全量继承与用例追踪",
+      "apis_source_notation": "API-008",
+      "data_source_notation": "DATA-013/201/202",
+      "pages": [
+        "PAGE-008",
+        "PAGE-201"
+      ],
+      "qa_status": "PARTIAL",
+      "evidence": "Q04/Q05；R01/R02"
+    },
+    {
+      "capability": "CAP-202",
+      "behavior": "本机概览/最新完整草稿提交",
+      "backend_source": "backend.md#3-全量继承与用例追踪",
+      "apis_source_notation": "API-008",
+      "data_source_notation": "DATA-201/202",
+      "pages": [
+        "PAGE-008",
+        "PAGE-202"
+      ],
+      "qa_status": "PARTIAL",
+      "evidence": "Q04/Q05/Q07；R01/R02"
+    },
+    {
+      "capability": "CAP-203",
+      "behavior": "当次对照/最小结算/重来",
+      "backend_source": "backend.md#3-全量继承与用例追踪",
+      "apis_source_notation": "API-008",
+      "data_source_notation": "DATA-014/202/203/208",
+      "pages": [
+        "PAGE-008",
+        "PAGE-203"
+      ],
+      "qa_status": "PARTIAL",
+      "evidence": "Q04/Q05/Q06；R01/R02/R04"
+    },
+    {
+      "capability": "CAP-204",
+      "behavior": "校验服务端状态后本机恢复",
+      "backend_source": "backend.md#3-全量继承与用例追踪",
+      "apis_source_notation": "API-008",
+      "data_source_notation": "DATA-014/201/202",
+      "pages": [
+        "PAGE-008",
+        "PAGE-201"
+      ],
+      "qa_status": "PARTIAL",
+      "evidence": "Q07；R01–05，F01 复验通过"
+    },
+    {
+      "capability": "CAP-205",
+      "behavior": "模型正式移除/计划解引用/卡资格",
+      "backend_source": "backend.md#3-全量继承与用例追踪",
+      "apis_source_notation": "API-101/204",
+      "data_source_notation": "DATA-006/008/210/211/212",
+      "pages": [
+        "PAGE-208"
+      ],
+      "qa_status": "PARTIAL",
+      "evidence": "C05；S05–07；T01–04 跨页下架引用、新建限制与即时退款"
+    },
+    {
+      "capability": "CAP-206",
+      "behavior": "设计布局/真实成功失败toast",
+      "backend_source": "backend.md#3-全量继承与用例追踪",
+      "apis_source_notation": "API-004及各命令",
+      "data_source_notation": "DATA-006/211；无额外UI表",
+      "pages": [
+        "PAGE-201",
+        "PAGE-204",
+        "PAGE-208"
+      ],
+      "qa_status": "PARTIAL",
+      "evidence": "U01/U03/U04"
+    },
+    {
+      "capability": "CAP-207",
+      "behavior": "首页示例/动效前端，公开预设读",
+      "backend_source": "backend.md#3-全量继承与用例追踪",
+      "apis_source_notation": "API-202",
+      "data_source_notation": "DATA-212",
+      "pages": [
+        "PAGE-205"
+      ],
+      "qa_status": "PARTIAL",
+      "evidence": "U01/U02"
+    },
+    {
+      "capability": "CAP-208",
+      "behavior": "排除已选/当前库的随机词",
+      "backend_source": "backend.md#3-全量继承与用例追踪",
+      "apis_source_notation": "API-004",
+      "data_source_notation": "DATA-002/013/203",
+      "pages": [
+        "PAGE-204"
+      ],
+      "qa_status": "PARTIAL",
+      "evidence": "R06：排除/上限/统计；未直接核对额度"
+    },
+    {
+      "capability": "CAP-209",
+      "behavior": "本人资料/登录欢迎事实",
+      "backend_source": "backend.md#3-全量继承与用例追踪",
+      "apis_source_notation": "API-002/201",
+      "data_source_notation": "DATA-003/204",
+      "pages": [
+        "PAGE-206"
+      ],
+      "qa_status": "PARTIAL",
+      "evidence": "Q05/Q09"
+    },
+    {
+      "capability": "CAP-210",
+      "behavior": "独立平台消息/登录提醒（DB2-R09 标题已接收）",
+      "backend_source": "backend.md#3-全量继承与用例追踪",
+      "apis_source_notation": "API-205/207",
+      "data_source_notation": "DATA-205",
+      "pages": [
+        "PAGE-207",
+        "PAGE-209"
+      ],
+      "qa_status": "PARTIAL",
+      "evidence": "Q09"
+    },
+    {
+      "capability": "CAP-211",
+      "behavior": "04:00学习日/有效生成自动签到",
+      "backend_source": "backend.md#3-全量继承与用例追踪",
+      "apis_source_notation": "API-005/006/203",
+      "data_source_notation": "DATA-206/207/208",
+      "pages": [
+        "PAGE-214"
+      ],
+      "qa_status": "PARTIAL",
+      "evidence": "S01 有效访客 claim 当日自动签到且复习不重复；04:00 边界仍待独立验"
+    },
+    {
+      "capability": "CAP-212",
+      "behavior": "补签/历史规则后续差额",
+      "backend_source": "backend.md#3-全量继承与用例追踪",
+      "apis_source_notation": "API-203",
+      "data_source_notation": "DATA-206/207/210",
+      "pages": [
+        "PAGE-214"
+      ],
+      "qa_status": "PARTIAL",
+      "evidence": "T08–10 跨月/历史差额/不补XP/复习不变/成就待领/幂等/30日与注册边界；04:00实时时点与其余并发仍待验"
+    },
+    {
+      "capability": "CAP-213",
+      "behavior": "owner+lexeme首次掌握/累计",
+      "backend_source": "backend.md#3-全量继承与用例追踪",
+      "apis_source_notation": "API-008/203",
+      "data_source_notation": "DATA-202/203/207/208",
+      "pages": [
+        "PAGE-203",
+        "PAGE-214"
+      ],
+      "qa_status": "PARTIAL",
+      "evidence": "Q04/Q11；S01 单 lexeme/三词形正确后 mastered_total=1"
+    },
+    {
+      "capability": "CAP-214",
+      "behavior": "动态等级/成就/手动全或无领取",
+      "backend_source": "backend.md#3-全量继承与用例追踪",
+      "apis_source_notation": "API-203",
+      "data_source_notation": "DATA-207/208/209/210",
+      "pages": [
+        "PAGE-210",
+        "PAGE-214"
+      ],
+      "qa_status": "PARTIAL",
+      "evidence": "S09–12 手动奖励全或无；T09 补签新成就达成但7分/11XP仍待手动领取"
+    },
+    {
+      "capability": "CAP-215",
+      "behavior": "兑换/库存/手动下架退积分",
+      "backend_source": "backend.md#3-全量继承与用例追踪",
+      "apis_source_notation": "API-204",
+      "data_source_notation": "DATA-207/210/211",
+      "pages": [
+        "PAGE-210",
+        "PAGE-215"
+      ],
+      "qa_status": "PARTIAL",
+      "evidence": "C01–05/C07；R09/R10；S05–07；T01–07 F05修复、当前退款及跨页编辑通过；未扩大为全权益通过"
+    },
+    {
+      "capability": "CAP-216",
+      "behavior": "逐模型加时/计划体验/额度组合",
+      "backend_source": "backend.md#3-全量继承与用例追踪",
+      "apis_source_notation": "API-004/204",
+      "data_source_notation": "DATA-006/009/210/211",
+      "pages": [
+        "PAGE-204",
+        "PAGE-208",
+        "PAGE-215"
+      ],
+      "qa_status": "PARTIAL",
+      "evidence": "C02/C04"
+    },
+    {
+      "capability": "CAP-217",
+      "behavior": "成长配置/类型道具/正数补分",
+      "backend_source": "backend.md#3-全量继承与用例追踪",
+      "apis_source_notation": "API-103/206",
+      "data_source_notation": "DATA-206/207/208/209/210",
+      "pages": [
+        "PAGE-210",
+        "PAGE-211"
+      ],
+      "qa_status": "PARTIAL",
+      "evidence": "C03；R09/R10；S05–07/S06-live/S09–12；T01–07 F05分页修复、增删/失败/并发保护通过"
+    },
+    {
+      "capability": "CAP-218",
+      "behavior": "预设目录/固定台/草稿预览发布",
+      "backend_source": "backend.md#3-全量继承与用例追踪",
+      "apis_source_notation": "API-202/208",
+      "data_source_notation": "DATA-010/011/012/212/214",
+      "pages": [
+        "PAGE-212",
+        "PAGE-216",
+        "PAGE-217"
+      ],
+      "qa_status": "PARTIAL",
+      "evidence": "SETUP/Q01"
+    },
+    {
+      "capability": "CAP-219",
+      "behavior": "访问/学习漏斗/留存/概览",
+      "backend_source": "backend.md#3-全量继承与用例追踪",
+      "apis_source_notation": "API-209/900",
+      "data_source_notation": "DATA-009/202/213/214",
+      "pages": [
+        "PAGE-213",
+        "PAGE-218"
+      ],
+      "qa_status": "FAIL",
+      "evidence": "T11–14 数值/聚合/权限/显示及周期切换通过；F06/T15 30天图表撑宽320/390px页面"
+    },
+    {
+      "capability": "CAP-220",
+      "behavior": "本人新旧批次标题编辑",
+      "backend_source": "backend.md#3-全量继承与用例追踪",
+      "apis_source_notation": "API-007",
+      "data_source_notation": "DATA-012",
+      "pages": [
+        "PAGE-005",
+        "PAGE-006"
+      ],
+      "qa_status": "PARTIAL",
+      "evidence": "Q01/Q02（上一轮已有独立证据，纠正索引）"
+    }
+  ],
+  "pages": [
+    {
+      "page": "PAGE-002",
+      "views": [
+        {
+          "prototype_view": "register",
+          "route": "/register",
+          "components": [
+            "AuthForm"
+          ],
+          "application_models": [
+            "AuthIntent"
+          ],
+          "apis": [
+            "API-002",
+            "API-006"
+          ],
+          "plan": "frontend.md#generation",
+          "verification": [
+            "FE2-V07"
+          ]
+        }
+      ],
+      "qa_evidence": [
+        "DEV, SETUP/Q03/Q09；S01/S03 真实访客注册收录"
+      ],
+      "ui_acceptance": [
+        {
+          "id": "UIA-PAGE-002-01",
+          "status": "NOT_FULLY_VERIFIED"
+        },
+        {
+          "id": "UIA-PAGE-002-COPY09",
+          "status": "NOT_FULLY_VERIFIED"
+        },
+        {
+          "id": "UIA-PAGE-002-ICON10",
+          "status": "NOT_FULLY_VERIFIED"
+        },
+        {
+          "id": "UIA-PAGE-002-NAV11",
+          "status": "NOT_FULLY_VERIFIED"
+        }
+      ]
+    },
+    {
+      "page": "PAGE-003",
+      "views": [
+        {
+          "prototype_view": "login",
+          "route": "/login",
+          "components": [
+            "AuthForm"
+          ],
+          "application_models": [
+            "Session",
+            "Welcome"
+          ],
+          "apis": [
+            "API-002",
+            "API-006",
+            "API-205"
+          ],
+          "plan": "frontend.md#notices",
+          "verification": [
+            "FE2-V07",
+            "FE2-V12"
+          ]
+        }
+      ],
+      "qa_evidence": [
+        "DEV, SETUP/Q03/Q09；S03 删除后旧登录失效"
+      ],
+      "ui_acceptance": [
+        {
+          "id": "UIA-PAGE-003-01",
+          "status": "NOT_FULLY_VERIFIED"
+        },
+        {
+          "id": "UIA-PAGE-003-COPY09",
+          "status": "NOT_FULLY_VERIFIED"
+        },
+        {
+          "id": "UIA-PAGE-003-ICON10",
+          "status": "NOT_FULLY_VERIFIED"
+        },
+        {
+          "id": "UIA-PAGE-003-NAV11",
+          "status": "NOT_FULLY_VERIFIED"
+        },
+        {
+          "id": "UIA-PAGE-003-TOAST19",
+          "status": "PARTIAL"
+        }
+      ]
+    },
+    {
+      "page": "PAGE-005",
+      "views": [
+        {
+          "prototype_view": "library",
+          "route": "/library",
+          "components": [
+            "LibraryStats",
+            "LibraryRow"
+          ],
+          "application_models": [
+            "LibraryPage"
+          ],
+          "apis": [
+            "API-007",
+            "API-008"
+          ],
+          "plan": "frontend.md#generation",
+          "verification": [
+            "FE2-V08"
+          ]
+        }
+      ],
+      "qa_evidence": [
+        "DEV, Q01/Q04/Q05/Q11, Q06/Q07, Q07/Q10, Q10, Q11"
+      ],
+      "ui_acceptance": [
+        {
+          "id": "UIA-PAGE-005-01",
+          "status": "NOT_FULLY_VERIFIED"
+        },
+        {
+          "id": "UIA-PAGE-005-02",
+          "status": "NOT_FULLY_VERIFIED"
+        },
+        {
+          "id": "UIA-PAGE-005-COPY09",
+          "status": "NOT_FULLY_VERIFIED"
+        },
+        {
+          "id": "UIA-PAGE-005-ICON10",
+          "status": "NOT_FULLY_VERIFIED"
+        },
+        {
+          "id": "UIA-PAGE-005-NAV11",
+          "status": "NOT_FULLY_VERIFIED"
+        },
+        {
+          "id": "UIA-PAGE-005-LIBRARY18",
+          "status": "NOT_FULLY_VERIFIED"
+        }
+      ]
+    },
+    {
+      "page": "PAGE-006",
+      "views": [
+        {
+          "prototype_view": "batch",
+          "route": "/library/:batchId",
+          "components": [
+            "TitleEditor",
+            "SavedPassage",
+            "ReadOnlyConfiguration"
+          ],
+          "application_models": [
+            "BatchDetail"
+          ],
+          "apis": [
+            "API-007",
+            "API-008"
+          ],
+          "plan": "frontend.md#generation",
+          "verification": [
+            "FE2-V08",
+            "FE2-V13"
+          ]
+        }
+      ],
+      "qa_evidence": [
+        "DEV, Q01/Q02, Q10, Q11"
+      ],
+      "ui_acceptance": [
+        {
+          "id": "UIA-PAGE-006-01",
+          "status": "NOT_FULLY_VERIFIED"
+        },
+        {
+          "id": "UIA-PAGE-006-02",
+          "status": "NOT_FULLY_VERIFIED"
+        },
+        {
+          "id": "UIA-PAGE-006-03",
+          "status": "NOT_FULLY_VERIFIED"
+        },
+        {
+          "id": "UIA-PAGE-006-04",
+          "status": "NOT_FULLY_VERIFIED"
+        },
+        {
+          "id": "UIA-PAGE-006-COPY09",
+          "status": "NOT_FULLY_VERIFIED"
+        },
+        {
+          "id": "UIA-PAGE-006-ICON10",
+          "status": "NOT_FULLY_VERIFIED"
+        },
+        {
+          "id": "UIA-PAGE-006-NAV11",
+          "status": "NOT_FULLY_VERIFIED"
+        },
+        {
+          "id": "UIA-PAGE-006-SETTINGS22",
+          "status": "NOT_FULLY_VERIFIED"
+        }
+      ]
+    },
+    {
+      "page": "PAGE-007",
+      "views": [
+        {
+          "prototype_view": "range",
+          "route": "/review",
+          "components": [
+            "ReviewRangeSetup"
+          ],
+          "application_models": [
+            "RangeSetup",
+            "ActiveRange"
+          ],
+          "apis": [
+            "API-008"
+          ],
+          "plan": "frontend.md#review",
+          "verification": [
+            "FE2-V04",
+            "FE2-V05",
+            "FE2-V08"
+          ]
+        }
+      ],
+      "qa_evidence": [
+        "DEV, Q06/Q07, Q10/U04"
+      ],
+      "ui_acceptance": [
+        {
+          "id": "UIA-PAGE-007-01",
+          "status": "NOT_FULLY_VERIFIED"
+        },
+        {
+          "id": "UIA-PAGE-007-COPY09",
+          "status": "NOT_FULLY_VERIFIED"
+        },
+        {
+          "id": "UIA-PAGE-007-ICON10",
+          "status": "NOT_FULLY_VERIFIED"
+        },
+        {
+          "id": "UIA-PAGE-007-NAV11",
+          "status": "NOT_FULLY_VERIFIED"
+        }
+      ]
+    },
+    {
+      "page": "PAGE-008",
+      "views": [
+        {
+          "prototype_view": "sessiondone",
+          "route": "/review/:sessionId",
+          "components": [
+            "SessionTotals"
+          ],
+          "application_models": [
+            "ReviewSession"
+          ],
+          "apis": [
+            "API-008"
+          ],
+          "plan": "frontend.md#review",
+          "verification": [
+            "FE2-V05"
+          ]
+        }
+      ],
+      "qa_evidence": [
+        "DEV, Q04–07, Q10；R01–05"
+      ],
+      "ui_acceptance": [
+        {
+          "id": "UIA-PAGE-008-01",
+          "status": "NOT_FULLY_VERIFIED"
+        },
+        {
+          "id": "UIA-PAGE-008-COPY09",
+          "status": "NOT_FULLY_VERIFIED"
+        },
+        {
+          "id": "UIA-PAGE-008-ICON10",
+          "status": "NOT_FULLY_VERIFIED"
+        },
+        {
+          "id": "UIA-PAGE-008-NAV11",
+          "status": "NOT_FULLY_VERIFIED"
+        }
+      ]
+    },
+    {
+      "page": "PAGE-103",
+      "views": [
+        {
+          "prototype_view": "users",
+          "route": "/admin/users",
+          "components": [
+            "UserSearch"
+          ],
+          "application_models": [
+            "UserSearchPage"
+          ],
+          "apis": [
+            "API-103"
+          ],
+          "plan": "frontend.md#growth",
+          "verification": [
+            "FE2-V10"
+          ]
+        },
+        {
+          "prototype_view": "userdetail",
+          "route": "/admin/users/:userId",
+          "components": [
+            "UserDetailSections",
+            "AdminBatchReader"
+          ],
+          "application_models": [
+            "UserDetail"
+          ],
+          "apis": [
+            "API-103"
+          ],
+          "plan": "frontend.md#growth",
+          "verification": [
+            "FE2-V10"
+          ]
+        }
+      ],
+      "qa_evidence": [
+        "C04, DEV, Q03/C04, SETUP/Q09"
+      ],
+      "ui_acceptance": [
+        {
+          "id": "UIA-PAGE-103-01",
+          "status": "NOT_FULLY_VERIFIED"
+        },
+        {
+          "id": "UIA-PAGE-103-02",
+          "status": "NOT_FULLY_VERIFIED"
+        },
+        {
+          "id": "UIA-PAGE-103-COPY09",
+          "status": "NOT_FULLY_VERIFIED"
+        },
+        {
+          "id": "UIA-PAGE-103-ICON10",
+          "status": "NOT_FULLY_VERIFIED"
+        }
+      ]
+    },
+    {
+      "page": "PAGE-201",
+      "views": [
+        {
+          "prototype_view": "review",
+          "route": "/review/:sessionId",
+          "components": [
+            "LetterSlots",
+            "PassageCloze"
+          ],
+          "application_models": [
+            "Draft",
+            "ReviewSession"
+          ],
+          "apis": [
+            "API-008"
+          ],
+          "plan": "frontend.md#review",
+          "verification": [
+            "FE2-V03",
+            "FE2-V04",
+            "FE2-V05"
+          ]
+        }
+      ],
+      "qa_evidence": [
+        "Q04/Q05/Q07；R01–05"
+      ],
+      "ui_acceptance": [
+        {
+          "id": "UIA-PAGE-201-01",
+          "status": "NOT_FULLY_VERIFIED"
+        },
+        {
+          "id": "UIA-PAGE-201-COPY09",
+          "status": "NOT_FULLY_VERIFIED"
+        },
+        {
+          "id": "UIA-PAGE-201-ICON10",
+          "status": "NOT_FULLY_VERIFIED"
+        },
+        {
+          "id": "UIA-PAGE-201-NAV11",
+          "status": "NOT_FULLY_VERIFIED"
+        }
+      ]
+    },
+    {
+      "page": "PAGE-202",
+      "views": [
+        {
+          "prototype_view": "overview",
+          "route": "/review/:sessionId",
+          "components": [
+            "AnswerOverview"
+          ],
+          "application_models": [
+            "Draft"
+          ],
+          "apis": [
+            "API-008"
+          ],
+          "plan": "frontend.md#review",
+          "verification": [
+            "FE2-V03",
+            "FE2-V05"
+          ]
+        }
+      ],
+      "qa_evidence": [
+        "Q04/Q05/Q07；R01/R02"
+      ],
+      "ui_acceptance": [
+        {
+          "id": "UIA-PAGE-202-01",
+          "status": "NOT_FULLY_VERIFIED"
+        },
+        {
+          "id": "UIA-PAGE-202-COPY09",
+          "status": "NOT_FULLY_VERIFIED"
+        },
+        {
+          "id": "UIA-PAGE-202-ICON10",
+          "status": "NOT_FULLY_VERIFIED"
+        },
+        {
+          "id": "UIA-PAGE-202-NAV11",
+          "status": "NOT_FULLY_VERIFIED"
+        }
+      ]
+    },
+    {
+      "page": "PAGE-203",
+      "views": [
+        {
+          "prototype_view": "summary",
+          "route": "/review/:sessionId",
+          "components": [
+            "AttemptSummary"
+          ],
+          "application_models": [
+            "EphemeralComparison",
+            "Receipt"
+          ],
+          "apis": [
+            "API-008"
+          ],
+          "plan": "frontend.md#review",
+          "verification": [
+            "FE2-V05"
+          ]
+        }
+      ],
+      "qa_evidence": [
+        "Q04/Q05/Q06/Q11；R01/R02/R04"
+      ],
+      "ui_acceptance": [
+        {
+          "id": "UIA-PAGE-203-01",
+          "status": "NOT_FULLY_VERIFIED"
+        },
+        {
+          "id": "UIA-PAGE-203-COPY09",
+          "status": "NOT_FULLY_VERIFIED"
+        },
+        {
+          "id": "UIA-PAGE-203-ICON10",
+          "status": "NOT_FULLY_VERIFIED"
+        },
+        {
+          "id": "UIA-PAGE-203-NAV11",
+          "status": "NOT_FULLY_VERIFIED"
+        }
+      ]
+    },
+    {
+      "page": "PAGE-204",
+      "views": [
+        {
+          "prototype_view": "create",
+          "route": "/create",
+          "components": [
+            "CreationWorkspace",
+            "EditableConfiguration",
+            "WordPicker"
+          ],
+          "application_models": [
+            "GenerationWorkspace"
+          ],
+          "apis": [
+            "API-004",
+            "API-005",
+            "API-006"
+          ],
+          "plan": "frontend.md#generation",
+          "verification": [
+            "FE2-V06",
+            "FE2-V07"
+          ]
+        }
+      ],
+      "qa_evidence": [
+        "C02/C04, DEV, SETUP, U04；R06"
+      ],
+      "ui_acceptance": [
+        {
+          "id": "UIA-PAGE-204-01",
+          "status": "NOT_FULLY_VERIFIED"
+        },
+        {
+          "id": "UIA-PAGE-204-COPY09",
+          "status": "NOT_FULLY_VERIFIED"
+        },
+        {
+          "id": "UIA-PAGE-204-ICON10",
+          "status": "NOT_FULLY_VERIFIED"
+        },
+        {
+          "id": "UIA-PAGE-204-NAV11",
+          "status": "NOT_FULLY_VERIFIED"
+        },
+        {
+          "id": "UIA-PAGE-204-SETTINGS16",
+          "status": "NOT_FULLY_VERIFIED"
+        }
+      ]
+    },
+    {
+      "page": "PAGE-205",
+      "views": [
+        {
+          "prototype_view": "home",
+          "route": "/",
+          "components": [
+            "HomeStoryStack"
+          ],
+          "application_models": [
+            "PublicHomeSamples"
+          ],
+          "apis": [
+            "API-001",
+            "API-209"
+          ],
+          "plan": "frontend.md#design",
+          "verification": [
+            "FE2-V13",
+            "FE2-V15"
+          ]
+        }
+      ],
+      "qa_evidence": [
+        "DEV, SETUP/Q09, U01/U02"
+      ],
+      "ui_acceptance": [
+        {
+          "id": "UIA-PAGE-205-01",
+          "status": "PARTIAL"
+        },
+        {
+          "id": "UIA-PAGE-205-COPY09",
+          "status": "PARTIAL"
+        },
+        {
+          "id": "UIA-PAGE-205-ICON10",
+          "status": "PARTIAL"
+        },
+        {
+          "id": "UIA-PAGE-205-HOME10",
+          "status": "PARTIAL"
+        },
+        {
+          "id": "UIA-PAGE-205-NAV11",
+          "status": "PARTIAL"
+        },
+        {
+          "id": "UIA-PAGE-205-STACK13",
+          "status": "PARTIAL"
+        },
+        {
+          "id": "UIA-PAGE-205-MOTION14",
+          "status": "PARTIAL"
+        }
+      ]
+    },
+    {
+      "page": "PAGE-206",
+      "views": [
+        {
+          "prototype_view": "profile",
+          "route": "/account",
+          "components": [
+            "AccountShell",
+            "ProfileForm",
+            "AccountSecurity"
+          ],
+          "application_models": [
+            "Account"
+          ],
+          "apis": [
+            "API-003",
+            "API-201"
+          ],
+          "plan": "frontend.md#growth",
+          "verification": [
+            "FE2-V07"
+          ]
+        }
+      ],
+      "qa_evidence": [
+        "DEV, Q05/Q09；R07 改密前置；S02–04 注销复验；W01 未定位 console 观察"
+      ],
+      "ui_acceptance": [
+        {
+          "id": "UIA-PAGE-206-01",
+          "status": "NOT_FULLY_VERIFIED"
+        },
+        {
+          "id": "UIA-PAGE-206-COPY09",
+          "status": "NOT_FULLY_VERIFIED"
+        },
+        {
+          "id": "UIA-PAGE-206-ICON10",
+          "status": "NOT_FULLY_VERIFIED"
+        },
+        {
+          "id": "UIA-PAGE-206-NAV11",
+          "status": "NOT_FULLY_VERIFIED"
+        },
+        {
+          "id": "UIA-PAGE-206-ACCOUNT17",
+          "status": "NOT_FULLY_VERIFIED"
+        }
+      ]
+    },
+    {
+      "page": "PAGE-207",
+      "views": [
+        {
+          "prototype_view": "notices",
+          "route": "/notices",
+          "components": [
+            "NoticeList",
+            "SafeNoticeBody"
+          ],
+          "application_models": [
+            "NoticeCollection"
+          ],
+          "apis": [
+            "API-205"
+          ],
+          "plan": "frontend.md#notices",
+          "verification": [
+            "FE2-V12"
+          ]
+        }
+      ],
+      "qa_evidence": [
+        "Q09"
+      ],
+      "ui_acceptance": [
+        {
+          "id": "UIA-PAGE-207-01",
+          "status": "NOT_FULLY_VERIFIED"
+        },
+        {
+          "id": "UIA-PAGE-207-COPY09",
+          "status": "NOT_FULLY_VERIFIED"
+        },
+        {
+          "id": "UIA-PAGE-207-ICON10",
+          "status": "NOT_FULLY_VERIFIED"
+        },
+        {
+          "id": "UIA-PAGE-207-NAV11",
+          "status": "NOT_FULLY_VERIFIED"
+        },
+        {
+          "id": "UIA-PAGE-207-TOAST19",
+          "status": "PARTIAL"
+        }
+      ]
+    },
+    {
+      "page": "PAGE-208",
+      "views": [
+        {
+          "prototype_view": "models",
+          "route": "/admin/models",
+          "components": [
+            "CredentialForm",
+            "ModelEditor",
+            "RemovalImpact"
+          ],
+          "application_models": [
+            "AdminModels"
+          ],
+          "apis": [
+            "API-101"
+          ],
+          "plan": "frontend.md#growth",
+          "verification": [
+            "FE2-V10"
+          ]
+        },
+        {
+          "prototype_view": "plans",
+          "route": "/admin/plans",
+          "components": [
+            "PlanEditor",
+            "PriorityEditor"
+          ],
+          "application_models": [
+            "Plans"
+          ],
+          "apis": [
+            "API-102"
+          ],
+          "plan": "frontend.md#growth",
+          "verification": [
+            "FE2-V10"
+          ]
+        }
+      ],
+      "qa_evidence": [
+        "C02/C04, C05, SETUP, SETUP/C04, SETUP/C05, U01/U03/U04"
+      ],
+      "ui_acceptance": [
+        {
+          "id": "UIA-PAGE-208-01",
+          "status": "NOT_FULLY_VERIFIED"
+        },
+        {
+          "id": "UIA-PAGE-208-COPY09",
+          "status": "NOT_FULLY_VERIFIED"
+        },
+        {
+          "id": "UIA-PAGE-208-ICON10",
+          "status": "NOT_FULLY_VERIFIED"
+        }
+      ]
+    },
+    {
+      "page": "PAGE-209",
+      "views": [
+        {
+          "prototype_view": "messages",
+          "route": "/admin/notices",
+          "components": [
+            "NoticeEditor",
+            "MarkdownPreview"
+          ],
+          "application_models": [
+            "AdminNotices"
+          ],
+          "apis": [
+            "API-207"
+          ],
+          "plan": "frontend.md#notices",
+          "verification": [
+            "FE2-V10",
+            "FE2-V12"
+          ]
+        }
+      ],
+      "qa_evidence": [
+        "Q09"
+      ],
+      "ui_acceptance": [
+        {
+          "id": "UIA-PAGE-209-01",
+          "status": "NOT_FULLY_VERIFIED"
+        },
+        {
+          "id": "UIA-PAGE-209-COPY09",
+          "status": "NOT_FULLY_VERIFIED"
+        },
+        {
+          "id": "UIA-PAGE-209-ICON10",
+          "status": "NOT_FULLY_VERIFIED"
+        }
+      ]
+    },
+    {
+      "page": "PAGE-210",
+      "views": [
+        {
+          "prototype_view": "operations",
+          "route": "/admin/growth",
+          "components": [
+            "CheckinSettings",
+            "LevelEditor",
+            "AchievementEditor",
+            "ItemDefinitionEditor",
+            "TierContentDialog"
+          ],
+          "application_models": [
+            "OperationsDraft",
+            "GrowthSettingsForm",
+            "LevelTableDraft",
+            "AchievementTableDraft",
+            "LocalizedEditorText"
+          ],
+          "apis": [
+            "API-206"
+          ],
+          "plan": "frontend.md#growth",
+          "verification": [
+            "FE2-V10",
+            "FE2-V18",
+            "FE2-V19"
+          ]
+        }
+      ],
+      "qa_evidence": [
+        "C01/C02/C03/C05/C07；R09/R10；S05–07/S06-live；S09–12；T01–07 F05修复通过"
+      ],
+      "ui_acceptance": [
+        {
+          "id": "UIA-PAGE-210-01",
+          "status": "NOT_FULLY_VERIFIED"
+        },
+        {
+          "id": "UIA-PAGE-210-COPY09",
+          "status": "NOT_FULLY_VERIFIED"
+        },
+        {
+          "id": "UIA-PAGE-210-ICON10",
+          "status": "NOT_FULLY_VERIFIED"
+        }
+      ]
+    },
+    {
+      "page": "PAGE-211",
+      "views": [
+        {
+          "prototype_view": "credits",
+          "route": "/admin/users/:userId#points",
+          "components": [
+            "PointsLedger",
+            "PointGrantForm"
+          ],
+          "application_models": [
+            "UserLedger"
+          ],
+          "apis": [
+            "API-103"
+          ],
+          "plan": "frontend.md#growth",
+          "verification": [
+            "FE2-V10"
+          ]
+        }
+      ],
+      "qa_evidence": [
+        "C03, Q03/C04"
+      ],
+      "ui_acceptance": [
+        {
+          "id": "UIA-PAGE-211-01",
+          "status": "NOT_FULLY_VERIFIED"
+        },
+        {
+          "id": "UIA-PAGE-211-COPY09",
+          "status": "NOT_FULLY_VERIFIED"
+        },
+        {
+          "id": "UIA-PAGE-211-ICON10",
+          "status": "NOT_FULLY_VERIFIED"
+        }
+      ]
+    },
+    {
+      "page": "PAGE-212",
+      "views": [
+        {
+          "prototype_view": "presets",
+          "route": "/admin/presets",
+          "components": [
+            "PresetEditor",
+            "PreviewWorkspace",
+            "PublishConfirmation"
+          ],
+          "application_models": [
+            "PresetDraft",
+            "AdminPreviewOptions"
+          ],
+          "apis": [
+            "API-208",
+            "API-202"
+          ],
+          "plan": "frontend.md#generation",
+          "verification": [
+            "FE2-V11",
+            "FE2-V20"
+          ]
+        }
+      ],
+      "qa_evidence": [
+        "SETUP/Q01"
+      ],
+      "ui_acceptance": [
+        {
+          "id": "UIA-PAGE-212-01",
+          "status": "NOT_FULLY_VERIFIED"
+        },
+        {
+          "id": "UIA-PAGE-212-02",
+          "status": "NOT_FULLY_VERIFIED"
+        },
+        {
+          "id": "UIA-PAGE-212-03",
+          "status": "NOT_FULLY_VERIFIED"
+        },
+        {
+          "id": "UIA-PAGE-212-COPY09",
+          "status": "NOT_FULLY_VERIFIED"
+        },
+        {
+          "id": "UIA-PAGE-212-ICON10",
+          "status": "NOT_FULLY_VERIFIED"
+        }
+      ]
+    },
+    {
+      "page": "PAGE-213",
+      "views": [
+        {
+          "prototype_view": "metrics",
+          "route": "/admin/analytics",
+          "components": [
+            "MetricTile",
+            "MetricChart"
+          ],
+          "application_models": [
+            "AnalyticsDashboard"
+          ],
+          "apis": [
+            "API-209"
+          ],
+          "plan": "frontend.md#quality",
+          "verification": [
+            "FE2-V16"
+          ]
+        }
+      ],
+      "qa_evidence": [
+        "T11–14；F06/T15"
+      ],
+      "ui_acceptance": [
+        {
+          "id": "UIA-PAGE-213-01",
+          "status": "NOT_FULLY_VERIFIED"
+        },
+        {
+          "id": "UIA-PAGE-213-COPY09",
+          "status": "FAIL",
+          "finding": "QA2-F06",
+          "evidence": "qa2-004/analytics-layout-results.json"
+        },
+        {
+          "id": "UIA-PAGE-213-ICON10",
+          "status": "NOT_FULLY_VERIFIED"
+        }
+      ]
+    },
+    {
+      "page": "PAGE-214",
+      "views": [
+        {
+          "prototype_view": "growth",
+          "route": "/account/growth",
+          "components": [
+            "AccountShell",
+            "CheckinCalendar",
+            "AchievementGroup",
+            "LevelAwardList",
+            "AchievementCard"
+          ],
+          "application_models": [
+            "Growth",
+            "Achievement"
+          ],
+          "apis": [
+            "API-203"
+          ],
+          "plan": "frontend.md#growth",
+          "verification": [
+            "FE2-V09",
+            "FE2-V10",
+            "FE2-V18"
+          ]
+        }
+      ],
+      "qa_evidence": [
+        "DEV, Q04/Q11；S01 自动签到与掌握；S09–12 手动奖励/全或无/称号；T08–10 补签/成就待领"
+      ],
+      "ui_acceptance": [
+        {
+          "id": "UIA-PAGE-214-01",
+          "status": "NOT_FULLY_VERIFIED"
+        },
+        {
+          "id": "UIA-PAGE-214-COPY09",
+          "status": "NOT_FULLY_VERIFIED"
+        },
+        {
+          "id": "UIA-PAGE-214-ICON10",
+          "status": "NOT_FULLY_VERIFIED"
+        },
+        {
+          "id": "UIA-PAGE-214-NAV11",
+          "status": "NOT_FULLY_VERIFIED"
+        },
+        {
+          "id": "UIA-PAGE-214-ACCOUNT17",
+          "status": "NOT_FULLY_VERIFIED"
+        }
+      ]
+    },
+    {
+      "page": "PAGE-215",
+      "views": [
+        {
+          "prototype_view": "bag",
+          "route": "/account/items",
+          "components": [
+            "AccountShell",
+            "OwnedItemCard",
+            "EffectPreview"
+          ],
+          "application_models": [
+            "OwnedItem"
+          ],
+          "apis": [
+            "API-204"
+          ],
+          "plan": "frontend.md#growth",
+          "verification": [
+            "FE2-V09"
+          ]
+        },
+        {
+          "prototype_view": "shop",
+          "route": "/account/exchange",
+          "components": [
+            "AccountShell",
+            "ShopItemCard"
+          ],
+          "application_models": [
+            "Catalog"
+          ],
+          "apis": [
+            "API-204"
+          ],
+          "plan": "frontend.md#growth",
+          "verification": [
+            "FE2-V09"
+          ]
+        }
+      ],
+      "qa_evidence": [
+        "C01–05/C07；R09/R10；S05；T01–07 分页/改价退款通过；T08–10补签"
+      ],
+      "ui_acceptance": [
+        {
+          "id": "UIA-PAGE-215-01",
+          "status": "NOT_FULLY_VERIFIED"
+        },
+        {
+          "id": "UIA-PAGE-215-COPY09",
+          "status": "NOT_FULLY_VERIFIED"
+        },
+        {
+          "id": "UIA-PAGE-215-ICON10",
+          "status": "NOT_FULLY_VERIFIED"
+        },
+        {
+          "id": "UIA-PAGE-215-NAV11",
+          "status": "NOT_FULLY_VERIFIED"
+        },
+        {
+          "id": "UIA-PAGE-215-ACCOUNT17",
+          "status": "NOT_FULLY_VERIFIED"
+        }
+      ]
+    },
+    {
+      "page": "PAGE-216",
+      "views": [
+        {
+          "prototype_view": "trial",
+          "route": "/trial/:presetId",
+          "components": [
+            "PresetWorkspace",
+            "ReadOnlyConfiguration"
+          ],
+          "application_models": [
+            "PublishedPreset",
+            "GenerationWorkspace"
+          ],
+          "apis": [
+            "API-202",
+            "API-005",
+            "API-006"
+          ],
+          "plan": "frontend.md#generation",
+          "verification": [
+            "FE2-V06",
+            "FE2-V07",
+            "FE2-V11"
+          ]
+        }
+      ],
+      "qa_evidence": [
+        "SETUP/Q01"
+      ],
+      "ui_acceptance": [
+        {
+          "id": "UIA-PAGE-216-01",
+          "status": "NOT_FULLY_VERIFIED"
+        },
+        {
+          "id": "UIA-PAGE-216-02",
+          "status": "NOT_FULLY_VERIFIED"
+        },
+        {
+          "id": "UIA-PAGE-216-03",
+          "status": "NOT_FULLY_VERIFIED"
+        },
+        {
+          "id": "UIA-PAGE-216-COPY09",
+          "status": "NOT_FULLY_VERIFIED"
+        },
+        {
+          "id": "UIA-PAGE-216-ICON10",
+          "status": "NOT_FULLY_VERIFIED"
+        },
+        {
+          "id": "UIA-PAGE-216-NAV11",
+          "status": "NOT_FULLY_VERIFIED"
+        },
+        {
+          "id": "UIA-PAGE-216-SETTINGS15",
+          "status": "NOT_FULLY_VERIFIED"
+        }
+      ]
+    },
+    {
+      "page": "PAGE-217",
+      "views": [
+        {
+          "prototype_view": "explore",
+          "route": "/explore",
+          "components": [
+            "MeaningLanguageTabs",
+            "PresetGallery"
+          ],
+          "application_models": [
+            "PublishedPresetCollection"
+          ],
+          "apis": [
+            "API-202",
+            "API-209"
+          ],
+          "plan": "frontend.md#generation",
+          "verification": [
+            "FE2-V11",
+            "FE2-V15"
+          ]
+        }
+      ],
+      "qa_evidence": [
+        "DEV, SETUP/Q01, U01/U02"
+      ],
+      "ui_acceptance": [
+        {
+          "id": "UIA-PAGE-217-01",
+          "status": "NOT_FULLY_VERIFIED"
+        },
+        {
+          "id": "UIA-PAGE-217-02",
+          "status": "NOT_FULLY_VERIFIED"
+        },
+        {
+          "id": "UIA-PAGE-217-03",
+          "status": "NOT_FULLY_VERIFIED"
+        },
+        {
+          "id": "UIA-PAGE-217-04",
+          "status": "NOT_FULLY_VERIFIED"
+        },
+        {
+          "id": "UIA-PAGE-217-05",
+          "status": "NOT_FULLY_VERIFIED"
+        },
+        {
+          "id": "UIA-PAGE-217-06",
+          "status": "NOT_FULLY_VERIFIED"
+        },
+        {
+          "id": "UIA-PAGE-217-COPY09",
+          "status": "NOT_FULLY_VERIFIED"
+        },
+        {
+          "id": "UIA-PAGE-217-ICON10",
+          "status": "NOT_FULLY_VERIFIED"
+        },
+        {
+          "id": "UIA-PAGE-217-NAV11",
+          "status": "NOT_FULLY_VERIFIED"
+        },
+        {
+          "id": "UIA-PAGE-217-CAR11",
+          "status": "NOT_FULLY_VERIFIED"
+        }
+      ]
+    },
+    {
+      "page": "PAGE-218",
+      "views": [
+        {
+          "prototype_view": "adminhome",
+          "route": "/admin",
+          "components": [
+            "OverviewMetrics",
+            "ModuleLinks"
+          ],
+          "application_models": [
+            "AdminOverview"
+          ],
+          "apis": [
+            "API-209"
+          ],
+          "plan": "frontend.md#growth",
+          "verification": [
+            "FE2-V16"
+          ]
+        }
+      ],
+      "qa_evidence": [
+        "DEV, SETUP/Q09"
+      ],
+      "ui_acceptance": [
+        {
+          "id": "UIA-PAGE-218-01",
+          "status": "NOT_FULLY_VERIFIED"
+        },
+        {
+          "id": "UIA-PAGE-218-COPY09",
+          "status": "NOT_FULLY_VERIFIED"
+        },
+        {
+          "id": "UIA-PAGE-218-ICON10",
+          "status": "NOT_FULLY_VERIFIED"
+        }
+      ]
+    }
+  ],
+  "active_data": [
+    "DATA-001",
+    "DATA-002",
+    "DATA-003",
+    "DATA-004",
+    "DATA-005",
+    "DATA-006",
+    "DATA-007",
+    "DATA-008",
+    "DATA-009",
+    "DATA-010",
+    "DATA-011",
+    "DATA-012",
+    "DATA-013",
+    "DATA-014",
+    "DATA-016",
+    "DATA-017",
+    "DATA-018",
+    "DATA-201",
+    "DATA-202",
+    "DATA-203",
+    "DATA-204",
+    "DATA-205",
+    "DATA-206",
+    "DATA-207",
+    "DATA-208",
+    "DATA-209",
+    "DATA-210",
+    "DATA-211",
+    "DATA-212",
+    "DATA-213",
+    "DATA-214"
+  ],
+  "replaced_data": [
+    {
+      "id": "DATA-015",
+      "replacement": "DATA-202",
+      "rule": "Only minimal facts; no historic answers",
+      "plan": "frontend.md#review"
+    }
+  ],
+  "design_deltas": [
+    {
+      "id": "FDE-01",
+      "source": "../design/frontend-delta.md",
+      "plan": "frontend.md#routes",
+      "source_section": "FDE-01"
+    },
+    {
+      "id": "FDE-02",
+      "source": "../design/frontend-delta.md",
+      "plan": "frontend.md#design",
+      "source_section": "FDE-02"
+    },
+    {
+      "id": "FDE-03",
+      "source": "../design/frontend-delta.md",
+      "plan": "frontend.md#generation",
+      "source_section": "FDE-03"
+    },
+    {
+      "id": "FDE-04",
+      "source": "../design/frontend-delta.md",
+      "plan": "frontend.md#review",
+      "source_section": "FDE-04"
+    },
+    {
+      "id": "FDE-05",
+      "source": "../design/frontend-delta.md",
+      "plan": "frontend.md#generation",
+      "source_section": "FDE-05"
+    },
+    {
+      "id": "FDE-06",
+      "source": "../design/frontend-delta.md",
+      "plan": "frontend.md#growth",
+      "source_section": "FDE-06"
+    },
+    {
+      "id": "FDE-07",
+      "source": "../design/frontend-delta.md",
+      "plan": "frontend.md#notices",
+      "source_section": "FDE-07"
+    },
+    {
+      "id": "FDE-08",
+      "source": "../design/frontend-delta.md",
+      "plan": "frontend.md#generation",
+      "source_section": "FDE-08"
+    },
+    {
+      "id": "FDE-09",
+      "source": "../design/frontend-delta.md",
+      "plan": "frontend.md#growth",
+      "source_section": "FDE-09"
+    }
+  ],
+  "ui_count": 119,
+  "limitations": "CR009 scoped independent verification passed pending gate. CR010/F06: 30-day analytics chart causes document overflow on 320/390px. T08–10 add partial makeup coverage, T11–14 add numerical/API/UI analytics coverage. No complete capability/UIA/UAT pass; W01 retained.",
+  "version": "M002-QA-04",
+  "previous_round": "qa2-003/coverage.json"
+}

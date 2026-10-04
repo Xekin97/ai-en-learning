@@ -1,0 +1,695 @@
+{
+  "version": "M002-QA-15",
+  "authorization": "APPROVAL-M002-041",
+  "inheritance": [
+    {
+      "capability": "CAP-001",
+      "current_rule": "修改或扩展；原核心职责保留",
+      "acceptance": "AC-001",
+      "trace_pages": [
+        "PAGE-205",
+        "PAGE-217"
+      ],
+      "api": "API-001/202",
+      "existing_qa_status": "PARTIAL",
+      "existing_evidence": "U01/U02",
+      "audit": "PASS_INHERITANCE_RECEPTION_SCOPE",
+      "current_evidence": "U01/U02",
+      "runtime_scope_not_upgraded": true
+    },
+    {
+      "capability": "CAP-002",
+      "current_rule": "保留并衔接",
+      "acceptance": "AC-002",
+      "trace_pages": [
+        "PAGE-002",
+        "PAGE-003"
+      ],
+      "api": "API-002",
+      "existing_qa_status": "PARTIAL",
+      "existing_evidence": "SETUP/Q03；S03 真实访客注册收录；QA10 A01实际注册关联及浏览器去重",
+      "audit": "PASS_INHERITANCE_RECEPTION_SCOPE",
+      "current_evidence": "SETUP/Q03；S03 真实访客注册收录；QA10 A01实际注册关联及浏览器去重",
+      "runtime_scope_not_upgraded": true
+    },
+    {
+      "capability": "CAP-003",
+      "current_rule": "修改或扩展；原核心职责保留",
+      "acceptance": "AC-003",
+      "trace_pages": [
+        "PAGE-002",
+        "PAGE-003",
+        "PAGE-103",
+        "PAGE-205",
+        "PAGE-206",
+        "PAGE-218"
+      ],
+      "api": "API-002",
+      "existing_qa_status": "PARTIAL",
+      "existing_evidence": "SETUP/Q09；S03 注销后两会话及旧登录失效",
+      "audit": "PASS_INHERITANCE_RECEPTION_SCOPE",
+      "current_evidence": "SETUP/Q09；S03 注销后两会话及旧登录失效",
+      "runtime_scope_not_upgraded": true
+    },
+    {
+      "capability": "CAP-004",
+      "current_rule": "保留并衔接",
+      "acceptance": "AC-004",
+      "trace_pages": [
+        "PAGE-206"
+      ],
+      "api": "API-003",
+      "existing_qa_status": "PARTIAL",
+      "existing_evidence": "R07 前置改密/多会话断言；S02–04 注销部分另见 CAP-005",
+      "audit": "PASS_INHERITANCE_RECEPTION_SCOPE",
+      "current_evidence": "R07 前置改密/多会话断言；S02–04 注销部分另见 CAP-005",
+      "runtime_scope_not_upgraded": true
+    },
+    {
+      "capability": "CAP-005",
+      "current_rule": "修改或扩展；原核心职责保留",
+      "acceptance": "AC-005",
+      "trace_pages": [
+        "PAGE-206"
+      ],
+      "api": "API-003",
+      "existing_qa_status": "PARTIAL",
+      "existing_evidence": "S02–04：确认/错密/19 类非空关联表清除/多会话/他人隔离；F03 原缺陷复验通过；并发/回滚复用 DEV；QA10 A09控制：注销三条已关联浏览器访问链/分析身份/最小复习事实，保留同浏览器他人业务事实及匿名汇总",
+      "audit": "PASS_INHERITANCE_RECEPTION_SCOPE",
+      "current_evidence": "S02–04：确认/错密/19 类非空关联表清除/多会话/他人隔离；F03 原缺陷复验通过；并发/回滚复用 DEV；QA10 A09控制：注销三条已关联浏览器访问链/分析身份/最小复习事实，保留同浏览器他人业务事实及匿名汇总",
+      "runtime_scope_not_upgraded": true
+    },
+    {
+      "capability": "CAP-006",
+      "current_rule": "修改或扩展；原核心职责保留",
+      "acceptance": "AC-006",
+      "trace_pages": [
+        "PAGE-204"
+      ],
+      "api": "API-004",
+      "existing_qa_status": "PARTIAL",
+      "existing_evidence": "DEV；G01 大小写查词与非法/重复词预检，零调用/零扣次",
+      "audit": "PASS_INHERITANCE_RECEPTION_SCOPE",
+      "current_evidence": "DEV；G01 大小写查词与非法/重复词预检，零调用/零扣次",
+      "runtime_scope_not_upgraded": true
+    },
+    {
+      "capability": "CAP-007",
+      "current_rule": "修改或扩展；原核心职责保留",
+      "acceptance": "AC-007",
+      "trace_pages": [
+        "PAGE-204"
+      ],
+      "api": "API-004",
+      "existing_qa_status": "PARTIAL",
+      "existing_evidence": "U04（布局）；V09/10 模型卡不改quota，计划覆盖与逐模型独立时长；QA09 P04/05预设例外不放开普通模型权限",
+      "audit": "PASS_INHERITANCE_RECEPTION_SCOPE",
+      "current_evidence": "U04（布局）；V09/10 模型卡不改quota，计划覆盖与逐模型独立时长；QA09 P04/05预设例外不放开普通模型权限",
+      "runtime_scope_not_upgraded": true
+    },
+    {
+      "capability": "CAP-008",
+      "current_rule": "修改或扩展；原核心职责保留",
+      "acceptance": "AC-008",
+      "trace_pages": [
+        "PAGE-204"
+      ],
+      "api": "API-005",
+      "existing_qa_status": "PARTIAL",
+      "existing_evidence": "SETUP；G01/02 预检与单活跃请求；G03/04 失败和断流；QA09 P03完整校验及U02真实浏览器失败/重试",
+      "audit": "PASS_INHERITANCE_RECEPTION_SCOPE",
+      "current_evidence": "SETUP；G01/02 预检与单活跃请求；G03/04 失败和断流；QA09 P03完整校验及U02真实浏览器失败/重试",
+      "runtime_scope_not_upgraded": true
+    },
+    {
+      "capability": "CAP-009",
+      "current_rule": "修改或扩展；原核心职责保留",
+      "acceptance": "AC-009",
+      "trace_pages": [
+        "PAGE-204"
+      ],
+      "api": "API-005",
+      "existing_qa_status": "PARTIAL",
+      "existing_evidence": "QA06 G02–06取消计次/基础与次数卡退款；QA07 G01–10复验且新增过期卡退款不复活；QA09 R01–04补visitor/trial失败退款；生产代理仍待验；QA09 R01–04访客/体验原来源退款、取消计次、在途base调整仍退trial；U02浏览器退款与重试",
+      "audit": "PASS_INHERITANCE_RECEPTION_SCOPE",
+      "current_evidence": "QA06 G02–06取消计次/基础与次数卡退款；QA07 G01–10复验且新增过期卡退款不复活；QA09 R01–04补visitor/trial失败退款；生产代理仍待验；QA09 R01–04访客/体验原来源退款、取消计次、在途base调整仍退trial；U02浏览器退款与重试",
+      "runtime_scope_not_upgraded": true
+    },
+    {
+      "capability": "CAP-010",
+      "current_rule": "修改或扩展；原核心职责保留",
+      "acceptance": "AC-010",
+      "trace_pages": [
+        "PAGE-204"
+      ],
+      "api": "API-006",
+      "existing_qa_status": "PARTIAL",
+      "existing_evidence": "原SETUP/G05；QA06 G07/QA2-F09失败→QA07 G07四终态409 state_conflict，G08保存201/200、404隐私/删除，G09草稿410；CR013沿034限定关闭；QA09 P04/05与U02预设收录/默认标题/完整正文；QA10 A02实际生成/收录重试只写一次分析事实",
+      "audit": "PASS_INHERITANCE_RECEPTION_SCOPE",
+      "current_evidence": "原SETUP/G05；QA06 G07/QA2-F09失败→QA07 G07四终态409 state_conflict，G08保存201/200、404隐私/删除，G09草稿410；CR013沿034限定关闭；QA09 P04/05与U02预设收录/默认标题/完整正文；QA10 A02实际生成/收录重试只写一次分析事实",
+      "runtime_scope_not_upgraded": true
+    },
+    {
+      "capability": "CAP-011",
+      "current_rule": "修改或扩展；原核心职责保留",
+      "acceptance": "AC-011",
+      "trace_pages": [
+        "PAGE-002",
+        "PAGE-003",
+        "PAGE-204"
+      ],
+      "api": "API-006",
+      "existing_qa_status": "PARTIAL",
+      "existing_evidence": "SETUP；S01/S03 两个真实访客注册 claim；QA09 P04 claim201/200同批且账号额度不扣；U02真实浏览器注册承接",
+      "audit": "PASS_INHERITANCE_RECEPTION_SCOPE",
+      "current_evidence": "SETUP；S01/S03 两个真实访客注册 claim；QA09 P04 claim201/200同批且账号额度不扣；U02真实浏览器注册承接",
+      "runtime_scope_not_upgraded": true
+    },
+    {
+      "capability": "CAP-012",
+      "current_rule": "修改或扩展；原核心职责保留",
+      "acceptance": "AC-012",
+      "trace_pages": [
+        "PAGE-005"
+      ],
+      "api": "API-007",
+      "existing_qa_status": "PARTIAL",
+      "existing_evidence": "原Q/L统计/分页；QA07 J01–04返回通过；QA08 K01–03/05–08全库统计、分页焦点、失败与延迟响应通过，F10/F11沿036限定关闭",
+      "audit": "PASS_INHERITANCE_RECEPTION_SCOPE",
+      "current_evidence": "原Q/L统计/分页；QA07 J01–04返回通过；QA08 K01–03/05–08全库统计、分页焦点、失败与延迟响应通过，F10/F11沿036限定关闭",
+      "runtime_scope_not_upgraded": true
+    },
+    {
+      "capability": "CAP-013",
+      "current_rule": "保留并衔接",
+      "acceptance": "AC-013",
+      "trace_pages": [
+        "PAGE-005"
+      ],
+      "api": "API-007",
+      "existing_qa_status": "PARTIAL",
+      "existing_evidence": "L01/02/03/05/06搜索规范化正确，CR011沿031关闭；QA08 K01/09按钮/Enter/空/清除回输入、旧分页不污染新搜索通过，F10沿036限定关闭",
+      "audit": "PASS_INHERITANCE_RECEPTION_SCOPE",
+      "current_evidence": "L01/02/03/05/06搜索规范化正确，CR011沿031关闭；QA08 K01/09按钮/Enter/空/清除回输入、旧分页不污染新搜索通过，F10沿036限定关闭",
+      "runtime_scope_not_upgraded": true
+    },
+    {
+      "capability": "CAP-014",
+      "current_rule": "扩展本人标题编辑 CAP-220，其余生成内容只读",
+      "acceptance": "AC-014",
+      "trace_pages": [
+        "PAGE-006"
+      ],
+      "api": "API-007",
+      "existing_qa_status": "PARTIAL",
+      "existing_evidence": "Q01/Q02；QA07 J01–04详情返回查询/加载/位置/标题通过，CR012沿034限定关闭",
+      "audit": "PASS_INHERITANCE_RECEPTION_SCOPE",
+      "current_evidence": "Q01/Q02；QA07 J01–04详情返回查询/加载/位置/标题通过，CR012沿034限定关闭；QA14 H01–04日期一致与双语午夜/中午通过；shared 8项共享页面通过；CR017待限定关闭",
+      "runtime_scope_not_upgraded": true
+    },
+    {
+      "capability": "CAP-015",
+      "current_rule": "保留并衔接",
+      "acceptance": "AC-015",
+      "trace_pages": [
+        "PAGE-005",
+        "PAGE-006"
+      ],
+      "api": "API-007",
+      "existing_qa_status": "PARTIAL",
+      "existing_evidence": "Q10/V05快照；QA08 K03/05–08参与双向切换焦点/统计/失败恢复通过；B01未来日期预览变化、已建23篇快照不变，F10/F11沿036限定关闭",
+      "audit": "PASS_INHERITANCE_RECEPTION_SCOPE",
+      "current_evidence": "Q10/V05快照；QA08 K03/05–08参与双向切换焦点/统计/失败恢复通过；B01未来日期预览变化、已建23篇快照不变，F10/F11沿036限定关闭",
+      "runtime_scope_not_upgraded": true
+    },
+    {
+      "capability": "CAP-016",
+      "current_rule": "修改或扩展；原核心职责保留",
+      "acceptance": "AC-016",
+      "trace_pages": [
+        "PAGE-005",
+        "PAGE-006"
+      ],
+      "api": "API-007",
+      "existing_qa_status": "PARTIAL",
+      "existing_evidence": "Q11；V08 删库保留掌握，随机重新允许已删原词",
+      "audit": "PASS_INHERITANCE_RECEPTION_SCOPE",
+      "current_evidence": "Q11；V08 删库保留掌握，随机重新允许已删原词",
+      "runtime_scope_not_upgraded": true
+    },
+    {
+      "capability": "CAP-017",
+      "current_rule": "保留并衔接",
+      "acceptance": "AC-017",
+      "trace_pages": [
+        "PAGE-007"
+      ],
+      "api": "API-008",
+      "existing_qa_status": "PARTIAL",
+      "existing_evidence": "Q10/U04；V05/V07 洛杉矶日期边界、多批快照、空/旧版本替换保护；QA08 B01动态日期预览与固定快照；B03/04真实替换竞争",
+      "audit": "PASS_INHERITANCE_RECEPTION_SCOPE",
+      "current_evidence": "Q10/U04；V05/V07 洛杉矶日期边界、多批快照、空/旧版本替换保护；QA08 B01动态日期预览与固定快照；B03/04真实替换竞争",
+      "runtime_scope_not_upgraded": true
+    },
+    {
+      "capability": "CAP-018",
+      "current_rule": "替代（旧 ID 保留为追踪）",
+      "acceptance": "AC-018",
+      "trace_pages": [
+        "PAGE-008"
+      ],
+      "api": "API-008",
+      "existing_qa_status": "PARTIAL",
+      "existing_evidence": "Q04/Q05",
+      "audit": "PASS_INHERITANCE_RECEPTION_SCOPE",
+      "current_evidence": "Q04/Q05",
+      "runtime_scope_not_upgraded": true
+    },
+    {
+      "capability": "CAP-019",
+      "current_rule": "替代（旧 ID 保留为追踪）",
+      "acceptance": "AC-019",
+      "trace_pages": [
+        "PAGE-008",
+        "PAGE-201"
+      ],
+      "api": "API-008",
+      "existing_qa_status": "PARTIAL",
+      "existing_evidence": "Q04/Q05",
+      "audit": "PASS_INHERITANCE_RECEPTION_SCOPE",
+      "current_evidence": "Q04/Q05",
+      "runtime_scope_not_upgraded": true
+    },
+    {
+      "capability": "CAP-020",
+      "current_rule": "修改或扩展；原核心职责保留",
+      "acceptance": "AC-020",
+      "trace_pages": [
+        "PAGE-005",
+        "PAGE-007",
+        "PAGE-008"
+      ],
+      "api": "API-008",
+      "existing_qa_status": "PARTIAL",
+      "existing_evidence": "Q06/Q07；V06/V07 多批进度、完成最小概况和旧替换会话失效；QA08 B02重复提交最小回执；B03–05替换并发与旧会话失效；QA10 A02/A08恢复不重复开始、过90天迟交归原队列且无历史答案",
+      "audit": "PASS_INHERITANCE_RECEPTION_SCOPE",
+      "current_evidence": "Q06/Q07；V06/V07 多批进度、完成最小概况和旧替换会话失效；QA08 B02重复提交最小回执；B03–05替换并发与旧会话失效；QA10 A02/A08恢复不重复开始、过90天迟交归原队列且无历史答案",
+      "runtime_scope_not_upgraded": true
+    },
+    {
+      "capability": "CAP-021",
+      "current_rule": "保留并衔接",
+      "acceptance": "AC-021",
+      "trace_pages": [
+        "PAGE-002",
+        "PAGE-003",
+        "PAGE-005",
+        "PAGE-006",
+        "PAGE-007",
+        "PAGE-008",
+        "PAGE-103",
+        "PAGE-204",
+        "PAGE-205",
+        "PAGE-206",
+        "PAGE-217",
+        "PAGE-218"
+      ],
+      "api": "API-001",
+      "existing_qa_status": "PARTIAL",
+      "existing_evidence": "DEV；V13语言刷新/新浏览器保持；QA07 J08切换语言保留已提交查询与21行加载范围",
+      "audit": "PASS_INHERITANCE_RECEPTION_SCOPE",
+      "current_evidence": "DEV；V13语言刷新/新浏览器保持；QA07 J08切换语言保留已提交查询与21行加载范围；QA14 H01–04日期一致与双语午夜/中午通过；shared 8项共享页面通过；CR017待限定关闭",
+      "runtime_scope_not_upgraded": true
+    },
+    {
+      "capability": "CAP-022",
+      "current_rule": "保留并衔接",
+      "acceptance": "AC-022",
+      "trace_pages": [
+        "PAGE-005",
+        "PAGE-008"
+      ],
+      "api": "API-008",
+      "existing_qa_status": "PARTIAL",
+      "existing_evidence": "Q07/Q10；QA08 B01暂停批次仍可单篇复习",
+      "audit": "PASS_INHERITANCE_RECEPTION_SCOPE",
+      "current_evidence": "Q07/Q10；QA08 B01暂停批次仍可单篇复习",
+      "runtime_scope_not_upgraded": true
+    },
+    {
+      "capability": "CAP-101",
+      "current_rule": "保留并衔接",
+      "acceptance": "AC-101",
+      "trace_pages": [
+        "PAGE-208"
+      ],
+      "api": "API-101",
+      "existing_qa_status": "PARTIAL",
+      "existing_evidence": "SETUP",
+      "audit": "PASS_INHERITANCE_RECEPTION_SCOPE",
+      "current_evidence": "SETUP",
+      "runtime_scope_not_upgraded": true
+    },
+    {
+      "capability": "CAP-102",
+      "current_rule": "修改或扩展；原核心职责保留",
+      "acceptance": "AC-102",
+      "trace_pages": [
+        "PAGE-208"
+      ],
+      "api": "API-101",
+      "existing_qa_status": "PARTIAL",
+      "existing_evidence": "SETUP/C05",
+      "audit": "PASS_INHERITANCE_RECEPTION_SCOPE",
+      "current_evidence": "SETUP/C05",
+      "runtime_scope_not_upgraded": true
+    },
+    {
+      "capability": "CAP-103",
+      "current_rule": "修改或扩展；原核心职责保留",
+      "acceptance": "AC-103",
+      "trace_pages": [
+        "PAGE-208"
+      ],
+      "api": "API-102",
+      "existing_qa_status": "PARTIAL",
+      "existing_evidence": "SETUP/C04",
+      "audit": "PASS_INHERITANCE_RECEPTION_SCOPE",
+      "current_evidence": "SETUP/C04",
+      "runtime_scope_not_upgraded": true
+    },
+    {
+      "capability": "CAP-104",
+      "current_rule": "修改或扩展；原核心职责保留",
+      "acceptance": "AC-104",
+      "trace_pages": [
+        "PAGE-103",
+        "PAGE-211"
+      ],
+      "api": "API-103",
+      "existing_qa_status": "PARTIAL",
+      "existing_evidence": "Q03/C04；V12/V14 实际用户库与密码管理",
+      "audit": "PASS_INHERITANCE_RECEPTION_SCOPE",
+      "current_evidence": "Q03/C04；V12/V14 实际用户库与密码管理",
+      "runtime_scope_not_upgraded": true
+    },
+    {
+      "capability": "CAP-105",
+      "current_rule": "修改或扩展；原核心职责保留",
+      "acceptance": "AC-105",
+      "trace_pages": [
+        "PAGE-103"
+      ],
+      "api": "API-103",
+      "existing_qa_status": "PARTIAL",
+      "existing_evidence": "C04；QA09 R04试用在途时base调整重置不改trial退款来源/到期",
+      "audit": "PASS_INHERITANCE_RECEPTION_SCOPE",
+      "current_evidence": "C04；QA09 R04试用在途时base调整重置不改trial退款来源/到期",
+      "runtime_scope_not_upgraded": true
+    },
+    {
+      "capability": "CAP-106",
+      "current_rule": "保留并衔接",
+      "acceptance": "AC-106",
+      "trace_pages": [
+        "PAGE-103"
+      ],
+      "api": "API-103",
+      "existing_qa_status": "PARTIAL",
+      "existing_evidence": "DEV；V14 确认校验/取消/实际重置撤目标两会话、旧密失效、新密有效",
+      "audit": "PASS_INHERITANCE_RECEPTION_SCOPE",
+      "current_evidence": "DEV；V14 确认校验/取消/实际重置撤目标两会话、旧密失效、新密有效",
+      "runtime_scope_not_upgraded": true
+    },
+    {
+      "capability": "CAP-107",
+      "current_rule": "保留并衔接",
+      "acceptance": "AC-107",
+      "trace_pages": [
+        "PAGE-103"
+      ],
+      "api": "API-103",
+      "existing_qa_status": "PARTIAL",
+      "existing_evidence": "DEV；V12 列表与完整阅读、无编辑动作、直接写/代复习拒绝及owner隔离",
+      "audit": "PASS_INHERITANCE_RECEPTION_SCOPE",
+      "current_evidence": "DEV；V12 列表与完整阅读、无编辑动作、直接写/代复习拒绝及owner隔离",
+      "runtime_scope_not_upgraded": true
+    }
+  ],
+  "inheritance_count": 29,
+  "historical_artifacts_checked": [
+    {
+      "path": ".planning/milestones/M002/verification/evidence/qa2-001/run2/real-audit.json",
+      "sha256": "1a3e9f053f5e4f27e560fdbbf155d9b0f2a2058cb357791c0c0e0d66a6dcde36",
+      "manifest": ".planning/milestones/M002/verification/evidence/qa2-001/manifest.json",
+      "verified": true
+    },
+    {
+      "path": ".planning/milestones/M002/verification/evidence/qa2-001/real-audit-v2.mjs",
+      "sha256": "a9f820081f0f80040db3d21be86f2dada56a7aa507ed6c9fa89d1707ef427da3",
+      "manifest": ".planning/milestones/M002/verification/evidence/qa2-001/manifest.json",
+      "verified": true
+    },
+    {
+      "path": ".planning/milestones/M002/verification/evidence/qa2-001/ui-run2/ui-audit.json",
+      "sha256": "4a82ec929c4e0c663f78f53d1e64060e119e98f69b7a573d11fce0c66af82400",
+      "manifest": ".planning/milestones/M002/verification/evidence/qa2-001/manifest.json",
+      "verified": true
+    },
+    {
+      "path": ".planning/milestones/M002/verification/evidence/qa2-003/account-final-results.json",
+      "sha256": "45200a1b4884c88d1dd652160b0c0da116ea26a0bca7ff72b0ce4d2ad3c77b97",
+      "manifest": ".planning/milestones/M002/verification/evidence/qa2-003/manifest.json",
+      "verified": true
+    },
+    {
+      "path": ".planning/milestones/M002/verification/evidence/qa2-005/business-results.json",
+      "sha256": "426a5796ad55cecb0b83568d460b771e0ab27a5df29b24fb209b1a3a1d860a71",
+      "manifest": ".planning/milestones/M002/verification/evidence/qa2-005/manifest.json",
+      "verified": true
+    },
+    {
+      "path": ".planning/milestones/M002/verification/evidence/qa2-005/inherited-results.json",
+      "sha256": "7853b87b6d6e52f57a6f176d0de8410fc94b86874dc8bccda73749e262824ed1",
+      "manifest": ".planning/milestones/M002/verification/evidence/qa2-005/manifest.json",
+      "verified": true
+    },
+    {
+      "path": ".planning/milestones/M002/verification/evidence/qa2-007/library-results.json",
+      "sha256": "0761dc9c242783b873e7d7f7894c186f96b74253538ff98d1878d6a2cd3f458a",
+      "manifest": ".planning/milestones/M002/verification/evidence/qa2-007/manifest.json",
+      "verified": true
+    },
+    {
+      "path": ".planning/milestones/M002/verification/evidence/qa2-008/library-results.json",
+      "sha256": "1bfa8d4c48bf3072db9ec6de150e0c6ee0ee501eaf785229dcb2feeccbe4b45a",
+      "manifest": ".planning/milestones/M002/verification/evidence/qa2-008/manifest.json",
+      "verified": true
+    },
+    {
+      "path": ".planning/milestones/M002/verification/evidence/qa2-008/review-results.json",
+      "sha256": "c6db399bb577b29a107074b2d6d97195cdfeea8cf5dff2e7c6f5fddec78a012e",
+      "manifest": ".planning/milestones/M002/verification/evidence/qa2-008/manifest.json",
+      "verified": true
+    },
+    {
+      "path": ".planning/milestones/M002/verification/evidence/qa2-009/api-results.json",
+      "sha256": "b4285d467b726a8e53bceca4a5c9d08272d8c00a73d3fe2357d3e20756567113",
+      "manifest": ".planning/milestones/M002/verification/evidence/qa2-009/manifest.json",
+      "verified": true
+    },
+    {
+      "path": ".planning/milestones/M002/verification/evidence/qa2-009/api-controls.json",
+      "sha256": "1e99089a6e3ed0d7bd13d6809e1bb388073b92b1d2b8e8db426264534768abd3",
+      "manifest": ".planning/milestones/M002/verification/evidence/qa2-009/manifest.json",
+      "verified": true
+    },
+    {
+      "path": ".planning/milestones/M002/verification/evidence/qa2-009/ui-results.json",
+      "sha256": "fb3d9b40c9907b26de1a97ec3d5fc8cfd0e1477eff5cbd44c8e3efbef2d9a7bd",
+      "manifest": ".planning/milestones/M002/verification/evidence/qa2-009/manifest.json",
+      "verified": true
+    },
+    {
+      "path": ".planning/milestones/M002/verification/evidence/qa2-010/analytics-results.json",
+      "sha256": "0bdaca4450f85ead5b96add24246b84826b7a1f7b9d715926e5fcfc30e1de91c",
+      "manifest": ".planning/milestones/M002/verification/evidence/qa2-010/manifest.json",
+      "verified": true
+    },
+    {
+      "path": ".planning/milestones/M002/verification/evidence/qa2-010/deletion-control-results.json",
+      "sha256": "a503e598b85da6883cd5e67e9e726d2943dd57052bb5543bff70ca18a9c8d10d",
+      "manifest": ".planning/milestones/M002/verification/evidence/qa2-010/manifest.json",
+      "verified": true
+    },
+    {
+      "path": ".planning/milestones/M002/verification/evidence/qa2-010/stalled-results.json",
+      "sha256": "d7ed342e9a2f01701c1b949228533a90c54ff9856c0f5a6ca688460eab153e62",
+      "manifest": ".planning/milestones/M002/verification/evidence/qa2-010/manifest.json",
+      "verified": true
+    },
+    {
+      "path": ".planning/milestones/M002/implementation/evidence/frontend-e2e-final-1.log",
+      "sha256": "6c4b5b418c75f2e785b03214f41d5f3b097e72569d11a2346cfba5645e7831cf",
+      "manifest": ".planning/milestones/M002/implementation/evidence/frontend-final-manifest.json",
+      "verified": true,
+      "type": "developer runtime evidence, not rerun"
+    },
+    {
+      "path": ".planning/milestones/M002/implementation/evidence/frontend-admin-core-handoff.log",
+      "sha256": "a8bc04a1841dcf60b0e517ce7237c4032afa311be3f43157330477e9f22c723b",
+      "manifest": ".planning/milestones/M002/implementation/evidence/frontend-final-manifest.json",
+      "verified": true,
+      "type": "developer runtime evidence, not rerun"
+    },
+    {
+      "path": ".planning/milestones/M002/implementation/evidence/backend-profile-config.log",
+      "sha256": "269f9b3129d8dd28a0af313f1b64b2a1c58239d5e26331c5503e1703e996cef8",
+      "manifest": ".planning/milestones/M002/implementation/evidence/backend-final-manifest.json",
+      "verified": true,
+      "type": "developer runtime evidence, not rerun"
+    },
+    {
+      "path": ".planning/milestones/M002/implementation/evidence/backend-restore.log",
+      "sha256": "adc4d2dfab6e00d9b56c243260daeb5a61d6744640c532bb3068d116d6270d4e",
+      "manifest": ".planning/milestones/M002/implementation/evidence/backend-final-manifest.json",
+      "verified": true,
+      "type": "developer runtime evidence, not rerun"
+    }
+  ],
+  "title_facets": [
+    {
+      "id": "default-and-private-edit",
+      "source": "AC-220",
+      "evidence": [
+        "qa2-001/run2/real-audit.json#Q01",
+        "qa2-009/api-results.json#P04",
+        "qa2-009/ui-results.json#U02"
+      ],
+      "scope": "普通、预设及访客收录默认值/本人编辑；literal文字、无生成和统计变化"
+    },
+    {
+      "id": "conflict-and-failure",
+      "source": "AC-220/UIA006-03",
+      "evidence": [
+        "qa2-014/run/results.json#R01-R04,C01"
+      ],
+      "scope": "真实冲突、取消/空白、普通503失败回焦及显式重试、身份失效/删除均通过；CR016/017/018已正式限定关闭"
+    },
+    {
+      "id": "ownership-admin-readonly",
+      "source": "AC-220/UIA103-02",
+      "evidence": [
+        "qa2-001/run2/real-audit.json#Q03",
+        "qa2-005/inherited-results.json#V12"
+      ],
+      "scope": "他人/管理员拒绝写入，后台读取当前标题"
+    },
+    {
+      "id": "draft-and-reviewed",
+      "source": "AC-220",
+      "evidence": [
+        "qa2-001/run2/real-audit.json#Q04,Q07"
+      ],
+      "scope": "已有复习后仍可改标题，本机草稿确认恢复不被改名清空"
+    },
+    {
+      "id": "library-search-return",
+      "source": "AC-220/UIA005-02",
+      "evidence": [
+        "qa2-007/library-results.json#J04",
+        "qa2-008/library-results.json#K01-K03"
+      ],
+      "scope": "标题刷新、原词查询、旧到新顺序、已加载/位置保持"
+    },
+    {
+      "id": "relogin-locale",
+      "source": "AC-220",
+      "evidence": [
+        "qa2-012/run2/results.json#T2"
+      ],
+      "scope": "真实重新登录及切语言、刷新保持字面值"
+    },
+    {
+      "id": "legacy-paused-isolation",
+      "source": "AC-220",
+      "evidence": [
+        "qa2-012/run2/results.json#T3"
+      ],
+      "scope": "迁移旧批次、暂停批次编辑及同源两私人批次和公开预设隔离"
+    },
+    {
+      "id": "single-preset-field",
+      "source": "AC-218/UIA212-02",
+      "evidence": [
+        "qa2-012/run2/results.json#T2"
+      ],
+      "scope": "后台双语单标题输入、无说明；草稿不改发布版"
+    },
+    {
+      "id": "preset-publication",
+      "source": "AC-218/UIA212-03/UIA217-02/UIA216-02",
+      "evidence": [
+        "qa2-009/api-results.json#P02,P03",
+        "qa2-009/ui-results.json#U01"
+      ],
+      "scope": "只改标题复用预览但需手动发布；更改配置需新预览；公开目录/台同一标题与完整样文"
+    },
+    {
+      "id": "review-no-title",
+      "source": "AC-220/FE2-V03",
+      "evidence": [
+        "confirmed-control/results.json#UI15-zh-1440,UI15-en-1440",
+        "final-control/results.json#UI15-zh-390,UI15-en-390"
+      ],
+      "scope": "Independent real review word/overview DOM and aria contain no QA15 custom title; session API has no title; normal and paused preset batches represented"
+    },
+    {
+      "id": "responsive-title",
+      "source": "UIA006-02/04",
+      "evidence": [
+        "control/results.json"
+      ],
+      "scope": "QA15 8 accepted cases PASS with approved four widths and two locales; 32 selected regional axe scans zero violations; title icon separately FAIL I01"
+    }
+  ],
+  "source_changes_since_QA12": [
+    "frontend/app/composables/use-display-formatters.ts",
+    "frontend/app/pages/library/[batchId].vue",
+    "frontend/tests/unit/display-formatters.test.ts",
+    "frontend/tests/unit/library-title-editor.test.ts"
+  ],
+  "source_continuity": {
+    "frontend/app/pages/admin/presets.vue": {
+      "sha256": "2b3a5c91850fc2dbb62d711c96b63a6127978895791e1422bf3410987dc5fab6",
+      "frontend_unchanged_since_QA12": true
+    },
+    "frontend/app/runtime/stores/library.ts": {
+      "sha256": "1275068c5c4160a6948ee1b364f658a986b600b1af367f43df5cdf5fd852b795",
+      "frontend_unchanged_since_QA12": true
+    },
+    "backend/internal/learning/title.go": {
+      "sha256": "9b824d20fd2d6e405d951d66a3a122e65c78cd3c50b3d3a86e3fc8d0dda975b0",
+      "frontend_unchanged_since_QA12": null
+    },
+    "backend/internal/httpapi/contract_v13_test.go": {
+      "sha256": "919ae82eeee61685961d6dbe306cda2030e8e769be6229e132eae35bd3fef93e",
+      "frontend_unchanged_since_QA12": null
+    },
+    "backend/db/migrations/0008_m002_identity_vocabulary.sql": {
+      "sha256": "a9af9eff5aeceaaf3707f17581b53905696fb6002f4418be505ad2c46bb2260e",
+      "frontend_unchanged_since_QA12": null
+    },
+    "frontend/tests/e2e/m002-review.spec.ts": {
+      "sha256": "74be74df02e1eedd09e8972589daa1b27da6f85ac9f222b618e8f8f087021a51",
+      "frontend_unchanged_since_QA12": true
+    }
+  },
+  "changed_production_scope": "library detail async identity/focus guard and approved failure key; dateTime formatter; independent QA14 plus new QA15 UI needed for affected title view",
+  "no_new_business_assumptions": true,
+  "cr001_recommendation": "scoped closure of full inheritance baseline/reception, not all UIA or milestone acceptance",
+  "cr002_recommendation": "business facets verified; keep open for UIA006 ICON10 fidelity issue CR019",
+  "formal_crs": "open_pending_gate",
+  "historical_W01": "unlocated; not a confirmed blocking CR",
+  "runtime_claims": "Historical PASS applies only to recorded cases/versions and continuity; developer evidence separately labeled"
+}

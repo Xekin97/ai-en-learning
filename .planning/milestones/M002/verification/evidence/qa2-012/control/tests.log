@@ -1,0 +1,28 @@
+T1-focus FAIL Error: expect(locator).toBeFocused() failed
+
+Locator:  locator('#batch-title')
+Expected: focused
+Received: inactive
+Timeout:  5000ms
+
+Call log:
+  - Expect "to.be.focused" with timeout 5000ms
+  - waiting for locator('#batch-title')
+    14 × locator resolved to <input id="batch-title" aria-invalid="true" aria-describedby="batch-title-hint"/>
+       - unexpected value "inactive"
+
+T4-console FAIL Error: expect(received).toEqual(expected) // deep equality
+
+- Expected  - 1
++ Received  + 9
+
+- Array []
++ Array [
++   Object {
++     "action": "T4-console",
++     "kind": "error",
++     "text": "TypeError: Cannot read properties of undefined (reading 'titleRevision')
++     at je (http://127.0.0.1:3301/_nuxt/Bj-ROn-Q.js:1:2391)",
++     "url": "http://127.0.0.1:3301/library/01a0e6c3-8053-7a2d-ad89-8af3f26e9cdf",
++   },
++ ]

@@ -1,0 +1,61 @@
+{
+  "version": "M002-QA-22",
+  "agent": "qa-quinn",
+  "at": "2026-09-29T02:23:28.534713+00:00",
+  "authorization": "User explicitly selected continue M002 integration and acceptance; standing frontend implementation/QA and local services authorization",
+  "scope": "Prepare persistent disposable local integrated candidate; three bounded cross-layer smoke journeys",
+  "mode": "integration smoke, not full milestone acceptance",
+  "sources": {
+    "frontend-cr022": {
+      "manifest_sha256": "339867b9789afc83888fd051777f1452ee328cf94335134180f340c94a929188",
+      "files_verified": 284
+    },
+    "backend-cr013": {
+      "manifest_sha256": "c54307a04cecb3dd99cc13d64ae0fbcb6c1fca2c0538711af040d279bbe9b549",
+      "files_verified": 288
+    }
+  },
+  "build_directory": "/var/folders/z9/99ckxr957v901zwwc8jdk8640000gn/T/wordweave-cr022-build-AP5n7I",
+  "compiled_files_verified": 444,
+  "source_changes": [],
+  "reuse": "QA20/21 34 frontend groups and QA01-18 business evidence retained, unchanged dependencies; no repeat whole-site screenshots/unit/lint/type",
+  "cases": [
+    {
+      "id": "INT22-01",
+      "criteria": "CAP002/008/011/218; API002/005/006/202",
+      "method": "Visitor real browser generate -> register -> one saved batch, quota and checkin API + DB readback; persists reload"
+    },
+    {
+      "id": "INT22-02",
+      "criteria": "CAP014/201/202/203; API007/008/203",
+      "method": "Edit title -> reload -> review partial/skip/edit -> correct submission -> growth and minimal receipt; reload does not restore answers"
+    },
+    {
+      "id": "INT22-03",
+      "criteria": "CAP102/103/107; API102/103",
+      "method": "Admin model edit -> reload and live options vs frozen batch snapshot; learner admin rejection"
+    }
+  ],
+  "soft_budget": {
+    "journeys": 3,
+    "screenshots_saved": 0,
+    "images_sent_to_model": 0,
+    "expansion": "Only actual failures or necessary missing evidence; behavior+DB assertions sufficient here; reuse approved UI/motion results"
+  },
+  "real_provider_calls": 0,
+  "provider_mode": "local fixed sample, never external provider",
+  "non_goals": [
+    "real AI quality",
+    "production deployment",
+    "manual UAT",
+    "new requirements",
+    "profile migration"
+  ],
+  "before_documents_sha256": {
+    "verification/coverage-matrix.md": "d519a4c54b11ee90079c49e35b8d18cadc80e60ff3a0560fa19816710c5f1d4e",
+    "verification/report.md": "13cb751fb06dd32c96f9ba55452e40a50eefb7bfd06ef1de30650d312694ca53",
+    "verification/ai-evaluation.md": "ab03bfd7085dcf93d267349dd6a6781081ebc3221aac9e20f51ea0b943890d75",
+    "verification/uat.md": "a578f9bddb2275548bf625e088d8a9b7889c7317e6a993b3927de07ee7c0ec54",
+    "handoffs/verification.md": "b4d9a7fd18411660f8590f148731c82b556b57b1d85415f6cead764411e27441"
+  }
+}

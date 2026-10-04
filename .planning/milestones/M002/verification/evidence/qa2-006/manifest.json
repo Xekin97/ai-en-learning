@@ -1,0 +1,201 @@
+{
+  "captured_at": "2026-09-22T02:38:11.818823+00:00",
+  "role": "qa-quinn",
+  "milestone": "M002",
+  "version": "M002-QA-06",
+  "authorization": "TRANSITION-M002-030",
+  "result": {
+    "status": "FAIL",
+    "passed": 11,
+    "failed": 2,
+    "total": 13,
+    "failed_scenarios": [
+      "L04",
+      "G07"
+    ],
+    "search_cr011": "verified_pending_gate"
+  },
+  "source_checks": {
+    "frontend-cr010": {
+      "files": 277,
+      "matches": true
+    },
+    "backend-cr011": {
+      "files": 287,
+      "matches": true
+    }
+  },
+  "protected_audit": {
+    "protected_count": 6417,
+    "unexpected_changed": [],
+    "owned_existing_changed": [
+      ".planning/milestones/M002/verification/report.md",
+      ".planning/milestones/M002/verification/coverage-matrix.md",
+      ".planning/milestones/M002/verification/ai-evaluation.md",
+      ".planning/milestones/M002/verification/uat.md",
+      ".planning/milestones/M002/handoffs/verification.md",
+      ".planning/milestones/M002/changes/CR-011.md"
+    ],
+    "new_change_requests": [
+      "M002-CR-012",
+      "M002-CR-013"
+    ],
+    "control_plane_unchanged": true,
+    "source_unchanged": true,
+    "ports_after": {
+      "3300": true,
+      "3330": true,
+      "38080": true,
+      "4186": true,
+      "3331": false,
+      "3301": false,
+      "38081": false,
+      "38082": false,
+      "39081": false,
+      "63541": false
+    }
+  },
+  "original_artifact_recovery": {
+    "qa05_artifacts": 80,
+    "unchanged_at_original_path": 74,
+    "mutable_originals_recovered": [
+      ".planning/milestones/M002/changes/CR-011.md",
+      ".planning/milestones/M002/handoffs/verification.md",
+      ".planning/milestones/M002/verification/ai-evaluation.md",
+      ".planning/milestones/M002/verification/coverage-matrix.md",
+      ".planning/milestones/M002/verification/report.md",
+      ".planning/milestones/M002/verification/uat.md"
+    ],
+    "archive": "before-owned.tar.gz",
+    "archive_sha256": "f2a118150053c722e2685ce091acfc9add1cb94a90cb30199695bf021080e80c"
+  },
+  "artifact_link_check": {
+    "checked": 72,
+    "missing": []
+  },
+  "coverage_index": {
+    "CAP": 49,
+    "PAGE": 25,
+    "views": 28,
+    "UIA": 119
+  },
+  "document_read_size": {
+    "unit": "UTF-8 bytes",
+    "paths": {
+      ".planning/milestones/M002/verification/report.md": {
+        "before_utf8_bytes": 8926,
+        "after_utf8_bytes": 8774
+      },
+      ".planning/milestones/M002/verification/coverage-matrix.md": {
+        "before_utf8_bytes": 14471,
+        "after_utf8_bytes": 15174
+      },
+      ".planning/milestones/M002/verification/ai-evaluation.md": {
+        "before_utf8_bytes": 1721,
+        "after_utf8_bytes": 1745
+      },
+      ".planning/milestones/M002/verification/uat.md": {
+        "before_utf8_bytes": 3410,
+        "after_utf8_bytes": 3804
+      },
+      ".planning/milestones/M002/handoffs/verification.md": {
+        "before_utf8_bytes": 4515,
+        "after_utf8_bytes": 4707
+      },
+      ".planning/milestones/M002/changes/CR-011.md": {
+        "before_utf8_bytes": 3481,
+        "after_utf8_bytes": 4481
+      }
+    },
+    "runtime_input_tokens": "unknown"
+  },
+  "real_provider_calls": 0,
+  "local_provider_calls": 36,
+  "developer_checks_rerun": false,
+  "fixes_applied": false,
+  "stage_transition": false,
+  "committed": false,
+  "deployed": false,
+  "environment": {
+    "node": "24.21.0",
+    "go": "1.26.7",
+    "postgres": "18",
+    "frontend": "existing frontend-cr010 isolated production output",
+    "backend": "fresh QA execution binary from backend-cr011; not a rerun of developer build check",
+    "api": "127.0.0.1:38081",
+    "proxy": "127.0.0.1:3301",
+    "frontend_port": 3331,
+    "provider": "loopback:38082 only",
+    "database": "fresh disposable m002-local-stack cluster on 63541",
+    "started_for_this_round": true,
+    "stopped": true,
+    "stop_exit": 0,
+    "original_preview_ports": [
+      3300,
+      3330,
+      38080,
+      4186
+    ],
+    "private_credentials_copied": false,
+    "setup_correction": "Initial server process inherited Node22; replaced with cached Node24.21.0 before any QA scenarios. No dependency updates."
+  },
+  "new_session_handoff_test": "not_performed",
+  "input_tokens": "unknown",
+  "artifact_hashes": {
+    ".planning/milestones/M002/verification/report.md": "affef438b7af72c92ab3dcd6e5d40bfe3026f04a3488e80cde27fe974250c429",
+    ".planning/milestones/M002/verification/coverage-matrix.md": "af65f54cdd6605f9aebc5e1f5ebb31f9bd288995058e37584c38bfae2503f812",
+    ".planning/milestones/M002/verification/ai-evaluation.md": "6530738f4185f0ab2ff73243e68c122f8647214ce6cc793bccbf0d3af73ea4d7",
+    ".planning/milestones/M002/verification/uat.md": "0d9d5087ace962812fb0ceb1044bdc5b8e517d4c765149325a5cc411ca3e1bcb",
+    ".planning/milestones/M002/handoffs/verification.md": "5efd3fd980bafbf3e0932dc535d8fe081036cfabc64a76adf5223097ff44518d",
+    ".planning/milestones/M002/changes/CR-011.md": "3350b2f0976f4e25100381fb0e7f1dc55b45efe2db9a14f1a2bcea2283a2b3f9",
+    ".planning/milestones/M002/changes/CR-012.md": "0b8da2060c78cd1f3601c1a3d45d251f6a8a4e5103a7a17fe9cea69889049852",
+    ".planning/milestones/M002/changes/CR-013.md": "92b8d01be9c746376fa480952c1258bd38fe429ffae5e2e9db6685b0a4f478f4",
+    ".planning/milestones/M002/verification/evidence/qa2-006/L03-en-1440.png": "158a44f3adbb4a5eb99e901bb77bec5289c9fdede523b5e18e5ff57cade22b8f",
+    ".planning/milestones/M002/verification/evidence/qa2-006/L03-en-320.png": "18c50528bc93657e5571c173e853b08dcf8aa0acbe7447bd236fc0d8ffb6ef23",
+    ".planning/milestones/M002/verification/evidence/qa2-006/L03-en-390.png": "95176d00a68d36aaafdde2a02fc2b1103904a3a0e38f1a1f2706b1f53afb9858",
+    ".planning/milestones/M002/verification/evidence/qa2-006/L03-en-768.png": "43de859267575e21d09c53c6c0082293acba7e0d75d16f075f1acf4c4b04e8d6",
+    ".planning/milestones/M002/verification/evidence/qa2-006/L03-zh-1440.png": "7db59f31be6ebb39e7a10d8138f0727df6800eac71597ff3930a4af29f9c787b",
+    ".planning/milestones/M002/verification/evidence/qa2-006/L03-zh-320.png": "bb4f85a69d4a9eed271b10f9084fc70df28e4816106d07f39f5243595936c447",
+    ".planning/milestones/M002/verification/evidence/qa2-006/L03-zh-390.png": "20d07f82812f0deea12068a73e64fefec70daca69b76ab3876a9a439d8117f24",
+    ".planning/milestones/M002/verification/evidence/qa2-006/L03-zh-768.png": "069201e30417e14d4fc28e7237af96e3190a12f3bdd28ed643809aa864af7107",
+    ".planning/milestones/M002/verification/evidence/qa2-006/L04-failure.png": "a03aab8ec20efa3b8604ed22a5a8575dac7ecb2ac900738f45f9a825f1416bcf",
+    ".planning/milestones/M002/verification/evidence/qa2-006/L05-cleared.png": "97df1081389e64c96c0185d8f1b0dec56fba5abc3b5c9213cb31f011c2195a01",
+    ".planning/milestones/M002/verification/evidence/qa2-006/README.md": "9dafc5fbf26ef306f03844f95b1fd2b014dde257b68865e900d629d04891c967",
+    ".planning/milestones/M002/verification/evidence/qa2-006/before-git-status.txt": "9e18048389d745f423800620edc55904ba32fe21f16cb681923f70b393c49292",
+    ".planning/milestones/M002/verification/evidence/qa2-006/before-owned.tar.gz": "f2a118150053c722e2685ce091acfc9add1cb94a90cb30199695bf021080e80c",
+    ".planning/milestones/M002/verification/evidence/qa2-006/coverage.json": "8bc236bdb9b3fc5b6a1ac11a59cf8c59b8ff5daecb64bf68f4e86db7aec8e354",
+    ".planning/milestones/M002/verification/evidence/qa2-006/environment-stop.log": "e053e26ab0e1a87ff9227f10a7742aaa43c01aca65bf8c495ad3e2bc2467e5b1",
+    ".planning/milestones/M002/verification/evidence/qa2-006/environment.json": "101dc2fcda2429593571ad9777d58536fae97fe0b18ad6f5895e802ff19467b9",
+    ".planning/milestones/M002/verification/evidence/qa2-006/execution.json": "d9ab89090e84cfe020229e1f72b4d1f833c306330ae9ae1ffa522aab79a6ec7c",
+    ".planning/milestones/M002/verification/evidence/qa2-006/fixture.json": "b1b45c52a15968dd2dd4cedd9eed35793f46f28d0ab25aa3716074b21b89fb7a",
+    ".planning/milestones/M002/verification/evidence/qa2-006/generation-results.json": "1bac6f3f660c27e7f77693de108b15e2bcaed2fa95323f2e0826cf3a53330fe2",
+    ".planning/milestones/M002/verification/evidence/qa2-006/generation-v2-results.json": "8937257814d028298304c72f228674e3d42b9e29e765996522f0e2e1c26a9c57",
+    ".planning/milestones/M002/verification/evidence/qa2-006/generation-v2.log": "29c4d03d587c8e00f34237170322b4a113264ef8039f0609e6385325673031fc",
+    ".planning/milestones/M002/verification/evidence/qa2-006/generation-v2.mjs": "dc0ee7162170ca600d86379501a4951477f9ba8ffbb5d8607a792b92a878aba9",
+    ".planning/milestones/M002/verification/evidence/qa2-006/generation.log": "40e04d896ff009917cfbf54f1779417e8913c1789aea7a39a6fc3ed857198f94",
+    ".planning/milestones/M002/verification/evidence/qa2-006/generation.mjs": "b9e73a4b4ea181ff88105b347719433e4ba67efb332710470f8594fcac41d23d",
+    ".planning/milestones/M002/verification/evidence/qa2-006/harness.mjs": "330b88cb759d4e006ee520ba8764d955bea05cdc7438da6f39d5c39bf15172d0",
+    ".planning/milestones/M002/verification/evidence/qa2-006/inputs.json": "57418a57314aa6cf2a22bd3c84a45f04775df090959c9b26399a7898b2ae450c",
+    ".planning/milestones/M002/verification/evidence/qa2-006/library-axe.json": "96f068b2299753db7bdae59807e533276065ad07fc609a1808589502bd4f3124",
+    ".planning/milestones/M002/verification/evidence/qa2-006/library-results.json": "50992c4f020bf06dea7c7774daf477ee1ad376e61a714ea225bc748d9c2e8d2f",
+    ".planning/milestones/M002/verification/evidence/qa2-006/library.log": "8a3f364d8628369ef06a7dea6af5202f1acaa74fecaaabd6ad72b98de38a0cf9",
+    ".planning/milestones/M002/verification/evidence/qa2-006/library.mjs": "acb54a65733545cca749e13bf2ed3ae60baa57c3fb442d652e1e67eff9c5f968",
+    ".planning/milestones/M002/verification/evidence/qa2-006/links.json": "db469fc0795c073cb26501b729d354bdd076b07510b8f560d13e373c1cbdf150",
+    ".planning/milestones/M002/verification/evidence/qa2-006/previous-CR-011.md": "5f2c68537f751f39160c50afb3013b6632a16f49b282e5dab3e9f1554f09e77b",
+    ".planning/milestones/M002/verification/evidence/qa2-006/previous-ai-evaluation.md": "2a959c5f2a41e390523114b4a28f9a8722561415b7da61bd968d74cb4312e061",
+    ".planning/milestones/M002/verification/evidence/qa2-006/previous-coverage-matrix.md": "d24ffc5b735403e712d9e8e11bfaa9054a773da669c8d15768631183ba5e8fce",
+    ".planning/milestones/M002/verification/evidence/qa2-006/previous-handoff.md": "f3393587624f7af1ef68eb69e0d00e8142265a62987cbf3d750260fd5fc89f8f",
+    ".planning/milestones/M002/verification/evidence/qa2-006/previous-report.md": "823944be3df6d4d52021b54cd98a60a604f3a90067cb6afede0e9eff90760a9b",
+    ".planning/milestones/M002/verification/evidence/qa2-006/previous-uat.md": "19a64612396dfe416ecba44072f3282dacc4a16dc31ef0af5f683e28b56befc4",
+    ".planning/milestones/M002/verification/evidence/qa2-006/protection.json": "e906e6d44e5ec9283b9781ff7a46de8b2df07e6b3797e7470fe4f04d6b7a659a",
+    ".planning/milestones/M002/verification/evidence/qa2-006/save-state-evidence.json": "ec2e524ec12fb4bb14661fdc646501b2c71412fa8c5d3cf163eb2ced06d35f38",
+    ".planning/milestones/M002/verification/evidence/qa2-006/scroll-browser-history-back-after.png": "b410b987aff912e4cff2d52ab3d3f7e4fd0af357c313703457ca5e1c53d71e5b",
+    ".planning/milestones/M002/verification/evidence/qa2-006/scroll-browser-history-back-before.png": "9069e6896bfeabf95fe1dcc49aef8cb3b9ad00baf120b51bc02dceb7e74ea53b",
+    ".planning/milestones/M002/verification/evidence/qa2-006/scroll-explicit-back-link-after.png": "da0a5f0e6a23abbd1a0be23933507c1f1049e77bb641c0064ae513f93664bff8",
+    ".planning/milestones/M002/verification/evidence/qa2-006/scroll-explicit-back-link-before.png": "9069e6896bfeabf95fe1dcc49aef8cb3b9ad00baf120b51bc02dceb7e74ea53b",
+    ".planning/milestones/M002/verification/evidence/qa2-006/scroll-repro-results.json": "b0762287eedffa8d3c909211d2407285b3b397b7069be01f6a1de97c7d9b9764",
+    ".planning/milestones/M002/verification/evidence/qa2-006/scroll-repro.log": "52ebaf1ce531b41796a41c2510ce25e18082219f5416e7da2bd1dab7ca57af13",
+    ".planning/milestones/M002/verification/evidence/qa2-006/scroll-repro.mjs": "a7f0379feb7abfab1fcd9ec30a01b0e1452795dcf44686cc05be908c39b36e8c"
+  },
+  "hash_note": "Manifest excludes itself; immutable logs retained. Six QA05 mutable originals recoverable from before-owned tar."
+}

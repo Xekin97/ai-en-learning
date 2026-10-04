@@ -1,0 +1,52 @@
+C01 PASS
+C02 PASS
+C03 PASS
+C04 PASS
+C05 PASS
+R08 FAIL
+C06 FAIL
+C07 PASS
+[
+  {
+    "id": "C01",
+    "name": "Exchange uses current price and same idempotency key cannot charge twice",
+    "result": "PASS"
+  },
+  {
+    "id": "C02",
+    "name": "Same-model six-day plus three-day card adds three days to original tail",
+    "result": "PASS"
+  },
+  {
+    "id": "C03",
+    "name": "Admin grant cannot deduct points; model card cannot add creation counts",
+    "result": "PASS"
+  },
+  {
+    "id": "C04",
+    "name": "Base plan reset preserves active trial expiry and separate quota origin",
+    "result": "PASS"
+  },
+  {
+    "id": "C05",
+    "name": "Retirement makes already-used model cards manually refundable",
+    "result": "PASS"
+  },
+  {
+    "id": "R08",
+    "name": "Real admin page can edit retirement points after the referenced model was retired",
+    "result": "FAIL",
+    "error": "Error: expect(received).toBe(expected) // Object.is equality\n\nExpected: 1\nReceived: 0"
+  },
+  {
+    "id": "C06",
+    "name": "Updated retirement points invalidate old preview; manual refund uses new amount once",
+    "result": "FAIL",
+    "error": "TypeError: Cannot read properties of undefined (reading 'code')"
+  },
+  {
+    "id": "C07",
+    "name": "Owned cards page renders real refund/active states without DTO errors",
+    "result": "PASS"
+  }
+]

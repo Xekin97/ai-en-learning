@@ -1,0 +1,65 @@
+{
+  "version": "QA33",
+  "scope": "CR029",
+  "result": "PASS_WITH_EXPLICIT_EVIDENCE_BOUNDARIES",
+  "developer_evidence_reused": ".planning/milestones/M002/implementation/evidence/generic-models29/manifest.json",
+  "restore": {
+    "result": "PASS",
+    "full_backup_restored": true,
+    "migration": "0015",
+    "all_existing_rows_unchanged": true,
+    "no_owner_no_acl": true,
+    "original_role_privileges_verified_by_isolated_integration_tests": true,
+    "real_model_calls": 0
+  },
+  "deployment": {
+    "schema": "0015_generic_model_connections.sql",
+    "preserved_tables": 59,
+    "all_old_data_unchanged": true
+  },
+  "browser": {
+    "result": "PASS",
+    "results": [
+      {
+        "case": "guest-cannot-configure-and-model-must-be-manually-selected",
+        "result": "PASS"
+      },
+      {
+        "case": "admin-unified-list-migrated-key-blank-edit-unchanged-close",
+        "width": 1440,
+        "lang": "zh",
+        "result": "PASS",
+        "models": 3
+      },
+      {
+        "case": "admin-unified-list-migrated-key-blank-edit-unchanged-close",
+        "width": 390,
+        "lang": "zh",
+        "result": "PASS",
+        "models": 3
+      }
+    ],
+    "errors": [],
+    "blocked": [],
+    "real_model_calls": 0,
+    "configuration_writes": 0
+  },
+  "defects": [
+    {
+      "id": "QA33-F01",
+      "issue": "migration updated_at trigger",
+      "status": "fixed_and_reverified",
+      "handoffs": [
+        "100",
+        "101"
+      ]
+    },
+    {
+      "id": "QA33-H01",
+      "issue": "test harness assumed locale, account language authoritative",
+      "status": "harness_corrected_and_reverified"
+    }
+  ],
+  "user_acceptance": "pending",
+  "paid_model_calls": 0
+}

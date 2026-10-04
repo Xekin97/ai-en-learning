@@ -1,0 +1,187 @@
+{
+  "captured_at": "2026-09-28T05:47:56.280933+00:00",
+  "role": "qa-quinn",
+  "milestone": "M002",
+  "version": "M002-QA-10",
+  "authorization": "APPROVAL-M002-036",
+  "result": {
+    "status": "scoped_verification_passed_remaining_coverage",
+    "total": 11,
+    "passed": 11,
+    "failed": 0,
+    "new_change_requests": [],
+    "original_main": {
+      "passed": 9,
+      "failed": 1,
+      "test_fixture_case": "A09",
+      "cause": "synthetic username exceeds approved 32-character limit",
+      "preserved": "analytics-results.json",
+      "control": "deletion-control-results.json"
+    },
+    "final_case_ids": [
+      "A01",
+      "A02",
+      "A03",
+      "A04",
+      "A05",
+      "A06",
+      "A07",
+      "A08",
+      "A09",
+      "A10",
+      "A11"
+    ]
+  },
+  "source_checks": {
+    "frontend-cr014-015": {
+      "source_sha256": "83260ed1472683df3d547d366cddd31262c7bb7e0eb3ad3c9d74914bb9aa78b1",
+      "files_verified": 280,
+      "manifest_sha256": "ac8b106583031abbef219d81ebf331308f7bad04ea83b98af13b8650534c37f7"
+    },
+    "backend-cr013": {
+      "source_sha256": "c54307a04cecb3dd99cc13d64ae0fbcb6c1fca2c0538711af040d279bbe9b549",
+      "files_verified": 288,
+      "manifest_sha256": "13b5dccdeb84e1b958c0ac378b4add5ed4c6815e9024cc3cf0eb6fd19e99912d"
+    }
+  },
+  "protected_audit": {
+    "protected_count": 6874,
+    "unexpected_changed": [],
+    "unexpected_new_files": [],
+    "owned_existing_changed": [
+      ".planning/milestones/M002/verification/coverage-matrix.md",
+      ".planning/milestones/M002/verification/report.md",
+      ".planning/milestones/M002/verification/ai-evaluation.md",
+      ".planning/milestones/M002/verification/uat.md",
+      ".planning/milestones/M002/handoffs/verification.md"
+    ],
+    "control_plane_unchanged": true,
+    "source_unchanged": true
+  },
+  "original_artifact_recovery": {
+    "qa09_artifacts": 63,
+    "unchanged_at_original_path": 58,
+    "mutable_originals_recovered": [
+      ".planning/milestones/M002/handoffs/verification.md",
+      ".planning/milestones/M002/verification/ai-evaluation.md",
+      ".planning/milestones/M002/verification/coverage-matrix.md",
+      ".planning/milestones/M002/verification/report.md",
+      ".planning/milestones/M002/verification/uat.md"
+    ],
+    "archive": "before-owned.tar.gz",
+    "archive_sha256": "9fcdc69fa25fedaf099b4da54a3a28992a35b01a971571cd6e19a5e28fb7ba71",
+    "qa09_manifest_sha256": "17b5c5308d6ceada9ab7b9054aa8261585a194af29987b0f2f7931131f4e7c66"
+  },
+  "artifact_link_check": {
+    "checked": 36,
+    "missing": []
+  },
+  "coverage_index": {
+    "CAP": 49,
+    "PAGE": 25,
+    "views": 28,
+    "UIA": 119
+  },
+  "document_read_size": {
+    "unit": "UTF-8 bytes",
+    "paths": {
+      ".planning/milestones/M002/verification/coverage-matrix.md": {
+        "before_utf8_bytes": 17911,
+        "after_utf8_bytes": 18517
+      },
+      ".planning/milestones/M002/verification/report.md": {
+        "before_utf8_bytes": 8654,
+        "after_utf8_bytes": 6423
+      },
+      ".planning/milestones/M002/verification/ai-evaluation.md": {
+        "before_utf8_bytes": 1677,
+        "after_utf8_bytes": 1065
+      },
+      ".planning/milestones/M002/verification/uat.md": {
+        "before_utf8_bytes": 4288,
+        "after_utf8_bytes": 4502
+      },
+      ".planning/milestones/M002/handoffs/verification.md": {
+        "before_utf8_bytes": 3830,
+        "after_utf8_bytes": 3301
+      }
+    }
+  },
+  "commands": [
+    {
+      "command": "python3 frontend/tests/integration/m002-local-stack.py",
+      "exit_code": 0
+    },
+    {
+      "command": "node <QA10>/analytics-lifecycle.mjs",
+      "exit_code": 1,
+      "result": "9PASS / 1 fixture FAIL preserved"
+    },
+    {
+      "command": "node <QA10>/deletion-control.mjs",
+      "exit_code": 0
+    },
+    {
+      "command": "node <QA10>/stalled-maintenance.mjs",
+      "exit_code": 0
+    },
+    {
+      "command": "python3 frontend/tests/integration/m002-local-stack.py stop",
+      "exit_code": 0
+    }
+  ],
+  "local_provider_calls": 2,
+  "provider_call_breakdown": {
+    "compatibility_probe": 1,
+    "valid_generation": 1
+  },
+  "real_provider_calls": 0,
+  "browser": "Chromium API request contexts only; no UI scenarios",
+  "developer_checks_rerun": false,
+  "fixes_applied": false,
+  "stage_transition": false,
+  "committed": false,
+  "deployed": false,
+  "private_value_copy_check": {
+    "matching_files": []
+  },
+  "new_session_handoff_test": "not performed",
+  "input_tokens": "unknown",
+  "artifact_hashes": {
+    ".planning/milestones/M002/verification/evidence/qa2-010/README.md": "1cd93053c6927c9545c5aee4f11f85bccd754b1f5ab225f619ed09cf5502a1a5",
+    ".planning/milestones/M002/verification/evidence/qa2-010/analytics-lifecycle.mjs": "3b39a009fb840d01d68a0f4c3d5f4456b7d3dd11fd61bf929c563cc1e2e54403",
+    ".planning/milestones/M002/verification/evidence/qa2-010/analytics-results.json": "0bdaca4450f85ead5b96add24246b84826b7a1f7b9d715926e5fcfc30e1de91c",
+    ".planning/milestones/M002/verification/evidence/qa2-010/analytics.log": "25a910b6e4a16a9e0844755be825c888145aad7f3dcfa9891e7927e71498bc50",
+    ".planning/milestones/M002/verification/evidence/qa2-010/api-support.mjs": "5eea4bc485467a6a6281714ef2a0a07df1e89893f8d651aedef09dbe05f1b64b",
+    ".planning/milestones/M002/verification/evidence/qa2-010/before-owned.tar.gz": "9fcdc69fa25fedaf099b4da54a3a28992a35b01a971571cd6e19a5e28fb7ba71",
+    ".planning/milestones/M002/verification/evidence/qa2-010/coverage.json": "f68bdd74fcfc5cce17b25390b80e3419351db642df0e1aea983582c817243505",
+    ".planning/milestones/M002/verification/evidence/qa2-010/deletion-control-results.json": "a503e598b85da6883cd5e67e9e726d2943dd57052bb5543bff70ca18a9c8d10d",
+    ".planning/milestones/M002/verification/evidence/qa2-010/deletion-control.log": "577053eb23b96d46956447f94cf56a89dddfda3a1e50ba9029e88e843b195d52",
+    ".planning/milestones/M002/verification/evidence/qa2-010/deletion-control.mjs": "6a5aff57b2376d158faff00d88a5f992a52f51eefdb5ae042c5916f4f5926b5d",
+    ".planning/milestones/M002/verification/evidence/qa2-010/environment-stop.json": "7d0d53449b5cbce7103980868ca2940cdcbb892d894813addd61843f7e9a387c",
+    ".planning/milestones/M002/verification/evidence/qa2-010/finalization-initial.log": "7d3771daf1e95ae2cf2bbf72ac1c63b68c86b9a785b405dedd92b4f84f4c643a",
+    ".planning/milestones/M002/verification/evidence/qa2-010/finalize-initial.py": "aec8ea41dab9c94c343c9328b528cf8542037b54dd5e445ef334d99cfa4cfa84",
+    ".planning/milestones/M002/verification/evidence/qa2-010/finalize.py": "9583347885ee9b9d63005fa3459edb47d5064f443a4e81c18c7bbdda6b54c451",
+    ".planning/milestones/M002/verification/evidence/qa2-010/fixture.json": "cb6915ab3735e7fced5a07a12dc3e79cea2e0c27150c390e9574c30c1620891d",
+    ".planning/milestones/M002/verification/evidence/qa2-010/harness.mjs": "330b88cb759d4e006ee520ba8764d955bea05cdc7438da6f39d5c39bf15172d0",
+    ".planning/milestones/M002/verification/evidence/qa2-010/inputs.json": "aa4a082e664735f729c3e1d22f08fdffcf69c75e08cf6ea34a9d0dd0670a877c",
+    ".planning/milestones/M002/verification/evidence/qa2-010/previous-ai-evaluation.md": "3dbb5f4b3f8bd04dbceee9cb558f8805279ebc6bcad4a483e83b9f03048c7b8f",
+    ".planning/milestones/M002/verification/evidence/qa2-010/previous-coverage-matrix.md": "05ab2e309b1eff39b78e70fa20290fd360ed5b2165755572f20f30145cd76292",
+    ".planning/milestones/M002/verification/evidence/qa2-010/previous-report.md": "08bb8dce5a20a447222e42f5d3a309c62eccfc509010c85b1b7bc8410acd9d9a",
+    ".planning/milestones/M002/verification/evidence/qa2-010/previous-uat.md": "30143f99fa5f9d1a6d51608027681178ce2412a76bfd3b104b0b07086856a56b",
+    ".planning/milestones/M002/verification/evidence/qa2-010/previous-verification.md": "8c5e7ab2a46e75967168fba87b8540389e11d989b6f036f14dfa369212973f52",
+    ".planning/milestones/M002/verification/evidence/qa2-010/protected-before.json": "5455490b959127fb20d9606e63edf34b6e4736fda77ba2b4709e69ec8828c763",
+    ".planning/milestones/M002/verification/evidence/qa2-010/provider-fixed.mjs": "b37d53ca0ae23e472264ef83841d7f5f4f97d59d21470ee6f617c38031a4c5ec",
+    ".planning/milestones/M002/verification/evidence/qa2-010/stack.log": "132b58a6869988705e604deba2c044d0bb8eceb748c64fbb68d593140a896a4d",
+    ".planning/milestones/M002/verification/evidence/qa2-010/stalled-maintenance.mjs": "ca518fc301be22fa2ea4ca7e5cfdb9b85576b4d3c7ebbfa5a3ae5fce1a981f14",
+    ".planning/milestones/M002/verification/evidence/qa2-010/stalled-results.json": "d7ed342e9a2f01701c1b949228533a90c54ff9856c0f5a6ca688460eab153e62",
+    ".planning/milestones/M002/verification/evidence/qa2-010/stalled.log": "e30597c20045c946cd1aeb3bf999c7d8d6914d375153f6e1c8316fee49a947f4",
+    ".planning/milestones/M002/verification/evidence/qa2-010/stop.log": "e053e26ab0e1a87ff9227f10a7742aaa43c01aca65bf8c495ad3e2bc2467e5b1",
+    ".planning/milestones/M002/verification/coverage-matrix.md": "d559b8ec8724a25e02f7558963a7a2ad293a5676563c9e3fb18146ac9936a8ad",
+    ".planning/milestones/M002/verification/report.md": "549c0d9a0bd447abc22dc6ec8822984987c8ba497b50629c2e2a50e1f5e1d30e",
+    ".planning/milestones/M002/verification/ai-evaluation.md": "3479c9c4bec191aba192e8b9290dc149ea7e1b2c3106d383470d348ec8981312",
+    ".planning/milestones/M002/verification/uat.md": "fa8a140d3d0d553656b52a47d01a9f530b087dd54e0371d7de6ac33dcf05e606",
+    ".planning/milestones/M002/handoffs/verification.md": "a1c7e65b4a52e5e55405afd626b99105c0b3e70a0a2af1a55782763cde5160d8"
+  },
+  "hash_note": "All new QA10 files excluding this manifest, plus five current QA documents; archives preserve original QA09 bytes."
+}

@@ -1,0 +1,38 @@
+{
+  "version": "M002-QA-12",
+  "overall": "FAIL",
+  "cases": [
+    {
+      "id": "T1",
+      "result": "FAIL",
+      "functional_protection": "PASS",
+      "finding": "QA2-F12",
+      "source": "control-valid/results.json"
+    },
+    {
+      "id": "T2",
+      "result": "PASS",
+      "source": "run2/results.json"
+    },
+    {
+      "id": "T3",
+      "result": "PASS",
+      "source": "run2/results.json"
+    },
+    {
+      "id": "T4",
+      "result": "FAIL",
+      "authorization_and_data_protection": "PASS",
+      "finding": "QA2-F13",
+      "source": "control-valid/results.json"
+    }
+  ],
+  "initial_fixture_failures": 4,
+  "run2_false_positive": "Original T4 PASS ignored captured console.error; reviewed as FAIL, reproduced in control",
+  "new_cr": "M002-CR-016",
+  "local_provider_calls": 12,
+  "real_provider_calls": 0,
+  "formal_state_changed": false,
+  "application_changed": false,
+  "injection_control": "Initial 503 body was incomplete; control-valid uses full Problem schema and reproduces both failures without changing application"
+}

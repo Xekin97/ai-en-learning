@@ -1,0 +1,90 @@
+{
+  "rows": [
+    {
+      "id": "01a0c6f4-d58c-7335-98ad-b1a1af9c937a",
+      "account_id": "01a0c6f4-d4f0-7c9e-8d64-8d2b45b18fd3",
+      "call_status": "user_cancelled",
+      "disposition": "pending",
+      "completed_at": "2026-09-22T10:32:09.372474+08:00"
+    },
+    {
+      "id": "01a0c6f4-d613-7ccd-ac5a-7fcfe96cae9d",
+      "account_id": "01a0c6f4-d4f0-7c9e-8d64-8d2b45b18fd3",
+      "call_status": "validation_failed",
+      "disposition": "pending",
+      "completed_at": "2026-09-22T10:32:09.494338+08:00"
+    },
+    {
+      "id": "01a0c6f4-d65e-76d5-8d9f-a920963963cf",
+      "account_id": "01a0c6f4-d4f0-7c9e-8d64-8d2b45b18fd3",
+      "call_status": "stream_failed",
+      "disposition": "pending",
+      "completed_at": "2026-09-22T10:32:09.56995+08:00"
+    },
+    {
+      "id": "01a0c6f4-d68e-7e7d-82fe-72858036842c",
+      "account_id": "01a0c6f4-d4f0-7c9e-8d64-8d2b45b18fd3",
+      "call_status": "valid",
+      "disposition": "abandoned",
+      "completed_at": "2026-09-22T10:32:09.617807+08:00"
+    }
+  ],
+  "probes": [
+    {
+      "run": "01a0c6f4-d58c-7335-98ad-b1a1af9c937a",
+      "scenario": "G02",
+      "status": 404,
+      "problem": {
+        "type": "https://wordweave.example/problems/not-found",
+        "title": "Not found",
+        "status": 404,
+        "code": "not_found",
+        "detail": "The requested resource could not be found.",
+        "request_id": "req_NHrFrADOxP5iakPld5olLg"
+      }
+    },
+    {
+      "run": "01a0c6f4-d613-7ccd-ac5a-7fcfe96cae9d",
+      "scenario": "invalid",
+      "status": 404,
+      "problem": {
+        "type": "https://wordweave.example/problems/not-found",
+        "title": "Not found",
+        "status": 404,
+        "code": "not_found",
+        "detail": "The requested resource could not be found.",
+        "request_id": "req_x6KghanG2AkkjZ8v211h9w"
+      }
+    },
+    {
+      "run": "01a0c6f4-d65e-76d5-8d9f-a920963963cf",
+      "scenario": "G04",
+      "status": 404,
+      "problem": {
+        "type": "https://wordweave.example/problems/not-found",
+        "title": "Not found",
+        "status": 404,
+        "code": "not_found",
+        "detail": "The requested resource could not be found.",
+        "request_id": "req_-8Q4wsvPHdZHfcNHcbnROA"
+      }
+    },
+    {
+      "run": "01a0c6f4-d68e-7e7d-82fe-72858036842c",
+      "scenario": "G05",
+      "status": 404,
+      "problem": {
+        "type": "https://wordweave.example/problems/not-found",
+        "title": "Not found",
+        "status": 404,
+        "code": "not_found",
+        "detail": "The requested resource could not be found.",
+        "request_id": "req_PUyiS8t5j-vSF8n5Hn0j1Q"
+      }
+    }
+  ],
+  "sameOwner": true,
+  "authenticatedContext": "generation-v2 user context owns all four rows; original capability tokens used only in memory",
+  "expected": 409,
+  "actual": 404
+}

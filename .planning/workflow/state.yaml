@@ -1,7 +1,7 @@
 schema_version: 1
 profile: consumer-ai-web@1.0.0
 agt_revision: b5badf88cd7194400c3d4d0e9395e7c98490dc26
-milestone: M001
+milestone: M002
 stage: milestone-complete
 active_role: null
 active_agent: null
@@ -9,11 +9,6 @@ status: complete
 required_artifacts: []
 pending_user_decisions: []
 open_change_requests: []
-closed_change_requests:
-- CR-039
-- CR-040
-- CR-041
-- CR-042
 retained_open_items:
 - id: CR039-L1
   status: open
@@ -24,26 +19,19 @@ retained_open_items:
 - id: AI-QUALITY-90
   status: unverified
   source: .planning/milestones/M001/verification/ai-evaluation.md
-current_handoff: .planning/milestones/M001/handoffs/verification.md
-completion:
-  application_commit: 387c775534844ff0b8ca9857523dc39c1d8ee87a
-  framework_commit_at_closeout: 42acf7579d08a7d17d597709ccb57bebcad0dc96
-  decision_id: TRANSITION-M001-138
-  authorization: USER-M001-CLOSEOUT-20260916
-  completed_at: '2026-09-16T02:09:06.968504+00:00'
-  evidence: .planning/milestones/M001/reviews/evidence/m001-closeout-138.json
-  current_handoff: .planning/milestones/M001/handoffs/verification.md
-  known_limitations_waived: false
-  further_model_tuning_authorized: false
-  release_approved: false
-current_uat_acceptance:
-  decision_id: USER-UAT-ACCEPTANCE-134
-  status: accepted_by_user
-  accepted_at: '2026-09-12T09:45:21Z'
-  scope: Current local UAT candidate FRONTEND-SYNC-133; specific user test cases not supplied
-  record: .planning/milestones/M001/reviews/stream-failure-capture-gates.md
-  known_limitations_waived: false
-  release_approved: false
+- id: W01
+  status: unverified
+  source: .planning/milestones/M002/verification/report.md#保留事项
+- id: QA26-MINIMAX
+  status: open
+  source: .planning/milestones/M002/verification/report.md#保留事项
+current_handoff: .planning/milestones/M002/handoffs/verification.md
+previous_milestone:
+  id: M001
+  status: complete
+  completion_decision: TRANSITION-M001-138
+  handoff: .planning/milestones/M001/handoffs/verification.md
+  state_snapshot: .planning/milestones/M002/reviews/evidence/start-001/m001-state.yaml
 compatibility_policy:
   decision_id: USER-COMPAT-001
   record: .planning/milestones/M001/reviews/first-release-compatibility-policy.md
@@ -63,9 +51,514 @@ model_routing:
   lock: .planning/agt/model-routing-v1.lock.json
   adoption: .planning/agt/model-routing-adoption-001.md
   policy: codex-balanced@1.0.0
+authorization_refs:
+- id: TRANSITION-M002-001
+  scope: M002 initialization and product planning
+  source: .planning/milestones/M002/reviews/start.md
+- id: TRANSITION-M002-002
+  scope: Approve the presented M002 product version and enter UI/UX design only
+  source: .planning/milestones/M002/reviews/product-planning.md
+- id: TRANSITION-M002-003
+  scope: Return M002 to product-maya for M002-CR-001 product-baseline revision only; historical approval preserved,
+    no new approval or forward transition.
+  source: .planning/milestones/M002/reviews/product-rollback.md
+- id: TRANSITION-M002-004
+  scope: Approve M002-PRODUCT-02 as the current product baseline and enter UI/UX design with designer-tony only;
+    M002-CR-001 remains open for design acceptance.
+  source: .planning/milestones/M002/reviews/product-revision.md
+- id: TRANSITION-M002-005
+  scope: Reopen only batch-title editing and preset single-title/removal-of-description requirements; user expressly
+    requests product revision after return. Prior product approvals and UI-05 snapshot retained.
+  source: .planning/milestones/M002/reviews/title-fields-rollback.md
+- id: TRANSITION-M002-006
+  scope: Approve M002-PRODUCT-03 as the current product baseline and enter UI/UX design with designer-tony; M002-CR-001
+    and M002-CR-002 remain open for design reception and revision.
+  source: .planning/milestones/M002/reviews/product-title-revision.md
+- id: APPROVAL-M002-007
+  scope: Approve M002-UI-22 design and authorize a documentation-only M001-to-M002 frontend handoff supplement;
+    no stage transition.
+  source: .planning/milestones/M002/reviews/uiux-design.md
+- id: TRANSITION-M002-008
+  scope: Enter technical-design and activate dba-diana after accepted UI22 and delivered H01; technical artifacts
+    and implementation are not yet approved.
+  source: .planning/milestones/M002/reviews/technical-entry.md
+- id: TRANSITION-M002-009
+  scope: Approve M002-DB-01 and activate backend-alex within technical-design; no stage advancement or implementation
+    authorization.
+  source: .planning/milestones/M002/reviews/database-design.md
+- id: TRANSITION-M002-010
+  scope: Activate dba-diana within technical-design for M002-CR-003 database reception corrections only; preserve
+    DB-01 historical approval; no BE-01 approval, stage advancement or implementation authorization.
+  source: .planning/milestones/M002/reviews/database-reception-rework.md
+- id: TRANSITION-M002-011
+  scope: Approve M002-DB-02 and activate backend-alex for CR-003 reception within technical-design; retain DB-01
+    history and open CR pending reception; no backend approval, stage advancement or implementation authorization.
+  source: .planning/milestones/M002/reviews/database-revision.md
+- id: TRANSITION-M002-012
+  scope: Approve M002-BE-02, close M002-CR-003 design reception and activate frontend-bob within technical-design;
+    preserve implementation validations and all other open items; no frontend approval or implementation authorization.
+  source: .planning/milestones/M002/reviews/backend-design.md
+- id: TRANSITION-M002-013
+  scope: Activate dba-diana within technical-design for M002-CR-004 limited database reception and transaction clarification;
+    preserve FE-01 as revision input and DB-02/BE-02 historical approvals; no full frontend acceptance, stage advancement
+    or implementation authorization.
+  source: .planning/milestones/M002/reviews/frontend-reception-rework.md
+- id: TRANSITION-M002-014
+  scope: Approve M002-DB-03 and activate backend-alex for CR-004 reception within technical-design; retain DB-02/BE-02
+    history and CR-004 pending backend/frontend reception; no stage advancement or implementation authorization.
+  source: .planning/milestones/M002/reviews/database-cr004-revision.md
+- id: TRANSITION-M002-015
+  scope: Approve M002-BE-03 and activate frontend-bob for CR-004 reception within technical-design; retain CR-004
+    until frontend alignment is verified, preserve earlier approvals and open items; no frontend approval, stage
+    advancement or implementation authorization.
+  source: .planning/milestones/M002/reviews/backend-cr004-revision.md
+- id: TRANSITION-M002-016
+  scope: Approve M002-FE-02, close CR-004 design reception, complete technical-design and enter implementation with
+    backend-ethan; preserve all implementation verification and other open items. No implementation acceptance,
+    deployment or new live AI evaluation authorized.
+  source: .planning/milestones/M002/reviews/technical-design.md
+- id: TRANSITION-M002-017
+  scope: Activate frontend-claire within implementation to receive the backend delivery and implement approved FE-02/UI-22/H01;
+    preserve stage, approvals and all open verification items. No whole-implementation acceptance, deployment or
+    new live AI evaluation.
+  source: .planning/milestones/M002/reviews/frontend-implementation-entry.md
+- id: TRANSITION-M002-018
+  scope: Accept backend/frontend implementation deliveries for independent verification and enter verification with
+    qa-quinn. Preserve all open items and prior approvals; no independent quality/UAT pass, deployment or new live
+    AI evaluation.
+  source: .planning/milestones/M002/reviews/implementation.md
+- id: TRANSITION-M002-019
+  scope: Return M002 from verification to implementation and activate backend-ethan for CR-006 only; register CR-005/006
+    as open, preserve QA failures and all prior approvals. Frontend CR-005 awaits separate role activation, then
+    independent re-verification. No quality/UAT pass, deployment or new live AI evaluation.
+  source: .planning/milestones/M002/reviews/verification-rework.md
+- id: TRANSITION-M002-020
+  scope: Activate frontend-claire within implementation to fix CR-005 and receive the backend CR-006 delta. Preserve
+    CR-006 as implemented_pending_qa and all open items; no stage advancement, independent quality/UAT pass, deployment
+    or new live AI evaluation.
+  source: .planning/milestones/M002/reviews/frontend-cr005-entry.md
+- id: TRANSITION-M002-021
+  scope: Accept CR-005 and CR-006 implementation repairs for independent re-verification; return to verification
+    with qa-quinn and continue existing coverage. Preserve all open items, prior QA FAIL and approvals; no quality/UAT
+    pass, deployment or new live AI evaluation.
+  source: .planning/milestones/M002/reviews/verification-reentry.md
+- id: TRANSITION-M002-022
+  scope: Return M002 to implementation and activate backend-ethan for CR-007 only; register CR-007/008, close CR-005
+    and CR-006 within independently verified scope. Preserve QA02 overall FAIL, CR-008 frontend rework, all other
+    open items and approvals. No UAT pass, deployment or new live AI evaluation.
+  source: .planning/milestones/M002/reviews/verification-rework-022.md
+- id: TRANSITION-M002-023
+  scope: Activate frontend-claire within implementation to fix CR-008 and receive the current backend CR-007 delivery.
+    Preserve CR-007 as implemented_pending_qa, CR-005/006 scoped closures and all other open items. No stage advancement,
+    independent quality/UAT pass, deployment or new live AI evaluation.
+  source: .planning/milestones/M002/reviews/frontend-cr008-entry.md
+- id: TRANSITION-M002-024
+  scope: Accept CR-007 and CR-008 implementation repairs for independent re-verification; return to verification
+    with qa-quinn and continue existing coverage. Preserve all open items, QA02 overall FAIL, CR-005/006 scoped
+    closures and prior approvals. No quality/UAT pass, deployment or new live AI evaluation.
+  source: .planning/milestones/M002/reviews/verification-reentry-024.md
+- id: TRANSITION-M002-025
+  scope: Return M002 to implementation and activate frontend-claire for CR-009 only; register CR-009 and close CR-007/008
+    within QA03 independently verified scope. Preserve QA03 overall FAIL, remaining coverage, other open items and
+    prior approvals. No UAT pass, deployment or new live AI evaluation.
+  source: .planning/milestones/M002/reviews/verification-rework-025.md
+- id: TRANSITION-M002-026
+  scope: Accept the CR-009 frontend repair for independent verification and return to verification with qa-quinn.
+    Preserve CR-009 OPEN, QA03 overall FAIL, remaining coverage, prior scoped closures and all other open items.
+    No quality/UAT pass, deployment or new live AI evaluation.
+  source: .planning/milestones/M002/reviews/verification-reentry-026.md
+- id: TRANSITION-M002-027
+  scope: Return M002 to implementation and activate frontend-claire for CR-010 only; register CR-010 and close CR-009
+    within QA04 T01-T07 independently verified scope. Preserve QA04 overall FAIL, remaining coverage, prior scoped
+    closures, all other open items and approvals. No UAT pass, deployment or new live AI evaluation.
+  source: .planning/milestones/M002/reviews/verification-rework-027.md
+- id: TRANSITION-M002-028
+  scope: Accept the CR-010 frontend repair for independent verification and return to verification with qa-quinn.
+    Preserve CR-010 OPEN, QA04 overall FAIL, remaining coverage, prior scoped closures and all other open items.
+    No quality/UAT pass, deployment or new live AI evaluation.
+  source: .planning/milestones/M002/reviews/verification-reentry-028.md
+- id: TRANSITION-M002-029
+  scope: Return M002 to implementation and activate backend-ethan for CR-011 only; register CR-011 and close CR-010
+    within QA05 V01-V04 independently verified scope. Preserve QA05 overall FAIL, remaining coverage, prior scoped
+    closures, all other open items and approvals. No UAT pass, deployment or new live AI evaluation.
+  source: .planning/milestones/M002/reviews/verification-rework-029.md
+- id: TRANSITION-M002-030
+  scope: Accept the CR-011 backend repair for independent verification and return to verification with qa-quinn.
+    Preserve CR-011 OPEN, QA05 overall FAIL, remaining coverage, prior scoped closures and all other open items.
+    No quality/UAT pass, deployment or new live AI evaluation.
+  source: .planning/milestones/M002/reviews/verification-reentry-030.md
+- id: TRANSITION-M002-031
+  scope: Return M002 from verification to implementation and activate backend-ethan for CR-013 only; register CR-012/013
+    and close CR-011 within QA06 L01/L02/L03/L05/L06 verified scope. Preserve QA06 overall FAIL, frontend CR-012
+    pending separate activation, remaining coverage, prior closures and all other open items. No UAT pass, deployment
+    or new live AI evaluation.
+  source: .planning/milestones/M002/reviews/verification-rework-031.md
+- id: TRANSITION-M002-032
+  scope: Activate frontend-claire within implementation to fix CR-012 and receive the current backend CR-013 delivery.
+    Preserve CR-013 as implemented_pending_qa, QA06 overall FAIL, all open items and prior scoped closures. No stage
+    advancement, independent quality/UAT pass, deployment or new live AI evaluation.
+  source: .planning/milestones/M002/reviews/frontend-cr012-entry.md
+- id: TRANSITION-M002-033
+  scope: Accept CR-012 frontend and CR-013 backend implementation repairs for independent re-verification; return
+    to verification with qa-quinn and continue remaining coverage. Preserve both CRs OPEN, QA06 overall FAIL, prior
+    scoped closures and all other open items. No quality/UAT pass, deployment or new live AI evaluation.
+  source: .planning/milestones/M002/reviews/verification-reentry-033.md
+- id: TRANSITION-M002-034
+  scope: Return M002 to implementation and activate frontend-claire for CR-014 and CR-015 together; register both
+    and close CR-012/013 within QA07 independently verified scope. Preserve QA07 overall FAIL, remaining coverage,
+    prior scoped closures and all other open items. No UAT pass, deployment or new live AI evaluation.
+  source: .planning/milestones/M002/reviews/verification-rework-034.md
+- id: TRANSITION-M002-035
+  scope: Accept the CR-014/015 frontend repairs for independent verification and return M002 to verification with
+    qa-quinn. Preserve both CRs OPEN, QA07 overall FAIL, remaining coverage, CR012/013 scoped closures and all other
+    open items. No quality/UAT pass, deployment or new live AI evaluation.
+  source: .planning/milestones/M002/reviews/verification-reentry-035.md
+- id: APPROVAL-M002-036
+  scope: Accept QA08 only for scoped closure of CR014/015 and continue existing independent verification with qa-quinn.
+    Preserve verification stage, all remaining coverage, CR001/002 and retained limitations; no milestone/UAT acceptance,
+    deployment or new live AI evaluation.
+  source: .planning/milestones/M002/reviews/verification-acceptance-036.md
+- id: TRANSITION-M002-037
+  scope: Return M002 to implementation and activate frontend-claire for CR016 only; register CR016, preserve QA12
+    FAIL, CR001/002, all previous scoped closures and retained limitations. No UAT acceptance, deployment or new
+    live AI evaluation.
+  source: .planning/milestones/M002/reviews/verification-rework-037.md
+- id: TRANSITION-M002-038
+  scope: Accept the CR016 frontend repair for independent verification and return M002 to verification with qa-quinn.
+    Retain FE2-R16-W1 for QA confirmation and routing, CR001/002/016 OPEN, QA12 FAIL, all prior scoped closures
+    and remaining coverage. No quality/UAT acceptance, implementation scope expansion, deployment or new live AI
+    evaluation.
+  source: .planning/milestones/M002/reviews/verification-reentry-038.md
+- id: TRANSITION-M002-039
+  scope: Close CR016 only within QA13 F12/F13 independent retest scope and return M002 to implementation with frontend-claire
+    for CR017/018 together. Route confirmed FE2-R16-W1 to CR017; retain CR001/002, QA13 overall FAIL, all prior
+    scoped closures and remaining limitations. No UAT acceptance, milestone completion, deployment or new live AI
+    evaluation.
+  source: .planning/milestones/M002/reviews/verification-rework-039.md
+- id: TRANSITION-M002-040
+  scope: Accept frontend CR017/018 repairs for independent verification and return M002 to verification with qa-quinn.
+    Retain CR001/002/017/018 OPEN, FE2-R16-W1 via CR017, QA13 overall FAIL, prior scoped closures including CR016
+    F12/F13 via039 and all remaining coverage. No UAT acceptance, milestone completion, deployment or new live AI
+    evaluation.
+  source: .planning/milestones/M002/reviews/verification-reentry-040.md
+- id: APPROVAL-M002-041
+  scope: Accept QA14 only for scoped closure of CR017/F14 and CR018/F15, close associated FE2-R16-W1 through CR017,
+    and continue existing verification with qa-quinn. Preserve CR001/002, prior scoped closures, all remaining coverage
+    and limitations; no whole-milestone/UAT acceptance, deployment or new live AI evaluation.
+  source: .planning/milestones/M002/reviews/verification-acceptance-041.md
+- id: TRANSITION-M002-042
+  scope: Close CR001 only within original inheritance baseline and downstream reception scope; register CR019/QA2-F16
+    and return M002 to implementation/frontend-claire for the title-edit pencil icon only. Retain CR002 OPEN, QA15
+    overall FAIL, prior scoped closures, remaining coverage and limitations. No UAT acceptance, milestone completion,
+    deployment or new live AI evaluation.
+  source: .planning/milestones/M002/reviews/verification-rework-042.md
+- id: TRANSITION-M002-043
+  scope: Accept the CR019 frontend repair for independent verification and return M002 to verification with qa-quinn.
+    Retain CR002/019 OPEN, QA15 overall FAIL, CR001 scoped closure via042, all prior scoped closures, remaining
+    coverage and limitations. No quality/UAT acceptance, milestone completion, deployment or new live AI evaluation.
+  source: .planning/milestones/M002/reviews/verification-reentry-043.md
+- id: APPROVAL-M002-044
+  scope: Accept QA16 for scoped closure of CR019/QA2-F16 title-edit pencil fidelity and CR002 original private batch
+    title editing plus single preset title/removal-of-description requirements. Continue verification with qa-quinn;
+    preserve remaining coverage, prior scoped closures and limitations. No whole-milestone/UAT acceptance, deployment
+    or new live AI evaluation.
+  source: .planning/milestones/M002/reviews/verification-acceptance-044.md
+- id: TRANSITION-M002-045
+  scope: Return M002 from verification to implementation and activate frontend-claire for CR020/QA2-F17 shared avatar-menu
+    dismissal and focus repair only. Register CR020; preserve QA17 overall FAIL, prior scoped closures including
+    CR002/019 via044, remaining coverage and limitations. No UAT acceptance, milestone completion, deployment or
+    new live AI evaluation.
+  source: .planning/milestones/M002/reviews/verification-rework-045.md
+- id: USER-FRONTEND-IMPLEMENTATION-001
+  scope: Standing user approval for frontend implementation issues within confirmed product/design/technical scope,
+    including repairs, necessary checks and related role handoffs; do not repeatedly ask for the same approval.
+    Scope changes and QA/UAT result acceptance remain separate.
+  source: .planning/milestones/M002/reviews/verification-reentry-046.md#frontend-standing-approval
+- id: TRANSITION-M002-046
+  scope: Accept CR020 frontend repair for independent verification; return M002 to verification with qa-quinn under
+    the user standing frontend implementation approval. Retain CR020 OPEN, QA17 FAIL, prior scoped closures and
+    remaining limitations. No UAT pass, milestone completion, deployment or live AI evaluation.
+  source: .planning/milestones/M002/reviews/verification-reentry-046.md
+- id: USER-FRONTEND-QA-001
+  scope: Standing user approval for frontend delivery QA, independent retests, required implementation-fix handoffs,
+    and evidence-supported scoped acceptance/closure within confirmed product/design/technical requirements; do
+    not request repeated approvals. Test outcomes must reflect actual evidence; unexecuted UAT is not deemed passed.
+  source: .planning/milestones/M002/reviews/verification-acceptance-047.md#frontend-qa-standing-approval
+- id: APPROVAL-M002-047
+  scope: Accept QA18 scoped evidence and close CR020/QA2-F17; continue M002 verification under qa-quinn with standing
+    frontend QA authorization. No stage/role change or unexecuted UAT pass.
+  source: .planning/milestones/M002/reviews/verification-acceptance-047.md
+- id: TRANSITION-M002-048
+  scope: Continuous authorized CR021 repair and independent verification; actual evidence gates retained.
+  source: .planning/milestones/M002/reviews/continuous-048.md
+- id: TRANSITION-M002-049
+  scope: Continuous authorized CR021 repair and independent verification; actual evidence gates retained.
+  source: .planning/milestones/M002/reviews/continuous-049.md
+- id: TRANSITION-M002-050
+  scope: Continuous authorized CR022 repair and independent verification; actual evidence gates retained.
+  source: .planning/milestones/M002/reviews/continuous-050.md
+- id: TRANSITION-M002-051
+  scope: Continuous authorized CR022 repair and independent verification; actual evidence gates retained.
+  source: .planning/milestones/M002/reviews/continuous-051.md
+- id: APPROVAL-M002-052
+  scope: Accept QA21 and close CR022/F21 based on actual independent evidence; frontend walkthrough candidate ready,
+    retain verification stage and unexecuted final UAT.
+  source: .planning/milestones/M002/reviews/verification-acceptance-052.md
+- id: USER-M002-UAT-20260929
+  scope: Explicit user acceptance of M002 UAT.
+  source: .planning/milestones/M002/reviews/verification-acceptance-060.md
+- id: TRANSITION-M002-060
+  scope: Complete M002 after explicit UAT acceptance and continuation of the presented closeout, retaining known
+    limitations; no release or M003.
+  source: .planning/milestones/M002/reviews/verification-acceptance-060.md
+- id: TRANSITION-M002-061
+  scope: Five user-requested M002 product and design additions; accepted prior delivery retained; no M003 or release.
+  source: .planning/milestones/M002/reviews/product-reopen-061.md
+- id: TRANSITION-M002-062
+  scope: Receive five explicit user product/design changes and prepare design revision; no new visual or implementation
+    approval.
+  source: .planning/milestones/M002/reviews/product-design-062.md
+- id: TRANSITION-M002-063
+  scope: User-requested optional once-only automatic notice reminder with browser-local history; preserve UI24 and
+    CR025, no visual approval or production implementation.
+  source: .planning/milestones/M002/reviews/notice-once-reopen-063.md
+- id: TRANSITION-M002-064
+  scope: User explicitly requested removal of reminder-type labels and internal logic copy. Receive D2-89 only;
+    CR026 local-cache scope stays OPEN and is not approved.
+  source: .planning/milestones/M002/reviews/copy-design-064.md
+- id: APPROVAL-M002-065
+  scope: Approve current UI26 presented design; retain CR026 unresolved scope and original delivery limitations.
+  source: .planning/milestones/M002/reviews/design-acceptance-065.md
+- id: TRANSITION-M002-065
+  scope: Accept current UI26 design and enter frontend technical reception under frontend-bob; preserve DB03/BE03
+    and prior scoped approvals. Exclude unresolved CR026 D2-88-LOCAL-SCOPE. No implementation/QA/UAT result acceptance
+    or release.
+  source: .planning/milestones/M002/reviews/design-acceptance-065.md
+- id: TRANSITION-M002-066
+  scope: Activate backend-alex for CR027 API004 administrator vocabulary-search contract clarification; retain stage
+    and all approval scopes. Register CR027; no FE03/BE04 acceptance, implementation, QA, release or CR026 scope
+    decision.
+  source: .planning/milestones/M002/reviews/backend-cr027-entry-066.md
+- id: TRANSITION-M002-067
+  scope: Accept BE04 CR027 clarification and activate frontend-bob for FE3-G01 reception; preserve BE4-I01 and runtime
+    verification pending. No implementation/QA result acceptance.
+  source: .planning/milestones/M002/reviews/continuous-067.md
+- id: TRANSITION-M002-068
+  scope: Accept FE04 scoped UI26 reception and enter implementation. First repair BE4-I01 and run BE4-V01–03; then
+    frontend-claire implements FE3-I01–06 under standing authorization. No QA/UAT or release acceptance.
+  source: .planning/milestones/M002/reviews/continuous-068.md
+- id: TRANSITION-M002-069
+  scope: Receive BE4-I01 developer-verified repair; activate frontend-claire to implement approved UI26 / FE04 FE3-I01–06,
+    retaining CR027 pending QA and all excluded/retained scope. No QA/UAT or release acceptance.
+  source: .planning/milestones/M002/reviews/continuous-069.md
+- id: TRANSITION-M002-070
+  scope: Receive implemented UI26/FE04 and BE04 CR027 fixes; perform bounded quality reception and browser/API evidence
+    audit under standing frontend QA authorization, without substituting user UAT or touching CR026 pending scope.
+  source: .planning/milestones/M002/reviews/continuous-070.md
+- id: APPROVAL-M002-071
+  scope: Accept QA28 scoped UI26 and BE04 evidence; close CR025/027 only. Preserve CR026 and pending user review
+    of new increment.
+  source: .planning/milestones/M002/reviews/verification-acceptance-071.md
+- id: TRANSITION-M002-072
+  scope: User reports actual header language selector differs from approved UI26. Reopen only CR025 header locale
+    fidelity (both public and admin), correct missed consumer wiring and tests under standing frontend authorization;
+    CR026 remains pending and CR027 remains closed.
+  source: .planning/milestones/M002/reviews/continuous-072.md
+- id: TRANSITION-M002-073
+  scope: Receive UI26 header locale correction, retain original QA28 missed-consumer evidence, and perform bounded
+    QA under standing frontend authorization. CR025 only header slice reopened; CR026 unchanged.
+  source: .planning/milestones/M002/reviews/continuous-073.md
+- id: APPROVAL-M002-074
+  scope: Accept QA29 header correction and scoped reclosure of CR025 under standing frontend QA authorization.
+  source: .planning/milestones/M002/reviews/verification-acceptance-074.md
+- id: TRANSITION-M002-075
+  scope: User explicitly requests searching UI optimization and reports fixed adapt/adaptive preview results. Revise
+    only shared loading presentation (CR028); preserve API004 and route fixture repair to frontend implementation
+    under standing authorization.
+  source: .planning/milestones/M002/reviews/continuous-075.md
+- id: TRANSITION-M002-076
+  scope: Receive narrow user-requested UI27 search loading amendment for CR028. Confirm existing WordPicker/API004
+    architecture unchanged; specify delay as presentation-only and fixture query repair. No new product, backend,
+    database or pricing scope.
+  source: .planning/milestones/M002/reviews/continuous-076.md
+- id: TRANSITION-M002-077
+  scope: 'Implement CR028 under current user request and standing frontend approval: query-aware full-catalog test
+    fixture, shared compact slow-search loading indicator; preserve FE04 APIs, private UAT environment and all unrelated
+    work.'
+  source: .planning/milestones/M002/reviews/continuous-077.md
+- id: TRANSITION-M002-078
+  scope: Current user-reported CR028 search and loading correction only; accept developer evidence for scoped QA
+    under standing frontend/QA authorization. No new user UAT, real model calls, production deployment, or CR026
+    decision.
+  source: .planning/milestones/M002/reviews/continuous-078.md
+- id: APPROVAL-M002-079
+  scope: Evidence-based scoped closure of CR028 search fixture/loading correction under standing frontend QA authorization;
+    no user UAT or CR026 decision.
+  source: .planning/milestones/M002/reviews/verification-acceptance-079.md
+- id: TRANSITION-M002-080
+  scope: User requested continuation of CR026 and explicitly selected browser-local records separated by account.
+    Resolve D2-88-LOCAL-SCOPE only; preserve other closures and limitations. Necessary implementation/handoffs are
+    within the original requested feature.
+  source: .planning/milestones/M002/reviews/continuous-080.md
+- id: USER-D2-88-LOCAL-SCOPE
+  scope: Browser-local once reminders separated by account; B is reminded independently of A. Explicit answer 2026-10-01.
+  source: .planning/milestones/M002/decisions/product-decisions.md#d2-88
+- id: TRANSITION-M002-081
+  scope: Receive explicitly confirmed CR026 account-separated browser-local once reminders. Add existing-style admin
+    switch and copy/prototype; no new page or user-facing reminder categories. Continue original authorized feature,
+    not a new whole-design approval.
+  source: .planning/milestones/M002/reviews/continuous-081.md
+- id: TRANSITION-M002-082
+  scope: Receive confirmed CR026 and UI28; add one default-false notice configuration field only. Browser account/notice
+    records remain client-local. No production migration.
+  source: .planning/milestones/M002/reviews/continuous-082.md
+- id: TRANSITION-M002-083
+  scope: Receive DB04 column for original requested CR026. Extend API205/207 bool config through existing service,
+    preserve visibility/revision/auth and no read-state write API.
+  source: .planning/milestones/M002/reviews/continuous-083.md
+- id: TRANSITION-M002-084
+  scope: Receive UI28/DB04/BE05 explicitly requested notice config. Frontend uses account+notice local history and
+    actual-dialog-display signal; inherit other FE04 behavior.
+  source: .planning/milestones/M002/reviews/continuous-084.md
+- id: TRANSITION-M002-085
+  scope: Implement original user requested CR026 and explicitly confirmed account-separated history. Backend DB04/BE05
+    extension; validate in isolated local DB only, no 3302 or live AI changes.
+  source: .planning/milestones/M002/reviews/continuous-085.md
+- id: TRANSITION-M002-086
+  scope: Implement CR026 UI28/FE05 after backend fixture/migration tests pass; account-separated local once history,
+    admin switch and actual display events. Final backend vet and cross-boundary QA remain required.
+  source: .planning/milestones/M002/reviews/continuous-086.md
+- id: TRANSITION-M002-087
+  scope: Verify CR026 implemented user-requested once reminder with explicit account separation. Reuse developer
+    browser/lifecycle evidence; add bounded real HTTP configuration/persistence/visibility/auth case in isolated
+    DB. No live AI, 3302 update or new user UAT.
+  source: .planning/milestones/M002/reviews/continuous-087.md
+- id: TRANSITION-M002-088
+  scope: QA31-F01 observed 422 for absent remind_once despite confirmed default-false input. Repair request DTO
+    decoding only, preserve output field and other required validation. Retain original QA failure; no requirement
+    changes or real UAT/AI calls.
+  source: .planning/milestones/M002/reviews/continuous-088.md
+- id: TRANSITION-M002-089
+  scope: Receive QA31-F01 default-false request DTO repair; retest exact original real HTTP case. Preserve initial
+    FAIL, browser/service passes, same scope and explicit account-separation decision; no new user UAT.
+  source: .planning/milestones/M002/reviews/continuous-089.md
+- id: APPROVAL-M002-090
+  scope: Scoped closure of CR026 once-reminder implementation after explicit account-scope answer and evidence-based
+    frontend/HTTP QA. No new user UAT or release.
+  source: .planning/milestones/M002/reviews/verification-acceptance-090.md
+- id: USER-M002-INCREMENT-UAT-20261001
+  scope: User explicitly said 验证通过 after the latest M002 incremental delivery; per-case/manual environment details
+    were not supplied.
+  source: .planning/milestones/M002/verification/uat.md
+- id: TRANSITION-M002-091
+  scope: Record explicit latest-increment validation and finish the existing M002 closeout after all reopened changes
+    are closed. Preserve prior UAT and all retained limitations; no 3302 migration, live model calls, production
+    release, Git commit or M003.
+  source: .planning/milestones/M002/reviews/verification-acceptance-091.md
+- id: USER-M002-GENERIC-MODELS-20261001
+  scope: Implement administrator-only generic model configuration with Chat Completions, Responses and Anthropic
+    Messages; preserve accepted unrelated behavior and original UAT; no live model batch, production release or
+    Git commit.
+  source: .planning/milestones/M002/reviews/model-generalization-092.md
+- id: TRANSITION-M002-093
+  scope: 接收PRODUCT06与已确认D2-90/91/92，按参考重做PAGE208通用模型配置原型与文案。
+  source: .planning/milestones/M002/reviews/model-generalization-093.md
+- id: TRANSITION-M002-094
+  scope: CR029 UI29接收，设计统一连接、模型与凭据迁移；原型四例布局通过。
+  source: .planning/milestones/M002/reviews/model-generalization-094.md
+- id: TRANSITION-M002-095
+  scope: 接收CR029统一连接存储方案，制定模型API与三协议适配。
+  source: .planning/milestones/M002/reviews/model-generalization-095.md
+- id: TRANSITION-M002-096
+  scope: 接收CR029统一连接与模型契约，规划UI29类型映射及状态。
+  source: .planning/milestones/M002/reviews/model-generalization-096.md
+- id: TRANSITION-M002-097
+  scope: CR029产品、UI29、DB与前后端方案接收完毕，开始统一模型服务实现及隔离验证。
+  source: .planning/milestones/M002/reviews/model-generalization-097.md
+- id: TRANSITION-M002-098
+  scope: 接收CR029已编译与数据库验证的模型契约，实现UI29；HTTP扩展回归仍需闭环。
+  source: .planning/milestones/M002/reviews/model-generalization-098.md
+- id: TRANSITION-M002-099
+  scope: 接收CR029前后端完整开发验证与UI29交付，复用已通过测试，进行原库迁移演练和3302真实环境限定验收；新用户UAT待确认。
+  source: .planning/milestones/M002/reviews/model-generalization-099.md
+- id: TRANSITION-M002-100
+  scope: QA迁移演练发现0015更新触发现有模型updated_at变化；原库未迁移。回到后端仅修正迁移保留时间并补回归，不改变功能口径。
+  source: .planning/milestones/M002/reviews/model-generalization-100.md
+- id: TRANSITION-M002-101
+  scope: 0015原数据更新时间问题已修复，模型与加密凭据逐值保留回归和新库迁移通过；重新进行原备份恢复演练及3302限定验证。
+  source: .planning/milestones/M002/reviews/model-generalization-101.md
+- id: TRANSITION-M002-102
+  scope: 根据用户反馈修复模型连接测试加载态串行列表共享问题：仅被点击模型显示测试中及反馈；后端单模型探测契约不变。
+  source: .planning/milestones/M002/reviews/model-generalization-102.md
+- id: TRANSITION-M002-103
+  scope: 接收CR029-F02模型测试状态修复及8项局部浏览器证据、类型/lint/构建；复用既有后端结果，更新3302前端并验证实际包的逐行反馈。
+  source: .planning/milestones/M002/reviews/model-generalization-103.md
+- id: TRANSITION-M002-104
+  scope: 接收用户服务商优先与批量模型输入的明确改动，修订CR029范围并保留现有权限、三协议、无默认模型及单模型测试。
+  source: .planning/milestones/M002/reviews/model-generalization-104.md
+- id: TRANSITION-M002-105
+  scope: 接收CR029-F03明确服务商优先和批量添加，设计UI30分组、可增删模型条目及高级选项间距。
+  source: .planning/milestones/M002/reviews/model-generalization-105.md
+- id: TRANSITION-M002-106
+  scope: UI30服务商优先和多模型设计已形成，补用户流式验证要求；设计原子批量接口与显式流式探测契约，无数据库迁移。
+  source: .planning/milestones/M002/reviews/model-generalization-106.md
+- id: TRANSITION-M002-107
+  scope: 接收服务商下多模型原子创建契约及明确流式测试，设计UI30草稿和DTO映射及逐项测试状态。
+  source: .planning/milestones/M002/reviews/model-generalization-107.md
+- id: TRANSITION-M002-108
+  scope: 接收F03/F04方案，实现原子批量模型新增并核验三协议真实SSE增量与终止；沿现有授权局部验证。
+  source: .planning/milestones/M002/reviews/model-generalization-108.md
+- id: TRANSITION-M002-109
+  scope: 接收批量原子接口及三协议流式严格验证，实现UI30服务商优先、模型列表条目、高级选项间距及逐项测试。
+  source: .planning/milestones/M002/reviews/model-generalization-109.md
+- id: TRANSITION-M002-110
+  scope: 接收 UI30 服务商优先批量模型表单及三协议流式探测；复用开发证据，补 3302 实际构建验证，不调用真实模型、不改原配置。
+  source: .planning/milestones/M002/reviews/model-generalization-110.md
+- id: TRANSITION-M002-111
+  scope: 接收用户 CR029-F05：服务商为列表和编辑主体，替代模型单独编辑及连接复制新增语义。
+  source: .planning/milestones/M002/reviews/model-generalization-111.md
+- id: TRANSITION-M002-112
+  scope: 将 PAGE208 重构为服务商分组卡片和服务商聚合编辑器，UI31沿用已确认视觉与流式测试。
+  source: .planning/milestones/M002/reviews/model-generalization-112.md
+- id: TRANSITION-M002-113
+  scope: DATA007/008服务商改为稳定可编辑聚合，评估凭据原位更新及模型关联完整性。
+  source: .planning/milestones/M002/reviews/model-generalization-113.md
+- id: TRANSITION-M002-114
+  scope: 设计服务商聚合读取/创建/更新API及单事务身份保持，采用0016凭据更新函数。
+  source: .planning/milestones/M002/reviews/model-generalization-114.md
+- id: TRANSITION-M002-115
+  scope: UI31服务商卡片/聚合草稿和typed聚合API映射，按modelUUID合并冲突。
+  source: .planning/milestones/M002/reviews/model-generalization-115.md
+- id: TRANSITION-M002-116
+  scope: 实现0016、服务商聚合API、原位保存及数据库/HTTP回归。
+  source: .planning/milestones/M002/reviews/model-generalization-116.md
+- id: TRANSITION-M002-117
+  scope: 实现UI31服务商列表、整组编辑/新增、冲突合并和明确两条添加路径；接收聚合API。
+  source: .planning/milestones/M002/reviews/model-generalization-117.md
+- id: TRANSITION-M002-118
+  scope: 接收UI31服务商聚合实现与定向验证，执行3302私有备份恢复演练0016、更新及真实元数据冒烟。
+  source: .planning/milestones/M002/reviews/model-generalization-118.md
+- id: TRANSITION-M002-119
+  scope: UIA-PAGE-217-MEANINGS23：精选词义移回左侧配置区并复验既有设计
+  source: .planning/milestones/M002/reviews/gallery-meanings-119.md
+- id: TRANSITION-M002-120
+  scope: GALLERY-MEANINGS-F01：复用开发证据、3302前端更新及已批准词义布局定向复验
+  source: .planning/milestones/M002/reviews/gallery-meanings-120.md
+- id: TRANSITION-M002-121
+  scope: GALLERY-MEANINGS-F02：词义区语言标签按原型使用语言原名，保持发布释义
+  source: .planning/milestones/M002/reviews/gallery-meanings-121.md
+- id: TRANSITION-M002-122
+  scope: GALLERY-MEANINGS-F01/F02：发布前端补充语言原名标签，复验精选与后台共享用处
+  source: .planning/milestones/M002/reviews/gallery-meanings-122.md
+- id: TRANSITION-M002-123
+  scope: Accept CR029/UI31 provider management and gallery meanings fixes; close final M002 increments with retained
+    limitations.
+  source: .planning/milestones/M002/reviews/verification-acceptance-123.md
 allowed_transitions: []
 last_transition:
-  timestamp: '2026-09-16T02:09:06.968504+00:00'
+  milestone: M002
+  timestamp: '2026-10-04'
+  operation: transition-stage
   from: verification
   to: milestone-complete
   previous_role: quality/base
@@ -73,19 +566,120 @@ last_transition:
   active_role: null
   active_agent: null
   confirmed_by: user
-  authorization: USER-M001-CLOSEOUT-20260916
-  evidence: .planning/milestones/M001/reviews/stream-failure-capture-gates.md
-  scope: 按用户验收与收尾授权完成 M001，保留已知限制
+  recorded_by: gatekeeper-owen
+  decision_id: TRANSITION-M002-123
+  evidence: .planning/milestones/M002/reviews/verification-acceptance-123.md
+  authorization_refs:
+  - USER-M002-FINAL-INCREMENT-UAT-20261004
+  scope: Accept CR029/UI31 provider management and gallery meanings fixes; close final M002 increments with retained
+    limitations.
+context_entries:
+  current_handoff: .planning/milestones/M002/handoffs/verification.md
+  task_index: .planning/milestones/M002/verification/coverage-matrix.md#qa38
+  constraints_index: .planning/milestones/M002/product/overview.md
+  stage_review: .planning/milestones/M002/reviews/verification-acceptance-123.md
+design_approval:
+  decision_id: APPROVAL-M002-065
+  version: M002-UI-26
+  status: approved
+  approved_by: user
+  approved_at: '2026-10-01T07:54:38.883037+00:00'
+  source: .planning/milestones/M002/reviews/design-acceptance-065.md
+  archive: .planning/milestones/M002/design/evidence/M002-UI-26.tar.gz
+  archive_sha256: 9927eca3d90c760dc455c83aa673c5545c6e2e33710c944ce392de2f65fae0d8
+  scope: Current UI26 and inherited presented UI23-25 revisions; excludes CR026 pending local cache scope
+  previous_approval_source: .planning/milestones/M002/reviews/uiux-design.md
+database_approval:
+  decision_id: TRANSITION-M002-014
+  version: M002-DB-03
+  status: approved
+  approved_by: user
+  approved_at: '2026-09-20T05:38:43.158839+00:00'
+  source: .planning/milestones/M002/reviews/database-cr004-revision.md
+  archive: .planning/milestones/M002/technical/evidence/M002-DB-03.tar.gz
+  archive_sha256: 188df7f5d1d63431a9755ab6461f31c4aa94ab62eb6dd6dc92396a81f74fd527
+backend_approval:
+  decision_id: TRANSITION-M002-067
+  version: M002-BE-04
+  status: approved
+  approved_by: user
+  approved_at: '2026-10-01T08:22:16.449402+00:00'
+  source: .planning/milestones/M002/reviews/continuous-067.md
+  archive: .planning/milestones/M002/technical/evidence/M002-BE-04.tar.gz
+  archive_sha256: 6d1319327bf99aa1059f412b3594b635f4eccd3de19fa829bea785e68db8d346
+  previous_approval_source: .planning/milestones/M002/reviews/backend-cr004-revision.md
+  scope: Accept BE04 CR027 clarification and activate frontend-bob for FE3-G01 reception; preserve BE4-I01 and runtime
+    verification pending. No implementation/QA result acceptance.
+frontend_approval:
+  decision_id: TRANSITION-M002-068
+  version: M002-FE-04
+  status: approved
+  approved_by: user
+  approved_at: '2026-10-01T08:23:22.269931+00:00'
+  source: .planning/milestones/M002/reviews/continuous-068.md
+  archive: .planning/milestones/M002/technical/evidence/M002-FE-04.tar.gz
+  archive_sha256: d9be17f2249ca41c61da34b8e554395a2a1ec1bac1f34a8040a0da759e579a23
+  previous_approval_source: .planning/milestones/M002/reviews/technical-design.md
+  scope: Accept FE04 scoped UI26 reception and enter implementation. First repair BE4-I01 and run BE4-V01–03; then
+    frontend-claire implements FE3-I01–06 under standing authorization. No QA/UAT or release acceptance.
+previous_completion: &id001
+  decision_id: TRANSITION-M002-091
+  authorization: USER-M002-INCREMENT-UAT-20261001
+  completed_at: '2026-10-01T10:49:31.845499+00:00'
+  evidence: .planning/milestones/M002/reviews/verification-acceptance-091.md
+  current_handoff: .planning/milestones/M002/handoffs/verification.md
   user_uat_accepted: true
-  real_model_calls_authorized: false
+  user_uat_source: .planning/milestones/M002/verification/uat.md
+  application_commit: null
+  source_state: uncommitted_source_snapshots_verified
+  source_manifests:
+  - .planning/milestones/M002/implementation/evidence/notice-once/source.json
+  - .planning/milestones/M002/implementation/evidence/notice-once/backend-source-final.json
+  inherited_completion: TRANSITION-M002-060
+  known_limitations_waived: false
+  further_model_tuning_authorized: false
   release_approved: false
-  decision_id: TRANSITION-M001-138
-document_maintenance:
-  id: M001-AGENT-CONTEXT-001
-  authorization: USER-M001-AGENT-CONTEXT-20260916
-  scope: Agent-oriented document consolidation; no milestone transition or application changes
-  evidence: .planning/milestones/M001/reviews/evidence/m001-agent-context-001.json
-  history_index: .planning/milestones/M001/handoffs/archive.md
-  prior_state_commit: 521de847183088dc8f3d69112d94f4977a90d06b
-  handoff_test: not_executed
-  open_item: CTX-M001-01
+  real_model_uat_3302_updated: false
+historical_completions:
+- decision_id: TRANSITION-M002-060
+  authorization: USER-M002-CLOSEOUT-20261001
+  completed_at: '2026-10-01T04:35:30.016577+00:00'
+  evidence: .planning/milestones/M002/reviews/verification-acceptance-060.md
+  current_handoff: .planning/milestones/M002/handoffs/verification.md
+  user_uat_accepted: true
+  user_uat_source: .planning/milestones/M002/verification/uat.md
+  application_commit: null
+  source_state: uncommitted_source_snapshots_verified
+  source_manifests:
+  - .planning/milestones/M002/implementation/evidence/frontend-cr024/source.json
+  - .planning/milestones/M002/implementation/evidence/backend-cr013/source.json
+  known_limitations_waived: false
+  further_model_tuning_authorized: false
+  release_approved: false
+- *id001
+verification_status:
+  version: QA38
+  scope: CR029/UI31 and GALLERY-MEANINGS-F01/F02 accepted
+  status: accepted_with_retained_limitations
+  user_uat_accepted: true
+  user_uat_source: .planning/milestones/M002/verification/uat.md
+  local_delivery: .planning/milestones/M002/delivery/gallery-meanings-3302-20261002/README.md
+completion:
+  decision_id: TRANSITION-M002-123
+  authorization: USER-M002-FINAL-INCREMENT-UAT-20261004
+  completed_at: '2026-10-04'
+  evidence: .planning/milestones/M002/reviews/verification-acceptance-123.md
+  current_handoff: .planning/milestones/M002/handoffs/verification.md
+  user_uat_accepted: true
+  user_uat_source: .planning/milestones/M002/verification/uat.md
+  application_commit: null
+  source_state: uncommitted_source_snapshots_verified
+  source_manifests:
+  - .planning/milestones/M002/implementation/evidence/provider-workspace31/manifest.json
+  - .planning/milestones/M002/implementation/evidence/gallery-meanings-fix/manifest.json
+  - .planning/milestones/M002/verification/evidence/qa2-036/manifest.json
+  inherited_completion: TRANSITION-M002-091
+  known_limitations_waived: false
+  further_model_tuning_authorized: false
+  release_approved: false
+  local_3302_delivery: .planning/milestones/M002/delivery/gallery-meanings-3302-20261002/deployment-final.json

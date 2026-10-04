@@ -1,0 +1,23 @@
+{
+  "authorization": "User requested real-model configuration for their manual testing. Covers provider/credential/model setup and necessary model-enable probes; not a quality evaluation batch.",
+  "source": "Existing M001 Docker backend runtime and read-only original PostgreSQL enabled-model configuration. backend/.env had stale mock URL and was not adopted.",
+  "credential": "Decrypted only in memory and passed to local credential-management API for encryption by M002; no API key in source, evidence, console or command arguments.",
+  "startup": "Docker was started to read prior local configuration; original PostgreSQL container started without migration or data changes.",
+  "models": "Existing mock identity converted to MiniMax to retain preset references; DeepSeek and GLM added. MiniMax remains disabled after two failed compatibility checks; no bypass. Source planned models all registered, only passing models selectable.",
+  "failure": "Two setup attempts used nonexistent GET /admin/models/:id (405). They did not send a model update or inference. Replaced with revision from GET /admin/models and retained PATCH per actual contract.",
+  "enable_checks": {
+    "MiniMax": [
+      "422 model_incompatible",
+      "422 model_incompatible"
+    ],
+    "DeepSeek": [
+      "200"
+    ],
+    "GLM": [
+      "200"
+    ]
+  },
+  "unverified": "Exact root cause of MiniMax compatibility failure; no tuning or extra inference undertaken. Existing MiniMax-bound trial preset has model_unavailable; disclosed to user.",
+  "preservation": "Frontend CR024 and application code unchanged; accounts, existing batches, notices, numerical plan limits retained. Existing plus plan without model grants remains unchanged.",
+  "runtime": "Mock port38084 stopped; proxy3302 does no inference; Go calls OpenRouter directly. Restoration must use qa2-026/preview.py resume, not older mock scripts."
+}

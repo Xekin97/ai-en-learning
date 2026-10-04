@@ -1,0 +1,148 @@
+  // Fixture preparation above reuses the delivered isolated harness; assertions below are independent QA cases.
+  const batchId=new URL(lp.url()).pathname.split('/').at(-1);
+  const detailPath='/me/batches/'+batchId;
+  const btn=(p,k)=>p.getByRole('button',{name:t(k),exact:true});
+  async function check(id,name,fn){
+    try{await fn();results.push({id,name,result:'PASS'});}
+    catch(e){results.push({id,name,result:'FAIL',error:String(e)});await lp.screenshot({path:new URL(id+'-failure.png',out).pathname,fullPage:true}).catch(()=>{});}
+    console.log(id,results.at(-1).result,name);
+  }
+  const initialBatch=(await read(learner,detailPath)).data.batch;
+  const initialStats=(await read(learner,'/me/learning-summary')).data;
+  const customTitle='<img src=x onerror=alert(1)> 我的学习 '+ 'Word'.repeat(25);
+  await check('Q01','Private title is literal text, persists, and preserves content/counters',async()=>{
+    await btn(lp,'l.title.edit').click();await lp.getByLabel(t('l.title.label'),{exact:true}).fill(customTitle);
+    await btn(lp,'l.title.save').click();await expect(lp.locator('#saved-batch-title')).toHaveText(customTitle);
+    expect(await lp.locator('#saved-batch-title img').count()).toBe(0);
+    const actual=(await read(learner,detailPath)).data.batch;
+    for(const k of ['passage','saved_at','targets','configuration','participates_in_range_review'])expect(actual[k]).toEqual(initialBatch[k]);
+    expect((await read(learner,'/me/learning-summary')).data).toEqual(initialStats);
+    await lp.reload();await ready(lp);await expect(lp.locator('#saved-batch-title')).toHaveText(customTitle);
+    await lp.setViewportSize({width:320,height:740});
+    expect(await lp.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
+    await lp.screenshot({path:new URL('title-320.png',out).pathname,fullPage:true});
+    await lp.setViewportSize({width:1440,height:1000});
+  });
+  await check('Q02','Title stale revision retains local input and offers explicit second save',async()=>{
+    await btn(lp,'l.title.edit').click();await lp.getByLabel(t('l.title.label'),{exact:true}).fill('Local pending title');
+    const b=(await read(learner,detailPath)).data.batch;
+    await write(learner,detailPath,'PATCH',{title:'Concurrent saved title',expected_title_revision:b.title_revision});
+    await btn(lp,'l.title.save').click();
+    await expect(lp.locator('.batch-title-editor [role=alert]')).toContainText('Concurrent saved title');
+    await expect(lp.getByLabel(t('l.title.label'),{exact:true})).toHaveValue('Local pending title');
+    expect((await read(learner,detailPath)).data.batch.title).toBe('Concurrent saved title');
+    await btn(lp,'l.title.save').click();await expect(lp.locator('#saved-batch-title')).toHaveText('Local pending title');
+  });
+  async function status(context,path,method,body){
+    const b=await read(context,'/bootstrap');
+    const r=await context.request.fetch(origin+'/api/v1'+path,{method,headers:{origin,'sec-fetch-site':'same-origin','x-csrf-token':b.data.csrf_token},data:body});return r.status();
+  }
+  await check('Q03','Admin cannot edit private title; second learner cannot read/write it',async()=>{
+    const b=(await read(learner,detailPath)).data.batch;
+    expect(await status(admin,detailPath,'PATCH',{title:'unauthorized',expected_title_revision:b.title_revision})).toBe(403);
+    const other=await browser.newContext();
+    await write(other,'/auth/register','POST',{username:'qa2_other_'+Date.now(),password:env.ADMIN_PASSWORD,password_confirmation:env.ADMIN_PASSWORD,ui_locale:'en-US'});
+    expect(await status(other,detailPath,'GET')).toBe(404);
+    expect(await status(other,detailPath,'PATCH',{title:'unauthorized',expected_title_revision:b.title_revision})).toBe(404);
+    await other.close();
+    expect((await read(learner,detailPath)).data.batch.title).toBe('Local pending title');
+  });
+  let reviewURL,attemptId;
+  const next=()=>btn(lp,'next').click();
+  async function fillCorrect(){
+    for(let i=0;i<5;i++)await lp.locator('.slot').nth(i).fill('learn'[i]);
+    await next();await expect(lp.locator('.gap')).toHaveCount(3);
+    for(const [i,v] of ['learns','learning','learned'].entries())await lp.locator('.gap').nth(i).fill(v);
+    await next();await btn(lp,'submit').click();await expect(lp.locator('.result-word')).toHaveCount(4);
+  }
+  await check('Q04','Correct word plus all surface forms succeeds and clears persisted answers',async()=>{
+    await lp.goto(origin+'/library/'+batchId);await ready(lp);await btn(lp,'l.single').click();
+    await expect(lp.locator('.slot')).toHaveCount(5);reviewURL=lp.url();
+    const sessionId=new URL(reviewURL).pathname.split('/').at(-1);
+    attemptId=(await read(learner,'/me/review-sessions/'+sessionId)).data.session.current_attempt.attempt_id;
+    await fillCorrect();await expect(lp.locator('.result-word .bad')).toHaveCount(0);
+    await expect(lp.locator('.result-word .good')).toHaveText(['learn','learns','learning','learned']);
+    expect((await read(learner,'/me/learning-summary')).data.successful_review_count).toBe(initialStats.successful_review_count+1);
+    const receipt=(await read(learner,'/me/review-attempts/'+attemptId)).data;
+    expect(receipt.state).toBe('submitted');expect(receipt).not.toHaveProperty('comparison');
+    expect(receipt.receipt.successful).toBe(true);
+  });
+  await check('Q05','Completed comparison is absent after reload and all-blank restart does not count learning',async()=>{
+    await lp.reload();await ready(lp);await expect(lp.locator('.result-word')).toHaveCount(0);
+    const before=(await read(learner,'/me/account')).data.account.last_learning_at;
+    await btn(lp,'restart').click();await expect(lp.locator('.slot')).toHaveCount(5);
+    await btn(lp,'overview').click();await btn(lp,'submit').click();
+    await expect(lp.locator('.result-word .bad')).toHaveCount(4);
+    expect((await read(learner,'/me/account')).data.account.last_learning_at).toBe(before);
+    expect((await read(learner,'/me/learning-summary')).data.successful_review_count).toBe(initialStats.successful_review_count+1);
+  });
+  await check('Q06','Back navigation from library cannot restore submitted comparison',async()=>{
+    await lp.locator('.review-context a').click();await expect(lp).toHaveURL(/\/library$/);
+    await lp.goBack();await ready(lp);await expect(lp.locator('.result-word')).toHaveCount(0);
+    await expect(lp.getByText(t('l.summary.unavailable'),{exact:true})).toBeVisible();
+  });
+  await check('Q07','Partial draft restores only on confirmation; title edits do not erase it',async()=>{
+    await btn(lp,'restart').click();await expect(lp.locator('.slot')).toHaveCount(5);
+    await lp.locator('.slot').first().fill('z');await btn(lp,'overview').click();
+    const b=(await read(learner,detailPath)).data.batch;
+    await write(learner,detailPath,'PATCH',{title:'Title with retained draft',expected_title_revision:b.title_revision});
+    await lp.reload();await ready(lp);await expect(lp.locator('#restore-draft[open]')).toBeVisible();
+    expect(await lp.locator('.answer-link').count()).toBe(0);
+    await btn(lp.locator('#restore-draft'),'resume').click();
+    await expect(lp.locator('.answer-link').first()).toHaveText('z');
+  });
+  await check('Q08','Real backend review still usable when IndexedDB is unavailable',async()=>{
+    const blocked=await browser.newContext({storageState:await learner.storageState()});
+    await blocked.addInitScript(()=>{IDBFactory.prototype.open=function(){throw new DOMException('QA unavailable IndexedDB','SecurityError')}});
+    const bp=await pageFor(blocked);try{
+      await bp.goto(reviewURL);await ready(bp);
+      await expect(bp.locator('main [role=alert]')).toBeVisible();
+      await bp.screenshot({path:new URL('real-storage-denied.png',out).pathname,fullPage:true});
+      await expect(bp.locator('.slot')).toHaveCount(5,{timeout:2500});
+    }finally{await blocked.close()}
+  });
+  await check('Q09','All-empty nickname/gender saves; same-day welcome and reminder content coexist',async()=>{
+    await write(learner,'/me/account','PATCH',{nickname:null,gender:null});
+    const notice={title:{zh:'公告',en:'QA Reminder'},body_markdown:{zh:'正文',en:'**Reminder body** <script>window.pwned=1</script>'},visible:true,remind:true};
+    await write(admin,'/admin/notices','POST',notice);
+    await write(admin,'/admin/notices','POST',{...notice,title:{zh:'隐藏',en:'Hidden QA reminder'},visible:false});
+    const loginCtx=await browser.newContext();const logPage=await pageFor(loginCtx);
+    try{
+      await logPage.goto(origin+'/login');await ready(logPage);
+      await logPage.locator('input[autocomplete=username]').fill(learnerName);
+      await logPage.locator('input[type=password]').fill(env.ADMIN_PASSWORD);
+      await logPage.locator('form button[type=submit]').click();
+      await expect(logPage.locator('dialog[open]')).toContainText('QA Reminder');
+      await expect(logPage.locator('dialog[open]')).not.toContainText('Hidden QA reminder');
+      await expect(logPage.locator('#toast')).toBeVisible();
+      expect(await logPage.locator('#toast').evaluate(el=>el.parentElement.tagName)).toBe('DIALOG');
+      expect(await logPage.evaluate(()=>window.pwned)).toBeUndefined();
+      await logPage.screenshot({path:new URL('welcome-reminder.png',out).pathname,fullPage:true});
+      await logPage.keyboard.press('Escape');await logPage.reload();await ready(logPage);
+      await expect(logPage.locator('dialog[open]')).toHaveCount(0);
+    }finally{await loginCtx.close()}
+  });
+  await check('Q10','Paused batch excluded from date range but available for single review',async()=>{
+    await write(learner,detailPath,'PATCH',{participates_in_range_review:false});
+    const date=new Date().toLocaleDateString('en-CA',{timeZone:'Asia/Shanghai'});
+    const range=await read(learner,'/me/review-range/preview?start_date='+date+'&end_date='+date+'&timezone=Asia%2FShanghai');
+    expect(range.data.batch_count).toBe(0);
+    await lp.goto(origin+'/library/'+batchId);await ready(lp);await btn(lp,'l.resumeSingle').count();
+    expect(await lp.locator('main button').allTextContents()).toContain(t('l.resumeSingle'));
+    await write(learner,detailPath,'PATCH',{participates_in_range_review:true});
+  });
+  await check('Q11','Successful delete removes batch and invalidates corresponding review URL',async()=>{
+    await lp.goto(origin+'/library/'+batchId);await ready(lp);
+    await btn(lp,'l.delete').click();await btn(lp.locator('dialog[open]'),'cancel').click();
+    expect((await read(learner,detailPath)).data.batch.id).toBe(batchId);
+    await btn(lp,'l.delete').click();await btn(lp.locator('dialog[open]'),'l.delete').click();
+    await expect(lp).toHaveURL(/\/library$/);
+    expect(await status(learner,detailPath,'GET')).toBe(404);
+    await lp.goto(reviewURL);await ready(lp);await expect(lp.locator('.slot')).toHaveCount(0);
+    expect((await read(learner,'/me/learning-summary')).data.successful_review_count).toBe(initialStats.successful_review_count+1);
+  });
+  console.log(JSON.stringify({fixturePreparation:observed,results,localProviderCalls:calls,realProviderCalls:0,pageErrors:failures},null,2));
+  writeFileSync(new URL('real-audit.json',out),JSON.stringify({fixturePreparation:observed,results,localProviderCalls:calls,realProviderCalls:0,pageErrors:failures},null,2));
+}catch(error){
+  writeFileSync(new URL('real-audit-setup-error.json',out),JSON.stringify({fixturePreparation:observed,error:String(error),results,pageErrors:failures},null,2));throw error;
+}finally{await browser.close();await new Promise(r=>provider.close(r));await new Promise(r=>proxy.close(r))}

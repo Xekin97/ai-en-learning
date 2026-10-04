@@ -1,0 +1,1591 @@
+{
+  "results": [
+    {
+      "id": "K01",
+      "name": "CR014 search/Enter/empty/clear return focus; full statistics survive filtering",
+      "result": "PASS"
+    },
+    {
+      "id": "K02",
+      "name": "CR014 load-more focuses first of four new titles and preserves prior order",
+      "result": "PASS"
+    },
+    {
+      "id": "K03",
+      "name": "CR014/015 filtered and unfiltered bidirectional participation uses full-library counts",
+      "result": "PASS"
+    },
+    {
+      "id": "K04",
+      "name": "CR012 regression: filtered return by page-link and browser history keeps position and 21 rows",
+      "result": "PASS"
+    },
+    {
+      "id": "K05",
+      "name": "Shared detail participation updates the cached list summary on return",
+      "result": "PASS"
+    },
+    {
+      "id": "K06",
+      "name": "PATCH network failure retains confirmed state and successful retry restores focus/stats",
+      "result": "PASS"
+    },
+    {
+      "id": "K07",
+      "name": "A failed summary read keeps the committed checkbox and recovers by search",
+      "result": "PASS"
+    },
+    {
+      "id": "K08",
+      "name": "An older real summary response cannot overwrite the newer second mutation",
+      "result": "PASS"
+    },
+    {
+      "id": "K09",
+      "name": "A pending old load-more does not append or take focus after a new search",
+      "result": "PASS"
+    },
+    {
+      "id": "K10",
+      "name": "UI18 exact six labels/order, local accessibility and no unexpected runtime errors",
+      "result": "FAIL",
+      "error": "Error: expect(received).toEqual(expected) // deep equality\n\n- Expected  -  1\n+ Received  + 58\n\n- Array []\n+ Array [\n+   Object {\n+     \"description\": \"Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds\",\n+     \"help\": \"Elements must meet minimum color contrast ratio thresholds\",\n+     \"helpUrl\": \"https://dequeuniversity.com/rules/axe/4.11/color-contrast?application=playwright\",\n+     \"id\": \"color-contrast\",\n+     \"impact\": \"serious\",\n+     \"nodes\": Array [\n+       Object {\n+         \"all\": Array [],\n+         \"any\": Array [\n+           Object {\n+             \"data\": Object {\n+               \"bgColor\": \"#edf2e4\",\n+               \"contrastRatio\": 4.41,\n+               \"expectedContrastRatio\": \"4.5:1\",\n+               \"fgColor\": \"#65726a\",\n+               \"fontSize\": \"9.0pt (12px)\",\n+               \"fontWeight\": \"normal\",\n+               \"messageKey\": null,\n+             },\n+             \"id\": \"color-contrast\",\n+             \"impact\": \"serious\",\n+             \"message\": \"Element has insufficient color contrast of 4.41 (foreground color: #65726a, background color: #edf2e4, font size: 9.0pt (12px), font weight: normal). Expected contrast ratio of 4.5:1\",\n+             \"relatedNodes\": Array [\n+               Object {\n+                 \"html\": \"<div data-stat=\\\"generated\\\">\",\n+                 \"target\": Array [\n+                   \"div[data-stat=\\\"generated\\\"]\",\n+                 ],\n+               },\n+             ],\n+           },\n+         ],\n+         \"failureSummary\": \"Fix any of the following:\n+   Element has insufficient color contrast of 4.41 (foreground color: #65726a, background color: #edf2e4, font size: 9.0pt (12px), font weight: normal). Expected contrast ratio of 4.5:1\",\n+         \"html\": \"<span>累计生成篇数</span>\",\n+         \"impact\": \"serious\",\n+         \"none\": Array [],\n+         \"target\": Array [\n+           \"div[data-stat=\\\"generated\\\"] > dt > span\",\n+         ],\n+       },\n+     ],\n+     \"tags\": Array [\n+       \"cat.color\",\n+       \"wcag2aa\",\n+       \"wcag143\",\n+       \"TTv5\",\n+       \"TT13.c\",\n+       \"EN-301-549\",\n+       \"EN-9.1.4.3\",\n+       \"ACT\",\n+       \"RGAAv4\",\n+       \"RGAA-3.2.1\",\n+     ],\n+   },\n+ ]"
+    }
+  ],
+  "samples": [
+    {
+      "action": "K01",
+      "lang": "en",
+      "width": 320,
+      "filteredRows": 3,
+      "unfilteredLoadedRows": 20,
+      "fullLibraryTotal": 24,
+      "searchClearFocus": true
+    },
+    {
+      "action": "K01",
+      "lang": "en",
+      "width": 390,
+      "filteredRows": 3,
+      "unfilteredLoadedRows": 20,
+      "fullLibraryTotal": 24,
+      "searchClearFocus": true
+    },
+    {
+      "action": "K01",
+      "lang": "en",
+      "width": 768,
+      "filteredRows": 3,
+      "unfilteredLoadedRows": 20,
+      "fullLibraryTotal": 24,
+      "searchClearFocus": true
+    },
+    {
+      "action": "K01",
+      "lang": "en",
+      "width": 1440,
+      "filteredRows": 3,
+      "unfilteredLoadedRows": 20,
+      "fullLibraryTotal": 24,
+      "searchClearFocus": true
+    },
+    {
+      "action": "K01",
+      "lang": "zh",
+      "width": 320,
+      "filteredRows": 3,
+      "unfilteredLoadedRows": 20,
+      "fullLibraryTotal": 24,
+      "searchClearFocus": true
+    },
+    {
+      "action": "K01",
+      "lang": "zh",
+      "width": 390,
+      "filteredRows": 3,
+      "unfilteredLoadedRows": 20,
+      "fullLibraryTotal": 24,
+      "searchClearFocus": true
+    },
+    {
+      "action": "K01",
+      "lang": "zh",
+      "width": 768,
+      "filteredRows": 3,
+      "unfilteredLoadedRows": 20,
+      "fullLibraryTotal": 24,
+      "searchClearFocus": true
+    },
+    {
+      "action": "K01",
+      "lang": "zh",
+      "width": 1440,
+      "filteredRows": 3,
+      "unfilteredLoadedRows": 20,
+      "fullLibraryTotal": 24,
+      "searchClearFocus": true
+    },
+    {
+      "action": "K02",
+      "lang": "en",
+      "width": 320,
+      "newCount": 4,
+      "firstNew": "01a0e613-2f0e-7014-99c0-85560c3c7f04",
+      "focus": true
+    },
+    {
+      "action": "K02",
+      "lang": "en",
+      "width": 390,
+      "newCount": 4,
+      "firstNew": "01a0e613-2f0e-7014-99c0-85560c3c7f04",
+      "focus": true
+    },
+    {
+      "action": "K02",
+      "lang": "en",
+      "width": 768,
+      "newCount": 4,
+      "firstNew": "01a0e613-2f0e-7014-99c0-85560c3c7f04",
+      "focus": true
+    },
+    {
+      "action": "K02",
+      "lang": "en",
+      "width": 1440,
+      "newCount": 4,
+      "firstNew": "01a0e613-2f0e-7014-99c0-85560c3c7f04",
+      "focus": true
+    },
+    {
+      "action": "K02",
+      "lang": "zh",
+      "width": 320,
+      "newCount": 4,
+      "firstNew": "01a0e613-2f0e-7014-99c0-85560c3c7f04",
+      "focus": true
+    },
+    {
+      "action": "K02",
+      "lang": "zh",
+      "width": 390,
+      "newCount": 4,
+      "firstNew": "01a0e613-2f0e-7014-99c0-85560c3c7f04",
+      "focus": true
+    },
+    {
+      "action": "K02",
+      "lang": "zh",
+      "width": 768,
+      "newCount": 4,
+      "firstNew": "01a0e613-2f0e-7014-99c0-85560c3c7f04",
+      "focus": true
+    },
+    {
+      "action": "K02",
+      "lang": "zh",
+      "width": 1440,
+      "newCount": 4,
+      "firstNew": "01a0e613-2f0e-7014-99c0-85560c3c7f04",
+      "focus": true
+    },
+    {
+      "action": "K03",
+      "lang": "en",
+      "id": "01a0e613-2f1b-781d-b6dc-28eb1d424562",
+      "before": [
+        25,
+        2,
+        23,
+        1,
+        0,
+        0
+      ],
+      "after": [
+        25,
+        2,
+        22,
+        2,
+        0,
+        0
+      ],
+      "ui": [
+        25,
+        2,
+        22,
+        2,
+        0,
+        0
+      ],
+      "patch": {
+        "batch_id": "01a0e613-2f1b-781d-b6dc-28eb1d424562",
+        "participates_in_range_review": false
+      },
+      "focused": true
+    },
+    {
+      "action": "K03",
+      "lang": "en",
+      "id": "01a0e613-2f1b-781d-b6dc-28eb1d424562",
+      "before": [
+        25,
+        2,
+        22,
+        2,
+        0,
+        0
+      ],
+      "after": [
+        25,
+        2,
+        23,
+        1,
+        0,
+        0
+      ],
+      "ui": [
+        25,
+        2,
+        23,
+        1,
+        0,
+        0
+      ],
+      "patch": {
+        "batch_id": "01a0e613-2f1b-781d-b6dc-28eb1d424562",
+        "participates_in_range_review": true
+      },
+      "focused": true
+    },
+    {
+      "action": "K03",
+      "lang": "en",
+      "id": "01a0e613-2def-7ecb-8a1f-0fff8b0d965e",
+      "before": [
+        25,
+        2,
+        23,
+        1,
+        0,
+        0
+      ],
+      "after": [
+        25,
+        2,
+        22,
+        2,
+        0,
+        0
+      ],
+      "ui": [
+        25,
+        2,
+        22,
+        2,
+        0,
+        0
+      ],
+      "patch": {
+        "batch_id": "01a0e613-2def-7ecb-8a1f-0fff8b0d965e",
+        "participates_in_range_review": false
+      },
+      "focused": true
+    },
+    {
+      "action": "K03",
+      "lang": "en",
+      "id": "01a0e613-2def-7ecb-8a1f-0fff8b0d965e",
+      "before": [
+        25,
+        2,
+        22,
+        2,
+        0,
+        0
+      ],
+      "after": [
+        25,
+        2,
+        23,
+        1,
+        0,
+        0
+      ],
+      "ui": [
+        25,
+        2,
+        23,
+        1,
+        0,
+        0
+      ],
+      "patch": {
+        "batch_id": "01a0e613-2def-7ecb-8a1f-0fff8b0d965e",
+        "participates_in_range_review": true
+      },
+      "focused": true
+    },
+    {
+      "action": "K03",
+      "lang": "en",
+      "id": "01a0e613-2f1b-781d-b6dc-28eb1d424562",
+      "before": [
+        25,
+        2,
+        23,
+        1,
+        0,
+        0
+      ],
+      "after": [
+        25,
+        2,
+        22,
+        2,
+        0,
+        0
+      ],
+      "ui": [
+        25,
+        2,
+        22,
+        2,
+        0,
+        0
+      ],
+      "patch": {
+        "batch_id": "01a0e613-2f1b-781d-b6dc-28eb1d424562",
+        "participates_in_range_review": false
+      },
+      "focused": true
+    },
+    {
+      "action": "K03",
+      "lang": "en",
+      "id": "01a0e613-2f1b-781d-b6dc-28eb1d424562",
+      "before": [
+        25,
+        2,
+        22,
+        2,
+        0,
+        0
+      ],
+      "after": [
+        25,
+        2,
+        23,
+        1,
+        0,
+        0
+      ],
+      "ui": [
+        25,
+        2,
+        23,
+        1,
+        0,
+        0
+      ],
+      "patch": {
+        "batch_id": "01a0e613-2f1b-781d-b6dc-28eb1d424562",
+        "participates_in_range_review": true
+      },
+      "focused": true
+    },
+    {
+      "action": "K03",
+      "lang": "en",
+      "id": "01a0e613-2def-7ecb-8a1f-0fff8b0d965e",
+      "before": [
+        25,
+        2,
+        23,
+        1,
+        0,
+        0
+      ],
+      "after": [
+        25,
+        2,
+        22,
+        2,
+        0,
+        0
+      ],
+      "ui": [
+        25,
+        2,
+        22,
+        2,
+        0,
+        0
+      ],
+      "patch": {
+        "batch_id": "01a0e613-2def-7ecb-8a1f-0fff8b0d965e",
+        "participates_in_range_review": false
+      },
+      "focused": true
+    },
+    {
+      "action": "K03",
+      "lang": "en",
+      "id": "01a0e613-2def-7ecb-8a1f-0fff8b0d965e",
+      "before": [
+        25,
+        2,
+        22,
+        2,
+        0,
+        0
+      ],
+      "after": [
+        25,
+        2,
+        23,
+        1,
+        0,
+        0
+      ],
+      "ui": [
+        25,
+        2,
+        23,
+        1,
+        0,
+        0
+      ],
+      "patch": {
+        "batch_id": "01a0e613-2def-7ecb-8a1f-0fff8b0d965e",
+        "participates_in_range_review": true
+      },
+      "focused": true
+    },
+    {
+      "action": "K03",
+      "lang": "en",
+      "id": "01a0e613-2f1b-781d-b6dc-28eb1d424562",
+      "before": [
+        25,
+        2,
+        23,
+        1,
+        0,
+        0
+      ],
+      "after": [
+        25,
+        2,
+        22,
+        2,
+        0,
+        0
+      ],
+      "ui": [
+        25,
+        2,
+        22,
+        2,
+        0,
+        0
+      ],
+      "patch": {
+        "batch_id": "01a0e613-2f1b-781d-b6dc-28eb1d424562",
+        "participates_in_range_review": false
+      },
+      "focused": true
+    },
+    {
+      "action": "K03",
+      "lang": "en",
+      "id": "01a0e613-2f1b-781d-b6dc-28eb1d424562",
+      "before": [
+        25,
+        2,
+        22,
+        2,
+        0,
+        0
+      ],
+      "after": [
+        25,
+        2,
+        23,
+        1,
+        0,
+        0
+      ],
+      "ui": [
+        25,
+        2,
+        23,
+        1,
+        0,
+        0
+      ],
+      "patch": {
+        "batch_id": "01a0e613-2f1b-781d-b6dc-28eb1d424562",
+        "participates_in_range_review": true
+      },
+      "focused": true
+    },
+    {
+      "action": "K03",
+      "lang": "en",
+      "id": "01a0e613-2def-7ecb-8a1f-0fff8b0d965e",
+      "before": [
+        25,
+        2,
+        23,
+        1,
+        0,
+        0
+      ],
+      "after": [
+        25,
+        2,
+        22,
+        2,
+        0,
+        0
+      ],
+      "ui": [
+        25,
+        2,
+        22,
+        2,
+        0,
+        0
+      ],
+      "patch": {
+        "batch_id": "01a0e613-2def-7ecb-8a1f-0fff8b0d965e",
+        "participates_in_range_review": false
+      },
+      "focused": true
+    },
+    {
+      "action": "K03",
+      "lang": "en",
+      "id": "01a0e613-2def-7ecb-8a1f-0fff8b0d965e",
+      "before": [
+        25,
+        2,
+        22,
+        2,
+        0,
+        0
+      ],
+      "after": [
+        25,
+        2,
+        23,
+        1,
+        0,
+        0
+      ],
+      "ui": [
+        25,
+        2,
+        23,
+        1,
+        0,
+        0
+      ],
+      "patch": {
+        "batch_id": "01a0e613-2def-7ecb-8a1f-0fff8b0d965e",
+        "participates_in_range_review": true
+      },
+      "focused": true
+    },
+    {
+      "action": "K03",
+      "lang": "en",
+      "id": "01a0e613-2f1b-781d-b6dc-28eb1d424562",
+      "before": [
+        25,
+        2,
+        23,
+        1,
+        0,
+        0
+      ],
+      "after": [
+        25,
+        2,
+        22,
+        2,
+        0,
+        0
+      ],
+      "ui": [
+        25,
+        2,
+        22,
+        2,
+        0,
+        0
+      ],
+      "patch": {
+        "batch_id": "01a0e613-2f1b-781d-b6dc-28eb1d424562",
+        "participates_in_range_review": false
+      },
+      "focused": true
+    },
+    {
+      "action": "K03",
+      "lang": "en",
+      "id": "01a0e613-2f1b-781d-b6dc-28eb1d424562",
+      "before": [
+        25,
+        2,
+        22,
+        2,
+        0,
+        0
+      ],
+      "after": [
+        25,
+        2,
+        23,
+        1,
+        0,
+        0
+      ],
+      "ui": [
+        25,
+        2,
+        23,
+        1,
+        0,
+        0
+      ],
+      "patch": {
+        "batch_id": "01a0e613-2f1b-781d-b6dc-28eb1d424562",
+        "participates_in_range_review": true
+      },
+      "focused": true
+    },
+    {
+      "action": "K03",
+      "lang": "en",
+      "id": "01a0e613-2def-7ecb-8a1f-0fff8b0d965e",
+      "before": [
+        25,
+        2,
+        23,
+        1,
+        0,
+        0
+      ],
+      "after": [
+        25,
+        2,
+        22,
+        2,
+        0,
+        0
+      ],
+      "ui": [
+        25,
+        2,
+        22,
+        2,
+        0,
+        0
+      ],
+      "patch": {
+        "batch_id": "01a0e613-2def-7ecb-8a1f-0fff8b0d965e",
+        "participates_in_range_review": false
+      },
+      "focused": true
+    },
+    {
+      "action": "K03",
+      "lang": "en",
+      "id": "01a0e613-2def-7ecb-8a1f-0fff8b0d965e",
+      "before": [
+        25,
+        2,
+        22,
+        2,
+        0,
+        0
+      ],
+      "after": [
+        25,
+        2,
+        23,
+        1,
+        0,
+        0
+      ],
+      "ui": [
+        25,
+        2,
+        23,
+        1,
+        0,
+        0
+      ],
+      "patch": {
+        "batch_id": "01a0e613-2def-7ecb-8a1f-0fff8b0d965e",
+        "participates_in_range_review": true
+      },
+      "focused": true
+    },
+    {
+      "action": "K03",
+      "lang": "zh",
+      "id": "01a0e613-2f1b-781d-b6dc-28eb1d424562",
+      "before": [
+        25,
+        2,
+        23,
+        1,
+        0,
+        0
+      ],
+      "after": [
+        25,
+        2,
+        22,
+        2,
+        0,
+        0
+      ],
+      "ui": [
+        25,
+        2,
+        22,
+        2,
+        0,
+        0
+      ],
+      "patch": {
+        "batch_id": "01a0e613-2f1b-781d-b6dc-28eb1d424562",
+        "participates_in_range_review": false
+      },
+      "focused": true
+    },
+    {
+      "action": "K03",
+      "lang": "zh",
+      "id": "01a0e613-2f1b-781d-b6dc-28eb1d424562",
+      "before": [
+        25,
+        2,
+        22,
+        2,
+        0,
+        0
+      ],
+      "after": [
+        25,
+        2,
+        23,
+        1,
+        0,
+        0
+      ],
+      "ui": [
+        25,
+        2,
+        23,
+        1,
+        0,
+        0
+      ],
+      "patch": {
+        "batch_id": "01a0e613-2f1b-781d-b6dc-28eb1d424562",
+        "participates_in_range_review": true
+      },
+      "focused": true
+    },
+    {
+      "action": "K03",
+      "lang": "zh",
+      "id": "01a0e613-2def-7ecb-8a1f-0fff8b0d965e",
+      "before": [
+        25,
+        2,
+        23,
+        1,
+        0,
+        0
+      ],
+      "after": [
+        25,
+        2,
+        22,
+        2,
+        0,
+        0
+      ],
+      "ui": [
+        25,
+        2,
+        22,
+        2,
+        0,
+        0
+      ],
+      "patch": {
+        "batch_id": "01a0e613-2def-7ecb-8a1f-0fff8b0d965e",
+        "participates_in_range_review": false
+      },
+      "focused": true
+    },
+    {
+      "action": "K03",
+      "lang": "zh",
+      "id": "01a0e613-2def-7ecb-8a1f-0fff8b0d965e",
+      "before": [
+        25,
+        2,
+        22,
+        2,
+        0,
+        0
+      ],
+      "after": [
+        25,
+        2,
+        23,
+        1,
+        0,
+        0
+      ],
+      "ui": [
+        25,
+        2,
+        23,
+        1,
+        0,
+        0
+      ],
+      "patch": {
+        "batch_id": "01a0e613-2def-7ecb-8a1f-0fff8b0d965e",
+        "participates_in_range_review": true
+      },
+      "focused": true
+    },
+    {
+      "action": "K03",
+      "lang": "zh",
+      "id": "01a0e613-2f1b-781d-b6dc-28eb1d424562",
+      "before": [
+        25,
+        2,
+        23,
+        1,
+        0,
+        0
+      ],
+      "after": [
+        25,
+        2,
+        22,
+        2,
+        0,
+        0
+      ],
+      "ui": [
+        25,
+        2,
+        22,
+        2,
+        0,
+        0
+      ],
+      "patch": {
+        "batch_id": "01a0e613-2f1b-781d-b6dc-28eb1d424562",
+        "participates_in_range_review": false
+      },
+      "focused": true
+    },
+    {
+      "action": "K03",
+      "lang": "zh",
+      "id": "01a0e613-2f1b-781d-b6dc-28eb1d424562",
+      "before": [
+        25,
+        2,
+        22,
+        2,
+        0,
+        0
+      ],
+      "after": [
+        25,
+        2,
+        23,
+        1,
+        0,
+        0
+      ],
+      "ui": [
+        25,
+        2,
+        23,
+        1,
+        0,
+        0
+      ],
+      "patch": {
+        "batch_id": "01a0e613-2f1b-781d-b6dc-28eb1d424562",
+        "participates_in_range_review": true
+      },
+      "focused": true
+    },
+    {
+      "action": "K03",
+      "lang": "zh",
+      "id": "01a0e613-2def-7ecb-8a1f-0fff8b0d965e",
+      "before": [
+        25,
+        2,
+        23,
+        1,
+        0,
+        0
+      ],
+      "after": [
+        25,
+        2,
+        22,
+        2,
+        0,
+        0
+      ],
+      "ui": [
+        25,
+        2,
+        22,
+        2,
+        0,
+        0
+      ],
+      "patch": {
+        "batch_id": "01a0e613-2def-7ecb-8a1f-0fff8b0d965e",
+        "participates_in_range_review": false
+      },
+      "focused": true
+    },
+    {
+      "action": "K03",
+      "lang": "zh",
+      "id": "01a0e613-2def-7ecb-8a1f-0fff8b0d965e",
+      "before": [
+        25,
+        2,
+        22,
+        2,
+        0,
+        0
+      ],
+      "after": [
+        25,
+        2,
+        23,
+        1,
+        0,
+        0
+      ],
+      "ui": [
+        25,
+        2,
+        23,
+        1,
+        0,
+        0
+      ],
+      "patch": {
+        "batch_id": "01a0e613-2def-7ecb-8a1f-0fff8b0d965e",
+        "participates_in_range_review": true
+      },
+      "focused": true
+    },
+    {
+      "action": "K03",
+      "lang": "zh",
+      "id": "01a0e613-2f1b-781d-b6dc-28eb1d424562",
+      "before": [
+        25,
+        2,
+        23,
+        1,
+        0,
+        0
+      ],
+      "after": [
+        25,
+        2,
+        22,
+        2,
+        0,
+        0
+      ],
+      "ui": [
+        25,
+        2,
+        22,
+        2,
+        0,
+        0
+      ],
+      "patch": {
+        "batch_id": "01a0e613-2f1b-781d-b6dc-28eb1d424562",
+        "participates_in_range_review": false
+      },
+      "focused": true
+    },
+    {
+      "action": "K03",
+      "lang": "zh",
+      "id": "01a0e613-2f1b-781d-b6dc-28eb1d424562",
+      "before": [
+        25,
+        2,
+        22,
+        2,
+        0,
+        0
+      ],
+      "after": [
+        25,
+        2,
+        23,
+        1,
+        0,
+        0
+      ],
+      "ui": [
+        25,
+        2,
+        23,
+        1,
+        0,
+        0
+      ],
+      "patch": {
+        "batch_id": "01a0e613-2f1b-781d-b6dc-28eb1d424562",
+        "participates_in_range_review": true
+      },
+      "focused": true
+    },
+    {
+      "action": "K03",
+      "lang": "zh",
+      "id": "01a0e613-2def-7ecb-8a1f-0fff8b0d965e",
+      "before": [
+        25,
+        2,
+        23,
+        1,
+        0,
+        0
+      ],
+      "after": [
+        25,
+        2,
+        22,
+        2,
+        0,
+        0
+      ],
+      "ui": [
+        25,
+        2,
+        22,
+        2,
+        0,
+        0
+      ],
+      "patch": {
+        "batch_id": "01a0e613-2def-7ecb-8a1f-0fff8b0d965e",
+        "participates_in_range_review": false
+      },
+      "focused": true
+    },
+    {
+      "action": "K03",
+      "lang": "zh",
+      "id": "01a0e613-2def-7ecb-8a1f-0fff8b0d965e",
+      "before": [
+        25,
+        2,
+        22,
+        2,
+        0,
+        0
+      ],
+      "after": [
+        25,
+        2,
+        23,
+        1,
+        0,
+        0
+      ],
+      "ui": [
+        25,
+        2,
+        23,
+        1,
+        0,
+        0
+      ],
+      "patch": {
+        "batch_id": "01a0e613-2def-7ecb-8a1f-0fff8b0d965e",
+        "participates_in_range_review": true
+      },
+      "focused": true
+    },
+    {
+      "action": "K03",
+      "lang": "zh",
+      "id": "01a0e613-2f1b-781d-b6dc-28eb1d424562",
+      "before": [
+        25,
+        2,
+        23,
+        1,
+        0,
+        0
+      ],
+      "after": [
+        25,
+        2,
+        22,
+        2,
+        0,
+        0
+      ],
+      "ui": [
+        25,
+        2,
+        22,
+        2,
+        0,
+        0
+      ],
+      "patch": {
+        "batch_id": "01a0e613-2f1b-781d-b6dc-28eb1d424562",
+        "participates_in_range_review": false
+      },
+      "focused": true
+    },
+    {
+      "action": "K03",
+      "lang": "zh",
+      "id": "01a0e613-2f1b-781d-b6dc-28eb1d424562",
+      "before": [
+        25,
+        2,
+        22,
+        2,
+        0,
+        0
+      ],
+      "after": [
+        25,
+        2,
+        23,
+        1,
+        0,
+        0
+      ],
+      "ui": [
+        25,
+        2,
+        23,
+        1,
+        0,
+        0
+      ],
+      "patch": {
+        "batch_id": "01a0e613-2f1b-781d-b6dc-28eb1d424562",
+        "participates_in_range_review": true
+      },
+      "focused": true
+    },
+    {
+      "action": "K03",
+      "lang": "zh",
+      "id": "01a0e613-2def-7ecb-8a1f-0fff8b0d965e",
+      "before": [
+        25,
+        2,
+        23,
+        1,
+        0,
+        0
+      ],
+      "after": [
+        25,
+        2,
+        22,
+        2,
+        0,
+        0
+      ],
+      "ui": [
+        25,
+        2,
+        22,
+        2,
+        0,
+        0
+      ],
+      "patch": {
+        "batch_id": "01a0e613-2def-7ecb-8a1f-0fff8b0d965e",
+        "participates_in_range_review": false
+      },
+      "focused": true
+    },
+    {
+      "action": "K03",
+      "lang": "zh",
+      "id": "01a0e613-2def-7ecb-8a1f-0fff8b0d965e",
+      "before": [
+        25,
+        2,
+        22,
+        2,
+        0,
+        0
+      ],
+      "after": [
+        25,
+        2,
+        23,
+        1,
+        0,
+        0
+      ],
+      "ui": [
+        25,
+        2,
+        23,
+        1,
+        0,
+        0
+      ],
+      "patch": {
+        "batch_id": "01a0e613-2def-7ecb-8a1f-0fff8b0d965e",
+        "participates_in_range_review": true
+      },
+      "focused": true
+    },
+    {
+      "action": "K04",
+      "lang": "en",
+      "width": 390,
+      "history": false,
+      "before": 5553,
+      "after": 5553
+    },
+    {
+      "action": "K04",
+      "lang": "en",
+      "width": 390,
+      "history": true,
+      "before": 5553,
+      "after": 5553
+    },
+    {
+      "action": "K04",
+      "lang": "zh",
+      "width": 1440,
+      "history": false,
+      "before": 2896,
+      "after": 2896
+    },
+    {
+      "action": "K04",
+      "lang": "zh",
+      "width": 1440,
+      "history": true,
+      "before": 2896,
+      "after": 2896
+    },
+    {
+      "action": "K05",
+      "lang": "en",
+      "id": "01a0e613-2def-7ecb-8a1f-0fff8b0d965e",
+      "before": [
+        25,
+        2,
+        22,
+        2,
+        0,
+        0
+      ],
+      "after": [
+        25,
+        2,
+        23,
+        1,
+        0,
+        0
+      ],
+      "ui": [
+        25,
+        2,
+        23,
+        1,
+        0,
+        0
+      ],
+      "patch": {
+        "batch_id": "01a0e613-2def-7ecb-8a1f-0fff8b0d965e",
+        "participates_in_range_review": true
+      },
+      "focused": true
+    },
+    {
+      "action": "K05",
+      "before": [
+        25,
+        2,
+        23,
+        1,
+        0,
+        0
+      ],
+      "after": [
+        25,
+        2,
+        22,
+        2,
+        0,
+        0
+      ]
+    },
+    {
+      "action": "K06",
+      "lang": "en",
+      "id": "01a0e613-2f1b-781d-b6dc-28eb1d424562",
+      "before": [
+        25,
+        2,
+        23,
+        1,
+        0,
+        0
+      ],
+      "after": [
+        25,
+        2,
+        22,
+        2,
+        0,
+        0
+      ],
+      "ui": [
+        25,
+        2,
+        22,
+        2,
+        0,
+        0
+      ],
+      "patch": {
+        "batch_id": "01a0e613-2f1b-781d-b6dc-28eb1d424562",
+        "participates_in_range_review": false
+      },
+      "focused": true
+    },
+    {
+      "action": "K06",
+      "lang": "en",
+      "id": "01a0e613-2f1b-781d-b6dc-28eb1d424562",
+      "before": [
+        25,
+        2,
+        22,
+        2,
+        0,
+        0
+      ],
+      "after": [
+        25,
+        2,
+        23,
+        1,
+        0,
+        0
+      ],
+      "ui": [
+        25,
+        2,
+        23,
+        1,
+        0,
+        0
+      ],
+      "patch": {
+        "batch_id": "01a0e613-2f1b-781d-b6dc-28eb1d424562",
+        "participates_in_range_review": true
+      },
+      "focused": true
+    },
+    {
+      "action": "K07",
+      "lang": "en",
+      "id": "01a0e613-2f1b-781d-b6dc-28eb1d424562",
+      "before": [
+        25,
+        2,
+        22,
+        2,
+        0,
+        0
+      ],
+      "after": [
+        25,
+        2,
+        23,
+        1,
+        0,
+        0
+      ],
+      "ui": [
+        25,
+        2,
+        23,
+        1,
+        0,
+        0
+      ],
+      "patch": {
+        "batch_id": "01a0e613-2f1b-781d-b6dc-28eb1d424562",
+        "participates_in_range_review": true
+      },
+      "focused": true
+    },
+    {
+      "action": "K07",
+      "before": [
+        25,
+        2,
+        23,
+        1,
+        0,
+        0
+      ],
+      "after": [
+        25,
+        2,
+        22,
+        2,
+        0,
+        0
+      ]
+    },
+    {
+      "action": "K08",
+      "baseline": [
+        25,
+        2,
+        23,
+        1,
+        0,
+        0
+      ],
+      "latest": [
+        25,
+        2,
+        21,
+        3,
+        0,
+        0
+      ],
+      "oldResponseReleased": true
+    },
+    {
+      "action": "K08",
+      "lang": "en",
+      "id": "01a0e613-2f1b-781d-b6dc-28eb1d424562",
+      "before": [
+        25,
+        2,
+        21,
+        3,
+        0,
+        0
+      ],
+      "after": [
+        25,
+        2,
+        22,
+        2,
+        0,
+        0
+      ],
+      "ui": [
+        25,
+        2,
+        22,
+        2,
+        0,
+        0
+      ],
+      "patch": {
+        "batch_id": "01a0e613-2f1b-781d-b6dc-28eb1d424562",
+        "participates_in_range_review": true
+      },
+      "focused": true
+    },
+    {
+      "action": "K08",
+      "lang": "en",
+      "id": "01a0e613-2f2b-7546-9379-ab59c22f7016",
+      "before": [
+        25,
+        2,
+        22,
+        2,
+        0,
+        0
+      ],
+      "after": [
+        25,
+        2,
+        23,
+        1,
+        0,
+        0
+      ],
+      "ui": [
+        25,
+        2,
+        23,
+        1,
+        0,
+        0
+      ],
+      "patch": {
+        "batch_id": "01a0e613-2f2b-7546-9379-ab59c22f7016",
+        "participates_in_range_review": true
+      },
+      "focused": true
+    }
+  ],
+  "runtime": [
+    {
+      "kind": "error",
+      "url": "http://127.0.0.1:3301/library?entry=book",
+      "action": "K06",
+      "text": "Failed to load resource: net::ERR_FAILED"
+    },
+    {
+      "kind": "error",
+      "url": "http://127.0.0.1:3301/library?entry=book",
+      "action": "K07",
+      "text": "Failed to load resource: net::ERR_FAILED"
+    }
+  ],
+  "localProviderCalls": 27,
+  "realProviderCalls": 0
+}

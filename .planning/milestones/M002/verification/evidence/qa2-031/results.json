@@ -1,0 +1,17 @@
+{
+  "id": "QA31-HTTP",
+  "command": [
+    "go",
+    "test",
+    "-race",
+    "-tags=integration",
+    "./internal/httpapi",
+    "-run",
+    "^TestQA31NoticeOnceHTTP$",
+    "-count=1",
+    "-v"
+  ],
+  "exit": 1,
+  "result": "FAIL",
+  "temporary_db": true
+}

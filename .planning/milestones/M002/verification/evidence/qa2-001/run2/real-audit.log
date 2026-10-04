@@ -1,0 +1,81 @@
+Q01 PASS Private title is literal text, persists, and preserves content/counters
+Q02 PASS Title stale revision retains local input and offers explicit second save
+Q03 PASS Admin cannot edit private title; second learner cannot read/write it
+Q04 PASS Correct word plus all surface forms succeeds and clears persisted answers
+Q05 PASS All-blank restart does not count learning or successful review
+Q06 PASS Back navigation from library cannot restore submitted comparison
+Q07 PASS Partial draft restores only on confirmation; title edits do not erase it
+Q08 FAIL Real backend review still usable when IndexedDB is unavailable
+Q09 PASS All-empty nickname/gender saves; same-day welcome and reminder content coexist
+Q10 PASS Paused batch excluded from date range but available for single review
+Q11 PASS Successful delete removes batch and invalidates corresponding review URL
+{
+  "fixturePreparation": [
+    "real admin login + overview",
+    "all 8 admin modules accept real DTOs, no initial operational reward fixtures",
+    "real atomic multi-row level preview/save and isolated growth activation",
+    "admin draft → real independent preview SSE → publish",
+    "visitor preset generation → register → one-time claim to personal library"
+  ],
+  "results": [
+    {
+      "id": "Q01",
+      "name": "Private title is literal text, persists, and preserves content/counters",
+      "result": "PASS"
+    },
+    {
+      "id": "Q02",
+      "name": "Title stale revision retains local input and offers explicit second save",
+      "result": "PASS"
+    },
+    {
+      "id": "Q03",
+      "name": "Admin cannot edit private title; second learner cannot read/write it",
+      "result": "PASS"
+    },
+    {
+      "id": "Q04",
+      "name": "Correct word plus all surface forms succeeds and clears persisted answers",
+      "result": "PASS"
+    },
+    {
+      "id": "Q05",
+      "name": "All-blank restart does not count learning or successful review",
+      "result": "PASS"
+    },
+    {
+      "id": "Q06",
+      "name": "Back navigation from library cannot restore submitted comparison",
+      "result": "PASS"
+    },
+    {
+      "id": "Q07",
+      "name": "Partial draft restores only on confirmation; title edits do not erase it",
+      "result": "PASS"
+    },
+    {
+      "id": "Q08",
+      "name": "Real backend review still usable when IndexedDB is unavailable",
+      "result": "FAIL",
+      "error": "Error: expect(locator).toBeVisible() failed\n\nLocator: locator('main [role=alert]')\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n  - Expect \"to.be.visible\" with timeout 5000ms\n  - waiting for locator('main [role=alert]')\n"
+    },
+    {
+      "id": "Q09",
+      "name": "All-empty nickname/gender saves; same-day welcome and reminder content coexist",
+      "result": "PASS"
+    },
+    {
+      "id": "Q10",
+      "name": "Paused batch excluded from date range but available for single review",
+      "result": "PASS"
+    },
+    {
+      "id": "Q11",
+      "name": "Successful delete removes batch and invalidates corresponding review URL",
+      "result": "PASS"
+    }
+  ],
+  "localProviderCalls": 2,
+  "realProviderCalls": 0,
+  "pageErrors": []
+}

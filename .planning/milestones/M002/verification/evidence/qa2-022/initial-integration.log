@@ -1,0 +1,15 @@
+INT22-01 FAIL Error: expect(page).toHaveURL(expected) failed
+
+Expected pattern: /\/library\/[a-f0-9-]+/
+Received string:  "http://127.0.0.1:3302/register?claim=1&redirect=/library"
+Timeout: 5000ms
+
+Call log:
+  - Expect "to.have.url" with timeout 5000ms
+    14 × locator resolved to <html lang="en-US" data-app-ready="true">…</html>
+       - unexpected value "http://127.0.0.1:3302/register?claim=1&redirect=/library"
+
+INT22-03 FAIL Error: expect(received).toBe(expected) // Object.is equality
+
+Expected: 403
+Received: 401

@@ -1,0 +1,2630 @@
+[
+  {
+    "id": "W20-en-today",
+    "engine": "chromium",
+    "lang": "en",
+    "width": 1440,
+    "checks": [
+      {
+        "name": "correct welcome variant with literal name and no fabricated days",
+        "pass": true,
+        "actual": {
+          "actual": "Welcome back. Keep today’s learning going.",
+          "expected": "Welcome back. Keep today’s learning going."
+        }
+      },
+      {
+        "name": "ordinary feedback cancels old welcome timeline and uses five-second dwell",
+        "pass": true,
+        "actual": {
+          "old": "idle",
+          "duration": 5600,
+          "same": false
+        }
+      },
+      {
+        "name": "no runtime warning/error",
+        "pass": true,
+        "actual": []
+      }
+    ],
+    "observations": {
+      "start": {
+        "time": 1143.5,
+        "text": "Welcome back. Keep today’s learning going.",
+        "children": [],
+        "animations": 1
+      },
+      "end": 7142.5
+    },
+    "runtime": [],
+    "requests": [
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:3300/api/v1/bootstrap"
+      },
+      {
+        "method": "POST",
+        "url": "http://127.0.0.1:3300/api/v1/analytics/events"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:3300/api/v1/bootstrap"
+      },
+      {
+        "method": "POST",
+        "url": "http://127.0.0.1:3300/api/v1/auth/login"
+      },
+      {
+        "method": "POST",
+        "url": "http://127.0.0.1:3300/api/v1/analytics/events"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:3300/api/v1/me/account"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:3300/api/v1/notices?reminders_only=true"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:3300/api/v1/bootstrap"
+      },
+      {
+        "method": "PATCH",
+        "url": "http://127.0.0.1:3300/api/v1/me/account"
+      }
+    ],
+    "status": "PASS"
+  },
+  {
+    "id": "W20-zh-today",
+    "engine": "webkit",
+    "lang": "zh",
+    "width": 320,
+    "checks": [
+      {
+        "name": "correct welcome variant with literal name and no fabricated days",
+        "pass": true,
+        "actual": {
+          "actual": "欢迎回来，今天的学习还在继续。",
+          "expected": "欢迎回来，今天的学习还在继续。"
+        }
+      },
+      {
+        "name": "ordinary feedback cancels old welcome timeline and uses five-second dwell",
+        "pass": true,
+        "actual": {
+          "old": "idle",
+          "duration": 5600,
+          "same": false
+        }
+      },
+      {
+        "name": "no runtime warning/error",
+        "pass": true,
+        "actual": []
+      }
+    ],
+    "observations": {
+      "start": {
+        "time": 706,
+        "text": "欢迎回来，今天的学习还在继续。",
+        "children": [],
+        "animations": 1
+      },
+      "end": 6596
+    },
+    "runtime": [],
+    "requests": [
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:3300/api/v1/bootstrap"
+      },
+      {
+        "method": "POST",
+        "url": "http://127.0.0.1:3300/api/v1/analytics/events"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:3300/api/v1/bootstrap"
+      },
+      {
+        "method": "POST",
+        "url": "http://127.0.0.1:3300/api/v1/auth/login"
+      },
+      {
+        "method": "POST",
+        "url": "http://127.0.0.1:3300/api/v1/analytics/events"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:3300/api/v1/me/account"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:3300/api/v1/notices?reminders_only=true"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:3300/api/v1/bootstrap"
+      },
+      {
+        "method": "PATCH",
+        "url": "http://127.0.0.1:3300/api/v1/me/account"
+      }
+    ],
+    "status": "PASS"
+  },
+  {
+    "id": "P20-en-1440",
+    "engine": "chromium",
+    "lang": "en",
+    "width": 1440,
+    "checks": [
+      {
+        "name": "test completed",
+        "pass": false,
+        "actual": "locator.selectOption: Timeout 8000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByLabel('Gender (optional)', { exact: true })\u001b[22m\n"
+      }
+    ],
+    "observations": {},
+    "runtime": [],
+    "requests": [
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:3300/api/v1/bootstrap"
+      },
+      {
+        "method": "POST",
+        "url": "http://127.0.0.1:3300/api/v1/analytics/events"
+      }
+    ],
+    "error": "locator.selectOption: Timeout 8000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByLabel('Gender (optional)', { exact: true })\u001b[22m\n\n    at profile (/Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/.planning/milestones/M002/verification/evidence/qa2-020/extra/entry-flows.mjs:60:269)\n    at async run (/Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/.planning/milestones/M002/verification/evidence/qa2-020/extra/entry-flows.mjs:20:6)\n    at async file:///Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/.planning/milestones/M002/verification/evidence/qa2-020/extra/entry-flows.mjs:65:2",
+    "status": "FAIL"
+  },
+  {
+    "id": "P20-zh-390",
+    "engine": "webkit",
+    "lang": "zh",
+    "width": 390,
+    "checks": [
+      {
+        "name": "test completed",
+        "pass": false,
+        "actual": "locator.selectOption: Timeout 8000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByLabel('性别（选填）', { exact: true })\u001b[22m\n"
+      }
+    ],
+    "observations": {},
+    "runtime": [],
+    "requests": [
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:3300/api/v1/bootstrap"
+      },
+      {
+        "method": "POST",
+        "url": "http://127.0.0.1:3300/api/v1/analytics/events"
+      }
+    ],
+    "error": "locator.selectOption: Timeout 8000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByLabel('性别（选填）', { exact: true })\u001b[22m\n\n    at profile (/Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/.planning/milestones/M002/verification/evidence/qa2-020/extra/entry-flows.mjs:60:269)\n    at async run (/Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/.planning/milestones/M002/verification/evidence/qa2-020/extra/entry-flows.mjs:20:6)\n    at async file:///Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/.planning/milestones/M002/verification/evidence/qa2-020/extra/entry-flows.mjs:65:2",
+    "status": "FAIL"
+  },
+  {
+    "id": "A20-en-1440",
+    "engine": "chromium",
+    "lang": "en",
+    "width": 1440,
+    "checks": [
+      {
+        "name": "only previous and next controls",
+        "pass": true
+      },
+      {
+        "name": "actual eight-second automatic rotation moves full card without announcing",
+        "pass": true,
+        "actual": {
+          "first": {
+            "ms": 0,
+            "position": "1 / 2",
+            "scroll": 0,
+            "announce": "",
+            "overflow": false
+          },
+          "last": {
+            "ms": 8606.600000023842,
+            "position": "2 / 2",
+            "scroll": 1320,
+            "announce": "",
+            "overflow": false
+          }
+        }
+      },
+      {
+        "name": "keyboard reading and locale redraw preserve pause",
+        "pass": true
+      },
+      {
+        "name": "reduced motion still allows immediate manual positioning",
+        "pass": true
+      },
+      {
+        "name": "returning to gallery retains chosen language and position per CAR11",
+        "pass": false,
+        "actual": {
+          "selected": "false",
+          "ids": [
+            "preset-zh",
+            "preset-en"
+          ],
+          "before": "preset-en"
+        }
+      },
+      {
+        "name": "browsing never generates",
+        "pass": true
+      },
+      {
+        "name": "no runtime warning/error",
+        "pass": true,
+        "actual": []
+      }
+    ],
+    "observations": {
+      "frames": [
+        {
+          "ms": 0,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 61.10000002384186,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 121.80000001192093,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 182.9000000357628,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 244.4000000357628,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 305.69999998807907,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 366.9000000357628,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 427.19999998807907,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 488.5,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 549.6999999880791,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 610.8000000119209,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 671.8000000119209,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 733,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 794,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 854.9000000357628,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 915.6999999880791,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 976.9000000357628,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 1038,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 1098.6000000238419,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 1159.6000000238419,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 1220.199999988079,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 1280.4000000357628,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 1341.4000000357628,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 1402.5,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 1463.6000000238419,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 1524.699999988079,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 1585.800000011921,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 1646.800000011921,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 1707.9000000357628,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 1769.1000000238419,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 1829.300000011921,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 1890.4000000357628,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 1951.6000000238419,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 2012.6000000238419,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 2073.699999988079,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 2134.800000011921,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 2195,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 2256,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 2317.100000023842,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 2377.699999988079,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 2438.800000011921,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 2499.400000035763,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 2560.400000035763,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 2620.800000011921,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 2681.900000035763,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 2743,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 2804.100000023842,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 2864.300000011921,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 2925.300000011921,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 2986,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 3047.100000023842,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 3108.300000011921,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 3169.300000011921,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 3230.400000035763,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 3291.5,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 3351.800000011921,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 3412.900000035763,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 3474,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 3535,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 3596,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 3657.199999988079,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 3718.300000011921,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 3779.300000011921,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 3840.400000035763,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 3901.199999988079,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 3961.5,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 4022.600000023842,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 4083.699999988079,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 4144.400000035763,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 4205.5,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 4265.699999988079,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 4326.800000011921,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 4387.900000035763,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 4449.100000023842,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 4510.100000023842,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 4570.400000035763,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 4631.5,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 4692.5,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 4753.600000023842,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 4814.699999988079,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 4875.800000011921,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 4935.900000035763,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 4996.5,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 5057.699999988079,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 5118.699999988079,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 5180,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 5241,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 5302.100000023842,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 5363.199999988079,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 5424.300000011921,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 5485.400000035763,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 5546.400000035763,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 5607.5,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 5668.600000023842,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 5729.800000011921,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 5790.300000011921,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 5851.5,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 5912.5,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 5973.600000023842,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 6034.699999988079,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 6095.800000011921,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 6157,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 6218.100000023842,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 6279.100000023842,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 6340.300000011921,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 6401.400000035763,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 6462.5,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 6523.5,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 6584.699999988079,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 6645.900000035763,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 6706.900000035763,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 6768,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 6829.199999988079,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 6890.199999988079,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 6951.199999988079,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 7012.300000011921,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 7073.400000035763,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 7134.400000035763,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 7195.600000023842,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 7256.600000023842,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 7317.800000011921,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 7387,
+          "position": "2 / 2",
+          "scroll": 36,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 7448.300000011921,
+          "position": "2 / 2",
+          "scroll": 239,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 7509.800000011921,
+          "position": "2 / 2",
+          "scroll": 719,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 7570.800000011921,
+          "position": "2 / 2",
+          "scroll": 1003,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 7631.400000035763,
+          "position": "2 / 2",
+          "scroll": 1133,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 7692.100000023842,
+          "position": "2 / 2",
+          "scroll": 1213,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 7753.100000023842,
+          "position": "2 / 2",
+          "scroll": 1270,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 7814.300000011921,
+          "position": "2 / 2",
+          "scroll": 1299,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 7875.300000011921,
+          "position": "2 / 2",
+          "scroll": 1315,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 7936.199999988079,
+          "position": "2 / 2",
+          "scroll": 1320,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 7997.100000023842,
+          "position": "2 / 2",
+          "scroll": 1320,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 8058.900000035763,
+          "position": "2 / 2",
+          "scroll": 1320,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 8119.400000035763,
+          "position": "2 / 2",
+          "scroll": 1320,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 8180.400000035763,
+          "position": "2 / 2",
+          "scroll": 1320,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 8241.600000023842,
+          "position": "2 / 2",
+          "scroll": 1320,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 8301.699999988079,
+          "position": "2 / 2",
+          "scroll": 1320,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 8362.699999988079,
+          "position": "2 / 2",
+          "scroll": 1320,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 8423.800000011921,
+          "position": "2 / 2",
+          "scroll": 1320,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 8485,
+          "position": "2 / 2",
+          "scroll": 1320,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 8545.5,
+          "position": "2 / 2",
+          "scroll": 1320,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 8606.600000023842,
+          "position": "2 / 2",
+          "scroll": 1320,
+          "announce": "",
+          "overflow": false
+        }
+      ],
+      "reentry": {
+        "selected": "false",
+        "ids": [
+          "preset-zh",
+          "preset-en"
+        ],
+        "before": "preset-en"
+      }
+    },
+    "runtime": [],
+    "requests": [
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:3300/api/v1/bootstrap"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:3300/api/v1/presets?limit=100&cursor=page-2"
+      },
+      {
+        "method": "POST",
+        "url": "http://127.0.0.1:3300/api/v1/analytics/events"
+      },
+      {
+        "method": "POST",
+        "url": "http://127.0.0.1:3300/api/v1/analytics/events"
+      },
+      {
+        "method": "POST",
+        "url": "http://127.0.0.1:3300/api/v1/analytics/events"
+      }
+    ],
+    "status": "FAIL"
+  },
+  {
+    "id": "A20-zh-390",
+    "engine": "webkit",
+    "lang": "zh",
+    "width": 390,
+    "checks": [
+      {
+        "name": "only previous and next controls",
+        "pass": true
+      },
+      {
+        "name": "actual eight-second automatic rotation moves full card without announcing",
+        "pass": true,
+        "actual": {
+          "first": {
+            "ms": 0,
+            "position": "1 / 2",
+            "scroll": 0,
+            "announce": "",
+            "overflow": false
+          },
+          "last": {
+            "ms": 8605,
+            "position": "2 / 2",
+            "scroll": 350,
+            "announce": "",
+            "overflow": false
+          }
+        }
+      },
+      {
+        "name": "keyboard reading and locale redraw preserve pause",
+        "pass": true
+      },
+      {
+        "name": "reduced motion still allows immediate manual positioning",
+        "pass": true
+      },
+      {
+        "name": "returning to gallery retains chosen language and position per CAR11",
+        "pass": false,
+        "actual": {
+          "selected": "false",
+          "ids": [
+            "preset-zh",
+            "preset-en"
+          ],
+          "before": "preset-en"
+        }
+      },
+      {
+        "name": "browsing never generates",
+        "pass": true
+      },
+      {
+        "name": "no runtime warning/error",
+        "pass": true,
+        "actual": []
+      }
+    ],
+    "observations": {
+      "frames": [
+        {
+          "ms": 0,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 61,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 121,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 182,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 243,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 303,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 365,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 425,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 485,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 546,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 607,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 669,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 733,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 797,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 860,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 925,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 989,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 1052,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 1117,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 1181,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 1244,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 1309,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 1373,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 1436,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 1501,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 1565,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 1629,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 1693,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 1757,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 1820,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 1884,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 1948,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 2012,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 2077,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 2140,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 2205,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 2269,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 2333,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 2397,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 2460,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 2525,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 2589,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 2652,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 2716,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 2781,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 2844,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 2909,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 2973,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 3037,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 3101,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 3165,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 3229,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 3292,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 3356,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 3421,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 3485,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 3549,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 3613,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 3676,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 3741,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 3805,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 3869,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 3933,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 3997,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 4060,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 4125,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 4188,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 4252,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 4316,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 4381,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 4445,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 4509,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 4572,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 4637,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 4700,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 4765,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 4829,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 4892,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 4957,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 5021,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 5084,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 5148,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 5212,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 5277,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 5341,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 5405,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 5469,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 5533,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 5596,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 5661,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 5724,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 5789,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 5852,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 5917,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 5980,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 6045,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 6108,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 6172,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 6237,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 6300,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 6365,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 6429,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 6492,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 6557,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 6621,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 6684,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 6749,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 6813,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 6877,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 6941,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 7005,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 7069,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 7133,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 7196,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 7261,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 7324,
+          "position": "1 / 2",
+          "scroll": 0,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 7388,
+          "position": "2 / 2",
+          "scroll": 18,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 7452,
+          "position": "2 / 2",
+          "scroll": 239,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 7517,
+          "position": "2 / 2",
+          "scroll": 328,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 7580,
+          "position": "2 / 2",
+          "scroll": 350,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 7644,
+          "position": "2 / 2",
+          "scroll": 350,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 7709,
+          "position": "2 / 2",
+          "scroll": 350,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 7772,
+          "position": "2 / 2",
+          "scroll": 350,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 7836,
+          "position": "2 / 2",
+          "scroll": 350,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 7901,
+          "position": "2 / 2",
+          "scroll": 350,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 7965,
+          "position": "2 / 2",
+          "scroll": 350,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 8028,
+          "position": "2 / 2",
+          "scroll": 350,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 8092,
+          "position": "2 / 2",
+          "scroll": 350,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 8157,
+          "position": "2 / 2",
+          "scroll": 350,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 8221,
+          "position": "2 / 2",
+          "scroll": 350,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 8285,
+          "position": "2 / 2",
+          "scroll": 350,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 8349,
+          "position": "2 / 2",
+          "scroll": 350,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 8413,
+          "position": "2 / 2",
+          "scroll": 350,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 8476,
+          "position": "2 / 2",
+          "scroll": 350,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 8540,
+          "position": "2 / 2",
+          "scroll": 350,
+          "announce": "",
+          "overflow": false
+        },
+        {
+          "ms": 8605,
+          "position": "2 / 2",
+          "scroll": 350,
+          "announce": "",
+          "overflow": false
+        }
+      ],
+      "reentry": {
+        "selected": "false",
+        "ids": [
+          "preset-zh",
+          "preset-en"
+        ],
+        "before": "preset-en"
+      }
+    },
+    "runtime": [],
+    "requests": [
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:3300/api/v1/bootstrap"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:3300/api/v1/presets?limit=100&cursor=page-2"
+      },
+      {
+        "method": "POST",
+        "url": "http://127.0.0.1:3300/api/v1/analytics/events"
+      },
+      {
+        "method": "POST",
+        "url": "http://127.0.0.1:3300/api/v1/analytics/events"
+      },
+      {
+        "method": "POST",
+        "url": "http://127.0.0.1:3300/api/v1/analytics/events"
+      }
+    ],
+    "status": "FAIL"
+  },
+  {
+    "id": "W20-en-new",
+    "engine": "chromium",
+    "lang": "en",
+    "width": 1440,
+    "checks": [
+      {
+        "name": "correct welcome variant with literal name and no fabricated days",
+        "pass": true,
+        "actual": {
+          "actual": "Welcome, <b>Reader</b>. Start with your first story.",
+          "expected": "Welcome, <b>Reader</b>. Start with your first story."
+        }
+      },
+      {
+        "name": "initial reduced motion renders immediately without animation",
+        "pass": true
+      },
+      {
+        "name": "no-learning welcome keeps full ten-second dwell",
+        "pass": true
+      },
+      {
+        "name": "no runtime warning/error",
+        "pass": true,
+        "actual": []
+      }
+    ],
+    "observations": {
+      "start": {
+        "time": 1144.6000000238419,
+        "text": "Welcome, <b>Reader</b>. Start with your first story.",
+        "children": [],
+        "animations": 0
+      },
+      "end": 11072.700000047684
+    },
+    "runtime": [],
+    "requests": [
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:3300/api/v1/bootstrap"
+      },
+      {
+        "method": "POST",
+        "url": "http://127.0.0.1:3300/api/v1/analytics/events"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:3300/api/v1/bootstrap"
+      },
+      {
+        "method": "POST",
+        "url": "http://127.0.0.1:3300/api/v1/auth/login"
+      },
+      {
+        "method": "POST",
+        "url": "http://127.0.0.1:3300/api/v1/analytics/events"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:3300/api/v1/me/account"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:3300/api/v1/notices?reminders_only=true"
+      }
+    ],
+    "status": "PASS"
+  },
+  {
+    "id": "W20-zh-new",
+    "engine": "webkit",
+    "lang": "zh",
+    "width": 320,
+    "checks": [
+      {
+        "name": "correct welcome variant with literal name and no fabricated days",
+        "pass": true,
+        "actual": {
+          "actual": "欢迎，<b>Reader</b>，从第一篇短文开始吧。",
+          "expected": "欢迎，<b>Reader</b>，从第一篇短文开始吧。"
+        }
+      },
+      {
+        "name": "initial reduced motion renders immediately without animation",
+        "pass": true
+      },
+      {
+        "name": "no-learning welcome keeps full ten-second dwell",
+        "pass": true
+      },
+      {
+        "name": "no runtime warning/error",
+        "pass": true,
+        "actual": []
+      }
+    ],
+    "observations": {
+      "start": {
+        "time": 678,
+        "text": "欢迎，<b>Reader</b>，从第一篇短文开始吧。",
+        "children": [],
+        "animations": 0
+      },
+      "end": 10694
+    },
+    "runtime": [],
+    "requests": [
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:3300/api/v1/bootstrap"
+      },
+      {
+        "method": "POST",
+        "url": "http://127.0.0.1:3300/api/v1/analytics/events"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:3300/api/v1/bootstrap"
+      },
+      {
+        "method": "POST",
+        "url": "http://127.0.0.1:3300/api/v1/auth/login"
+      },
+      {
+        "method": "POST",
+        "url": "http://127.0.0.1:3300/api/v1/analytics/events"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:3300/api/v1/me/account"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:3300/api/v1/notices?reminders_only=true"
+      }
+    ],
+    "status": "PASS"
+  },
+  {
+    "id": "W20-en-returning",
+    "engine": "chromium",
+    "lang": "en",
+    "width": 1440,
+    "checks": [
+      {
+        "name": "correct welcome variant with literal name and no fabricated days",
+        "pass": true,
+        "actual": {
+          "actual": "Welcome back, <b>Reader</b>. It has been 5 learning days since your last session.",
+          "expected": "Welcome back, <b>Reader</b>. It has been 5 learning days since your last session."
+        }
+      },
+      {
+        "name": "runtime reduced-motion stops active opacity animation and keeps toast readable",
+        "pass": true
+      },
+      {
+        "name": "no runtime warning/error",
+        "pass": true,
+        "actual": []
+      }
+    ],
+    "observations": {
+      "start": {
+        "time": 1168.6000000238419,
+        "text": "Welcome back, <b>Reader</b>. It has been 5 learning days since your last session.",
+        "children": [
+          "STRONG"
+        ],
+        "animations": 1
+      },
+      "end": 11500.100000023842
+    },
+    "runtime": [],
+    "requests": [
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:3300/api/v1/bootstrap"
+      },
+      {
+        "method": "POST",
+        "url": "http://127.0.0.1:3300/api/v1/analytics/events"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:3300/api/v1/bootstrap"
+      },
+      {
+        "method": "POST",
+        "url": "http://127.0.0.1:3300/api/v1/auth/login"
+      },
+      {
+        "method": "POST",
+        "url": "http://127.0.0.1:3300/api/v1/analytics/events"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:3300/api/v1/me/account"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:3300/api/v1/notices?reminders_only=true"
+      }
+    ],
+    "status": "PASS"
+  },
+  {
+    "id": "W20-zh-returning",
+    "engine": "webkit",
+    "lang": "zh",
+    "width": 320,
+    "checks": [
+      {
+        "name": "correct welcome variant with literal name and no fabricated days",
+        "pass": true,
+        "actual": {
+          "actual": "欢迎回来，<b>Reader</b>，距离上一次学习已经过去了 5 天",
+          "expected": "欢迎回来，<b>Reader</b>，距离上一次学习已经过去了 5 天"
+        }
+      },
+      {
+        "name": "runtime reduced-motion stops active opacity animation and keeps toast readable",
+        "pass": true
+      },
+      {
+        "name": "no runtime warning/error",
+        "pass": true,
+        "actual": []
+      }
+    ],
+    "observations": {
+      "start": {
+        "time": 678,
+        "text": "欢迎回来，<b>Reader</b>，距离上一次学习已经过去了 5 天",
+        "children": [
+          "STRONG"
+        ],
+        "animations": 1
+      },
+      "end": 11023
+    },
+    "runtime": [],
+    "requests": [
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:3300/api/v1/bootstrap"
+      },
+      {
+        "method": "POST",
+        "url": "http://127.0.0.1:3300/api/v1/analytics/events"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:3300/api/v1/bootstrap"
+      },
+      {
+        "method": "POST",
+        "url": "http://127.0.0.1:3300/api/v1/auth/login"
+      },
+      {
+        "method": "POST",
+        "url": "http://127.0.0.1:3300/api/v1/analytics/events"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:3300/api/v1/me/account"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:3300/api/v1/notices?reminders_only=true"
+      }
+    ],
+    "status": "PASS"
+  }
+]

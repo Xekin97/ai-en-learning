@@ -1,0 +1,453 @@
+{
+  "results": [
+    {
+      "id": "chromium-en-R01",
+      "result": "PASS"
+    },
+    {
+      "id": "chromium-en-R02",
+      "result": "PASS"
+    },
+    {
+      "id": "chromium-en-R03",
+      "result": "PASS"
+    },
+    {
+      "id": "chromium-en-R04",
+      "result": "PASS"
+    },
+    {
+      "id": "chromium-en-C01",
+      "result": "FAIL",
+      "error": "Error: expect(received).toBe(expected) // Object.is equality\n\nExpected: \"Title was not saved. Your text is still here; please try again.\"\nReceived: \"Could not save. Your edits are kept. Please retry.\""
+    },
+    {
+      "id": "webkit-zh-R01",
+      "result": "PASS"
+    },
+    {
+      "id": "webkit-zh-R02",
+      "result": "PASS"
+    },
+    {
+      "id": "webkit-zh-R03",
+      "result": "PASS"
+    },
+    {
+      "id": "webkit-zh-C01",
+      "result": "FAIL",
+      "error": "Error: expect(received).toBe(expected) // Object.is equality\n\nExpected: \"标题未保存，请重试。你的输入已保留。\"\nReceived: \"保存失败，输入已保留，请重试。\""
+    },
+    {
+      "id": "H01-webkit-en",
+      "result": "FAIL",
+      "error": "Error: expect(received).toBe(expected) // Object.is equality\n\nExpected: true\nReceived: false"
+    },
+    {
+      "id": "H02-chromium-en",
+      "result": "FAIL",
+      "error": "Error: expect(received).toBe(expected) // Object.is equality\n\nExpected: true\nReceived: false"
+    },
+    {
+      "id": "H03-webkit-zh",
+      "result": "PASS"
+    },
+    {
+      "id": "H04-firefox-en",
+      "result": "FAIL",
+      "error": "Error: expect(received).toBe(expected) // Object.is equality\n\nExpected: true\nReceived: false"
+    }
+  ],
+  "samples": [
+    {
+      "id": "chromium-en-R01",
+      "afterFailure": {
+        "width": 1440,
+        "scrollWidth": 1440,
+        "inputY": 366.359375,
+        "hintY": 427.15625,
+        "errorY": 467.546875,
+        "buttonsY": 507.546875,
+        "focus": "batch-title"
+      },
+      "storedUnchanged": true,
+      "failureCopy": {
+        "action": "chromium-en-R01",
+        "lang": "en",
+        "actual": "Could not save. Your edits are kept. Please retry.",
+        "expected": "Title was not saved. Your text is still here; please try again."
+      }
+    },
+    {
+      "id": "chromium-en-R02",
+      "cancelledAndBlankWrites": 0,
+      "conflictKeptDraft": true,
+      "explicitRetry": 200
+    },
+    {
+      "id": "chromium-en-R03",
+      "writeRequestSkippedAfterBootstrap": true,
+      "unauthorizedWrite": 401,
+      "realUiRelogin": true,
+      "originalTitleRetained": true
+    },
+    {
+      "id": "chromium-en-R04",
+      "deletedBatch": "01a0e6ef-e275-7133-be96-2b83b38a91fb",
+      "response": 404,
+      "noResurrection": true
+    },
+    {
+      "id": "chromium-en-C01",
+      "action": "chromium-en-R01",
+      "lang": "en",
+      "actual": "Could not save. Your edits are kept. Please retry.",
+      "expected": "Title was not saved. Your text is still here; please try again.",
+      "source": "UI22 prototype/learning.js saveTitle + copy.json l.title.failed"
+    },
+    {
+      "id": "webkit-zh-R01",
+      "afterFailure": {
+        "width": 390,
+        "scrollWidth": 390,
+        "inputY": 442.453125,
+        "hintY": 503.25,
+        "errorY": 543.640625,
+        "buttonsY": 583.640625,
+        "focus": "batch-title"
+      },
+      "storedUnchanged": true,
+      "failureCopy": {
+        "action": "webkit-zh-R01",
+        "lang": "zh",
+        "actual": "保存失败，输入已保留，请重试。",
+        "expected": "标题未保存，请重试。你的输入已保留。"
+      }
+    },
+    {
+      "id": "webkit-zh-R02",
+      "cancelledAndBlankWrites": 0,
+      "conflictKeptDraft": true,
+      "explicitRetry": 200
+    },
+    {
+      "id": "webkit-zh-R03",
+      "writeRequestSkippedAfterBootstrap": true,
+      "unauthorizedWrite": 401,
+      "realUiRelogin": true,
+      "originalTitleRetained": true
+    },
+    {
+      "id": "webkit-zh-C01",
+      "action": "webkit-zh-R01",
+      "lang": "zh",
+      "actual": "保存失败，输入已保留，请重试。",
+      "expected": "标题未保存，请重试。你的输入已保留。",
+      "source": "UI22 prototype/learning.js saveTitle + copy.json l.title.failed"
+    },
+    {
+      "id": "H01-webkit-en",
+      "dates": [
+        {
+          "mode": "direct",
+          "server": "Sep 28, 2026, 2:46 PM",
+          "client": "SEP 28, 2026 AT 2:46 PM",
+          "locale": "en-US",
+          "equal": false,
+          "editAndCancelUsable": true
+        },
+        {
+          "mode": "reload",
+          "server": "Sep 28, 2026, 2:46 PM",
+          "client": "SEP 28, 2026 AT 2:46 PM",
+          "locale": "en-US",
+          "equal": false,
+          "editAndCancelUsable": true
+        }
+      ],
+      "runtime": [
+        {
+          "action": "H01-webkit-en",
+          "kind": "error",
+          "message": "Hydration completed but contains mismatches.",
+          "url": "http://127.0.0.1:3301/_nuxt/DyjLnLfz.js"
+        },
+        {
+          "action": "H01-webkit-en",
+          "kind": "error",
+          "message": "Hydration completed but contains mismatches.",
+          "url": "http://127.0.0.1:3301/_nuxt/DyjLnLfz.js"
+        }
+      ],
+      "databaseUnchanged": true
+    },
+    {
+      "id": "H02-chromium-en",
+      "dates": [
+        {
+          "mode": "direct",
+          "server": "Sep 28, 2026, 2:46 PM",
+          "client": "SEP 28, 2026, 2:46 PM",
+          "locale": "en-US",
+          "equal": false,
+          "editAndCancelUsable": true
+        },
+        {
+          "mode": "reload",
+          "server": "Sep 28, 2026, 2:46 PM",
+          "client": "SEP 28, 2026, 2:46 PM",
+          "locale": "en-US",
+          "equal": false,
+          "editAndCancelUsable": true
+        }
+      ],
+      "runtime": [],
+      "databaseUnchanged": true
+    },
+    {
+      "id": "H03-webkit-zh",
+      "dates": [
+        {
+          "mode": "direct",
+          "server": "2026年9月28日 14:46",
+          "client": "2026年9月28日 14:46",
+          "locale": "zh-CN",
+          "equal": true,
+          "editAndCancelUsable": true
+        },
+        {
+          "mode": "reload",
+          "server": "2026年9月28日 14:46",
+          "client": "2026年9月28日 14:46",
+          "locale": "zh-CN",
+          "equal": true,
+          "editAndCancelUsable": true
+        }
+      ],
+      "runtime": [],
+      "databaseUnchanged": true
+    },
+    {
+      "id": "H04-firefox-en",
+      "dates": [
+        {
+          "mode": "direct",
+          "server": "Sep 28, 2026, 2:46 PM",
+          "client": "SEP 28, 2026, 2:46 PM",
+          "locale": "en-US",
+          "equal": false,
+          "editAndCancelUsable": true
+        },
+        {
+          "mode": "reload",
+          "server": "Sep 28, 2026, 2:46 PM",
+          "client": "SEP 28, 2026, 2:46 PM",
+          "locale": "en-US",
+          "equal": false,
+          "editAndCancelUsable": true
+        }
+      ],
+      "runtime": [],
+      "databaseUnchanged": true
+    }
+  ],
+  "runtime": [
+    {
+      "action": "chromium-en-R01",
+      "kind": "error",
+      "message": "Failed to load resource: the server responded with a status of 503 (Service Unavailable)",
+      "url": "http://127.0.0.1:3301/api/v1/me/batches/01a0e6c3-8097-7134-b55a-0270c0f0f263"
+    },
+    {
+      "action": "chromium-en-R02",
+      "kind": "error",
+      "message": "Failed to load resource: the server responded with a status of 409 (Conflict)",
+      "url": "http://127.0.0.1:3301/api/v1/me/batches/01a0e6c3-8097-7134-b55a-0270c0f0f263"
+    },
+    {
+      "action": "chromium-en-R04",
+      "kind": "error",
+      "message": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+      "url": "http://127.0.0.1:3301/api/v1/me/batches/01a0e6ef-e275-7133-be96-2b83b38a91fb"
+    },
+    {
+      "action": "webkit-zh-R01",
+      "kind": "error",
+      "message": "Failed to load resource: the server responded with a status of 503 (Service Unavailable)",
+      "url": "http://127.0.0.1:3301/api/v1/me/batches/01a0e6c3-8097-7134-b55a-0270c0f0f263"
+    },
+    {
+      "action": "webkit-zh-R02",
+      "kind": "error",
+      "message": "Failed to load resource: the server responded with a status of 409 (Conflict)",
+      "url": "http://127.0.0.1:3301/api/v1/me/batches/01a0e6c3-8097-7134-b55a-0270c0f0f263"
+    },
+    {
+      "action": "H01-webkit-en",
+      "kind": "error",
+      "message": "Hydration completed but contains mismatches.",
+      "url": "http://127.0.0.1:3301/_nuxt/DyjLnLfz.js"
+    },
+    {
+      "action": "H01-webkit-en",
+      "kind": "error",
+      "message": "Hydration completed but contains mismatches.",
+      "url": "http://127.0.0.1:3301/_nuxt/DyjLnLfz.js"
+    }
+  ],
+  "requests": [
+    {
+      "action": "chromium-en-R01",
+      "path": "/api/v1/me/batches/01a0e6c3-8097-7134-b55a-0270c0f0f263",
+      "title": "QA13 retained draft"
+    },
+    {
+      "action": "chromium-en-R01",
+      "path": "/api/v1/me/batches/01a0e6c3-8097-7134-b55a-0270c0f0f263",
+      "title": "QA13 retained draft - revised"
+    },
+    {
+      "action": "chromium-en-R02",
+      "path": "/api/v1/me/batches/01a0e6c3-8097-7134-b55a-0270c0f0f263",
+      "title": "Keep local conflict draft"
+    },
+    {
+      "action": "chromium-en-R02",
+      "path": "/api/v1/me/batches/01a0e6c3-8097-7134-b55a-0270c0f0f263",
+      "title": "Keep local conflict draft"
+    },
+    {
+      "action": "chromium-en-R04",
+      "path": "/api/v1/me/batches/01a0e6ef-e275-7133-be96-2b83b38a91fb",
+      "title": "Must not recreate a deleted batch"
+    },
+    {
+      "action": "webkit-zh-R01",
+      "path": "/api/v1/me/batches/01a0e6c3-8097-7134-b55a-0270c0f0f263",
+      "title": "QA13 retained draft"
+    },
+    {
+      "action": "webkit-zh-R01",
+      "path": "/api/v1/me/batches/01a0e6c3-8097-7134-b55a-0270c0f0f263",
+      "title": "QA13 retained draft - revised"
+    },
+    {
+      "action": "webkit-zh-R02",
+      "path": "/api/v1/me/batches/01a0e6c3-8097-7134-b55a-0270c0f0f263",
+      "title": "Keep local conflict draft"
+    },
+    {
+      "action": "webkit-zh-R02",
+      "path": "/api/v1/me/batches/01a0e6c3-8097-7134-b55a-0270c0f0f263",
+      "title": "Keep local conflict draft"
+    }
+  ],
+  "responses": [
+    {
+      "action": "chromium-en-R01",
+      "path": "/api/v1/me/batches/01a0e6c3-8097-7134-b55a-0270c0f0f263",
+      "method": "PATCH",
+      "status": 503
+    },
+    {
+      "action": "chromium-en-R01",
+      "path": "/api/v1/me/batches/01a0e6c3-8097-7134-b55a-0270c0f0f263",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "action": "chromium-en-R01",
+      "path": "/api/v1/me/batches/01a0e6c3-8097-7134-b55a-0270c0f0f263",
+      "method": "PATCH",
+      "status": 200
+    },
+    {
+      "action": "chromium-en-R02",
+      "path": "/api/v1/me/batches/01a0e6c3-8097-7134-b55a-0270c0f0f263",
+      "method": "PATCH",
+      "status": 409
+    },
+    {
+      "action": "chromium-en-R02",
+      "path": "/api/v1/me/batches/01a0e6c3-8097-7134-b55a-0270c0f0f263",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "action": "chromium-en-R02",
+      "path": "/api/v1/me/batches/01a0e6c3-8097-7134-b55a-0270c0f0f263",
+      "method": "PATCH",
+      "status": 200
+    },
+    {
+      "action": "chromium-en-R04",
+      "path": "/api/v1/me/batches/01a0e6ef-e275-7133-be96-2b83b38a91fb",
+      "method": "PATCH",
+      "status": 404
+    },
+    {
+      "action": "webkit-zh-R01",
+      "path": "/api/v1/me/batches/01a0e6c3-8097-7134-b55a-0270c0f0f263",
+      "method": "PATCH",
+      "status": 503
+    },
+    {
+      "action": "webkit-zh-R01",
+      "path": "/api/v1/me/batches/01a0e6c3-8097-7134-b55a-0270c0f0f263",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "action": "webkit-zh-R01",
+      "path": "/api/v1/me/batches/01a0e6c3-8097-7134-b55a-0270c0f0f263",
+      "method": "PATCH",
+      "status": 200
+    },
+    {
+      "action": "webkit-zh-R02",
+      "path": "/api/v1/me/batches/01a0e6c3-8097-7134-b55a-0270c0f0f263",
+      "method": "PATCH",
+      "status": 409
+    },
+    {
+      "action": "webkit-zh-R02",
+      "path": "/api/v1/me/batches/01a0e6c3-8097-7134-b55a-0270c0f0f263",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "action": "webkit-zh-R02",
+      "path": "/api/v1/me/batches/01a0e6c3-8097-7134-b55a-0270c0f0f263",
+      "method": "PATCH",
+      "status": 200
+    }
+  ],
+  "browserVersions": [
+    {
+      "label": "chromium-en",
+      "version": "151.0.7922.34"
+    },
+    {
+      "label": "webkit-zh",
+      "version": "26.5"
+    },
+    {
+      "label": "H01-webkit-en",
+      "version": "26.5"
+    },
+    {
+      "label": "H02-chromium-en",
+      "version": "151.0.7922.34"
+    },
+    {
+      "label": "H03-webkit-zh",
+      "version": "26.5"
+    },
+    {
+      "label": "H04-firefox-en",
+      "version": "153.0"
+    }
+  ],
+  "localProviderCalls": 1,
+  "realProviderCalls": 0
+}

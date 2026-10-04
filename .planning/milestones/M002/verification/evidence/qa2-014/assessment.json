@@ -1,0 +1,140 @@
+{
+  "version": "M002-QA-14",
+  "result": "PASS_WITHIN_CR017_CR018_RETEST_SCOPE",
+  "milestone_result": "NOT_COMPLETE",
+  "authorization": "TRANSITION-M002-040",
+  "accepted_checks": 21,
+  "passed": 21,
+  "failed": 0,
+  "groups": {
+    "core": 13,
+    "shared": 8
+  },
+  "results": [
+    {
+      "id": "chromium-en-R01",
+      "result": "PASS"
+    },
+    {
+      "id": "chromium-en-R02",
+      "result": "PASS"
+    },
+    {
+      "id": "chromium-en-R03",
+      "result": "PASS"
+    },
+    {
+      "id": "chromium-en-R04",
+      "result": "PASS"
+    },
+    {
+      "id": "chromium-en-C01",
+      "result": "PASS"
+    },
+    {
+      "id": "webkit-zh-R01",
+      "result": "PASS"
+    },
+    {
+      "id": "webkit-zh-R02",
+      "result": "PASS"
+    },
+    {
+      "id": "webkit-zh-R03",
+      "result": "PASS"
+    },
+    {
+      "id": "webkit-zh-C01",
+      "result": "PASS"
+    },
+    {
+      "id": "H01-webkit-en",
+      "result": "PASS"
+    },
+    {
+      "id": "H02-chromium-en",
+      "result": "PASS"
+    },
+    {
+      "id": "H03-webkit-zh",
+      "result": "PASS"
+    },
+    {
+      "id": "H04-firefox-en",
+      "result": "PASS"
+    },
+    {
+      "id": "en-US-account",
+      "result": "PASS"
+    },
+    {
+      "id": "en-US-items",
+      "result": "PASS"
+    },
+    {
+      "id": "en-US-notice",
+      "result": "PASS"
+    },
+    {
+      "id": "en-US-admin-user",
+      "result": "PASS"
+    },
+    {
+      "id": "zh-CN-account",
+      "result": "PASS"
+    },
+    {
+      "id": "zh-CN-items",
+      "result": "PASS"
+    },
+    {
+      "id": "zh-CN-notice",
+      "result": "PASS"
+    },
+    {
+      "id": "zh-CN-admin-user",
+      "result": "PASS"
+    }
+  ],
+  "closure_recommendations": {
+    "CR017": "F14 hydration and affected shared dateTime scope; FE2-R16-W1 association",
+    "CR018": "F15 exact bilingual ordinary title failure copy"
+  },
+  "formal_cr_status": "open_pending_gate",
+  "cr016": "closed_F12_F13_via039; regression passed",
+  "historical_failures": "../qa2-013/manifest.json unchanged",
+  "runtime": {
+    "expected_http_errors": 5,
+    "unexpected_errors": 0,
+    "hydration_warnings": 0,
+    "filter": "case + URL + status; no hydration suppression"
+  },
+  "visual_inspection": [
+    "run/webkit-zh-ordinary-failure.png",
+    "run/H01-webkit-en-date.png",
+    "run/zh-CN-items.png"
+  ],
+  "boundary_values_counted_as_additional_checks": false,
+  "shared_pages": [
+    "account",
+    "items",
+    "notices",
+    "admin user detail"
+  ],
+  "local_provider_calls": 1,
+  "real_provider_calls": 0,
+  "database": "new disposable clone removed; source database unmodified by tests",
+  "developer_quality_checks_rerun": false,
+  "frontend_rebuilt": false,
+  "backend_runtime_compiled_from_matching_source": true,
+  "application_or_control_changed": false,
+  "uat": "NOT_EXECUTED",
+  "input_tokens": "unknown",
+  "new_session_handoff_test": "not_executed",
+  "limitations": [
+    "CR017/F14和CR018/F15独立复验通过，正式等待守门限定关闭；CR016沿039按F12/F13已关闭。",
+    "CR001原继承遗漏关闭建议保持；CR002仍待整体标题覆盖判断，历史W01不自动合并或关闭。",
+    "本轮21项全部通过；QA13原失败/测量修正原件保留，不改变历史结果。",
+    "未验证完整UIA/真机/人工读屏/生产代理/04:00实时时点或真实AI质量，用户UAT未执行。"
+  ]
+}

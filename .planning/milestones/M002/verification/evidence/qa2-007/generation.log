@@ -1,0 +1,62 @@
+G01 PASS
+G02 PASS
+G03 PASS
+G04 PASS
+G05 PASS
+G06 PASS
+G07 PASS
+G08 PASS
+G09 PASS
+G10 PASS
+[
+  {
+    "id": "G01",
+    "name": "Vocabulary lookup and generation precheck do not consume quota",
+    "result": "PASS"
+  },
+  {
+    "id": "G02",
+    "name": "Active-run conflict and explicit cancellation charge once without check-in",
+    "result": "PASS"
+  },
+  {
+    "id": "G03",
+    "name": "Provider and content-validation failures refund base source once",
+    "result": "PASS"
+  },
+  {
+    "id": "G04",
+    "name": "Transport interruption differs from explicit cancellation and refunds once",
+    "result": "PASS"
+  },
+  {
+    "id": "G05",
+    "name": "Valid generation then discard remains charged and automatically checked in",
+    "result": "PASS"
+  },
+  {
+    "id": "G06",
+    "name": "Extra-credit failures refund the original card and cancellation consumes it once",
+    "result": "PASS"
+  },
+  {
+    "id": "G07",
+    "name": "Own authenticated run in invalid/discarded state must return contract 409 on save",
+    "result": "PASS"
+  },
+  {
+    "id": "G08",
+    "name": "CR013 preserves wrong-token/owner/missing/deleted 404 and valid save idempotency",
+    "result": "PASS"
+  },
+  {
+    "id": "G09",
+    "name": "CR013 preserves pending draft expiry 410 without saving or refunding",
+    "result": "PASS"
+  },
+  {
+    "id": "G10",
+    "name": "Failure refund restores the original expired extra-credit balance without reviving availability",
+    "result": "PASS"
+  }
+]

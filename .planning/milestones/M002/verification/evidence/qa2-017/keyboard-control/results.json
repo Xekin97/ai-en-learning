@@ -1,0 +1,446 @@
+[
+  {
+    "id": "N17-en-320",
+    "engine": "webkit",
+    "lang": "en",
+    "width": 320,
+    "checks": [
+      {
+        "name": "approved four account labels",
+        "pass": true
+      },
+      {
+        "name": "enterOpens",
+        "pass": true,
+        "actual": {
+          "production": true,
+          "prototype": true
+        }
+      },
+      {
+        "name": "spaceCloses",
+        "pass": true,
+        "actual": {
+          "production": true,
+          "prototype": true
+        }
+      },
+      {
+        "name": "spaceOpens",
+        "pass": true,
+        "actual": {
+          "production": true,
+          "prototype": true
+        }
+      },
+      {
+        "name": "firstLinkFocused",
+        "pass": true,
+        "actual": {
+          "production": true,
+          "prototype": true
+        }
+      },
+      {
+        "name": "escapeCloses",
+        "pass": true,
+        "actual": {
+          "production": true,
+          "prototype": true
+        }
+      },
+      {
+        "name": "outsideCloses",
+        "pass": false,
+        "actual": {
+          "production": false,
+          "prototype": true
+        }
+      },
+      {
+        "name": "tabExitCloses",
+        "pass": false,
+        "actual": {
+          "production": false,
+          "prototype": true
+        }
+      },
+      {
+        "name": "selectionCloses",
+        "pass": true,
+        "actual": {
+          "production": true,
+          "prototype": true
+        }
+      },
+      {
+        "name": "Escape returns focus to avatar",
+        "pass": false,
+        "actual": {
+          "production": {
+            "tag": "BODY",
+            "text": "Skip to main contentWordWeaveHomePicksLearnReviewLibraryChineseUpdatesllearner_e2ePersonal informationAccount growthItem",
+            "isSummary": false,
+            "isHeading": false
+          },
+          "prototype": {
+            "tag": "SUMMARY",
+            "text": "小小涟",
+            "isSummary": true,
+            "isHeading": false
+          }
+        }
+      },
+      {
+        "name": "selecting section focuses page heading",
+        "pass": false,
+        "actual": {
+          "production": {
+            "tag": "BODY",
+            "text": "Skip to main contentWordWeaveHomePicksLearnReviewLibraryChineseUpdatesllearner_e2ePersonal informationAccount growthItem",
+            "isSummary": false,
+            "isHeading": false
+          },
+          "prototype": {
+            "tag": "H1",
+            "text": "Personal information",
+            "isSummary": false,
+            "isHeading": true
+          }
+        }
+      },
+      {
+        "name": "selected section has aria-current",
+        "pass": true,
+        "actual": "page"
+      },
+      {
+        "name": "header no horizontal overflow",
+        "pass": true
+      },
+      {
+        "name": "no runtime warning/error",
+        "pass": true,
+        "actual": []
+      }
+    ],
+    "observations": {
+      "production": {
+        "enterOpens": true,
+        "spaceCloses": true,
+        "spaceOpens": true,
+        "labels": [
+          "Personal information",
+          "Account growth",
+          "Item cards",
+          "Redemption center"
+        ],
+        "firstLinkFocused": true,
+        "escapeCloses": true,
+        "escapeFocus": {
+          "tag": "BODY",
+          "text": "Skip to main contentWordWeaveHomePicksLearnReviewLibraryChineseUpdatesllearner_e2ePersonal informationAccount growthItem",
+          "isSummary": false,
+          "isHeading": false
+        },
+        "outsideTarget": {
+          "tag": "DIV",
+          "inDropdown": false
+        },
+        "outsideCloses": false,
+        "tabExitCloses": false,
+        "tabExitFocus": {
+          "tag": "A",
+          "text": "Create with my words",
+          "isSummary": false,
+          "isHeading": false
+        },
+        "selectionCloses": true,
+        "selectionFocus": {
+          "tag": "BODY",
+          "text": "Skip to main contentWordWeaveHomePicksLearnReviewLibraryChineseUpdatesllearner_e2ePersonal informationAccount growthItem",
+          "isSummary": false,
+          "isHeading": false
+        },
+        "current": "page"
+      },
+      "prototype": {
+        "enterOpens": true,
+        "spaceCloses": true,
+        "spaceOpens": true,
+        "labels": [
+          "Personal information",
+          "Account growth",
+          "Item cards",
+          "Redemption center"
+        ],
+        "firstLinkFocused": true,
+        "escapeCloses": true,
+        "escapeFocus": {
+          "tag": "SUMMARY",
+          "text": "小小涟",
+          "isSummary": true,
+          "isHeading": false
+        },
+        "outsideTarget": {
+          "tag": "DIV",
+          "inDropdown": false
+        },
+        "outsideCloses": true,
+        "tabExitCloses": true,
+        "tabExitFocus": {
+          "tag": "A",
+          "text": "Create with my words",
+          "isSummary": false,
+          "isHeading": false
+        },
+        "selectionCloses": true,
+        "selectionFocus": {
+          "tag": "H1",
+          "text": "Personal information",
+          "isSummary": false,
+          "isHeading": true
+        },
+        "current": "page"
+      }
+    },
+    "runtime": [],
+    "requests": [
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:3300/api/v1/bootstrap"
+      },
+      {
+        "method": "POST",
+        "url": "http://127.0.0.1:3300/api/v1/analytics/events"
+      },
+      {
+        "method": "POST",
+        "url": "http://127.0.0.1:3300/api/v1/analytics/events"
+      }
+    ],
+    "status": "FAIL"
+  },
+  {
+    "id": "N17-zh-320",
+    "engine": "webkit",
+    "lang": "zh",
+    "width": 320,
+    "checks": [
+      {
+        "name": "approved four account labels",
+        "pass": true
+      },
+      {
+        "name": "enterOpens",
+        "pass": true,
+        "actual": {
+          "production": true,
+          "prototype": true
+        }
+      },
+      {
+        "name": "spaceCloses",
+        "pass": true,
+        "actual": {
+          "production": true,
+          "prototype": true
+        }
+      },
+      {
+        "name": "spaceOpens",
+        "pass": true,
+        "actual": {
+          "production": true,
+          "prototype": true
+        }
+      },
+      {
+        "name": "firstLinkFocused",
+        "pass": true,
+        "actual": {
+          "production": true,
+          "prototype": true
+        }
+      },
+      {
+        "name": "escapeCloses",
+        "pass": true,
+        "actual": {
+          "production": true,
+          "prototype": true
+        }
+      },
+      {
+        "name": "outsideCloses",
+        "pass": false,
+        "actual": {
+          "production": false,
+          "prototype": true
+        }
+      },
+      {
+        "name": "tabExitCloses",
+        "pass": false,
+        "actual": {
+          "production": false,
+          "prototype": true
+        }
+      },
+      {
+        "name": "selectionCloses",
+        "pass": true,
+        "actual": {
+          "production": true,
+          "prototype": true
+        }
+      },
+      {
+        "name": "Escape returns focus to avatar",
+        "pass": false,
+        "actual": {
+          "production": {
+            "tag": "BODY",
+            "text": "跳到主要内容词涟首页精选学习复习书架英文平台消息llearner_e2e个人信息账号成长道具卡兑换中心AI 语境学习从一个故事，\n记住新的单词。把想学的单词写进短文，读懂用法，再用拼写复习加深记忆。用我的单词造文先试一篇AI 短文示例故事 ",
+            "isSummary": false,
+            "isHeading": false
+          },
+          "prototype": {
+            "tag": "SUMMARY",
+            "text": "小小涟",
+            "isSummary": true,
+            "isHeading": false
+          }
+        }
+      },
+      {
+        "name": "selecting section focuses page heading",
+        "pass": false,
+        "actual": {
+          "production": {
+            "tag": "BODY",
+            "text": "跳到主要内容词涟首页精选学习复习书架英文平台消息llearner_e2e个人信息账号成长道具卡兑换中心llearner_e2e@learner_e2e基础计划基础生效计划基础上次登录2026年9月20日 13:00上次学习2026年9月15",
+            "isSummary": false,
+            "isHeading": false
+          },
+          "prototype": {
+            "tag": "H1",
+            "text": "个人信息",
+            "isSummary": false,
+            "isHeading": true
+          }
+        }
+      },
+      {
+        "name": "selected section has aria-current",
+        "pass": true,
+        "actual": "page"
+      },
+      {
+        "name": "header no horizontal overflow",
+        "pass": true
+      },
+      {
+        "name": "no runtime warning/error",
+        "pass": true,
+        "actual": []
+      }
+    ],
+    "observations": {
+      "production": {
+        "enterOpens": true,
+        "spaceCloses": true,
+        "spaceOpens": true,
+        "labels": [
+          "个人信息",
+          "账号成长",
+          "道具卡",
+          "兑换中心"
+        ],
+        "firstLinkFocused": true,
+        "escapeCloses": true,
+        "escapeFocus": {
+          "tag": "BODY",
+          "text": "跳到主要内容词涟首页精选学习复习书架英文平台消息llearner_e2e个人信息账号成长道具卡兑换中心AI 语境学习从一个故事，\n记住新的单词。把想学的单词写进短文，读懂用法，再用拼写复习加深记忆。用我的单词造文先试一篇AI 短文示例故事 ",
+          "isSummary": false,
+          "isHeading": false
+        },
+        "outsideTarget": {
+          "tag": "DIV",
+          "inDropdown": false
+        },
+        "outsideCloses": false,
+        "tabExitCloses": false,
+        "tabExitFocus": {
+          "tag": "A",
+          "text": "用我的单词造文",
+          "isSummary": false,
+          "isHeading": false
+        },
+        "selectionCloses": true,
+        "selectionFocus": {
+          "tag": "BODY",
+          "text": "跳到主要内容词涟首页精选学习复习书架英文平台消息llearner_e2e个人信息账号成长道具卡兑换中心llearner_e2e@learner_e2e基础计划基础生效计划基础上次登录2026年9月20日 13:00上次学习2026年9月15",
+          "isSummary": false,
+          "isHeading": false
+        },
+        "current": "page"
+      },
+      "prototype": {
+        "enterOpens": true,
+        "spaceCloses": true,
+        "spaceOpens": true,
+        "labels": [
+          "个人信息",
+          "账号成长",
+          "道具卡",
+          "兑换中心"
+        ],
+        "firstLinkFocused": true,
+        "escapeCloses": true,
+        "escapeFocus": {
+          "tag": "SUMMARY",
+          "text": "小小涟",
+          "isSummary": true,
+          "isHeading": false
+        },
+        "outsideTarget": {
+          "tag": "DIV",
+          "inDropdown": false
+        },
+        "outsideCloses": true,
+        "tabExitCloses": true,
+        "tabExitFocus": {
+          "tag": "A",
+          "text": "用我的单词造文",
+          "isSummary": false,
+          "isHeading": false
+        },
+        "selectionCloses": true,
+        "selectionFocus": {
+          "tag": "H1",
+          "text": "个人信息",
+          "isSummary": false,
+          "isHeading": true
+        },
+        "current": "page"
+      }
+    },
+    "runtime": [],
+    "requests": [
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:3300/api/v1/bootstrap"
+      },
+      {
+        "method": "POST",
+        "url": "http://127.0.0.1:3300/api/v1/analytics/events"
+      },
+      {
+        "method": "POST",
+        "url": "http://127.0.0.1:3300/api/v1/analytics/events"
+      }
+    ],
+    "status": "FAIL"
+  }
+]

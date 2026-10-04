@@ -1,0 +1,39 @@
+L01 PASS
+L02 PASS
+L03 PASS
+L04 FAIL
+L05 PASS
+L06 PASS
+[
+  {
+    "id": "L01",
+    "name": "CR011 normalized exact search and bidirectional cursor continuity",
+    "result": "PASS"
+  },
+  {
+    "id": "L02",
+    "name": "CR011 invalid filter/cursor, exact targets and ownership boundaries",
+    "result": "PASS"
+  },
+  {
+    "id": "L03",
+    "name": "Actual bilingual mobile/desktop uppercase search and load more",
+    "result": "PASS"
+  },
+  {
+    "id": "L04",
+    "name": "Detail round trip retains uppercase query, loaded range and focused row",
+    "result": "FAIL",
+    "error": "Error: expect(locator).toBeInViewport() failed\n\nLocator:  locator('.library-row').last().locator('h2 a')\nExpected: in viewport\nReceived: viewport ratio 0\nTimeout:  5000ms\n\nCall log:\n  - Expect \"to.be.in.viewport\" with timeout 5000ms\n  - waiting for locator('.library-row').last().locator('h2 a')\n    14 × locator resolved to <a class=\"\" href=\"/library/01a0c6f2-070f-74ac-96dd-cb7f1d28be7a?entry=LEARN\">learn</a>\n       - unexpected value \"viewport ratio 0\"\n"
+  },
+  {
+    "id": "L05",
+    "name": "No-result/clear search and all six statistics remain consistent",
+    "result": "PASS"
+  },
+  {
+    "id": "L06",
+    "name": "Library search/list accessibility and browser runtime",
+    "result": "PASS"
+  }
+]

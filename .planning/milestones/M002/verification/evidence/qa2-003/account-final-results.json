@@ -1,0 +1,35 @@
+{
+  "results": [
+    {
+      "id": "S01",
+      "name": "Successful guest claim auto-signs once; review masters unique lexeme and does not repeat daily sign-in",
+      "result": "PASS"
+    },
+    {
+      "id": "S02",
+      "name": "Account UI requires both confirmations; wrong password leaves account and content intact",
+      "result": "PASS"
+    },
+    {
+      "id": "S03",
+      "name": "Real account page deletes claimed account, populated personal data and all sessions, preserving another owner",
+      "result": "PASS"
+    },
+    {
+      "id": "S04",
+      "name": "Unclaimed account also deletes normally and cannot retain an authenticated session",
+      "result": "PASS"
+    }
+  ],
+  "fixturePreparation": [
+    "real admin login + overview",
+    "real atomic multi-row level preview/save and isolated growth activation",
+    "admin draft → real independent preview SSE → publish",
+    "visitor preset generation → register → one-time claim to personal library"
+  ],
+  "localProviderCalls": 4,
+  "realProviderCalls": 0,
+  "pageErrors": [
+    "Hydration completed but contains mismatches."
+  ]
+}

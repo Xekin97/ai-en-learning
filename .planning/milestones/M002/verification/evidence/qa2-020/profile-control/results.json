@@ -1,0 +1,110 @@
+[
+  {
+    "id": "P20-en-1440",
+    "engine": "chromium",
+    "lang": "en",
+    "width": 1440,
+    "checks": [
+      {
+        "name": "locale switch preserves unsaved profile values",
+        "pass": true
+      },
+      {
+        "name": "empty nickname returns to username in shared identity",
+        "pass": true
+      },
+      {
+        "name": "cancelled password input clears before reopen",
+        "pass": true
+      },
+      {
+        "name": "no runtime warning/error",
+        "pass": true,
+        "actual": []
+      }
+    ],
+    "observations": {},
+    "runtime": [],
+    "requests": [
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:3300/api/v1/bootstrap"
+      },
+      {
+        "method": "POST",
+        "url": "http://127.0.0.1:3300/api/v1/analytics/events"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:3300/api/v1/bootstrap"
+      },
+      {
+        "method": "PUT",
+        "url": "http://127.0.0.1:3300/api/v1/me/ui-locale"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:3300/api/v1/bootstrap"
+      },
+      {
+        "method": "PATCH",
+        "url": "http://127.0.0.1:3300/api/v1/me/account"
+      }
+    ],
+    "status": "PASS"
+  },
+  {
+    "id": "P20-zh-390",
+    "engine": "webkit",
+    "lang": "zh",
+    "width": 390,
+    "checks": [
+      {
+        "name": "locale switch preserves unsaved profile values",
+        "pass": true
+      },
+      {
+        "name": "empty nickname returns to username in shared identity",
+        "pass": true
+      },
+      {
+        "name": "cancelled password input clears before reopen",
+        "pass": true
+      },
+      {
+        "name": "no runtime warning/error",
+        "pass": true,
+        "actual": []
+      }
+    ],
+    "observations": {},
+    "runtime": [],
+    "requests": [
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:3300/api/v1/bootstrap"
+      },
+      {
+        "method": "POST",
+        "url": "http://127.0.0.1:3300/api/v1/analytics/events"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:3300/api/v1/bootstrap"
+      },
+      {
+        "method": "PUT",
+        "url": "http://127.0.0.1:3300/api/v1/me/ui-locale"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:3300/api/v1/bootstrap"
+      },
+      {
+        "method": "PATCH",
+        "url": "http://127.0.0.1:3300/api/v1/me/account"
+      }
+    ],
+    "status": "PASS"
+  }
+]

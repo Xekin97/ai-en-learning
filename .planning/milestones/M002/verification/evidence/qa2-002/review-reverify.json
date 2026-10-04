@@ -1,0 +1,50 @@
+{
+  "results": [
+    {
+      "id": "R01",
+      "name": "Real API: denied initial storage allows edit, overview corrections, submit, retry cleanup and receipt-only reload",
+      "result": "PASS"
+    },
+    {
+      "id": "R02",
+      "name": "Real API: write transaction failure keeps latest input and still submits; later cleanup removes persisted old answer",
+      "result": "PASS"
+    },
+    {
+      "id": "R03",
+      "name": "Real API: storage recovery requires confirmation and cannot replace an existing saved answer",
+      "result": "PASS"
+    },
+    {
+      "id": "R04",
+      "name": "Real API: unknown local schema is preserved on retry; explicit restart removes it and opens a fresh server attempt",
+      "result": "PASS"
+    },
+    {
+      "id": "R05",
+      "name": "Real API and two tabs: other-tab draft changes require restore confirmation",
+      "result": "PASS"
+    },
+    {
+      "id": "R06",
+      "name": "Random candidates exclude selected and current-library words, enforce limit, and do not charge or add learning",
+      "result": "PASS"
+    },
+    {
+      "id": "R07",
+      "name": "Current and second sessions: password change keeps only current session; deletion revokes access and removes the owned batch",
+      "result": "FAIL",
+      "error": "Error: /me/account: 500 undefined"
+    }
+  ],
+  "fixturePreparation": [
+    "real admin login + overview",
+    "all 8 admin modules accept real DTOs, no initial operational reward fixtures",
+    "real atomic multi-row level preview/save and isolated growth activation",
+    "admin draft → real independent preview SSE → publish",
+    "visitor preset generation → register → one-time claim to personal library"
+  ],
+  "localProviderCalls": 3,
+  "realProviderCalls": 0,
+  "pageErrors": []
+}

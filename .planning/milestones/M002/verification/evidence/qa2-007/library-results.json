@@ -1,0 +1,571 @@
+{
+  "results": [
+    {
+      "id": "J01",
+      "name": "CR012 page-link return preserves query/range/scroll/focus in both languages and four widths",
+      "result": "PASS"
+    },
+    {
+      "id": "J02",
+      "name": "CR012 browser-history return preserves query/range/scroll/focus in both languages and four widths",
+      "result": "PASS"
+    },
+    {
+      "id": "J03",
+      "name": "CR012 direct navigation and departure via home retain normal initial scrolling",
+      "result": "PASS"
+    },
+    {
+      "id": "J04",
+      "name": "Title change returns to the current row with the original words and range",
+      "result": "PASS"
+    },
+    {
+      "id": "J05",
+      "name": "UI18 search completion returns keyboard focus to the search input",
+      "result": "FAIL",
+      "error": "Error: expect(received).toBe(expected) // Object.is equality\n\nExpected: true\nReceived: false"
+    },
+    {
+      "id": "J06",
+      "name": "UI18 load-more completion focuses the first newly appended title",
+      "result": "FAIL",
+      "error": "Error: expect(received).toBe(expected) // Object.is equality\n\nExpected: true\nReceived: false"
+    },
+    {
+      "id": "J07",
+      "name": "Participation update keeps checkbox focus and synchronizes whole-library count",
+      "result": "FAIL",
+      "error": "Error: expect(locator).toHaveText(expected) failed\n\nLocator:  locator('.library-stats dd').nth(2)\nExpected: \"19\"\nReceived: \"20\"\nTimeout:  5000ms\n\nCall log:\n  - Expect \"to.have.text\" with timeout 5000ms\n  - waiting for locator('.library-stats dd').nth(2)\n    14 × locator resolved to <dd>20</dd>\n       - unexpected value \"20\"\n"
+    },
+    {
+      "id": "J08",
+      "name": "Language switch preserves committed search and loaded range",
+      "result": "PASS"
+    },
+    {
+      "id": "J09",
+      "name": "Library exact content/order and accessibility/runtime",
+      "result": "PASS"
+    }
+  ],
+  "samples": [
+    {
+      "action": "J01",
+      "lang": "en",
+      "width": 320,
+      "kind": "page-link",
+      "before": {
+        "y": 5923,
+        "top": 771.984375,
+        "bottom": 900.359375,
+        "focus": false,
+        "count": 21,
+        "width": 320,
+        "viewport": 320,
+        "height": 900
+      },
+      "after": {
+        "y": 5923,
+        "top": 771.984375,
+        "bottom": 900.359375,
+        "focus": true,
+        "count": 21,
+        "width": 320,
+        "viewport": 320,
+        "height": 900
+      }
+    },
+    {
+      "action": "J01",
+      "lang": "en",
+      "width": 390,
+      "kind": "page-link",
+      "before": {
+        "y": 5584,
+        "top": 798.484375,
+        "bottom": 900.265625,
+        "focus": false,
+        "count": 21,
+        "width": 390,
+        "viewport": 390,
+        "height": 900
+      },
+      "after": {
+        "y": 5584,
+        "top": 798.484375,
+        "bottom": 900.265625,
+        "focus": true,
+        "count": 21,
+        "width": 390,
+        "viewport": 390,
+        "height": 900
+      }
+    },
+    {
+      "action": "J01",
+      "lang": "en",
+      "width": 768,
+      "kind": "page-link",
+      "before": {
+        "y": 4486,
+        "top": 795.3125,
+        "bottom": 852.109375,
+        "focus": false,
+        "count": 21,
+        "width": 768,
+        "viewport": 768,
+        "height": 900
+      },
+      "after": {
+        "y": 4486,
+        "top": 795.3125,
+        "bottom": 852.109375,
+        "focus": true,
+        "count": 21,
+        "width": 768,
+        "viewport": 768,
+        "height": 900
+      }
+    },
+    {
+      "action": "J01",
+      "lang": "en",
+      "width": 1440,
+      "kind": "page-link",
+      "before": {
+        "y": 3105,
+        "top": 797.734375,
+        "bottom": 854.53125,
+        "focus": false,
+        "count": 21,
+        "width": 1440,
+        "viewport": 1440,
+        "height": 900
+      },
+      "after": {
+        "y": 3105,
+        "top": 797.734375,
+        "bottom": 854.53125,
+        "focus": true,
+        "count": 21,
+        "width": 1440,
+        "viewport": 1440,
+        "height": 900
+      }
+    },
+    {
+      "action": "J01",
+      "lang": "zh",
+      "width": 320,
+      "kind": "page-link",
+      "before": {
+        "y": 5393,
+        "top": 771.984375,
+        "bottom": 900.359375,
+        "focus": false,
+        "count": 21,
+        "width": 320,
+        "viewport": 320,
+        "height": 900
+      },
+      "after": {
+        "y": 5393,
+        "top": 771.984375,
+        "bottom": 900.359375,
+        "focus": true,
+        "count": 21,
+        "width": 320,
+        "viewport": 320,
+        "height": 900
+      }
+    },
+    {
+      "action": "J01",
+      "lang": "zh",
+      "width": 390,
+      "kind": "page-link",
+      "before": {
+        "y": 5300,
+        "top": 798.296875,
+        "bottom": 900.078125,
+        "focus": false,
+        "count": 21,
+        "width": 390,
+        "viewport": 390,
+        "height": 900
+      },
+      "after": {
+        "y": 5300,
+        "top": 798.296875,
+        "bottom": 900.078125,
+        "focus": true,
+        "count": 21,
+        "width": 390,
+        "viewport": 390,
+        "height": 900
+      }
+    },
+    {
+      "action": "J01",
+      "lang": "zh",
+      "width": 768,
+      "kind": "page-link",
+      "before": {
+        "y": 4186,
+        "top": 795.3125,
+        "bottom": 852.109375,
+        "focus": false,
+        "count": 21,
+        "width": 768,
+        "viewport": 768,
+        "height": 900
+      },
+      "after": {
+        "y": 4186,
+        "top": 795.3125,
+        "bottom": 852.109375,
+        "focus": true,
+        "count": 21,
+        "width": 768,
+        "viewport": 768,
+        "height": 900
+      }
+    },
+    {
+      "action": "J01",
+      "lang": "zh",
+      "width": 1440,
+      "kind": "page-link",
+      "before": {
+        "y": 2915,
+        "top": 797.734375,
+        "bottom": 854.53125,
+        "focus": false,
+        "count": 21,
+        "width": 1440,
+        "viewport": 1440,
+        "height": 900
+      },
+      "after": {
+        "y": 2915,
+        "top": 797.734375,
+        "bottom": 854.53125,
+        "focus": true,
+        "count": 21,
+        "width": 1440,
+        "viewport": 1440,
+        "height": 900
+      }
+    },
+    {
+      "action": "J02",
+      "lang": "en",
+      "width": 320,
+      "kind": "browser-history",
+      "before": {
+        "y": 5923,
+        "top": 771.984375,
+        "bottom": 900.359375,
+        "focus": false,
+        "count": 21,
+        "width": 320,
+        "viewport": 320,
+        "height": 900
+      },
+      "after": {
+        "y": 5923,
+        "top": 771.984375,
+        "bottom": 900.359375,
+        "focus": true,
+        "count": 21,
+        "width": 320,
+        "viewport": 320,
+        "height": 900
+      }
+    },
+    {
+      "action": "J02",
+      "lang": "en",
+      "width": 390,
+      "kind": "browser-history",
+      "before": {
+        "y": 5584,
+        "top": 798.484375,
+        "bottom": 900.265625,
+        "focus": false,
+        "count": 21,
+        "width": 390,
+        "viewport": 390,
+        "height": 900
+      },
+      "after": {
+        "y": 5584,
+        "top": 798.484375,
+        "bottom": 900.265625,
+        "focus": true,
+        "count": 21,
+        "width": 390,
+        "viewport": 390,
+        "height": 900
+      }
+    },
+    {
+      "action": "J02",
+      "lang": "en",
+      "width": 768,
+      "kind": "browser-history",
+      "before": {
+        "y": 4486,
+        "top": 795.3125,
+        "bottom": 852.109375,
+        "focus": false,
+        "count": 21,
+        "width": 768,
+        "viewport": 768,
+        "height": 900
+      },
+      "after": {
+        "y": 4486,
+        "top": 795.3125,
+        "bottom": 852.109375,
+        "focus": true,
+        "count": 21,
+        "width": 768,
+        "viewport": 768,
+        "height": 900
+      }
+    },
+    {
+      "action": "J02",
+      "lang": "en",
+      "width": 1440,
+      "kind": "browser-history",
+      "before": {
+        "y": 3105,
+        "top": 797.734375,
+        "bottom": 854.53125,
+        "focus": false,
+        "count": 21,
+        "width": 1440,
+        "viewport": 1440,
+        "height": 900
+      },
+      "after": {
+        "y": 3105,
+        "top": 797.734375,
+        "bottom": 854.53125,
+        "focus": true,
+        "count": 21,
+        "width": 1440,
+        "viewport": 1440,
+        "height": 900
+      }
+    },
+    {
+      "action": "J02",
+      "lang": "zh",
+      "width": 320,
+      "kind": "browser-history",
+      "before": {
+        "y": 5393,
+        "top": 771.984375,
+        "bottom": 900.359375,
+        "focus": false,
+        "count": 21,
+        "width": 320,
+        "viewport": 320,
+        "height": 900
+      },
+      "after": {
+        "y": 5393,
+        "top": 771.984375,
+        "bottom": 900.359375,
+        "focus": true,
+        "count": 21,
+        "width": 320,
+        "viewport": 320,
+        "height": 900
+      }
+    },
+    {
+      "action": "J02",
+      "lang": "zh",
+      "width": 390,
+      "kind": "browser-history",
+      "before": {
+        "y": 5300,
+        "top": 798.296875,
+        "bottom": 900.078125,
+        "focus": false,
+        "count": 21,
+        "width": 390,
+        "viewport": 390,
+        "height": 900
+      },
+      "after": {
+        "y": 5300,
+        "top": 798.296875,
+        "bottom": 900.078125,
+        "focus": true,
+        "count": 21,
+        "width": 390,
+        "viewport": 390,
+        "height": 900
+      }
+    },
+    {
+      "action": "J02",
+      "lang": "zh",
+      "width": 768,
+      "kind": "browser-history",
+      "before": {
+        "y": 4186,
+        "top": 795.3125,
+        "bottom": 852.109375,
+        "focus": false,
+        "count": 21,
+        "width": 768,
+        "viewport": 768,
+        "height": 900
+      },
+      "after": {
+        "y": 4186,
+        "top": 795.3125,
+        "bottom": 852.109375,
+        "focus": true,
+        "count": 21,
+        "width": 768,
+        "viewport": 768,
+        "height": 900
+      }
+    },
+    {
+      "action": "J02",
+      "lang": "zh",
+      "width": 1440,
+      "kind": "browser-history",
+      "before": {
+        "y": 2915,
+        "top": 797.734375,
+        "bottom": 854.53125,
+        "focus": false,
+        "count": 21,
+        "width": 1440,
+        "viewport": 1440,
+        "height": 900
+      },
+      "after": {
+        "y": 2915,
+        "top": 797.734375,
+        "bottom": 854.53125,
+        "focus": true,
+        "count": 21,
+        "width": 1440,
+        "viewport": 1440,
+        "height": 900
+      }
+    },
+    {
+      "action": "J05",
+      "observed": [
+        {
+          "lang": "en",
+          "width": 320,
+          "focused": false,
+          "actual": {
+            "tag": "BUTTON",
+            "id": "",
+            "type": "submit",
+            "text": "Search"
+          }
+        },
+        {
+          "lang": "en",
+          "width": 1440,
+          "focused": false,
+          "actual": {
+            "tag": "BUTTON",
+            "id": "",
+            "type": "submit",
+            "text": "Search"
+          }
+        },
+        {
+          "lang": "zh",
+          "width": 320,
+          "focused": false,
+          "actual": {
+            "tag": "BUTTON",
+            "id": "",
+            "type": "submit",
+            "text": "搜索"
+          }
+        },
+        {
+          "lang": "zh",
+          "width": 1440,
+          "focused": false,
+          "actual": {
+            "tag": "BUTTON",
+            "id": "",
+            "type": "submit",
+            "text": "搜索"
+          }
+        }
+      ]
+    },
+    {
+      "action": "J06",
+      "observed": [
+        {
+          "lang": "en",
+          "width": 320,
+          "focused": false,
+          "actual": {
+            "tag": "BODY",
+            "id": "",
+            "type": null,
+            "text": "Permanently delete this batch?Deletion is permanent. Your points, experience, achievements and cumul"
+          }
+        },
+        {
+          "lang": "en",
+          "width": 1440,
+          "focused": false,
+          "actual": {
+            "tag": "BODY",
+            "id": "",
+            "type": null,
+            "text": "Permanently delete this batch?Deletion is permanent. Your points, experience, achievements and cumul"
+          }
+        },
+        {
+          "lang": "zh",
+          "width": 320,
+          "focused": false,
+          "actual": {
+            "tag": "BODY",
+            "id": "",
+            "type": null,
+            "text": "永久删除这个批次？删除后无法恢复。已获得的积分、经验、成就及累计学习成果不受影响。取消永久删除跳到主要内容词涟首页精选学习复习书架英文平台消息qqa7_library_1790146984242个人信"
+          }
+        },
+        {
+          "lang": "zh",
+          "width": 1440,
+          "focused": false,
+          "actual": {
+            "tag": "BODY",
+            "id": "",
+            "type": null,
+            "text": "永久删除这个批次？删除后无法恢复。已获得的积分、经验、成就及累计学习成果不受影响。取消永久删除跳到主要内容词涟首页精选学习复习书架英文平台消息qqa7_library_1790146984242个人信"
+          }
+        }
+      ]
+    }
+  ],
+  "runtime": [],
+  "localProviderCalls": 24,
+  "realProviderCalls": 0
+}

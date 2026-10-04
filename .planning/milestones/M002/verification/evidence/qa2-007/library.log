@@ -1,0 +1,59 @@
+J01 PASS
+J02 PASS
+J03 PASS
+J04 PASS
+J05 FAIL
+J06 FAIL
+J07 FAIL
+J08 PASS
+J09 PASS
+[
+  {
+    "id": "J01",
+    "name": "CR012 page-link return preserves query/range/scroll/focus in both languages and four widths",
+    "result": "PASS"
+  },
+  {
+    "id": "J02",
+    "name": "CR012 browser-history return preserves query/range/scroll/focus in both languages and four widths",
+    "result": "PASS"
+  },
+  {
+    "id": "J03",
+    "name": "CR012 direct navigation and departure via home retain normal initial scrolling",
+    "result": "PASS"
+  },
+  {
+    "id": "J04",
+    "name": "Title change returns to the current row with the original words and range",
+    "result": "PASS"
+  },
+  {
+    "id": "J05",
+    "name": "UI18 search completion returns keyboard focus to the search input",
+    "result": "FAIL",
+    "error": "Error: expect(received).toBe(expected) // Object.is equality\n\nExpected: true\nReceived: false"
+  },
+  {
+    "id": "J06",
+    "name": "UI18 load-more completion focuses the first newly appended title",
+    "result": "FAIL",
+    "error": "Error: expect(received).toBe(expected) // Object.is equality\n\nExpected: true\nReceived: false"
+  },
+  {
+    "id": "J07",
+    "name": "Participation update keeps checkbox focus and synchronizes whole-library count",
+    "result": "FAIL",
+    "error": "Error: expect(locator).toHaveText(expected) failed\n\nLocator:  locator('.library-stats dd').nth(2)\nExpected: \"19\"\nReceived: \"20\"\nTimeout:  5000ms\n\nCall log:\n  - Expect \"to.have.text\" with timeout 5000ms\n  - waiting for locator('.library-stats dd').nth(2)\n    14 × locator resolved to <dd>20</dd>\n       - unexpected value \"20\"\n"
+  },
+  {
+    "id": "J08",
+    "name": "Language switch preserves committed search and loaded range",
+    "result": "PASS"
+  },
+  {
+    "id": "J09",
+    "name": "Library exact content/order and accessibility/runtime",
+    "result": "PASS"
+  }
+]

@@ -1,0 +1,37 @@
+{
+  "version": "M002-QA-11",
+  "role": "qa-quinn",
+  "authorization": "APPROVAL-M002-036",
+  "mode": "read-only evidence audit; staged patch not applied",
+  "product_root": "/Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning",
+  "staging_root": "/private/tmp/wordweave-m002-qa11-x5mozk38",
+  "scope": [
+    "CR001 inheritance",
+    "CR002 titles",
+    "finite acceptance gaps"
+  ],
+  "permissions": {
+    "product_writable": false,
+    "local_tcp_listener": "PermissionError Errno 1 Operation not permitted",
+    "reason": "managed filesystem excludes product root; restricted network"
+  },
+  "source_checks": {
+    "frontend-cr014-015": {
+      "files": 280,
+      "source_sha256": "83260ed1472683df3d547d366cddd31262c7bb7e0eb3ad3c9d74914bb9aa78b1",
+      "manifest_sha256": "ac8b106583031abbef219d81ebf331308f7bad04ea83b98af13b8650534c37f7",
+      "mismatches": []
+    },
+    "backend-cr013": {
+      "files": 288,
+      "source_sha256": "c54307a04cecb3dd99cc13d64ae0fbcb6c1fca2c0538711af040d279bbe9b549",
+      "manifest_sha256": "13b5dccdeb84e1b958c0ac378b4add5ed4c6815e9024cc3cf0eb6fd19e99912d",
+      "mismatches": []
+    }
+  },
+  "protected_files": 6909,
+  "qa10_manifest": {
+    "sha256": "640533af2b75cc27095ce3a558fd9214c184fb4f87d882f997efb2ac90f3ee1a",
+    "verified_artifacts": 34
+  }
+}

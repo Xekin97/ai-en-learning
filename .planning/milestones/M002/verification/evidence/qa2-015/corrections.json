@@ -1,0 +1,22 @@
+{
+  "reason": "Initial fixture long title exceeded approved API007 technical cap, so client correctly prevented PATCH. Not a product regression.",
+  "source": "technical/api/identity-library.md:69 title_max_length; frontend page enforces server supplied cap",
+  "change": "Read title_max_length from batch detail, generate exact maximum code points; keep layout, copy, keyboard and axe assertions unchanged",
+  "original_results": "run/results.json retained",
+  "control": "control/results.json",
+  "product_changed": false,
+  "warnings_suppressed": false,
+  "keyboard_controls": {
+    "initial": "control/results.json: Chromium four pass, WebKit four stop at plain Tab button expectation",
+    "comparison": "keyboard-control/results.json: all four prove Alt+Tab reaches save and cancel in production/prototype; final assertion wrongly equated outside-editor focus target",
+    "observed": "ordinary Tab skips editor buttons in both; production reaches BODY, prototype reaches demo-only SUMMARY",
+    "correction": "Compare scoped skip behavior and Alt+Tab editor operation; do not require a prototype-only demo control in product",
+    "final": "confirmed-control/results.json: four WebKit cases plus embedded review-title hiding check",
+    "product_changed": false
+  },
+  "review_probe": {
+    "initial": "confirmed-control mobile expected five letters but preset fixture first word has four; irrelevant to title hiding",
+    "correction": "final-control waits for first spelling slot to be visible, asserts current title absent from word/overview DOM, aria and review API; remaining checks unchanged",
+    "raw_results_retained": true
+  }
+}

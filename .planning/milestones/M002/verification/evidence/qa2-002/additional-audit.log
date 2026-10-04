@@ -1,0 +1,68 @@
+R07-repro FAIL
+R09 PASS
+R10 PASS
+{
+  "results": [
+    {
+      "id": "R07-repro",
+      "name": "Account with consumed visitor claim cannot be deleted; fresh-account control can be deleted",
+      "result": "FAIL",
+      "error": "Error: expect(received).toBe(expected) // Object.is equality\n\nExpected: 204\nReceived: 500"
+    },
+    {
+      "id": "R09",
+      "name": "CR-006: actual admin API changes retired-model price; stale preview rejected; used/unused refunds use current price exactly once",
+      "result": "PASS"
+    },
+    {
+      "id": "R10",
+      "name": "CR-006: new definitions still cannot reference a retired model",
+      "result": "PASS"
+    }
+  ],
+  "details": {
+    "accountDelete": {
+      "expectedStatus": 204,
+      "actualStatus": 500,
+      "problem": {
+        "type": "https://wordweave.example/problems/internal-error",
+        "title": "Internal error",
+        "status": 500,
+        "code": "internal_error",
+        "detail": "The request could not be completed.",
+        "request_id": "req_pxHHiAEh70EaSiEs4eqRtA"
+      },
+      "consumedClaimsBefore": 1,
+      "consumedClaimsAfter": 1,
+      "batchIdsUnchanged": true,
+      "cleanAccountDeleteStatus": 204,
+      "cleanAccountReadAfterDeleteStatus": 401
+    },
+    "refunds": {
+      "oldPreviewStatus": 409,
+      "oldPreviewCode": "preview_stale",
+      "usedRefund": "35",
+      "usedAfterFurtherPriceChange": "35",
+      "unusedRefund": "50",
+      "finalPoints": "275",
+      "sameReceiptOnBothKindsOfRetry": true
+    },
+    "newRetiredReference": {
+      "status": 422,
+      "problem": {
+        "type": "https://wordweave.example/problems/validation-failed",
+        "title": "Request could not be accepted",
+        "status": 422,
+        "code": "validation_failed",
+        "detail": "One or more fields need attention.",
+        "request_id": "req_KN8X6OljR_c2UHp5qEAUSg",
+        "field_errors": [
+          {
+            "field": "/effect/model_ids",
+            "code": "invalid_reference"
+          }
+        ]
+      }
+    }
+  }
+}

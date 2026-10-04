@@ -1,0 +1,175 @@
+{
+  "results": [
+    {
+      "id": "U01",
+      "name": "Published full samples, language tabs and locked workspace match approved copy in two languages/four widths without generating",
+      "result": "PASS"
+    },
+    {
+      "id": "U02",
+      "name": "Real browser provider failure refunds, retry generates once and guest registration claims once",
+      "result": "PASS"
+    },
+    {
+      "id": "U03",
+      "name": "Stale preset refreshes displayed version without auto-retry; unavailable model visibly disables start",
+      "result": "PASS"
+    },
+    {
+      "id": "U04",
+      "name": "Stable gallery/workspace accessibility and runtime checks; approved prototype comparison captures",
+      "result": "PASS"
+    }
+  ],
+  "samples": [
+    {
+      "action": "U01",
+      "lang": "en",
+      "width": 320,
+      "fullSample": true,
+      "lockedSettings": true,
+      "settingsFocus": true,
+      "noHorizontalOverflow": true
+    },
+    {
+      "action": "U01",
+      "lang": "en",
+      "width": 390,
+      "fullSample": true,
+      "lockedSettings": true,
+      "settingsFocus": true,
+      "noHorizontalOverflow": true
+    },
+    {
+      "action": "U01",
+      "lang": "en",
+      "width": 768,
+      "fullSample": true,
+      "lockedSettings": true,
+      "settingsFocus": true,
+      "noHorizontalOverflow": true
+    },
+    {
+      "action": "U01",
+      "lang": "en",
+      "width": 1440,
+      "fullSample": true,
+      "lockedSettings": true,
+      "settingsFocus": true,
+      "noHorizontalOverflow": true
+    },
+    {
+      "action": "U01",
+      "lang": "zh",
+      "width": 320,
+      "fullSample": true,
+      "lockedSettings": true,
+      "settingsFocus": true,
+      "noHorizontalOverflow": true
+    },
+    {
+      "action": "U01",
+      "lang": "zh",
+      "width": 390,
+      "fullSample": true,
+      "lockedSettings": true,
+      "settingsFocus": true,
+      "noHorizontalOverflow": true
+    },
+    {
+      "action": "U01",
+      "lang": "zh",
+      "width": 768,
+      "fullSample": true,
+      "lockedSettings": true,
+      "settingsFocus": true,
+      "noHorizontalOverflow": true
+    },
+    {
+      "action": "U01",
+      "lang": "zh",
+      "width": 1440,
+      "fullSample": true,
+      "lockedSettings": true,
+      "settingsFocus": true,
+      "noHorizontalOverflow": true
+    },
+    {
+      "action": "U02",
+      "failedProviderCalls": 1,
+      "successfulGenerationCalls": 1,
+      "authExtraCalls": 0,
+      "claimedBatches": 1,
+      "basicRemaining": 4
+    },
+    {
+      "action": "U03",
+      "staleStatus": 409,
+      "updatedTitle": "A fresh edition of shared ideas",
+      "autoRetryCalls": 0,
+      "unavailableStartDisabled": true
+    },
+    {
+      "action": "U04",
+      "axeScans": 4,
+      "violations": 0,
+      "unexpectedRuntime": 0
+    }
+  ],
+  "runtime": [
+    {
+      "kind": "error",
+      "url": "http://127.0.0.1:3301/trial/57fbd3e5-8741-4469-af39-5ae364ac1207",
+      "action": "U02",
+      "text": "Failed to load resource: the server responded with a status of 503 (Service Unavailable)"
+    },
+    {
+      "kind": "error",
+      "url": "http://127.0.0.1:3301/trial/57fbd3e5-8741-4469-af39-5ae364ac1207",
+      "action": "U03",
+      "text": "Failed to load resource: the server responded with a status of 409 (Conflict)"
+    }
+  ],
+  "requests": [
+    {
+      "action": "U02",
+      "path": "/api/v1/presets/57fbd3e5-8741-4469-af39-5ae364ac1207/generations/stream",
+      "body": {
+        "published_version": "ee50dcf3-ac99-498f-9b42-6f18a2f3458e"
+      }
+    },
+    {
+      "action": "U02",
+      "path": "/api/v1/presets/57fbd3e5-8741-4469-af39-5ae364ac1207/generations/stream",
+      "body": {
+        "published_version": "ee50dcf3-ac99-498f-9b42-6f18a2f3458e"
+      }
+    },
+    {
+      "action": "U03",
+      "path": "/api/v1/presets/57fbd3e5-8741-4469-af39-5ae364ac1207/generations/stream",
+      "body": {
+        "published_version": "ee50dcf3-ac99-498f-9b42-6f18a2f3458e"
+      }
+    }
+  ],
+  "providerRequests": [
+    {
+      "number": 1,
+      "mode": "http-failure",
+      "probe": false
+    },
+    {
+      "number": 2,
+      "mode": "valid",
+      "probe": false
+    },
+    {
+      "number": 3,
+      "mode": "valid",
+      "probe": true
+    }
+  ],
+  "localProviderCalls": 3,
+  "realProviderCalls": 0
+}

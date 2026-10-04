@@ -1,0 +1,127 @@
+{
+  "version": "M002-QA-13",
+  "overall": "FAIL",
+  "accepted_cases": [
+    {
+      "id": "chromium-en-R01",
+      "result": "PASS",
+      "source": "run/results.json"
+    },
+    {
+      "id": "chromium-en-R02",
+      "result": "PASS",
+      "source": "run/results.json"
+    },
+    {
+      "id": "chromium-en-R03",
+      "result": "PASS",
+      "source": "run/results.json"
+    },
+    {
+      "id": "chromium-en-R04",
+      "result": "PASS",
+      "source": "run/results.json"
+    },
+    {
+      "id": "chromium-en-C01",
+      "result": "FAIL",
+      "error": "Error: expect(received).toBe(expected) // Object.is equality\n\nExpected: \"Title was not saved. Your text is still here; please try again.\"\nReceived: \"Could not save. Your edits are kept. Please retry.\"",
+      "source": "run/results.json"
+    },
+    {
+      "id": "webkit-zh-R01",
+      "result": "PASS",
+      "source": "run/results.json"
+    },
+    {
+      "id": "webkit-zh-R02",
+      "result": "PASS",
+      "source": "run/results.json"
+    },
+    {
+      "id": "webkit-zh-R03",
+      "result": "PASS",
+      "source": "run/results.json"
+    },
+    {
+      "id": "webkit-zh-C01",
+      "result": "FAIL",
+      "error": "Error: expect(received).toBe(expected) // Object.is equality\n\nExpected: \"标题未保存，请重试。你的输入已保留。\"\nReceived: \"保存失败，输入已保留，请重试。\"",
+      "source": "run/results.json"
+    },
+    {
+      "id": "H01-webkit-en",
+      "result": "FAIL",
+      "error": "Error: expect(received).toBe(expected) // Object.is equality\n\nExpected: true\nReceived: false",
+      "source": "date-control/results.json"
+    },
+    {
+      "id": "H02-chromium-en",
+      "result": "PASS",
+      "source": "date-control/results.json"
+    },
+    {
+      "id": "H03-webkit-zh",
+      "result": "PASS",
+      "source": "date-control/results.json"
+    },
+    {
+      "id": "H04-firefox-en",
+      "result": "PASS",
+      "source": "date-control/results.json"
+    }
+  ],
+  "counts": {
+    "pass": 10,
+    "fail": 3
+  },
+  "cr016": {
+    "result": "PASS_WITHIN_RETEST_SCOPE",
+    "findings": [
+      "QA2-F12",
+      "QA2-F13"
+    ],
+    "formal_status": "open_pending_gate",
+    "cases": [
+      "chromium-en-R01",
+      "chromium-en-R02",
+      "chromium-en-R03",
+      "chromium-en-R04",
+      "webkit-zh-R01",
+      "webkit-zh-R02",
+      "webkit-zh-R03"
+    ]
+  },
+  "new_findings": [
+    {
+      "id": "QA2-F14",
+      "observation": "FE2-R16-W1",
+      "change_request": "M002-CR-017",
+      "severity": "P2",
+      "case": "H01-webkit-en"
+    },
+    {
+      "id": "QA2-F15",
+      "change_request": "M002-CR-018",
+      "severity": "P3",
+      "cases": [
+        "chromium-en-C01",
+        "webkit-zh-C01"
+      ]
+    }
+  ],
+  "raw_first_run": {
+    "pass": 8,
+    "fail": 5,
+    "preserved": true,
+    "false_failures": [
+      "H02-chromium-en",
+      "H04-firefox-en"
+    ],
+    "cause": "innerText includes CSS uppercase; SSR hydration must compare DOM textContent. Corrected only in separate date-control run."
+  },
+  "local_provider_calls": 1,
+  "real_provider_calls": 0,
+  "controls_changed": false,
+  "developer_checks_rerun": false
+}

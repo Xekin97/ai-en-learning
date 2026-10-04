@@ -1,0 +1,53 @@
+{
+  "authorization": "TRANSITION-M002-030",
+  "scripts": [
+    {
+      "command": [
+        "node@24.21.0",
+        "library.mjs"
+      ],
+      "cwd": "product repository root",
+      "exit_code": 1,
+      "results": "library-results.json",
+      "log": "library.log",
+      "interpretation": "Read assertions/results; process exit alone is not acceptance."
+    },
+    {
+      "command": [
+        "node@24.21.0",
+        "scroll-repro.mjs"
+      ],
+      "cwd": "product repository root",
+      "exit_code": 0,
+      "results": "scroll-repro-results.json",
+      "log": "scroll-repro.log",
+      "interpretation": "Read assertions/results; process exit alone is not acceptance."
+    },
+    {
+      "command": [
+        "node@24.21.0",
+        "generation.mjs"
+      ],
+      "cwd": "product repository root",
+      "exit_code": 1,
+      "results": "generation-results.json",
+      "log": "generation.log",
+      "interpretation": "Read assertions/results; process exit alone is not acceptance."
+    },
+    {
+      "command": [
+        "node@24.21.0",
+        "generation-v2.mjs"
+      ],
+      "cwd": "product repository root",
+      "exit_code": 1,
+      "results": "generation-v2-results.json",
+      "log": "generation-v2.log",
+      "interpretation": "Read assertions/results; process exit alone is not acceptance."
+    }
+  ],
+  "local_provider_calls": 36,
+  "real_provider_calls": 0,
+  "developer_checks_rerun": false,
+  "source_changes": false
+}

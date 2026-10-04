@@ -1,0 +1,75 @@
+--- qa01/frontend/app/runtime/stores/library.ts
++++ current/frontend/app/runtime/stores/library.ts
+@@ -9,6 +9,7 @@
+ 
+ interface LibraryState {
+   request: number;
++  summaryRequest: number;
+   loadingMore: boolean;
+   summary: LearningSummaryModel | null;
+   batches: BatchSummaryModel[];
+@@ -26,6 +27,7 @@
+     feedback = useFeedbackStore();
+   const state = usePrivateState<LibraryState>("library", () => ({
+     request: 0,
++    summaryRequest: 0,
+     loadingMore: false,
+     summary: null,
+     batches: [],
+@@ -40,6 +42,7 @@
+   async function load(query = state.value.query): Promise<void> {
+     const epoch = session.epoch.value;
+     const request = ++state.value.request;
++    const summaryRequest = ++state.value.summaryRequest;
+     state.value.status = "loading";
+     state.value.query = query.trim();
+     try {
+@@ -49,7 +52,8 @@
+       ]);
+       if (epoch !== session.epoch.value || request !== state.value.request)
+         return;
+-      state.value.summary = summary;
++      if (summaryRequest === state.value.summaryRequest)
++        state.value.summary = summary;
+       state.value.batches = page.items;
+       state.value.nextCursor = page.nextCursor;
+       state.value.hasMore = page.hasMore;
+@@ -90,6 +94,7 @@
+       );
+       state.value.nextCursor = page.nextCursor;
+       state.value.hasMore = page.hasMore;
++      state.value.failure = null;
+     } catch (error) {
+       if (epoch !== session.epoch.value || request !== state.value.request)
+         return;
+@@ -130,6 +135,15 @@
+       if (summary) summary.participatesInRangeReview = updated;
+       const detail = state.value.details[batchId];
+       if (detail) detail.participatesInRangeReview = updated;
++      const summaryRequest = ++state.value.summaryRequest;
++      const learningSummary = await api.getLearningSummary();
++      if (
++        epoch === session.epoch.value &&
++        summaryRequest === state.value.summaryRequest
++      ) {
++        state.value.summary = learningSummary;
++        state.value.failure = null;
++      }
+     } catch (error) {
+       if (epoch !== session.epoch.value) return;
+       state.value.failure = normalizeFailure(error);
+@@ -170,8 +184,13 @@
+         Object.entries(state.value.details).filter(([id]) => id !== batchId),
+       );
+       state.value.status = state.value.batches.length ? "ready" : "empty";
++      const summaryRequest = ++state.value.summaryRequest;
+       const summary = await api.getLearningSummary();
+-      if (epoch === session.epoch.value) state.value.summary = summary;
++      if (
++        epoch === session.epoch.value &&
++        summaryRequest === state.value.summaryRequest
++      )
++        state.value.summary = summary;
+     } catch (error) {
+       if (epoch !== session.epoch.value) return;
+       state.value.failure = normalizeFailure(error);

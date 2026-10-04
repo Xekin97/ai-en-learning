@@ -1,0 +1,19 @@
+{
+  "id": "I01",
+  "result": "FAIL",
+  "finding": "QA2-F16",
+  "change_request": "M002-CR-019",
+  "severity": "P3",
+  "source": "UI22/H01 UIA-PAGE-006-ICON10; design/prototype/icons.js actionIcons[l.title.edit]=pencil; app.js B consumes mapping",
+  "method": "manual comparison of matching language/viewport/data/state browser screenshots plus exact approved and implementation element sources",
+  "expected": "Edit-title button includes local Lucide pencil SVG and visible label",
+  "actual": "Production edit-title button renders label only; no pencil icon",
+  "expected_source": "design/prototype/icons.js:11 and app.js:157; learning.js:210",
+  "actual_source": "frontend/app/pages/library/[batchId].vue:104",
+  "screenshots": [
+    "final-control/UI15-zh-390-production-title.png",
+    "final-control/UI15-zh-390-prototype-title.png"
+  ],
+  "no_new_runtime_dom_query_claim": true,
+  "business_result": "title editing remains functional; no authorization/data failure"
+}

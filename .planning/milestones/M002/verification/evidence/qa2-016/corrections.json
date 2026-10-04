@@ -1,0 +1,12 @@
+{
+  "initial_results": "results.json",
+  "initial_result": {
+    "pass": 0,
+    "fail": 4
+  },
+  "reason": "QA expected ariaSnapshot to emit a redundant text child. Playwright correctly serializes a text-only named button as a single button node. This is a serialization assumption, not approved product behavior.",
+  "correction": "Assert exact accessible name from approved copy and equality with prototype accessibility snapshot; retain SVG decoration, tab exclusion, asset, layout, click/cancel/save checks.",
+  "corrected_results": "control/results.json",
+  "application_modified": false,
+  "original_failures_preserved": true
+}

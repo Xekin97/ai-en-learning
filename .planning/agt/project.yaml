@@ -1,82 +1,84 @@
 schema_version: 1
-
 project:
-  id: "wordweave"
-  display_name_zh: "词涟"
-  display_name_en: "WordWeave"
-  name_status: "CONFIRMED"
-  name_decision: ".planning/milestones/M001/decisions/DEC-018.md"
-  repository: "."
-
+  id: wordweave
+  display_name_zh: 词涟
+  display_name_en: WordWeave
+  name_status: CONFIRMED
+  name_decision: .planning/milestones/M001/decisions/DEC-018.md
+  repository: .
 agt_base:
-  repository: "../agt-coding-v2"
-  resolved_path_at_lock: "/Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/agt-coding-v2"
-  git_revision: "b5badf88cd7194400c3d4d0e9395e7c98490dc26"
+  repository: ../agt-coding-v2
+  resolved_path_at_lock: /Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/agt-coding-v2
+  git_revision: b5badf88cd7194400c3d4d0e9395e7c98490dc26
   profile:
-    id: "consumer-ai-web"
-    version: "1.0.0"
-    reference: "consumer-ai-web@1.0.0"
-    status_at_lock: "available"
-    source: "profiles/consumer-ai-web/PROFILE.yaml"
-    sha256: "9d9258ebc8cba13f5df2f8289fa81e973e60af9f10e5ca126fd83482aa0c050f"
-
+    id: consumer-ai-web
+    version: 1.0.0
+    reference: consumer-ai-web@1.0.0
+    status_at_lock: available
+    source: profiles/consumer-ai-web/PROFILE.yaml
+    sha256: 9d9258ebc8cba13f5df2f8289fa81e973e60af9f10e5ca126fd83482aa0c050f
 profile_selection:
-  id: "INIT-PROFILE-001"
-  status: "CONFIRMED"
-  selected_by: "user"
-  selected_at: "2026-08-28T11:00:33Z"
-  user_selection: "consumer-ai-web@1.0.0"
+  id: INIT-PROFILE-001
+  status: CONFIRMED
+  selected_by: user
+  selected_at: '2026-08-28T11:00:33Z'
+  user_selection: consumer-ai-web@1.0.0
   fit:
-    - "面向个人消费者的公开 Web 产品"
-    - "AI 生成内容是核心用户价值"
-    - "支持匿名访客、注册用户和权益分组"
-    - "需要 OpenRouter 模型路由、调用配额、成本控制和流式返回"
-    - "首个里程碑需要产品、设计、数据库、前后端与验证完整闭环"
+  - 面向个人消费者的公开 Web 产品
+  - AI 生成内容是核心用户价值
+  - 支持匿名访客、注册用户和权益分组
+  - 需要 OpenRouter 模型路由、调用配额、成本控制和流式返回
+  - 首个里程碑需要产品、设计、数据库、前后端与验证完整闭环
   checked_mismatches:
-    - "首版不是企业多租户或复杂组织权限产品"
-    - "首版不做原生移动端、桌面端或离线优先"
-    - "产品不直接产生医疗、金融或法律等高风险专业决策"
-    - "首版不依赖大规模人工审核、实时多人协作或无界面 API 交付"
-  defaults_status: "PROPOSED"
-  defaults_rule: "Profile 默认倾向必须由相应专业角色分析，不能自动视为用户已确认决策。"
+  - 首版不是企业多租户或复杂组织权限产品
+  - 首版不做原生移动端、桌面端或离线优先
+  - 产品不直接产生医疗、金融或法律等高风险专业决策
+  - 首版不依赖大规模人工审核、实时多人协作或无界面 API 交付
+  defaults_status: PROPOSED
+  defaults_rule: Profile 默认倾向必须由相应专业角色分析，不能自动视为用户已确认决策。
   tradeoffs:
-    - "完整阶段和正式产物提高可追踪性，但比只做原型需要更多审批。"
-    - "AI 输出契约、失败恢复和评估提高可靠性，但增加首版设计与测试工作。"
-    - "统一权益组模型便于后续演进，但首版即需明确组别、额度和管理员边界。"
-
+  - 完整阶段和正式产物提高可追踪性，但比只做原型需要更多审批。
+  - AI 输出契约、失败恢复和评估提高可靠性，但增加首版设计与测试工作。
+  - 统一权益组模型便于后续演进，但首版即需明确组别、额度和管理员边界。
 initialization:
-  status: "complete"
-  initialized_at: "2026-08-28T11:00:33Z"
-  questionnaire: ".planning/agt/questionnaire.yaml"
-  agent_registry: ".planning/agt/agents.yaml"
-  workflow_state: ".planning/workflow/state.yaml"
-
+  status: complete
+  initialized_at: '2026-08-28T11:00:33Z'
+  questionnaire: .planning/agt/questionnaire.yaml
+  agent_registry: .planning/agt/agents.yaml
+  workflow_state: .planning/workflow/state.yaml
 milestone:
-  id: "M001"
-  status: "complete"
-  initial_stage: "product-planning"
+  id: M002
+  status: complete
+  initial_stage: product-planning
   active_role: null
   active_agent: null
-  completed_at: "2026-09-16T02:09:06.968504+00:00"
-  current_handoff: ".planning/milestones/M001/handoffs/verification.md"
-  completion_record: ".planning/milestones/M001/reviews/stream-failure-capture-gates.md"
-  retained_limitations: ".planning/milestones/M001/verification/report.md#收尾核对与保留事项"
-
+  started_at: '2026-09-16T08:41:31.598970+00:00'
+  current_handoff: .planning/milestones/M002/handoffs/verification.md
+  initialization_record: .planning/milestones/M002/reviews/start.md
+  previous_completion:
+    completed_at: '2026-10-01T10:49:31.845499+00:00'
+    completion_decision: TRANSITION-M002-091
+    completion_record: .planning/milestones/M002/reviews/verification-acceptance-091.md
+  reopened_at: '2026-10-01T11:44:46.948774+00:00'
+  reopen_record: .planning/milestones/M002/reviews/model-generalization-092.md
+  verification_status: QA38 accepted_with_retained_limitations
+  completed_at: '2026-10-04'
+  completion_decision: TRANSITION-M002-123
+  completion_record: .planning/milestones/M002/reviews/verification-acceptance-123.md
 model_routing:
-  status: "enabled"
-  policy: "codex-balanced@1.0.0"
-  lock: ".planning/agt/model-routing-v1.lock.json"
-  approval: ".planning/agt/model-routing-adoption-001.md"
-  adopted_at: "2026-09-07T02:38:06Z"
-  adapter_repository: "../agt-coding-v2"
-  source_snapshot: ".planning/agt/model-routing-adoption-001.json"
-  source_status: "explicitly_adopted_worktree_overlay_not_in_pinned_git_revision"
+  status: enabled
+  policy: codex-balanced@1.0.0
+  lock: .planning/agt/model-routing-v1.lock.json
+  approval: .planning/agt/model-routing-adoption-001.md
+  adopted_at: '2026-09-07T02:38:06Z'
+  adapter_repository: ../agt-coding-v2
+  source_snapshot: .planning/agt/model-routing-adoption-001.json
+  source_status: explicitly_adopted_worktree_overlay_not_in_pinned_git_revision
   profile_migration: false
   global_codex_config_modified: false
-
 delivery_snapshot:
-  application_commit: "387c775534844ff0b8ca9857523dc39c1d8ee87a"
-  framework_commit_at_closeout: "42acf7579d08a7d17d597709ccb57bebcad0dc96"
+  application_commit: 387c775534844ff0b8ca9857523dc39c1d8ee87a
+  framework_commit_at_closeout: 42acf7579d08a7d17d597709ccb57bebcad0dc96
   profile_lock_unchanged: true
   original_agt_revision_retained: true
-  evidence: ".planning/milestones/M001/reviews/evidence/m001-closeout-138.json"
+  evidence: .planning/milestones/M001/reviews/evidence/m001-closeout-138.json

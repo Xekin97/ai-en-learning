@@ -1,0 +1,294 @@
+{
+  "violations": [],
+  "incomplete": [
+    {
+      "id": "aria-prohibited-attr",
+      "impact": "serious",
+      "tags": [
+        "cat.aria",
+        "wcag2a",
+        "wcag412",
+        "EN-301-549",
+        "EN-9.4.1.2",
+        "RGAAv4",
+        "RGAA-7.1.1"
+      ],
+      "description": "Ensure ARIA attributes are not prohibited for an element's role",
+      "help": "Elements must only use permitted ARIA attributes",
+      "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/aria-prohibited-attr?application=playwright",
+      "nodes": [
+        {
+          "any": [],
+          "all": [],
+          "none": [
+            {
+              "id": "aria-prohibited-attr",
+              "data": {
+                "role": null,
+                "nodeName": "div",
+                "messageKey": "noRoleSingular",
+                "prohibited": [
+                  "aria-label"
+                ]
+              },
+              "relatedNodes": [],
+              "impact": "serious",
+              "message": "aria-label attribute is not well supported on a div with no valid role attribute."
+            }
+          ],
+          "impact": "serious",
+          "html": "<div class=\"word-picker-selection\" aria-label=\"Selected words\">",
+          "target": [
+            ".word-picker-selection"
+          ],
+          "failureSummary": "Fix all of the following:\n  aria-label attribute is not well supported on a div with no valid role attribute."
+        }
+      ]
+    },
+    {
+      "id": "aria-toggle-field-name",
+      "impact": "serious",
+      "tags": [
+        "cat.aria",
+        "wcag2a",
+        "wcag412",
+        "TTv5",
+        "TT5.c",
+        "EN-301-549",
+        "EN-9.4.1.2",
+        "ACT",
+        "RGAAv4",
+        "RGAA-7.1.1"
+      ],
+      "description": "Ensure every ARIA toggle field has an accessible name",
+      "help": "ARIA toggle fields must have an accessible name",
+      "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/aria-toggle-field-name?application=playwright",
+      "nodes": [
+        {
+          "any": [],
+          "all": [],
+          "none": [
+            {
+              "id": "no-implicit-explicit-label",
+              "data": "option",
+              "relatedNodes": [],
+              "impact": "serious",
+              "message": "Check that the <label> does not need be part of the ARIA option field's name"
+            }
+          ],
+          "impact": "serious",
+          "html": "<span id=\"v-0-0-0-1-option-0\" class=\"ww-select-option\" role=\"option\" aria-selected=\"false\" aria-disabled=\"false\"><span>Discussion</span><!----></span>",
+          "target": [
+            "#v-0-0-0-1-option-0"
+          ],
+          "failureSummary": "Fix all of the following:\n  Check that the <label> does not need be part of the ARIA option field's name"
+        },
+        {
+          "any": [],
+          "all": [],
+          "none": [
+            {
+              "id": "no-implicit-explicit-label",
+              "data": "option",
+              "relatedNodes": [],
+              "impact": "serious",
+              "message": "Check that the <label> does not need be part of the ARIA option field's name"
+            }
+          ],
+          "impact": "serious",
+          "html": "<span id=\"v-0-0-0-1-option-1\" class=\"ww-select-option is-active\" role=\"option\" aria-selected=\"true\" aria-disabled=\"false\">",
+          "target": [
+            "#v-0-0-0-1-option-1"
+          ],
+          "failureSummary": "Fix all of the following:\n  Check that the <label> does not need be part of the ARIA option field's name"
+        },
+        {
+          "any": [],
+          "all": [],
+          "none": [
+            {
+              "id": "no-implicit-explicit-label",
+              "data": "option",
+              "relatedNodes": [],
+              "impact": "serious",
+              "message": "Check that the <label> does not need be part of the ARIA option field's name"
+            }
+          ],
+          "impact": "serious",
+          "html": "<span id=\"v-0-0-0-1-option-2\" class=\"ww-select-option\" role=\"option\" aria-selected=\"false\" aria-disabled=\"false\"><span>Business</span><!----></span>",
+          "target": [
+            "#v-0-0-0-1-option-2"
+          ],
+          "failureSummary": "Fix all of the following:\n  Check that the <label> does not need be part of the ARIA option field's name"
+        },
+        {
+          "any": [],
+          "all": [],
+          "none": [
+            {
+              "id": "no-implicit-explicit-label",
+              "data": "option",
+              "relatedNodes": [],
+              "impact": "serious",
+              "message": "Check that the <label> does not need be part of the ARIA option field's name"
+            }
+          ],
+          "impact": "serious",
+          "html": "<span id=\"v-0-0-0-1-option-3\" class=\"ww-select-option\" role=\"option\" aria-selected=\"false\" aria-disabled=\"false\"><span>News</span><!----></span>",
+          "target": [
+            "#v-0-0-0-1-option-3"
+          ],
+          "failureSummary": "Fix all of the following:\n  Check that the <label> does not need be part of the ARIA option field's name"
+        }
+      ]
+    },
+    {
+      "id": "aria-valid-attr-value",
+      "impact": "critical",
+      "tags": [
+        "cat.aria",
+        "wcag2a",
+        "wcag412",
+        "EN-301-549",
+        "EN-9.4.1.2",
+        "RGAAv4",
+        "RGAA-7.1.1"
+      ],
+      "description": "Ensure all ARIA attributes have valid values",
+      "help": "ARIA attributes must conform to valid values",
+      "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/aria-valid-attr-value?application=playwright",
+      "nodes": [
+        {
+          "any": [],
+          "all": [
+            {
+              "id": "aria-valid-attr-value",
+              "data": {
+                "messageKey": "controlsWithinPopup",
+                "needsReview": "aria-controls=\"preset-words-list\""
+              },
+              "relatedNodes": [],
+              "impact": "critical",
+              "message": "Unable to determine if aria-controls referenced ID exists on the page while using aria-haspopup: aria-controls=\"preset-words-list\""
+            }
+          ],
+          "none": [],
+          "impact": "critical",
+          "html": "<input id=\"preset-words-search\" value=\"\" type=\"text\" role=\"combobox\" autocomplete=\"off\" autocapitalize=\"none\" spellcheck=\"false\" aria-autocomplete=\"list\" aria-haspopup=\"listbox\" aria-controls=\"preset-words-list\" aria-expanded=\"false\" aria-describedby=\"preset-words-feedbac...\" ...>",
+          "target": [
+            "#preset-words-search"
+          ],
+          "failureSummary": "Fix all of the following:\n  Unable to determine if aria-controls referenced ID exists on the page while using aria-haspopup: aria-controls=\"preset-words-list\""
+        },
+        {
+          "any": [],
+          "all": [
+            {
+              "id": "aria-valid-attr-value",
+              "data": {
+                "messageKey": "controlsWithinPopup",
+                "needsReview": "aria-controls=\"v-0-0-0-0-options\""
+              },
+              "relatedNodes": [],
+              "impact": "critical",
+              "message": "Unable to determine if aria-controls referenced ID exists on the page while using aria-haspopup: aria-controls=\"v-0-0-0-0-options\""
+            }
+          ],
+          "none": [],
+          "impact": "critical",
+          "html": "<button class=\"ww-select-trigger\" type=\"button\" role=\"combobox\" aria-haspopup=\"listbox\" aria-expanded=\"false\" aria-controls=\"v-0-0-0-0-options\" aria-label=\"AI model\" aria-required=\"true\">",
+          "target": [
+            "button[aria-controls=\"v-0-0-0-0-options\"]"
+          ],
+          "failureSummary": "Fix all of the following:\n  Unable to determine if aria-controls referenced ID exists on the page while using aria-haspopup: aria-controls=\"v-0-0-0-0-options\""
+        },
+        {
+          "any": [],
+          "all": [
+            {
+              "id": "aria-valid-attr-value",
+              "data": {
+                "messageKey": "controlsWithinPopup",
+                "needsReview": "aria-controls=\"v-0-0-0-1-options\""
+              },
+              "relatedNodes": [],
+              "impact": "critical",
+              "message": "Unable to determine if aria-controls referenced ID exists on the page while using aria-haspopup: aria-controls=\"v-0-0-0-1-options\""
+            }
+          ],
+          "none": [],
+          "impact": "critical",
+          "html": "<button class=\"ww-select-trigger\" type=\"button\" role=\"combobox\" aria-haspopup=\"listbox\" aria-expanded=\"true\" aria-controls=\"v-0-0-0-1-options\" aria-label=\"Style\" aria-required=\"false\" aria-activedescendant=\"v-0-0-0-1-option-1\">",
+          "target": [
+            "button[aria-controls=\"v-0-0-0-1-options\"]"
+          ],
+          "failureSummary": "Fix all of the following:\n  Unable to determine if aria-controls referenced ID exists on the page while using aria-haspopup: aria-controls=\"v-0-0-0-1-options\""
+        },
+        {
+          "any": [],
+          "all": [
+            {
+              "id": "aria-valid-attr-value",
+              "data": {
+                "messageKey": "controlsWithinPopup",
+                "needsReview": "aria-controls=\"v-0-0-0-2-options\""
+              },
+              "relatedNodes": [],
+              "impact": "critical",
+              "message": "Unable to determine if aria-controls referenced ID exists on the page while using aria-haspopup: aria-controls=\"v-0-0-0-2-options\""
+            }
+          ],
+          "none": [],
+          "impact": "critical",
+          "html": "<button class=\"ww-select-trigger\" type=\"button\" role=\"combobox\" aria-haspopup=\"listbox\" aria-expanded=\"false\" aria-controls=\"v-0-0-0-2-options\" aria-label=\"Length\" aria-required=\"false\">",
+          "target": [
+            "button[aria-controls=\"v-0-0-0-2-options\"]"
+          ],
+          "failureSummary": "Fix all of the following:\n  Unable to determine if aria-controls referenced ID exists on the page while using aria-haspopup: aria-controls=\"v-0-0-0-2-options\""
+        },
+        {
+          "any": [],
+          "all": [
+            {
+              "id": "aria-valid-attr-value",
+              "data": {
+                "messageKey": "controlsWithinPopup",
+                "needsReview": "aria-controls=\"v-0-0-0-3-options\""
+              },
+              "relatedNodes": [],
+              "impact": "critical",
+              "message": "Unable to determine if aria-controls referenced ID exists on the page while using aria-haspopup: aria-controls=\"v-0-0-0-3-options\""
+            }
+          ],
+          "none": [],
+          "impact": "critical",
+          "html": "<button class=\"ww-select-trigger\" type=\"button\" role=\"combobox\" aria-haspopup=\"listbox\" aria-expanded=\"false\" aria-controls=\"v-0-0-0-3-options\" aria-label=\"Explanation language\" aria-required=\"true\">",
+          "target": [
+            "button[aria-controls=\"v-0-0-0-3-options\"]"
+          ],
+          "failureSummary": "Fix all of the following:\n  Unable to determine if aria-controls referenced ID exists on the page while using aria-haspopup: aria-controls=\"v-0-0-0-3-options\""
+        }
+      ]
+    }
+  ],
+  "passed": [
+    "aria-allowed-attr",
+    "aria-conditional-attr",
+    "aria-deprecated-role",
+    "aria-hidden-focus",
+    "aria-prohibited-attr",
+    "aria-required-attr",
+    "aria-required-children",
+    "aria-required-parent",
+    "aria-roles",
+    "aria-valid-attr-value",
+    "aria-valid-attr",
+    "button-name",
+    "color-contrast",
+    "duplicate-id-aria",
+    "form-field-multiple-labels",
+    "label",
+    "nested-interactive",
+    "valid-lang"
+  ]
+}

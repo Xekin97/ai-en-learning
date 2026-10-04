@@ -1,6 +1,55 @@
 # WordWeave backend
 
-This directory is the independent Go build context for the WordWeave M001 API. It is a Go 1.26 modular monolith backed by PostgreSQL 18. Browser APIs follow API contract v1.4 at `../.planning/milestones/M001/technical/api/index.md`.
+This directory is the independent Go build context for the WordWeave M002 API. It is a Go 1.26 modular monolith backed by PostgreSQL 18. Current browser APIs follow `../.planning/milestones/M002/technical/api/index.md`; the M001 contracts below describe inherited behavior except where M002 explicitly replaces it.
+
+## M002 operation and migration
+
+Apply migrations 0008–0016 to a backed-up M001 database using the existing controlled
+migration role. These are additive business-data migrations: accounts, saved text,
+resources and cumulative statistics remain. The obsolete `cutover-entry-meaning`
+command rejects this migration set and must not be used for M002.
+
+The final accepted schema is 0016. Later M002 migrations add browser-local
+one-time notice reminders (0014), generic model connections (0015), and
+provider-based model management (0016). See the M002 technical contracts and
+the accepted delivery handoff for migration and credential-transition details.
+
+Growth and analytics start disabled. Configure levels, achievements, check-in
+rewards and cards in the admin console; migrations do not seed example rewards.
+Check-in rule changes begin at the next Beijing 04:00 learning-day boundary.
+After level one and a currently effective check-in rule exist, an operator can run:
+
+```sh
+wordweave-admin activate-growth --database EXPECTED_DATABASE --role EXPECTED_OPERATOR --confirm
+```
+
+This command uses only the explicitly supplied `MAINTENANCE_DATABASE_URL`, verifies
+the exact database, current role and migration set, then records activation once.
+Repeated activation does not reset history. Provision the operator as a member of
+`wordweave_maintenance`; never put its connection string in browser configuration.
+Keep the existing capability/session keys stable across deployments.
+
+Deploy with the matching M002 frontend. Review drafts are browser-local; server
+review routes accept final submissions and return comparison answers only once.
+Legacy `/actions` routes are removed. Base and trial quotas are separately keyed;
+admin base-plan edits require the latest `expected_base_revision`.
+
+Maintenance aggregates analytics every minute, qualifies rewards without claiming
+them, preserves retirement-refund eligibility, and clears eligible transient data
+in bounded batches. Personal analytics detail expires after 90 days; delayed
+aggregation prevents cleanup ahead of its checkpoint. Dashboard reads filter expired
+detail even when maintenance is delayed. The private metrics endpoint exposes
+analytics lag, overdue event count, recomputation pending state and unknown AI usage.
+An unavailable metric remains unavailable; it is not reported as zero.
+
+`CLARITY_PROJECT_ID` is optional and provides only the admin dashboard link.
+Frontend tracking remains limited to the separately approved public-page scope.
+
+For isolated verification, set `TEST_DATABASE_URL` to a disposable PostgreSQL 18
+cluster with database-creation permission, `TEST_POSTGRES_BIN` to its tool directory,
+and `OPENROUTER_TEST_API_KEY=` / `OPENROUTER_TEST_MODEL=`. The migration test uses
+`pg_dump`/`pg_restore` in a second temporary database and compares all table digests.
+Do not point these tests at an operational database. Use `GOTOOLCHAIN=go1.26.7`.
 
 ## CR-033 contract compatibility
 

@@ -1,0 +1,187 @@
+{
+  "captured_at": "2026-09-21T04:03:27.531659+00:00",
+  "role": "qa-quinn",
+  "milestone": "M002",
+  "version": "M002-QA-02",
+  "authorization": "TRANSITION-M002-021",
+  "result": {
+    "overall": "FAIL",
+    "passed_valid_checks": 14,
+    "passed_ids": [
+      "R01",
+      "R02",
+      "R03",
+      "R04",
+      "R05",
+      "R06",
+      "C01",
+      "C02",
+      "C03",
+      "C04",
+      "C05",
+      "C07",
+      "R09",
+      "R10"
+    ],
+    "verified_scoped_fixes": [
+      "M002-CR-005",
+      "M002-CR-006"
+    ],
+    "verified_fixes_pending_formal_gate_closure": true,
+    "new_confirmed_defects": [
+      "QA2-F03",
+      "QA2-F04"
+    ],
+    "new_change_requests": [
+      "M002-CR-007",
+      "M002-CR-008"
+    ],
+    "repeated_failure_not_additional_defect": "R07-repro",
+    "invalid_harness_results": [
+      {
+        "source": "cards-audit.json",
+        "id": "C06",
+        "reason": "Incorrect Problem body.error.code access; corrected root body.code in independent R09/R10"
+      }
+    ],
+    "not_counted_as_full_pass": [
+      "R07 password preconditions",
+      "fixture preparation",
+      "screenshots",
+      "duplicate reproduction"
+    ],
+    "notes": [
+      "R06 learning statistics unchanged; no direct quota ledger assertion.",
+      "C01-05/07 repeat previous QA cases, not new feature coverage.",
+      "CR-006 API fix does not resolve CR-008 browser form submission blocker."
+    ]
+  },
+  "source_checks": {
+    "frontend-cr005": {
+      "manifest": ".planning/milestones/M002/implementation/evidence/frontend-cr005/source.json",
+      "sha256": "eb5203ff7160b58f78227049a3ba2de0b3d6553ddeb02cd9a266bedc63c8f27e",
+      "count": 273,
+      "working_tree_mismatches": []
+    },
+    "backend-cr006": {
+      "manifest": ".planning/milestones/M002/implementation/evidence/backend-cr006/source.json",
+      "sha256": "8fb696cda27f470f9315eda1682c6bece84464f9b27e605c14e38772a2e1b0d4",
+      "count": 284,
+      "working_tree_mismatches": []
+    }
+  },
+  "protected_audit": {
+    "count": 5744,
+    "unexpected_changed": [],
+    "missing": [],
+    "control_plane_unchanged": true
+  },
+  "original_artifact_recovery": {
+    "before_owned_files_verified": 7,
+    "old_manifest_artifacts_matched": 74,
+    "unchanged_artifacts_checked": 67,
+    "changed_current_documents_recoverable_in_before_archive": [
+      ".planning/milestones/M002/verification/report.md",
+      ".planning/milestones/M002/verification/coverage-matrix.md",
+      ".planning/milestones/M002/verification/uat.md",
+      ".planning/milestones/M002/verification/ai-evaluation.md",
+      ".planning/milestones/M002/handoffs/verification.md",
+      ".planning/milestones/M002/changes/CR-005.md",
+      ".planning/milestones/M002/changes/CR-006.md"
+    ]
+  },
+  "artifact_link_check": {
+    "documents": 9,
+    "local_links_checked": 77,
+    "missing": [],
+    "new_session_handoff_test": "not_executed_no_delegation_authorization"
+  },
+  "coverage_index": {
+    "capabilities": 49,
+    "pages": 25,
+    "views": 28,
+    "ui_items": 119,
+    "full_acceptance": false
+  },
+  "real_provider_calls": 0,
+  "local_provider_calls": 4,
+  "developer_checks_rerun": false,
+  "fixes_applied": false,
+  "stage_transition": false,
+  "committed": false,
+  "deployed": false,
+  "environment": {
+    "owned_services_stopped": [
+      3301,
+      3331,
+      38081,
+      38082,
+      39081,
+      63541
+    ],
+    "previous_services_preserved": [
+      3300,
+      3330,
+      38080,
+      4186
+    ],
+    "listening": {
+      "3300": true,
+      "3330": true,
+      "38080": true,
+      "4186": true,
+      "3301": false,
+      "3331": false,
+      "38081": false,
+      "38082": false,
+      "39081": false,
+      "63541": false
+    },
+    "private_temporary_data_preserved": true,
+    "application_build_preserved": true
+  },
+  "input_tokens": "unknown",
+  "artifact_hashes": {
+    ".planning/milestones/M002/changes/CR-005.md": "5ec57fe199a2136a0c8fa9b9ea7b74c4a5b1d2d0f9970af7dc2a5a181d4f74fe",
+    ".planning/milestones/M002/changes/CR-006.md": "6f9479fbb891e0f74990fb734cd16a3f3530b25c516fc20e149beb7a718b519c",
+    ".planning/milestones/M002/changes/CR-007.md": "800c43d557bd7852a6052be7904cb440ec8a6d6d062e5719d558b87215a5ee93",
+    ".planning/milestones/M002/changes/CR-008.md": "f237635e9bb4e705ae1fcf8f17bf8ba85ee6bd757979719d7c75f4e5834ed5f5",
+    ".planning/milestones/M002/handoffs/verification.md": "1998931fdc4fc225c0eddefaa5db533a52e2a1d059a40eece7cf15ddf92e951e",
+    ".planning/milestones/M002/verification/ai-evaluation.md": "ed9d9ea95e9677b33d1a76887719e88c883f8a56b7a4d99e546373128d8e0a8e",
+    ".planning/milestones/M002/verification/coverage-matrix.md": "21f94e4966c2010a3fa265450c3f4a1a796bca0c5b08d0a1d66db7c858d11a3f",
+    ".planning/milestones/M002/verification/evidence/qa2-002/R01-denied-submitted.png": "0548a59017c5ea8bc1fe9c05e35b00e460e3ea2575a090a559ddc48787f836d3",
+    ".planning/milestones/M002/verification/evidence/qa2-002/R03-recovery-confirmation.png": "4cfb3941fe410780cd41c1557187bbeffe7d02d23fca8bf3288960b68459742d",
+    ".planning/milestones/M002/verification/evidence/qa2-002/R07-failure.png": "83c2c96257139485ce1bb3cbaca305f4819ba5a130c2fa3fcde4d5bb785dc875",
+    ".planning/milestones/M002/verification/evidence/qa2-002/additional-audit.json": "4ac14e7e4ed5ed409eb7aad8d3bcb8188d6ef0e672386bdb350a435dc3f990bb",
+    ".planning/milestones/M002/verification/evidence/qa2-002/additional-audit.log": "62c7bad0ed9b8f59182d40e7d702f459b51b8db28570f50ce0f45db35aa301a9",
+    ".planning/milestones/M002/verification/evidence/qa2-002/additional-audit.mjs": "d4aaa10c80f2e49e1af82d03ec584c3aa3db0c0f5e9714e40d73e5268a43d615",
+    ".planning/milestones/M002/verification/evidence/qa2-002/admin-retired-card-ui.json": "753b8d303dcee3d0c2f757d6494901a3c1838e9aaf493dc3f9567c18dcdbad2c",
+    ".planning/milestones/M002/verification/evidence/qa2-002/admin-retired-card-ui.png": "97922feb5ed95ccdbaed0e738a38b4dd42a2f681fb51eec94cc1c9fcf1af3133",
+    ".planning/milestones/M002/verification/evidence/qa2-002/before-owned.tar.gz": "fa17bb3153d929d2f66f2e9faf395339aab59fbe362815bad413a1eba3abb4a8",
+    ".planning/milestones/M002/verification/evidence/qa2-002/cards-audit.json": "dace94788a680809f7e9abb904680d2375a5460d43539c6c9d65e4a817f4e41f",
+    ".planning/milestones/M002/verification/evidence/qa2-002/cards-real.png": "f869bc524383374a4432f52de59fc8c44a2352547ba860866c103af7c279c7b0",
+    ".planning/milestones/M002/verification/evidence/qa2-002/cards-reverify.log": "d49277aa3d45760ee65e53aeb1c0e6cd34e6390afa19df0d879986f8beb65765",
+    ".planning/milestones/M002/verification/evidence/qa2-002/cards-reverify.mjs": "5939f92bb5485dc895b358f22a1eac8d9333e9ea20e21235bf5b614202284b01",
+    ".planning/milestones/M002/verification/evidence/qa2-002/coverage.json": "72971d99b5d2010da0b6acd03b0da5da763b17271881ae62747e25a39bfb1d59",
+    ".planning/milestones/M002/verification/evidence/qa2-002/environment-start.log": "132b58a6869988705e604deba2c044d0bb8eceb748c64fbb68d593140a896a4d",
+    ".planning/milestones/M002/verification/evidence/qa2-002/environment-stop.json": "b0bfe02aca8eaef67924bf7ea227e0bd1119f6e02d20c7f319622572cc30da1a",
+    ".planning/milestones/M002/verification/evidence/qa2-002/environment-stop.log": "e053e26ab0e1a87ff9227f10a7742aaa43c01aca65bf8c495ad3e2bc2467e5b1",
+    ".planning/milestones/M002/verification/evidence/qa2-002/freeze.py": "20cb29448930b1687c70477a7d2a60fa2cf4bc22faa7fa8c681311cc2b852c2d",
+    ".planning/milestones/M002/verification/evidence/qa2-002/inputs.json": "d67d925caa5c6898118ee72627e6a1b811b28083896ee8a10b9211a0a79749c0",
+    ".planning/milestones/M002/verification/evidence/qa2-002/links.json": "41c567d5e328750440bc377332347655d8d63cfd4e9c3fe3a1e179ab846b5e19",
+    ".planning/milestones/M002/verification/evidence/qa2-002/originals.json": "1bc83022d2acfae82b42310f1514226d7ea04a0e37b2beff8253fe75e1f546df",
+    ".planning/milestones/M002/verification/evidence/qa2-002/previous-ai-evaluation.md": "be8e80af1cca01fe3b0069f06e820d2f8a74aace9f620d45993b1790ace892b2",
+    ".planning/milestones/M002/verification/evidence/qa2-002/previous-coverage-matrix.md": "ccb21e6a73f4d0cf4dffdbb051df4c555912f43290a18d68ac55a1c9b4d8a625",
+    ".planning/milestones/M002/verification/evidence/qa2-002/previous-handoff.md": "04b55c3a9fffadaf503de27aa6a530d9d5fa2e42d322d9a04bc9184599962e89",
+    ".planning/milestones/M002/verification/evidence/qa2-002/previous-report.md": "49c1301a8a1f4a81a229fda84663f87c6637a2f43f4b17238a544a9384426a69",
+    ".planning/milestones/M002/verification/evidence/qa2-002/previous-uat.md": "e8a3ae1ba56b899f09d0b8e36323b0c9a99f5e41b5a5dcbb9b5a0ed02930c501",
+    ".planning/milestones/M002/verification/evidence/qa2-002/protection.json": "be7134b17f4fb2cc172ccccfea80fbd9b79f3d987b87acd296d0b046a95e7123",
+    ".planning/milestones/M002/verification/evidence/qa2-002/results-summary.json": "f6c8a14c8cffe7d8477cb4b4ca0b29ce2e8dcb8bba19e0edd53de155f82d5979",
+    ".planning/milestones/M002/verification/evidence/qa2-002/review-reverify.json": "a326cd7af5d71cc606d71df8918fed9532a5b5909df4171827098e0f69c902a2",
+    ".planning/milestones/M002/verification/evidence/qa2-002/review-reverify.log": "c87653f797b69525cf38a33c958ac7b7175151b94678fd0c11cd0750527f0b7f",
+    ".planning/milestones/M002/verification/evidence/qa2-002/review-reverify.mjs": "b94f2e453b180f9513d97a769ba04ad77fbaa7839055d942a25448db45a82411",
+    ".planning/milestones/M002/verification/report.md": "0b1a569cf0e2529ec86e862a696d92dc5dc02a4b4bcf0a269535539512658f0d",
+    ".planning/milestones/M002/verification/uat.md": "546e4616e83ee1a4a477969271a6a7f668d6984362dee363bf4654c8b51cf83f"
+  },
+  "hash_note": "Current QA2 artifacts and current document versions. QA1 raw evidence unchanged; its mutable document versions recover from before-owned.tar.gz. Excludes this manifest itself. Do not overwrite frozen files on later reruns."
+}

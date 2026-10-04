@@ -3619,3 +3619,4391 @@ scope_decisions:
     independent_verification_requires_gate: true
     continuous_rework_authorized: false
     release_approved: false
+
+milestone_starts:
+- id: TRANSITION-M002-001
+  milestone: M002
+  previous_milestone: M001
+  from: null
+  to: product-planning
+  active_role: product/to-c
+  active_agent: product-maya
+  confirmed_by: user
+  timestamp: '2026-09-16T08:41:31.598970+00:00'
+  evidence: .planning/milestones/M002/reviews/start.md
+  scope: Initialize the explicitly requested phase 2; product planning only; existing
+    Profile retained.
+
+milestone_transitions:
+- id: TRANSITION-M002-002
+  milestone: M002
+  timestamp: '2026-09-17T09:16:06.671412+00:00'
+  operation: transition-stage
+  from: product-planning
+  to: uiux-design
+  previous_role: product/to-c
+  previous_agent: product-maya
+  active_role: uiux/base
+  active_agent: designer-tony
+  confirmed_by: user
+  decision_id: TRANSITION-M002-002
+  authorization: 用户在已展示产品原件并明确推荐进入 UI/UX 后回复“下一步”，批准该产品版本作为设计输入并授权此唯一目标迁移。
+  evidence: .planning/milestones/M002/reviews/product-planning.md
+  approved_artifacts:
+  - .planning/milestones/M002/product/overview.md
+  - .planning/milestones/M002/product/data-assets.md
+  - .planning/milestones/M002/product/abilities.md
+  - .planning/milestones/M002/product/pages/index.md
+  - .planning/milestones/M002/product/ai-behavior.md
+  - .planning/milestones/M002/handoffs/product.md
+  - .planning/milestones/M002/decisions/product-decisions.md
+  approval_snapshot: .planning/milestones/M002/reviews/evidence/product-gate-002/approved-product-and-before-state.tar.gz
+- id: TRANSITION-M002-003
+  milestone: M002
+  timestamp: '2026-09-18T03:30:37.422285+00:00'
+  operation: recover-or-rollback
+  from: uiux-design
+  to: product-planning
+  previous_role: uiux/base
+  previous_agent: designer-tony
+  active_role: product/to-c
+  active_agent: product-maya
+  status: active
+  confirmed_by: user
+  decision_id: TRANSITION-M002-003
+  authorization: 用户在已明确展示“将 M002 回溯到产品规划，由 product-maya 核对一期继承关系并修订正式需求，再交回设计”的唯一目标后回复“确认”。仅授权本次回溯及产品责任修订，不批准修订稿、设计或后续阶段。
+  evidence: .planning/milestones/M002/reviews/product-rollback.md
+  original_handoff: .planning/milestones/M002/handoffs/uiux.md
+  change_requests:
+  - M002-CR-001
+  recovery_basis:
+  - TRANSITION-M002-002
+  scope: Return the M002 inheritance and complete-current-product-baseline gap to its product owner; preserve
+    approved history and existing design work in progress.
+  prior_approval_snapshot: .planning/milestones/M002/reviews/evidence/product-gate-002/approved-product-and-before-state.tar.gz
+  product_revision_approved: false
+  design_approved: false
+  specialist_artifacts_modified: false
+  profile_modified: false
+  implementation_authorized: false
+  runtime_model_switch: not_performed
+- id: TRANSITION-M002-004
+  milestone: M002
+  timestamp: '2026-09-18T05:40:28.571406+00:00'
+  operation: transition-stage
+  from: product-planning
+  to: uiux-design
+  previous_role: product/to-c
+  previous_agent: product-maya
+  active_role: uiux/base
+  active_agent: designer-tony
+  status: active
+  confirmed_by: user
+  decision_id: TRANSITION-M002-004
+  authorization: 用户在明确询问“是否批准 M002-PRODUCT-02，并正式进入 UI/UX 设计，由 designer-tony 接收并修订原型？”后回复“批准”。批准该产品修订为设计输入，仅授权 product-planning
+    → uiux-design 及 designer-tony 接收/修订；不批准设计完成或后续阶段。
+  evidence: .planning/milestones/M002/reviews/product-revision.md
+  approved_product_version: M002-PRODUCT-02
+  approved_artifacts:
+  - .planning/milestones/M002/product/overview.md
+  - .planning/milestones/M002/product/data-assets.md
+  - .planning/milestones/M002/product/abilities.md
+  - .planning/milestones/M002/product/pages/index.md
+  - .planning/milestones/M002/product/ai-behavior.md
+  - .planning/milestones/M002/handoffs/product.md
+  - .planning/milestones/M002/decisions/product-decisions.md
+  approval_snapshot: .planning/milestones/M002/reviews/evidence/product-gate-004/approved-product-and-before-state.tar.gz
+  approval_snapshot_sha256: 99e37a3339710ed5e0dfcf588cd5523b2ccf239b900d13a42ce008ebdfbd23eb
+  product_review_snapshot: .planning/milestones/M002/product/evidence/M002-PRODUCT-02-review.tar.gz
+  product_review_snapshot_sha256: 9732993a66cef70f533aa3d27e38df128af7cfe71d67e10c3699da56fefab6af
+  current_handoff: .planning/milestones/M002/handoffs/product.md
+  change_requests_retained:
+  - M002-CR-001
+  change_request_disposition: Product revision approved; designer-tony must record acceptance and design coverage
+    before closing M002-CR-001 or advancing to technical design.
+  design_approved: false
+  specialist_artifacts_modified: false
+  profile_modified: false
+  implementation_authorized: false
+  runtime_model_switch: not_performed
+- id: TRANSITION-M002-005
+  milestone: M002
+  timestamp: '2026-09-18T06:37:52.135038+00:00'
+  operation: recover-or-rollback
+  from: uiux-design
+  to: product-planning
+  previous_role: uiux/base
+  previous_agent: designer-tony
+  active_role: product/to-c
+  active_agent: product-maya
+  status: active
+  confirmed_by: user
+  decision_id: TRANSITION-M002-005
+  authorization: 返回产品角色调整需求，所有的学习批次短文，标题均可由用户自行编辑，默认标题和现有，热门预设里的文章，也不再区分不同语言的标题，同时移除说明字段
+  evidence: .planning/milestones/M002/reviews/title-fields-rollback.md
+  scope: Reopen only batch-title editing and preset single-title/removal-of-description
+    requirements; user expressly requests product revision after return. Prior product
+    approvals and UI-05 snapshot retained.
+  approved_new_product: false
+  design_approved: false
+  implementation_authorized: false
+- id: TRANSITION-M002-006
+  milestone: M002
+  timestamp: '2026-09-18T06:51:19.748117+00:00'
+  operation: transition-stage
+  from: product-planning
+  to: uiux-design
+  previous_role: product/to-c
+  previous_agent: product-maya
+  active_role: uiux/base
+  active_agent: designer-tony
+  status: active
+  confirmed_by: user
+  decision_id: TRANSITION-M002-006
+  authorization: 用户在明确询问“是否批准 M002-PRODUCT-03，进入 UI/UX 设计，由 designer-tony 接收并修改原型？”后回复“批准”。批准本版产品为设计输入，仅迁移至
+    UI/UX 并激活 designer-tony，不批准设计完成或后续阶段。
+  evidence: .planning/milestones/M002/reviews/product-title-revision.md
+  approved_product_version: M002-PRODUCT-03
+  approved_artifacts:
+  - .planning/milestones/M002/product/overview.md
+  - .planning/milestones/M002/product/data-assets.md
+  - .planning/milestones/M002/product/abilities.md
+  - .planning/milestones/M002/product/pages/index.md
+  - .planning/milestones/M002/product/ai-behavior.md
+  - .planning/milestones/M002/handoffs/product.md
+  - .planning/milestones/M002/decisions/product-decisions.md
+  approval_snapshot: .planning/milestones/M002/reviews/evidence/product-gate-006/approved-product-and-before-state.tar.gz
+  approval_snapshot_sha256: fc183e65982e49d572946acecb3d76bc0f2a21786452d1e7913e2035aa6cfaaa
+  product_review_snapshot: .planning/milestones/M002/product/evidence/M002-PRODUCT-03-review.tar.gz
+  product_review_snapshot_sha256: 80df63c3b75eff95f7381a4f04692cbbc659eb1649de7681554aaaa37c4fafb9
+  current_handoff: .planning/milestones/M002/handoffs/product.md
+  change_requests_retained:
+  - M002-CR-001
+  - M002-CR-002
+  change_request_disposition: Product revision approved; designer-tony must receive
+    the current full baseline and revise affected UI. Both changes remain open pending
+    design acceptance and the appropriate gate.
+  design_approved: false
+  specialist_artifacts_modified: false
+  profile_modified: false
+  implementation_authorized: false
+  runtime_model_switch: not_performed
+- id: APPROVAL-M002-007
+  milestone: M002
+  timestamp: '2026-09-20T02:33:14.019810+00:00'
+  operation: artifact-approval
+  from: uiux-design
+  to: uiux-design
+  active_role: uiux/base
+  active_agent: designer-tony
+  confirmed_by: user
+  evidence: .planning/milestones/M002/reviews/uiux-design.md
+  approved_design_version: M002-UI-22
+  approval_snapshot: .planning/milestones/M002/design/evidence/M002-UI-22.tar.gz
+  approval_snapshot_sha256: 37df94f33a3bbc8be9f2be5bc0ef187f8d6b08e422a201aa9514732d0487b767
+  handoff_supplement_authorized: true
+  stage_transition: false
+  implementation_authorized: false
+- id: TRANSITION-M002-008
+  milestone: M002
+  timestamp: '2026-09-20T02:52:08.838266+00:00'
+  operation: transition-stage
+  from: uiux-design
+  to: technical-design
+  active_role: dba/base
+  active_agent: dba-diana
+  confirmed_by: user
+  evidence: .planning/milestones/M002/reviews/technical-entry.md
+  previous_role: uiux/base
+  previous_agent: designer-tony
+  status: active
+  decision_id: TRANSITION-M002-008
+  authorization: 用户已明确验收 M002-UI-22，并要求补齐 M001→M002 前端差异交接；该补充已交付后，用户本轮明确要求“下一步”。结合已登记的唯一后续阶段 technical-design 和锁定角色顺序，本次授权进入技术方案设计并激活首位
+    dba-diana；不重复索取同一接续确认。
+  approved_design_version: M002-UI-22
+  design_approval: APPROVAL-M002-007
+  handoff_version: M002-UI-22-H01
+  current_handoff: .planning/milestones/M002/handoffs/uiux.md
+  handoff_snapshot: .planning/milestones/M002/design/evidence/M002-UI-22-H01.tar.gz
+  handoff_snapshot_sha256: cde52a1e90940d8b5863e8163b408c2dc6fe0c48eb492d6f3ad479c15b3d475a
+  before_controls: .planning/milestones/M002/reviews/evidence/technical-entry-008/before-controls.tar.gz
+  change_requests_retained:
+  - M002-CR-001
+  - M002-CR-002
+  change_request_disposition: Product and design accepted; retained for technical and implementation reception.
+  technical_design_approved: false
+  implementation_authorized: false
+  specialist_artifacts_modified: false
+  profile_modified: false
+  runtime_model_switch: not_performed
+- id: TRANSITION-M002-009
+  milestone: M002
+  timestamp: '2026-09-20T03:14:31.408432+00:00'
+  operation: activate-role
+  from: technical-design
+  to: technical-design
+  previous_role: dba/base
+  previous_agent: dba-diana
+  active_role: backend-architect/base
+  active_agent: backend-alex
+  confirmed_by: user
+  decision_id: TRANSITION-M002-009
+  evidence: .planning/milestones/M002/reviews/database-design.md
+  authorization: 用户在明确询问“是否批准这份方案，交给 backend-alex 继续后端架构设计？”后回复“下一步”。批准已展示的 M002-DB-01 数据库方案和交接，授权同一 technical-design
+    阶段内从 dba-diana 切换到 backend-alex；不重复索取同一批准。
+  approved_database_version: M002-DB-01
+  approved_artifacts:
+  - .planning/milestones/M002/technical/database.md
+  - .planning/milestones/M002/handoffs/database.md
+  approval_snapshot: .planning/milestones/M002/technical/evidence/M002-DB-01.tar.gz
+  approval_snapshot_sha256: 120071388aaa0cdd621adb2425e6d9fc19b88fd6f95f9c62353b5a1f3c66a37a
+  current_handoff: .planning/milestones/M002/handoffs/database.md
+  stage_transition: false
+  technical_stage_complete: false
+  implementation_authorized: false
+  specialist_artifacts_modified: false
+  profile_modified: false
+  runtime_model_switch: not_performed
+- id: TRANSITION-M002-010
+  milestone: M002
+  timestamp: '2026-09-20T03:47:21.569313+00:00'
+  operation: activate-role
+  from: technical-design
+  to: technical-design
+  previous_role: backend-architect/base
+  previous_agent: backend-alex
+  active_role: dba/base
+  active_agent: dba-diana
+  confirmed_by: user
+  decision_id: TRANSITION-M002-010
+  evidence: .planning/milestones/M002/reviews/database-reception-rework.md
+  authorization: 用户在已明确展示“DBA 补齐 → 后端复核 → 前端架构，是否按此继续？”后回复“下一步”。授权本次在 technical-design
+    内将 M002-CR-003 有限交回 dba-diana；不将其解释为批准 M002-BE-01、尚未形成的数据库修订、前端方案或实施。
+  change_request: M002-CR-003
+  current_handoff: .planning/milestones/M002/handoffs/backend-architecture.md
+  before_controls: .planning/milestones/M002/reviews/evidence/database-reception-010/before-controls.tar.gz
+  stage_transition: false
+  artifact_approval: false
+  technical_stage_complete: false
+  implementation_authorized: false
+  specialist_artifacts_modified: false
+  profile_modified: false
+  runtime_model_switch: not_performed
+- id: TRANSITION-M002-011
+  milestone: M002
+  timestamp: '2026-09-20T04:07:05.794557+00:00'
+  operation: activate-role
+  from: technical-design
+  to: technical-design
+  previous_role: dba/base
+  previous_agent: dba-diana
+  active_role: backend-architect/base
+  active_agent: backend-alex
+  confirmed_by: user
+  decision_id: TRANSITION-M002-011
+  evidence: .planning/milestones/M002/reviews/database-revision.md
+  authorization: 用户在明确询问“是否批准 DB-02，并交回后端复核？”后回复“批准”。本次批准已展示的 M002-DB-02 数据库方案/交接，授权同一
+    technical-design 阶段内 dba-diana→backend-alex 接收复核；不重复索取确认，不据此批准后端或前端方案及实施。
+  approved_database_version: M002-DB-02
+  approved_artifacts:
+  - .planning/milestones/M002/technical/database.md
+  - .planning/milestones/M002/handoffs/database.md
+  approval_snapshot: .planning/milestones/M002/technical/evidence/M002-DB-02.tar.gz
+  approval_snapshot_sha256: 7771a8a773c370524e79414a0882580879933c1dc72c9a33173ab84642b3a9c7
+  previous_database_approval: TRANSITION-M002-009
+  previous_database_version: M002-DB-01
+  current_handoff: .planning/milestones/M002/handoffs/database.md
+  before_controls: .planning/milestones/M002/reviews/evidence/database-revision-011/before-controls.tar.gz
+  change_requests_retained:
+  - M002-CR-001
+  - M002-CR-002
+  - M002-CR-003
+  change_request_disposition: CR-003 database revision approved; backend reception
+    and alignment remain required before closure. CR-001/002 application reception
+    unchanged.
+  stage_transition: false
+  technical_stage_complete: false
+  backend_approved: false
+  implementation_authorized: false
+  specialist_artifacts_modified: false
+  profile_modified: false
+  runtime_model_switch: not_performed
+- id: TRANSITION-M002-012
+  milestone: M002
+  timestamp: '2026-09-20T04:19:32.699300+00:00'
+  operation: activate-role
+  from: technical-design
+  to: technical-design
+  previous_role: backend-architect/base
+  previous_agent: backend-alex
+  active_role: frontend-architect/base
+  active_agent: frontend-bob
+  confirmed_by: user
+  decision_id: TRANSITION-M002-012
+  evidence: .planning/milestones/M002/reviews/backend-design.md
+  authorization: 用户在明确询问“是否批准 BE-02，并交给 frontend-bob 开始前端架构设计？”后回复“批准”。批准已展示的 BE-02
+    完整后端/API/AI方案及交接，按已完成接收记录处理 CR-003，授权同一 technical-design 阶段内 backend-alex→frontend-bob；不将批准扩大为前端方案批准或实施授权。
+  approved_backend_version: M002-BE-02
+  approved_artifacts:
+  - .planning/milestones/M002/technical/backend.md
+  - .planning/milestones/M002/technical/ai-integration.md
+  - .planning/milestones/M002/handoffs/backend-architecture.md
+  - .planning/milestones/M002/changes/CR-003.md
+  - .planning/milestones/M002/technical/api/administration.md
+  - .planning/milestones/M002/technical/api/analytics.md
+  - .planning/milestones/M002/technical/api/generation-presets.md
+  - .planning/milestones/M002/technical/api/growth-benefits.md
+  - .planning/milestones/M002/technical/api/identity-library.md
+  - .planning/milestones/M002/technical/api/index.md
+  - .planning/milestones/M002/technical/api/review.md
+  approval_snapshot: .planning/milestones/M002/technical/evidence/M002-BE-02.tar.gz
+  approval_snapshot_sha256: 975171990e515a40c71c618577b79f562d9ceace828d50cff57ffc3d6d2d9d5e
+  current_handoff: .planning/milestones/M002/handoffs/backend-architecture.md
+  before_controls: .planning/milestones/M002/reviews/evidence/backend-design-012/before-controls.tar.gz
+  closed_change_requests:
+  - id: M002-CR-003
+    scope: database/backend design reception
+    source: .planning/milestones/M002/changes/CR-003.md
+    resolution_version: M002-BE-02
+    runtime_verification: not_performed
+  change_requests_retained:
+  - M002-CR-001
+  - M002-CR-002
+  stage_transition: false
+  technical_stage_complete: false
+  frontend_approved: false
+  implementation_authorized: false
+  specialist_artifacts_modified: false
+  profile_modified: false
+  runtime_model_switch: not_performed
+- id: TRANSITION-M002-013
+  milestone: M002
+  timestamp: '2026-09-20T04:38:32.831323+00:00'
+  operation: activate-role
+  from: technical-design
+  to: technical-design
+  previous_role: frontend-architect/base
+  previous_agent: frontend-bob
+  active_role: dba/base
+  active_agent: dba-diana
+  confirmed_by: user
+  decision_id: TRANSITION-M002-013
+  evidence: .planning/milestones/M002/reviews/frontend-reception-rework.md
+  authorization: 用户在前端交接明确展示CR-004及“数据库、后端补齐，再回前端复核”后回复“批准”，登记被中断后又回复“继续”。授权本次同阶段有限交回dba-diana；不重复询问，不视为完整前端验收或实施授权。
+  input_frontend_version: M002-FE-01
+  input_snapshot: .planning/milestones/M002/technical/evidence/M002-FE-01.tar.gz
+  input_snapshot_sha256: 370bd9c70b2fc56b8682e562261ccf47242354746dec76cf09f966de8a0dab86
+  current_handoff: .planning/milestones/M002/handoffs/frontend-architecture.md
+  before_controls: .planning/milestones/M002/reviews/evidence/frontend-reception-013/before-controls.tar.gz
+  change_requests_registered:
+  - M002-CR-004
+  change_requests_retained:
+  - M002-CR-001
+  - M002-CR-002
+  - M002-CR-004
+  change_request_disposition: CR-004 remains open for database/backend correction then frontend reception;
+    CR-003 closure under TRANSITION-M002-012 unchanged.
+  stage_transition: false
+  technical_stage_complete: false
+  frontend_approved: false
+  implementation_authorized: false
+  specialist_artifacts_modified: false
+  profile_modified: false
+  runtime_model_switch: not_performed
+- id: TRANSITION-M002-014
+  milestone: M002
+  timestamp: '2026-09-20T05:38:43.158839+00:00'
+  operation: activate-role
+  from: technical-design
+  to: technical-design
+  previous_role: dba/base
+  previous_agent: dba-diana
+  active_role: backend-architect/base
+  active_agent: backend-alex
+  confirmed_by: user
+  decision_id: TRANSITION-M002-014
+  evidence: .planning/milestones/M002/reviews/database-cr004-revision.md
+  authorization: 用户在明确询问“是否批准 DB-03，交给后端角色补齐接口契约？”后回复“继续”。批准已展示的 M002-DB-03 数据库修订及交接，并授权同一 technical-design
+    阶段内 dba-diana→backend-alex；不重复索取确认，不扩大为后端修订稿、前端整稿或实施批准。
+  approved_database_version: M002-DB-03
+  approved_artifacts:
+  - .planning/milestones/M002/technical/database.md
+  - .planning/milestones/M002/handoffs/database.md
+  approval_snapshot: .planning/milestones/M002/technical/evidence/M002-DB-03.tar.gz
+  approval_snapshot_sha256: 188df7f5d1d63431a9755ab6461f31c4aa94ab62eb6dd6dc92396a81f74fd527
+  previous_database_approval: TRANSITION-M002-011
+  previous_database_version: M002-DB-02
+  current_handoff: .planning/milestones/M002/handoffs/database.md
+  before_controls: .planning/milestones/M002/reviews/evidence/database-cr004-014/before-controls.tar.gz
+  change_requests_retained:
+  - M002-CR-001
+  - M002-CR-002
+  - M002-CR-004
+  change_request_disposition: CR-004 database revision approved; backend contracts and frontend reception
+    remain required before closure. CR-003 design reception closure under TRANSITION-M002-012 remains
+    unchanged.
+  stage_transition: false
+  technical_stage_complete: false
+  backend_revision_approved: false
+  frontend_approved: false
+  implementation_authorized: false
+  specialist_artifacts_modified: false
+  profile_modified: false
+  runtime_model_switch: not_performed
+- id: TRANSITION-M002-015
+  milestone: M002
+  timestamp: '2026-09-20T05:54:03.235714+00:00'
+  operation: activate-role
+  from: technical-design
+  to: technical-design
+  previous_role: backend-architect/base
+  previous_agent: backend-alex
+  active_role: frontend-architect/base
+  active_agent: frontend-bob
+  confirmed_by: user
+  decision_id: TRANSITION-M002-015
+  evidence: .planning/milestones/M002/reviews/backend-cr004-revision.md
+  authorization: 用户在明确询问“是否批准 BE-03，交给 frontend-bob 复核？”后回复“批准”。批准已展示的 M002-BE-03 后端/API/AI 修订及交接，授权同一
+    technical-design 阶段内 backend-alex→frontend-bob 接收 CR-004；不重复索取确认，不扩大为前端方案批准、CR-004 自动关闭或实施授权。
+  approved_backend_version: M002-BE-03
+  approved_artifacts:
+  - .planning/milestones/M002/technical/backend.md
+  - .planning/milestones/M002/technical/ai-integration.md
+  - .planning/milestones/M002/handoffs/backend-architecture.md
+  - .planning/milestones/M002/changes/CR-004.md
+  - .planning/milestones/M002/technical/api/administration.md
+  - .planning/milestones/M002/technical/api/analytics.md
+  - .planning/milestones/M002/technical/api/generation-presets.md
+  - .planning/milestones/M002/technical/api/growth-benefits.md
+  - .planning/milestones/M002/technical/api/identity-library.md
+  - .planning/milestones/M002/technical/api/index.md
+  - .planning/milestones/M002/technical/api/review.md
+  approval_snapshot: .planning/milestones/M002/technical/evidence/M002-BE-03.tar.gz
+  approval_snapshot_sha256: f66ec03208ef6c28a106bb6ae4ddc7047c1eb27bce353f725adcc3688fad6dbd
+  previous_backend_approval: TRANSITION-M002-012
+  previous_backend_version: M002-BE-02
+  current_handoff: .planning/milestones/M002/handoffs/backend-architecture.md
+  before_controls: .planning/milestones/M002/reviews/evidence/backend-cr004-015/before-controls.tar.gz
+  change_requests_retained:
+  - M002-CR-001
+  - M002-CR-002
+  - M002-CR-004
+  change_request_disposition: CR-004 backend design revision approved; frontend schema/mock/save-flow
+    reception remains required before closure. CR-003 design closure under TRANSITION-M002-012 unchanged.
+  stage_transition: false
+  technical_stage_complete: false
+  frontend_approved: false
+  implementation_authorized: false
+  specialist_artifacts_modified: false
+  profile_modified: false
+  runtime_model_switch: not_performed
+- id: TRANSITION-M002-016
+  milestone: M002
+  timestamp: '2026-09-20T06:08:58.863030+00:00'
+  operation: transition-stage
+  from: technical-design
+  to: implementation
+  previous_role: frontend-architect/base
+  previous_agent: frontend-bob
+  active_role: backend-implementer/base
+  active_agent: backend-ethan
+  confirmed_by: user
+  decision_id: TRANSITION-M002-016
+  evidence: .planning/milestones/M002/reviews/technical-design.md
+  kind: stage_transition
+  authorization: 用户在明确询问“是否批准 FE-02，经交接检查后进入后端实施？”后回复“批准”。批准M002-FE-02并授权一次technical-design→implementation迁移，由backend-ethan接收；不扩大为实现完成、部署或新增真实模型评价。
+  approved_frontend_version: M002-FE-02
+  approved_artifacts:
+  - .planning/milestones/M002/technical/frontend.md
+  - .planning/milestones/M002/technical/frontend-traceability.json
+  - .planning/milestones/M002/handoffs/frontend-architecture.md
+  - .planning/milestones/M002/changes/CR-004.md
+  approval_snapshot: .planning/milestones/M002/technical/evidence/M002-FE-02.tar.gz
+  approval_snapshot_sha256: 0e13fe1d9d3b23d415e486306a32f4d0c49b9c48b35d735c0a8a4ab8683738b4
+  technical_role_approvals:
+    dba: TRANSITION-M002-014
+    backend: TRANSITION-M002-015
+    frontend: TRANSITION-M002-016
+  current_handoff: .planning/milestones/M002/handoffs/frontend-architecture.md
+  before_controls: .planning/milestones/M002/reviews/evidence/technical-design-016/before-controls.tar.gz
+  closed_change_requests:
+  - id: M002-CR-004
+    scope: database/backend/frontend design reception
+    source: .planning/milestones/M002/changes/CR-004.md
+    resolution_version: M002-FE-02
+    runtime_verification: not_performed
+  change_requests_retained:
+  - M002-CR-001
+  - M002-CR-002
+  retained_open_items:
+  - id: CR039-L1
+    status: open
+    source: .planning/milestones/M001/changes/CR-039.md#retained-limitations
+  - id: CR042-L1
+    status: open
+    source: .planning/milestones/M001/verification/CR-042-generation-evidence.md#retained-limitations
+  - id: AI-QUALITY-90
+    status: unverified
+    source: .planning/milestones/M001/verification/ai-evaluation.md
+  stage_transition: true
+  technical_stage_complete: true
+  frontend_approved: true
+  implementation_authorized: true
+  implementation_completed: false
+  specialist_artifacts_modified: false
+  profile_modified: false
+  runtime_model_switch: not_performed
+- id: TRANSITION-M002-017
+  milestone: M002
+  timestamp: '2026-09-20T08:46:25.556970+00:00'
+  operation: activate-role
+  from: implementation
+  to: implementation
+  previous_role: backend-implementer/base
+  previous_agent: backend-ethan
+  active_role: frontend-implementer/base
+  active_agent: frontend-claire
+  confirmed_by: user
+  decision_id: TRANSITION-M002-017
+  evidence: .planning/milestones/M002/reviews/frontend-implementation-entry.md
+  kind: role_activation
+  authorization: 用户在已明确展示“下一步交给 frontend-claire，依据已验收设计实现前端并接入真实接口”后回复“下一步”。据此授权 implementation 阶段内 backend-ethan
+    → frontend-claire 接收；沿用 TRANSITION-M002-016 的实施授权，不将本次角色切换视为整体验收、部署或新增真实模型评测授权。
+  current_handoff: .planning/milestones/M002/handoffs/backend-implementation.md
+  before_controls: .planning/milestones/M002/reviews/evidence/frontend-implementation-entry-017/before-controls.tar.gz
+  backend_source_snapshot: .planning/milestones/M002/implementation/evidence/backend-source.tar.gz
+  backend_source_snapshot_sha256: 6219072d1aacd9a76ce480c1869b1b6374ae81edb4ea16e4fa2f30ab7faf4f5d
+  change_requests_retained:
+  - M002-CR-001
+  - M002-CR-002
+  retained_open_items:
+  - id: CR039-L1
+    status: open
+    source: .planning/milestones/M001/changes/CR-039.md#retained-limitations
+  - id: CR042-L1
+    status: open
+    source: .planning/milestones/M001/verification/CR-042-generation-evidence.md#retained-limitations
+  - id: AI-QUALITY-90
+    status: unverified
+    source: .planning/milestones/M001/verification/ai-evaluation.md
+  stage_transition: false
+  implementation_authorization_source: TRANSITION-M002-016
+  implementation_completed: false
+  implementation_accepted: false
+  specialist_artifacts_modified: false
+  profile_modified: false
+  runtime_model_switch: not_performed
+- id: TRANSITION-M002-018
+  milestone: M002
+  timestamp: '2026-09-21T02:01:30.429236+00:00'
+  operation: transition-stage
+  from: implementation
+  to: verification
+  previous_role: frontend-implementer/base
+  previous_agent: frontend-claire
+  active_role: quality/base
+  active_agent: qa-quinn
+  confirmed_by: user
+  decision_id: TRANSITION-M002-018
+  evidence: .planning/milestones/M002/reviews/implementation.md
+  kind: stage_transition
+  authorization: 上轮已明确展示“下一步是由质量角色进行独立整体验收”，本轮用户回复“下一步”。授权 implementation → verification 并激活 qa-quinn，接受已交付两端实施进入独立验证；不代表独立质量或用户
+    UAT 通过，不包含部署、发布或新增真实 AI 调用。
+  current_handoff: .planning/milestones/M002/handoffs/frontend-implementation.md
+  before_controls: .planning/milestones/M002/reviews/evidence/implementation-018/before-controls.tar.gz
+  source_manifests:
+    backend:
+      path: .planning/milestones/M002/implementation/evidence/backend-final-manifest.json
+      sha256: a284d57f631deb907f3148cd2df1566bd8e38d05e85dfeae7b3c92096861d909
+    frontend:
+      path: .planning/milestones/M002/implementation/evidence/frontend-final-manifest.json
+      sha256: 3b01b97d38ed30f97399ff5c00b125e4164bf7fd40ce9b0fedb2a904f2d1c233
+  change_requests_retained:
+  - M002-CR-001
+  - M002-CR-002
+  retained_open_items:
+  - id: CR039-L1
+    status: open
+    source: .planning/milestones/M001/changes/CR-039.md#retained-limitations
+  - id: CR042-L1
+    status: open
+    source: .planning/milestones/M001/verification/CR-042-generation-evidence.md#retained-limitations
+  - id: AI-QUALITY-90
+    status: unverified
+    source: .planning/milestones/M001/verification/ai-evaluation.md
+  stage_transition: true
+  implementation_accepted_for_verification: true
+  independent_verification_passed: false
+  uat_passed: false
+  milestone_completed: false
+  specialist_artifacts_modified: false
+  profile_modified: false
+  runtime_model_switch: not_performed
+- id: TRANSITION-M002-019
+  milestone: M002
+  timestamp: '2026-09-21T02:39:37.984314+00:00'
+  operation: recover-or-rollback
+  from: verification
+  to: implementation
+  previous_role: quality/base
+  previous_agent: qa-quinn
+  active_role: backend-implementer/base
+  active_agent: backend-ethan
+  confirmed_by: user
+  decision_id: TRANSITION-M002-019
+  evidence: .planning/milestones/M002/reviews/verification-rework.md
+  kind: stage_rollback
+  authorization: 用户在已明确展示“先交后端修复积分配置，再交前端修复草稿降级，随后复验”的唯一顺序后回复“下一步”。本次仅回溯 implementation 并激活 backend-ethan 处理 CR-006；不跨越下一角色交接或验收门。
+  current_handoff: .planning/milestones/M002/handoffs/verification.md
+  before_controls: .planning/milestones/M002/reviews/evidence/verification-rework-019/before-controls.tar.gz
+  qa_manifest: .planning/milestones/M002/verification/evidence/qa2-001/manifest.json
+  qa_manifest_sha256: 7e177ab895b0f56684512aa2f5b25e1b45021732eb6b3499cbbe7083ffb5505a
+  registered_change_requests:
+  - M002-CR-005
+  - M002-CR-006
+  change_requests_retained:
+  - M002-CR-001
+  - M002-CR-002
+  - M002-CR-005
+  - M002-CR-006
+  retained_open_items:
+  - id: CR039-L1
+    status: open
+    source: .planning/milestones/M001/changes/CR-039.md#retained-limitations
+  - id: CR042-L1
+    status: open
+    source: .planning/milestones/M001/verification/CR-042-generation-evidence.md#retained-limitations
+  - id: AI-QUALITY-90
+    status: unverified
+    source: .planning/milestones/M001/verification/ai-evaluation.md
+  scoped_rework: M002-CR-006 / QA2-F02
+  deferred_role_rework: M002-CR-005 / frontend-claire; separate activation required
+  stage_transition: true
+  independent_verification_passed: false
+  uat_passed: false
+  milestone_completed: false
+  specialist_artifacts_modified: false
+  profile_modified: false
+  runtime_model_switch: not_performed
+- id: TRANSITION-M002-020
+  milestone: M002
+  timestamp: '2026-09-21T02:58:05.548437+00:00'
+  operation: activate-role
+  from: implementation
+  to: implementation
+  previous_role: backend-implementer/base
+  previous_agent: backend-ethan
+  active_role: frontend-implementer/base
+  active_agent: frontend-claire
+  confirmed_by: user
+  decision_id: TRANSITION-M002-020
+  evidence: .planning/milestones/M002/reviews/frontend-cr005-entry.md
+  kind: role_activation
+  authorization: 上轮明确展示“下一步交给 frontend-claire 修复草稿存储故障，随后由 QA 复验两项问题”，本轮用户回复“下一步”。仅授权本次 implementation 阶段内角色接收及 CR-005 修复，不替代之后的质量验收。
+  current_handoff: .planning/milestones/M002/handoffs/backend-implementation.md
+  before_controls: .planning/milestones/M002/reviews/evidence/frontend-rework-entry-020/before-controls.tar.gz
+  backend_manifest:
+    path: .planning/milestones/M002/implementation/evidence/backend-cr006/manifest.json
+    sha256: 22e5ed6a0af3f2e69a82ee60f4589b7ad5c0f3589ced4a49f46dce7df6778b41
+  source_counts:
+    backend: 284
+    frontend: 271
+  scoped_rework: M002-CR-005 / QA2-F01
+  backend_rework_status: M002-CR-006 implemented_pending_qa; remains open
+  change_requests_retained:
+  - M002-CR-001
+  - M002-CR-002
+  - M002-CR-005
+  - M002-CR-006
+  retained_open_items:
+  - id: CR039-L1
+    status: open
+    source: .planning/milestones/M001/changes/CR-039.md#retained-limitations
+  - id: CR042-L1
+    status: open
+    source: .planning/milestones/M001/verification/CR-042-generation-evidence.md#retained-limitations
+  - id: AI-QUALITY-90
+    status: unverified
+    source: .planning/milestones/M001/verification/ai-evaluation.md
+  stage_transition: false
+  independent_verification_passed: false
+  uat_passed: false
+  milestone_completed: false
+  specialist_artifacts_modified: false
+  profile_modified: false
+  runtime_model_switch: not_performed
+- id: TRANSITION-M002-021
+  milestone: M002
+  timestamp: '2026-09-21T03:45:06.214508+00:00'
+  operation: transition-stage
+  from: implementation
+  to: verification
+  previous_role: frontend-implementer/base
+  previous_agent: frontend-claire
+  active_role: quality/base
+  active_agent: qa-quinn
+  confirmed_by: user
+  decision_id: TRANSITION-M002-021
+  evidence: .planning/milestones/M002/reviews/verification-reentry.md
+  kind: stage_transition
+  authorization: 上轮明确展示“下一步交回 QA，独立复验 CR-005 和后端 CR-006，再继续二期验收”，本轮用户回复“下一步”。仅授权 implementation → verification 及 qa-quinn
+    接收复验，不代表验收通过或关闭缺陷。
+  current_handoff: .planning/milestones/M002/handoffs/frontend-implementation.md
+  before_controls: .planning/milestones/M002/reviews/evidence/verification-reentry-021/before-controls.tar.gz
+  implementation_manifests:
+    backend-cr006:
+      path: .planning/milestones/M002/implementation/evidence/backend-cr006/manifest.json
+      sha256: 22e5ed6a0af3f2e69a82ee60f4589b7ad5c0f3589ced4a49f46dce7df6778b41
+      evidence_count: 29
+      declared_checks: 7
+    frontend-cr005:
+      path: .planning/milestones/M002/implementation/evidence/frontend-cr005/manifest.json
+      sha256: fa5885ebeeeaf3e7bff3858824a6cac1182b42ae7e182603cb730a411f249a73
+      evidence_count: 56
+      declared_checks: 9
+  qa_manifest:
+    path: .planning/milestones/M002/verification/evidence/qa2-001/manifest.json
+    sha256: 7e177ab895b0f56684512aa2f5b25e1b45021732eb6b3499cbbe7083ffb5505a
+    checked_artifacts: 74
+    result_unchanged: FAIL
+  change_requests_retained:
+  - M002-CR-001
+  - M002-CR-002
+  - M002-CR-005
+  - M002-CR-006
+  retained_open_items:
+  - id: CR039-L1
+    status: open
+    source: .planning/milestones/M001/changes/CR-039.md#retained-limitations
+  - id: CR042-L1
+    status: open
+    source: .planning/milestones/M001/verification/CR-042-generation-evidence.md#retained-limitations
+  - id: AI-QUALITY-90
+    status: unverified
+    source: .planning/milestones/M001/verification/ai-evaluation.md
+  rework_status:
+    M002-CR-005: implemented_pending_qa
+    M002-CR-006: implemented_pending_qa
+  stage_transition: true
+  independent_verification_passed: false
+  uat_passed: false
+  milestone_completed: false
+  specialist_artifacts_modified: false
+  profile_modified: false
+  runtime_model_switch: not_performed
+- id: TRANSITION-M002-022
+  milestone: M002
+  timestamp: '2026-09-21T04:41:32.783104+00:00'
+  operation: recover-or-rollback
+  from: verification
+  to: implementation
+  previous_role: quality/base
+  previous_agent: qa-quinn
+  active_role: backend-implementer/base
+  active_agent: backend-ethan
+  confirmed_by: user
+  decision_id: TRANSITION-M002-022
+  evidence: .planning/milestones/M002/reviews/verification-rework-022.md
+  kind: stage_transition
+  authorization: 用户在上轮明确展示“先交后端修复注销，再交前端修复表单，随后 QA 复验”后回复“下一步”。本次仅执行首个交接：返回 implementation 并激活 backend-ethan 处理 CR-007；接收
+    QA02 已验证修复的范围性关闭，不代表全量质量通过。
+  current_handoff: .planning/milestones/M002/handoffs/verification.md
+  before_controls: .planning/milestones/M002/reviews/evidence/verification-rework-022/before-controls.tar.gz
+  qa_manifest:
+    path: .planning/milestones/M002/verification/evidence/qa2-002/manifest.json
+    sha256: f10d0ae373d4becc6f7d84ddb6616a91d3312c85de5f23ad375b13e1c8787d5a
+    artifacts_checked: 40
+    result: FAIL
+    scoped_fixes_verified:
+    - M002-CR-005
+    - M002-CR-006
+    open_defects:
+    - M002-CR-007
+    - M002-CR-008
+  source_checks:
+    frontend-cr005:
+      path: .planning/milestones/M002/implementation/evidence/frontend-cr005/source.json
+      sha256: eb5203ff7160b58f78227049a3ba2de0b3d6553ddeb02cd9a266bedc63c8f27e
+      count: 273
+    backend-cr006:
+      path: .planning/milestones/M002/implementation/evidence/backend-cr006/source.json
+      sha256: 8fb696cda27f470f9315eda1682c6bece84464f9b27e605c14e38772a2e1b0d4
+      count: 284
+  closed_change_requests:
+  - id: M002-CR-005
+    scope: IndexedDB failure memory editing and draft protection defect QA2-F01
+    source: .planning/milestones/M002/changes/CR-005.md
+    resolution_version: M002-QA-02
+    verification: R01-R05
+    evidence: .planning/milestones/M002/verification/evidence/qa2-002/review-reverify.json
+  - id: M002-CR-006
+    scope: retired-model reference preservation in admin item API defect QA2-F02; frontend editing remains CR-008
+    source: .planning/milestones/M002/changes/CR-006.md
+    resolution_version: M002-QA-02
+    verification: R09/R10
+    evidence: .planning/milestones/M002/verification/evidence/qa2-002/additional-audit.json
+  registered_change_requests:
+  - M002-CR-007
+  - M002-CR-008
+  change_requests_retained:
+  - M002-CR-001
+  - M002-CR-002
+  - M002-CR-007
+  - M002-CR-008
+  retained_open_items:
+  - id: CR039-L1
+    status: open
+    source: .planning/milestones/M001/changes/CR-039.md#retained-limitations
+  - id: CR042-L1
+    status: open
+    source: .planning/milestones/M001/verification/CR-042-generation-evidence.md#retained-limitations
+  - id: AI-QUALITY-90
+    status: unverified
+    source: .planning/milestones/M001/verification/ai-evaluation.md
+  stage_transition: true
+  independent_verification_passed: false
+  uat_passed: false
+  milestone_completed: false
+  specialist_artifacts_modified: false
+  profile_modified: false
+  runtime_model_switch: not_performed
+- id: TRANSITION-M002-023
+  milestone: M002
+  timestamp: '2026-09-21T06:24:33.445609+00:00'
+  operation: activate-role
+  from: implementation
+  to: implementation
+  previous_role: backend-implementer/base
+  previous_agent: backend-ethan
+  active_role: frontend-implementer/base
+  active_agent: frontend-claire
+  confirmed_by: user
+  decision_id: TRANSITION-M002-023
+  evidence: .planning/milestones/M002/reviews/frontend-cr008-entry.md
+  kind: role_activation
+  authorization: 上轮明确展示交前端修复 CR-008、随后统一交 QA 复验，用户回复“下一步”。仅授权同一 implementation 阶段内 backend-ethan → frontend-claire 接收 CR-008，不跨到验证阶段或关闭
+    CR-007。
+  current_handoff: .planning/milestones/M002/handoffs/backend-implementation.md
+  before_controls: .planning/milestones/M002/reviews/evidence/frontend-cr008-entry-023/before-controls.tar.gz
+  source_checks:
+    backend-cr007:
+      path: .planning/milestones/M002/implementation/evidence/backend-cr007/source.json
+      sha256: e7c331f4150d8fe2401b16d6ee5e34f4da0762810e41d5d7fda57059d4eb477a
+      count: 285
+      archive: .planning/milestones/M002/implementation/evidence/backend-cr007/backend-source.tar.gz
+      archive_sha256: 90bd2c694690712820e073ca47b0544207888585bb1a236184590558ec5d2c55
+    frontend-cr005:
+      path: .planning/milestones/M002/implementation/evidence/frontend-cr005/source.json
+      sha256: eb5203ff7160b58f78227049a3ba2de0b3d6553ddeb02cd9a266bedc63c8f27e
+      count: 273
+      archive: .planning/milestones/M002/implementation/evidence/frontend-cr005/frontend-source.tar.gz
+      archive_sha256: df5b096bd6e78152f8234b515e6c80df60a49777ea49dfd7aa4dbbb76681f5e3
+  implementation_manifests:
+    backend-cr007:
+      path: .planning/milestones/M002/implementation/evidence/backend-cr007/manifest.json
+      sha256: bf2435bd95cc44cb10c4a185becf622b661825fdff5a9aeb2c1e8ebe1fb159e9
+    frontend-cr005:
+      path: .planning/milestones/M002/implementation/evidence/frontend-cr005/manifest.json
+      sha256: fa5885ebeeeaf3e7bff3858824a6cac1182b42ae7e182603cb730a411f249a73
+  qa_manifest:
+    path: .planning/milestones/M002/verification/evidence/qa2-002/manifest.json
+    sha256: f10d0ae373d4becc6f7d84ddb6616a91d3312c85de5f23ad375b13e1c8787d5a
+    checked_artifacts: 40
+    result_unchanged: FAIL
+  change_requests_retained:
+  - M002-CR-001
+  - M002-CR-002
+  - M002-CR-007
+  - M002-CR-008
+  retained_open_items:
+  - id: CR039-L1
+    status: open
+    source: .planning/milestones/M001/changes/CR-039.md#retained-limitations
+  - id: CR042-L1
+    status: open
+    source: .planning/milestones/M001/verification/CR-042-generation-evidence.md#retained-limitations
+  - id: AI-QUALITY-90
+    status: unverified
+    source: .planning/milestones/M001/verification/ai-evaluation.md
+  rework_status:
+    M002-CR-007: implemented_pending_qa
+    M002-CR-008: open_frontend_rework
+  prior_scoped_closures_preserved:
+    decision_id: TRANSITION-M002-022
+    ids:
+    - M002-CR-005
+    - M002-CR-006
+  stage_transition: false
+  independent_verification_passed: false
+  uat_passed: false
+  milestone_completed: false
+  specialist_artifacts_modified: false
+  profile_modified: false
+  runtime_model_switch: not_performed
+- id: TRANSITION-M002-024
+  milestone: M002
+  timestamp: '2026-09-21T06:48:58.838789+00:00'
+  operation: transition-stage
+  from: implementation
+  to: verification
+  previous_role: frontend-implementer/base
+  previous_agent: frontend-claire
+  active_role: quality/base
+  active_agent: qa-quinn
+  confirmed_by: user
+  decision_id: TRANSITION-M002-024
+  evidence: .planning/milestones/M002/reviews/verification-reentry-024.md
+  kind: stage_transition
+  authorization: 上轮已明确展示“下一步由 QA 独立复验 CR007、CR008”，用户本轮回复“下一步”。仅授权 implementation → verification 和 qa-quinn 接收复验，不代表质量/UAT
+    通过或关闭缺陷。
+  current_handoff: .planning/milestones/M002/handoffs/frontend-implementation.md
+  before_controls: .planning/milestones/M002/reviews/evidence/verification-reentry-024/before-controls.tar.gz
+  source_checks:
+    backend-cr007:
+      path: .planning/milestones/M002/implementation/evidence/backend-cr007/source.json
+      sha256: e7c331f4150d8fe2401b16d6ee5e34f4da0762810e41d5d7fda57059d4eb477a
+      count: 285
+      archive: .planning/milestones/M002/implementation/evidence/backend-cr007/backend-source.tar.gz
+      archive_sha256: 90bd2c694690712820e073ca47b0544207888585bb1a236184590558ec5d2c55
+    frontend-cr008:
+      path: .planning/milestones/M002/implementation/evidence/frontend-cr008/source.json
+      sha256: 33090089b0e1fb3de268d4e988189ec657c1adcd5f172db681c37b47e6a438a3
+      count: 274
+      archive: .planning/milestones/M002/implementation/evidence/frontend-cr008/frontend-source.tar.gz
+      archive_sha256: c33127b9083e51096588a3621f75cfa1bf060afa1458a2ce4c4810f64cd47a43
+  implementation_manifests:
+    backend-cr007:
+      path: .planning/milestones/M002/implementation/evidence/backend-cr007/manifest.json
+      sha256: bf2435bd95cc44cb10c4a185becf622b661825fdff5a9aeb2c1e8ebe1fb159e9
+      evidence_count: 39
+      declared_checks: 8
+    frontend-cr008:
+      path: .planning/milestones/M002/implementation/evidence/frontend-cr008/manifest.json
+      sha256: 145ebc21ad5446d56a13d9abf2b8dea78c6f52c593310b026c87c3e3f718e05f
+      evidence_count: 50
+      declared_checks: 8
+  qa_manifest:
+    path: .planning/milestones/M002/verification/evidence/qa2-002/manifest.json
+    sha256: f10d0ae373d4becc6f7d84ddb6616a91d3312c85de5f23ad375b13e1c8787d5a
+    checked_artifacts: 40
+    result_unchanged: FAIL
+  change_requests_retained:
+  - M002-CR-001
+  - M002-CR-002
+  - M002-CR-007
+  - M002-CR-008
+  retained_open_items:
+  - id: CR039-L1
+    status: open
+    source: .planning/milestones/M001/changes/CR-039.md#retained-limitations
+  - id: CR042-L1
+    status: open
+    source: .planning/milestones/M001/verification/CR-042-generation-evidence.md#retained-limitations
+  - id: AI-QUALITY-90
+    status: unverified
+    source: .planning/milestones/M001/verification/ai-evaluation.md
+  rework_status:
+    M002-CR-007: implemented_pending_qa
+    M002-CR-008: implemented_pending_qa
+  prior_scoped_closures_preserved:
+    decision_id: TRANSITION-M002-022
+    ids:
+    - M002-CR-005
+    - M002-CR-006
+  stage_transition: true
+  independent_verification_passed: false
+  uat_passed: false
+  milestone_completed: false
+  specialist_artifacts_modified: false
+  profile_modified: false
+  runtime_model_switch: not_performed
+- id: TRANSITION-M002-025
+  milestone: M002
+  timestamp: '2026-09-21T07:14:52.505418+00:00'
+  operation: recover-or-rollback
+  from: verification
+  to: implementation
+  previous_role: quality/base
+  previous_agent: qa-quinn
+  active_role: frontend-implementer/base
+  active_agent: frontend-claire
+  confirmed_by: user
+  decision_id: TRANSITION-M002-025
+  evidence: .planning/milestones/M002/reviews/verification-rework-025.md
+  kind: stage_transition
+  authorization: 上轮已明确展示“下一步按交接流程交由前端修复 CR009，再继续验收”，用户本轮回复“下一个”。确认同一目标，返回 implementation 并激活 frontend-claire；接收 QA03 原 CR007/008
+    的限定关闭，不代表全量质量通过。
+  current_handoff: .planning/milestones/M002/handoffs/verification.md
+  before_controls: .planning/milestones/M002/reviews/evidence/verification-rework-025/before-controls.tar.gz
+  qa_manifest:
+    path: .planning/milestones/M002/verification/evidence/qa2-003/manifest.json
+    sha256: f577d4b5dd05efef4f132a3bb9403be5b194d5e76b44bf56ecddce2626d6d029
+    artifacts_checked: 64
+    result: FAIL
+    scoped_fixes_verified:
+    - M002-CR-007
+    - M002-CR-008
+    open_defects:
+    - M002-CR-009
+  source_checks:
+    frontend-cr008:
+      path: .planning/milestones/M002/implementation/evidence/frontend-cr008/source.json
+      sha256: 33090089b0e1fb3de268d4e988189ec657c1adcd5f172db681c37b47e6a438a3
+      count: 274
+    backend-cr007:
+      path: .planning/milestones/M002/implementation/evidence/backend-cr007/source.json
+      sha256: e7c331f4150d8fe2401b16d6ee5e34f4da0762810e41d5d7fda57059d4eb477a
+      count: 285
+  closed_change_requests:
+  - id: M002-CR-007
+    scope: Claimed-account deletion defect QA2-F03; independent UI/data deletion and isolation scope only, matching developer
+      concurrency/rollback evidence reused.
+    source: .planning/milestones/M002/changes/CR-007.md
+    resolution_version: M002-QA-03
+    verification: S02-S04
+    evidence: .planning/milestones/M002/verification/evidence/qa2-003/account-final-results.json
+  - id: M002-CR-008
+    scope: Loaded retired model option filtering defect QA2-F04; pagination omission/data loss remains CR-009.
+    source: .planning/milestones/M002/changes/CR-008.md
+    resolution_version: M002-QA-03
+    verification: S05-S07, S06-live
+    evidence: .planning/milestones/M002/verification/evidence/qa2-003/cards-results.json
+  registered_change_requests:
+  - M002-CR-009
+  change_requests_retained:
+  - M002-CR-001
+  - M002-CR-002
+  - M002-CR-009
+  retained_open_items:
+  - id: CR039-L1
+    status: open
+    source: .planning/milestones/M001/changes/CR-039.md#retained-limitations
+  - id: CR042-L1
+    status: open
+    source: .planning/milestones/M001/verification/CR-042-generation-evidence.md#retained-limitations
+  - id: AI-QUALITY-90
+    status: unverified
+    source: .planning/milestones/M001/verification/ai-evaluation.md
+  prior_scoped_closures_preserved:
+    decision_id: TRANSITION-M002-022
+    ids:
+    - M002-CR-005
+    - M002-CR-006
+  stage_transition: true
+  independent_verification_passed: false
+  uat_passed: false
+  milestone_completed: false
+  specialist_artifacts_modified: false
+  profile_modified: false
+  runtime_model_switch: not_performed
+- id: TRANSITION-M002-026
+  milestone: M002
+  timestamp: '2026-09-21T07:40:18.464646+00:00'
+  operation: transition-stage
+  from: implementation
+  to: verification
+  previous_role: frontend-implementer/base
+  previous_agent: frontend-claire
+  active_role: quality/base
+  active_agent: qa-quinn
+  confirmed_by: user
+  decision_id: TRANSITION-M002-026
+  evidence: .planning/milestones/M002/reviews/verification-reentry-026.md
+  kind: stage_transition
+  authorization: 上轮已明确展示“下一步由 QA 独立复验，CR009 暂未关闭”，用户本轮回复“下一步”。只接收 CR009 修复并返回 verification / qa-quinn，不代表独立质量通过或关闭缺陷。
+  current_handoff: .planning/milestones/M002/handoffs/frontend-implementation.md
+  before_controls: .planning/milestones/M002/reviews/evidence/verification-reentry-026/before-controls.tar.gz
+  implementation_manifest:
+    path: .planning/milestones/M002/implementation/evidence/frontend-cr009/manifest.json
+    sha256: 1a6dcd24f9321b6aef8e09f5446ee8af059796b8f77eae0e82cbcb71b5a3d2c4
+    artifacts_checked: 100
+    checks: 8
+    unit_passed: 309
+    browser_passed: 12
+  qa_manifest:
+    path: .planning/milestones/M002/verification/evidence/qa2-003/manifest.json
+    sha256: f577d4b5dd05efef4f132a3bb9403be5b194d5e76b44bf56ecddce2626d6d029
+    artifacts_checked: 64
+    result: FAIL
+  source_checks:
+    frontend-cr009:
+      path: .planning/milestones/M002/implementation/evidence/frontend-cr009/source.json
+      sha256: 91f84ed5784fd3f80a070b6b832c72f40daeb9a8e25eb1f90c3224a886e204c9
+      count: 276
+      archive: .planning/milestones/M002/implementation/evidence/frontend-cr009/frontend-source.tar.gz
+      archive_sha256: 99c5066b459af6afa7da8cd61de70f4f7c156e7cc600c331a637a7fb0fd2798c
+    backend-cr007:
+      path: .planning/milestones/M002/implementation/evidence/backend-cr007/source.json
+      sha256: e7c331f4150d8fe2401b16d6ee5e34f4da0762810e41d5d7fda57059d4eb477a
+      count: 285
+      archive: .planning/milestones/M002/implementation/evidence/backend-cr007/backend-source.tar.gz
+      archive_sha256: 90bd2c694690712820e073ca47b0544207888585bb1a236184590558ec5d2c55
+  rework_status:
+    M002-CR-009: implemented_pending_qa
+  change_requests_retained:
+  - M002-CR-001
+  - M002-CR-002
+  - M002-CR-009
+  retained_open_items:
+  - id: CR039-L1
+    status: open
+    source: .planning/milestones/M001/changes/CR-039.md#retained-limitations
+  - id: CR042-L1
+    status: open
+    source: .planning/milestones/M001/verification/CR-042-generation-evidence.md#retained-limitations
+  - id: AI-QUALITY-90
+    status: unverified
+    source: .planning/milestones/M001/verification/ai-evaluation.md
+  prior_scoped_closures_preserved:
+  - decision_id: TRANSITION-M002-025
+    ids:
+    - M002-CR-007
+    - M002-CR-008
+  - decision_id: TRANSITION-M002-022
+    ids:
+    - M002-CR-005
+    - M002-CR-006
+  stage_transition: true
+  independent_verification_passed: false
+  uat_passed: false
+  milestone_completed: false
+  specialist_artifacts_modified: false
+  profile_modified: false
+  runtime_model_switch: not_performed
+- id: TRANSITION-M002-027
+  milestone: M002
+  timestamp: '2026-09-21T08:14:31.804648+00:00'
+  operation: recover-or-rollback
+  from: verification
+  to: implementation
+  previous_role: quality/base
+  previous_agent: qa-quinn
+  active_role: frontend-implementer/base
+  active_agent: frontend-claire
+  confirmed_by: user
+  decision_id: TRANSITION-M002-027
+  evidence: .planning/milestones/M002/reviews/verification-rework-027.md
+  kind: stage_transition
+  authorization: During QA04 the user was shown CR010 and the single proposed return to frontend implementation, then replied
+    下一步. This confirms the same scoped handoff, not quality/UAT pass.
+  current_handoff: .planning/milestones/M002/handoffs/verification.md
+  before_controls: .planning/milestones/M002/reviews/evidence/verification-rework-027/before-controls.tar.gz
+  qa_manifest:
+    path: .planning/milestones/M002/verification/evidence/qa2-004/manifest.json
+    sha256: 209be75870dc5ecfba5da7fb32cc79e0657a68fbe4044eea489274448b730370
+    artifacts_checked: 69
+    result: FAIL
+    passed: 14
+    failed: 1
+  source_checks:
+    frontend-cr009:
+      path: .planning/milestones/M002/implementation/evidence/frontend-cr009/source.json
+      sha256: 91f84ed5784fd3f80a070b6b832c72f40daeb9a8e25eb1f90c3224a886e204c9
+      count: 276
+    backend-cr007:
+      path: .planning/milestones/M002/implementation/evidence/backend-cr007/source.json
+      sha256: e7c331f4150d8fe2401b16d6ee5e34f4da0762810e41d5d7fda57059d4eb477a
+      count: 285
+  closed_change_requests:
+  - id: M002-CR-009
+    scope: 'Paginated existing model references: independent T01-T07 automatic completeness, explicit add/remove, failure/revision
+      protection, mobile edit and current-price refund. No full benefits/UIA acceptance.'
+    source: .planning/milestones/M002/changes/CR-009.md
+    resolution_version: M002-QA-04
+    verification: T01-T07
+    evidence: .planning/milestones/M002/verification/evidence/qa2-004/cards-results.json
+  registered_change_requests:
+  - M002-CR-010
+  change_requests_retained:
+  - M002-CR-001
+  - M002-CR-002
+  - M002-CR-010
+  retained_open_items:
+  - id: CR039-L1
+    status: open
+    source: .planning/milestones/M001/changes/CR-039.md#retained-limitations
+  - id: CR042-L1
+    status: open
+    source: .planning/milestones/M001/verification/CR-042-generation-evidence.md#retained-limitations
+  - id: AI-QUALITY-90
+    status: unverified
+    source: .planning/milestones/M001/verification/ai-evaluation.md
+  prior_scoped_closures_preserved:
+  - decision_id: TRANSITION-M002-025
+    ids:
+    - M002-CR-007
+    - M002-CR-008
+  - decision_id: TRANSITION-M002-022
+    ids:
+    - M002-CR-005
+    - M002-CR-006
+  stage_transition: true
+  independent_verification_passed: false
+  uat_passed: false
+  milestone_completed: false
+  specialist_artifacts_modified: false
+  profile_modified: false
+  runtime_model_switch: not_performed
+- id: TRANSITION-M002-028
+  milestone: M002
+  timestamp: '2026-09-21T09:05:48.325224+00:00'
+  operation: transition-stage
+  from: implementation
+  to: verification
+  previous_role: frontend-implementer/base
+  previous_agent: frontend-claire
+  active_role: quality/base
+  active_agent: qa-quinn
+  confirmed_by: user
+  decision_id: TRANSITION-M002-028
+  evidence: .planning/milestones/M002/reviews/verification-reentry-028.md
+  kind: stage_transition
+  authorization: 前轮明确展示下一步由 QA 独立复验 CR010，本轮用户回复“下一步”，确认同一阶段迁移及角色接续。
+  scope: Accept the CR-010 frontend repair for independent verification and return to verification
+    with qa-quinn. Preserve CR-010 OPEN, QA04 overall FAIL, remaining coverage, prior scoped
+    closures and all other open items. No quality/UAT pass, deployment or new live AI evaluation.
+  current_handoff: .planning/milestones/M002/handoffs/frontend-implementation.md
+  before_controls: .planning/milestones/M002/reviews/evidence/verification-reentry-028/before-controls.tar.gz
+  implementation_manifest:
+    path: .planning/milestones/M002/implementation/evidence/frontend-cr010/manifest.json
+    sha256: 1589038c01a5431aa8c17744a44a4ca48c558cf49dd781557eb4f45f5a0de229
+    artifacts_checked: 170
+    result: cr010_implemented_pending_qa
+    browser_passed: 26
+    command_records: 8
+  qa_manifest:
+    path: .planning/milestones/M002/verification/evidence/qa2-004/manifest.json
+    sha256: 209be75870dc5ecfba5da7fb32cc79e0657a68fbe4044eea489274448b730370
+    artifacts_checked: 69
+    result: FAIL
+    passed: 14
+    failed: 1
+  source_checks:
+    frontend-cr010:
+      path: .planning/milestones/M002/implementation/evidence/frontend-cr010/source.json
+      sha256: 97b2ee50e294c7c74532bdd5cfd54065a9ce2560d95b2b6c427e88f1de98d603
+      count: 277
+      archive: .planning/milestones/M002/implementation/evidence/frontend-cr010/frontend-source.tar.gz
+      archive_sha256: f5345aae9f1ec632dfa05f1e60fce9590125fd7681870b7a9b84310ae7def0fa
+    backend-cr007:
+      path: .planning/milestones/M002/implementation/evidence/backend-cr007/source.json
+      sha256: e7c331f4150d8fe2401b16d6ee5e34f4da0762810e41d5d7fda57059d4eb477a
+      count: 285
+      archive: .planning/milestones/M002/implementation/evidence/backend-cr007/backend-source.tar.gz
+      archive_sha256: 90bd2c694690712820e073ca47b0544207888585bb1a236184590558ec5d2c55
+  change_requests_retained:
+  - M002-CR-001
+  - M002-CR-002
+  - M002-CR-010
+  retained_open_items:
+  - id: CR039-L1
+    status: open
+    source: .planning/milestones/M001/changes/CR-039.md#retained-limitations
+  - id: CR042-L1
+    status: open
+    source: .planning/milestones/M001/verification/CR-042-generation-evidence.md#retained-limitations
+  - id: AI-QUALITY-90
+    status: unverified
+    source: .planning/milestones/M001/verification/ai-evaluation.md
+  prior_scoped_closures_preserved:
+  - decision_id: TRANSITION-M002-027
+    ids:
+    - M002-CR-009
+  - decision_id: TRANSITION-M002-025
+    ids:
+    - M002-CR-007
+    - M002-CR-008
+  - decision_id: TRANSITION-M002-022
+    ids:
+    - M002-CR-005
+    - M002-CR-006
+  stage_transition: true
+  independent_verification_passed: false
+  uat_passed: false
+  milestone_completed: false
+  specialist_artifacts_modified: false
+  profile_modified: false
+  runtime_model_switch: not_performed
+- id: TRANSITION-M002-029
+  milestone: M002
+  timestamp: '2026-09-22T01:53:57.049620+00:00'
+  operation: recover-or-rollback
+  from: verification
+  to: implementation
+  previous_role: quality/base
+  previous_agent: qa-quinn
+  active_role: backend-implementer/base
+  active_agent: backend-ethan
+  confirmed_by: user
+  decision_id: TRANSITION-M002-029
+  evidence: .planning/milestones/M002/reviews/verification-rework-029.md
+  kind: stage_transition
+  authorization: 用户在已展示下一步为后端修复CR011、再独立复验后回复“下一步”，确认同一返工交接范围。
+  scope: Return M002 to implementation and activate backend-ethan for CR-011 only; register CR-011 and close CR-010
+    within QA05 V01-V04 independently verified scope. Preserve QA05 overall FAIL, remaining coverage, prior scoped
+    closures, all other open items and approvals. No UAT pass, deployment or new live AI evaluation.
+  current_handoff: .planning/milestones/M002/handoffs/verification.md
+  before_controls: .planning/milestones/M002/reviews/evidence/verification-rework-029/before-controls.tar.gz
+  qa_manifest:
+    path: .planning/milestones/M002/verification/evidence/qa2-005/manifest.json
+    sha256: c3278acb8c54d3d3b733dd7d054b86a740525d8fe5373c42ae9a85099ca84b17
+    artifacts_checked: 80
+    result: FAIL
+    passed: 13
+    failed: 1
+  source_checks:
+    frontend-cr010:
+      path: .planning/milestones/M002/implementation/evidence/frontend-cr010/source.json
+      sha256: 97b2ee50e294c7c74532bdd5cfd54065a9ce2560d95b2b6c427e88f1de98d603
+      count: 277
+    backend-cr007:
+      path: .planning/milestones/M002/implementation/evidence/backend-cr007/source.json
+      sha256: e7c331f4150d8fe2401b16d6ee5e34f4da0762810e41d5d7fda57059d4eb477a
+      count: 285
+  closed_change_requests:
+  - id: M002-CR-010
+    scope: 'QA05 V01-V04 only: 7/30-day dynamic analytics charts, complete dates/data and keyboard access, narrow/desktop
+      bilingual layouts, Firefox/WebKit timestamp hydration and scoped axe. No whole analytics/UIA acceptance.'
+    source: .planning/milestones/M002/changes/CR-010.md
+    resolution_version: M002-QA-05
+    verification: V01-V04
+    evidence: .planning/milestones/M002/verification/evidence/qa2-005/analytics-results.json
+  registered_change_requests:
+  - M002-CR-011
+  change_requests_retained:
+  - M002-CR-001
+  - M002-CR-002
+  - M002-CR-011
+  retained_open_items:
+  - id: CR039-L1
+    status: open
+    source: .planning/milestones/M001/changes/CR-039.md#retained-limitations
+  - id: CR042-L1
+    status: open
+    source: .planning/milestones/M001/verification/CR-042-generation-evidence.md#retained-limitations
+  - id: AI-QUALITY-90
+    status: unverified
+    source: .planning/milestones/M001/verification/ai-evaluation.md
+  prior_scoped_closures_preserved:
+  - decision_id: TRANSITION-M002-027
+    ids:
+    - M002-CR-009
+  - decision_id: TRANSITION-M002-025
+    ids:
+    - M002-CR-007
+    - M002-CR-008
+  - decision_id: TRANSITION-M002-022
+    ids:
+    - M002-CR-005
+    - M002-CR-006
+  stage_transition: true
+  independent_verification_passed: false
+  uat_passed: false
+  milestone_completed: false
+  specialist_artifacts_modified: false
+  profile_modified: false
+  runtime_model_switch: not_performed
+- id: TRANSITION-M002-030
+  milestone: M002
+  timestamp: '2026-09-22T02:24:51.298113+00:00'
+  operation: transition-stage
+  from: implementation
+  to: verification
+  previous_role: backend-implementer/base
+  previous_agent: backend-ethan
+  active_role: quality/base
+  active_agent: qa-quinn
+  confirmed_by: user
+  decision_id: TRANSITION-M002-030
+  evidence: .planning/milestones/M002/reviews/verification-reentry-030.md
+  kind: stage_transition
+  authorization: 用户在上轮已明确展示“通过交接门交给QA，独立复验真实页面搜索与分页”后回复“下一步”，确认同一目标。
+  scope: Accept the CR-011 backend repair for independent verification and return to verification with qa-quinn.
+    Preserve CR-011 OPEN, QA05 overall FAIL, remaining coverage, prior scoped closures and all other open items.
+    No quality/UAT pass, deployment or new live AI evaluation.
+  current_handoff: .planning/milestones/M002/handoffs/backend-implementation.md
+  before_controls: .planning/milestones/M002/reviews/evidence/verification-reentry-030/before-controls.tar.gz
+  source_checks:
+    backend-cr011:
+      source_path: .planning/milestones/M002/implementation/evidence/backend-cr011/source.json
+      source_sha256: 3ce57a3517aec9a965238dbd3f398f37db11d40f3ad28c5d4055fc1218e7b617
+      manifest_sha256: 98ac872912c4f4b21e6d5b06d00c3fed77576492e1e569e06d179543e3c069c7
+      file_count: 287
+      artifact_count: 34
+      source_archive_matches: true
+    frontend-cr010:
+      source_path: .planning/milestones/M002/implementation/evidence/frontend-cr010/source.json
+      source_sha256: 97b2ee50e294c7c74532bdd5cfd54065a9ce2560d95b2b6c427e88f1de98d603
+      manifest_sha256: 1589038c01a5431aa8c17744a44a4ca48c558cf49dd781557eb4f45f5a0de229
+      file_count: 277
+      artifact_count: 170
+      source_archive_matches: true
+  qa05_evidence_preserved:
+    manifest_sha256: c3278acb8c54d3d3b733dd7d054b86a740525d8fe5373c42ae9a85099ca84b17
+    artifacts: 80
+    result: 13 PASS / 1 FAIL preserved
+  change_requests_retained:
+  - M002-CR-001
+  - M002-CR-002
+  - M002-CR-011
+  retained_open_items:
+  - id: CR039-L1
+    status: open
+    source: .planning/milestones/M001/changes/CR-039.md#retained-limitations
+  - id: CR042-L1
+    status: open
+    source: .planning/milestones/M001/verification/CR-042-generation-evidence.md#retained-limitations
+  - id: AI-QUALITY-90
+    status: unverified
+    source: .planning/milestones/M001/verification/ai-evaluation.md
+  prior_scoped_closures_preserved:
+  - decision_id: TRANSITION-M002-029
+    ids:
+    - M002-CR-010
+  - decision_id: TRANSITION-M002-027
+    ids:
+    - M002-CR-009
+  - decision_id: TRANSITION-M002-025
+    ids:
+    - M002-CR-007
+    - M002-CR-008
+  - decision_id: TRANSITION-M002-022
+    ids:
+    - M002-CR-005
+    - M002-CR-006
+  stage_transition: true
+  independent_verification_passed: false
+  uat_passed: false
+  milestone_completed: false
+  specialist_artifacts_modified: false
+  profile_modified: false
+  runtime_model_switch: not_performed
+- id: TRANSITION-M002-031
+  milestone: M002
+  timestamp: '2026-09-23T03:29:58.935568+00:00'
+  operation: recover-or-rollback
+  from: verification
+  to: implementation
+  previous_role: quality/base
+  previous_agent: qa-quinn
+  active_role: backend-implementer/base
+  active_agent: backend-ethan
+  confirmed_by: user
+  decision_id: TRANSITION-M002-031
+  evidence: .planning/milestones/M002/reviews/verification-rework-031.md
+  kind: stage_rollback
+  authorization: 此前已明确展示经交接门返回开发、先后端CR013再前端CR012、随后独立复验；用户询问两项是否有文档要求，助手核对批准原件后说明依据，用户于2026-09-23回复“下一步”，确认推进同一返工目标。
+  scope: Return M002 from verification to implementation and activate backend-ethan for CR-013 only; register CR-012/013
+    and close CR-011 within QA06 L01/L02/L03/L05/L06 verified scope. Preserve QA06 overall FAIL, frontend CR-012
+    pending separate activation, remaining coverage, prior closures and all other open items. No UAT pass, deployment
+    or new live AI evaluation.
+  current_handoff: .planning/milestones/M002/handoffs/verification.md
+  before_controls: .planning/milestones/M002/reviews/evidence/verification-rework-031/before-controls.tar.gz
+  source_checks:
+    backend-cr011:
+      source_sha256: 3ce57a3517aec9a965238dbd3f398f37db11d40f3ad28c5d4055fc1218e7b617
+      manifest_sha256: 98ac872912c4f4b21e6d5b06d00c3fed77576492e1e569e06d179543e3c069c7
+      file_count: 287
+      artifact_count: 34
+      current_sources_match: true
+    frontend-cr010:
+      source_sha256: 97b2ee50e294c7c74532bdd5cfd54065a9ce2560d95b2b6c427e88f1de98d603
+      manifest_sha256: 1589038c01a5431aa8c17744a44a4ca48c558cf49dd781557eb4f45f5a0de229
+      file_count: 277
+      artifact_count: 170
+      current_sources_match: true
+  qa06_evidence_preserved:
+    manifest_sha256: 34cf956eba83f77f2e515ea1f5be298faa149cb03fa844d850a5b4be1ff36db7
+    artifacts: 54
+    result:
+      status: FAIL
+      passed: 11
+      failed: 2
+      total: 13
+      failed_scenarios:
+      - L04
+      - G07
+      search_cr011: verified_pending_gate
+  change_requests_registered:
+  - M002-CR-012
+  - M002-CR-013
+  change_requests_closed:
+  - id: M002-CR-011
+    finding: QA2-F07
+    scope: Normalized complete-target library search and cursor scope only; QA06 L01/L02/L03/L05/L06. Does not close
+      separate L04/CR012 scroll restoration.
+    evidence: .planning/milestones/M002/verification/evidence/qa2-006/library-results.json
+  change_requests_retained:
+  - M002-CR-001
+  - M002-CR-002
+  - M002-CR-012
+  - M002-CR-013
+  retained_open_items:
+  - id: CR039-L1
+    status: open
+    source: .planning/milestones/M001/changes/CR-039.md#retained-limitations
+  - id: CR042-L1
+    status: open
+    source: .planning/milestones/M001/verification/CR-042-generation-evidence.md#retained-limitations
+  - id: AI-QUALITY-90
+    status: unverified
+    source: .planning/milestones/M001/verification/ai-evaluation.md
+  prior_scoped_closures_preserved:
+  - decision_id: TRANSITION-M002-029
+    ids:
+    - M002-CR-010
+  - decision_id: TRANSITION-M002-027
+    ids:
+    - M002-CR-009
+  - decision_id: TRANSITION-M002-025
+    ids:
+    - M002-CR-007
+    - M002-CR-008
+  - decision_id: TRANSITION-M002-022
+    ids:
+    - M002-CR-005
+    - M002-CR-006
+  stage_transition: true
+  independent_verification_passed: false
+  uat_passed: false
+  milestone_completed: false
+  specialist_artifacts_modified: false
+  profile_modified: false
+  real_model_calls_authorized: false
+  deployment_authorized: false
+  runtime_model_switch: not_performed
+- id: TRANSITION-M002-032
+  milestone: M002
+  timestamp: '2026-09-23T03:50:37.500179+00:00'
+  operation: activate-role
+  from: implementation
+  to: implementation
+  previous_role: backend-implementer/base
+  previous_agent: backend-ethan
+  active_role: frontend-implementer/base
+  active_agent: frontend-claire
+  confirmed_by: user
+  decision_id: TRANSITION-M002-032
+  evidence: .planning/milestones/M002/reviews/frontend-cr012-entry.md
+  kind: role_activation
+  authorization: 用户在上一轮已展示“下一步经交接门转前端修复CR012，随后复验两项”后回复“下一步”，确认同一前端角色交接目标。
+  scope: Activate frontend-claire within implementation to fix CR-012 and receive the current backend CR-013 delivery.
+    Preserve CR-013 as implemented_pending_qa, QA06 overall FAIL, all open items and prior scoped closures. No stage
+    advancement, independent quality/UAT pass, deployment or new live AI evaluation.
+  current_handoff: .planning/milestones/M002/handoffs/backend-implementation.md
+  before_controls: .planning/milestones/M002/reviews/evidence/frontend-cr012-entry-032/before-controls.tar.gz
+  source_checks:
+    backend-cr013:
+      source_path: .planning/milestones/M002/implementation/evidence/backend-cr013/source.json
+      source_sha256: c54307a04cecb3dd99cc13d64ae0fbcb6c1fca2c0538711af040d279bbe9b549
+      manifest_sha256: 13b5dccdeb84e1b958c0ac378b4add5ed4c6815e9024cc3cf0eb6fd19e99912d
+      file_count: 288
+      artifact_count: 31
+      source_archive_matches: true
+    frontend-cr010:
+      source_path: .planning/milestones/M002/implementation/evidence/frontend-cr010/source.json
+      source_sha256: 97b2ee50e294c7c74532bdd5cfd54065a9ce2560d95b2b6c427e88f1de98d603
+      manifest_sha256: 1589038c01a5431aa8c17744a44a4ca48c558cf49dd781557eb4f45f5a0de229
+      file_count: 277
+      artifact_count: 170
+      source_archive_matches: true
+  backend_checks:
+    command_records_passed: 7
+    green_top_level: 1
+    green_subtests: 11
+    related_top_level: 7
+    related_subtests: 17
+    red_exit: 1
+    reexecuted: false
+  qa06_evidence_preserved:
+    manifest_sha256: 34cf956eba83f77f2e515ea1f5be298faa149cb03fa844d850a5b4be1ff36db7
+    artifact_count: 54
+    result:
+      status: FAIL
+      passed: 11
+      failed: 2
+      total: 13
+      failed_scenarios:
+      - L04
+      - G07
+      search_cr011: verified_pending_gate
+  change_requests_retained:
+  - M002-CR-001
+  - M002-CR-002
+  - M002-CR-012
+  - M002-CR-013
+  retained_open_items:
+  - id: CR039-L1
+    status: open
+    source: .planning/milestones/M001/changes/CR-039.md#retained-limitations
+  - id: CR042-L1
+    status: open
+    source: .planning/milestones/M001/verification/CR-042-generation-evidence.md#retained-limitations
+  - id: AI-QUALITY-90
+    status: unverified
+    source: .planning/milestones/M001/verification/ai-evaluation.md
+  prior_scoped_closures_preserved:
+  - decision_id: TRANSITION-M002-031
+    ids:
+    - M002-CR-011
+  - decision_id: TRANSITION-M002-029
+    ids:
+    - M002-CR-010
+  - decision_id: TRANSITION-M002-027
+    ids:
+    - M002-CR-009
+  - decision_id: TRANSITION-M002-025
+    ids:
+    - M002-CR-007
+    - M002-CR-008
+  - decision_id: TRANSITION-M002-022
+    ids:
+    - M002-CR-005
+    - M002-CR-006
+  stage_transition: false
+  independent_verification_passed: false
+  uat_passed: false
+  milestone_completed: false
+  specialist_artifacts_modified: false
+  profile_modified: false
+  real_model_calls_authorized: false
+  deployment_authorized: false
+  runtime_model_switch: not_performed
+- id: TRANSITION-M002-033
+  milestone: M002
+  timestamp: '2026-09-23T06:14:59.073483+00:00'
+  operation: transition-stage
+  from: implementation
+  to: verification
+  previous_role: frontend-implementer/base
+  previous_agent: frontend-claire
+  active_role: quality/base
+  active_agent: qa-quinn
+  confirmed_by: user
+  decision_id: TRANSITION-M002-033
+  evidence: .planning/milestones/M002/reviews/verification-reentry-033.md
+  kind: stage_transition
+  authorization: 用户在上一轮明确展示“下一步由守门交接QA，独立复验CR012和后端CR013”后回复“下一步”，确认同一阶段迁移与角色目标。
+  scope: Accept CR-012 frontend and CR-013 backend implementation repairs for independent re-verification; return
+    to verification with qa-quinn and continue remaining coverage. Preserve both CRs OPEN, QA06 overall FAIL, prior
+    scoped closures and all other open items. No quality/UAT pass, deployment or new live AI evaluation.
+  current_handoff: .planning/milestones/M002/handoffs/frontend-implementation.md
+  before_controls: .planning/milestones/M002/reviews/evidence/verification-reentry-033/before-controls.tar.gz
+  source_checks:
+    frontend-cr012:
+      source_path: .planning/milestones/M002/implementation/evidence/frontend-cr012/source.json
+      source_sha256: ce08fecc568f3628fc80d769509dffdf696b8e30492463ac21a39298dfc991a1
+      manifest_sha256: 5c7a96c1d29ad8126d3c5cdef1e6d2ec41ef3168d0c863b2d44285b6970badb8
+      file_count: 278
+      artifact_count: 82
+      source_archive_matches: true
+    backend-cr013:
+      source_path: .planning/milestones/M002/implementation/evidence/backend-cr013/source.json
+      source_sha256: c54307a04cecb3dd99cc13d64ae0fbcb6c1fca2c0538711af040d279bbe9b549
+      manifest_sha256: 13b5dccdeb84e1b958c0ac378b4add5ed4c6815e9024cc3cf0eb6fd19e99912d
+      file_count: 288
+      artifact_count: 31
+      source_archive_matches: true
+  frontend_checks:
+    browser_first:
+      pass: 25
+      test_sync_fail: 2
+    controls:
+      pass: 2
+    unique_passed: 27
+    unit_files: 29
+    unit_passed: 309
+    runtime: []
+  backend_checks:
+    passed_command_records: 7
+    logs:
+      red:
+        top_level_pass: 0
+        subtests_pass: 3
+        fail_count: 9
+      green:
+        top_level_pass: 1
+        subtests_pass: 11
+        fail_count: 0
+      integration-lifecycle:
+        top_level_pass: 7
+        subtests_pass: 17
+        fail_count: 0
+  qa06:
+    manifest_sha256: 34cf956eba83f77f2e515ea1f5be298faa149cb03fa844d850a5b4be1ff36db7
+    artifacts: 54
+    original_result:
+      status: FAIL
+      passed: 11
+      failed: 2
+      total: 13
+      failed_scenarios:
+      - L04
+      - G07
+      search_cr011: verified_pending_gate
+  open_change_requests_retained:
+  - M002-CR-001
+  - M002-CR-002
+  - M002-CR-012
+  - M002-CR-013
+  retained_open_items:
+  - id: CR039-L1
+    status: open
+    source: .planning/milestones/M001/changes/CR-039.md#retained-limitations
+  - id: CR042-L1
+    status: open
+    source: .planning/milestones/M001/verification/CR-042-generation-evidence.md#retained-limitations
+  - id: AI-QUALITY-90
+    status: unverified
+    source: .planning/milestones/M001/verification/ai-evaluation.md
+  stage_transition: true
+  independent_verification_passed: false
+  uat_passed: false
+  milestone_completed: false
+  specialist_artifacts_modified: false
+  profile_modified: false
+  real_model_calls_authorized: false
+  deployment_authorized: false
+  runtime_model_switch: not_performed
+- id: TRANSITION-M002-034
+  milestone: M002
+  timestamp: '2026-09-23T09:28:51.642674+00:00'
+  operation: recover-or-rollback
+  from: verification
+  to: implementation
+  previous_role: quality/base
+  previous_agent: qa-quinn
+  active_role: frontend-implementer/base
+  active_agent: frontend-claire
+  confirmed_by: user
+  decision_id: TRANSITION-M002-034
+  evidence: .planning/milestones/M002/reviews/verification-rework-034.md
+  kind: stage_rollback
+  authorization: 上一轮已展示按QA07限定关闭CR012/013、经守门将CR014焦点和CR015统计一并交前端修复后复验；用户于2026-09-23回复“下一步”，检查期间又回复“继续”，确认同一返工迁移。未新增需求或扩大范围。
+  scope: Return M002 to implementation and activate frontend-claire for CR-014 and CR-015 together; register both
+    and close CR-012/013 within QA07 independently verified scope. Preserve QA07 overall FAIL, remaining coverage,
+    prior scoped closures and all other open items. No UAT pass, deployment or new live AI evaluation.
+  current_handoff: .planning/milestones/M002/handoffs/verification.md
+  before_controls: .planning/milestones/M002/reviews/evidence/verification-rework-034/before-controls.tar.gz
+  source_checks:
+    frontend-cr012:
+      source_sha256: ce08fecc568f3628fc80d769509dffdf696b8e30492463ac21a39298dfc991a1
+      manifest_sha256: 5c7a96c1d29ad8126d3c5cdef1e6d2ec41ef3168d0c863b2d44285b6970badb8
+      file_count: 278
+      artifact_count: 82
+      source_archive_matches: true
+      current_sources_match: true
+    backend-cr013:
+      source_sha256: c54307a04cecb3dd99cc13d64ae0fbcb6c1fca2c0538711af040d279bbe9b549
+      manifest_sha256: 13b5dccdeb84e1b958c0ac378b4add5ed4c6815e9024cc3cf0eb6fd19e99912d
+      file_count: 288
+      artifact_count: 31
+      source_archive_matches: true
+      current_sources_match: true
+  qa07_evidence_preserved:
+    manifest_sha256: ae93ab837f2c975c73dcba367c18b55d93b4166e01461ec81e5d022a01411527
+    artifacts: 75
+    result:
+      status: FAIL
+      passed: 16
+      failed: 3
+      total: 19
+      failed_scenarios:
+      - J05
+      - J06
+      - J07
+      cr012: verified_pending_gate
+      cr013: verified_pending_gate
+      new_change_requests:
+      - M002-CR-014
+      - M002-CR-015
+  qa06_originals_recoverable:
+    manifest_sha256: 34cf956eba83f77f2e515ea1f5be298faa149cb03fa844d850a5b4be1ff36db7
+    artifacts: 54
+    recovered_from_qa07:
+    - .planning/milestones/M002/verification/report.md
+    - .planning/milestones/M002/verification/coverage-matrix.md
+    - .planning/milestones/M002/verification/ai-evaluation.md
+    - .planning/milestones/M002/verification/uat.md
+    - .planning/milestones/M002/handoffs/verification.md
+    - .planning/milestones/M002/changes/CR-012.md
+    - .planning/milestones/M002/changes/CR-013.md
+  change_requests_registered:
+  - M002-CR-014
+  - M002-CR-015
+  change_requests_closed:
+  - id: M002-CR-012
+    finding: QA2-F08
+    scope: 'QA07 J01-J04: explicit and browser-history detail return in two languages/four viewports preserves original
+      row focus/scroll, query and loaded range; direct navigation and title-change return. Does not close separate
+      search/load/participation focus or statistics findings.'
+    evidence: .planning/milestones/M002/verification/evidence/qa2-007/library-results.json
+  - id: M002-CR-013
+    finding: QA2-F09
+    scope: 'QA07 G07: four authenticated owned original-token nonvalid/abandoned save states return 409 state_conflict;
+      G01-G06 original accounting and G08-G09 save/404/deletion/410 boundaries. G09 uses backdated disposable persisted
+      draft times, not natural token expiry; no blanket shared-command acceptance.'
+    evidence: .planning/milestones/M002/verification/evidence/qa2-007/generation-results.json
+  change_requests_retained:
+  - M002-CR-001
+  - M002-CR-002
+  - M002-CR-014
+  - M002-CR-015
+  retained_open_items:
+  - id: CR039-L1
+    status: open
+    source: .planning/milestones/M001/changes/CR-039.md#retained-limitations
+  - id: CR042-L1
+    status: open
+    source: .planning/milestones/M001/verification/CR-042-generation-evidence.md#retained-limitations
+  - id: AI-QUALITY-90
+    status: unverified
+    source: .planning/milestones/M001/verification/ai-evaluation.md
+  prior_scoped_closures_preserved:
+  - decision_id: TRANSITION-M002-031
+    ids:
+    - M002-CR-011
+  - decision_id: TRANSITION-M002-029
+    ids:
+    - M002-CR-010
+  - decision_id: TRANSITION-M002-027
+    ids:
+    - M002-CR-009
+  - decision_id: TRANSITION-M002-025
+    ids:
+    - M002-CR-007
+    - M002-CR-008
+  - decision_id: TRANSITION-M002-022
+    ids:
+    - M002-CR-005
+    - M002-CR-006
+  stage_transition: true
+  independent_verification_passed: false
+  uat_passed: false
+  milestone_completed: false
+  specialist_artifacts_modified: false
+  profile_modified: false
+  real_model_calls_authorized: false
+  deployment_authorized: false
+  runtime_model_switch: not_performed
+- id: TRANSITION-M002-035
+  milestone: M002
+  timestamp: '2026-09-28T03:22:36.974608+00:00'
+  operation: transition-stage
+  from: implementation
+  to: verification
+  previous_role: frontend-implementer/base
+  previous_agent: frontend-claire
+  active_role: quality/base
+  active_agent: qa-quinn
+  confirmed_by: user
+  decision_id: TRANSITION-M002-035
+  evidence: .planning/milestones/M002/reviews/verification-reentry-035.md
+  kind: stage_transition
+  authorization: 上一轮已明确展示“下一步经守门交QA独立复验CR014/015，两项暂不关闭”；用户于2026-09-28回复“继续”，确认同一阶段迁移与角色目标。
+  scope: Accept the CR-014/015 frontend repairs for independent verification and return M002 to verification with
+    qa-quinn. Preserve both CRs OPEN, QA07 overall FAIL, remaining coverage, CR012/013 scoped closures and all other
+    open items. No quality/UAT pass, deployment or new live AI evaluation.
+  current_handoff: .planning/milestones/M002/handoffs/frontend-implementation.md
+  before_controls: .planning/milestones/M002/reviews/evidence/verification-reentry-035/before-controls.tar.gz
+  source_checks:
+    frontend-cr014-015:
+      source_sha256: 83260ed1472683df3d547d366cddd31262c7bb7e0eb3ad3c9d74914bb9aa78b1
+      manifest_sha256: ac8b106583031abbef219d81ebf331308f7bad04ea83b98af13b8650534c37f7
+      file_count: 280
+      artifact_count: 69
+      source_archive_matches: true
+      current_sources_match: true
+    backend-cr013:
+      source_sha256: c54307a04cecb3dd99cc13d64ae0fbcb6c1fca2c0538711af040d279bbe9b549
+      manifest_sha256: 13b5dccdeb84e1b958c0ac378b4add5ed4c6815e9024cc3cf0eb6fd19e99912d
+      file_count: 288
+      artifact_count: 31
+      source_archive_matches: true
+      current_sources_match: true
+  frontend_checks:
+    unit_files: 30
+    unit_passed: 317
+    browser_passed: 21
+    axe_violations: 0
+    expected_fault_console_errors: 3
+    commands:
+    - command: pnpm --dir frontend typecheck
+      exit_code: 0
+      log: typecheck.log
+    - command: pnpm --dir frontend lint
+      exit_code: 0
+      log: lint.log
+    - command: pnpm --dir frontend format:check
+      exit_code: 0
+      log: format-check.log
+    - command: pnpm --dir frontend lint:boundaries
+      exit_code: 0
+      log: lint-boundaries.log
+    - command: pnpm --dir frontend test
+      exit_code: 0
+      log: test.log
+    build_exit_code: 0
+  qa07:
+    manifest_sha256: ae93ab837f2c975c73dcba367c18b55d93b4166e01461ec81e5d022a01411527
+    artifact_count: 75
+    result:
+      status: FAIL
+      passed: 16
+      failed: 3
+      total: 19
+      failed_scenarios:
+      - J05
+      - J06
+      - J07
+      cr012: verified_pending_gate
+      cr013: verified_pending_gate
+      new_change_requests:
+      - M002-CR-014
+      - M002-CR-015
+  open_change_requests_retained:
+  - M002-CR-001
+  - M002-CR-002
+  - M002-CR-014
+  - M002-CR-015
+  retained_open_items:
+  - id: CR039-L1
+    status: open
+    source: .planning/milestones/M001/changes/CR-039.md#retained-limitations
+  - id: CR042-L1
+    status: open
+    source: .planning/milestones/M001/verification/CR-042-generation-evidence.md#retained-limitations
+  - id: AI-QUALITY-90
+    status: unverified
+    source: .planning/milestones/M001/verification/ai-evaluation.md
+  prior_scoped_closures_preserved:
+    decision_id: TRANSITION-M002-034
+    ids:
+    - M002-CR-012
+    - M002-CR-013
+    earlier_closures: unchanged
+  stage_transition: true
+  independent_verification_passed: false
+  uat_passed: false
+  milestone_completed: false
+  specialist_artifacts_modified: false
+  profile_modified: false
+  real_model_calls_authorized: false
+  deployment_authorized: false
+  runtime_model_switch: not_performed
+- id: APPROVAL-M002-036
+  milestone: M002
+  timestamp: '2026-09-28T03:46:28.383954+00:00'
+  operation: artifact-approval
+  kind: scoped_verification_acceptance
+  from: verification
+  to: verification
+  active_role: quality/base
+  active_agent: qa-quinn
+  recorded_by: gatekeeper-owen
+  confirmed_by: user
+  evidence: .planning/milestones/M002/reviews/verification-acceptance-036.md
+  authorization: 上轮明确提出正式关闭CR014/015并继续质量验证，用户本轮回复“下一步”；同一目标与范围已授权，不重复确认。
+  scope: Accept QA08 only for scoped closure of CR014/015 and continue existing independent verification with qa-quinn.
+    Preserve verification stage, all remaining coverage, CR001/002 and retained limitations; no milestone/UAT acceptance,
+    deployment or new live AI evaluation.
+  current_handoff: .planning/milestones/M002/handoffs/verification.md
+  before_controls: .planning/milestones/M002/reviews/evidence/verification-acceptance-036/before-controls.tar.gz
+  source_checks:
+    frontend-cr014-015:
+      files: 280
+      matches: true
+      source_sha256: 83260ed1472683df3d547d366cddd31262c7bb7e0eb3ad3c9d74914bb9aa78b1
+      manifest_sha256: ac8b106583031abbef219d81ebf331308f7bad04ea83b98af13b8650534c37f7
+      matches_after: true
+      artifact_count: 69
+      source_archive_matches: true
+    backend-cr013:
+      files: 288
+      matches: true
+      source_sha256: c54307a04cecb3dd99cc13d64ae0fbcb6c1fca2c0538711af040d279bbe9b549
+      manifest_sha256: 13b5dccdeb84e1b958c0ac378b4add5ed4c6815e9024cc3cf0eb6fd19e99912d
+      matches_after: true
+      artifact_count: 31
+      source_archive_matches: true
+  qa08:
+    manifest_sha256: 3cdfd5e5731b706833c01cc8cb46265d74b3f9659ebeab5d60bddc99879af745
+    artifact_count: 63
+    result:
+      status: scoped_reverification_passed_remaining_coverage
+      passed: 15
+      failed: 0
+      total: 15
+      original_library:
+        passed: 9
+        failed: 1
+        unresolved: 0
+        transient_case: K10
+        retained: library-results.json / axe.json / K10-failure.png
+        control: contrast-repro.json / library-controls.json
+      cr014: verified_pending_gate
+      cr015: verified_pending_gate
+      new_change_requests: []
+    coverage_index:
+      CAP: 49
+      PAGE: 25
+      views: 28
+      UIA: 119
+    raw_failure_preserved: true
+    control_scans: 6
+  closed_change_requests:
+  - id: M002-CR-014
+    scope: QA08 K01–03 original operation focus/visibility; K04–09 related regression
+  - id: M002-CR-015
+    scope: QA08 K03/05–08 whole-library participation summary; B01 future date preview/fixed snapshot
+  open_change_requests_retained:
+  - M002-CR-001
+  - M002-CR-002
+  retained_open_items:
+  - id: CR039-L1
+    status: open
+    source: .planning/milestones/M001/changes/CR-039.md#retained-limitations
+  - id: CR042-L1
+    status: open
+    source: .planning/milestones/M001/verification/CR-042-generation-evidence.md#retained-limitations
+  - id: AI-QUALITY-90
+    status: unverified
+    source: .planning/milestones/M001/verification/ai-evaluation.md
+  prior_scoped_closures_preserved: CR012/013 via034 and earlier closures unchanged
+  stage_transition: false
+  role_change: false
+  scoped_independent_verification_accepted: true
+  whole_milestone_verification_passed: false
+  uat_passed: false
+  milestone_completed: false
+  specialist_artifacts_modified: false
+  profile_modified: false
+  real_model_calls_authorized: false
+  deployment_authorized: false
+  runtime_model_switch: not_performed
+- milestone: M002
+  timestamp: '2026-09-28T07:02:01.347887+00:00'
+  operation: recover-or-rollback
+  from: verification
+  to: implementation
+  previous_role: quality/base
+  previous_agent: qa-quinn
+  active_role: frontend-implementer/base
+  active_agent: frontend-claire
+  confirmed_by: user
+  decision_id: TRANSITION-M002-037
+  evidence: .planning/milestones/M002/reviews/verification-rework-037.md
+  kind: stage_rollback
+  scope:
+  - M002-CR-016
+  source_handoff: .planning/milestones/M002/handoffs/verification.md
+  qa12:
+    result: FAIL
+    manifest_sha256: 9d267c145abcd610b00d1c7477bd51f8a65c05a71b9e926c7d2fb29a36e3b841
+    artifact_count: 110
+    findings:
+    - QA2-F12
+    - QA2-F13
+    raw_results_preserved: true
+  registered_change_requests:
+  - M002-CR-016
+  closed_change_requests: []
+  open_change_requests_retained:
+  - M002-CR-001
+  - M002-CR-002
+  retained_open_items:
+  - id: CR039-L1
+    status: open
+    source: .planning/milestones/M001/changes/CR-039.md#retained-limitations
+  - id: CR042-L1
+    status: open
+    source: .planning/milestones/M001/verification/CR-042-generation-evidence.md#retained-limitations
+  - id: AI-QUALITY-90
+    status: unverified
+    source: .planning/milestones/M001/verification/ai-evaluation.md
+  prior_scoped_closures_preserved: true
+  whole_milestone_verification_passed: false
+  uat_passed: false
+  milestone_completed: false
+  specialist_artifacts_modified: false
+  profile_modified: false
+  real_model_calls_authorized: false
+  deployment_authorized: false
+  runtime_model_switch: not_performed
+- milestone: M002
+  timestamp: '2026-09-28T07:29:02.616938+00:00'
+  operation: transition-stage
+  from: implementation
+  to: verification
+  previous_role: frontend-implementer/base
+  previous_agent: frontend-claire
+  active_role: quality/base
+  active_agent: qa-quinn
+  confirmed_by: user
+  decision_id: TRANSITION-M002-038
+  evidence: .planning/milestones/M002/reviews/verification-reentry-038.md
+  kind: stage_transition
+  source_handoff: .planning/milestones/M002/handoffs/frontend-implementation.md
+  scope:
+  - M002-CR-016
+  - FE2-R16-W1 independent confirmation
+  - existing verification coverage
+  frontend:
+    manifest: .planning/milestones/M002/implementation/evidence/frontend-cr016/manifest.json
+    sha256: c9a23d94af88574a30b0dfa3e4c944adfbe3d4c742ea0c632bf9e973238457f2
+    artifacts: 92
+    matches: true
+    source_files: 281
+    archive_matches: true
+    source_sha256: 5731ba5406b2bf28172e00318af8e471d13c286ce0af77ae8f224abb3306a529
+  backend:
+    manifest: .planning/milestones/M002/implementation/evidence/backend-cr013/manifest.json
+    sha256: 13b5dccdeb84e1b958c0ac378b4add5ed4c6815e9024cc3cf0eb6fd19e99912d
+    artifacts: 31
+    matches: true
+    source_files: 288
+    archive_matches: true
+    source_sha256: c54307a04cecb3dd99cc13d64ae0fbcb6c1fca2c0538711af040d279bbe9b549
+  qa12_preserved:
+    manifest: .planning/milestones/M002/verification/evidence/qa2-012/manifest.json
+    sha256: 9d267c145abcd610b00d1c7477bd51f8a65c05a71b9e926c7d2fb29a36e3b841
+    artifacts: 110
+    matches: true
+  closed_change_requests: []
+  open_change_requests_retained:
+  - M002-CR-001
+  - M002-CR-002
+  - M002-CR-016
+  retained_open_items:
+  - id: CR039-L1
+    status: open
+    source: .planning/milestones/M001/changes/CR-039.md#retained-limitations
+  - id: CR042-L1
+    status: open
+    source: .planning/milestones/M001/verification/CR-042-generation-evidence.md#retained-limitations
+  - id: AI-QUALITY-90
+    status: unverified
+    source: .planning/milestones/M001/verification/ai-evaluation.md
+  - id: FE2-R16-W1
+    status: unverified
+    source: .planning/milestones/M002/implementation/frontend-validation.md#cr016
+  prior_scoped_closures_preserved: true
+  whole_milestone_verification_passed: false
+  uat_passed: false
+  milestone_completed: false
+  specialist_artifacts_modified: false
+  profile_modified: false
+  real_model_calls_authorized: false
+  deployment_authorized: false
+  runtime_model_switch: not_performed
+- milestone: M002
+  timestamp: '2026-09-28T07:47:53.852987+00:00'
+  operation: recover-or-rollback
+  from: verification
+  to: implementation
+  previous_role: quality/base
+  previous_agent: qa-quinn
+  active_role: frontend-implementer/base
+  active_agent: frontend-claire
+  confirmed_by: user
+  decision_id: TRANSITION-M002-039
+  evidence: .planning/milestones/M002/reviews/verification-rework-039.md
+  kind: stage_rollback
+  recorded_by: gatekeeper-owen
+  authorization: 用户对上一轮明确提出的CR016 F12/F13限定关闭并交frontend-claire修复CR017/018回复下一步。
+  scope:
+  - M002-CR-017
+  - M002-CR-018
+  source_handoff: .planning/milestones/M002/handoffs/verification.md
+  before_controls: .planning/milestones/M002/reviews/evidence/verification-rework-039/before-controls.tar.gz
+  source_checks:
+    frontend-cr016:
+      manifest: .planning/milestones/M002/implementation/evidence/frontend-cr016/manifest.json
+      manifest_sha256: c9a23d94af88574a30b0dfa3e4c944adfbe3d4c742ea0c632bf9e973238457f2
+      artifact_count: 92
+      artifacts_match: true
+      source_files: 281
+      source_sha256: 5731ba5406b2bf28172e00318af8e471d13c286ce0af77ae8f224abb3306a529
+      source_archive_matches: true
+    backend-cr013:
+      manifest: .planning/milestones/M002/implementation/evidence/backend-cr013/manifest.json
+      manifest_sha256: 13b5dccdeb84e1b958c0ac378b4add5ed4c6815e9024cc3cf0eb6fd19e99912d
+      artifact_count: 31
+      artifacts_match: true
+      source_files: 288
+      source_sha256: c54307a04cecb3dd99cc13d64ae0fbcb6c1fca2c0538711af040d279bbe9b549
+      source_archive_matches: true
+  qa13:
+    overall: FAIL
+    accepted_cases: 13
+    counts:
+      pass: 10
+      fail: 3
+    manifest_sha256: 3691be754238b7fea94c0467a926274aa58e07cfc412399c241eafae1be435eb
+    artifact_count: 59
+    coverage_counts:
+      CAP: 49
+      PAGE: 25
+      views: 28
+      UIA: 119
+    raw_results_preserved: true
+  closed_change_requests:
+  - id: M002-CR-016
+    scope: QA2-F12/F13 only; seven QA13 title failure focus, identity invalidation and related cancel/blank/conflict/delete
+      checks
+    evidence: .planning/milestones/M002/verification/evidence/qa2-013/assessment.json
+    cases:
+    - chromium-en-R01
+    - chromium-en-R02
+    - chromium-en-R03
+    - chromium-en-R04
+    - webkit-zh-R01
+    - webkit-zh-R02
+    - webkit-zh-R03
+  registered_change_requests:
+  - M002-CR-017
+  - M002-CR-018
+  open_change_requests_retained:
+  - M002-CR-001
+  - M002-CR-002
+  retained_open_items:
+  - id: CR039-L1
+    status: open
+    source: .planning/milestones/M001/changes/CR-039.md#retained-limitations
+  - id: CR042-L1
+    status: open
+    source: .planning/milestones/M001/verification/CR-042-generation-evidence.md#retained-limitations
+  - id: AI-QUALITY-90
+    status: unverified
+    source: .planning/milestones/M001/verification/ai-evaluation.md
+  - id: FE2-R16-W1
+    status: open
+    source: .planning/milestones/M002/changes/CR-017.md
+  observation_routing:
+    id: FE2-R16-W1
+    status: confirmed_open
+    change_request: M002-CR-017
+    historical_W01_merged: false
+  prior_scoped_closures_preserved: true
+  scoped_independent_verification_accepted: true
+  whole_milestone_verification_passed: false
+  uat_passed: false
+  milestone_completed: false
+  specialist_artifacts_modified: false
+  profile_modified: false
+  real_model_calls_authorized: false
+  deployment_authorized: false
+  runtime_model_switch: not_performed
+- milestone: M002
+  timestamp: '2026-09-28T08:06:02.436474+00:00'
+  operation: transition-stage
+  from: implementation
+  to: verification
+  previous_role: frontend-implementer/base
+  previous_agent: frontend-claire
+  active_role: quality/base
+  active_agent: qa-quinn
+  confirmed_by: user
+  decision_id: TRANSITION-M002-040
+  evidence: .planning/milestones/M002/reviews/verification-reentry-040.md
+  kind: stage_transition
+  recorded_by: gatekeeper-owen
+  authorization: 上一轮明确提出交QA独立复验两项、CR暂未关闭，用户本轮回复下一步；同一目标不重复请求批准。
+  scope:
+  - M002-CR-017
+  - M002-CR-018
+  - related title regression and remaining verification coverage
+  source_handoff: .planning/milestones/M002/handoffs/frontend-implementation.md
+  before_controls: .planning/milestones/M002/reviews/evidence/verification-reentry-040/before-controls.tar.gz
+  source_checks:
+    frontend-cr017-018:
+      manifest: .planning/milestones/M002/implementation/evidence/frontend-cr017-018/manifest.json
+      manifest_sha256: 57719c596d4f21c4df3b544862c65bc50acebb3363f30d872f5a0a0a2ed0794c
+      artifact_count: 102
+      artifacts_match: true
+      source_files: 282
+      source_sha256: e8bd3285a0292218d8e1108a47e39e1eb8550d928867a01e25428c023f009775
+      source_archive_matches: true
+    backend-cr013:
+      manifest: .planning/milestones/M002/implementation/evidence/backend-cr013/manifest.json
+      manifest_sha256: 13b5dccdeb84e1b958c0ac378b4add5ed4c6815e9024cc3cf0eb6fd19e99912d
+      artifact_count: 31
+      artifacts_match: true
+      source_files: 288
+      source_sha256: c54307a04cecb3dd99cc13d64ae0fbcb6c1fca2c0538711af040d279bbe9b549
+      source_archive_matches: true
+  frontend_evidence:
+    assessment: .planning/milestones/M002/implementation/evidence/frontend-cr017-018/assessment.json
+    accepted_cases: 27
+    counts:
+      pass: 27
+      fail: 0
+    core_checks: 13
+    shared_checks: 14
+    developer_checks:
+    - command: pnpm --dir frontend typecheck
+      exit_code: 0
+      log: typecheck.log
+    - command: pnpm --dir frontend lint
+      exit_code: 0
+      log: lint.log
+    - command: pnpm --dir frontend format:check
+      exit_code: 0
+      log: format-check.log
+    - command: pnpm --dir frontend lint:boundaries
+      exit_code: 0
+      log: lint-boundaries.log
+    - command: pnpm --dir frontend test
+      exit_code: 0
+      log: test.log
+    unit_count: 333
+    unit_files: 32
+    compiled_files: 444
+    compiled_matches: true
+    raw_failures_preserved:
+    - 'browser/shared-results.json: 8 PASS / 6 FAIL (fixture/query)'
+    - 'shared-control/shared-results.json: 4 PASS / 2 FAIL (growth activation missing)'
+    - 'browser/shared-tests.log: immutable issued-definition deletion rejected'
+    fixture_diagnosis: Title-only DB had no level1, growth activation or check-in rules; blank /admin/users intentionally
+      does not search. Added configured baseline and all=1 in test control; no product change or warning filter. Transient
+      fixtures removed; issued definitions remain unlisted in disposable DB.
+    local_provider_calls: 1
+    real_provider_calls: 0
+  qa13_preserved:
+    manifest: .planning/milestones/M002/verification/evidence/qa2-013/manifest.json
+    manifest_sha256: 3691be754238b7fea94c0467a926274aa58e07cfc412399c241eafae1be435eb
+    artifact_count: 59
+    matches: true
+    overall: FAIL
+    coverage_counts:
+      CAP: 49
+      PAGE: 25
+      views: 28
+      UIA: 119
+  closed_change_requests: []
+  open_change_requests_retained:
+  - M002-CR-001
+  - M002-CR-002
+  - M002-CR-017
+  - M002-CR-018
+  retained_open_items:
+  - id: CR039-L1
+    status: open
+    source: .planning/milestones/M001/changes/CR-039.md#retained-limitations
+  - id: CR042-L1
+    status: open
+    source: .planning/milestones/M001/verification/CR-042-generation-evidence.md#retained-limitations
+  - id: AI-QUALITY-90
+    status: unverified
+    source: .planning/milestones/M001/verification/ai-evaluation.md
+  - id: FE2-R16-W1
+    status: open
+    source: .planning/milestones/M002/changes/CR-017.md
+  prior_scoped_closures_preserved: true
+  whole_milestone_verification_passed: false
+  uat_passed: false
+  milestone_completed: false
+  specialist_artifacts_modified: false
+  profile_modified: false
+  real_model_calls_authorized: false
+  deployment_authorized: false
+  runtime_model_switch: not_performed
+- id: APPROVAL-M002-041
+  milestone: M002
+  timestamp: '2026-09-28T08:26:47.205182+00:00'
+  operation: artifact-approval
+  kind: scoped_verification_acceptance
+  from: verification
+  to: verification
+  active_role: quality/base
+  active_agent: qa-quinn
+  recorded_by: gatekeeper-owen
+  confirmed_by: user
+  evidence: .planning/milestones/M002/reviews/verification-acceptance-041.md
+  authorization: 上轮已明确按QA14范围关闭CR017/018并继续验证，本轮用户回复“下一步”；同一目标已授权，不重复询问。
+  scope: Accept QA14 only for scoped closure of CR017/F14 and CR018/F15, close associated FE2-R16-W1 through
+    CR017, and continue existing verification with qa-quinn. Preserve CR001/002, prior scoped closures,
+    all remaining coverage and limitations; no whole-milestone/UAT acceptance, deployment or new live
+    AI evaluation.
+  current_handoff: .planning/milestones/M002/handoffs/verification.md
+  before_controls: .planning/milestones/M002/reviews/evidence/verification-acceptance-041/before-controls.tar.gz
+  source_checks:
+    frontend-cr017-018:
+      manifest: .planning/milestones/M002/implementation/evidence/frontend-cr017-018/manifest.json
+      manifest_sha256: 57719c596d4f21c4df3b544862c65bc50acebb3363f30d872f5a0a0a2ed0794c
+      artifact_count: 102
+      source_files: 282
+      source_sha256: e8bd3285a0292218d8e1108a47e39e1eb8550d928867a01e25428c023f009775
+      source_archive_matches: true
+    backend-cr013:
+      manifest: .planning/milestones/M002/implementation/evidence/backend-cr013/manifest.json
+      manifest_sha256: 13b5dccdeb84e1b958c0ac378b4add5ed4c6815e9024cc3cf0eb6fd19e99912d
+      artifact_count: 31
+      source_files: 288
+      source_sha256: c54307a04cecb3dd99cc13d64ae0fbcb6c1fca2c0538711af040d279bbe9b549
+      source_archive_matches: true
+  qa14:
+    manifest: .planning/milestones/M002/verification/evidence/qa2-014/manifest.json
+    manifest_sha256: b0331baf700a4cc58727769a2df0055d30b87b8d4dd4eca7b261a81e84ab04a5
+    artifacts: 43
+    checks: 21
+    passed: 21
+    failed: 0
+    matches: true
+  compiled_files_matched: 444
+  qa13_preserved:
+    manifest_sha256: 3691be754238b7fea94c0467a926274aa58e07cfc412399c241eafae1be435eb
+    original_documents_archived: 5
+    remaining_artifacts_unchanged: 54
+    original_result: FAIL
+  coverage_counts:
+    CAP: 49
+    PAGE: 25
+    views: 28
+    UIA: 119
+  closed_change_requests:
+  - id: M002-CR-017
+    scope: QA2-F14 English WebKit SSR hydration; affected shared dateTime representative regressions
+  - id: M002-CR-018
+    scope: QA2-F15 exact bilingual ordinary title failure copy
+  closed_observations:
+  - id: FE2-R16-W1
+    via: M002-CR-017
+    scope: QA2-F14 only; not historical personal-page W01
+  open_change_requests_retained:
+  - M002-CR-001
+  - M002-CR-002
+  retained_open_items:
+  - id: CR039-L1
+    status: open
+    source: .planning/milestones/M001/changes/CR-039.md#retained-limitations
+  - id: CR042-L1
+    status: open
+    source: .planning/milestones/M001/verification/CR-042-generation-evidence.md#retained-limitations
+  - id: AI-QUALITY-90
+    status: unverified
+    source: .planning/milestones/M001/verification/ai-evaluation.md
+  historical_W01: unlocated; unchanged
+  prior_scoped_closures_preserved: true
+  last_stage_transition_preserved: TRANSITION-M002-040
+  whole_milestone_verification_passed: false
+  uat_passed: false
+  milestone_completed: false
+  specialist_artifacts_modified: false
+  profile_modified: false
+  new_qa_executed: false
+  real_model_calls_authorized: false
+  deployment_authorized: false
+  runtime_model_switch: not_performed
+- milestone: M002
+  timestamp: '2026-09-28T08:47:43.220059+00:00'
+  operation: recover-or-rollback
+  from: verification
+  to: implementation
+  previous_role: quality/base
+  previous_agent: qa-quinn
+  active_role: frontend-implementer/base
+  active_agent: frontend-claire
+  confirmed_by: user
+  decision_id: TRANSITION-M002-042
+  evidence: .planning/milestones/M002/reviews/verification-rework-042.md
+  kind: stage_rollback
+  recorded_by: gatekeeper-owen
+  authorization: 用户对已展示的CR001限定关闭、登记CR019并交frontend-claire单点修复、保留CR002开放的目标回复“下一步”；同一授权无需重复确认。
+  scope: Close CR001 only within original inheritance baseline and downstream reception scope; register
+    CR019/QA2-F16 and return M002 to implementation/frontend-claire for the title-edit pencil icon only.
+    Retain CR002 OPEN, QA15 overall FAIL, prior scoped closures, remaining coverage and limitations. No
+    UAT acceptance, milestone completion, deployment or new live AI evaluation.
+  source_handoff: .planning/milestones/M002/handoffs/verification.md
+  before_controls: .planning/milestones/M002/reviews/evidence/verification-rework-042/before-controls.tar.gz
+  source_checks:
+    frontend-cr017-018:
+      manifest: .planning/milestones/M002/implementation/evidence/frontend-cr017-018/manifest.json
+      manifest_sha256: 57719c596d4f21c4df3b544862c65bc50acebb3363f30d872f5a0a0a2ed0794c
+      artifact_count: 102
+      source_files: 282
+      source_sha256: e8bd3285a0292218d8e1108a47e39e1eb8550d928867a01e25428c023f009775
+      source_archive_matches: true
+    backend-cr013:
+      manifest: .planning/milestones/M002/implementation/evidence/backend-cr013/manifest.json
+      manifest_sha256: 13b5dccdeb84e1b958c0ac378b4add5ed4c6815e9024cc3cf0eb6fd19e99912d
+      artifact_count: 31
+      source_files: 288
+      source_sha256: c54307a04cecb3dd99cc13d64ae0fbcb6c1fca2c0538711af040d279bbe9b549
+      source_archive_matches: true
+  qa15:
+    manifest: .planning/milestones/M002/verification/evidence/qa2-015/manifest.json
+    manifest_sha256: 4551281c6fc4ad61d7468527a68f59c20069cc9ba570a7e8c4b84ec7238f0c97
+    artifacts: 171
+    accepted_checks: 9
+    passed: 8
+    failed: 1
+    result: FAIL_TITLE_EDIT_ICON_FIDELITY
+    accepted_runtime_cases:
+    - id: UI15-zh-360
+      result: PASS
+      source: control/results.json
+    - id: UI15-zh-390
+      result: PASS
+      source: final-control/results.json
+    - id: UI15-zh-768
+      result: PASS
+      source: control/results.json
+    - id: UI15-zh-1440
+      result: PASS
+      source: confirmed-control/results.json
+    - id: UI15-en-360
+      result: PASS
+      source: control/results.json
+    - id: UI15-en-390
+      result: PASS
+      source: final-control/results.json
+    - id: UI15-en-768
+      result: PASS
+      source: control/results.json
+    - id: UI15-en-1440
+      result: PASS
+      source: confirmed-control/results.json
+    I01_method: manual visual and source comparison; no new live DOM count
+    raw_failures_preserved: true
+  inheritance:
+    count: 29
+    historical_evidence_hashes_verified: 19
+    scope: CR001 inheritance baseline and downstream reception only
+    new_runtime_count: 0
+  compiled_files_matched: 444
+  qa14_preserved:
+    manifest_sha256: b0331baf700a4cc58727769a2df0055d30b87b8d4dd4eca7b261a81e84ab04a5
+    original_documents_archived: 5
+    remaining_artifacts_unchanged: 38
+  coverage_counts:
+    capabilities: 49
+    pages: 25
+    views: 28
+    ui_acceptance: 119
+  closed_change_requests:
+  - id: M002-CR-001
+    scope: Original 29-capability inheritance baseline and downstream reception only; not whole M002 verification
+    evidence: .planning/milestones/M002/verification/evidence/qa2-015/audit.json
+  registered_change_requests:
+  - M002-CR-019
+  open_change_requests_retained:
+  - M002-CR-002
+  retained_open_items:
+  - id: CR039-L1
+    status: open
+    source: .planning/milestones/M001/changes/CR-039.md#retained-limitations
+  - id: CR042-L1
+    status: open
+    source: .planning/milestones/M001/verification/CR-042-generation-evidence.md#retained-limitations
+  - id: AI-QUALITY-90
+    status: unverified
+    source: .planning/milestones/M001/verification/ai-evaluation.md
+  historical_W01: unlocated; unchanged
+  prior_scoped_closures_preserved: true
+  whole_milestone_verification_passed: false
+  uat_passed: false
+  milestone_completed: false
+  specialist_artifacts_modified: false
+  profile_modified: false
+  new_qa_executed: false
+  real_model_calls_authorized: false
+  deployment_authorized: false
+  runtime_model_switch: not_performed
+- milestone: M002
+  timestamp: '2026-09-28T08:59:38.728380+00:00'
+  operation: transition-stage
+  from: implementation
+  to: verification
+  previous_role: frontend-implementer/base
+  previous_agent: frontend-claire
+  active_role: quality/base
+  active_agent: qa-quinn
+  confirmed_by: user
+  decision_id: TRANSITION-M002-043
+  evidence: .planning/milestones/M002/reviews/verification-reentry-043.md
+  kind: stage_transition
+  recorded_by: gatekeeper-owen
+  authorization: User replied 下一步 to explicitly proposed qa-quinn independent retest of CR019 then CR019/CR002
+    closure assessment; same target and scope.
+  scope: Accept the CR019 frontend repair for independent verification and return M002 to verification
+    with qa-quinn. Retain CR002/019 OPEN, QA15 overall FAIL, CR001 scoped closure via042, all prior scoped
+    closures, remaining coverage and limitations. No quality/UAT acceptance, milestone completion, deployment
+    or new live AI evaluation.
+  source_handoff: .planning/milestones/M002/handoffs/frontend-implementation.md
+  before_controls: .planning/milestones/M002/reviews/evidence/verification-reentry-043/before-controls.tar.gz
+  source_checks:
+    frontend-cr019:
+      manifest: .planning/milestones/M002/implementation/evidence/frontend-cr019/manifest.json
+      manifest_sha256: 1ec32b0724b215931c8c6c90970eeb509787cd18b77868126fbb3125b258e8c1
+      artifact_count: 46
+      source_manifest_sha256: bae79f818dfbd09d4675f121bbbeee062e8abd6737d894200737a4ce52d98af5
+      source_files: 282
+      archive_matches: true
+    backend-cr013:
+      manifest: .planning/milestones/M002/implementation/evidence/backend-cr013/manifest.json
+      manifest_sha256: 13b5dccdeb84e1b958c0ac378b4add5ed4c6815e9024cc3cf0eb6fd19e99912d
+      artifact_count: 31
+      source_manifest_sha256: c54307a04cecb3dd99cc13d64ae0fbcb6c1fca2c0538711af040d279bbe9b549
+      source_files: 288
+      archive_matches: true
+  compiled_files_matched: 444
+  developer_browser_evidence:
+    pass: 8
+    fail: 0
+    runtime_events: 0
+    environment: production Nuxt + contract mock + UI22 prototype; not independent QA
+  qa15_preserved:
+    manifest_sha256: 4551281c6fc4ad61d7468527a68f59c20069cc9ba570a7e8c4b84ec7238f0c97
+    artifacts: 171
+    result_preserved: FAIL_TITLE_EDIT_ICON_FIDELITY
+  open_change_requests_retained:
+  - M002-CR-002
+  - M002-CR-019
+  retained_open_items:
+  - id: CR039-L1
+    status: open
+    source: .planning/milestones/M001/changes/CR-039.md#retained-limitations
+  - id: CR042-L1
+    status: open
+    source: .planning/milestones/M001/verification/CR-042-generation-evidence.md#retained-limitations
+  - id: AI-QUALITY-90
+    status: unverified
+    source: .planning/milestones/M001/verification/ai-evaluation.md
+  prior_scoped_closures_preserved: true
+  historical_W01: unlocated; unchanged
+  whole_milestone_verification_passed: false
+  uat_passed: false
+  milestone_completed: false
+  specialist_artifacts_modified: false
+  profile_modified: false
+  developer_or_qa_tests_rerun: false
+  real_model_calls_authorized: false
+  deployment_authorized: false
+  runtime_model_switch: not_performed
+- id: APPROVAL-M002-044
+  milestone: M002
+  timestamp: '2026-09-28T09:09:32.772123+00:00'
+  operation: artifact-approval
+  kind: scoped_verification_acceptance
+  from: verification
+  to: verification
+  active_role: quality/base
+  active_agent: qa-quinn
+  recorded_by: gatekeeper-owen
+  confirmed_by: user
+  evidence: .planning/milestones/M002/reviews/verification-acceptance-044.md
+  authorization: User replied 下一步 to already presented scoped closure of CR019/CR002 and continued verification;
+    no new stage or role change.
+  scope: Accept QA16 for scoped closure of CR019/QA2-F16 title-edit pencil fidelity and CR002 original
+    private batch title editing plus single preset title/removal-of-description requirements. Continue
+    verification with qa-quinn; preserve remaining coverage, prior scoped closures and limitations. No
+    whole-milestone/UAT acceptance, deployment or new live AI evaluation.
+  current_handoff: .planning/milestones/M002/handoffs/verification.md
+  before_controls: .planning/milestones/M002/reviews/evidence/verification-acceptance-044/before-controls.tar.gz
+  qa16:
+    manifest_sha256: 5b18d21726da0533d2c8904bc9c9eb605e97d2b7cd20027bf7aeb4e0a1f8f14a
+    artifact_count: 45
+    accepted_checks: 4
+    pass: 4
+    fail: 0
+    raw_initial_failures: 4
+    raw_failures_preserved: true
+    regional_axe_scans: 8
+    runtime_events: 0
+    result: PASS_SCOPED_RETEST_REMAINING_COVERAGE
+    environment: production Nuxt + contract mock; real backend evidence reused with source continuity
+  title_audit:
+    facets: 12
+    reused: 11
+    new_icon: 1
+    historical_hashes_verified: 19
+    scope: Original CR002 title edit and preset single-title/removal-of-description only; CR019 I01/F16
+      title pencil only
+  source_checks:
+    frontend:
+      version: frontend-cr019
+      source_files: 282
+      source_manifest_sha256: bae79f818dfbd09d4675f121bbbeee062e8abd6737d894200737a4ce52d98af5
+      manifest_sha256: 1ec32b0724b215931c8c6c90970eeb509787cd18b77868126fbb3125b258e8c1
+      artifact_count: 46
+      archive_matches: true
+    backend:
+      version: backend-cr013
+      source_files: 288
+      source_manifest_sha256: c54307a04cecb3dd99cc13d64ae0fbcb6c1fca2c0538711af040d279bbe9b549
+      manifest_sha256: 13b5dccdeb84e1b958c0ac378b4add5ed4c6815e9024cc3cf0eb6fd19e99912d
+      artifact_count: 31
+      archive_matches: true
+  compiled_files_matched: 444
+  qa15_preserved:
+    manifest_sha256: 4551281c6fc4ad61d7468527a68f59c20069cc9ba570a7e8c4b84ec7238f0c97
+    original_documents_archived: 5
+    other_artifacts_unchanged: 166
+    result_preserved: FAIL_TITLE_EDIT_ICON_FIDELITY
+  coverage_counts:
+    CAP: 49
+    PAGE: 25
+    views: 28
+    UIA: 119
+  closed_change_requests:
+  - id: M002-CR-019
+    scope: QA2-F16/I01 title-edit pencil and direct interaction fidelity only
+  - id: M002-CR-002
+    scope: Original private batch editable title plus preset single-title/removal-of-description only;
+      not full CAP218/PAGE006 or milestone acceptance
+  open_change_requests_retained: []
+  retained_open_items:
+  - id: CR039-L1
+    status: open
+    source: .planning/milestones/M001/changes/CR-039.md#retained-limitations
+  - id: CR042-L1
+    status: open
+    source: .planning/milestones/M001/verification/CR-042-generation-evidence.md#retained-limitations
+  - id: AI-QUALITY-90
+    status: unverified
+    source: .planning/milestones/M001/verification/ai-evaluation.md
+  historical_W01: unlocated; unchanged
+  prior_scoped_closures_preserved: true
+  last_stage_transition_preserved: TRANSITION-M002-043
+  whole_milestone_verification_passed: false
+  uat_passed: false
+  milestone_completed: false
+  specialist_artifacts_modified: false
+  profile_modified: false
+  developer_or_qa_tests_rerun: false
+  real_model_calls_authorized: false
+  deployment_authorized: false
+  runtime_model_switch: not_performed
+- milestone: M002
+  timestamp: '2026-09-28T09:28:16.610476+00:00'
+  operation: recover-or-rollback
+  from: verification
+  to: implementation
+  previous_role: quality/base
+  previous_agent: qa-quinn
+  active_role: frontend-implementer/base
+  active_agent: frontend-claire
+  confirmed_by: user
+  decision_id: TRANSITION-M002-045
+  evidence: .planning/milestones/M002/reviews/verification-rework-045.md
+  kind: stage_rollback
+  recorded_by: gatekeeper-owen
+  authorization: 用户对上轮已展示的“交前端修复CR020，再定向复验”回复“下一步”，确认同一限定返工目标；无需重复确认。
+  scope: Return M002 from verification to implementation and activate frontend-claire for CR020/QA2-F17
+    shared avatar-menu dismissal and focus repair only. Register CR020; preserve QA17 overall FAIL, prior
+    scoped closures including CR002/019 via044, remaining coverage and limitations. No UAT acceptance,
+    milestone completion, deployment or new live AI evaluation.
+  source_handoff: .planning/milestones/M002/handoffs/verification.md
+  source_checks: .planning/milestones/M002/reviews/evidence/verification-rework-045/before-check.json
+  before_controls: .planning/milestones/M002/reviews/evidence/verification-rework-045/before-controls.tar.gz
+  qa17:
+    manifest_sha256: 4d07d289ca273fee0aa613b41e8f522d2448d9012114348998e6fd7c5d6b9521
+    artifacts: 85
+    effective_cases: 18
+    passed: 14
+    failed: 4
+    result: FAIL
+    raw_failures_preserved: true
+  coverage_counts:
+    capabilities: 49
+    pages: 25
+    views: 28
+    ui_acceptance: 119
+  registered_change_requests:
+  - M002-CR-020
+  closed_change_requests: []
+  retained_open_items:
+  - id: CR039-L1
+    status: open
+    source: .planning/milestones/M001/changes/CR-039.md#retained-limitations
+  - id: CR042-L1
+    status: open
+    source: .planning/milestones/M001/verification/CR-042-generation-evidence.md#retained-limitations
+  - id: AI-QUALITY-90
+    status: unverified
+    source: .planning/milestones/M001/verification/ai-evaluation.md
+  prior_scoped_closures_preserved: true
+  historical_W01: unlocated; unchanged
+  whole_milestone_verification_passed: false
+  uat_passed: false
+  milestone_completed: false
+  specialist_artifacts_modified: false
+  profile_modified: false
+  new_qa_executed: false
+  real_model_calls_authorized: false
+  deployment_authorized: false
+  runtime_model_switch: not_performed
+- milestone: M002
+  timestamp: '2026-09-28T09:38:29.593174+00:00'
+  operation: transition-stage
+  from: implementation
+  to: verification
+  previous_role: frontend-implementer/base
+  previous_agent: frontend-claire
+  active_role: quality/base
+  active_agent: qa-quinn
+  confirmed_by: user
+  decision_id: TRANSITION-M002-046
+  evidence: .planning/milestones/M002/reviews/verification-reentry-046.md
+  kind: stage_transition
+  recorded_by: gatekeeper-owen
+  authorization: 用户明确“前端相关实现问题一律批准”；沿045既定前端修复范围，完成开发交付后直接进入其必要独立复验，无需重复审批。
+  standing_authorization:
+    id: USER-FRONTEND-IMPLEMENTATION-001
+    quote: 前端相关实现问题一律批准
+    scope: Standing user approval for frontend implementation issues within confirmed product/design/technical
+      scope, including repairs, necessary checks and related role handoffs; do not repeatedly ask for
+      the same approval. Scope changes and QA/UAT result acceptance remain separate.
+    source: .planning/milestones/M002/reviews/verification-reentry-046.md#frontend-standing-approval
+  scope: Accept CR020 frontend repair for independent verification; return M002 to verification with qa-quinn
+    under the user standing frontend implementation approval. Retain CR020 OPEN, QA17 FAIL, prior scoped
+    closures and remaining limitations. No UAT pass, milestone completion, deployment or live AI evaluation.
+  source_handoff: .planning/milestones/M002/handoffs/frontend-implementation.md
+  source_checks: .planning/milestones/M002/reviews/evidence/verification-reentry-046/before-check.json
+  before_controls: .planning/milestones/M002/reviews/evidence/verification-reentry-046/before-controls.tar.gz
+  delivery:
+    frontend-cr020:
+      manifest_sha256: 84890847e513dab7ff2725e79e516fdf7f5909244982947789c64cc4160bed35
+      artifacts: 62
+      source_files: 283
+      source_manifest_sha256: 2fb8eaf5c72f8423edac5696ef6c0043fe33068bcd0d37254c9638ad5811466e
+    backend-cr013:
+      manifest_sha256: 13b5dccdeb84e1b958c0ac378b4add5ed4c6815e9024cc3cf0eb6fd19e99912d
+      artifacts: 31
+      source_files: 288
+      source_manifest_sha256: c54307a04cecb3dd99cc13d64ae0fbcb6c1fca2c0538711af040d279bbe9b549
+  compiled_files_matched: 444
+  open_change_requests_retained:
+  - M002-CR-020
+  qa17_result_retained: FAIL; F17 awaiting independent retest
+  prior_scoped_closures_preserved: true
+  retained_open_items:
+  - id: CR039-L1
+    status: open
+    source: .planning/milestones/M001/changes/CR-039.md#retained-limitations
+  - id: CR042-L1
+    status: open
+    source: .planning/milestones/M001/verification/CR-042-generation-evidence.md#retained-limitations
+  - id: AI-QUALITY-90
+    status: unverified
+    source: .planning/milestones/M001/verification/ai-evaluation.md
+  uat_passed: false
+  milestone_completed: false
+  specialist_artifacts_modified: false
+  new_qa_executed: false
+  runtime_model_switch: not_performed
+- milestone: M002
+  timestamp: '2026-09-28T09:49:20.774004+00:00'
+  operation: artifact-approval
+  from: verification
+  to: verification
+  active_role: quality/base
+  active_agent: qa-quinn
+  confirmed_by: user
+  decision_id: APPROVAL-M002-047
+  evidence: .planning/milestones/M002/reviews/verification-acceptance-047.md
+  kind: scoped_acceptance
+  recorded_by: gatekeeper-owen
+  authorization: 前端交付的 QA 也都批准
+  standing_authorization:
+    id: USER-FRONTEND-QA-001
+    quote: 前端交付的 QA 也都批准
+    scope: Standing user approval for frontend delivery QA, independent retests, required implementation-fix
+      handoffs, and evidence-supported scoped acceptance/closure within confirmed product/design/technical
+      requirements; do not request repeated approvals. Test outcomes must reflect actual evidence; unexecuted
+      UAT is not deemed passed.
+    source: .planning/milestones/M002/reviews/verification-acceptance-047.md#frontend-qa-standing-approval
+  scope: Accept QA18 scoped evidence and close CR020/QA2-F17; continue M002 verification under qa-quinn
+    with standing frontend QA authorization. No stage/role change or unexecuted UAT pass.
+  source_handoff: .planning/milestones/M002/handoffs/verification.md
+  source_checks: .planning/milestones/M002/reviews/evidence/verification-acceptance-047/before-check.json
+  before_controls: .planning/milestones/M002/reviews/evidence/verification-acceptance-047/before-controls.tar.gz
+  qa18:
+    manifest_sha256: 618b26d9cbe2fd8619619c76d3e8c530fbf2781fad08bce269998a4bcc63b954
+    artifacts: 40
+    effective_cases: 4
+    passed: 4
+    failed: 0
+    assertions: 88
+    runtime_events: 0
+  closed_change_requests:
+  - M002-CR-020
+  closed_findings:
+  - QA2-F17
+  prior_scoped_closures_preserved: true
+  historical_qa17_failures_preserved: true
+  retained_open_items:
+  - id: CR039-L1
+    status: open
+    source: .planning/milestones/M001/changes/CR-039.md#retained-limitations
+  - id: CR042-L1
+    status: open
+    source: .planning/milestones/M001/verification/CR-042-generation-evidence.md#retained-limitations
+  - id: AI-QUALITY-90
+    status: unverified
+    source: .planning/milestones/M001/verification/ai-evaluation.md
+  historical_W01: unlocated; unchanged
+  stage_or_role_changed: false
+  uat_passed: false
+  whole_milestone_verification_passed: false
+  milestone_completed: false
+  specialist_artifacts_modified: false
+  gate_tests_run: false
+  runtime_model_switch: not_performed
+- milestone: M002
+  timestamp: '2026-09-28T09:59:04.071391+00:00'
+  operation: transition-stage
+  from: verification
+  to: implementation
+  previous_role: quality/base
+  previous_agent: qa-quinn
+  active_role: frontend-implementer/base
+  active_agent: frontend-claire
+  confirmed_by: user
+  decision_id: TRANSITION-M002-048
+  evidence: .planning/milestones/M002/reviews/continuous-048.md
+  kind: stage_rollback
+  recorded_by: gatekeeper-owen
+  authorization_refs:
+  - USER-FRONTEND-IMPLEMENTATION-001
+  - USER-FRONTEND-QA-001
+  user_steering: 下一步呢？怎么断了
+  scope: CR021/F18–20 only; continue within this turn, no repeated approval request
+  delivery:
+    manifest: .planning/milestones/M002/verification/evidence/qa2-019/manifest.json
+    sha256: 93e4ed19bda52671204c4fa288c42730e500c7d68dea235592fd91c4ee3f84ec
+    artifacts: 156
+  open_change_requests:
+  - M002-CR-021
+  retained_open_items:
+  - id: CR039-L1
+    status: open
+    source: .planning/milestones/M001/changes/CR-039.md#retained-limitations
+  - id: CR042-L1
+    status: open
+    source: .planning/milestones/M001/verification/CR-042-generation-evidence.md#retained-limitations
+  - id: AI-QUALITY-90
+    status: unverified
+    source: .planning/milestones/M001/verification/ai-evaluation.md
+  uat_passed: false
+  whole_milestone_passed: false
+  before_controls: .planning/milestones/M002/reviews/evidence/continuous-048/before-controls.tar.gz
+- milestone: M002
+  timestamp: '2026-09-28T10:02:46.556665+00:00'
+  operation: transition-stage
+  from: implementation
+  to: verification
+  previous_role: frontend-implementer/base
+  previous_agent: frontend-claire
+  active_role: quality/base
+  active_agent: qa-quinn
+  confirmed_by: user
+  decision_id: TRANSITION-M002-049
+  evidence: .planning/milestones/M002/reviews/continuous-049.md
+  kind: stage_transition
+  recorded_by: gatekeeper-owen
+  authorization_refs:
+  - USER-FRONTEND-IMPLEMENTATION-001
+  - USER-FRONTEND-QA-001
+  user_steering: 下一步呢？怎么断了
+  scope: CR021/F18–20 only; continue within this turn, no repeated approval request
+  delivery:
+    manifest: .planning/milestones/M002/implementation/evidence/frontend-cr021/manifest.json
+    sha256: 6d07e6b45e1f2e6f729322c56b3df836c7bdbea6300870b7dd601e06193e58aa
+    artifacts: 49
+  open_change_requests:
+  - M002-CR-021
+  retained_open_items:
+  - id: CR039-L1
+    status: open
+    source: .planning/milestones/M001/changes/CR-039.md#retained-limitations
+  - id: CR042-L1
+    status: open
+    source: .planning/milestones/M001/verification/CR-042-generation-evidence.md#retained-limitations
+  - id: AI-QUALITY-90
+    status: unverified
+    source: .planning/milestones/M001/verification/ai-evaluation.md
+  uat_passed: false
+  whole_milestone_passed: false
+  before_controls: .planning/milestones/M002/reviews/evidence/continuous-049/before-controls.tar.gz
+- milestone: M002
+  timestamp: '2026-09-28T10:09:32.112756+00:00'
+  operation: transition-stage
+  from: verification
+  to: implementation
+  previous_role: quality/base
+  previous_agent: qa-quinn
+  active_role: frontend-implementer/base
+  active_agent: frontend-claire
+  confirmed_by: user
+  decision_id: TRANSITION-M002-050
+  evidence: .planning/milestones/M002/reviews/continuous-050.md
+  kind: stage_rollback
+  recorded_by: gatekeeper-owen
+  authorization_refs:
+  - USER-FRONTEND-IMPLEMENTATION-001
+  - USER-FRONTEND-QA-001
+  user_steering: 下一步呢？怎么断了
+  scope: CR022/F21 only; continue within this turn, no repeated approval request
+  delivery:
+    manifest: .planning/milestones/M002/verification/evidence/qa2-020/manifest.json
+    sha256: c53d7eb37e841a791b2b7562eec2c107cb338db7facca4e402520464a654b09d
+    artifacts: 125
+  closed_change_requests:
+  - M002-CR-021
+  open_change_requests:
+  - M002-CR-022
+  retained_open_items:
+  - id: CR039-L1
+    status: open
+    source: .planning/milestones/M001/changes/CR-039.md#retained-limitations
+  - id: CR042-L1
+    status: open
+    source: .planning/milestones/M001/verification/CR-042-generation-evidence.md#retained-limitations
+  - id: AI-QUALITY-90
+    status: unverified
+    source: .planning/milestones/M001/verification/ai-evaluation.md
+  uat_passed: false
+  whole_milestone_passed: false
+  before_controls: .planning/milestones/M002/reviews/evidence/continuous-050/before-controls.tar.gz
+- milestone: M002
+  timestamp: '2026-09-28T10:13:38.698167+00:00'
+  operation: transition-stage
+  from: implementation
+  to: verification
+  previous_role: frontend-implementer/base
+  previous_agent: frontend-claire
+  active_role: quality/base
+  active_agent: qa-quinn
+  confirmed_by: user
+  decision_id: TRANSITION-M002-051
+  evidence: .planning/milestones/M002/reviews/continuous-051.md
+  kind: stage_transition
+  recorded_by: gatekeeper-owen
+  authorization_refs:
+  - USER-FRONTEND-IMPLEMENTATION-001
+  - USER-FRONTEND-QA-001
+  user_steering: 下一步呢？怎么断了
+  scope: CR022/F21 only; continue within this turn, no repeated approval request
+  delivery:
+    manifest: .planning/milestones/M002/implementation/evidence/frontend-cr022/manifest.json
+    sha256: cb227effa3f35240b73f8bdefbcda44ef11609e95975677486194d13572d002e
+    artifacts: 50
+  closed_change_requests:
+  - M002-CR-021
+  open_change_requests:
+  - M002-CR-022
+  retained_open_items:
+  - id: CR039-L1
+    status: open
+    source: .planning/milestones/M001/changes/CR-039.md#retained-limitations
+  - id: CR042-L1
+    status: open
+    source: .planning/milestones/M001/verification/CR-042-generation-evidence.md#retained-limitations
+  - id: AI-QUALITY-90
+    status: unverified
+    source: .planning/milestones/M001/verification/ai-evaluation.md
+  uat_passed: false
+  whole_milestone_passed: false
+  before_controls: .planning/milestones/M002/reviews/evidence/continuous-051/before-controls.tar.gz
+- milestone: M002
+  timestamp: '2026-09-28T10:19:25.628459+00:00'
+  operation: artifact-approval
+  from: verification
+  to: verification
+  active_role: quality/base
+  active_agent: qa-quinn
+  confirmed_by: user
+  decision_id: APPROVAL-M002-052
+  evidence: .planning/milestones/M002/reviews/verification-acceptance-052.md
+  kind: scoped_acceptance
+  recorded_by: gatekeeper-owen
+  authorization_refs:
+  - USER-FRONTEND-IMPLEMENTATION-001
+  - USER-FRONTEND-QA-001
+  scope: Accept QA21 and close CR022/F21 based on actual independent evidence; frontend walkthrough candidate
+    ready, retain verification stage and unexecuted final UAT.
+  qa21:
+    manifest: .planning/milestones/M002/verification/evidence/qa2-021/manifest.json
+    sha256: 6b10cc193e5b876963d9195a1576ea2370b390c3a9f32d1faea91ac0b6818f93
+    artifacts: 36
+    passed: 4
+    assertions: 52
+  closed_change_requests:
+  - M002-CR-022
+  closed_findings:
+  - QA2-F21
+  open_change_requests: []
+  retained_open_items:
+  - id: CR039-L1
+    status: open
+    source: .planning/milestones/M001/changes/CR-039.md#retained-limitations
+  - id: CR042-L1
+    status: open
+    source: .planning/milestones/M001/verification/CR-042-generation-evidence.md#retained-limitations
+  - id: AI-QUALITY-90
+    status: unverified
+    source: .planning/milestones/M001/verification/ai-evaluation.md
+  historical_W01: unlocated; unchanged
+  stage_or_role_changed: false
+  uat_passed: false
+  whole_milestone_verification_passed: false
+  milestone_completed: false
+  specialist_artifacts_modified: false
+  gate_tests_run: false
+  before_controls: .planning/milestones/M002/reviews/evidence/verification-acceptance-052/before-controls.tar.gz
+- milestone: M002
+  timestamp: '2026-09-29T02:32:49.808835+00:00'
+  operation: recover-or-rollback
+  from: verification
+  to: verification
+  active_role: quality/base
+  active_agent: qa-quinn
+  confirmed_by: user
+  decision_id: RECOVERY-M002-053
+  evidence: .planning/milestones/M002/reviews/recovery-053.md
+  kind: current_entry_recovery
+  recorded_by: gatekeeper-owen
+  authorization_refs:
+  - USER-FRONTEND-QA-001
+  user_instruction: 继续 M002 联调与验收（推荐）
+  previous_handoff: .planning/milestones/M002/handoffs/frontend-implementation.md
+  current_handoff: .planning/milestones/M002/handoffs/verification.md
+  qa22_manifest: .planning/milestones/M002/verification/evidence/qa2-022/manifest.json
+  qa22_manifest_sha256: 1b7c63309703be23a07747d7f4e4e817c260c58379a739f29dc08c3d957984c4
+  stage_or_role_changed: false
+  profile_migration: false
+  uat_passed: false
+  milestone_completed: false
+  before_controls: .planning/milestones/M002/reviews/evidence/recovery-053/before-controls.tar.gz
+- milestone: M002
+  timestamp: '2026-09-29T02:59:39.889626+00:00'
+  operation: transition-stage
+  from: verification
+  to: implementation
+  previous_role: quality/base
+  previous_agent: qa-quinn
+  active_role: frontend-implementer/base
+  active_agent: frontend-claire
+  confirmed_by: user
+  decision_id: TRANSITION-M002-054
+  evidence: .planning/milestones/M002/reviews/continuous-054.md
+  kind: stage_transition
+- milestone: M002
+  timestamp: '2026-09-29T03:11:33.544440+00:00'
+  operation: transition-stage
+  from: implementation
+  to: verification
+  previous_role: frontend-implementer/base
+  previous_agent: frontend-claire
+  active_role: quality/base
+  active_agent: qa-quinn
+  confirmed_by: user
+  decision_id: TRANSITION-M002-055
+  evidence: .planning/milestones/M002/reviews/continuous-055.md
+  kind: stage_transition
+- milestone: M002
+  timestamp: '2026-09-29T03:16:02.744519+00:00'
+  operation: artifact-approval
+  from: verification
+  to: verification
+  active_role: quality/base
+  active_agent: qa-quinn
+  confirmed_by: user
+  decision_id: APPROVAL-M002-056
+  evidence: .planning/milestones/M002/reviews/verification-acceptance-056.md
+  kind: scoped_acceptance
+  recorded_by: gatekeeper-owen
+  authorization_refs:
+  - USER-FRONTEND-IMPLEMENTATION-001
+  - USER-FRONTEND-QA-001
+  scope: Close CR023 four reported UAT implementation issues based on QA23 eight real-backend
+    retests; retain final user UAT
+  qa23_manifest_sha256: 1e37825571afdc556c7e781712552e9f48cb700c9d4875e724145645e3322719
+  closed_change_requests:
+  - M002-CR-023
+  closed_findings:
+  - UAT23-01
+  - UAT23-02
+  - UAT23-03
+  - UAT23-04
+  stage_or_role_changed: false
+  uat_passed: false
+  milestone_completed: false
+  preview: http://127.0.0.1:3302
+  before_controls: .planning/milestones/M002/reviews/evidence/verification-acceptance-056/before-controls.tar.gz
+- milestone: M002
+  timestamp: '2026-09-29T07:00:34.850878+00:00'
+  operation: transition-stage
+  from: verification
+  to: implementation
+  previous_role: quality/base
+  previous_agent: qa-quinn
+  active_role: frontend-implementer/base
+  active_agent: frontend-claire
+  confirmed_by: user
+  decision_id: TRANSITION-M002-057
+  evidence: .planning/milestones/M002/reviews/continuous-057.md
+  kind: stage_transition
+- milestone: M002
+  timestamp: '2026-09-29T07:04:41.847085+00:00'
+  operation: transition-stage
+  from: implementation
+  to: verification
+  previous_role: frontend-implementer/base
+  previous_agent: frontend-claire
+  active_role: quality/base
+  active_agent: qa-quinn
+  confirmed_by: user
+  decision_id: TRANSITION-M002-058
+  evidence: .planning/milestones/M002/reviews/continuous-058.md
+  kind: stage_transition
+- milestone: M002
+  timestamp: '2026-09-29T07:07:05.598413+00:00'
+  operation: artifact-approval
+  from: verification
+  to: verification
+  active_role: quality/base
+  active_agent: qa-quinn
+  confirmed_by: user
+  recorded_by: gatekeeper-owen
+  decision_id: APPROVAL-M002-059
+  evidence: .planning/milestones/M002/reviews/verification-acceptance-059.md
+  kind: scoped_acceptance
+  authorization_refs:
+  - USER-FRONTEND-IMPLEMENTATION-001
+  - USER-FRONTEND-QA-001
+  closed_change_requests:
+  - M002-CR-024
+  closed_findings:
+  - UAT25-RESULT-01
+  qa25_manifest_sha256: e6fd6438fba078dfb4d03f4faa7205f35e2653e76bc5169e2713ce7d3b4dea63
+  stage_or_role_changed: false
+  uat_passed: false
+  milestone_completed: false
+- milestone: M002
+  timestamp: '2026-10-01T04:35:30.016577+00:00'
+  operation: transition-stage
+  from: verification
+  to: milestone-complete
+  previous_role: quality/base
+  previous_agent: qa-quinn
+  active_role: null
+  active_agent: null
+  confirmed_by: user
+  recorded_by: gatekeeper-owen
+  decision_id: TRANSITION-M002-060
+  evidence: .planning/milestones/M002/reviews/verification-acceptance-060.md
+  kind: stage_transition
+  authorization_refs:
+  - USER-M002-UAT-20260929
+  - USER-M002-CLOSEOUT-20261001
+  scope: Register explicit user UAT acceptance and complete the previously presented
+    M002 closeout; preserve all known limitations.
+  user_uat_accepted: true
+  known_limitations_waived: false
+  real_model_calls_authorized: false
+  release_approved: false
+  new_milestone_started: false
+- milestone: M002
+  timestamp: '2026-10-01T04:45:18.949495+00:00'
+  operation: recover-or-rollback
+  from: milestone-complete
+  to: product-planning
+  previous_role: null
+  previous_agent: null
+  active_role: product/to-c
+  active_agent: product-maya
+  confirmed_by: user
+  recorded_by: gatekeeper-owen
+  decision_id: TRANSITION-M002-061
+  evidence: .planning/milestones/M002/reviews/product-reopen-061.md
+  kind: scoped_reopen
+  scope: Five user-requested M002 product and design additions; accepted prior delivery
+    retained; no M003 or release.
+- milestone: M002
+  timestamp: '2026-10-01T04:48:59.892383+00:00'
+  operation: transition-stage
+  from: product-planning
+  to: uiux-design
+  previous_role: product/to-c
+  previous_agent: product-maya
+  active_role: uiux/base
+  active_agent: designer-tony
+  confirmed_by: user
+  recorded_by: gatekeeper-owen
+  decision_id: TRANSITION-M002-062
+  evidence: .planning/milestones/M002/reviews/product-design-062.md
+  kind: stage_transition
+  scope: Receive five explicit user product/design changes and prepare design revision;
+    no new visual or implementation approval.
+- milestone: M002
+  timestamp: '2026-10-01T05:50:08.993595+00:00'
+  operation: recover-or-rollback
+  from: uiux-design
+  to: product-planning
+  previous_role: uiux/base
+  previous_agent: designer-tony
+  active_role: product/to-c
+  active_agent: product-maya
+  confirmed_by: user
+  recorded_by: gatekeeper-owen
+  decision_id: TRANSITION-M002-063
+  evidence: .planning/milestones/M002/reviews/notice-once-reopen-063.md
+  kind: scoped_reopen
+  scope: User-requested optional once-only automatic notice reminder with browser-local
+    history; preserve UI24 and CR025, no visual approval or production implementation.
+- milestone: M002
+  timestamp: '2026-10-01T06:02:04.540730+00:00'
+  operation: transition-stage
+  from: product-planning
+  to: uiux-design
+  previous_role: product/to-c
+  previous_agent: product-maya
+  active_role: uiux/base
+  active_agent: designer-tony
+  confirmed_by: user
+  recorded_by: gatekeeper-owen
+  decision_id: TRANSITION-M002-064
+  evidence: .planning/milestones/M002/reviews/copy-design-064.md
+  kind: scoped_design_reentry
+  scope: User explicitly requested removal of reminder-type labels and internal logic
+    copy. Receive D2-89 only; CR026 local-cache scope stays OPEN and is not approved.
+- milestone: M002
+  timestamp: '2026-10-01T07:54:38.883037+00:00'
+  operation: artifact-approval
+  stage: uiux-design
+  decision_id: APPROVAL-M002-065
+  version: M002-UI-26
+  confirmed_by: user
+  recorded_by: gatekeeper-owen
+  evidence: .planning/milestones/M002/reviews/design-acceptance-065.md
+  scope: Current UI26 and inherited presented UI23-25 revisions; excludes CR026 pending
+    local cache scope
+- milestone: M002
+  timestamp: '2026-10-01T07:54:38.883037+00:00'
+  operation: transition-stage
+  from: uiux-design
+  to: technical-design
+  previous_role: uiux/base
+  previous_agent: designer-tony
+  active_role: frontend-architect/base
+  active_agent: frontend-bob
+  confirmed_by: user
+  recorded_by: gatekeeper-owen
+  decision_id: TRANSITION-M002-065
+  evidence: .planning/milestones/M002/reviews/design-acceptance-065.md
+  kind: scoped_frontend_design_reception
+  scope: Accept current UI26 design and enter frontend technical reception under frontend-bob;
+    preserve DB03/BE03 and prior scoped approvals. Exclude unresolved CR026 D2-88-LOCAL-SCOPE.
+    No implementation/QA/UAT result acceptance or release.
+- milestone: M002
+  timestamp: '2026-10-01T08:15:34.869314+00:00'
+  operation: activate-role
+  from: technical-design
+  to: technical-design
+  previous_role: frontend-architect/base
+  previous_agent: frontend-bob
+  active_role: backend-architect/base
+  active_agent: backend-alex
+  confirmed_by: user
+  recorded_by: gatekeeper-owen
+  decision_id: TRANSITION-M002-066
+  evidence: .planning/milestones/M002/reviews/backend-cr027-entry-066.md
+  scope: Activate backend-alex for CR027 API004 administrator vocabulary-search contract clarification; retain stage
+    and all approval scopes. Register CR027; no FE03/BE04 acceptance, implementation, QA, release or CR026 scope
+    decision.
+- milestone: M002
+  timestamp: '2026-10-01T08:22:16.449402+00:00'
+  operation: activate-role
+  from: technical-design
+  to: technical-design
+  previous_role: backend-architect/base
+  previous_agent: backend-alex
+  active_role: frontend-architect/base
+  active_agent: frontend-bob
+  confirmed_by: user
+  recorded_by: gatekeeper-owen
+  decision_id: TRANSITION-M002-067
+  evidence: .planning/milestones/M002/reviews/continuous-067.md
+  scope: Accept BE04 CR027 clarification and activate frontend-bob for FE3-G01 reception; preserve BE4-I01 and runtime
+    verification pending. No implementation/QA result acceptance.
+- milestone: M002
+  timestamp: '2026-10-01T08:23:22.269931+00:00'
+  operation: transition-stage
+  from: technical-design
+  to: implementation
+  previous_role: frontend-architect/base
+  previous_agent: frontend-bob
+  active_role: backend-implementer/base
+  active_agent: backend-ethan
+  confirmed_by: user
+  recorded_by: gatekeeper-owen
+  decision_id: TRANSITION-M002-068
+  evidence: .planning/milestones/M002/reviews/continuous-068.md
+  scope: Accept FE04 scoped UI26 reception and enter implementation. First repair BE4-I01 and run BE4-V01–03; then
+    frontend-claire implements FE3-I01–06 under standing authorization. No QA/UAT or release acceptance.
+- milestone: M002
+  timestamp: '2026-10-01T08:26:14.610362+00:00'
+  operation: activate-role
+  from: implementation
+  to: implementation
+  previous_role: backend-implementer/base
+  previous_agent: backend-ethan
+  active_role: frontend-implementer/base
+  active_agent: frontend-claire
+  confirmed_by: user
+  recorded_by: gatekeeper-owen
+  decision_id: TRANSITION-M002-069
+  evidence: .planning/milestones/M002/reviews/continuous-069.md
+  scope: Receive BE4-I01 developer-verified repair; activate frontend-claire to implement approved UI26 / FE04 FE3-I01–06,
+    retaining CR027 pending QA and all excluded/retained scope. No QA/UAT or release acceptance.
+- milestone: M002
+  timestamp: '2026-10-01T08:49:26.610050+00:00'
+  operation: transition-stage
+  from: implementation
+  to: verification
+  previous_role: frontend-implementer/base
+  previous_agent: frontend-claire
+  active_role: quality/base
+  active_agent: qa-quinn
+  confirmed_by: user
+  recorded_by: gatekeeper-owen
+  decision_id: TRANSITION-M002-070
+  evidence: .planning/milestones/M002/reviews/continuous-070.md
+  scope: Receive implemented UI26/FE04 and BE04 CR027 fixes; perform bounded quality reception and browser/API evidence
+    audit under standing frontend QA authorization, without substituting user UAT or touching CR026 pending scope.
+- milestone: M002
+  timestamp: '2026-10-01T08:52:47.608014+00:00'
+  operation: artifact-approval
+  from: verification
+  to: verification
+  active_role: quality/base
+  active_agent: qa-quinn
+  confirmed_by: user
+  recorded_by: gatekeeper-owen
+  decision_id: APPROVAL-M002-071
+  evidence: .planning/milestones/M002/reviews/verification-acceptance-071.md
+  kind: scoped_acceptance
+  authorization_refs:
+  - USER-FRONTEND-IMPLEMENTATION-001
+  - USER-FRONTEND-QA-001
+  closed_change_requests:
+  - M002-CR-025
+  - M002-CR-027
+  qa28_manifest_sha256: de5e9c2c3111e1b9a568078aebf523b868730fb56b091a29eef19593d42b2f80
+  stage_or_role_changed: false
+  new_uat_passed: false
+  milestone_completed: false
+- milestone: M002
+  timestamp: '2026-10-01T09:01:36.470267+00:00'
+  operation: transition-stage
+  from: verification
+  to: implementation
+  previous_role: quality/base
+  previous_agent: qa-quinn
+  active_role: frontend-implementer/base
+  active_agent: frontend-claire
+  confirmed_by: user
+  recorded_by: gatekeeper-owen
+  decision_id: TRANSITION-M002-072
+  evidence: .planning/milestones/M002/reviews/continuous-072.md
+  scope: User reports actual header language selector differs from approved UI26. Reopen only CR025 header locale
+    fidelity (both public and admin), correct missed consumer wiring and tests under standing frontend authorization;
+    CR026 remains pending and CR027 remains closed.
+- milestone: M002
+  timestamp: '2026-10-01T09:06:18.476198+00:00'
+  operation: transition-stage
+  from: implementation
+  to: verification
+  previous_role: frontend-implementer/base
+  previous_agent: frontend-claire
+  active_role: quality/base
+  active_agent: qa-quinn
+  confirmed_by: user
+  recorded_by: gatekeeper-owen
+  decision_id: TRANSITION-M002-073
+  evidence: .planning/milestones/M002/reviews/continuous-073.md
+  scope: Receive UI26 header locale correction, retain original QA28 missed-consumer evidence, and perform bounded
+    QA under standing frontend authorization. CR025 only header slice reopened; CR026 unchanged.
+- milestone: M002
+  timestamp: '2026-10-01T09:07:50.810500+00:00'
+  operation: artifact-approval
+  from: verification
+  to: verification
+  active_role: quality/base
+  active_agent: qa-quinn
+  confirmed_by: user
+  recorded_by: gatekeeper-owen
+  decision_id: APPROVAL-M002-074
+  evidence: .planning/milestones/M002/reviews/verification-acceptance-074.md
+  kind: scoped_acceptance
+  authorization_refs:
+  - USER-FRONTEND-IMPLEMENTATION-001
+  - USER-FRONTEND-QA-001
+  closed_change_requests:
+  - M002-CR-025
+  qa29_manifest_sha256: 56d381d0adbd093558c35c50356a63a39e7697a1c1cdf9de59818fd0dc29a81e
+  stage_or_role_changed: false
+  uat_passed: false
+  milestone_completed: false
+- milestone: M002
+  timestamp: '2026-10-01T09:12:03.787351+00:00'
+  operation: transition-stage
+  from: verification
+  to: uiux-design
+  previous_role: quality/base
+  previous_agent: qa-quinn
+  active_role: uiux/base
+  active_agent: designer-tony
+  confirmed_by: user
+  recorded_by: gatekeeper-owen
+  decision_id: TRANSITION-M002-075
+  evidence: .planning/milestones/M002/reviews/continuous-075.md
+  scope: User explicitly requests searching UI optimization and reports fixed adapt/adaptive preview results. Revise
+    only shared loading presentation (CR028); preserve API004 and route fixture repair to frontend implementation
+    under standing authorization.
+- milestone: M002
+  timestamp: '2026-10-01T09:13:32.160859+00:00'
+  operation: transition-stage
+  from: uiux-design
+  to: technical-design
+  previous_role: uiux/base
+  previous_agent: designer-tony
+  active_role: frontend-architect/base
+  active_agent: frontend-bob
+  confirmed_by: user
+  recorded_by: gatekeeper-owen
+  decision_id: TRANSITION-M002-076
+  evidence: .planning/milestones/M002/reviews/continuous-076.md
+  scope: Receive narrow user-requested UI27 search loading amendment for CR028. Confirm existing WordPicker/API004
+    architecture unchanged; specify delay as presentation-only and fixture query repair. No new product, backend,
+    database or pricing scope.
+- milestone: M002
+  timestamp: '2026-10-01T09:14:07.241739+00:00'
+  operation: transition-stage
+  from: technical-design
+  to: implementation
+  previous_role: frontend-architect/base
+  previous_agent: frontend-bob
+  active_role: frontend-implementer/base
+  active_agent: frontend-claire
+  confirmed_by: user
+  recorded_by: gatekeeper-owen
+  decision_id: TRANSITION-M002-077
+  evidence: .planning/milestones/M002/reviews/continuous-077.md
+  scope: 'Implement CR028 under current user request and standing frontend approval: query-aware full-catalog test
+    fixture, shared compact slow-search loading indicator; preserve FE04 APIs, private UAT environment and all unrelated
+    work.'
+- milestone: M002
+  timestamp: '2026-10-01T09:20:49.918349+00:00'
+  operation: transition-stage
+  from: implementation
+  to: verification
+  previous_role: frontend-implementer/base
+  previous_agent: frontend-claire
+  active_role: quality/base
+  active_agent: qa-quinn
+  confirmed_by: user
+  recorded_by: gatekeeper-owen
+  decision_id: TRANSITION-M002-078
+  evidence: .planning/milestones/M002/reviews/continuous-078.md
+  scope: Current user-reported CR028 search and loading correction only; accept developer evidence for scoped QA
+    under standing frontend/QA authorization. No new user UAT, real model calls, production deployment, or CR026
+    decision.
+- milestone: M002
+  timestamp: '2026-10-01T09:21:43.992592+00:00'
+  operation: artifact-approval
+  from: verification
+  to: verification
+  active_role: quality/base
+  active_agent: qa-quinn
+  confirmed_by: user
+  recorded_by: gatekeeper-owen
+  decision_id: APPROVAL-M002-079
+  evidence: .planning/milestones/M002/reviews/verification-acceptance-079.md
+  kind: scoped_acceptance
+  authorization_refs:
+  - USER-FRONTEND-IMPLEMENTATION-001
+  - USER-FRONTEND-QA-001
+  closed_change_requests:
+  - M002-CR-028
+  qa30_manifest_sha256: 9a65a9a0a83d9a84c8a30afb4b3a160d56514655d603fa859aadf73a25bc8d62
+  stage_or_role_changed: false
+  uat_passed: false
+  milestone_completed: false
+- milestone: M002
+  timestamp: '2026-10-01T10:29:47.288225+00:00'
+  operation: transition-stage
+  from: verification
+  to: product-planning
+  previous_role: quality/base
+  previous_agent: qa-quinn
+  active_role: product/to-c
+  active_agent: product-maya
+  confirmed_by: user
+  recorded_by: gatekeeper-owen
+  decision_id: TRANSITION-M002-080
+  evidence: .planning/milestones/M002/reviews/continuous-080.md
+  scope: User requested continuation of CR026 and explicitly selected browser-local records separated by account.
+    Resolve D2-88-LOCAL-SCOPE only; preserve other closures and limitations. Necessary implementation/handoffs are
+    within the original requested feature.
+- milestone: M002
+  timestamp: '2026-10-01T10:29:47.908357+00:00'
+  operation: transition-stage
+  from: product-planning
+  to: uiux-design
+  previous_role: product/to-c
+  previous_agent: product-maya
+  active_role: uiux/base
+  active_agent: designer-tony
+  confirmed_by: user
+  recorded_by: gatekeeper-owen
+  decision_id: TRANSITION-M002-081
+  evidence: .planning/milestones/M002/reviews/continuous-081.md
+  scope: Receive explicitly confirmed CR026 account-separated browser-local once reminders. Add existing-style admin
+    switch and copy/prototype; no new page or user-facing reminder categories. Continue original authorized feature,
+    not a new whole-design approval.
+- milestone: M002
+  timestamp: '2026-10-01T10:31:43.034281+00:00'
+  operation: transition-stage
+  from: uiux-design
+  to: technical-design
+  previous_role: uiux/base
+  previous_agent: designer-tony
+  active_role: dba/base
+  active_agent: dba-diana
+  confirmed_by: user
+  recorded_by: gatekeeper-owen
+  decision_id: TRANSITION-M002-082
+  evidence: .planning/milestones/M002/reviews/continuous-082.md
+  scope: Receive confirmed CR026 and UI28; add one default-false notice configuration field only. Browser account/notice
+    records remain client-local. No production migration.
+- milestone: M002
+  timestamp: '2026-10-01T10:31:43.610306+00:00'
+  operation: activate-role
+  from: technical-design
+  to: technical-design
+  previous_role: dba/base
+  previous_agent: dba-diana
+  active_role: backend-architect/base
+  active_agent: backend-alex
+  confirmed_by: user
+  recorded_by: gatekeeper-owen
+  decision_id: TRANSITION-M002-083
+  evidence: .planning/milestones/M002/reviews/continuous-083.md
+  scope: Receive DB04 column for original requested CR026. Extend API205/207 bool config through existing service,
+    preserve visibility/revision/auth and no read-state write API.
+- milestone: M002
+  timestamp: '2026-10-01T10:31:44.184849+00:00'
+  operation: activate-role
+  from: technical-design
+  to: technical-design
+  previous_role: backend-architect/base
+  previous_agent: backend-alex
+  active_role: frontend-architect/base
+  active_agent: frontend-bob
+  confirmed_by: user
+  recorded_by: gatekeeper-owen
+  decision_id: TRANSITION-M002-084
+  evidence: .planning/milestones/M002/reviews/continuous-084.md
+  scope: Receive UI28/DB04/BE05 explicitly requested notice config. Frontend uses account+notice local history and
+    actual-dialog-display signal; inherit other FE04 behavior.
+- milestone: M002
+  timestamp: '2026-10-01T10:31:44.772911+00:00'
+  operation: transition-stage
+  from: technical-design
+  to: implementation
+  previous_role: frontend-architect/base
+  previous_agent: frontend-bob
+  active_role: backend-implementer/base
+  active_agent: backend-ethan
+  confirmed_by: user
+  recorded_by: gatekeeper-owen
+  decision_id: TRANSITION-M002-085
+  evidence: .planning/milestones/M002/reviews/continuous-085.md
+  scope: Implement original user requested CR026 and explicitly confirmed account-separated history. Backend DB04/BE05
+    extension; validate in isolated local DB only, no 3302 or live AI changes.
+- milestone: M002
+  timestamp: '2026-10-01T10:33:20.805133+00:00'
+  operation: activate-role
+  from: implementation
+  to: implementation
+  previous_role: backend-implementer/base
+  previous_agent: backend-ethan
+  active_role: frontend-implementer/base
+  active_agent: frontend-claire
+  confirmed_by: user
+  recorded_by: gatekeeper-owen
+  decision_id: TRANSITION-M002-086
+  evidence: .planning/milestones/M002/reviews/continuous-086.md
+  scope: Implement CR026 UI28/FE05 after backend fixture/migration tests pass; account-separated local once history,
+    admin switch and actual display events. Final backend vet and cross-boundary QA remain required.
+- milestone: M002
+  timestamp: '2026-10-01T10:38:45.996743+00:00'
+  operation: transition-stage
+  from: implementation
+  to: verification
+  previous_role: frontend-implementer/base
+  previous_agent: frontend-claire
+  active_role: quality/base
+  active_agent: qa-quinn
+  confirmed_by: user
+  recorded_by: gatekeeper-owen
+  decision_id: TRANSITION-M002-087
+  evidence: .planning/milestones/M002/reviews/continuous-087.md
+  scope: Verify CR026 implemented user-requested once reminder with explicit account separation. Reuse developer
+    browser/lifecycle evidence; add bounded real HTTP configuration/persistence/visibility/auth case in isolated
+    DB. No live AI, 3302 update or new user UAT.
+- milestone: M002
+  timestamp: '2026-10-01T10:40:10.790954+00:00'
+  operation: transition-stage
+  from: verification
+  to: implementation
+  previous_role: quality/base
+  previous_agent: qa-quinn
+  active_role: backend-implementer/base
+  active_agent: backend-ethan
+  confirmed_by: user
+  recorded_by: gatekeeper-owen
+  decision_id: TRANSITION-M002-088
+  evidence: .planning/milestones/M002/reviews/continuous-088.md
+  scope: QA31-F01 observed 422 for absent remind_once despite confirmed default-false input. Repair request DTO
+    decoding only, preserve output field and other required validation. Retain original QA failure; no requirement
+    changes or real UAT/AI calls.
+- milestone: M002
+  timestamp: '2026-10-01T10:41:36.077542+00:00'
+  operation: transition-stage
+  from: implementation
+  to: verification
+  previous_role: backend-implementer/base
+  previous_agent: backend-ethan
+  active_role: quality/base
+  active_agent: qa-quinn
+  confirmed_by: user
+  recorded_by: gatekeeper-owen
+  decision_id: TRANSITION-M002-089
+  evidence: .planning/milestones/M002/reviews/continuous-089.md
+  scope: Receive QA31-F01 default-false request DTO repair; retest exact original real HTTP case. Preserve initial
+    FAIL, browser/service passes, same scope and explicit account-separation decision; no new user UAT.
+- milestone: M002
+  timestamp: '2026-10-01T10:42:56.771134+00:00'
+  operation: artifact-approval
+  from: verification
+  to: verification
+  active_role: quality/base
+  active_agent: qa-quinn
+  confirmed_by: user
+  recorded_by: gatekeeper-owen
+  decision_id: APPROVAL-M002-090
+  evidence: .planning/milestones/M002/reviews/verification-acceptance-090.md
+  kind: scoped_acceptance
+  authorization_refs:
+  - USER-D2-88-LOCAL-SCOPE
+  - USER-FRONTEND-IMPLEMENTATION-001
+  - USER-FRONTEND-QA-001
+  closed_change_requests:
+  - M002-CR-026
+  qa31_manifest_sha256: ae3bc844b13831eda3dcb237d186fb75696e23592ee659ec939ee203a17f4d0f
+  stage_or_role_changed: false
+  uat_passed: false
+  milestone_completed: false
+- milestone: M002
+  timestamp: '2026-10-01T10:49:31.845499+00:00'
+  operation: transition-stage
+  from: verification
+  to: milestone-complete
+  previous_role: quality/base
+  previous_agent: qa-quinn
+  active_role: null
+  active_agent: null
+  confirmed_by: user
+  recorded_by: gatekeeper-owen
+  decision_id: TRANSITION-M002-091
+  evidence: .planning/milestones/M002/reviews/verification-acceptance-091.md
+  authorization_refs:
+  - USER-M002-INCREMENT-UAT-20261001
+  - USER-M002-CLOSEOUT-20261001
+  - USER-FRONTEND-QA-001
+  scope: Record explicit latest-increment validation and finish the existing M002 closeout after all reopened changes
+    are closed. Preserve prior UAT and all retained limitations; no 3302 migration, live model calls, production
+    release, Git commit or M003.
+
+
+- id: TRANSITION-M002-092
+  milestone: M002
+  timestamp: '2026-10-01T11:44:46.948774+00:00'
+  operation: recover-or-rollback
+  from: milestone-complete
+  to: product-planning
+  previous_role: null
+  previous_agent: null
+  active_role: product/to-c
+  active_agent: product-maya
+  confirmed_by: user
+  recorded_by: gatekeeper-owen
+  decision_id: TRANSITION-M002-092
+  evidence: .planning/milestones/M002/reviews/model-generalization-092.md
+  scope: Implement administrator-only generic model configuration with Chat Completions, Responses and Anthropic
+    Messages; preserve accepted unrelated behavior and original UAT; no live model batch, production release or
+    Git commit.
+
+- id: TRANSITION-M002-093
+  milestone: M002
+  timestamp: '2026-10-01T11:48:14.550948+00:00'
+  operation: transition-stage
+  from: product-planning
+  to: uiux-design
+  previous_role: product/to-c
+  previous_agent: product-maya
+  active_role: uiux/base
+  active_agent: designer-tony
+  confirmed_by: user
+  recorded_by: gatekeeper-owen
+  decision_id: TRANSITION-M002-093
+  evidence: .planning/milestones/M002/reviews/model-generalization-093.md
+  authorization_refs:
+  - USER-M002-GENERIC-MODELS-20261001
+  scope: 接收PRODUCT06与已确认D2-90/91/92，按参考重做PAGE208通用模型配置原型与文案。
+
+- id: TRANSITION-M002-094
+  milestone: M002
+  timestamp: '2026-10-01T11:55:19.462309+00:00'
+  operation: transition-stage
+  from: uiux-design
+  to: technical-design
+  previous_role: uiux/base
+  previous_agent: designer-tony
+  active_role: dba/base
+  active_agent: dba-diana
+  confirmed_by: user
+  recorded_by: gatekeeper-owen
+  decision_id: TRANSITION-M002-094
+  evidence: .planning/milestones/M002/reviews/model-generalization-094.md
+  authorization_refs:
+  - USER-M002-GENERIC-MODELS-20261001
+  scope: CR029 UI29接收，设计统一连接、模型与凭据迁移；原型四例布局通过。
+
+- id: TRANSITION-M002-095
+  milestone: M002
+  timestamp: '2026-10-01T11:55:49.850198+00:00'
+  operation: activate-role
+  from: technical-design
+  to: technical-design
+  previous_role: dba/base
+  previous_agent: dba-diana
+  active_role: backend-architect/base
+  active_agent: backend-alex
+  confirmed_by: user
+  recorded_by: gatekeeper-owen
+  decision_id: TRANSITION-M002-095
+  evidence: .planning/milestones/M002/reviews/model-generalization-095.md
+  authorization_refs:
+  - USER-M002-GENERIC-MODELS-20261001
+  scope: 接收CR029统一连接存储方案，制定模型API与三协议适配。
+
+- id: TRANSITION-M002-096
+  milestone: M002
+  timestamp: '2026-10-01T11:56:45.203374+00:00'
+  operation: activate-role
+  from: technical-design
+  to: technical-design
+  previous_role: backend-architect/base
+  previous_agent: backend-alex
+  active_role: frontend-architect/base
+  active_agent: frontend-bob
+  confirmed_by: user
+  recorded_by: gatekeeper-owen
+  decision_id: TRANSITION-M002-096
+  evidence: .planning/milestones/M002/reviews/model-generalization-096.md
+  authorization_refs:
+  - USER-M002-GENERIC-MODELS-20261001
+  scope: 接收CR029统一连接与模型契约，规划UI29类型映射及状态。
+
+- id: TRANSITION-M002-097
+  milestone: M002
+  timestamp: '2026-10-01T11:57:01.614915+00:00'
+  operation: transition-stage
+  from: technical-design
+  to: implementation
+  previous_role: frontend-architect/base
+  previous_agent: frontend-bob
+  active_role: backend-implementer/base
+  active_agent: backend-ethan
+  confirmed_by: user
+  recorded_by: gatekeeper-owen
+  decision_id: TRANSITION-M002-097
+  evidence: .planning/milestones/M002/reviews/model-generalization-097.md
+  authorization_refs:
+  - USER-M002-GENERIC-MODELS-20261001
+  scope: CR029产品、UI29、DB与前后端方案接收完毕，开始统一模型服务实现及隔离验证。
+
+- id: TRANSITION-M002-098
+  milestone: M002
+  timestamp: '2026-10-01T12:04:57.366450+00:00'
+  operation: activate-role
+  from: implementation
+  to: implementation
+  previous_role: backend-implementer/base
+  previous_agent: backend-ethan
+  active_role: frontend-implementer/base
+  active_agent: frontend-claire
+  confirmed_by: user
+  recorded_by: gatekeeper-owen
+  decision_id: TRANSITION-M002-098
+  evidence: .planning/milestones/M002/reviews/model-generalization-098.md
+  authorization_refs:
+  - USER-M002-GENERIC-MODELS-20261001
+  scope: 接收CR029已编译与数据库验证的模型契约，实现UI29；HTTP扩展回归仍需闭环。
+
+- id: TRANSITION-M002-099
+  milestone: M002
+  timestamp: '2026-10-01T12:27:37.263450+00:00'
+  operation: transition-stage
+  from: implementation
+  to: verification
+  previous_role: frontend-implementer/base
+  previous_agent: frontend-claire
+  active_role: quality/base
+  active_agent: qa-quinn
+  confirmed_by: user
+  recorded_by: gatekeeper-owen
+  decision_id: TRANSITION-M002-099
+  evidence: .planning/milestones/M002/reviews/model-generalization-099.md
+  authorization_refs:
+  - USER-M002-GENERIC-MODELS-20261001
+  scope: 接收CR029前后端完整开发验证与UI29交付，复用已通过测试，进行原库迁移演练和3302真实环境限定验收；新用户UAT待确认。
+
+- id: TRANSITION-M002-100
+  milestone: M002
+  timestamp: '2026-10-01T12:28:36.737573+00:00'
+  operation: transition-stage
+  from: verification
+  to: implementation
+  previous_role: quality/base
+  previous_agent: qa-quinn
+  active_role: backend-implementer/base
+  active_agent: backend-ethan
+  confirmed_by: user
+  recorded_by: gatekeeper-owen
+  decision_id: TRANSITION-M002-100
+  evidence: .planning/milestones/M002/reviews/model-generalization-100.md
+  authorization_refs:
+  - USER-M002-GENERIC-MODELS-20261001
+  scope: QA迁移演练发现0015更新触发现有模型updated_at变化；原库未迁移。回到后端仅修正迁移保留时间并补回归，不改变功能口径。
+
+- id: TRANSITION-M002-101
+  milestone: M002
+  timestamp: '2026-10-01T12:29:32.521997+00:00'
+  operation: transition-stage
+  from: implementation
+  to: verification
+  previous_role: backend-implementer/base
+  previous_agent: backend-ethan
+  active_role: quality/base
+  active_agent: qa-quinn
+  confirmed_by: user
+  recorded_by: gatekeeper-owen
+  decision_id: TRANSITION-M002-101
+  evidence: .planning/milestones/M002/reviews/model-generalization-101.md
+  authorization_refs:
+  - USER-M002-GENERIC-MODELS-20261001
+  scope: 0015原数据更新时间问题已修复，模型与加密凭据逐值保留回归和新库迁移通过；重新进行原备份恢复演练及3302限定验证。
+
+- id: TRANSITION-M002-102
+  milestone: M002
+  timestamp: '2026-10-01T15:16:43.769535+00:00'
+  operation: transition-stage
+  from: verification
+  to: implementation
+  previous_role: quality/base
+  previous_agent: qa-quinn
+  active_role: frontend-implementer/base
+  active_agent: frontend-claire
+  confirmed_by: user
+  recorded_by: gatekeeper-owen
+  decision_id: TRANSITION-M002-102
+  evidence: .planning/milestones/M002/reviews/model-generalization-102.md
+  authorization_refs:
+  - USER-M002-GENERIC-MODELS-20261001
+  scope: 根据用户反馈修复模型连接测试加载态串行列表共享问题：仅被点击模型显示测试中及反馈；后端单模型探测契约不变。
+
+- id: TRANSITION-M002-103
+  milestone: M002
+  timestamp: '2026-10-01T15:20:06.946945+00:00'
+  operation: transition-stage
+  from: implementation
+  to: verification
+  previous_role: frontend-implementer/base
+  previous_agent: frontend-claire
+  active_role: quality/base
+  active_agent: qa-quinn
+  confirmed_by: user
+  recorded_by: gatekeeper-owen
+  decision_id: TRANSITION-M002-103
+  evidence: .planning/milestones/M002/reviews/model-generalization-103.md
+  authorization_refs:
+  - USER-M002-GENERIC-MODELS-20261001
+  scope: 接收CR029-F02模型测试状态修复及8项局部浏览器证据、类型/lint/构建；复用既有后端结果，更新3302前端并验证实际包的逐行反馈。
+
+- id: TRANSITION-M002-104
+  milestone: M002
+  timestamp: '2026-10-01T15:25:37.759454+00:00'
+  operation: transition-stage
+  from: verification
+  to: product-planning
+  previous_role: quality/base
+  previous_agent: qa-quinn
+  active_role: product/to-c
+  active_agent: product-maya
+  confirmed_by: user
+  recorded_by: gatekeeper-owen
+  decision_id: TRANSITION-M002-104
+  evidence: .planning/milestones/M002/reviews/model-generalization-104.md
+  authorization_refs:
+  - USER-M002-PROVIDER-BATCH-20261001
+  scope: 接收用户服务商优先与批量模型输入的明确改动，修订CR029范围并保留现有权限、三协议、无默认模型及单模型测试。
+
+- id: TRANSITION-M002-105
+  milestone: M002
+  timestamp: '2026-10-01T15:25:38.049350+00:00'
+  operation: transition-stage
+  from: product-planning
+  to: uiux-design
+  previous_role: product/to-c
+  previous_agent: product-maya
+  active_role: uiux/base
+  active_agent: designer-tony
+  confirmed_by: user
+  recorded_by: gatekeeper-owen
+  decision_id: TRANSITION-M002-105
+  evidence: .planning/milestones/M002/reviews/model-generalization-105.md
+  authorization_refs:
+  - USER-M002-PROVIDER-BATCH-20261001
+  scope: 接收CR029-F03明确服务商优先和批量添加，设计UI30分组、可增删模型条目及高级选项间距。
+
+- id: TRANSITION-M002-106
+  milestone: M002
+  timestamp: '2026-10-01T15:28:17.858870+00:00'
+  operation: transition-stage
+  from: uiux-design
+  to: technical-design
+  previous_role: uiux/base
+  previous_agent: designer-tony
+  active_role: backend-architect/base
+  active_agent: backend-alex
+  confirmed_by: user
+  recorded_by: gatekeeper-owen
+  decision_id: TRANSITION-M002-106
+  evidence: .planning/milestones/M002/reviews/model-generalization-106.md
+  authorization_refs:
+  - USER-M002-PROVIDER-BATCH-20261001
+  scope: UI30服务商优先和多模型设计已形成，补用户流式验证要求；设计原子批量接口与显式流式探测契约，无数据库迁移。
+
+- id: TRANSITION-M002-107
+  milestone: M002
+  timestamp: '2026-10-01T15:28:18.012214+00:00'
+  operation: activate-role
+  from: technical-design
+  to: technical-design
+  previous_role: backend-architect/base
+  previous_agent: backend-alex
+  active_role: frontend-architect/base
+  active_agent: frontend-bob
+  confirmed_by: user
+  recorded_by: gatekeeper-owen
+  decision_id: TRANSITION-M002-107
+  evidence: .planning/milestones/M002/reviews/model-generalization-107.md
+  authorization_refs:
+  - USER-M002-PROVIDER-BATCH-20261001
+  scope: 接收服务商下多模型原子创建契约及明确流式测试，设计UI30草稿和DTO映射及逐项测试状态。
+
+- id: TRANSITION-M002-108
+  milestone: M002
+  timestamp: '2026-10-01T15:28:18.160506+00:00'
+  operation: transition-stage
+  from: technical-design
+  to: implementation
+  previous_role: frontend-architect/base
+  previous_agent: frontend-bob
+  active_role: backend-implementer/base
+  active_agent: backend-ethan
+  confirmed_by: user
+  recorded_by: gatekeeper-owen
+  decision_id: TRANSITION-M002-108
+  evidence: .planning/milestones/M002/reviews/model-generalization-108.md
+  authorization_refs:
+  - USER-M002-PROVIDER-BATCH-20261001
+  scope: 接收F03/F04方案，实现原子批量模型新增并核验三协议真实SSE增量与终止；沿现有授权局部验证。
+
+- id: TRANSITION-M002-109
+  milestone: M002
+  timestamp: '2026-10-01T15:31:48.590212+00:00'
+  operation: activate-role
+  from: implementation
+  to: implementation
+  previous_role: backend-implementer/base
+  previous_agent: backend-ethan
+  active_role: frontend-implementer/base
+  active_agent: frontend-claire
+  confirmed_by: user
+  recorded_by: gatekeeper-owen
+  decision_id: TRANSITION-M002-109
+  evidence: .planning/milestones/M002/reviews/model-generalization-109.md
+  authorization_refs:
+  - USER-M002-PROVIDER-BATCH-20261001
+  scope: 接收批量原子接口及三协议流式严格验证，实现UI30服务商优先、模型列表条目、高级选项间距及逐项测试。
+
+- id: TRANSITION-M002-110
+  milestone: M002
+  timestamp: '2026-10-01T15:40:18.766053+00:00'
+  operation: transition-stage
+  from: implementation
+  to: verification
+  previous_role: frontend-implementer/base
+  previous_agent: frontend-claire
+  active_role: quality/base
+  active_agent: qa-quinn
+  confirmed_by: user
+  recorded_by: gatekeeper-owen
+  decision_id: TRANSITION-M002-110
+  evidence: .planning/milestones/M002/reviews/model-generalization-110.md
+  authorization_refs:
+  - USER-M002-PROVIDER-BATCH-20261001
+  scope: 接收 UI30 服务商优先批量模型表单及三协议流式探测；复用开发证据，补 3302 实际构建验证，不调用真实模型、不改原配置。
+
+- id: TRANSITION-M002-111
+  milestone: M002
+  timestamp: '2026-10-01T16:10:34.000678+00:00'
+  operation: transition-stage
+  from: verification
+  to: product-planning
+  previous_role: quality/base
+  previous_agent: qa-quinn
+  active_role: product/to-c
+  active_agent: product-maya
+  confirmed_by: user
+  recorded_by: gatekeeper-owen
+  decision_id: TRANSITION-M002-111
+  evidence: .planning/milestones/M002/reviews/model-generalization-111.md
+  authorization_refs:
+  - USER-M002-PROVIDER-WORKSPACE-20261002
+  scope: 接收用户 CR029-F05：服务商为列表和编辑主体，替代模型单独编辑及连接复制新增语义。
+
+- id: TRANSITION-M002-112
+  milestone: M002
+  timestamp: '2026-10-01T16:10:34.189338+00:00'
+  operation: transition-stage
+  from: product-planning
+  to: uiux-design
+  previous_role: product/to-c
+  previous_agent: product-maya
+  active_role: uiux/base
+  active_agent: designer-tony
+  confirmed_by: user
+  recorded_by: gatekeeper-owen
+  decision_id: TRANSITION-M002-112
+  evidence: .planning/milestones/M002/reviews/model-generalization-112.md
+  authorization_refs:
+  - USER-M002-PROVIDER-WORKSPACE-20261002
+  scope: 将 PAGE208 重构为服务商分组卡片和服务商聚合编辑器，UI31沿用已确认视觉与流式测试。
+
+- id: TRANSITION-M002-113
+  milestone: M002
+  timestamp: '2026-10-01T16:11:35.636799+00:00'
+  operation: transition-stage
+  from: uiux-design
+  to: technical-design
+  previous_role: uiux/base
+  previous_agent: designer-tony
+  active_role: dba/base
+  active_agent: dba-diana
+  confirmed_by: user
+  recorded_by: gatekeeper-owen
+  decision_id: TRANSITION-M002-113
+  evidence: .planning/milestones/M002/reviews/model-generalization-113.md
+  authorization_refs:
+  - USER-M002-PROVIDER-WORKSPACE-20261002
+  scope: DATA007/008服务商改为稳定可编辑聚合，评估凭据原位更新及模型关联完整性。
+
+- id: TRANSITION-M002-114
+  milestone: M002
+  timestamp: '2026-10-01T16:12:32.447028+00:00'
+  operation: activate-role
+  from: technical-design
+  to: technical-design
+  previous_role: dba/base
+  previous_agent: dba-diana
+  active_role: backend-architect/base
+  active_agent: backend-alex
+  confirmed_by: user
+  recorded_by: gatekeeper-owen
+  decision_id: TRANSITION-M002-114
+  evidence: .planning/milestones/M002/reviews/model-generalization-114.md
+  authorization_refs:
+  - USER-M002-PROVIDER-WORKSPACE-20261002
+  scope: 设计服务商聚合读取/创建/更新API及单事务身份保持，采用0016凭据更新函数。
+
+- id: TRANSITION-M002-115
+  milestone: M002
+  timestamp: '2026-10-01T16:12:32.635513+00:00'
+  operation: activate-role
+  from: technical-design
+  to: technical-design
+  previous_role: backend-architect/base
+  previous_agent: backend-alex
+  active_role: frontend-architect/base
+  active_agent: frontend-bob
+  confirmed_by: user
+  recorded_by: gatekeeper-owen
+  decision_id: TRANSITION-M002-115
+  evidence: .planning/milestones/M002/reviews/model-generalization-115.md
+  authorization_refs:
+  - USER-M002-PROVIDER-WORKSPACE-20261002
+  scope: UI31服务商卡片/聚合草稿和typed聚合API映射，按modelUUID合并冲突。
+
+- id: TRANSITION-M002-116
+  milestone: M002
+  timestamp: '2026-10-01T16:12:32.809207+00:00'
+  operation: transition-stage
+  from: technical-design
+  to: implementation
+  previous_role: frontend-architect/base
+  previous_agent: frontend-bob
+  active_role: backend-implementer/base
+  active_agent: backend-ethan
+  confirmed_by: user
+  recorded_by: gatekeeper-owen
+  decision_id: TRANSITION-M002-116
+  evidence: .planning/milestones/M002/reviews/model-generalization-116.md
+  authorization_refs:
+  - USER-M002-PROVIDER-WORKSPACE-20261002
+  scope: 实现0016、服务商聚合API、原位保存及数据库/HTTP回归。
+
+- id: TRANSITION-M002-117
+  milestone: M002
+  timestamp: '2026-10-01T16:16:16.171904+00:00'
+  operation: activate-role
+  from: implementation
+  to: implementation
+  previous_role: backend-implementer/base
+  previous_agent: backend-ethan
+  active_role: frontend-implementer/base
+  active_agent: frontend-claire
+  confirmed_by: user
+  recorded_by: gatekeeper-owen
+  decision_id: TRANSITION-M002-117
+  evidence: .planning/milestones/M002/reviews/model-generalization-117.md
+  authorization_refs:
+  - USER-M002-PROVIDER-WORKSPACE-20261002
+  scope: 实现UI31服务商列表、整组编辑/新增、冲突合并和明确两条添加路径；接收聚合API。
+
+- id: TRANSITION-M002-118
+  milestone: M002
+  timestamp: '2026-10-01T16:26:23.853811+00:00'
+  operation: transition-stage
+  from: implementation
+  to: verification
+  previous_role: frontend-implementer/base
+  previous_agent: frontend-claire
+  active_role: quality/base
+  active_agent: qa-quinn
+  confirmed_by: user
+  recorded_by: gatekeeper-owen
+  decision_id: TRANSITION-M002-118
+  evidence: .planning/milestones/M002/reviews/model-generalization-118.md
+  authorization_refs:
+  - USER-M002-PROVIDER-WORKSPACE-20261002
+  scope: 接收UI31服务商聚合实现与定向验证，执行3302私有备份恢复演练0016、更新及真实元数据冒烟。
+
+- id: TRANSITION-M002-119
+  milestone: M002
+  timestamp: '2026-10-01T17:04:39.955447+00:00'
+  operation: transition-stage
+  from: verification
+  to: implementation
+  previous_role: quality/base
+  previous_agent: qa-quinn
+  active_role: frontend-implementer/base
+  active_agent: frontend-claire
+  confirmed_by: user
+  recorded_by: gatekeeper-owen
+  decision_id: TRANSITION-M002-119
+  evidence: .planning/milestones/M002/reviews/gallery-meanings-119.md
+  authorization_refs:
+  - USER-M002-GALLERY-MEANINGS-20261002
+  scope: UIA-PAGE-217-MEANINGS23：精选词义移回左侧配置区并复验既有设计
+
+- id: TRANSITION-M002-120
+  milestone: M002
+  timestamp: '2026-10-01T17:07:59.676742+00:00'
+  operation: transition-stage
+  from: implementation
+  to: verification
+  previous_role: frontend-implementer/base
+  previous_agent: frontend-claire
+  active_role: quality/base
+  active_agent: qa-quinn
+  confirmed_by: user
+  recorded_by: gatekeeper-owen
+  decision_id: TRANSITION-M002-120
+  evidence: .planning/milestones/M002/reviews/gallery-meanings-120.md
+  authorization_refs:
+  - USER-M002-GALLERY-MEANINGS-20261002
+  scope: GALLERY-MEANINGS-F01：复用开发证据、3302前端更新及已批准词义布局定向复验
+
+- id: TRANSITION-M002-121
+  milestone: M002
+  timestamp: '2026-10-01T17:09:46.403358+00:00'
+  operation: transition-stage
+  from: verification
+  to: implementation
+  previous_role: quality/base
+  previous_agent: qa-quinn
+  active_role: frontend-implementer/base
+  active_agent: frontend-claire
+  confirmed_by: user
+  recorded_by: gatekeeper-owen
+  decision_id: TRANSITION-M002-121
+  evidence: .planning/milestones/M002/reviews/gallery-meanings-121.md
+  authorization_refs:
+  - USER-M002-GALLERY-MEANINGS-20261002
+  scope: GALLERY-MEANINGS-F02：词义区语言标签按原型使用语言原名，保持发布释义
+
+- id: TRANSITION-M002-122
+  milestone: M002
+  timestamp: '2026-10-01T17:11:47.031309+00:00'
+  operation: transition-stage
+  from: implementation
+  to: verification
+  previous_role: frontend-implementer/base
+  previous_agent: frontend-claire
+  active_role: quality/base
+  active_agent: qa-quinn
+  confirmed_by: user
+  recorded_by: gatekeeper-owen
+  decision_id: TRANSITION-M002-122
+  evidence: .planning/milestones/M002/reviews/gallery-meanings-122.md
+  authorization_refs:
+  - USER-M002-GALLERY-MEANINGS-20261002
+  scope: GALLERY-MEANINGS-F01/F02：发布前端补充语言原名标签，复验精选与后台共享用处
+
+- id: TRANSITION-M002-123
+  milestone: M002
+  timestamp: '2026-10-04'
+  operation: transition-stage
+  from: verification
+  to: milestone-complete
+  previous_role: quality/base
+  previous_agent: qa-quinn
+  active_role: null
+  active_agent: null
+  confirmed_by: user
+  recorded_by: gatekeeper-owen
+  decision_id: TRANSITION-M002-123
+  evidence: .planning/milestones/M002/reviews/verification-acceptance-123.md
+  authorization_refs:
+  - USER-M002-FINAL-INCREMENT-UAT-20261004
+  scope: Accept CR029/UI31 provider management and gallery meanings fixes; close final M002 increments with retained
+    limitations.

@@ -1,0 +1,87 @@
+Q01 PASS Private title is literal text, persists, and preserves content/counters
+Q02 PASS Title stale revision retains local input and offers explicit second save
+Q03 PASS Admin cannot edit private title; second learner cannot read/write it
+Q04 FAIL Correct word plus all surface forms succeeds and clears persisted answers
+Q05 FAIL Completed comparison is absent after reload and all-blank restart does not count learning
+Q06 PASS Back navigation from library cannot restore submitted comparison
+Q07 FAIL Partial draft restores only on confirmation; title edits do not erase it
+Q08 FAIL Real backend review still usable when IndexedDB is unavailable
+Q09 FAIL All-empty nickname/gender saves; same-day welcome and reminder content coexist
+Q10 FAIL Paused batch excluded from date range but available for single review
+Q11 FAIL Successful delete removes batch and invalidates corresponding review URL
+{
+  "fixturePreparation": [
+    "real admin login + overview",
+    "all 8 admin modules accept real DTOs, no initial operational reward fixtures",
+    "real atomic multi-row level preview/save and isolated growth activation",
+    "admin draft → real independent preview SSE → publish",
+    "visitor preset generation → register → one-time claim to personal library"
+  ],
+  "results": [
+    {
+      "id": "Q01",
+      "name": "Private title is literal text, persists, and preserves content/counters",
+      "result": "PASS"
+    },
+    {
+      "id": "Q02",
+      "name": "Title stale revision retains local input and offers explicit second save",
+      "result": "PASS"
+    },
+    {
+      "id": "Q03",
+      "name": "Admin cannot edit private title; second learner cannot read/write it",
+      "result": "PASS"
+    },
+    {
+      "id": "Q04",
+      "name": "Correct word plus all surface forms succeeds and clears persisted answers",
+      "result": "FAIL",
+      "error": "Error: expect(locator).toHaveText(expected) failed\n\nLocator: locator('.result-word .good')\nTimeout: 5000ms\n- Expected  - 6\n+ Received  + 1\n\n- Array [\n-   \"learn\",\n-   \"learns\",\n-   \"learning\",\n-   \"learned\",\n- ]\n+ Array []\n\nCall log:\n  - Expect \"to.have.text.array\" with timeout 5000ms\n  - waiting for locator('.result-word .good')\n    14 × locator resolved to 0 elements\n"
+    },
+    {
+      "id": "Q05",
+      "name": "Completed comparison is absent after reload and all-blank restart does not count learning",
+      "result": "FAIL",
+      "error": "TimeoutError: locator.click: Timeout 12000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: 'Try this batch again', exact: true })\u001b[22m\n"
+    },
+    {
+      "id": "Q06",
+      "name": "Back navigation from library cannot restore submitted comparison",
+      "result": "PASS"
+    },
+    {
+      "id": "Q07",
+      "name": "Partial draft restores only on confirmation; title edits do not erase it",
+      "result": "FAIL",
+      "error": "TimeoutError: locator.click: Timeout 12000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: 'Try this batch again', exact: true })\u001b[22m\n"
+    },
+    {
+      "id": "Q08",
+      "name": "Real backend review still usable when IndexedDB is unavailable",
+      "result": "FAIL",
+      "error": "Error: expect(locator).toHaveCount(expected) failed\n\nLocator:  locator('.slot')\nExpected: 5\nReceived: 0\nTimeout:  2500ms\n\nCall log:\n  - Expect \"to.have.count\" with timeout 2500ms\n  - waiting for locator('.slot')\n    9 × locator resolved to 0 elements\n      - unexpected value \"0\"\n"
+    },
+    {
+      "id": "Q09",
+      "name": "All-empty nickname/gender saves; same-day welcome and reminder content coexist",
+      "result": "FAIL",
+      "error": "Error: /admin/notices: 400 undefined"
+    },
+    {
+      "id": "Q10",
+      "name": "Paused batch excluded from date range but available for single review",
+      "result": "FAIL",
+      "error": "Error: expect(received).toContain(expected) // indexOf\n\nExpected value: undefined\nReceived array: [\"Edit title\", \"Review this story\", \"Delete permanently\"]"
+    },
+    {
+      "id": "Q11",
+      "name": "Successful delete removes batch and invalidates corresponding review URL",
+      "result": "FAIL",
+      "error": "Error: expect(received).toBe(expected) // Object.is equality\n\nExpected: 1\nReceived: 0"
+    }
+  ],
+  "localProviderCalls": 3,
+  "realProviderCalls": 0,
+  "pageErrors": []
+}

@@ -1,0 +1,386 @@
+{
+  "version": "M002-QA-17",
+  "result": "FAIL",
+  "effective_cases": 18,
+  "passed": 14,
+  "failed": 4,
+  "new_findings": [
+    {
+      "id": "QA2-F17",
+      "cr": "M002-CR-020",
+      "severity": "P2",
+      "scope": "Shared learner avatar menu dismissal and focus management",
+      "status": "confirmed_pending_gate"
+    }
+  ],
+  "cases": [
+    {
+      "id": "H17-zh-320",
+      "status": "PASS",
+      "source": "results.json",
+      "checks": 12,
+      "failed_checks": []
+    },
+    {
+      "id": "H17-zh-390",
+      "status": "PASS",
+      "source": "results.json",
+      "checks": 12,
+      "failed_checks": []
+    },
+    {
+      "id": "H17-zh-768",
+      "status": "PASS",
+      "source": "results.json",
+      "checks": 12,
+      "failed_checks": []
+    },
+    {
+      "id": "H17-zh-1440",
+      "status": "PASS",
+      "source": "results.json",
+      "checks": 12,
+      "failed_checks": []
+    },
+    {
+      "id": "H17-en-320",
+      "status": "PASS",
+      "source": "results.json",
+      "checks": 12,
+      "failed_checks": []
+    },
+    {
+      "id": "H17-en-390",
+      "status": "PASS",
+      "source": "results.json",
+      "checks": 12,
+      "failed_checks": []
+    },
+    {
+      "id": "H17-en-768",
+      "status": "PASS",
+      "source": "results.json",
+      "checks": 12,
+      "failed_checks": []
+    },
+    {
+      "id": "H17-en-1440",
+      "status": "PASS",
+      "source": "results.json",
+      "checks": 12,
+      "failed_checks": []
+    },
+    {
+      "id": "N17-zh-1440",
+      "status": "FAIL",
+      "source": "results.json",
+      "checks": 14,
+      "failed_checks": [
+        {
+          "name": "outsideCloses",
+          "pass": false,
+          "actual": {
+            "production": false,
+            "prototype": true
+          }
+        },
+        {
+          "name": "tabExitCloses",
+          "pass": false,
+          "actual": {
+            "production": false,
+            "prototype": true
+          }
+        },
+        {
+          "name": "Escape returns focus to avatar",
+          "pass": false,
+          "actual": {
+            "production": {
+              "tag": "BODY",
+              "text": "跳到主要内容词涟首页精选学习复习书架英文平台消息llearner_e2e个人信息账号成长道具卡兑换中心AI 语境学习从一个故事，\n记住新的单词。把想学的单词写进短文，读懂用法，再用拼写复习加深记忆。用我的单词造文先试一篇AI 短文示例故事 ",
+              "isSummary": false,
+              "isHeading": false
+            },
+            "prototype": {
+              "tag": "SUMMARY",
+              "text": "小小涟",
+              "isSummary": true,
+              "isHeading": false
+            }
+          }
+        },
+        {
+          "name": "selecting section focuses page heading",
+          "pass": false,
+          "actual": {
+            "production": {
+              "tag": "BODY",
+              "text": "跳到主要内容词涟首页精选学习复习书架英文平台消息llearner_e2e个人信息账号成长道具卡兑换中心llearner_e2e@learner_e2e基础计划基础生效计划基础上次登录2026年9月20日 13:00上次学习2026年9月15",
+              "isSummary": false,
+              "isHeading": false
+            },
+            "prototype": {
+              "tag": "H1",
+              "text": "个人信息",
+              "isSummary": false,
+              "isHeading": true
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "N17-en-1440",
+      "status": "FAIL",
+      "source": "results.json",
+      "checks": 14,
+      "failed_checks": [
+        {
+          "name": "outsideCloses",
+          "pass": false,
+          "actual": {
+            "production": false,
+            "prototype": true
+          }
+        },
+        {
+          "name": "tabExitCloses",
+          "pass": false,
+          "actual": {
+            "production": false,
+            "prototype": true
+          }
+        },
+        {
+          "name": "Escape returns focus to avatar",
+          "pass": false,
+          "actual": {
+            "production": {
+              "tag": "BODY",
+              "text": "Skip to main contentWordWeaveHomePicksLearnReviewLibraryChineseUpdatesllearner_e2ePersonal informationAccount growthItem",
+              "isSummary": false,
+              "isHeading": false
+            },
+            "prototype": {
+              "tag": "SUMMARY",
+              "text": "小小涟",
+              "isSummary": true,
+              "isHeading": false
+            }
+          }
+        },
+        {
+          "name": "selecting section focuses page heading",
+          "pass": false,
+          "actual": {
+            "production": {
+              "tag": "BODY",
+              "text": "Skip to main contentWordWeaveHomePicksLearnReviewLibraryChineseUpdatesllearner_e2ePersonal informationAccount growthItem",
+              "isSummary": false,
+              "isHeading": false
+            },
+            "prototype": {
+              "tag": "H1",
+              "text": "Personal information",
+              "isSummary": false,
+              "isHeading": true
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "N17-zh-320",
+      "status": "FAIL",
+      "source": "keyboard-control/results.json",
+      "checks": 14,
+      "failed_checks": [
+        {
+          "name": "outsideCloses",
+          "pass": false,
+          "actual": {
+            "production": false,
+            "prototype": true
+          }
+        },
+        {
+          "name": "tabExitCloses",
+          "pass": false,
+          "actual": {
+            "production": false,
+            "prototype": true
+          }
+        },
+        {
+          "name": "Escape returns focus to avatar",
+          "pass": false,
+          "actual": {
+            "production": {
+              "tag": "BODY",
+              "text": "跳到主要内容词涟首页精选学习复习书架英文平台消息llearner_e2e个人信息账号成长道具卡兑换中心AI 语境学习从一个故事，\n记住新的单词。把想学的单词写进短文，读懂用法，再用拼写复习加深记忆。用我的单词造文先试一篇AI 短文示例故事 ",
+              "isSummary": false,
+              "isHeading": false
+            },
+            "prototype": {
+              "tag": "SUMMARY",
+              "text": "小小涟",
+              "isSummary": true,
+              "isHeading": false
+            }
+          }
+        },
+        {
+          "name": "selecting section focuses page heading",
+          "pass": false,
+          "actual": {
+            "production": {
+              "tag": "BODY",
+              "text": "跳到主要内容词涟首页精选学习复习书架英文平台消息llearner_e2e个人信息账号成长道具卡兑换中心llearner_e2e@learner_e2e基础计划基础生效计划基础上次登录2026年9月20日 13:00上次学习2026年9月15",
+              "isSummary": false,
+              "isHeading": false
+            },
+            "prototype": {
+              "tag": "H1",
+              "text": "个人信息",
+              "isSummary": false,
+              "isHeading": true
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "N17-en-320",
+      "status": "FAIL",
+      "source": "keyboard-control/results.json",
+      "checks": 14,
+      "failed_checks": [
+        {
+          "name": "outsideCloses",
+          "pass": false,
+          "actual": {
+            "production": false,
+            "prototype": true
+          }
+        },
+        {
+          "name": "tabExitCloses",
+          "pass": false,
+          "actual": {
+            "production": false,
+            "prototype": true
+          }
+        },
+        {
+          "name": "Escape returns focus to avatar",
+          "pass": false,
+          "actual": {
+            "production": {
+              "tag": "BODY",
+              "text": "Skip to main contentWordWeaveHomePicksLearnReviewLibraryChineseUpdatesllearner_e2ePersonal informationAccount growthItem",
+              "isSummary": false,
+              "isHeading": false
+            },
+            "prototype": {
+              "tag": "SUMMARY",
+              "text": "小小涟",
+              "isSummary": true,
+              "isHeading": false
+            }
+          }
+        },
+        {
+          "name": "selecting section focuses page heading",
+          "pass": false,
+          "actual": {
+            "production": {
+              "tag": "BODY",
+              "text": "Skip to main contentWordWeaveHomePicksLearnReviewLibraryChineseUpdatesllearner_e2ePersonal informationAccount growthItem",
+              "isSummary": false,
+              "isHeading": false
+            },
+            "prototype": {
+              "tag": "H1",
+              "text": "Personal information",
+              "isSummary": false,
+              "isHeading": true
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "M17-en-1440",
+      "status": "PASS",
+      "source": "control/results.json",
+      "checks": 8,
+      "failed_checks": []
+    },
+    {
+      "id": "M17-zh-390",
+      "status": "PASS",
+      "source": "control/results.json",
+      "checks": 8,
+      "failed_checks": []
+    },
+    {
+      "id": "W17-en-320",
+      "status": "PASS",
+      "source": "control/results.json",
+      "checks": 11,
+      "failed_checks": []
+    },
+    {
+      "id": "W17-zh-320",
+      "status": "PASS",
+      "source": "control/results.json",
+      "checks": 11,
+      "failed_checks": []
+    },
+    {
+      "id": "W17-zh-1440",
+      "status": "PASS",
+      "source": "results.json",
+      "checks": 11,
+      "failed_checks": []
+    },
+    {
+      "id": "W17-en-1440",
+      "status": "PASS",
+      "source": "results.json",
+      "checks": 11,
+      "failed_checks": []
+    }
+  ],
+  "raw_runs": [
+    {
+      "source": "results.json",
+      "cases": 18,
+      "passed": 10,
+      "failed": 8
+    },
+    {
+      "source": "control/results.json",
+      "cases": 6,
+      "passed": 4,
+      "failed": 2
+    },
+    {
+      "source": "keyboard-control/results.json",
+      "cases": 2,
+      "passed": 0,
+      "failed": 2
+    }
+  ],
+  "runtime_warnings_errors": 0,
+  "provider_calls": 0,
+  "real_backend_tested": false,
+  "uat": "not_executed",
+  "limitations": [
+    "Contract mock for UI presentation only; API sorting/security/time facts retain previous evidence and are not newly tested.",
+    "Two browser engines; no real device or screen-reader test.",
+    "No offscreen/background home-motion or all welcome variants/reduced-motion claim in this round.",
+    "Remaining original coverage must be triaged using matching prior evidence; no speculative combinations added."
+  ]
+}

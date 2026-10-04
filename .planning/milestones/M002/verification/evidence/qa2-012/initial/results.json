@@ -1,0 +1,65 @@
+{
+  "results": [
+    {
+      "id": "T1",
+      "name": "Cancel, blank rejection, ordinary save failure and explicit retry",
+      "result": "FAIL",
+      "error": "SyntaxError: Cannot convert tSJ0WnAOXi1vAXUFIE-4KH9-Xu1-D3QbuoWg1qlvoGc to a BigInt"
+    },
+    {
+      "id": "T2",
+      "name": "Saved title survives re-login and UI language; preset uses one title",
+      "result": "FAIL",
+      "error": "TimeoutError: locator.selectOption: Timeout 12000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('.locale-switch select').first()\u001b[22m\n"
+    },
+    {
+      "id": "T3",
+      "name": "Migrated and paused batches can be renamed; same-preset copies are isolated",
+      "result": "FAIL",
+      "error": "Error: locator.uncheck: Clicking the checkbox did not change its state\nCall log:\n\u001b[2m  - waiting for locator('.library-check input')\u001b[22m\n\u001b[2m    - locator resolved to <input checked type=\"checkbox\"/>\u001b[22m\n\u001b[2m  - attempting click action\u001b[22m\n\u001b[2m    - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m    - element is visible, enabled and stable\u001b[22m\n\u001b[2m    - scrolling into view if needed\u001b[22m\n\u001b[2m    - done scrolling\u001b[22m\n\u001b[2m    - performing click action\u001b[22m\n\u001b[2m    - click action done\u001b[22m\n\u001b[2m    - waiting for scheduled navigations to finish\u001b[22m\n\u001b[2m    - navigations have finished\u001b[22m\n"
+    },
+    {
+      "id": "T4",
+      "name": "Deletion and session invalidation while editing reject save without false success",
+      "result": "FAIL",
+      "error": "Error: /me/batches/01a0e6c2-a79b-7bc2-ad7f-59676928d4bd 400 {\"type\":\"https://wordweave.example/problems/malformed-request\",\"title\":\"Malformed request\",\"status\":400,\"code\":\"malformed_request\",\"detail\":\"Content-Type must be application/json.\",\"request_id\":\"req_siTZeZhHc5DN17KmDiodqg\"}"
+    }
+  ],
+  "samples": [],
+  "runtime": [
+    {
+      "kind": "error",
+      "url": "http://127.0.0.1:3301/library/01a0e6c2-a78b-7065-95dd-a5c9c99fa108",
+      "action": "T1",
+      "text": "Failed to load resource: the server responded with a status of 503 (Service Unavailable)"
+    }
+  ],
+  "requests": [
+    {
+      "action": "T1",
+      "path": "/api/v1/me/batches/01a0e6c2-a78b-7065-95dd-a5c9c99fa108",
+      "kind": "title",
+      "title": "A title worth keeping"
+    },
+    {
+      "action": "T1",
+      "path": "/api/v1/me/batches/01a0e6c2-a78b-7065-95dd-a5c9c99fa108",
+      "kind": "title",
+      "title": "A title worth keeping"
+    },
+    {
+      "action": "T2",
+      "path": "/api/v1/me/batches/01a0e6c2-a78b-7065-95dd-a5c9c99fa108",
+      "kind": "title",
+      "title": "同一个标题 · Same title"
+    },
+    {
+      "action": "T3",
+      "path": "/api/v1/me/batches/10360848-c72c-4457-994a-f28be90cd050",
+      "kind": "title",
+      "title": "From my earlier studies"
+    }
+  ],
+  "localProviderCalls": 6,
+  "realProviderCalls": 0
+}

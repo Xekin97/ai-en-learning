@@ -1,0 +1,41 @@
+{
+  "results": [
+    {
+      "id": "C01",
+      "name": "Exchange uses current price and same idempotency key cannot charge twice",
+      "result": "PASS"
+    },
+    {
+      "id": "C02",
+      "name": "Same-model six-day plus three-day card adds three days to original tail",
+      "result": "PASS"
+    },
+    {
+      "id": "C03",
+      "name": "Admin grant cannot deduct points; model card cannot add creation counts",
+      "result": "PASS"
+    },
+    {
+      "id": "C04",
+      "name": "Base plan reset preserves active trial expiry and separate quota origin",
+      "result": "PASS"
+    },
+    {
+      "id": "C05",
+      "name": "Retirement makes already-used model cards manually refundable",
+      "result": "PASS"
+    },
+    {
+      "id": "C06",
+      "name": "Updated retirement points invalidate old preview; manual refund uses new amount once",
+      "result": "FAIL",
+      "error": "Error: /admin/growth/items/01a0c1c8-cc8c-7592-b5c2-a31ad34e6651 422 {\"type\":\"https://wordweave.example/problems/validation-failed\",\"title\":\"Request could not be accepted\",\"status\":422,\"code\":\"validation_failed\",\"detail\":\"One or more fields need attention.\",\"request_id\":\"req_mjhs-FWTJhoA5pNJlpDPtw\",\"field_errors\":[{\"field\":\"/effect/model_ids\",\"code\":\"invalid_reference\"}]}"
+    },
+    {
+      "id": "C07",
+      "name": "Owned cards page renders real refund/active states without DTO errors",
+      "result": "PASS"
+    }
+  ],
+  "realProviderCalls": 0
+}

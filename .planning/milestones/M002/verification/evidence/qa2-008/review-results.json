@@ -1,0 +1,123 @@
+{
+  "results": [
+    {
+      "id": "B01",
+      "name": "Participation updates future date preview but not an already-created range snapshot",
+      "result": "PASS"
+    },
+    {
+      "id": "B02",
+      "name": "Two simultaneous submissions settle once and retries/readback never expose the comparison",
+      "result": "PASS"
+    },
+    {
+      "id": "B03",
+      "name": "Two simultaneous replacements yield one new range and reject the stale replacement",
+      "result": "PASS"
+    },
+    {
+      "id": "B04",
+      "name": "A real submit-versus-replace race has one winner and no duplicate completion",
+      "result": "PASS"
+    },
+    {
+      "id": "B05",
+      "name": "Replacement-first rejects old start/submit/restart and preserves minimal readback",
+      "result": "PASS"
+    }
+  ],
+  "samples": [
+    {
+      "id": "B01",
+      "before": {
+        "batch_count": 23,
+        "entry_count": 23,
+        "empty": false
+      },
+      "after": {
+        "batch_count": 22,
+        "entry_count": 22,
+        "empty": false
+      },
+      "fixedSessionTotal": 23,
+      "singleBatchAllowed": true
+    },
+    {
+      "id": "B02",
+      "attempt": "01a0e615-2531-7288-b479-9ccabd47e6e6",
+      "outcomes": [
+        "submitted",
+        "already_submitted"
+      ],
+      "receipt": {
+        "attempt_id": "01a0e615-2531-7288-b479-9ccabd47e6e6",
+        "batch_id": "01a0e613-2f1b-781d-b6dc-28eb1d424562",
+        "revision": "jQ_9cdOK73rvVZEEPZaB3TbtEILGVcfTkbgOrwrUQFA",
+        "submitted_at": "2026-09-28T11:35:40.608768+08:00",
+        "successful": true,
+        "has_answer": true
+      },
+      "summaryBefore": {
+        "generation_count": 25,
+        "unique_learned_entries": 2,
+        "participating_batches": 23,
+        "paused_batches": 1,
+        "successful_review_count": 0,
+        "batches_ever_reviewed_successfully": 0
+      },
+      "summaryAfter": {
+        "generation_count": 25,
+        "unique_learned_entries": 2,
+        "participating_batches": 23,
+        "paused_batches": 1,
+        "successful_review_count": 1,
+        "batches_ever_reviewed_successfully": 1
+      },
+      "masteredBefore": 0,
+      "masteredAfter": 1,
+      "repeatWithoutComparison": true
+    },
+    {
+      "id": "B03",
+      "oldSession": "01a0e615-250c-79c6-a19e-12c4478f726d",
+      "newSession": "01a0e615-2564-7a55-a4bd-2ef8ca30335b",
+      "statuses": [
+        201,
+        409
+      ],
+      "conflict": "session_replaced"
+    },
+    {
+      "id": "B04",
+      "attempt": "01a0e615-2571-7d61-8263-9c764d5d495f",
+      "submitStatus": 200,
+      "submitCode": "submitted",
+      "replaceStatus": 409,
+      "replaceCode": "revision_conflict",
+      "successfulBefore": 1,
+      "successfulAfter": 2
+    },
+    {
+      "id": "B05",
+      "oldSession": "01a0e615-2564-7a55-a4bd-2ef8ca30335b",
+      "newSession": "01a0e615-258f-71c1-abb7-3000dd521bdc",
+      "rejections": [
+        {
+          "status": 409,
+          "code": "session_replaced"
+        },
+        {
+          "status": 409,
+          "code": "session_replaced"
+        },
+        {
+          "status": 409,
+          "code": "session_replaced"
+        }
+      ],
+      "readState": "restarted"
+    }
+  ],
+  "localProviderCalls": 0,
+  "realProviderCalls": 0
+}

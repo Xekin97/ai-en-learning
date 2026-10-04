@@ -1,0 +1,159 @@
+{
+  "date": "2026-10-04",
+  "scope": "Local Git archival of accepted M002; no new product implementation or deployment.",
+  "previous_application_head": "5da571b226635113c41cd9cb8c4f33433946fbad",
+  "application_source_commit": "ed7dd083ae2e0544fba0944bda12326edee9865f",
+  "preceding_commits": [
+    {
+      "group": "01-schema",
+      "commit": "6cc1ea3a95d20ed56eb0262834adcb668012ffb7",
+      "subject": "feat(db): add M002 learning, growth and provider migrations",
+      "files": 9,
+      "whitespace_check_exit": 0
+    },
+    {
+      "group": "02-backend",
+      "commit": "1e680ae4aed7ffb530f655a078a5bf2bd628a7f1",
+      "subject": "feat(backend): deliver M002 learning and administration services",
+      "files": 182,
+      "whitespace_check_exit": 0
+    },
+    {
+      "group": "03-frontend",
+      "commit": "1ef793d4281d2f63a79613890a74c91bbcc4c9a5",
+      "subject": "feat(frontend): deliver accepted M002 learner and admin interfaces",
+      "files": 198,
+      "whitespace_check_exit": 0
+    },
+    {
+      "group": "04-browser-tests",
+      "commit": "ed7dd083ae2e0544fba0944bda12326edee9865f",
+      "subject": "test: preserve M002 browser and integration regression suites",
+      "files": 37,
+      "whitespace_check_exit": 0
+    },
+    {
+      "group": "05-contracts",
+      "commit": "0f395dee838fe40682b1a103cbc9f075d6f77c1f",
+      "subject": "docs: archive M002 product and technical contracts",
+      "files": 170,
+      "whitespace_check_exit": 0
+    },
+    {
+      "group": "06-design",
+      "commit": "295f1c654775379c22ac96f6cf4f2f8b32afa09f",
+      "subject": "docs(design): archive M002 prototypes and UI handoffs",
+      "files": 728,
+      "whitespace_check_exit": 2
+    },
+    {
+      "group": "07-delivery-evidence",
+      "commit": "ec8fc269ae81e00cc672cc868acdd541a758f61c",
+      "subject": "docs: preserve M002 implementation and review evidence",
+      "files": 2060,
+      "whitespace_check_exit": 2
+    }
+  ],
+  "archive_commit_lookup": "git log -1 --format=%H -- .planning/milestones/M002/delivery/git-archive-20261004.md",
+  "accepted_source_hash_count": 28,
+  "accepted_source_hashes_match": true,
+  "accepted_source_manifest": ".planning/milestones/M002/verification/evidence/qa2-038/check.json",
+  "application_source_changed_during_archival": false,
+  "archival_document_updates": [
+    "README.md",
+    "backend/README.md",
+    "frontend/README.md"
+  ],
+  "fresh_checks": [
+    {
+      "command": "go test -race ./...",
+      "directory": "backend",
+      "result": "passed",
+      "integration_tags": false,
+      "live_model_environment": "unset"
+    },
+    {
+      "command": "go vet ./...",
+      "directory": "backend",
+      "result": "passed"
+    },
+    {
+      "command": "pnpm test",
+      "directory": "frontend",
+      "result": "passed",
+      "test_files": 39,
+      "tests": 372
+    },
+    {
+      "command": "pnpm typecheck",
+      "directory": "frontend",
+      "result": "passed"
+    },
+    {
+      "command": "pnpm lint",
+      "directory": "frontend",
+      "result": "passed"
+    },
+    {
+      "command": "pnpm lint:boundaries",
+      "directory": "frontend",
+      "result": "passed",
+      "modules": 257,
+      "dependencies": 283
+    },
+    {
+      "command": "pnpm build",
+      "directory": "frontend",
+      "result": "passed"
+    },
+    {
+      "check": "Workflow and project YAML parsing",
+      "result": "passed",
+      "files": 4
+    },
+    {
+      "check": "Code commit staged whitespace checks",
+      "result": "passed",
+      "groups": [
+        "01-schema",
+        "02-backend",
+        "03-frontend",
+        "04-browser-tests"
+      ]
+    },
+    {
+      "check": "Archive reconstruction, digest and overwrite protection",
+      "result": "passed"
+    }
+  ],
+  "reused_browser_acceptance": [
+    "QA36",
+    "QA37",
+    "QA38"
+  ],
+  "browser_suite_rerun": false,
+  "paid_model_calls": 0,
+  "credential_pattern_review": {
+    "unique_files": 6244,
+    "text_files": 4481,
+    "archives": 292,
+    "pattern_matches": 81,
+    "distinct_matched_values": 27,
+    "classification": "Documentation examples and synthetic test fixtures; no live credential match identified."
+  },
+  "split_archive": {
+    "manifest": ".planning/milestones/M002/reviews/evidence/provider-workspace/before-archive-parts.json",
+    "original_bytes": 113289421,
+    "sha256": "639ff775ef4ce92b51a4e6fb6d819cefff8ffd23d534a11a6e7c6a8c53339121",
+    "parts": 4,
+    "original_retained_locally": true
+  },
+  "excluded_working_tree_directories": [
+    "docs/research/",
+    "docs/deployment/"
+  ],
+  "frozen_evidence_rewritten": false,
+  "milestone_state": "complete",
+  "remote_push_performed": false,
+  "production_deployment_performed": false
+}

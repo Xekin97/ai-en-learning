@@ -1,0 +1,280 @@
+{
+  "results": [
+    {
+      "id": "G01",
+      "name": "Vocabulary lookup and generation precheck do not consume quota",
+      "result": "PASS"
+    },
+    {
+      "id": "G02",
+      "name": "Active-run conflict and explicit cancellation charge once without check-in",
+      "result": "PASS"
+    },
+    {
+      "id": "G03",
+      "name": "Provider and content-validation failures refund base source once",
+      "result": "PASS"
+    },
+    {
+      "id": "G04",
+      "name": "Transport interruption differs from explicit cancellation and refunds once",
+      "result": "PASS"
+    },
+    {
+      "id": "G05",
+      "name": "Valid generation then discard remains charged and automatically checked in",
+      "result": "PASS"
+    },
+    {
+      "id": "G06",
+      "name": "Extra-credit failures refund the original card and cancellation consumes it once",
+      "result": "PASS"
+    },
+    {
+      "id": "G07",
+      "name": "Own authenticated run in invalid/discarded state must return contract 409 on save",
+      "result": "PASS"
+    },
+    {
+      "id": "G08",
+      "name": "CR013 preserves wrong-token/owner/missing/deleted 404 and valid save idempotency",
+      "result": "PASS"
+    },
+    {
+      "id": "G09",
+      "name": "CR013 preserves pending draft expiry 410 without saving or refunding",
+      "result": "PASS"
+    },
+    {
+      "id": "G10",
+      "name": "Failure refund restores the original expired extra-credit balance without reviving availability",
+      "result": "PASS"
+    }
+  ],
+  "samples": [
+    {
+      "action": "G01",
+      "invalidRequests": 4,
+      "providerCalls": 0,
+      "chargesUnchanged": true
+    },
+    {
+      "action": "G02",
+      "charge": {
+        "run_id": "01a0cd16-7af7-73b6-b3e8-e25318e7f3ce",
+        "source_kind": "plan",
+        "plan_code": "registered",
+        "origin": "base",
+        "item_id": null,
+        "state": "consumed",
+        "units": 1
+      },
+      "signedToday": false,
+      "conflict": 409,
+      "crossOwner": 404,
+      "terminal": "cancelled"
+    },
+    {
+      "action": "G03",
+      "kind": "provider-open-failure",
+      "status": 503,
+      "code": "generation_unavailable",
+      "charge": {
+        "run_id": "01a0cd16-7b62-7e89-ba28-03f1694d79e3",
+        "source_kind": "plan",
+        "origin": "base",
+        "item_id": null,
+        "state": "refunded"
+      }
+    },
+    {
+      "action": "G03",
+      "kind": "invalid",
+      "terminal": {
+        "event": "generation.failed",
+        "data": {
+          "code": "content_validation_failed",
+          "quota_refunded": true,
+          "retryable": true,
+          "request_id": "req_-G1r9WohcdSkAIy4hm-skQ"
+        }
+      },
+      "charge": {
+        "run_id": "01a0cd16-7ba2-763c-9dd0-dcf8ff763759",
+        "source_kind": "plan",
+        "plan_code": "registered",
+        "origin": "base",
+        "item_id": null,
+        "state": "refunded",
+        "units": 1
+      },
+      "saveRejected": 409
+    },
+    {
+      "action": "G04",
+      "charge": {
+        "run_id": "01a0cd16-7bf0-7a3d-a9f9-6d9548f93a89",
+        "source_kind": "plan",
+        "plan_code": "registered",
+        "origin": "base",
+        "item_id": null,
+        "state": "refunded",
+        "units": 1
+      },
+      "generationCountUnchanged": true
+    },
+    {
+      "action": "G05",
+      "charge": {
+        "run_id": "01a0cd16-7c24-7d89-af92-be97dba7cf08",
+        "source_kind": "plan",
+        "plan_code": "registered",
+        "origin": "base",
+        "item_id": null,
+        "state": "consumed",
+        "units": 1
+      },
+      "signedToday": true,
+      "savedBatches": 0
+    },
+    {
+      "action": "G06",
+      "kind": "provider-open-failure",
+      "status": 503,
+      "code": "generation_unavailable",
+      "charge": {
+        "run_id": "01a0cd16-7c9c-72f7-a1e0-1ae5abaf5e52",
+        "source_kind": "extra_credit",
+        "origin": null,
+        "item_id": "01a0cd16-7c69-784e-abd3-6bf356ff7677",
+        "state": "refunded"
+      }
+    },
+    {
+      "action": "G06",
+      "failSource": {
+        "run_id": "01a0cd16-7c9c-72f7-a1e0-1ae5abaf5e52",
+        "source_kind": "extra_credit",
+        "plan_code": null,
+        "origin": null,
+        "item_id": "01a0cd16-7c69-784e-abd3-6bf356ff7677",
+        "state": "refunded",
+        "units": 1
+      },
+      "cancelSource": {
+        "run_id": "01a0cd16-7ce5-7bad-bcdc-87c6097136b3",
+        "source_kind": "extra_credit",
+        "plan_code": null,
+        "origin": null,
+        "item_id": "01a0cd16-7c69-784e-abd3-6bf356ff7677",
+        "state": "consumed",
+        "units": 1
+      },
+      "before": {
+        "remaining_count": 5,
+        "expires_at": "2026-09-23T16:06:38.056198+08:00"
+      },
+      "after": {
+        "remaining_count": 4,
+        "expires_at": "2026-09-23T16:06:38.056198+08:00"
+      }
+    },
+    {
+      "action": "G07",
+      "saveProbes": [
+        {
+          "run": "01a0cd16-7af7-73b6-b3e8-e25318e7f3ce",
+          "scenario": "G02",
+          "status": 409,
+          "problem": {
+            "type": "https://wordweave.example/problems/state-conflict",
+            "title": "Action conflict",
+            "status": 409,
+            "code": "state_conflict",
+            "detail": "The resource is already in another state.",
+            "request_id": "req_ayhP3EuAXL1QErRspF-UYA"
+          }
+        },
+        {
+          "run": "01a0cd16-7ba2-763c-9dd0-dcf8ff763759",
+          "scenario": "invalid",
+          "status": 409,
+          "problem": {
+            "type": "https://wordweave.example/problems/state-conflict",
+            "title": "Action conflict",
+            "status": 409,
+            "code": "state_conflict",
+            "detail": "The resource is already in another state.",
+            "request_id": "req_iyq39GM737c4O_I06_5bBw"
+          }
+        },
+        {
+          "run": "01a0cd16-7bf0-7a3d-a9f9-6d9548f93a89",
+          "scenario": "G04",
+          "status": 409,
+          "problem": {
+            "type": "https://wordweave.example/problems/state-conflict",
+            "title": "Action conflict",
+            "status": 409,
+            "code": "state_conflict",
+            "detail": "The resource is already in another state.",
+            "request_id": "req_-3sredfRes7FyU4SVhizPA"
+          }
+        },
+        {
+          "run": "01a0cd16-7c24-7d89-af92-be97dba7cf08",
+          "scenario": "G05",
+          "status": 409,
+          "problem": {
+            "type": "https://wordweave.example/problems/state-conflict",
+            "title": "Action conflict",
+            "status": 409,
+            "code": "state_conflict",
+            "detail": "The resource is already in another state.",
+            "request_id": "req_RsrqWy8hpnJg93KuFk4UBA"
+          }
+        }
+      ]
+    },
+    {
+      "action": "G08",
+      "run": "01a0cd16-7d41-7216-aae3-0eca1d09af38",
+      "wrongToken": 404,
+      "other": 404,
+      "missing": 404,
+      "firstSave": 201,
+      "repeatSave": 200,
+      "afterDelete": 404,
+      "chargeUnchanged": true
+    },
+    {
+      "action": "G09",
+      "run": "01a0cd16-7d98-7010-b6ba-719cef874172",
+      "status": 410,
+      "code": "capability_expired",
+      "method": "Only the disposable stored draft validated_at/expires_at was moved into the past; original issued token retained",
+      "chargeUnchanged": true
+    },
+    {
+      "action": "G10",
+      "run": "01a0cd16-7dd2-784e-a3b5-996f1bcc2acb",
+      "source": {
+        "run_id": "01a0cd16-7dd2-784e-a3b5-996f1bcc2acb",
+        "source_kind": "extra_credit",
+        "plan_code": null,
+        "origin": null,
+        "item_id": "01a0cd16-7c69-784e-abd3-6bf356ff7677",
+        "state": "refunded",
+        "units": 1
+      },
+      "storedBalanceBeforeRefund": 1,
+      "storedBalanceAfterRefund": 2,
+      "availableExtra": 0,
+      "expiryPreserved": true,
+      "retryRejected": 429,
+      "providerCalls": 1
+    }
+  ],
+  "localProviderCalls": 10,
+  "realProviderCalls": 0
+}

@@ -1,0 +1,55 @@
+{
+  "results": [
+    {
+      "id": "T1-focus",
+      "result": "FAIL",
+      "error": "Error: expect(locator).toBeFocused() failed\n\nLocator:  locator('#batch-title')\nExpected: focused\nReceived: inactive\nTimeout:  5000ms\n\nCall log:\n  - Expect \"to.be.focused\" with timeout 5000ms\n  - waiting for locator('#batch-title')\n    14 × locator resolved to <input id=\"batch-title\" aria-invalid=\"true\" aria-describedby=\"batch-title-hint\"/>\n       - unexpected value \"inactive\"\n"
+    },
+    {
+      "id": "T4-console",
+      "result": "FAIL",
+      "error": "Error: expect(received).toEqual(expected) // deep equality\n\n- Expected  - 1\n+ Received  + 9\n\n- Array []\n+ Array [\n+   Object {\n+     \"action\": \"T4-console\",\n+     \"kind\": \"error\",\n+     \"text\": \"TypeError: Cannot read properties of undefined (reading 'titleRevision')\n+     at je (http://127.0.0.1:3301/_nuxt/Bj-ROn-Q.js:1:2391)\",\n+     \"url\": \"http://127.0.0.1:3301/library/01a0e6c3-8053-7a2d-ad89-8af3f26e9cdf\",\n+   },\n+ ]"
+    }
+  ],
+  "samples": [
+    {
+      "action": "T1-focus",
+      "focus": {
+        "tag": "BODY",
+        "id": ""
+      },
+      "inputRetained": true,
+      "storedUnchanged": true
+    },
+    {
+      "action": "T4-console",
+      "storedUnchanged": true,
+      "writeStatus": 401,
+      "loginGateVisible": true,
+      "runtime": [
+        {
+          "kind": "error",
+          "url": "http://127.0.0.1:3301/library/01a0e6c3-8053-7a2d-ad89-8af3f26e9cdf",
+          "action": "T4-console",
+          "text": "TypeError: Cannot read properties of undefined (reading 'titleRevision')\n    at je (http://127.0.0.1:3301/_nuxt/Bj-ROn-Q.js:1:2391)"
+        }
+      ]
+    }
+  ],
+  "runtime": [
+    {
+      "kind": "error",
+      "url": "http://127.0.0.1:3301/library/01a0e6c3-8097-7134-b55a-0270c0f0f263",
+      "action": "T1-focus",
+      "text": "Failed to load resource: the server responded with a status of 503 (Service Unavailable)"
+    },
+    {
+      "kind": "error",
+      "url": "http://127.0.0.1:3301/library/01a0e6c3-8053-7a2d-ad89-8af3f26e9cdf",
+      "action": "T4-console",
+      "text": "TypeError: Cannot read properties of undefined (reading 'titleRevision')\n    at je (http://127.0.0.1:3301/_nuxt/Bj-ROn-Q.js:1:2391)"
+    }
+  ],
+  "localProviderCalls": 0,
+  "realProviderCalls": 0
+}

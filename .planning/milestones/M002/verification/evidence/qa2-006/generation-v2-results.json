@@ -1,0 +1,228 @@
+{
+  "results": [
+    {
+      "id": "G01",
+      "name": "Vocabulary lookup and generation precheck do not consume quota",
+      "result": "PASS"
+    },
+    {
+      "id": "G02",
+      "name": "Active-run conflict and explicit cancellation charge once without check-in",
+      "result": "PASS"
+    },
+    {
+      "id": "G03",
+      "name": "Provider and content-validation failures refund base source once",
+      "result": "PASS"
+    },
+    {
+      "id": "G04",
+      "name": "Transport interruption differs from explicit cancellation and refunds once",
+      "result": "PASS"
+    },
+    {
+      "id": "G05",
+      "name": "Valid generation then discard remains charged and automatically checked in",
+      "result": "PASS"
+    },
+    {
+      "id": "G06",
+      "name": "Extra-credit failures refund the original card and cancellation consumes it once",
+      "result": "PASS"
+    },
+    {
+      "id": "G07",
+      "name": "Own authenticated run in invalid/discarded state must return contract 409 on save",
+      "result": "FAIL",
+      "error": "Error: G02\n\nexpect(received).toBe(expected) // Object.is equality\n\nExpected: 409\nReceived: 404"
+    }
+  ],
+  "samples": [
+    {
+      "action": "G01",
+      "invalidRequests": 4,
+      "providerCalls": 0,
+      "chargesUnchanged": true
+    },
+    {
+      "action": "G02",
+      "charge": {
+        "run_id": "01a0c6f4-d58c-7335-98ad-b1a1af9c937a",
+        "source_kind": "plan",
+        "plan_code": "registered",
+        "origin": "base",
+        "item_id": null,
+        "state": "consumed",
+        "units": 1
+      },
+      "signedToday": false,
+      "conflict": 409,
+      "crossOwner": 404,
+      "terminal": "cancelled"
+    },
+    {
+      "action": "G03",
+      "kind": "provider-open-failure",
+      "status": 503,
+      "code": "generation_unavailable",
+      "charge": {
+        "run_id": "01a0c6f4-d5e6-7159-9513-13065fc46c5b",
+        "source_kind": "plan",
+        "origin": "base",
+        "item_id": null,
+        "state": "refunded"
+      }
+    },
+    {
+      "action": "G03",
+      "kind": "invalid",
+      "terminal": {
+        "event": "generation.failed",
+        "data": {
+          "code": "content_validation_failed",
+          "quota_refunded": true,
+          "retryable": true,
+          "request_id": "req_jVOrmYiPvag_08xERDr-Fg"
+        }
+      },
+      "charge": {
+        "run_id": "01a0c6f4-d613-7ccd-ac5a-7fcfe96cae9d",
+        "source_kind": "plan",
+        "plan_code": "registered",
+        "origin": "base",
+        "item_id": null,
+        "state": "refunded",
+        "units": 1
+      },
+      "saveRejected": 404
+    },
+    {
+      "action": "G04",
+      "charge": {
+        "run_id": "01a0c6f4-d65e-76d5-8d9f-a920963963cf",
+        "source_kind": "plan",
+        "plan_code": "registered",
+        "origin": "base",
+        "item_id": null,
+        "state": "refunded",
+        "units": 1
+      },
+      "generationCountUnchanged": true
+    },
+    {
+      "action": "G05",
+      "charge": {
+        "run_id": "01a0c6f4-d68e-7e7d-82fe-72858036842c",
+        "source_kind": "plan",
+        "plan_code": "registered",
+        "origin": "base",
+        "item_id": null,
+        "state": "consumed",
+        "units": 1
+      },
+      "signedToday": true,
+      "savedBatches": 0
+    },
+    {
+      "action": "G06",
+      "kind": "provider-open-failure",
+      "status": 503,
+      "code": "generation_unavailable",
+      "charge": {
+        "run_id": "01a0c6f4-d6ff-7eb5-aa5a-d3eed247649a",
+        "source_kind": "extra_credit",
+        "origin": null,
+        "item_id": "01a0c6f4-d6cd-7f6e-9071-26ba48db99bf",
+        "state": "refunded"
+      }
+    },
+    {
+      "action": "G06",
+      "failSource": {
+        "run_id": "01a0c6f4-d6ff-7eb5-aa5a-d3eed247649a",
+        "source_kind": "extra_credit",
+        "plan_code": null,
+        "origin": null,
+        "item_id": "01a0c6f4-d6cd-7f6e-9071-26ba48db99bf",
+        "state": "refunded",
+        "units": 1
+      },
+      "cancelSource": {
+        "run_id": "01a0c6f4-d743-758f-b6cf-6c1a994a29b5",
+        "source_kind": "extra_credit",
+        "plan_code": null,
+        "origin": null,
+        "item_id": "01a0c6f4-d6cd-7f6e-9071-26ba48db99bf",
+        "state": "consumed",
+        "units": 1
+      },
+      "before": {
+        "remaining_count": 5,
+        "expires_at": "2026-09-22T11:32:09.677095+08:00"
+      },
+      "after": {
+        "remaining_count": 4,
+        "expires_at": "2026-09-22T11:32:09.677095+08:00"
+      }
+    },
+    {
+      "action": "G07",
+      "saveProbes": [
+        {
+          "run": "01a0c6f4-d58c-7335-98ad-b1a1af9c937a",
+          "scenario": "G02",
+          "status": 404,
+          "problem": {
+            "type": "https://wordweave.example/problems/not-found",
+            "title": "Not found",
+            "status": 404,
+            "code": "not_found",
+            "detail": "The requested resource could not be found.",
+            "request_id": "req_NHrFrADOxP5iakPld5olLg"
+          }
+        },
+        {
+          "run": "01a0c6f4-d613-7ccd-ac5a-7fcfe96cae9d",
+          "scenario": "invalid",
+          "status": 404,
+          "problem": {
+            "type": "https://wordweave.example/problems/not-found",
+            "title": "Not found",
+            "status": 404,
+            "code": "not_found",
+            "detail": "The requested resource could not be found.",
+            "request_id": "req_x6KghanG2AkkjZ8v211h9w"
+          }
+        },
+        {
+          "run": "01a0c6f4-d65e-76d5-8d9f-a920963963cf",
+          "scenario": "G04",
+          "status": 404,
+          "problem": {
+            "type": "https://wordweave.example/problems/not-found",
+            "title": "Not found",
+            "status": 404,
+            "code": "not_found",
+            "detail": "The requested resource could not be found.",
+            "request_id": "req_-8Q4wsvPHdZHfcNHcbnROA"
+          }
+        },
+        {
+          "run": "01a0c6f4-d68e-7e7d-82fe-72858036842c",
+          "scenario": "G05",
+          "status": 404,
+          "problem": {
+            "type": "https://wordweave.example/problems/not-found",
+            "title": "Not found",
+            "status": 404,
+            "code": "not_found",
+            "detail": "The requested resource could not be found.",
+            "request_id": "req_PUyiS8t5j-vSF8n5Hn0j1Q"
+          }
+        }
+      ]
+    }
+  ],
+  "localProviderCalls": 7,
+  "realProviderCalls": 0
+}

@@ -1,0 +1,117 @@
+{
+  "results": [
+    {
+      "id": "T1",
+      "name": "Cancel, blank rejection, ordinary save failure and explicit retry",
+      "result": "PASS"
+    },
+    {
+      "id": "T2",
+      "name": "Saved title survives re-login and UI language; preset uses one title",
+      "result": "PASS"
+    },
+    {
+      "id": "T3",
+      "name": "Migrated and paused batches can be renamed; same-preset copies are isolated",
+      "result": "PASS"
+    },
+    {
+      "id": "T4",
+      "name": "Deletion and session invalidation while editing reject save without false success",
+      "result": "PASS"
+    }
+  ],
+  "samples": [
+    {
+      "action": "T1",
+      "cancelWrites": 0,
+      "blankWrites": 0,
+      "injected503": 1,
+      "explicitRetryWrites": 1
+    },
+    {
+      "action": "T2",
+      "relogin": true,
+      "locales": [
+        "zh-CN",
+        "en-US"
+      ],
+      "presetTitleFields": 1,
+      "descriptionFields": 0
+    },
+    {
+      "action": "T3",
+      "migratedBatch": "97899c04-58a9-427f-85e9-fd55c4f10fe5",
+      "pausedBatch": "01a0e6c3-8089-7bd6-a536-4c2d8a920598",
+      "unchangedSibling": "01a0e6c3-8097-7134-b55a-0270c0f0f263",
+      "unchangedPreset": "44a97337-9c55-4600-8710-e5819d1c5fd8"
+    },
+    {
+      "action": "T4",
+      "deletedBatchStatus": 404,
+      "expiredSessionStatus": 401,
+      "noResurrection": true,
+      "noTitleWrite": true
+    }
+  ],
+  "runtime": [
+    {
+      "kind": "error",
+      "url": "http://127.0.0.1:3301/library/01a0e6c3-8053-7a2d-ad89-8af3f26e9cdf",
+      "action": "T1",
+      "text": "Failed to load resource: the server responded with a status of 503 (Service Unavailable)"
+    },
+    {
+      "kind": "error",
+      "url": "http://127.0.0.1:3301/library/01a0e6c3-8064-712d-a4fa-7d7338288979",
+      "action": "T4",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+    },
+    {
+      "kind": "error",
+      "url": "http://127.0.0.1:3301/library/01a0e6c3-8053-7a2d-ad89-8af3f26e9cdf",
+      "action": "T4",
+      "text": "TypeError: Cannot read properties of undefined (reading 'titleRevision')\n    at je (http://127.0.0.1:3301/_nuxt/Bj-ROn-Q.js:1:2391)"
+    }
+  ],
+  "requests": [
+    {
+      "action": "T1",
+      "path": "/api/v1/me/batches/01a0e6c3-8053-7a2d-ad89-8af3f26e9cdf",
+      "kind": "title",
+      "title": "A title worth keeping"
+    },
+    {
+      "action": "T1",
+      "path": "/api/v1/me/batches/01a0e6c3-8053-7a2d-ad89-8af3f26e9cdf",
+      "kind": "title",
+      "title": "A title worth keeping"
+    },
+    {
+      "action": "T2",
+      "path": "/api/v1/me/batches/01a0e6c3-8053-7a2d-ad89-8af3f26e9cdf",
+      "kind": "title",
+      "title": "同一个标题 · Same title"
+    },
+    {
+      "action": "T3",
+      "path": "/api/v1/me/batches/97899c04-58a9-427f-85e9-fd55c4f10fe5",
+      "kind": "title",
+      "title": "From my earlier studies"
+    },
+    {
+      "action": "T3",
+      "path": "/api/v1/me/batches/01a0e6c3-8089-7bd6-a536-4c2d8a920598",
+      "kind": "title",
+      "title": "My private version"
+    },
+    {
+      "action": "T4",
+      "path": "/api/v1/me/batches/01a0e6c3-8064-712d-a4fa-7d7338288979",
+      "kind": "title",
+      "title": "Must not restore deleted content"
+    }
+  ],
+  "localProviderCalls": 6,
+  "realProviderCalls": 0
+}

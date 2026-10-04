@@ -1,0 +1,26 @@
+{
+  "results": [
+    {
+      "id": "INT22-01",
+      "name": "Guest generation, browser registration and one persisted batch/check-in",
+      "result": "FAIL",
+      "duration_ms": 5652,
+      "error": "Error: expect(page).toHaveURL(expected) failed\n\nExpected pattern: /\\/library\\/[a-f0-9-]+/\nReceived string:  \"http://127.0.0.1:3302/register?claim=1&redirect=/library\"\nTimeout: 5000ms\n\nCall log:\n  - Expect \"to.have.url\" with timeout 5000ms\n    14 × locator resolved to <html lang=\"en-US\" data-app-ready=\"true\">…</html>\n       - unexpected value \"http://127.0.0.1:3302/register?claim=1&redirect=/library\"\n"
+    },
+    {
+      "id": "INT22-03",
+      "name": "Admin model edit persists, live options update, saved snapshot and permissions remain",
+      "result": "FAIL",
+      "duration_ms": 636,
+      "error": "Error: expect(received).toBe(expected) // Object.is equality\n\nExpected: 403\nReceived: 401"
+    }
+  ],
+  "runtime": [],
+  "samples": [],
+  "screenshotsSaved": 0,
+  "imagesSentToModel": 0,
+  "provider": {
+    "localProviderCalls": 3,
+    "realProviderCalls": 0
+  }
+}

@@ -1,0 +1,25 @@
+WAIT actual scheduled cleanup guard while aggregation lock is held
+[
+  {
+    "id": "A11",
+    "name": "Scheduled cleanup refuses to purge ahead of stale aggregation, logs a bounded failure and query still hides expired UV",
+    "result": "PASS",
+    "remainingExpiredRow": 1,
+    "freshness": "delayed",
+    "uv": {
+      "value": null,
+      "numerator": null,
+      "denominator": null,
+      "status": "unavailable",
+      "reason": "detail_expired"
+    },
+    "diagnostic": [
+      {
+        "time": "2026-09-28T13:45:45.669717+08:00",
+        "level": "ERROR",
+        "msg": "analytics_cleanup_failed",
+        "reason": "checkpoint_or_database_unavailable"
+      }
+    ]
+  }
+]

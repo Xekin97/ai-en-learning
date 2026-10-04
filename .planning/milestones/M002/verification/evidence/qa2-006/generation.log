@@ -1,0 +1,44 @@
+G01 FAIL
+G02 FAIL
+G03 FAIL
+G04 FAIL
+G05 FAIL
+G06 FAIL
+[
+  {
+    "id": "G01",
+    "name": "Vocabulary lookup and generation precheck do not consume quota",
+    "result": "FAIL",
+    "error": "Error: expect(received).toBe(expected) // Object.is equality\n\nExpected: 422\nReceived: 400"
+  },
+  {
+    "id": "G02",
+    "name": "Active-run conflict and explicit cancellation charge once without check-in",
+    "result": "FAIL",
+    "error": "Error: expect(received).toBe(expected) // Object.is equality\n\nExpected: 409\nReceived: 404"
+  },
+  {
+    "id": "G03",
+    "name": "Provider and content-validation failures refund base source once",
+    "result": "FAIL",
+    "error": "Error: expect(received).toBe(expected) // Object.is equality\n\nExpected: 200\nReceived: 503"
+  },
+  {
+    "id": "G04",
+    "name": "Transport interruption differs from explicit cancellation and refunds once",
+    "result": "FAIL",
+    "error": "Error: expect(received).toBe(expected) // Object.is equality\n\nExpected: 409\nReceived: 404"
+  },
+  {
+    "id": "G05",
+    "name": "Valid generation then discard remains charged and automatically checked in",
+    "result": "FAIL",
+    "error": "Error: expect(received).toBe(expected) // Object.is equality\n\nExpected: 409\nReceived: 404"
+  },
+  {
+    "id": "G06",
+    "name": "Extra-credit failures refund the original card and cancellation consumes it once",
+    "result": "FAIL",
+    "error": "Error: expect(received).toBe(expected) // Object.is equality\n\nExpected: 200\nReceived: 503"
+  }
+]

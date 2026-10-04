@@ -1,0 +1,7 @@
+{
+  "finding": "QA31-F01: old NoticeInput missing remind_once returned 422 required; BE05 says missing defaults false",
+  "cause": "configuration decoder validates all non-omitempty request fields before unmarshalling",
+  "expected": "input optional, output always boolean; other required fields remain strict",
+  "owner": "backend-ethan",
+  "scope": "CR026 transport request decoding only"
+}

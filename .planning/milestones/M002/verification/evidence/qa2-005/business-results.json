@@ -1,0 +1,37 @@
+{
+  "results": [
+    {
+      "id": "V05",
+      "name": "Browser-local inclusive date range, multi-batch snapshot and participation changes",
+      "result": "PASS"
+    },
+    {
+      "id": "V06",
+      "name": "Two batches progress through next/completion; unique mastery and no persisted comparisons",
+      "result": "PASS"
+    },
+    {
+      "id": "V07",
+      "name": "Empty/stale range replacement preserves old session; successful replacement rejects old work",
+      "result": "PASS"
+    },
+    {
+      "id": "V08",
+      "name": "Random candidate exhaustion, current-library/other-owner boundaries and no quota/growth mutation",
+      "result": "FAIL",
+      "error": "Error: Command failed: /opt/homebrew/opt/postgresql@18/bin/psql postgres://fe_test@127.0.0.1:63541/wordweave_fe_m002?sslmode=disable -v ON_ERROR_STOP=1 -X -A -t -c SELECT count(*) FROM wordweave.quota_charges WHERE owner_id='01a0c35d-ebb8-77e1-a3e6-63106bb9b64f'\nERROR:  relation \"wordweave.quota_charges\" does not exist\nLINE 1: SELECT count(*) FROM wordweave.quota_charges WHERE owner_id=...\n                             ^\n"
+    },
+    {
+      "id": "V09",
+      "name": "AB 3d + BC 6d and reverse order independently add each model; retries never duplicate time",
+      "result": "PASS"
+    },
+    {
+      "id": "V10",
+      "name": "Plan coverage blocks all-model cards, permits partial coverage and does not pause existing grants",
+      "result": "PASS"
+    }
+  ],
+  "localProviderCalls": 4,
+  "realProviderCalls": 0
+}

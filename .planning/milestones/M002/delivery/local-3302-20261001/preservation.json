@@ -1,0 +1,41 @@
+{
+  "result": "PASS",
+  "protected_tables_unchanged": [
+    "ai_models",
+    "openrouter_credentials",
+    "entitlement_groups",
+    "group_models",
+    "group_lengths",
+    "platform_notices",
+    "generation_runs",
+    "generation_charges",
+    "ai_call_usage",
+    "plan_quota_states",
+    "learning_batches",
+    "review_attempts",
+    "review_sessions",
+    "user_items",
+    "model_time_contributions",
+    "plan_trials",
+    "presets",
+    "preset_versions",
+    "preset_preview_runs"
+  ],
+  "environment_sha256_unchanged": true,
+  "generation_calls_added": 0,
+  "runtime_mutated_tables": [
+    "account_sessions",
+    "accounts",
+    "analytics_daily",
+    "analytics_events",
+    "growth_settings",
+    "traffic_session_accounts",
+    "traffic_sessions",
+    "visitor_identities"
+  ],
+  "growth_settings_changed_columns": [
+    "analytics_aggregated_through",
+    "analytics_updated_at"
+  ],
+  "growth_settings_reason": "Existing analytics maintenance advanced aggregation timestamps only; growth configuration and activation unchanged."
+}

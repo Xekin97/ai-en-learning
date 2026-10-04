@@ -1,0 +1,27 @@
+{
+  "results": [
+    {
+      "id": "T11",
+      "name": "Real event ingestion deduplicates retries, distinguishes browsers and channels, and deduplicates UV across two days",
+      "result": "FAIL",
+      "error": "Error: expect(received).toEqual(expected) // deep equality\n\n- Expected  - 2\n+ Received  + 2\n\n  Object {\n-   \"direct_unknown\": 1,\n+   \"direct_unknown\": 2,\n    \"referrer\": 1,\n-   \"utm\": 3,\n+   \"utm\": 2,\n  }"
+    },
+    {
+      "id": "T12",
+      "name": "Failure rate excludes cancelled and ongoing runs; empty samples and immature retention are not displayed as zero rates",
+      "result": "PASS"
+    },
+    {
+      "id": "T13",
+      "name": "Collection rejects private fields and forged business events, excludes administrators, and restricts analytical reads",
+      "result": "PASS"
+    },
+    {
+      "id": "T14",
+      "name": "Analytics page renders real collected values and a period change; account and analytics pages do not load Clarity",
+      "result": "FAIL",
+      "error": "Error: expect(locator).toHaveText(expected) failed\n\nLocator:  locator('.metric').filter({ hasText: 'Page views' }).locator('strong')\nExpected: \"5\"\nReceived: \"8\"\nTimeout:  5000ms\n\nCall log:\n  - Expect \"to.have.text\" with timeout 5000ms\n  - waiting for locator('.metric').filter({ hasText: 'Page views' }).locator('strong')\n    14 × locator resolved to <strong>8</strong>\n       - unexpected value \"8\"\n"
+    }
+  ],
+  "realProviderCalls": 0
+}
