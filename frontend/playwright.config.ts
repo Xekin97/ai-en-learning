@@ -2,8 +2,10 @@ import { defineConfig, devices } from "@playwright/test";
 
 export default defineConfig({
   testDir: "./tests/e2e",
+  // UI22 supersedes M001 visual/API assertions; inherited behaviors are mapped in tests/e2e/README.md.
+  testMatch: /m002-.*\.spec\.ts$/,
   use: {
-    baseURL: "http://127.0.0.1:3300",
+    baseURL: process.env.UI26_ORIGIN ?? "http://127.0.0.1:3300",
     trace: "retain-on-failure",
   },
   projects: [

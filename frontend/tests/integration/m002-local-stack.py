@@ -1,0 +1,28 @@
+import os, tempfile, subprocess, json, secrets, base64, sys, signal
+from pathlib import Path
+root=Path(__file__).resolve().parents[3]
+if len(sys.argv)>1 and sys.argv[1]=='stop':
+    work=Path(Path('/tmp/wordweave-fe-m002-current').read_text())
+    try: os.kill(int((work/'backend.pid').read_text()), signal.SIGTERM)
+    except ProcessLookupError: pass
+    subprocess.run(['/opt/homebrew/opt/postgresql@18/bin/pg_ctl','-D',str(work/'data'),'-m','fast','stop','-w'],check=True)
+    print('Disposable API and database stopped; private files preserved for debugging.')
+    sys.exit(0)
+work=Path(tempfile.mkdtemp(prefix='wordweave-fe-m002-'))
+pg=Path('/opt/homebrew/opt/postgresql@18/bin')
+log=open(work/'setup.log','w')
+def run(args,env=None,cwd=None): subprocess.run(list(map(str,args)),env=env,cwd=cwd,check=True,stdout=log,stderr=subprocess.STDOUT)
+run([pg/'initdb','-D',work/'data','-A','trust','-U','fe_test','--no-locale','--encoding=UTF8'])
+run([pg/'pg_ctl','-D',work/'data','-l',work/'postgres.log','-o',f'-h 127.0.0.1 -p 63541 -k {work}','start','-w'])
+run([pg/'createdb','-h','127.0.0.1','-p','63541','-U','fe_test','wordweave_fe_m002'])
+env=dict(os.environ, GOTOOLCHAIN='go1.26.7', HTTP_ADDR='127.0.0.1:38081',METRICS_ADDR='127.0.0.1:39081',PUBLIC_ORIGIN='http://127.0.0.1:3301', APP_DATABASE_URL='postgres://fe_test@127.0.0.1:63541/wordweave_fe_m002?sslmode=disable',AI_DATABASE_URL='postgres://fe_test@127.0.0.1:63541/wordweave_fe_m002?sslmode=disable',COOKIE_SECURE='false',OPENROUTER_BASE_URL='http://127.0.0.1:38082',OPENROUTER_MASTER_KEYS='1:'+base64.b64encode(secrets.token_bytes(32)).decode(),OPENROUTER_CURRENT_KEY_VERSION='1',TRUSTED_PROXY_CIDRS='127.0.0.1/32',ADMIN_USERNAME='fe_m002_admin',ADMIN_PASSWORD=secrets.token_urlsafe(24))
+for k in ['SESSION_PEPPER','CAPABILITY_PEPPER','CSRF_HMAC_KEY','CURSOR_HMAC_KEY']: env[k]=secrets.token_hex(32)
+(work/'env.json').write_text(json.dumps(env));os.chmod(work/'env.json',0o600)
+Path('/tmp/wordweave-fe-m002-current').write_text(str(work))
+run(['go','build','-o',work/'wordweave','./cmd/wordweave'],env,root/'backend')
+run(['go','build','-o',work/'wordweave-admin','./cmd/wordweave-admin'],env,root/'backend')
+run([work/'wordweave-admin','migrate'],env)
+run([work/'wordweave-admin','create-admin'],env)
+proc=subprocess.Popen([work/'wordweave'],env=env,stdout=open(work/'backend.log','w'),stderr=subprocess.STDOUT,start_new_session=True)
+(work/'backend.pid').write_text(str(proc.pid))
+print('Dedicated local database migrated; admin and API started. No external provider configured.')

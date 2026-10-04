@@ -1,5 +1,25 @@
+import { adminPresetsFixture } from "./m002-admin-presets-fixture.mjs";
+import { adminGrowthFixture } from "./m002-admin-growth-fixture.mjs";
+import {
+  operationsFixture,
+  configuredNotices,
+} from "./m002-operations-fixture.mjs";
+import { adminFixture } from "./m002-admin-fixture.mjs";
+import { growthFixture } from "./m002-growth-fixture.mjs";
+import { reviewFixture } from "./m002-review-fixture.mjs";
 import { createServer } from "node:http";
 import { readFileSync } from "node:fs";
+import { createHash } from "node:crypto";
+// Use the same frozen corpus as the real API; never ship this test adapter to clients.
+const vocabularyBytes = readFileSync(
+  new URL(
+    "../../../backend/assets/vocabulary/english-words.json",
+    import.meta.url,
+  ),
+);
+const vocabularyEntries = JSON.parse(vocabularyBytes.toString("utf8"));
+const vocabularyVersion =
+  "sha256:" + createHash("sha256").update(vocabularyBytes).digest("hex");
 const quotaFixtures = Object.fromEntries(
   [
     "user-limited",
@@ -21,7 +41,7 @@ const quotaFixtures = Object.fromEntries(
 );
 const changedUsers = new Map();
 
-const port = 38080;
+const port = Number(process.env.WORDWEAVE_MOCK_PORT || 38080);
 const savedAt = "2026-08-10T09:00:00+08:00";
 const model = {
   id: "model-fast",
@@ -29,7 +49,18 @@ const model = {
     "Quick Context with a deliberately long name for responsive checks",
   description:
     "Fast stories for everyday learning in a clear and natural context",
-  openrouter_model_id: "mock/quick-context",
+  provider_model_id: "mock/quick-context",
+  connection: {
+    id: "connection-demo",
+    name: "Demo",
+    protocol: "openai_chat",
+    base_url: "https://models.example/v1",
+    credential_configured: true,
+    masked_hint: "••••demo",
+  },
+  max_output_tokens: null,
+  output_mode: "prompt",
+  retired_at: null,
   enabled: true,
   assigned_group_codes: ["visitor", "basic", "pro", "plus"],
   created_at: savedAt,
@@ -37,6 +68,8 @@ const model = {
 };
 const batch = {
   id: "batch-e2e",
+  title: "adapt",
+  title_revision: "title-1",
   saved_at: savedAt,
   passage_preview: "Teams adapt quickly when the context changes.",
   tags: ["growth"],
@@ -49,6 +82,9 @@ const batch = {
 };
 const batchDetail = {
   id: batch.id,
+  title: batch.title,
+  title_revision: batch.title_revision,
+  title_max_length: 200,
   saved_at: batch.saved_at,
   configuration: {
     model: batch.model,
@@ -88,6 +124,12 @@ createServer(async (request, response) => {
 
 async function handle(request, response) {
   const url = new URL(request.url ?? "/", `http://${request.headers.host}`);
+  if (await adminPresetsFixture(request, response, url)) return;
+  if (await adminGrowthFixture(request, response, url)) return;
+  if (await operationsFixture(request, response, url)) return;
+  if (await adminFixture(request, response, url)) return;
+  if (await reviewFixture(request, response, url)) return;
+  if (await growthFixture(request, response, url)) return;
   const role = sessionRole(request.headers.cookie);
   const locale = request.headers.cookie?.includes("wordweave_ui_locale=zh-CN")
     ? "zh-CN"
@@ -100,25 +142,25 @@ async function handle(request, response) {
           role === "visitor"
             ? {
                 kind: "visitor",
-                username: null,
-                role: null,
-                plan_code: null,
               }
             : {
                 kind: "account",
+                id: role + "-e2e",
                 username: role === "admin" ? "admin_e2e" : "learner_e2e",
                 role,
                 plan_code: role === "learner" ? "basic" : null,
               },
         ui_locale: role === "visitor" ? null : locale,
-        supported_ui_locales: ["zh-CN", "en-US"],
         csrf_token: "csrf-e2e",
       },
       meta: { request_id: "req-bootstrap" },
     });
   }
 
-  if (request.method === "POST" && url.pathname === "/api/v1/auth/login") {
+  if (
+    request.method === "POST" &&
+    ["/api/v1/auth/login", "/api/v1/auth/register"].includes(url.pathname)
+  ) {
     const body = await requestJson(request);
     if (body.password === "WrongPass123!") {
       return problem(response, {
@@ -135,12 +177,28 @@ async function handle(request, response) {
         data: {
           actor: {
             kind: "account",
+            id: nextRole + "-e2e",
             username: nextRole === "admin" ? "admin_e2e" : "learner_e2e",
             role: nextRole,
             plan_code: nextRole === "learner" ? "basic" : null,
           },
           ui_locale: "en-US",
           csrf_token: "csrf-login-e2e",
+          welcome: url.pathname.endsWith("/register")
+            ? {
+                kind: "no_learning",
+                display_name: "Mia",
+                days_since_learning: null,
+                previous_learning_at: null,
+              }
+            : nextRole === "admin"
+              ? null
+              : {
+                  kind: "returning",
+                  display_name: "Mia",
+                  days_since_learning: 5,
+                  previous_learning_at: "2026-09-15T05:00:00Z",
+                },
         },
         meta: { request_id: "req-login" },
       },
@@ -160,14 +218,69 @@ async function handle(request, response) {
     });
   }
 
-  if (request.method === "GET" && url.pathname === "/api/v1/me/account") {
+  if (
+    ["GET", "PATCH"].includes(request.method) &&
+    url.pathname === "/api/v1/me/account"
+  ) {
+    const profile =
+      request.method === "PATCH"
+        ? await requestJson(request)
+        : { nickname: null, gender: null };
     return json(response, {
       data: {
-        username: "learner_e2e",
-        plan_code: "basic",
-        ui_locale: locale,
+        account: {
+          username: "learner_e2e",
+          nickname: profile.nickname,
+          gender: profile.gender,
+          display_name: profile.nickname || "learner_e2e",
+          base_plan_code: "basic",
+          effective_plan_code: "basic",
+          ui_locale: locale,
+          last_login_at: "2026-09-20T05:00:00Z",
+          last_learning_at: "2026-09-15T05:00:00Z",
+        },
       },
       meta: { request_id: "req-account" },
+    });
+  }
+  if (request.method === "GET" && url.pathname.startsWith("/api/v1/notices")) {
+    const notice = {
+      id: "notice-1",
+      title: locale === "zh-CN" ? "欢迎来到词涟" : "Welcome to WordWeave",
+      body_html: "<p>Read a story. Practise your words.</p>",
+      content_locale: locale,
+      remind: true,
+      remind_once: false,
+      published_at: "2026-09-20T01:00:00Z",
+      revision: "notice-revision",
+    };
+    const rows = [notice, ...configuredNotices(locale)].sort(
+      (a, b) =>
+        Number(b.remind) - Number(a.remind) ||
+        b.published_at.localeCompare(a.published_at) ||
+        a.id.localeCompare(b.id),
+    );
+    if (url.pathname === "/api/v1/notices")
+      return json(response, {
+        data: {
+          items: rows.filter(
+            (n) =>
+              url.searchParams.get("reminders_only") !== "true" || n.remind,
+          ),
+        },
+        meta: { request_id: "req-notices", next_cursor: null, has_more: false },
+      });
+    const selected = rows.find((n) => n.id === url.pathname.split("/").at(-1));
+    if (!selected)
+      return problem(response, {
+        status: 404,
+        code: "not_found",
+        title: "Not found",
+        detail: "Not found",
+      });
+    return json(response, {
+      data: { notice: selected },
+      meta: { request_id: "req-notice" },
     });
   }
 
@@ -208,6 +321,132 @@ async function handle(request, response) {
     });
   }
 
+  if (
+    request.method === "POST" &&
+    url.pathname === "/api/v1/vocabulary/random"
+  ) {
+    const body = await requestJson(request);
+    const entry =
+      ["adapt", "gentle", "weave"].find(
+        (word) => !body.selected_entries.includes(word),
+      ) ?? null;
+    return json(response, {
+      data: { entry, reason: entry ? null : "no_candidates" },
+      meta: { request_id: "req-random" },
+    });
+  }
+  if (request.method === "GET" && url.pathname.startsWith("/api/v1/presets")) {
+    const item = (id, language) => ({
+      id,
+      title: "A small step — " + language,
+      published_version: "published-1",
+      version_created_at: savedAt,
+      configuration: {
+        model: { id: model.id, name: model.display_name },
+        entries: batch.entries,
+        meaning_language: language,
+        scenario: "story",
+        length: "short",
+      },
+      sample: {
+        passage: batchDetail.passage,
+        tags: batchDetail.tags,
+        targets: batchDetail.targets,
+      },
+      availability: { can_generate: true, reason: null },
+    });
+    if (url.pathname === "/api/v1/presets") {
+      const second = url.searchParams.has("cursor");
+      return json(response, {
+        data: {
+          items: second ? [item("preset-en", "en")] : [item("preset-zh", "zh")],
+        },
+        meta: {
+          request_id: "req-presets",
+          next_cursor: second ? null : "page-2",
+          has_more: !second,
+        },
+      });
+    }
+    return json(response, {
+      data: {
+        preset: item(
+          url.pathname.endsWith("preset-en") ? "preset-en" : "preset-zh",
+          url.pathname.endsWith("preset-en") ? "en" : "zh",
+        ),
+        quota: {
+          kind: "limited",
+          limit: 5,
+          remaining: 5,
+          window_hours: 24,
+          refreshes_at: null,
+        },
+        extra_quota: { remaining: 0, earliest_expires_at: null },
+        can_start: true,
+        block_reason: null,
+      },
+      meta: { request_id: "req-preset" },
+    });
+  }
+  if (
+    request.method === "PATCH" &&
+    url.pathname === "/api/v1/me/batches/batch-e2e"
+  ) {
+    const body = await requestJson(request);
+    if ("title" in body) {
+      if (body.expected_title_revision !== batchDetail.title_revision)
+        return problem(response, {
+          status: 409,
+          code: "revision_conflict",
+          title: "Changed",
+          detail: "Title changed.",
+        });
+      batch.title = batchDetail.title = body.title.trim();
+      batch.title_revision = batchDetail.title_revision = "title-" + Date.now();
+      return json(response, {
+        data: {
+          batch_id: batch.id,
+          title: batch.title,
+          title_revision: batch.title_revision,
+        },
+        meta: { request_id: "req-title" },
+      });
+    }
+    batch.participates_in_range_review =
+      batchDetail.participates_in_range_review =
+        body.participates_in_range_review;
+    return json(response, {
+      data: {
+        batch_id: batch.id,
+        participates_in_range_review: body.participates_in_range_review,
+      },
+      meta: { request_id: "req-participation" },
+    });
+  }
+  if (
+    request.method === "POST" &&
+    url.pathname === "/api/v1/generations/run-e2e/save"
+  )
+    return json(response, {
+      data: { batch_id: batch.id, saved_at: savedAt, title: batch.title },
+      meta: { request_id: "req-save" },
+    });
+  if (
+    request.method === "POST" &&
+    url.pathname === "/api/v1/generations/run-e2e/visitor-claim"
+  )
+    return json(response, {
+      data: { claim_token: "claim-e2e", expires_at: "2026-09-20T12:00:00Z" },
+      meta: { request_id: "req-claim" },
+    });
+  if (
+    request.method === "POST" &&
+    url.pathname === "/api/v1/visitor-claims/consume"
+  )
+    return json(response, {
+      data: { batch_id: batch.id, claimed: true, title: batch.title },
+      meta: { request_id: "req-consume" },
+    });
   if (request.method === "GET" && url.pathname === "/api/v1/me/batches") {
     const empty =
       request.headers.cookie?.includes("wordweave_test_library=empty") ||
@@ -292,12 +531,19 @@ async function handle(request, response) {
                 id: model.id,
                 name: model.display_name,
                 description: model.description,
+                access: { from_plan: true, card_ends_at: null },
               },
             ],
         meaning_languages: ["zh", "en", "ja"],
         scenarios: ["discussion", "story", "business", "news"],
         lengths: unavailable ? [] : ["short", "medium", "long", "xlong"],
         max_entries: 5,
+        effective_plan: {
+          code: role === "visitor" ? "visitor" : "basic",
+          origin: role === "visitor" ? "visitor" : "base",
+          trial_ends_at: null,
+        },
+        extra_quota: { remaining: 0, earliest_expires_at: null },
         availability: unavailable
           ? { can_generate: false, reason: "no_models" }
           : { can_generate: true, reason: null },
@@ -317,10 +563,50 @@ async function handle(request, response) {
     request.method === "GET" &&
     url.pathname === "/api/v1/vocabulary/search"
   ) {
+    const query = url.searchParams.get("q") ?? "";
+    const rawLimit = url.searchParams.get("limit") || "10";
+    if (!/^[+-]?\d+$/.test(rawLimit))
+      return problem(response, {
+        status: 400,
+        code: "malformed_request",
+        title: "Malformed request",
+        detail: "The limit parameter is invalid.",
+      });
+    const limit = BigInt(rawLimit);
+    if (limit < -(2n ** 63n) || limit > 2n ** 63n - 1n)
+      return problem(response, {
+        status: 400,
+        code: "malformed_request",
+        title: "Malformed request",
+        detail: "The limit parameter is invalid.",
+      });
+    if (
+      ![...query].length ||
+      [...query].length > 64 ||
+      limit < 1n ||
+      limit > 20n
+    )
+      return problem(response, {
+        status: 422,
+        code: "validation_failed",
+        title: "Invalid query",
+        detail: "The vocabulary query is invalid.",
+      });
+    const normalized = query.toLowerCase();
+    const matches = vocabularyEntries
+      .filter((entry) => entry.toLowerCase().includes(normalized))
+      .sort(
+        (a, b) =>
+          Number(!a.startsWith(normalized)) -
+            Number(!b.startsWith(normalized)) ||
+          a.length - b.length ||
+          (a < b ? -1 : a > b ? 1 : 0),
+      )
+      .slice(0, Number(limit));
     return json(response, {
       data: {
-        items: [{ entry: "adapt" }, { entry: "adaptive" }],
-        vocabulary_version: "e2e-v1",
+        items: matches.map((entry) => ({ entry })),
+        vocabulary_version: vocabularyVersion,
       },
       meta: { request_id: "req-search" },
     });
@@ -328,7 +614,8 @@ async function handle(request, response) {
 
   if (
     request.method === "POST" &&
-    url.pathname === "/api/v1/generations/stream"
+    (url.pathname === "/api/v1/generations/stream" ||
+      /^\/api\/v1\/presets\/[^/]+\/generations\/stream$/.test(url.pathname))
   ) {
     response.writeHead(200, {
       "cache-control": "no-store",
@@ -535,21 +822,17 @@ async function handle(request, response) {
 
   if (
     request.method === "GET" &&
-    url.pathname === "/api/v1/admin/openrouter-credential"
-  ) {
+    url.pathname === "/api/v1/admin/model-connections"
+  )
     return json(response, {
-      data: {
-        configured: true,
-        masked_hint: "sk-or-••••e2e",
-        updated_at: savedAt,
-      },
-      meta: { request_id: "req-credential" },
+      data: { items: [model.connection] },
+      meta: { request_id: "req-connections" },
     });
-  }
-
-  if (request.method === "GET" && url.pathname === "/api/v1/admin/models") {
-    return list(response, [model], "req-models");
-  }
+  if (request.method === "GET" && url.pathname === "/api/v1/admin/models")
+    return json(response, {
+      data: { items: [model], revision: "model-revision" },
+      meta: { request_id: "req-models", next_cursor: null, has_more: false },
+    });
 
   if (request.method === "GET" && url.pathname === "/api/v1/admin/groups") {
     return json(response, {
