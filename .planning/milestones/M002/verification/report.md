@@ -1,37 +1,40 @@
-> **M002-QA-CR313-01 当前登记**：配置可移植性独立QA为 `PASS with retained limits`，状态为 `awaiting_user_review`；[本轮矩阵](config-portability/coverage-matrix.md)、[报告](config-portability/report.md)、[AI范围](config-portability/ai-evaluation.md)、[UAT清单](config-portability/uat.md)、[交接](../handoffs/config-portability-verification.md)。本前缀不改变下方既有记录，不能据此关闭CR313或M002。
+# M002 当前验收结论与保留事项
 
-> **M002续做索引124**：本里程碑包含原M003全部需求。[较新同类原件](../../M002-legacy-M003/verification/report.md)及其已记录的逐项接收/验证均归M002；旧编号只是历史标识。当前工作与未完成项见[续做索引](../continuation.md)，下方前期记录保留，不能据旧完成态关闭当前M002。
+M002 已于 2026-10-16 完成，五组交付均已获用户接受；无活动角色、开放 CR 或待用户评审任务。正式状态见 [workflow](../../../workflow/state.yaml)，最终批准为 [TRANSITION-M002-146](../reviews/milestone-closeout.md)。本页于 2026-10-19 收敛已有结论，没有新增测试、扩大验收或重新关闭里程碑。
 
----
-milestone: M002
-stage: verification
-role: quality/base
-agent_name: qa-quinn
-status: accepted_with_retained_limitations
-version: M002-QA-38
-scope: Final M002 increment acceptance
-date: 2026-10-04
----
+## 当前证据范围
 
-# 二期增量验收已通过
+| 交付范围 | 当前有效结论与版本 | 接受来源 / 详细证据 |
+|---|---|---|
+| 学习、成长、通知、服务商模型管理及精选释义 | 原091接受基线及 QA38/UI31 的限定增量已接受；保留旧矩阵的 PARTIAL/环境边界 | [123接受](../reviews/verification-acceptance-123.md)、[QA38核对](evidence/qa2-038/check.json) |
+| 规划、基础纠错、付费审稿返修、自定义参数、完成后编辑 | 归属 M002 的原 M003 交付由096接受；CR308仅撤销QA缺陷分类，模型漏判未被证明修复 | [096接受](../../M002-legacy-M003/reviews/verification-acceptance-096.md)、[QA政策](../../../agt/qa-scope-policy.md) |
+| 功能词过滤、渐进显示、返修保留旧稿逐段替换 | CR311/312 的 QA07 版本由105接受；API/DB 100项、浏览器13项、焦点5项是该范围证据 | [105接受](../../M002-legacy-M003/reviews/verification-acceptance-105.md)、[专项报告](../../M002-legacy-M003/verification/report.md) |
+| models/plans/items/growth 配置导入导出 | M002-QA-CR313-01 在699文件快照上的 PASS with retained limits 已获用户接受 | [CR313接受](../reviews/cr313-uat-acceptance.md)、[提交时QA原件](config-portability/report.md) |
+| 浏览器单词朗读 | M002-FI-PRON-01-R1 / QA-PRON-01-R1；PRON-DEFECT-001修复后18/18定向通过；本地桌面UAT已接受 | [发音接受](../reviews/pronunciation-uat-acceptance.md)、[提交时QA原件](pronunciation/report.md) |
 
-用户已明确接受服务商模型管理及精选释义修复，并授权收尾，见[验收记录](uat.md)。CR029关闭；原091二期范围继续有效。当前本地交付是UI31服务商工作区、0016迁移及精选释义修复后的前端包。[交付恢复入口](../delivery/gallery-meanings-3302-20261002/README.md)读取当前运行状态，不重跑种子或旧部署脚本。
-
-复用QA36服务商聚合API/原子事务/UUID引用保留/密钥隔离/流式探测及3302双视口证据，复用QA37精选释义位置、重复词签删除、语言原名和后台共享组件证据。QA37最终3302首卡在相同数据/字体/视口下与原型截图一致。此次仅登记验收和收尾：28项必需产物齐全，3份增量manifest的源摘要匹配，未复跑测试、未调用真实AI、未改变应用或数据库。
-
-[QA36](evidence/qa2-036/manifest.json)、[QA37](../implementation/evidence/gallery-meanings-fix/manifest.json)、[本轮核对](evidence/qa2-038/check.json)、[原问答](evidence/qa2-038/inputs.json)。修复前的当前文档/控制面和本轮相关源码快照保存于[evidence/qa2-038/before-closeout.tar.gz](evidence/qa2-038/before-closeout.tar.gz)，旧失败证据原地保留。新会话交接测试未执行；静态引用与摘要检查不替代独立接续测试。
+逐能力的验证方法、版本复用和边界见[当前覆盖矩阵](coverage-matrix.md)。原报告中的 awaiting_user_review、待听音、待关闭及旧环境端口描述只属于原提交时点，不再作为当前行动指令；接受记录没有把未执行的专项变成测试通过。
 
 ## 保留事项
 
-| ID / 范围 | 现有结论与影响 | 来源、后续动作与完成条件 |
+| ID / 范围 | 当前事实 | 触发接续的条件与原件 |
 |---|---|---|
-| QA26-MINIMAX | 两次启用校验返回 model_incompatible，保持禁用；当时绑定该模型的热门预设不能生成。原因未定位，本轮未重新查询运行状态 | [原失败](evidence/qa2-026/minimax-retry.json)、[配置核对](evidence/qa2-026/final-check.json)。需要恢复该模型时从既有失败定向排查；启用检查与关联预设实际生成通过后才能认定解决 |
-| CR039-L1 | safe→safety/safely 被拒，safer 未核实 | [原约束与验收](../../M001/changes/CR-039.md#retained-limitations)。后续明确恢复词形改进时按原样本核验，不自动重启调优 |
-| CR042-L1 | 未知标注反馈定位精度、多回复整包回放仍有限制 | [原约束与验收](../../M001/verification/CR-042-generation-evidence.md#retained-limitations)。按实际失败定向处理，未扩展回放平台 |
-| AI-QUALITY-90 | 稳定成功率 ≥90% 仍未验证 | [AI 验证范围](ai-evaluation.md)、[一期评估](../../M001/verification/ai-evaluation.md)。需单独明确评测范围与调用授权；本次 UAT 不提供统计证明 |
-| W01 | 个人页曾出现未定位的 hydration console 警告，后续定向捕获未复现；未据此宣称修复 | [QA03 原观察](evidence/qa2-003/manifest.json)。再次出现时记录具体页面、堆栈和操作，定位并定向复验 |
-| 环境与人工专项 | 生产 SSE 代理、Linux 部署与容量/告警、真实设备输入法/读屏、04:00 实时时点等仍按矩阵保留证据边界 | [矩阵](coverage-matrix.md#api数据与剩余工作)。属于后续对应环境验证；用户整体 UAT 不补写未执行的专项测试 |
+| CR039-L1 | safe→safety/safely 被拒，safer 未核实 | 用户明确改进词形或复现失败时，按[原CR](../../M001/changes/CR-039.md#retained-limitations)定位；不得据收尾标为修复 |
+| CR042-L1 | 未知标注反馈定位与多回复整包回放仍受限 | 按[原边界](../../M001/verification/CR-042-generation-evidence.md#retained-limitations)和实际失败定向处理 |
+| AI-QUALITY-90 | ≥90%稳定成功率未获统计证明 | [原评估](ai-evaluation.md)；独立模型研究须有对应任务与调用授权，不纳入QA功能阻塞 |
+| W01 | 个人页曾有 hydration 警告，原因未定位；后续未复现不等于修复 | 再现时保存页面/堆栈/操作并定向复验；[QA03原观察](evidence/qa2-003/manifest.json) |
+| QA26-MINIMAX | 启用校验两次 model_incompatible，未复查当前服务状态 | 需要恢复模型时先查[原失败](evidence/qa2-026/minimax-retry.json)和[配置核对](evidence/qa2-026/final-check.json)，验证启用及关联生成 |
+| PRON-MOBILE | 真实手机未验证；桌面整体接受不证明全部设备/口音或逐项人工听音 | 有可访问手机环境与明确验证任务后按[发音UAT](pronunciation/uat.md)补验 |
+| 环境与人工专项 | 生产SSE、Linux、容量告警、真实输入法/读屏、04:00实时边界等未全部验证 | 依据[整体保留表](../reviews/milestone-closeout-check.md#继续保留的事项)及受影响专项选择验证 |
+| CR313故障与并发边界 | TCP COMMIT ACK丢失、进程kill、双时序barrier、KDF压力、全多tab/管理员组合、真实24h过期未全部执行 | [原QA边界](config-portability/report.md#复用与保留边界)；替身/确定性证据不提升为真实故障注入 |
 
+QA仅验证功能与实现；文章质量和模型语义审稿准确率遵守[项目政策](../../../agt/qa-scope-policy.md)。默认不重跑全站、不恢复模型研究、不改现有UAT数据。后续从具体问题与批准范围进入，先核对代码/依赖是否仍匹配证据。
 
+## 历史恢复
 
-原保留项不因本轮修复而消失；开放CR和角色以workflow为准。未执行新会话交接测试，token unknown。
+本页与相关入口的整理前正文、摘要和旧锚点由[版本索引](../reviews/evidence/context-maintenance-20261019/receipt.json)定位到产品提交。冻结QA原件、失败日志和接受记录保持原样。原件恢复命令与本次整理结果见[接续入口](../continuation.md#上下文整理)。
+
+## 旧引用的版本定位
+
+以下旧锚点仅定位整理前原文，按[版本索引](../reviews/evidence/context-maintenance-20261019/receipt.json)中的原路径、Git提交与摘要恢复；不代表当前行动指令。
+
+<a id="二期增量验收已通过"></a>

@@ -1,0 +1,368 @@
+{
+  "id": "AGT-CONTEXT-HANDOFF-CHECK-20261019",
+  "date": "2026-10-19",
+  "authorization": {
+    "user_instruction": "授权",
+    "scope": "one independent read-only handoff audit"
+  },
+  "executor": "/root/context_handoff_audit",
+  "isolation": {
+    "fork_turns": "none",
+    "provided": "product/framework paths, read-only limits, three task questions; no prior conversation or expected answers",
+    "did_not_read": [
+      "context-maintenance-20261019/receipt.json",
+      "prepared test answers"
+    ],
+    "writes": false,
+    "application_tests": false,
+    "runtime_or_model_calls": false,
+    "further_delegation": false
+  },
+  "result": "PASS_LIMITED_READONLY_TASKS",
+  "tested_before_result_registration": {
+    "continuation_sha256": "be4f086684bee337b5224dae0e871e4b6a2ea805c2b7614e554cebf74056b445",
+    "note": "Continuation recorded NOT_RUN when read. Root subsequently registered the result; after user requested commit/push, root updated the publication-status sentence. Post-audit wording replacements below reconstruct the tested snapshot; task answers, source evidence and business state are unchanged.",
+    "post_audit_replacements": [
+      {
+        "before": "内容与静态检查通过；独立新会话接续测试 **NOT_RUN**，尚未证明实际token或接续效果。",
+        "after": "内容与静态检查通过；经用户授权，独立只读接续验证的状态恢复、缺陷回归定位、变更及未验证项识别三项通过，读取范围与限制见回执；实际token节省仍未测量。"
+      },
+      {
+        "before": "2026-10-04 的 Git 归档仅覆盖当时版本，本次没有新增提交或发布。",
+        "after": "历史 Git 归档按各自版本恢复；本轮配置与文档整理随 Git 提交保存，不构成应用部署。"
+      }
+    ]
+  },
+  "tasks": [
+    {
+      "id": "state_recovery",
+      "result": "PASS",
+      "answer": "M002 / milestone-complete / complete; no active role, active agent, open CR, pending user decision or allowed transition. Last transition TRANSITION-M002-146. Only the assigned read-only audit is currently authorized for this auditor; future work needs a specific task. Recovered pinned consumer-ai-web@2.0.0 plus explicit maintenance patch, QA policy, compatibility/claim exceptions, retained data and source boundaries.",
+      "sources": [
+        ".planning/workflow/state.yaml:1-32,111-130",
+        ".planning/agt/agents.yaml:128-129",
+        ".planning/milestones/M002/reviews/milestone-closeout.md:12-26",
+        ".planning/milestones/M002/continuation.md:3-29",
+        ".planning/agt/qa-scope-policy.md:8-20"
+      ],
+      "retained_items": [
+        "CR039-L1",
+        "CR042-L1",
+        "AI-QUALITY-90",
+        "W01",
+        "QA26-MINIMAX",
+        "PRON-MOBILE"
+      ],
+      "unverified": "Also retained production SSE, Linux, capacity alerts, real IME/screen-reader, 04:00 boundary and CR313 fault/concurrency limits. Completion does not turn these into PASS."
+    },
+    {
+      "id": "defect_regression_localization",
+      "result": "PASS",
+      "defect": "PRON-DEFECT-001",
+      "answer": "Located disabled result pronunciation and missing focus transfer: optional pronunciationActive Boolean was coerced to false when omitted; R1 explicitly defaults it to true while retaining pronunciationEnabled opt-in and outgoing-plan false. Prior R1 targeted retest 18/18 PASS; library 35/35 reused only in original scope. Focus transfers only when previously on the outgoing plan pronunciation button.",
+      "sources": [
+        ".planning/milestones/M002/implementation/frontend-validation.md:13-21",
+        ".planning/milestones/M002/verification/pronunciation/evidence/run-143/defect-pron-001-focus-transfer.json:17-43",
+        ".planning/milestones/M002/verification/pronunciation/evidence/run-145/defect-pron-001-retest.json:2-22",
+        ".planning/milestones/M002/verification/pronunciation/report.md:18-38",
+        "frontend/app/presentation/components/GenerationVocabularyList.vue:8-27,116-120",
+        "frontend/app/presentation/components/GenerationContent.vue:103-135,221-228,260-262,601-610,687-694",
+        "frontend/tests/unit/generation-pronunciation-focus.test.ts:108-221",
+        ".planning/milestones/M002/verification/coverage-matrix.md:25-31"
+      ],
+      "unverified": "No current service/build check or reproduction. Same symptom need not have same cause; controlled browser fixtures do not prove real model generation; native start/end do not prove human audio quality or mobile coverage."
+    },
+    {
+      "id": "change_disposition_and_limits",
+      "result": "PASS",
+      "answers": [
+        {
+          "id": "CR-313",
+          "disposition": "resolved; four-category config import/export accepted by USER-M002-CR313-UAT-ACCEPTED-20261016",
+          "boundary": "Old open/product-awaiting-review are historical. Fault injection, true COMMIT ACK loss, kill, concurrency/barrier, real 04:00/24h, KDF RSS and all multi-tab/admin combinations remain limited. Earlier full-run FAIL records remain FAIL."
+        },
+        {
+          "id": "CR-308",
+          "disposition": "resolved by reclassification to nonblocking model observation; QA defect/AC-321 blocking and automatic rework withdrawn",
+          "boundary": "No claim that model omissions were fixed, article quality passed or stable success >=90% was proven."
+        },
+        {
+          "id": "CR-316",
+          "disposition": "browser-only option B selected; downstream browser implementation/QA/desktop UAT accepted",
+          "boundary": "Recording/FreeDictionary path was removed from first-release scope, not validated; real mobile/all accents/all devices/manual per-case listening remain unverified."
+        }
+      ],
+      "sources": [
+        ".planning/milestones/M002/changes/index.md:46-49",
+        ".planning/milestones/M002/reviews/cr313-uat-acceptance.md:13-15,29-40",
+        ".planning/milestones/M002/changes/CR-308.md:20-48",
+        ".planning/milestones/M002/changes/CR-316.md:42-50",
+        ".planning/milestones/M002/reviews/pronunciation-uat-acceptance.md:11-17",
+        ".planning/milestones/M002/verification/config-portability/report.md:40-42",
+        ".planning/milestones/M002-legacy-M003/reviews/verification-acceptance-096.md:35-38"
+      ]
+    }
+  ],
+  "findings": {
+    "blocking": [],
+    "historical_differences_resolved": [
+      "CR313 original open/product-awaiting-review versus later acceptance",
+      "CR316 pending downstream receipt versus later browser acceptance",
+      "Pronunciation implementation/QA/guide pre-UAT states versus accepted state",
+      "CR313 acceptance next-pronunciation step and pronunciation acceptance next-closeout step versus final closeout",
+      "M001 policy records historical active/rework text; only policy clauses remain current",
+      "096 acceptance old Profile 1.0/M003/3014 metadata versus current pinned configuration"
+    ],
+    "local_link_check": {
+      "markdown_documents": 14,
+      "references": 281,
+      "missing_paths": 0,
+      "scope": "path existence only; not all fragments or remote links"
+    },
+    "framework_patch": "Patch SHA and six base/patched file SHAs verified in memory against pinned revision; no writes",
+    "search_correction": "Initial guessed presentation/generation component path did not exist; filename search found presentation/components. Auditor search assumption, not a document dead link.",
+    "missing_runtime_information": [
+      "current service availability/build",
+      "browser/reproduction steps/focus state for hypothetical new issue",
+      "device-specific human audio checks",
+      "uncovered fault/concurrency cases"
+    ]
+  },
+  "reading": {
+    "kind": "auditor-reported tool-visible reads; no complete token or cumulative-input measurement",
+    "aliases": {
+      "P": "product root",
+      "F": "framework files from pinned revision with adopted patch in memory",
+      "M1": "P/.planning/milestones/M001",
+      "M2": "P/.planning/milestones/M002",
+      "L3": "P/.planning/milestones/M002-legacy-M003"
+    },
+    "order": [
+      {
+        "path": "P/README.md",
+        "range": "full L1-53; preceded only by directory/entry filename discovery"
+      },
+      {
+        "path": "P/.planning/agt/project.yaml",
+        "range": "full L1-129"
+      },
+      {
+        "path": "P/.planning/agt/profiles/consumer-ai-web/PROFILE.yaml",
+        "range": "L1-257; batch tail truncated"
+      },
+      {
+        "path": "P/.planning/agt/profile-upgrade-2.0.0.md",
+        "range": "first batch only tail visible; reread at step 8"
+      },
+      {
+        "path": "P/.planning/agt/context-maintenance-adoption.json",
+        "range": "full L1-50"
+      },
+      {
+        "path": "P/.planning/workflow/state.yaml",
+        "range": "full L1-136"
+      },
+      {
+        "path": "M2/continuation.md",
+        "range": "full L1-43 before result registration"
+      },
+      {
+        "path": "P/.planning/agt/profiles/consumer-ai-web/PROFILE.yaml; P/.planning/agt/profile-upgrade-2.0.0.md",
+        "range": "L258-267; full L1-56"
+      },
+      {
+        "path": "P/.planning/agt/context-maintenance-v1.patch",
+        "range": "full L1-110"
+      },
+      {
+        "path": "F/core/document-maintenance.md",
+        "range": "full L1-105"
+      },
+      {
+        "path": "F/core/role-contract.md",
+        "range": "full L1-153"
+      },
+      {
+        "path": "F/core/workflow-control.md",
+        "range": "full L1-84; other three patched files hashed only, not displayed"
+      },
+      {
+        "path": "P/.planning/agt/agents.yaml",
+        "range": "full L1-133"
+      },
+      {
+        "path": "P/.planning/agt/qa-scope-policy.md",
+        "range": "full L1-20"
+      },
+      {
+        "path": "M1/reviews/first-release-compatibility-policy.md",
+        "range": "full L1-52"
+      },
+      {
+        "path": "M1/reviews/claimed-batch-delete-retention-exception.md",
+        "range": "full L1-54"
+      },
+      {
+        "path": "M2/reviews/milestone-closeout.md",
+        "range": "full L1-38"
+      },
+      {
+        "path": "M2/verification/report.md",
+        "range": "full L1-40"
+      },
+      {
+        "path": "M2/changes/index.md",
+        "range": "full L1-53"
+      },
+      {
+        "path": "M2/implementation/frontend-validation.md",
+        "range": "full L1-63"
+      },
+      {
+        "path": "M2/verification/pronunciation/report.md",
+        "range": "full L1-38"
+      },
+      {
+        "path": "M2/handoffs/pronunciation-frontend-implementation.md",
+        "range": "full L1-59"
+      },
+      {
+        "path": "M2/reviews/pronunciation-uat-acceptance.md",
+        "range": "full L1-17"
+      },
+      {
+        "path": "M2/reviews/cr313-uat-acceptance.md",
+        "range": "full L1-42"
+      },
+      {
+        "paths": [
+          "M2/changes/CR-313.md",
+          "M2/changes/CR-308.md",
+          "M2/changes/CR-316.md",
+          "M2/verification/config-portability/report.md",
+          "P/frontend/tests/unit/generation-pronunciation-focus.test.ts",
+          "P/frontend/tests/unit/word-pronunciation.test.ts"
+        ],
+        "range": "heading/keyword matches; initial component path guess failed"
+      },
+      {
+        "path": "M2/changes/CR-313.md",
+        "range": "full L1-80"
+      },
+      {
+        "path": "M2/changes/CR-308.md",
+        "range": "full L1-48"
+      },
+      {
+        "path": "M2/changes/CR-316.md",
+        "range": "full L1-50"
+      },
+      {
+        "path": "M2/verification/config-portability/report.md",
+        "range": "full L1-50"
+      },
+      {
+        "path": "M2/verification/pronunciation/evidence; P/frontend",
+        "range": "targeted evidence/component/test filenames; heading search in coverage-matrix and closeout-check"
+      },
+      {
+        "path": "M2/verification/coverage-matrix.md",
+        "range": "L1-35"
+      },
+      {
+        "path": "M2/reviews/milestone-closeout-check.md",
+        "range": "L43-64"
+      },
+      {
+        "path": "M2/verification/pronunciation/evidence/run-143/defect-pron-001-focus-transfer.json",
+        "range": "full L1-44"
+      },
+      {
+        "path": "M2/verification/pronunciation/evidence/run-145/defect-pron-001-retest.json",
+        "range": "full L1-23"
+      },
+      {
+        "path": "P/frontend/app/presentation/components/GenerationVocabularyList.vue",
+        "range": "L1-120"
+      },
+      {
+        "path": "P/frontend/tests/unit/generation-pronunciation-focus.test.ts",
+        "range": "L108-221"
+      },
+      {
+        "paths": [
+          "P/frontend/app/presentation/components/GenerationContent.vue",
+          "P/frontend/tests/unit/word-pronunciation.test.ts",
+          "L3/reviews/verification-acceptance-096.md"
+        ],
+        "range": "pronunciation/focus/planLeaving/nextTick/disabled/workspace matches; test names L96,97,107,121,145; acceptance headings/relevant matches"
+      },
+      {
+        "path": "M2/verification/pronunciation/uat-local-20261016/guide.md",
+        "range": "full L1-29"
+      },
+      {
+        "path": "P/frontend/app/presentation/components/GenerationContent.vue",
+        "range": "L99-148,215-263,600-611,683-697"
+      },
+      {
+        "path": "L3/reviews/verification-acceptance-096.md",
+        "range": "L11-46"
+      },
+      {
+        "path": "14 already-read Markdown documents",
+        "range": "reextracted links for path existence; target bodies not read"
+      }
+    ],
+    "measured_complete_fragments": [
+      {
+        "path": "M2/verification/coverage-matrix.md",
+        "lines": "1-35",
+        "characters": 3176,
+        "bytes": 5476
+      },
+      {
+        "path": "M2/reviews/milestone-closeout-check.md",
+        "lines": "43-64",
+        "characters": 1666,
+        "bytes": 3092
+      },
+      {
+        "path": "P/frontend/app/presentation/components/GenerationVocabularyList.vue",
+        "lines": "1-120",
+        "characters": 3447,
+        "bytes": 3447
+      },
+      {
+        "path": "P/frontend/tests/unit/generation-pronunciation-focus.test.ts",
+        "lines": "108-221",
+        "characters": 3315,
+        "bytes": 3315
+      },
+      {
+        "path": "P/frontend/app/presentation/components/GenerationContent.vue",
+        "lines": "99-148,215-263,600-611,683-697",
+        "characters": 4014,
+        "bytes": 4014
+      },
+      {
+        "path": "L3/reviews/verification-acceptance-096.md",
+        "lines": "11-46",
+        "characters": 1724,
+        "bytes": 2678
+      }
+    ],
+    "total_bytes": "not_reported; truncated batches and keyword outputs prevent a reliable cumulative total",
+    "tokens": "unknown",
+    "repeated_history_reconstruction": false,
+    "extra_reads": "One truncated-output reread, one guessed-path correction, and keyword searches followed by focused reading.",
+    "no_full_history_load": true
+  },
+  "limitations": [
+    "Single fresh-context auditor, three read-only localization tasks; not a global efficiency benchmark",
+    "No before/after independent-run comparison or runtime token/cost measurement",
+    "No application test rerun, live service/build verification, model-quality evaluation or device/audio validation",
+    "No exhaustive link/fragment audit by this auditor; static integrity checks are separately recorded"
+  ],
+  "recorded_by": "root, from completed independent agent response; no new product approval or workflow transition"
+}

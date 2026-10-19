@@ -1,35 +1,63 @@
-> **M002续做索引124**：本里程碑包含原M003全部需求。[较新同类原件](../../M002-legacy-M003/implementation/frontend-validation.md)及其已记录的逐项接收/验证均归M002；旧编号只是历史标识。当前工作与未完成项见[续做索引](../continuation.md)，下方前期记录保留，不能据旧完成态关闭当前M002。
+# M002 前端交付与回归接续
 
----
-milestone: M002
-stage: implementation
-role: frontend-implementer/base
-agent_name: frontend-claire
-version: M002-GALLERY-MEANINGS-F02
-status: verified_scoped_fix
----
+M002 已完成，五组交付的接受来源见[当前QA报告](../verification/report.md)。这里保留当前行为、修改原因和定向回归位置；旧待QA/待用户/待切换环境指令已退出当前入口。本次未运行应用测试。
 
-# 精选词义还原
+| 范围 | 最终行为与约束 | 证据/定位 |
+|---|---|---|
+| CR029/UI31 服务商工作区 | 以provider为列表和整组编辑单位；稳定模型ID、Key草稿、CAS三方合并；未知保存结果阻止重发；25+模型完整显示/保存 | [原证据](evidence/provider-workspace31)、[QA36](../verification/evidence/qa2-036/manifest.json)；中英×1440/390、原子性与隔离按各自证据，不把HTTP fixture当真实provider |
+| GALLERY-MEANINGS-F01/F02 | 词义置于配置事实之后、试用按钮之前；无重复词签；语言标签固定语言原名，详情来自同一发布快照 | [原证据](evidence/gallery-meanings-fix/manifest.json)；frontend/app/pages/explore.vue；三语言、共享后台及真实双视口复验已接受 |
+| CR301–312 生成体验 | 计划/输出保持同源；功能词过滤、逐段显示、保留完整旧稿逐段替换、阅读位置/焦点和终态遵从批准契约 | [原实现报告](../../M002-legacy-M003/implementation/frontend-validation.md)、frontend/app/presentation/generation/、[105接受](../../M002-legacy-M003/reviews/verification-acceptance-105.md) |
+| CR313 配置可移植性 | DTO→schema→mapper→model→store；秘密仅留Nuxt app隔离WeakMap，sessionStorage只存恢复字段；unknown只resolve不重放import，session epoch拒收迟到响应 | [实现原件](config-portability/frontend-validation.md)、[用户接受](../reviews/cr313-uat-acceptance.md)；frontend/app/runtime/stores/config-portability.ts、frontend/tests/unit/config-portability.test.ts |
+| 浏览器发音R1 | PAGE402计划/结果与PAGE403已存文章词义显示紧凑控件；浏览器native speech，同词重播/A→B/离页取消，禁止自动播放；计划→结果焦点交接 | [原实现交接](../handoffs/pronunciation-frontend-implementation.md)、[QA原件](../verification/pronunciation/report.md)、[桌面接受](../reviews/pronunciation-uat-acceptance.md)；frontend/app/presentation/pronunciation/、frontend/app/application/pronunciation/ |
 
-用户2026-10-02反馈精选试用的释义展示与设计不同；按已批准UIA-PAGE-217-MEANINGS23 / CAP-218 / DATA-212 / API-202定向修复，不新增需求或设计。来源 prototype/gallery.js、word-meanings.js、theme.css/copy.json；源摘要及可恢复旧文见[证据](evidence/gallery-meanings-fix/manifest.json)。单工作区串行，保留所有其他改动，无Git提交。
+## 可复用失败经验
 
-- F01：explore.vue把词义区从正文之后移至左侧配置事实之后、试用按钮之前，删除重复词签。所有词义和完整正文仍来自同一发布快照。
-- F02：PresetWordMeanings按原型显示语言原名中文/English/日本語，切UI语言不翻译该标签。共享后台预览也匹配word-meanings.js；配置选择器本地化保持。
+| 触发 | 有据原因与已验证处理 | 回归入口/边界 |
+|---|---|---|
+| PRON-DEFECT-001 结果发音持续禁用、焦点不转移 | 可选Boolean省略被Vue转成false；R1修复后QA结果18/18通过 | frontend/tests/unit/generation-pronunciation-focus.test.ts、frontend/tests/unit/word-pronunciation.test.ts；[原QA](../verification/pronunciation/report.md)。受控计划/结果为内存注入，桌面接受不替代手机 |
+| 词义位置/语言标签与批准设计不一致 | 按原型调整区域顺序、移除重复词签、保留语言原名；同数据实际页面复验通过 | gallery-meanings-fix证据；fixture查询串、样本篇数与语言设置须匹配当前批准数据 |
+| 配置导入响应丢失 | 结果未知时不得用current快照推断完成或自动重发；只resolve并保留回执语义 | frontend/tests/e2e/m002-config-portability.spec.ts、frontend/tests/e2e/m002-config-portability-real.spec.ts；真实COMMIT ACK/kill等未全部执行 |
 
-缺陷复验：类型、受影响文件lint、生产构建通过；三语言内容及标签在界面语言切换后保持，桌面/手机2项通过；后台同组件预览与语言切换2项通过。1440/390相同公开样本、字体、DPR、界面语言及减少动效下，与原型的尺寸/位置/字号/颜色/标签一致；所有卡片完整词义/原文、无重复和页面横溢通过。实际3302最终包在同条件下两张截图与原型逐字节相同，0页面异常、0真实模型调用。未改轮播或生成逻辑，复用既有证据，不重跑全站。
+未验证环境、W01、模型问题与PRON-MOBILE统一见[QA保留项](../verification/report.md#保留事项)。后续只按实际变更/缺陷选择验证；来源版本变化后重判证据适用性，不自动重跑全站。
 
-截图预算原问题2图+匹配4图+实际2图；F02及公开数据由2篇变3篇后新增匹配4图+实际2图。方法修正：原型fixture URL含版本查询串，初次未拦截；实际数据检查初次使用旧2篇快照；后台fixture初次误设zh预期，实际为en。分别修正请求匹配、读取最新公开数据和依据fixture配置后通过，未修改产品预期。初始证据/文档在before-documents.tar.gz和before-language-label.tar.gz，失败结果保留。最终日志/截图见同证据目录。
+## 旧引用的版本定位
 
-## 仍有效的 UI31 交付
+以下旧锚点仅定位整理前原文，按[版本索引](../reviews/evidence/context-maintenance-20261019/receipt.json)中的原路径、Git提交与摘要恢复；不代表当前行动指令。
 
-# CR029-F05 服务商工作区（UI31）
+<a id="精选词义还原"></a>
+<a id="仍有效的-ui31-交付"></a>
+<a id="cr029-f05-服务商工作区ui31"></a>
 
-UIA-PAGE208-PROVIDER：列表以稳定provider ID展示 `.generic-provider-card`，头部连接/数量/编辑，内部全部模型名称/ID/状态/测试/移除。新增服务商直接配置新连接+多个模型；编辑已有服务商填充全部模型，可修改并继续添加，不提供复制已有连接的新增下拉和单模型编辑按钮。
+## 更早审批的引用定位
 
-严格DTO→mapper→repository→store贯通新聚合API。页面草稿独占Key，关闭清除；原位模型UUID、单项流式反馈及移除影响确认保持。409按模型UUID三方合并：本地编辑/新项保留，远端新增纳入、下架剔除；POST/PATCH保存结果不明确均阻止重复提交并保留草稿。
+以下锚点在本次整理前已缺失。问题编号转接到保留的原CR及其中复验来源；旧下一步须按发起链接的审批记录时点解释，不能恢复为当前任务。
 
-39文件372单测、类型/lint/边界257模块283依赖通过。16项中英×1440/390浏览器验收通过：新服务商+多模型保存、整组编辑追加并刷新保持、超过20条全量显示编辑、单项测试隔离、空新项不阻碍其他项测试、取消确认、冲突恢复、最后模型移除仍可编辑空服务商；4项补充未知保存结果保护通过。4项原型交互通过。布局/截图已查看，固定头尾和高级字段间距、服务商层级、无横溢符合UI31。生产构建日志在同目录，QA切换前确认最新完成。
+<a id="cr005"></a>
+历史 CR005：[原问题、修订与复验](../changes/CR-005.md)；当前处理见[变更索引](../changes/index.md)。
 
-首轮类型发现聚合readonly数组不匹配，改为只读EditableProvider边界并去掉重复自动导出，保留初始日志。浏览器保存使用契约HTTP fixture，真实原子性及角色隔离见后端DB/HTTP证据，不把fixture冒称真实付费服务。原型后补空服务商零条编辑及影响提示；对应实际页面已被空态用例覆盖。QA复用开发检查，补3302实际包与真实配置的两视口验证，测试拦截避免费用。
+<a id="cr008"></a>
+历史 CR008：[原问题、修订与复验](../changes/CR-008.md)；当前处理见[变更索引](../changes/index.md)。
 
-[evidence/provider-workspace31](evidence/provider-workspace31)；原UI30列表/单模型编辑证据失效，流式传输及未改学习流程证据仍有效。旧文见before-validation.tar.gz。用户UAT未代签。
+<a id="cr009"></a>
+历史 CR009：[原问题、修订与复验](../changes/CR-009.md)；当前处理见[变更索引](../changes/index.md)。
+
+<a id="cr010"></a>
+历史 CR010：[原问题、修订与复验](../changes/CR-010.md)；当前处理见[变更索引](../changes/index.md)。
+
+<a id="cr012"></a>
+历史 CR012：[原问题、修订与复验](../changes/CR-012.md)；当前处理见[变更索引](../changes/index.md)。
+
+<a id="cr014"></a>
+历史 CR014：[原问题、修订与复验](../changes/CR-014.md)；当前处理见[变更索引](../changes/index.md)。
+
+<a id="cr016"></a>
+历史 CR016：[原问题、修订与复验](../changes/CR-016.md)；当前处理见[变更索引](../changes/index.md)。
+
+<a id="cr017"></a>
+历史 CR017：[原问题、修订与复验](../changes/CR-017.md)；当前处理见[变更索引](../changes/index.md)。
+
+<a id="cr019"></a>
+历史 CR019：[原问题、修订与复验](../changes/CR-019.md)；当前处理见[变更索引](../changes/index.md)。
+
+<a id="cr020"></a>
+历史 CR020：[原问题、修订与复验](../changes/CR-020.md)；当前处理见[变更索引](../changes/index.md)。

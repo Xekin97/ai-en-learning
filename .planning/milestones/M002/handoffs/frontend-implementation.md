@@ -1,7 +1,20 @@
-> **M002续做索引124**：本里程碑包含原M003全部需求。[较新同类原件](../../M002-legacy-M003/handoffs/frontend-implementation.md)及其已记录的逐项接收/验证均归M002；旧编号只是历史标识。当前工作与未完成项见[续做索引](../continuation.md)，下方前期记录保留，不能据旧完成态关闭当前M002。
+# M002 前端接续入口
 
-# 精选词义还原交接
+本里程碑已完成，无待QA、待用户验收或待环境切换任务。按新任务读取[前端最终修改与回归](../implementation/frontend-validation.md)，必要时展开对应设计/专项原件；[当前测试边界](../verification/report.md#保留事项)保留真实手机等未验范围。
 
-frontend-claire / 2026-10-02。用户反馈GALLERY-MEANINGS-F01/F02按既有UIA-PAGE-217-MEANINGS23修复：explore.vue把词义移至配置事实之后、试用按钮之前，删除重复词签。组件语言标签补充按原型固定语言原名，释义快照和数据链路保持，设计不变。类型/lint/构建、2项三语言回归、2项后台标签复验和1440/390同数据原型对照通过；见[开发验证](../implementation/frontend-validation.md)与[证据](../implementation/evidence/gallery-meanings-fix)。单工作区、无并行或Git操作。
+CR029服务商工作区、精选词义、生成逐段返修、CR313和浏览器发音R1均已有接受来源。原交接中的旧端口/部署建议不作为当前执行指令。发音从浏览器方案接续，旧录音方案已被替代。
 
-交qa-quinn按持续授权更新本地3302前端，补实际API双视口复验。复用开发证据，不重跑全站；不要改数据库、服务商或调用真实模型。CR029服务商UI31仍待用户验收，其交付及保留事项见[QA36](../verification/evidence/qa2-036/manifest.json)。旧报告/交接冻结在本轮before-documents.tar.gz。无产品待决，不代签本轮UAT。
+[当前里程碑接续与历史恢复](../continuation.md)是统一入口；本次由root执行已授权的文档维护，没有激活frontend-claire或改变工作流。
+
+## 旧引用的版本定位
+
+以下旧锚点仅定位整理前原文，按[版本索引](../reviews/evidence/context-maintenance-20261019/receipt.json)中的原路径、Git提交与摘要恢复；不代表当前行动指令。
+
+<a id="精选词义还原交接"></a>
+
+## 更早审批的引用定位
+
+以下锚点在本次整理前已缺失。问题编号转接到保留的原CR及其中复验来源；旧下一步须按发起链接的审批记录时点解释，不能恢复为当前任务。
+
+<a id="下一步"></a>
+历史交接动作：以发起链接的原审批记录为准；当前已完成，[接续入口](../continuation.md)不激活旧角色或旧部署。

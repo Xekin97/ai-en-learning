@@ -9,20 +9,28 @@ project:
 agt_base:
   repository: ../agt-coding-v2
   resolved_path_at_lock: /Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/agt-coding-v2
-  git_revision: b5badf88cd7194400c3d4d0e9395e7c98490dc26
+  # Resolve framework roles, skills and templates at this revision, not sibling HEAD.
+  git_revision: 91d98055ec49c877cc03473e479bcc6a9f371af6
+  overrides:
+  - id: AGT-CONTEXT-MAINTENANCE-20261019
+    manifest: .planning/agt/context-maintenance-adoption.json
+    scope: Context maintenance contract; apply the recorded patch to the pinned revision.
   profile:
     id: consumer-ai-web
-    version: 1.0.0
-    reference: consumer-ai-web@1.0.0
+    version: 2.0.0
+    reference: consumer-ai-web@2.0.0
     status_at_lock: available
     source: profiles/consumer-ai-web/PROFILE.yaml
-    sha256: 9d9258ebc8cba13f5df2f8289fa81e973e60af9f10e5ca126fd83482aa0c050f
+    sha256: a5c2384b20727264713c901ed8da7a1199e653591cd21d5ea924930c53e4dc8e
+    snapshot: .planning/agt/profiles/consumer-ai-web/PROFILE.yaml
 profile_selection:
-  id: INIT-PROFILE-001
+  id: AGT-PROFILE-UPGRADE-2-20261019
   status: CONFIRMED
   selected_by: user
-  selected_at: '2026-08-28T11:00:33Z'
-  user_selection: consumer-ai-web@1.0.0
+  selected_at: '2026-10-19T02:03:03Z'
+  user_selection: consumer-ai-web@2.0.0
+  supersedes: INIT-PROFILE-001
+  record: .planning/agt/profile-upgrade-2.0.0.md
   fit:
   - 面向个人消费者的公开 Web 产品
   - AI 生成内容是核心用户价值

@@ -1,5 +1,5 @@
 schema_version: 1
-profile: consumer-ai-web@1.0.0
+profile: consumer-ai-web@2.0.0
 milestone: M002
 transitions:
 - id: TRANSITION-M001-001
@@ -10272,3 +10272,23 @@ milestone_transitions:
   evidence: .planning/milestones/M002/reviews/milestone-closeout.md
   scope: Formal M002 closeout with retained limits; consolidate withdrawn M003/M004 ownership and compact current
     control entries.
+configuration_changes:
+- id: AGT-PROFILE-UPGRADE-2-20261019
+  operation: upgrade-profile
+  timestamp: '2026-10-19T02:03:03Z'
+  confirmed_by: user
+  user_instruction: 升级当前 ai-en 项目的 agt 配置到 consume2.0
+  from:
+    profile: consumer-ai-web@1.0.0
+    agt_revision: b5badf88cd7194400c3d4d0e9395e7c98490dc26
+  to:
+    profile: consumer-ai-web@2.0.0
+    agt_revision: 91d98055ec49c877cc03473e479bcc6a9f371af6
+  milestone: M002
+  stage: milestone-complete
+  status: complete
+  active_role: null
+  active_agent: null
+  evidence: .planning/agt/profile-upgrade-2.0.0.md
+  scope: Apply the 2.0 delivery contract to subsequent authorized work; preserve completed milestone approvals,
+    specialist artifacts, stage transitions, project policies and the existing model-routing lock.

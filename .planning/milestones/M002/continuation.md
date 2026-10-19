@@ -2,6 +2,8 @@
 
 用户于 2026-10-16 明确批准正式收尾，并将误拆的 M003、M004 合并及压缩整理。正式状态见 [workflow](../../workflow/state.yaml)，关闭记录为 [TRANSITION-M002-146](reviews/milestone-closeout.md)。M002 已完成，无活动角色、开放 CR 或待审功能。下一步仅在收到具体新任务后按范围启动；不会自动创建新里程碑。
 
+当前测试结论先读[QA报告](verification/report.md)与[覆盖矩阵](verification/coverage-matrix.md)，修改状态先读[变更索引](changes/index.md)。开发回归从[后端](implementation/backend-validation.md)、[前端](implementation/frontend-validation.md)定位；下表专业原件只在对应任务需要时展开，旧提交状态不恢复为待办。
+
 ## 按任务读取原件
 
 | 交付范围 | 需求与技术原件 | 验证及用户接受 |
@@ -18,24 +20,24 @@
 
 QA 仅验证功能与实现，不评判文章质量或模型漏判；见[项目 QA 政策](../../agt/qa-scope-policy.md)。[首版兼容政策](../M001/reviews/first-release-compatibility-policy.md)、[主动删除承接记录例外](../M001/reviews/claimed-batch-delete-retention-exception.md)继续有效。新里程碑须明确授权；当前 UAT 数据和模型配置保留，收尾不授权数据迁移或生产发布。
 
-| 保留项 | 接续条件与原件 |
-|---|---|
-| CR039-L1、CR042-L1 | 词形与未知标注限制；有实际失败或明确改进任务时按[原 CR039](../M001/changes/CR-039.md#retained-limitations)、[原 CR042](../M001/verification/CR-042-generation-evidence.md#retained-limitations)处理 |
-| AI-QUALITY-90 | ≥90% 稳定成功率未获统计证明；[评估原件](verification/ai-evaluation.md)，独立模型研究，不纳入 QA 或自动调用模型 |
-| W01、QA26-MINIMAX | 个人页历史警告未定位、旧模型兼容问题未解决；复现或需要恢复模型时按[原报告](verification/report.md#保留事项)定向处理 |
-| PRON-MOBILE | 真实手机未验证；具备可访问环境后按[发音 UAT](verification/pronunciation/uat.md)补验，桌面通过不替代手机 |
-| 环境与专项边界 | 生产 SSE、Linux、容量告警、真实输入法/读屏、04:00 边界，以及配置导入故障注入/并发/KDF 压力等，按[整体核对](reviews/milestone-closeout-check.md#继续保留的事项)和各原报告保留，不写成已验证 |
-
-失败经验：结果控件可选 Boolean 缺省变 false，导致禁用及焦点转移失败；PRON-DEFECT-001 的 R1 修复和定向回归见[原 QA 报告](verification/pronunciation/report.md)。相关修改从原证据和代码恢复，不改写历史失败结论。
+CR039-L1、CR042-L1、AI-QUALITY-90、W01、QA26-MINIMAX、PRON-MOBILE及环境/专项边界统一维护在[QA保留事项](verification/report.md#保留事项)，均未因收尾宣称解决。PRON-DEFECT-001等有证据的失败经验与回归位置见[前端修改结论](implementation/frontend-validation.md#可复用失败经验)和[后端修改结论](implementation/backend-validation.md#可复用失败经验)。
 
 ## 本地交付与恢复
 
 接受环境为 [localhost:3016](http://localhost:3016)，真实服务及已保存模型配置，无 mock；[账号使用说明](verification/pronunciation/uat-local-20261016/guide.md)、[访问及凭据文件位置](verification/pronunciation/uat-local-20261016/access.json)、[构建切换与回退](verification/pronunciation/evidence/run-145/switch-receipt.json)。收尾未操作运行环境，访问可用性随本地进程生命周期变化。
 
-源码版本以[713 项接受清单](reviews/evidence/milestone-closeout-146/accepted-source-after-rename.json)为准；发音安装构建摘要 `a6437e56fe8a60781a7ec9b9ccbdc86272ae73a8cc734a8dc4ca4cd32066071a`。最后一次发音 QA 不代表全站重测，按上表逐能力取证。2026-10-04 的 Git 归档仅覆盖当时版本，本次没有新增提交或发布。
+源码版本以[713 项接受清单](reviews/evidence/milestone-closeout-146/accepted-source-after-rename.json)为准；发音安装构建摘要 `a6437e56fe8a60781a7ec9b9ccbdc86272ae73a8cc734a8dc4ca4cd32066071a`。最后一次发音 QA 不代表全站重测，按上表逐能力取证。历史 Git 归档按各自版本恢复；本轮配置与文档整理随 Git 提交保存，不构成应用部署。
 
-## 整理与归档
+<a id="整理与归档"></a>
 
-本文件是统一交付索引；当前控制状态仅保留完成事实、有效政策、遗留 ID 和来源。被精简的旧 state/project/agents/入口原文在[压缩归档](reviews/evidence/milestone-closeout-146/before-controls.tar.gz)，按[索引](reviews/evidence/milestone-closeout-146/archive-index.json)定向读取；归档不是第二份当前状态。原始审批、测试与失败内容保留；目录搬迁和机械引用更新见[路径映射及完整性记录](reviews/evidence/milestone-closeout-146/legacy-directory-rename.json)。冻结证据中的旧路径按该映射解析，不指向未来新建的同名里程碑；旧稿“待审”只说明当时事实。
+## 上下文整理
 
-前后字符/字节计量、摘要和引用检查见[整理回执](reviews/evidence/milestone-closeout-146/closure-receipt.json)。静态追踪已验证；新会话独立交接测试未执行，tokens 与运行时累计输入未知。
+2026-10-19按用户要求由root串行整理QA、前后端修改、45项变更状态和三份角色交接；产品/设计/架构沿上表已批准原件按范围读取。本次只维护上下文，M002终态、原接受、代码与环境不变。[责任范围、原件版本、计量与检查回执](reviews/evidence/context-maintenance-20261019/receipt.json)按需读取；[AGT修订](../../agt/context-maintenance-adoption.json)显式叠加到锁定的2.0版本。
+
+内容与静态检查通过；经用户授权，独立只读接续验证的状态恢复、缺陷回归定位、变更及未验证项识别三项通过，读取范围与限制见回执；实际token节省仍未测量。历史原件以回执的Git提交、路径、SHA定位；原稿待审状态不恢复为当前任务。恢复示例：
+
+```sh
+git show ce42e8726f7cf765a37afb574fe46f15b5d47f62:.planning/milestones/M002/verification/coverage-matrix.md
+```
+
+冻结清单继续按原版本/SHA解析，不与今日摘要混比。旧控制备份见[原索引](reviews/evidence/milestone-closeout-146/archive-index.json)，旧M003/M004路径见[目录映射](reviews/evidence/milestone-closeout-146/legacy-directory-rename.json)。原始审批、失败与专项QA原件保持；本次没有文件打包。

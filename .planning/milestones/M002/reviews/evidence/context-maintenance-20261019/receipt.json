@@ -1,0 +1,835 @@
+{
+  "id": "M002-CONTEXT-MAINTENANCE-20261019",
+  "user_instruction": "然后呢？现在怎么补这个收尾以及 AGT 的机制？",
+  "clarification": "压缩上下文文档，比如测试记录修改记录；不是文件打包",
+  "executor": "root; one session, responsibility-scoped documentation maintenance",
+  "milestone": "M002",
+  "business_state": "milestone-complete / complete; unchanged",
+  "scope": [
+    "verification/report.md",
+    "verification/coverage-matrix.md",
+    "implementation/backend-validation.md",
+    "implementation/frontend-validation.md",
+    "handoffs/verification.md",
+    "handoffs/backend-implementation.md",
+    "handoffs/frontend-implementation.md",
+    "changes/index.md",
+    "continuation.md"
+  ],
+  "originals": [
+    {
+      "path": ".planning/milestones/M002/verification/report.md",
+      "git_revision": "ce42e8726f7cf765a37afb574fe46f15b5d47f62",
+      "sha256": "37a5ca621502f83b7285079658ce2540261d003fbfef61c140ba270096820303",
+      "bytes": 4245,
+      "characters": 2471,
+      "old_anchors": [
+        "二期增量验收已通过",
+        "保留事项"
+      ],
+      "current_sha256": "09b9f940c946412ba205b8aa0e7d16f0d0742577087f0a574c6980ed2be562cf"
+    },
+    {
+      "path": ".planning/milestones/M002/verification/coverage-matrix.md",
+      "git_revision": "ce42e8726f7cf765a37afb574fe46f15b5d47f62",
+      "sha256": "8c1b41500d3d70809fd9f32156fd62768d87ecc9f9918fa8a0662ee1d6b9dfcd",
+      "bytes": 38793,
+      "characters": 21709,
+      "old_anchors": [
+        "qa38",
+        "qa32",
+        "qa31",
+        "qa30",
+        "qa29",
+        "qa28",
+        "qa33",
+        "qa34",
+        "qa35",
+        "qa36",
+        "最终增量验收登记qa38",
+        "精选释义复验qa37--gallery-meanings-f01f02",
+        "覆盖矩阵",
+        "用户验收登记与收尾qa32",
+        "cr026-一次提醒qa31pass",
+        "当前搜词修复限定复验qa30pass",
+        "当前页头限定复验qa29pass",
+        "当前-ui26-增量验收qa28",
+        "49-项能力",
+        "25-page--28-视图与设计条目",
+        "api数据与剩余工作",
+        "本轮技术质量与局限",
+        "qa17入口流程增量",
+        "qa18菜单复验",
+        "qa19增量与返工",
+        "qa20增量",
+        "qa21收敛",
+        "qa22-当前集成候选",
+        "qa23-用户反馈定向复验",
+        "qa24-本地生成替身修复",
+        "qa25-生成完成结果区还原",
+        "qa26-真实模型配置供用户验收",
+        "qa33--cr029-当前增量",
+        "qa34--cr029-f02",
+        "qa35--cr029-f03f04",
+        "qa36--ui31--cr029-f05"
+      ],
+      "current_sha256": "6b3554eeb5ce142732aac03d7c1ef37688ec8fd6edc4d80e1d19a7fd182b6693"
+    },
+    {
+      "path": ".planning/milestones/M002/implementation/backend-validation.md",
+      "git_revision": "ce42e8726f7cf765a37afb574fe46f15b5d47f62",
+      "sha256": "8869638e991351362dbb16445bffd9487e1e7e7a9dae47a9442f0b8d8a8dd54e",
+      "bytes": 2837,
+      "characters": 1593,
+      "old_anchors": [
+        "cr029-f05-服务商聚合实现"
+      ],
+      "current_sha256": "16bcfd8bb704f66766dad0580090d18ec6ad354dd517bda55a6ed659bdd208bc"
+    },
+    {
+      "path": ".planning/milestones/M002/implementation/frontend-validation.md",
+      "git_revision": "ce42e8726f7cf765a37afb574fe46f15b5d47f62",
+      "sha256": "8957b173d7d09e08b6d5966901139f4881e6a1367c889d209a9ca8c612e9e3d9",
+      "bytes": 4469,
+      "characters": 2158,
+      "old_anchors": [
+        "精选词义还原",
+        "仍有效的-ui31-交付",
+        "cr029-f05-服务商工作区ui31"
+      ],
+      "current_sha256": "a987c6495650947b3b592aa4fd73c0f40b3594464cb5c98405e4895037f231c7"
+    },
+    {
+      "path": ".planning/milestones/M002/handoffs/verification.md",
+      "git_revision": "ce42e8726f7cf765a37afb574fe46f15b5d47f62",
+      "sha256": "8eba6f3373b79b7bd641d04508bb15335e1ea40d2cda358cc5c7a33ef87dc8d3",
+      "bytes": 2858,
+      "characters": 1660,
+      "old_anchors": [
+        "二期已验收交付基线"
+      ],
+      "current_sha256": "65395d2e75f82b068b9031dd1dbb99c1789ad9a1c9dcbe2d6c3f78f59cdab1d3"
+    },
+    {
+      "path": ".planning/milestones/M002/handoffs/backend-implementation.md",
+      "git_revision": "ce42e8726f7cf765a37afb574fe46f15b5d47f62",
+      "sha256": "ec0f61413ed37c13496dec1295b4c3598594d602265b3a1c9241195a1268b1f6",
+      "bytes": 1527,
+      "characters": 867,
+      "old_anchors": [
+        "cr029-f05-后端交接"
+      ],
+      "current_sha256": "1f4b682130823fc25f8000b61373897431a7474b9af7fad2215956771daa7a0e"
+    },
+    {
+      "path": ".planning/milestones/M002/handoffs/frontend-implementation.md",
+      "git_revision": "ce42e8726f7cf765a37afb574fe46f15b5d47f62",
+      "sha256": "65d518c7ed4fe00a593af67b359d20d123c7c46e219fa6b753d6c41da07fd87b",
+      "bytes": 1357,
+      "characters": 735,
+      "old_anchors": [
+        "精选词义还原交接"
+      ],
+      "current_sha256": "ebc8829d9f831594a3916a8a73d12e5405d1a0b510ac284941e29cfb42ad0b64"
+    },
+    {
+      "path": ".planning/milestones/M002/continuation.md",
+      "git_revision": "ce42e8726f7cf765a37afb574fe46f15b5d47f62",
+      "sha256": "569b932ff66d0552274fb32d2cdf7880a8410a97b6cc8684d614cde0fd2a4be0",
+      "bytes": 6403,
+      "characters": 4141,
+      "old_anchors": [
+        "按任务读取原件",
+        "有效约束与保留事项",
+        "本地交付与恢复",
+        "整理与归档"
+      ],
+      "current_sha256": "f8c2a44ce9be5121e2171df555f699cd2c77e66be0bf2a65d33219362c2cb82b"
+    }
+  ],
+  "historical_source_rule": "Resolve frozen references to these paths by their recorded version and SHA using git show; never rehash or reinterpret frozen QA/approval manifests against current summaries. Other evidence stays in place.",
+  "new_entries": [
+    ".planning/milestones/M002/changes/index.md"
+  ],
+  "results": {
+    "content_consolidation": "PASS_WITH_DECLARED_SCOPE: QA, implementation, change dispositions and current handoffs; product/design/architecture rules remain source-linked",
+    "static_integrity": "PASS",
+    "independent_handoff": "PASS_LIMITED_READONLY_TASKS: state recovery, defect regression localization, change dispositions and unverified limits"
+  },
+  "tokens": "unknown",
+  "actual_runtime_input": "Partial read ranges and six fragment measurements recorded in handoff-check.json; cumulative input/tokens not measured",
+  "application_tests": "NOT_RUN; documentation-only maintenance",
+  "measurement": {
+    "kind": "explicit_static_task_document_sets; not runtime usage",
+    "edited_documents_with_new_index": {
+      "before": {
+        "files": [
+          {
+            "path": ".planning/milestones/M002/verification/report.md",
+            "bytes": 4245,
+            "characters": 2471
+          },
+          {
+            "path": ".planning/milestones/M002/verification/coverage-matrix.md",
+            "bytes": 38793,
+            "characters": 21709
+          },
+          {
+            "path": ".planning/milestones/M002/implementation/backend-validation.md",
+            "bytes": 2837,
+            "characters": 1593
+          },
+          {
+            "path": ".planning/milestones/M002/implementation/frontend-validation.md",
+            "bytes": 4469,
+            "characters": 2158
+          },
+          {
+            "path": ".planning/milestones/M002/handoffs/verification.md",
+            "bytes": 2858,
+            "characters": 1660
+          },
+          {
+            "path": ".planning/milestones/M002/handoffs/backend-implementation.md",
+            "bytes": 1527,
+            "characters": 867
+          },
+          {
+            "path": ".planning/milestones/M002/handoffs/frontend-implementation.md",
+            "bytes": 1357,
+            "characters": 735
+          },
+          {
+            "path": ".planning/milestones/M002/continuation.md",
+            "bytes": 6403,
+            "characters": 4141
+          }
+        ],
+        "bytes": 62489,
+        "characters": 35334
+      },
+      "after": {
+        "files": [
+          {
+            "path": ".planning/milestones/M002/verification/report.md",
+            "bytes": 4935,
+            "characters": 2869
+          },
+          {
+            "path": ".planning/milestones/M002/verification/coverage-matrix.md",
+            "bytes": 6855,
+            "characters": 4175
+          },
+          {
+            "path": ".planning/milestones/M002/implementation/backend-validation.md",
+            "bytes": 3967,
+            "characters": 2287
+          },
+          {
+            "path": ".planning/milestones/M002/implementation/frontend-validation.md",
+            "bytes": 5577,
+            "characters": 3488
+          },
+          {
+            "path": ".planning/milestones/M002/handoffs/verification.md",
+            "bytes": 1739,
+            "characters": 829
+          },
+          {
+            "path": ".planning/milestones/M002/handoffs/backend-implementation.md",
+            "bytes": 1005,
+            "characters": 517
+          },
+          {
+            "path": ".planning/milestones/M002/handoffs/frontend-implementation.md",
+            "bytes": 1416,
+            "characters": 660
+          },
+          {
+            "path": ".planning/milestones/M002/continuation.md",
+            "bytes": 6253,
+            "characters": 4077
+          },
+          {
+            "path": ".planning/milestones/M002/changes/index.md",
+            "bytes": 9878,
+            "characters": 6222
+          }
+        ],
+        "bytes": 41625,
+        "characters": 25124
+      }
+    },
+    "tasks": [
+      {
+        "id": "startup",
+        "task": "恢复完成状态、有效全局约束、保留项ID及接续入口；详细专项边界另按任务读取，前后均不计相同的项目/状态/Profile配置",
+        "before": {
+          "files": [
+            {
+              "path": ".planning/milestones/M002/continuation.md",
+              "bytes": 6403,
+              "characters": 4141
+            }
+          ],
+          "bytes": 6403,
+          "characters": 4141
+        },
+        "after": {
+          "files": [
+            {
+              "path": ".planning/milestones/M002/continuation.md",
+              "bytes": 6253,
+              "characters": 4077
+            }
+          ],
+          "bytes": 6253,
+          "characters": 4077
+        },
+        "bytes_reduction_percent": 2.34
+      },
+      {
+        "id": "verification",
+        "task": "核对五组接受范围、有效测试证据与未验证边界；不审计全部原始日志",
+        "before": {
+          "files": [
+            {
+              "path": ".planning/milestones/M002/continuation.md",
+              "bytes": 6403,
+              "characters": 4141
+            },
+            {
+              "path": ".planning/milestones/M002/verification/report.md",
+              "bytes": 4245,
+              "characters": 2471
+            },
+            {
+              "path": ".planning/milestones/M002/verification/coverage-matrix.md",
+              "bytes": 38793,
+              "characters": 21709
+            },
+            {
+              "path": ".planning/milestones/M002-legacy-M003/verification/report.md",
+              "bytes": 5758,
+              "characters": 3660
+            },
+            {
+              "path": ".planning/milestones/M002/verification/config-portability/report.md",
+              "bytes": 6354,
+              "characters": 3939
+            },
+            {
+              "path": ".planning/milestones/M002/verification/pronunciation/report.md",
+              "bytes": 2909,
+              "characters": 1665
+            }
+          ],
+          "bytes": 64462,
+          "characters": 37585
+        },
+        "after": {
+          "files": [
+            {
+              "path": ".planning/milestones/M002/continuation.md",
+              "bytes": 6253,
+              "characters": 4077
+            },
+            {
+              "path": ".planning/milestones/M002/verification/report.md",
+              "bytes": 4935,
+              "characters": 2869
+            },
+            {
+              "path": ".planning/milestones/M002/verification/coverage-matrix.md",
+              "bytes": 6855,
+              "characters": 4175
+            }
+          ],
+          "bytes": 18043,
+          "characters": 11121
+        },
+        "bytes_reduction_percent": 72.01
+      },
+      {
+        "id": "change_inventory",
+        "task": "清点45项变更当前处理及后续决定来源；不重新诊断每个原始缺陷",
+        "before": {
+          "files": [
+            {
+              "path": ".planning/milestones/M002/continuation.md",
+              "bytes": 6403,
+              "characters": 4141
+            },
+            {
+              "path": ".planning/milestones/M002/reviews/milestone-closeout.md",
+              "bytes": 3422,
+              "characters": 1886
+            },
+            {
+              "path": ".planning/milestones/M002/changes/CR-003.md",
+              "bytes": 5726,
+              "characters": 3265
+            },
+            {
+              "path": ".planning/milestones/M002/changes/CR-004.md",
+              "bytes": 7275,
+              "characters": 4028
+            },
+            {
+              "path": ".planning/milestones/M002/changes/CR-005.md",
+              "bytes": 3245,
+              "characters": 1854
+            },
+            {
+              "path": ".planning/milestones/M002/changes/CR-006.md",
+              "bytes": 3756,
+              "characters": 2180
+            },
+            {
+              "path": ".planning/milestones/M002/changes/CR-007.md",
+              "bytes": 3800,
+              "characters": 2162
+            },
+            {
+              "path": ".planning/milestones/M002/changes/CR-008.md",
+              "bytes": 3699,
+              "characters": 2039
+            },
+            {
+              "path": ".planning/milestones/M002/changes/CR-009.md",
+              "bytes": 4870,
+              "characters": 2616
+            },
+            {
+              "path": ".planning/milestones/M002/changes/CR-010.md",
+              "bytes": 4952,
+              "characters": 2732
+            },
+            {
+              "path": ".planning/milestones/M002/changes/CR-011.md",
+              "bytes": 4481,
+              "characters": 2596
+            },
+            {
+              "path": ".planning/milestones/M002/changes/CR-012.md",
+              "bytes": 3555,
+              "characters": 2052
+            },
+            {
+              "path": ".planning/milestones/M002/changes/CR-013.md",
+              "bytes": 4211,
+              "characters": 2461
+            },
+            {
+              "path": ".planning/milestones/M002/changes/CR-014.md",
+              "bytes": 3911,
+              "characters": 2236
+            },
+            {
+              "path": ".planning/milestones/M002/changes/CR-015.md",
+              "bytes": 3467,
+              "characters": 1994
+            },
+            {
+              "path": ".planning/milestones/M002/changes/CR-016.md",
+              "bytes": 4251,
+              "characters": 2371
+            },
+            {
+              "path": ".planning/milestones/M002/changes/CR-017.md",
+              "bytes": 3345,
+              "characters": 1987
+            },
+            {
+              "path": ".planning/milestones/M002/changes/CR-018.md",
+              "bytes": 2782,
+              "characters": 1780
+            },
+            {
+              "path": ".planning/milestones/M002/changes/CR-019.md",
+              "bytes": 2774,
+              "characters": 1640
+            },
+            {
+              "path": ".planning/milestones/M002/changes/CR-020.md",
+              "bytes": 4081,
+              "characters": 2191
+            },
+            {
+              "path": ".planning/milestones/M002/changes/CR-021.md",
+              "bytes": 3170,
+              "characters": 1798
+            },
+            {
+              "path": ".planning/milestones/M002/changes/CR-022.md",
+              "bytes": 1412,
+              "characters": 746
+            },
+            {
+              "path": ".planning/milestones/M002/changes/CR-023.md",
+              "bytes": 2037,
+              "characters": 976
+            },
+            {
+              "path": ".planning/milestones/M002/changes/CR-024.md",
+              "bytes": 1112,
+              "characters": 600
+            },
+            {
+              "path": ".planning/milestones/M002/changes/CR-025.md",
+              "bytes": 3056,
+              "characters": 1630
+            },
+            {
+              "path": ".planning/milestones/M002/changes/CR-026.md",
+              "bytes": 2144,
+              "characters": 1132
+            },
+            {
+              "path": ".planning/milestones/M002/changes/CR-027.md",
+              "bytes": 4658,
+              "characters": 2637
+            },
+            {
+              "path": ".planning/milestones/M002/changes/CR-028.md",
+              "bytes": 1642,
+              "characters": 810
+            },
+            {
+              "path": ".planning/milestones/M002/changes/CR-029.md",
+              "bytes": 2172,
+              "characters": 1086
+            },
+            {
+              "path": ".planning/milestones/M002/changes/CR-301.md",
+              "bytes": 4834,
+              "characters": 2776
+            },
+            {
+              "path": ".planning/milestones/M002/changes/CR-302.md",
+              "bytes": 12331,
+              "characters": 6779
+            },
+            {
+              "path": ".planning/milestones/M002/changes/CR-303.md",
+              "bytes": 4579,
+              "characters": 2539
+            },
+            {
+              "path": ".planning/milestones/M002/changes/CR-304.md",
+              "bytes": 4214,
+              "characters": 2802
+            },
+            {
+              "path": ".planning/milestones/M002/changes/CR-305.md",
+              "bytes": 4537,
+              "characters": 3031
+            },
+            {
+              "path": ".planning/milestones/M002/changes/CR-306.md",
+              "bytes": 27466,
+              "characters": 16558
+            },
+            {
+              "path": ".planning/milestones/M002/changes/CR-307.md",
+              "bytes": 5845,
+              "characters": 3669
+            },
+            {
+              "path": ".planning/milestones/M002/changes/CR-308.md",
+              "bytes": 3177,
+              "characters": 1907
+            },
+            {
+              "path": ".planning/milestones/M002/changes/CR-309.md",
+              "bytes": 4351,
+              "characters": 2395
+            },
+            {
+              "path": ".planning/milestones/M002/changes/CR-310.md",
+              "bytes": 4318,
+              "characters": 2218
+            },
+            {
+              "path": ".planning/milestones/M002/changes/CR-311.md",
+              "bytes": 8143,
+              "characters": 5101
+            },
+            {
+              "path": ".planning/milestones/M002/changes/CR-312.md",
+              "bytes": 14729,
+              "characters": 9189
+            },
+            {
+              "path": ".planning/milestones/M002/changes/CR-313.md",
+              "bytes": 8522,
+              "characters": 4112
+            },
+            {
+              "path": ".planning/milestones/M002/changes/CR-314.md",
+              "bytes": 3761,
+              "characters": 1825
+            },
+            {
+              "path": ".planning/milestones/M002/changes/CR-315.md",
+              "bytes": 2886,
+              "characters": 1428
+            },
+            {
+              "path": ".planning/milestones/M002/changes/CR-316.md",
+              "bytes": 5604,
+              "characters": 2806
+            },
+            {
+              "path": ".planning/milestones/M002/changes/M002-CR-001.md",
+              "bytes": 4843,
+              "characters": 2351
+            },
+            {
+              "path": ".planning/milestones/M002/changes/M002-CR-002.md",
+              "bytes": 4367,
+              "characters": 2135
+            }
+          ],
+          "bytes": 233916,
+          "characters": 133247
+        },
+        "after": {
+          "files": [
+            {
+              "path": ".planning/milestones/M002/continuation.md",
+              "bytes": 6253,
+              "characters": 4077
+            },
+            {
+              "path": ".planning/milestones/M002/changes/index.md",
+              "bytes": 9878,
+              "characters": 6222
+            },
+            {
+              "path": ".planning/milestones/M002/reviews/milestone-closeout.md",
+              "bytes": 3422,
+              "characters": 1886
+            }
+          ],
+          "bytes": 19553,
+          "characters": 12185
+        },
+        "bytes_reduction_percent": 91.64
+      }
+    ]
+  },
+  "checks": {
+    "original_git_blobs_and_sha256": "PASS: 8 original documents",
+    "immutable_change_records": "PASS: 45 unchanged and individually indexed",
+    "retained_items": [
+      "CR039-L1",
+      "CR042-L1",
+      "AI-QUALITY-90",
+      "W01",
+      "QA26-MINIMAX",
+      "PRON-MOBILE"
+    ],
+    "raw_evidence_and_approvals": "UNCHANGED",
+    "state_and_policies": "PASS: terminal M002, last transition, model lock and policies preserved",
+    "pinned_framework_patch": "PASS: applies to 91d9805; six patched hashes and Profile 2.0 validator pass",
+    "local_document_links": {
+      "checked": 268,
+      "missing": [],
+      "bad_fragments": []
+    },
+    "semantic_source_review": "Root reviewed five scope acceptance sources; QA pass, user acceptance, superseded scope and model observations kept distinct",
+    "repeat_read": "Same finalized sources have stable hashes; no recurring snapshots or archive generation",
+    "incoming_links": {
+      "checked": 383,
+      "unresolved": []
+    },
+    "pre_existing_anchor_gaps": [
+      [
+        ".planning/milestones/M002/changes/CR-027.md",
+        "../implementation/backend-validation.md#cr027"
+      ],
+      [
+        ".planning/milestones/M002/implementation/backend-worktree-plan.md",
+        "backend-validation.md#cr013"
+      ],
+      [
+        ".planning/milestones/M002/reviews/frontend-cr005-entry.md",
+        "../implementation/backend-validation.md#cr006"
+      ],
+      [
+        ".planning/milestones/M002/reviews/frontend-cr008-entry.md",
+        "../implementation/backend-validation.md#cr007"
+      ],
+      [
+        ".planning/milestones/M002/reviews/frontend-cr012-entry.md",
+        "../implementation/backend-validation.md#cr013"
+      ],
+      [
+        ".planning/milestones/M002/reviews/verification-acceptance-036.md",
+        "../handoffs/verification.md#保护与下一动作"
+      ],
+      [
+        ".planning/milestones/M002/reviews/verification-acceptance-041.md",
+        "../handoffs/verification.md#下一步"
+      ],
+      [
+        ".planning/milestones/M002/reviews/verification-acceptance-044.md",
+        "../handoffs/verification.md#下一步"
+      ],
+      [
+        ".planning/milestones/M002/reviews/verification-acceptance-047.md",
+        "../handoffs/verification.md#下一步"
+      ],
+      [
+        ".planning/milestones/M002/reviews/verification-reentry-024.md",
+        "../implementation/frontend-validation.md#cr008"
+      ],
+      [
+        ".planning/milestones/M002/reviews/verification-reentry-024.md",
+        "../implementation/backend-validation.md#cr007"
+      ],
+      [
+        ".planning/milestones/M002/reviews/verification-reentry-026.md",
+        "../implementation/frontend-validation.md#cr009"
+      ],
+      [
+        ".planning/milestones/M002/reviews/verification-reentry-028.md",
+        "../implementation/frontend-validation.md#cr010"
+      ],
+      [
+        ".planning/milestones/M002/reviews/verification-reentry-030.md",
+        "../implementation/backend-validation.md#cr011"
+      ],
+      [
+        ".planning/milestones/M002/reviews/verification-reentry-033.md",
+        "../implementation/frontend-validation.md#cr012"
+      ],
+      [
+        ".planning/milestones/M002/reviews/verification-reentry-033.md",
+        "../implementation/backend-validation.md#cr013"
+      ],
+      [
+        ".planning/milestones/M002/reviews/verification-reentry-035.md",
+        "../implementation/frontend-validation.md#cr014"
+      ],
+      [
+        ".planning/milestones/M002/reviews/verification-reentry-038.md",
+        "../implementation/frontend-validation.md#cr016"
+      ],
+      [
+        ".planning/milestones/M002/reviews/verification-reentry-040.md",
+        "../implementation/frontend-validation.md#cr017"
+      ],
+      [
+        ".planning/milestones/M002/reviews/verification-reentry-043.md",
+        "../implementation/frontend-validation.md#cr019"
+      ],
+      [
+        ".planning/milestones/M002/reviews/verification-reentry-043.md",
+        "../implementation/backend-validation.md#cr013"
+      ],
+      [
+        ".planning/milestones/M002/reviews/verification-reentry-043.md",
+        "../handoffs/frontend-implementation.md#下一步"
+      ],
+      [
+        ".planning/milestones/M002/reviews/verification-reentry-046.md",
+        "../implementation/frontend-validation.md#cr020"
+      ],
+      [
+        ".planning/milestones/M002/reviews/verification-reentry.md",
+        "../implementation/frontend-validation.md#cr005"
+      ],
+      [
+        ".planning/milestones/M002/reviews/verification-reentry.md",
+        "../implementation/backend-validation.md#cr006"
+      ],
+      [
+        ".planning/milestones/M002/reviews/verification-rework-039.md",
+        "../implementation/frontend-validation.md#cr016"
+      ],
+      [
+        ".planning/milestones/M002/reviews/verification-rework-042.md",
+        "../handoffs/verification.md#下一步"
+      ],
+      [
+        ".planning/milestones/M002/reviews/verification-rework-045.md",
+        "../handoffs/verification.md#下一步"
+      ]
+    ],
+    "legacy_anchor_bridges": [
+      {
+        "target": ".planning/milestones/M002/implementation/backend-validation.md",
+        "anchors": [
+          "cr006",
+          "cr007",
+          "cr011",
+          "cr013",
+          "cr027"
+        ]
+      },
+      {
+        "target": ".planning/milestones/M002/handoffs/verification.md",
+        "anchors": [
+          "下一步",
+          "保护与下一动作"
+        ]
+      },
+      {
+        "target": ".planning/milestones/M002/implementation/frontend-validation.md",
+        "anchors": [
+          "cr005",
+          "cr008",
+          "cr009",
+          "cr010",
+          "cr012",
+          "cr014",
+          "cr016",
+          "cr017",
+          "cr019",
+          "cr020"
+        ]
+      },
+      {
+        "target": ".planning/milestones/M002/handoffs/frontend-implementation.md",
+        "anchors": [
+          "下一步"
+        ]
+      }
+    ]
+  },
+  "interpretation": "Static selected-document sizes only, with new index and required task reads included. Detailed diagnosis requires additional scoped source reads. Independent fresh-context audit passed three read-only localization tasks; no paired before/after runtime comparison or token-savings claim.",
+  "responsibility_scopes": [
+    {
+      "owner": "QA",
+      "executed_by": "root",
+      "result": "Consolidated five accepted scopes, versioned evidence and retained limits in current report/matrix"
+    },
+    {
+      "owner": "backend/frontend implementation",
+      "executed_by": "root",
+      "result": "Consolidated final behavior, reasons, regression entry points and three handoffs; no new professional decisions"
+    },
+    {
+      "owner": "change/control",
+      "executed_by": "root",
+      "result": "Indexed 45 unchanged CR originals against later decisions; current state unchanged"
+    },
+    {
+      "owner": "product/design/architecture",
+      "executed_by": "root",
+      "result": "Checked scope ownership and policies; authoritative specifications remain source-linked, not rewritten"
+    }
+  ],
+  "independent_handoff": {
+    "evidence": ".planning/milestones/M002/reviews/evidence/context-maintenance-20261019/handoff-check.json",
+    "sha256": "6ed5a116f3fcbc1876463c3f71dfdeced55e1e25acbe68d6d97bbd9387a5cd0f",
+    "user_authorization": "授权",
+    "executor": "/root/context_handoff_audit",
+    "fork_turns": "none",
+    "tasks_passed": 3,
+    "blocking_findings": 0,
+    "runtime_token_savings": "not_measured"
+  }
+}

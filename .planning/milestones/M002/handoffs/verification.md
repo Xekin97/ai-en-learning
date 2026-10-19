@@ -1,27 +1,23 @@
-> **M002-QA-CR313-01 当前登记**：配置可移植性独立QA通过但仍为 `awaiting_user_review`；[本轮交接](config-portability-verification.md)、[报告](../verification/config-portability/report.md)、[矩阵](../verification/config-portability/coverage-matrix.md)、[UAT清单](../verification/config-portability/uat.md)。本前缀不改变下方既有交接正文，不授权关闭CR313/M002或进入下一门禁。
+# M002 质量接续入口
 
-> **M002续做索引124**：本里程碑包含原M003全部需求。[较新同类原件](../../M002-legacy-M003/handoffs/verification.md)及其已记录的逐项接收/验证均归M002；旧编号只是历史标识。当前工作与未完成项见[续做索引](../continuation.md)，下方前期记录保留，不能据旧完成态关闭当前M002。
+M002 已由 [TRANSITION-M002-146](../reviews/milestone-closeout.md) 完成，无活动角色或待验收任务。当前知识从[验收结论与遗留项](../verification/report.md)、[有效覆盖及回归入口](../verification/coverage-matrix.md)、[变更当前处理索引](../changes/index.md)读取。具体新任务才展开相关证据；无需遍历QA历史轮次。
 
----
-milestone: M002
-stage: milestone-complete
-role: quality/base
-agent_name: qa-quinn
-status: accepted_with_retained_limitations
-version: M002-QA-38
-date: 2026-10-04
----
+CR313 与浏览器发音均已有用户接受。各专项原始报告中的待用户/待关闭只记录提交时事实，不能恢复旧任务；接受原件由当前报告逐项链接。保留事项及项目QA政策继续有效，未验项没有因收尾变为通过。
 
-# 二期已验收交付基线
+实际交付环境、有效约束、原件恢复和本次上下文整理结果统一在[里程碑接续](../continuation.md)。本文只更新检索入口，不重新验收产品或签署历史角色意见。
 
-用户确认最后两项增量已测试通过并授权收尾，[原问答](../verification/evidence/qa2-038/inputs.json)。M002完成、CR029关闭，无活动专业角色；正式状态见[workflow](../../../workflow/state.yaml)，完成记录[123](../reviews/verification-acceptance-123.md)。不再将QA36/37“待用户验收”当成待办。
+## 旧引用的版本定位
 
-当前交付包含UI31服务商分组与整组模型编辑、三协议严格流式探测、0016迁移，以及精选词义配置区布局和原名语言标签。原091已验收的学习/成长/通知等功能继续有效。代码和3份增量源清单匹配，实际验证范围见[报告](../verification/report.md)、[覆盖矩阵](../verification/coverage-matrix.md#qa38)。本次无新模型调用、Git提交/推送、生产发布或M003启动。
+以下旧锚点仅定位整理前原文，按[版本索引](../reviews/evidence/context-maintenance-20261019/receipt.json)中的原路径、Git提交与摘要恢复；不代表当前行动指令。
 
-本地入口为[3302](http://127.0.0.1:3302)，[当前交付/恢复](../delivery/gallery-meanings-3302-20261002/README.md)读取最新release和私有运行状态。不得重跑种子、旧迁移或旧部署脚本；服务商密钥及账户只在私有环境保管。
+<a id="二期已验收交付基线"></a>
 
-保留CR039-L1、CR042-L1、AI-QUALITY-90、W01、QA26-MINIMAX及环境/人工专项，[来源、影响与完成条件](../verification/report.md#保留事项)保持，未豁免、未宣称已解决。后续仅按用户新任务或实际复现定向处理，不自动扩展调优或重复整站验证。
+## 更早审批的引用定位
 
-本轮把过期QA34状态索引对齐QA38，README与CR/状态/交接同步。旧当前文档和相关源码见[冻结快照](../verification/evidence/qa2-038/before-closeout.tar.gz)；历史审批/失败原地保留。新会话交接测试未执行，静态追踪通过，token unknown。
+以下锚点在本次整理前已缺失。问题编号转接到保留的原CR及其中复验来源；旧下一步须按发起链接的审批记录时点解释，不能恢复为当前任务。
 
-静态收尾核对发现history.yaml自092起多缩进两格而无法解析；本次只校正这段列表缩进并追加123，逐项对比保持历史字段和值不变，原字节在快照中保留。
+<a id="下一步"></a>
+历史交接动作：以发起链接的原审批记录为准；当前已完成，[接续入口](../continuation.md)不激活旧角色或旧部署。
+
+<a id="保护与下一动作"></a>
+历史交接动作：以发起链接的原审批记录为准；当前已完成，[接续入口](../continuation.md)不激活旧角色或旧部署。

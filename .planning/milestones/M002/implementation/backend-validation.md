@@ -1,22 +1,42 @@
-> **CR313 / M002-BI-CR313-01 后端验证入口（2026-10-16，接收修正R2）**：四类别 portability、0018、BE501-06 runtime、model_trial附属读取、空growth 422、resolve unknown及KDF准入的隔离PG/HTTP实际结果见 [config-portability/backend-validation.md](config-portability/backend-validation.md)，命令、实际stdout与失败修复见 [test-log.md](config-portability/evidence/backend/test-log.md)。状态 `awaiting_user_review`；下方旧正文保留。
+# M002 后端交付与验证接续
 
-> **M002续做索引124**：本里程碑包含原M003全部需求。[较新同类原件](../../M002-legacy-M003/implementation/backend-validation.md)及其已记录的逐项接收/验证均归M002；旧编号只是历史标识。当前工作与未完成项见[续做索引](../continuation.md)，下方前期记录保留，不能据旧完成态关闭当前M002。
+M002 已完成。这里维护最终行为、修改原因与验证入口；提交时报告的待QA/待部署指令已由[最终接受](../reviews/milestone-closeout.md)替代。本次只整理文档，未重跑应用测试或操作数据库。
 
----
-milestone: M002
-stage: implementation
-role: backend-implementer/base
-agent_name: backend-ethan
-version: M002-CR029-BE08
-status: ready_for_verification
----
+| 范围 | 最终行为与不可丢失的约束 | 验证/代码定位 |
+|---|---|---|
+| CR029-F05 服务商聚合 | 整组GET/POST/PATCH、完整成员归属、稳定UUID、配置锁/CAS、Key目的地保护及原子保存；省略不等于下架。0016将名称唯一约束改为服务商内 | [原实现证据](evidence/provider-workspace31)、[API](../technical/api/model-connections.md)、[123接受](../reviews/verification-acceptance-123.md)；真实DB/HTTP覆盖25+模型、旧引用、Key隔离、晚期SQL失败回滚；0真实模型调用 |
+| CR301–312 生成链 | 规划进入writer；普通与增强链按已批准权益执行；有限修正、终态/取消/退款一致；功能词过滤与逐段返修保持原批准语义 | [历史交付](../../M002-legacy-M003/implementation/backend-validation.md)、backend/internal/generation/、[105接受](../../M002-legacy-M003/reviews/verification-acceptance-105.md) |
+| CR313 四类别配置可移植性 | models/plans/items/growth全类preview/import/resolve；凭据严格输入；锁后权限/CAS复验、幂等与不可变回执；保留个人事实与跨类引用。0018及BE501-06退役runtime闭环 | [专项验证](config-portability/backend-validation.md)、[命令与首次失败](config-portability/evidence/backend/test-log.md)、backend/internal/portability/；[用户接受](../reviews/cr313-uat-acceptance.md) |
+| 浏览器发音 | 使用浏览器speechSynthesis；不新增服务端录音获取、缓存或发音生成接口 | [有效API契约](../technical/pronunciation/api/browser-speech.md)；旧录音草案为被替代历史 |
 
-# CR029-F05 服务商聚合实现
+## 可复用失败经验
 
-CAP101/102、DATA007/008、PAGE208。当前契约 technical/api/model-connections.md：GET服务商聚合完整模型，POST创建整组，PATCH原位更新服务商与模型。事务持有配置锁/CAS，模型归属与完整集合校验、稳定UUID和引用、密钥目的地保护，修改/新增一次提交。省略不是下架。0016新增凭据upsert窄权限函数，并将名称唯一从全平台改为服务商内，允许不同服务商同名模型；不改业务行。
+- 跨服务商同名模型发生唯一约束冲突→旧全平台索引范围过大→按服务商聚合维度调整0016并复验→从 provider-workspace31 的真实DB/HTTP证据和批准API定位；不能通过改名绕开已批准行为。
+- 配置导入后整行历史hash变化→既有后台重算会推进派生marker→按批准DB501边界分离个人事实与游标，仅放行已证实的派生变化→[QA方法原件](../verification/config-portability/evidence/history-method-correction.md)。不能把任意历史变化归因于后台任务。
 
-Go AI/admin/httpapi单元及vet通过，admin整包集成通过（9.402s）。新增隔离真实DB与HTTP验证：25→26个模型完整读取、ID互换与模型/服务商身份稳定、计划引用、单次revision、保留Key及换址拒绝、另一服务商Key隔离、未完成请求快照、完整成员/外部UUID/过期CAS拒绝、晚期SQL错误回滚连接/密钥/所有模型、应用角色不能读密文、AI角色不能更新凭据。HTTP权限/CSRF/保存/读取/CAS与原三协议探测通过；0015→0016及旧数据升级检查通过。
+完整有效测试边界和遗留项统一见[当前QA报告](../verification/report.md#保留事项)。冻结源码/QA清单证明原接受版本；后续修改必须重新判断受影响依赖。旧部署指令仅用于追溯，不应在恢复会话时重跑迁移或种子。
 
-初次集成发现旧全平台名称唯一导致跨服务商同名模型冲突；按当前聚合归属调整索引后复验通过，初始证据保留。0真实付费模型调用。原UI30流式严格验证未改，复用对应证据。当前日志和源码见[evidence/provider-workspace31](evidence/provider-workspace31)。3302部署须先私有备份、隔离恢复迁移演练，再应用0016；旧二进制严格校验账本，不能带0016直接回退，切换失败且无新业务写入才结构回退。用户新UI验收待QA交付后反馈。
+## 旧引用的版本定位
 
-旧实现记录可由[上一当前文快照](evidence/provider-workspace31/before-validation.tar.gz)及原evidence/provider-batch30、generic-models29按ID追溯；既有开放质量项未关闭。
+以下旧锚点仅定位整理前原文，按[版本索引](../reviews/evidence/context-maintenance-20261019/receipt.json)中的原路径、Git提交与摘要恢复；不代表当前行动指令。
+
+<a id="cr029-f05-服务商聚合实现"></a>
+
+## 更早审批的引用定位
+
+以下锚点在本次整理前已缺失。问题编号转接到保留的原CR及其中复验来源；旧下一步须按发起链接的审批记录时点解释，不能恢复为当前任务。
+
+<a id="cr006"></a>
+历史 CR006：[原问题、修订与复验](../changes/CR-006.md)；当前处理见[变更索引](../changes/index.md)。
+
+<a id="cr007"></a>
+历史 CR007：[原问题、修订与复验](../changes/CR-007.md)；当前处理见[变更索引](../changes/index.md)。
+
+<a id="cr011"></a>
+历史 CR011：[原问题、修订与复验](../changes/CR-011.md)；当前处理见[变更索引](../changes/index.md)。
+
+<a id="cr013"></a>
+历史 CR013：[原问题、修订与复验](../changes/CR-013.md)；当前处理见[变更索引](../changes/index.md)。
+
+<a id="cr027"></a>
+历史 CR027：[原问题、修订与复验](../changes/CR-027.md)；当前处理见[变更索引](../changes/index.md)。
