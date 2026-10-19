@@ -1,0 +1,93 @@
+{
+  "version": "M003-UI-13-R3",
+  "authorization": "USER-M003-UI13-RICH-SAMPLE-20261013",
+  "scope": "Design-owned rich sample fixture, current source consumption, bounded desktop/PAGE-212/390px checks. Prior UI13/R1/R2 protocol and motion evidence reused without rerun.",
+  "provider_calls": 0,
+  "checks": [
+    {
+      "name": "fixture-integrity",
+      "passed": false,
+      "details": null
+    },
+    {
+      "name": "bounded-browser",
+      "passed": true,
+      "details": {
+        "total": 6,
+        "passed": 6,
+        "failed": 0
+      }
+    },
+    {
+      "name": "frontend-source-read-only-identity",
+      "passed": true,
+      "details": {
+        "path": "frontend/app/presentation/home/sample-stories.ts",
+        "sha256": "511c6dd7525ccc9339366c432b6142380263172a0f21c61ddbe6ca443a2d9e59"
+      }
+    },
+    {
+      "name": "r1-product-copy-frozen",
+      "passed": true,
+      "details": {
+        "changed_keys": [
+          "static.en.m003.prototype.note",
+          "static.zh.m003.prototype.note"
+        ],
+        "allowed_design_harness_keys": [
+          "static.en.m003.prototype.note",
+          "static.zh.m003.prototype.note"
+        ]
+      }
+    },
+    {
+      "name": "json-sources-parse",
+      "passed": true,
+      "details": [
+        "design/copy.json",
+        "design/prototype/fixtures.json",
+        "design/fixtures/ui13-r3-bookshop.json"
+      ]
+    },
+    {
+      "name": "prototype-js-syntax",
+      "passed": true,
+      "details": ""
+    },
+    {
+      "name": "preview-http",
+      "passed": true,
+      "details": {
+        "status": 200,
+        "url": "http://127.0.0.1:4174/M003/design/prototype/?page=create&lang=zh&scenario=ui13-r3-bookshop&event=17&demo=open&rev=ui13-r3"
+      }
+    },
+    {
+      "name": "prior-evidence-frozen-and-reused",
+      "passed": true,
+      "details": [
+        "design/evidence/cr312/M003-UI-13-browser.json",
+        "design/evidence/cr312-r1/copy-observation.json",
+        "design/evidence/cr312-r2/M003-UI-13-R2-motion.json"
+      ]
+    },
+    {
+      "name": "capture-budget",
+      "passed": true,
+      "details": {
+        "count": 4,
+        "files": [
+          "01-rich-revision-desktop-zh.png",
+          "02-rich-final-desktop-zh.png",
+          "03-rich-final-mobile-zh.png",
+          "04-rich-revision-mobile-en.png"
+        ]
+      }
+    }
+  ],
+  "summary": {
+    "total": 9,
+    "passed": 8,
+    "failed": 1
+  }
+}

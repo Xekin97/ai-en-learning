@@ -83,6 +83,7 @@ test("draft, validated preview and explicit publish remain distinct", async ({
   expect(record.published.title).toBe("New title");
   expect(writes.find((w) => w.url.endsWith("/previews/stream"))?.body).toEqual({
     draft_version: "draft-2",
+    preview_content_mode: "basic",
   });
   expect(writes[0]?.body).not.toHaveProperty("description");
   await expect(page.locator("body")).not.toContainText("preview-private-token");

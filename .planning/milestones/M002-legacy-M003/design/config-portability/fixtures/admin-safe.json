@@ -1,0 +1,514 @@
+{
+  "provenance": {
+    "kind": "design-synthetic",
+    "basis": [
+      "frontend/app/pages/admin/models.vue",
+      "frontend/app/pages/admin/plans.vue",
+      "frontend/app/pages/admin/growth.vue",
+      ".planning/milestones/M002/design/prototype/fixtures.json#admin"
+    ],
+    "credential_policy": "No credential values. Names and counts are safe deterministic review data."
+  },
+  "models": {
+    "providers": [
+      {
+        "name": "OpenAI 生产连接",
+        "protocol": "OpenAI Responses",
+        "baseUrl": "https://api.openai.example/v1",
+        "credentialConfigured": true,
+        "models": [
+          {
+            "name": "Model A",
+            "providerModelId": "example/model-a",
+            "description": "Balanced story generation",
+            "enabled": true,
+            "outputMode": "json_schema"
+          },
+          {
+            "name": "Model B",
+            "providerModelId": "example/model-b",
+            "description": "Extended reading",
+            "enabled": true,
+            "outputMode": "json_schema"
+          }
+        ]
+      },
+      {
+        "name": "Anthropic 内容连接",
+        "protocol": "Anthropic Messages",
+        "baseUrl": "https://anthropic.example/v1",
+        "credentialConfigured": true,
+        "models": [
+          {
+            "name": "Model C",
+            "providerModelId": "example/model-c",
+            "description": "Long context review",
+            "enabled": false,
+            "outputMode": "prompt"
+          }
+        ]
+      }
+    ],
+    "preview": {
+      "add": 1,
+      "update": 2,
+      "remove": 1,
+      "unchanged": 0,
+      "items": 3
+    },
+    "references": [
+      {
+        "source": "Pro 计划",
+        "target": "Model B"
+      },
+      {
+        "source": "首页预设 · Bookshop",
+        "target": "Model B"
+      },
+      {
+        "source": "模型体验卡 · 7 天",
+        "target": "Model B"
+      }
+    ],
+    "changes": {
+      "add": [
+        {
+          "name": {
+            "zh": "api.backup.example › Model D",
+            "en": "api.backup.example › Model D"
+          },
+          "identity": "model:model-d",
+          "detail": {
+            "zh": "新增连接与模型；服务地址 https://api.backup.example/v1，协议 OpenAI Responses，当前启用。",
+            "en": "Adds a connection and model at https://api.backup.example/v1 using OpenAI Responses; enabled."
+          },
+          "applied": {
+            "zh": "连接名称省略，按服务地址 hostname 生成“api.backup.example”；模型说明清空为“无说明”；最大输出 token 省略，应用为“本产品未设置”（不代表提供方无限制）。",
+            "en": "The connection name is omitted and generated from the service URL hostname as “api.backup.example”; model description is cleared to “No description”; omitted maximum output tokens is applied as “Not set by this product” (not a provider unlimited claim)."
+          }
+        }
+      ],
+      "update": [
+        {
+          "name": {
+            "zh": "OpenAI 生产连接 › Model A",
+            "en": "OpenAI production connection › Model A"
+          },
+          "identity": "model:model-a",
+          "detail": {
+            "zh": "说明从“Balanced story generation”更新为“Structured story generation”；保持 json_schema 与启用状态。",
+            "en": "Description changes from “Balanced story generation” to “Structured story generation”; json_schema and enabled state remain."
+          }
+        },
+        {
+          "name": {
+            "zh": "Anthropic 内容连接 › Model C",
+            "en": "Anthropic content connection › Model C"
+          },
+          "identity": "model:model-c",
+          "detail": {
+            "zh": "输出模式从 prompt → json_schema；保持停用。",
+            "en": "Output mode changes from prompt to json_schema; remains disabled."
+          }
+        }
+      ],
+      "remove": [
+        {
+          "name": {
+            "zh": "OpenAI 生产连接 › Model B",
+            "en": "OpenAI production connection › Model B"
+          },
+          "identity": "model:model-b",
+          "detail": {
+            "zh": "从活动模型配置移出；历史短文与运行记录保留。",
+            "en": "Removed from active model configuration; existing stories and run history remain."
+          }
+        }
+      ]
+    }
+  },
+  "plans": {
+    "items": [
+      {
+        "code": "visitor",
+        "name": "访客",
+        "priority": 0,
+        "limit": 2,
+        "maxEntries": 3,
+        "lengths": [
+          "short"
+        ],
+        "models": [
+          "Model A"
+        ],
+        "review": 0
+      },
+      {
+        "code": "basic",
+        "name": "普通",
+        "priority": 1,
+        "limit": 5,
+        "maxEntries": 5,
+        "lengths": [
+          "short",
+          "medium"
+        ],
+        "models": [
+          "Model A"
+        ],
+        "review": 0
+      },
+      {
+        "code": "pro",
+        "name": "Pro",
+        "priority": 2,
+        "limit": 16,
+        "maxEntries": 10,
+        "lengths": [
+          "short",
+          "medium",
+          "long",
+          "xlong"
+        ],
+        "models": [
+          "Model A",
+          "Model B"
+        ],
+        "review": 2
+      },
+      {
+        "code": "plus",
+        "name": "Plus",
+        "priority": 3,
+        "limit": 20,
+        "maxEntries": 16,
+        "lengths": [
+          "short",
+          "medium",
+          "long",
+          "xlong"
+        ],
+        "models": [
+          "Model A",
+          "Model B"
+        ],
+        "review": 4
+      }
+    ],
+    "preview": {
+      "add": 0,
+      "update": 3,
+      "remove": 0,
+      "unchanged": 1,
+      "items": 4
+    },
+    "changes": {
+      "add": [],
+      "update": [
+        {
+          "name": {
+            "zh": "访客计划",
+            "en": "Visitor plan"
+          },
+          "identity": "plan:visitor",
+          "detail": {
+            "zh": "生成次数 2 → 3；仅允许短篇。",
+            "en": "Generation allowance changes from 2 to 3; short stories only."
+          }
+        },
+        {
+          "name": {
+            "zh": "Pro 计划",
+            "en": "Pro plan"
+          },
+          "identity": "plan:pro",
+          "detail": {
+            "zh": "生成次数 16 → 20；返修上限明确为 2。",
+            "en": "Generation allowance changes from 16 to 20; repair limit is explicitly 2."
+          }
+        },
+        {
+          "name": {
+            "zh": "Plus 计划",
+            "en": "Plus plan"
+          },
+          "identity": "plan:plus",
+          "detail": {
+            "zh": "单次最大词数 16 → 20；滚动 24 小时额度 20 → 无上限。",
+            "en": "Maximum vocabulary changes from 16 to 20; rolling 24-hour allowance changes from 20 to Unlimited."
+          },
+          "applied": {
+            "zh": "源文件对滚动 24 小时额度显式提供 null，应用为“无上限”；这是必填字段的明确值，不是省略缺省。",
+            "en": "The file explicitly provides null for the rolling 24-hour allowance, applied as “Unlimited”; this is an explicit value for a required field, not an omitted default."
+          }
+        }
+      ],
+      "remove": []
+    }
+  },
+  "items": {
+    "items": [
+      {
+        "name": "补签卡",
+        "kind": "makeup",
+        "price": 30,
+        "status": "listed"
+      },
+      {
+        "name": "额外次数卡",
+        "kind": "extra",
+        "price": 30,
+        "status": "listed"
+      },
+      {
+        "name": "模型体验卡",
+        "kind": "model",
+        "price": 120,
+        "status": "listed"
+      },
+      {
+        "name": "计划体验卡",
+        "kind": "plan",
+        "price": 200,
+        "status": "unlisted"
+      }
+    ],
+    "preview": {
+      "add": 0,
+      "update": 2,
+      "remove": 1,
+      "unchanged": 1,
+      "items": 3
+    },
+    "references": [
+      {
+        "source": "等级 3 奖励",
+        "target": "模型体验卡"
+      },
+      {
+        "source": "连续签到 30 天",
+        "target": "模型体验卡"
+      }
+    ],
+    "changes": {
+      "add": [],
+      "update": [
+        {
+          "name": {
+            "zh": "额外次数卡",
+            "en": "Extra generation card"
+          },
+          "identity": "item:extra",
+          "detail": {
+            "zh": "售价 30 → 40；仍保持上架。",
+            "en": "Price changes from 30 to 40; remains listed."
+          }
+        },
+        {
+          "name": {
+            "zh": "计划体验卡",
+            "en": "Plan trial card"
+          },
+          "identity": "item:plan",
+          "detail": {
+            "zh": "上架状态从下架 → 上架。",
+            "en": "Listing status changes from unlisted to listed."
+          },
+          "applied": {
+            "zh": "名称与说明均提供中文；英文说明显式为空，英文界面按现有规则回退显示中文说明，不继承目标旧英文译文。",
+            "en": "Name and description are provided in Chinese; the English description is explicitly empty, so the English UI falls back to the Chinese description and does not inherit the target’s old English text."
+          }
+        }
+      ],
+      "remove": [
+        {
+          "name": {
+            "zh": "模型体验卡",
+            "en": "Model trial card"
+          },
+          "identity": "item:model",
+          "detail": {
+            "zh": "从活动道具定义移出；库存、发放与使用流水保留。",
+            "en": "Removed from active item definitions; inventory, issuance, and usage history remain."
+          }
+        }
+      ]
+    }
+  },
+  "growth": {
+    "checkin": {
+      "base": 4,
+      "step": 2,
+      "cap": 10,
+      "xp": 10,
+      "masteryXp": 5
+    },
+    "levels": [
+      {
+        "level": 1,
+        "threshold": 0,
+        "points": 0,
+        "reward": "—"
+      },
+      {
+        "level": 2,
+        "threshold": 120,
+        "points": 10,
+        "reward": "额外次数卡 × 1"
+      },
+      {
+        "level": 3,
+        "threshold": 260,
+        "points": 20,
+        "reward": "模型体验卡 × 1"
+      }
+    ],
+    "achievements": {
+      "checkin_streak": 3,
+      "review_streak": 2,
+      "mastered_words": 4,
+      "saved_passages": 3
+    },
+    "preview": {
+      "add": 2,
+      "update": 8,
+      "remove": 1,
+      "unchanged": 5,
+      "items": 15
+    },
+    "effectiveDate": "2026-10-16 04:00",
+    "changes": {
+      "add": [
+        {
+          "name": {
+            "zh": "等级 4",
+            "en": "Level 4"
+          },
+          "identity": "level:4",
+          "detail": {
+            "zh": "门槛 480 XP，奖励 30 成长点。",
+            "en": "Threshold 480 XP; reward 30 growth points."
+          },
+          "applied": {
+            "zh": "源文件未选择奖励道具，应用为“无道具”。",
+            "en": "No reward item is selected in the file and the applied result is “No item”."
+          }
+        },
+        {
+          "name": {
+            "zh": "累计掌握 500 词",
+            "en": "Master 500 words"
+          },
+          "identity": "achievement:mastered_words:500",
+          "detail": {
+            "zh": "新增掌握词汇成就，奖励 50 成长点。",
+            "en": "Adds a mastered-words achievement with 50 growth points."
+          }
+        }
+      ],
+      "update": [
+        {
+          "name": {
+            "zh": "签到规则 › 基础奖励",
+            "en": "Check-in rules › Base reward"
+          },
+          "identity": "checkin:base",
+          "detail": {
+            "zh": "4 → 5 成长点。",
+            "en": "Changes from 4 to 5 growth points."
+          }
+        },
+        {
+          "name": {
+            "zh": "签到规则 › 递增步长",
+            "en": "Check-in rules › Increment"
+          },
+          "identity": "checkin:step",
+          "detail": {
+            "zh": "2 → 1 成长点。",
+            "en": "Changes from 2 to 1 growth point."
+          }
+        },
+        {
+          "name": {
+            "zh": "等级 2",
+            "en": "Level 2"
+          },
+          "identity": "level:2",
+          "detail": {
+            "zh": "门槛 120 → 100 XP。",
+            "en": "Threshold changes from 120 to 100 XP."
+          }
+        },
+        {
+          "name": {
+            "zh": "等级 3",
+            "en": "Level 3"
+          },
+          "identity": "level:3",
+          "detail": {
+            "zh": "门槛 260 → 240 XP。",
+            "en": "Threshold changes from 260 to 240 XP."
+          }
+        },
+        {
+          "name": {
+            "zh": "连续签到 7 天",
+            "en": "7-day check-in streak"
+          },
+          "identity": "achievement:checkin_streak:7",
+          "detail": {
+            "zh": "奖励 15 → 20 成长点。",
+            "en": "Reward changes from 15 to 20 growth points."
+          }
+        },
+        {
+          "name": {
+            "zh": "连续复习 7 天",
+            "en": "7-day review streak"
+          },
+          "identity": "achievement:review_streak:7",
+          "detail": {
+            "zh": "奖励 12 → 16 成长点。",
+            "en": "Reward changes from 12 to 16 growth points."
+          }
+        },
+        {
+          "name": {
+            "zh": "累计掌握 100 词",
+            "en": "Master 100 words"
+          },
+          "identity": "achievement:mastered_words:100",
+          "detail": {
+            "zh": "奖励 20 → 25 成长点。",
+            "en": "Reward changes from 20 to 25 growth points."
+          }
+        },
+        {
+          "name": {
+            "zh": "累计收藏 20 篇",
+            "en": "Save 20 passages"
+          },
+          "identity": "achievement:saved_passages:20",
+          "detail": {
+            "zh": "奖励 10 → 12 成长点。",
+            "en": "Reward changes from 10 to 12 growth points."
+          }
+        }
+      ],
+      "remove": [
+        {
+          "name": {
+            "zh": "累计收藏 5 篇（旧规则）",
+            "en": "Save 5 passages (legacy rule)"
+          },
+          "identity": "achievement:saved_passages:5",
+          "detail": {
+            "zh": "从活动成就规则移出；已达成与领取历史保留。",
+            "en": "Removed from active achievement rules; attainment and claim history remain."
+          }
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,41 @@
+{
+  "scope": "CR-304 targeted retest; real Go HTTP/SSE, disposable PostgreSQL, configured generation capacity=1, synthetic provider. This is contract behavior, not a production capacity claim.",
+  "configuration": {
+    "generation_max_in_flight": 1
+  },
+  "actual": {
+    "status": 503,
+    "headers": {
+      "Connection": "close",
+      "Content-Length": "300",
+      "Cache-Control": "no-store",
+      "Content-Security-Policy": "default-src 'self'; object-src 'none'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'",
+      "Content-Type": "application/problem+json; charset=utf-8",
+      "Date": "Mon, 12 Oct 2026 02:19:08 GMT",
+      "Referrer-Policy": "strict-origin-when-cross-origin",
+      "Retry-After": "5",
+      "X-Content-Type-Options": "nosniff"
+    },
+    "problem": {
+      "type": "https://wordweave.example/problems/generation-busy",
+      "title": "Generation temporarily busy",
+      "status": 503,
+      "code": "generation_busy",
+      "detail": "Generation is temporarily unavailable. Try again later.",
+      "request_id": "req_CvSeIhWsiS2Pik06ZBGqyQ",
+      "context": {
+        "accepted": false,
+        "retry_after_seconds": 5
+      }
+    },
+    "events": []
+  },
+  "checks": {
+    "one_slot_holder_completed": true,
+    "busy_is_503_before_acceptance": true,
+    "retry_seconds_integer_1_to_600": true,
+    "retry_context_matches_header": true,
+    "busy_response_no_store": true
+  },
+  "result": "PASS"
+}

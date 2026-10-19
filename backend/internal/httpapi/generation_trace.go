@@ -6,6 +6,7 @@ import (
 	"errors"
 	"fmt"
 	"net/http"
+	"time"
 
 	"wordweave/internal/ai"
 	"wordweave/internal/generationtrace"
@@ -29,15 +30,17 @@ func traceProviderResult(ctx context.Context, stage generationtrace.Stage, err e
 func writeTracedSSE(ctx context.Context, writer http.ResponseWriter, event string, data any) error {
 	check := "unknown"
 	switch event {
-	case "generation.started":
+	case "generation.started", "preview.started":
 		check = "started"
-	case "passage.delta":
+	case "generation.plan_item", "preview.plan_item":
+		check = "plan_item"
+	case "generation.edit", "preview.edit":
 		check = "delta"
-	case "generation.validated":
+	case "generation.validated", "preview.validated":
 		check = "validated"
-	case "generation.failed":
+	case "generation.failed", "preview.failed", "generation.settlement_pending", "preview.settlement_pending":
 		check = "failed"
-	case "generation.cancelled":
+	case "generation.cancelled", "preview.cancelled":
 		check = "cancelled"
 	}
 	count, reason, err := writeSSEParts(writer, event, data)
@@ -61,6 +64,7 @@ func recordDelivery(ctx context.Context, check string, count int, reason string)
 }
 
 func writeTracedHeartbeat(ctx context.Context, writer http.ResponseWriter) error {
+	_ = http.NewResponseController(writer).SetWriteDeadline(time.Now().Add(10 * time.Second))
 	n, err := fmt.Fprint(writer, ": heartbeat\n\n")
 	reason := ""
 	if err != nil {
@@ -72,6 +76,7 @@ func writeTracedHeartbeat(ctx context.Context, writer http.ResponseWriter) error
 	return err
 }
 func writeSSEParts(writer http.ResponseWriter, event string, data any) (int, string, error) {
+	_ = http.NewResponseController(writer).SetWriteDeadline(time.Now().Add(10 * time.Second))
 	payload, err := json.Marshal(data)
 	if err != nil {
 		return 0, "write_failed", err

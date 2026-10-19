@@ -66,7 +66,7 @@ type levelToken struct {
 }
 
 func readLevels(ctx context.Context, tx pgx.Tx) ([]LevelConfig, error) {
-	rows, err := tx.Query(ctx, `SELECT id,level_no,min_experience,reward_enabled,points,item_definition_id,item_count FROM wordweave.growth_levels ORDER BY level_no`)
+	rows, err := tx.Query(ctx, `SELECT id,level_no,min_experience,reward_enabled,points,item_definition_id,item_count FROM wordweave.growth_levels WHERE retired_at IS NULL ORDER BY level_no`)
 	if err != nil {
 		return nil, err
 	}
@@ -326,7 +326,7 @@ func (s *Service) SaveLevels(ctx context.Context, subject string, in LevelSave) 
 	if err != nil {
 		return LevelSaved{}, err
 	}
-	if _, err = tx.Exec(ctx, `SET CONSTRAINTS wordweave.growth_levels_min_experience_unique DEFERRED`); err != nil {
+	if _, err = tx.Exec(ctx, `SET CONSTRAINTS wordweave.growth_levels_active_min_experience_unique DEFERRED`); err != nil {
 		return LevelSaved{}, err
 	}
 	for i, change := range in.Changes {
@@ -340,7 +340,7 @@ func (s *Service) SaveLevels(ctx context.Context, subject string, in LevelSave) 
 			return LevelSaved{}, err
 		}
 	}
-	if _, err = tx.Exec(ctx, `SET CONSTRAINTS wordweave.growth_levels_min_experience_unique IMMEDIATE`); err != nil {
+	if _, err = tx.Exec(ctx, `SET CONSTRAINTS wordweave.growth_levels_active_min_experience_unique IMMEDIATE`); err != nil {
 		return LevelSaved{}, err
 	}
 	c.Revision, err = business.AdvanceConfiguration(ctx, tx)

@@ -14,6 +14,7 @@ import (
 	"github.com/jackc/pgx/v5/pgxpool"
 
 	"wordweave/internal/ai"
+	"wordweave/internal/capacity"
 	"wordweave/internal/dbgen"
 	"wordweave/internal/entitlement"
 	"wordweave/internal/generationtrace"
@@ -24,13 +25,18 @@ import (
 )
 
 var (
-	ErrInvalidInput          = errors.New("invalid generation input")
-	ErrGenerationInProgress  = errors.New("generation already in progress")
-	ErrQuotaExhausted        = errors.New("generation quota exhausted")
-	ErrGenerationUnavailable = errors.New("generation is unavailable")
-	ErrForbidden             = errors.New("generation is forbidden")
-	ErrTerminalRace          = errors.New("generation terminal state already decided")
+	ErrInvalidInput                   = errors.New("invalid generation input")
+	ErrGenerationInProgress           = errors.New("generation already in progress")
+	ErrQuotaExhausted                 = errors.New("generation quota exhausted")
+	ErrGenerationUnavailable          = errors.New("generation is unavailable")
+	ErrGenerationConfigurationInvalid = errors.New("generation configuration is invalid")
+	ErrForbidden                      = errors.New("generation is forbidden")
+	ErrTerminalRace                   = errors.New("generation terminal state already decided")
+	ErrSettlementUnconfirmed          = errors.New("generation settlement is unconfirmed")
+	ErrGenerationBusy                 = capacity.ErrBusy
 )
+
+const generationPreflightTimeout = 2 * time.Second
 
 type Input struct {
 	ModelID         string
@@ -41,9 +47,28 @@ type Input struct {
 }
 
 type Run struct {
-	ID    uuid.UUID
-	Token string
-	Spec  ai.GenerationSpec
+	ID       uuid.UUID
+	Token    string
+	Spec     ai.GenerationSpec
+	Snapshot RunSnapshot
+	capacity *capacity.Lease
+}
+
+func (r *Run) ReleaseCapacity() {
+	if r != nil && r.capacity != nil {
+		r.capacity.Release()
+	}
+}
+
+type RunSnapshot struct {
+	ConfigurationRevision  string                     `json:"configuration_revision"`
+	EffectivePlan          EffectivePlanSnapshot      `json:"effective_plan"`
+	ContentService         entitlement.ContentService `json:"content_service"`
+	NativeCorrectionPolicy entitlement.NativePolicy   `json:"native_correction_policy"`
+}
+type EffectivePlanSnapshot struct {
+	Code   string `json:"code"`
+	Origin string `json:"origin"`
 }
 
 type CancelOutcome struct {
@@ -61,6 +86,7 @@ type Service struct {
 	previewRegistry *Registry
 	capabilityKey   []byte
 	draftTTL        time.Duration
+	capacity        *capacity.Gate
 }
 
 func NewService(app *pgxpool.Pool, credentials *ai.CredentialStore, provider ai.Provider, capabilityKey []byte, draftTTL time.Duration, validator ai.Validator) *Service {
@@ -69,6 +95,46 @@ func NewService(app *pgxpool.Pool, credentials *ai.CredentialStore, provider ai.
 		validator: validator, registry: NewRegistry(capabilityKey), previewRegistry: NewRegistry(capabilityKey),
 		capabilityKey: append([]byte(nil), capabilityKey...), draftTTL: draftTTL,
 	}
+}
+
+func (service *Service) SetCapacityGate(gate *capacity.Gate) { service.capacity = gate }
+func (service *Service) BeginDrain() {
+	if service.capacity != nil {
+		service.capacity.SetDraining(true)
+	}
+}
+func (service *Service) WaitDrain(ctx context.Context) error {
+	if service.capacity == nil {
+		return nil
+	}
+	return service.capacity.WaitIdle(ctx)
+}
+func (service *Service) CapacityRetryAfterSeconds() int {
+	if service.capacity == nil {
+		return 1
+	}
+	return service.capacity.RetryAfterSeconds()
+}
+func capacityPendingKey(id uuid.UUID, preview bool) string {
+	prefix := "generation:"
+	if preview {
+		prefix = "preview:"
+	}
+	return prefix + id.String()
+}
+
+func (service *Service) MarkSettlementUnknown(id uuid.UUID, preview bool) {
+	if service.capacity != nil {
+		service.capacity.MarkUnknown(capacityPendingKey(id, preview))
+	}
+}
+
+func (service *Service) resolveSettlementUnknown(id uuid.UUID, preview bool) {
+	if service.capacity == nil {
+		return
+	}
+	service.capacity.ResolvePending(capacityPendingKey(id, preview))
+	service.capacity.SetSettlementHealthy(true)
 }
 
 func (service *Service) Provider() ai.Provider   { return service.provider }
@@ -85,6 +151,18 @@ func (service *Service) StartPreset(ctx context.Context, actor identity.Actor, i
 	return service.start(ctx, actor, Input{}, id, version)
 }
 func (service *Service) start(ctx context.Context, actor identity.Actor, input Input, presetID, versionID uuid.UUID) (_ Run, resultErr error) {
+	var preflight *capacity.Lease
+	if service.capacity != nil {
+		var err error
+		preflight, err = service.capacity.TryAcquire(capacity.Preflight, "")
+		if err != nil {
+			return Run{}, ErrGenerationBusy
+		}
+		defer preflight.Release()
+	}
+	preflightContext, cancelPreflight := context.WithTimeout(ctx, generationPreflightTimeout)
+	defer cancelPreflight()
+	ctx = preflightContext
 	trace := generationtrace.From(ctx)
 	trace.Begin(generationtrace.Preflight)
 	defer func() { finishTrace(ctx, generationtrace.Preflight, resultErr) }()
@@ -161,6 +239,15 @@ func (service *Service) start(ctx context.Context, actor identity.Actor, input I
 		return Run{}, err
 	}
 	groupCode, quotaLimit, maxEntries := plan.Code, plan.Limit, plan.MaxEntries
+	snapshot := RunSnapshot{
+		ConfigurationRevision:  business.Revision(service.capabilityKey, "configuration", configuration.Revision),
+		EffectivePlan:          EffectivePlanSnapshot{Code: plan.Code, Origin: plan.Origin},
+		ContentService:         entitlement.ContentService{NativeValidation: true, ContentReviewEnabled: plan.ContentReviewEnabled, ContentRepairLimit: plan.ContentRepairLimit},
+		NativeCorrectionPolicy: entitlement.SystemNativePolicy(),
+	}
+	if snapshot.EffectivePlan.Code == "registered" {
+		snapshot.EffectivePlan.Code = "basic"
+	}
 
 	if !isPreset && len(input.Entries) > maxEntries {
 		return Run{}, ErrInvalidInput
@@ -170,7 +257,8 @@ func (service *Service) start(ctx context.Context, actor identity.Actor, input I
 	if err := tx.QueryRow(ctx, `
 		SELECT model.display_name, model.provider_model_id
 		FROM wordweave.ai_models model
-		WHERE model.id=$1 AND model.enabled AND model.retired_at IS NULL AND ($6 OR
+		JOIN wordweave.ai_providers provider ON provider.id=model.provider_id
+		WHERE model.id=$1 AND model.enabled AND model.retired_at IS NULL AND provider.retired_at IS NULL AND ($6 OR
  EXISTS(SELECT 1 FROM wordweave.group_models assignment WHERE assignment.model_id=model.id AND assignment.group_code=$2) OR
  ($5 AND EXISTS(SELECT 1 FROM wordweave.model_time_contributions c WHERE c.owner_id=$3 AND c.model_id=model.id AND c.revoked_at IS NULL AND c.starts_at<=$4 AND c.ends_at>$4)))`, modelID, groupCode, actor.ID, configuration.Now, actor.IsLearner(), isPreset).Scan(&modelName, &providerModelID); err != nil {
 		if errors.Is(err, pgx.ErrNoRows) {
@@ -184,7 +272,15 @@ func (service *Service) start(ctx context.Context, actor identity.Actor, input I
 		if errors.Is(err, ai.ErrCredentialMissing) {
 			return Run{}, ErrGenerationUnavailable
 		}
+		var customError *ai.CustomParameterError
+		if errors.As(err, &customError) {
+			return Run{}, ErrGenerationConfigurationInvalid
+		}
 		return Run{}, err
+	}
+	requestParametersSnapshot, err := ai.RequestParametersSnapshot(spec)
+	if err != nil {
+		return Run{}, ErrGenerationConfigurationInvalid
 	}
 	check("length_assignment")
 	var allowedLength bool
@@ -233,17 +329,33 @@ func (service *Service) start(ctx context.Context, actor identity.Actor, input I
 		}
 	}
 	check("reserve")
+	var capacityLease *capacity.Lease
+	if service.capacity != nil {
+		capacityLease, err = service.capacity.TryAcquire(capacity.Generation, spec.ConnectionCapacityKey())
+		if err != nil {
+			return Run{}, ErrGenerationBusy
+		}
+		defer func() {
+			if resultErr != nil && capacityLease != nil {
+				capacityLease.Release()
+			}
+		}()
+	}
 	var runID uuid.UUID
 	err = tx.QueryRow(ctx, `
 		INSERT INTO wordweave.generation_runs(
 			account_id, visitor_id, credited_account_id, group_code_snapshot,
 			model_id, model_display_name_snapshot, provider_model_id_snapshot,
 			meaning_language, scenario, length_code, minimum_words_snapshot,
-			quota_limit_snapshot, max_entries_snapshot,entry_kind,preset_version_id,started_at
-		) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16)
+			quota_limit_snapshot, max_entries_snapshot,entry_kind,preset_version_id,started_at,
+			content_policy_version,configuration_revision_snapshot,content_review_enabled_snapshot,
+			content_repair_limit_snapshot,pipeline_version_snapshot,plan_origin_snapshot,
+			model_request_parameters_snapshot
+		) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,1,$17,$18,$19,$20,$21,$22)
 		RETURNING id`, accountID, visitorID, creditedAccountID, groupCode,
 		modelID, modelName, providerModelID, input.MeaningLanguage, input.Scenario,
-		input.Length, minimumWords, quotaLimit, maxEntries, entryKind, presetVersion, configuration.Now).Scan(&runID)
+		input.Length, minimumWords, quotaLimit, maxEntries, entryKind, presetVersion, configuration.Now,
+		configuration.Revision, plan.ContentReviewEnabled, plan.ContentRepairLimit, entitlement.PipelineVersion, plan.Origin, requestParametersSnapshot).Scan(&runID)
 	if err != nil {
 		var postgresError *pgconn.PgError
 		if errors.As(err, &postgresError) && postgresError.Code == "23505" {
@@ -283,6 +395,10 @@ func (service *Service) start(ctx context.Context, actor identity.Actor, input I
 	}
 	check("transaction_commit")
 	if err := tx.Commit(ctx); err != nil {
+		if service.capacity != nil && capacityLease != nil {
+			service.capacity.ReleaseUnknown(capacityLease, capacityPendingKey(runID, false))
+			capacityLease = nil
+		}
 		trace.PreflightCommitUnknown(runID.String())
 		trace.Note(generationtrace.Preflight, "transaction_commit", generationtrace.Why("transaction_unknown"))
 		return Run{}, fmt.Errorf("commit generation preflight: %w", err)
@@ -294,20 +410,33 @@ func (service *Service) start(ctx context.Context, actor identity.Actor, input I
 	if capture := trace.Capture(); capture != nil {
 		capture.EffectiveSpec(generationtrace.EffectiveSpec{RunID: spec.RunID, ModelID: spec.ModelID, ProviderModelID: spec.ProviderModelID, MeaningLanguage: spec.MeaningLanguage, Scenario: spec.Scenario, LengthCode: spec.LengthCode, MinimumWords: spec.MinimumWords, Entries: spec.Entries, PromptVersion: spec.PromptVersion})
 	}
-	return Run{ID: runID, Token: token, Spec: spec}, nil
+	return Run{ID: runID, Token: token, Spec: spec, Snapshot: snapshot, capacity: capacityLease}, nil
 }
 
 func (service *Service) CompleteValid(ctx context.Context, run Run, batch ai.ValidatedBatch) (resultErr error) {
+	outcome := OutcomeBasic
+	version := 1
+	if run.Snapshot.ContentService.ContentReviewEnabled {
+		outcome = OutcomeReviewPassed
+		version = 2
+	}
+	return service.CompletePipeline(ctx, run, PipelineResult{Version: version, Batch: batch, Outcome: outcome})
+}
+
+func (service *Service) CompletePipeline(ctx context.Context, run Run, pipeline PipelineResult) (resultErr error) {
 	trace := generationtrace.From(ctx)
 	trace.Begin(generationtrace.DraftCommit)
 	defer func() { finishTrace(ctx, generationtrace.DraftCommit, resultErr) }()
 	check := func(name string) { trace.Check(generationtrace.DraftCommit, name, -1) }
 	check("snapshot")
-	if err := ai.ValidateSnapshot(batch); err != nil {
+	if err := ai.ValidateSnapshot(pipeline.Batch); err != nil {
 		return fmt.Errorf("invalid validated generation draft: %w", err)
 	}
+	if !validPipelineForService(run.Snapshot.ContentService, pipeline) {
+		return errors.New("invalid generation pipeline result")
+	}
 	check("draft_encode")
-	payload, err := json.Marshal(batch)
+	payload, err := json.Marshal(pipeline.Batch)
 	if err != nil {
 		return fmt.Errorf("encode validated generation draft: %w", err)
 	}
@@ -331,12 +460,18 @@ func (service *Service) CompleteValid(ctx context.Context, run Run, batch ai.Val
 	if err != nil {
 		return err
 	}
+	check("usage_facts")
+	if err = validateContentOutcome(ctx, tx, run.ID, false, pipeline); err != nil {
+		return err
+	}
 
+	check("cas")
 	result, err := tx.Exec(ctx, `
 		UPDATE wordweave.generation_runs
 		SET call_status='valid', quota_charged=true, counts_toward_cumulative=true,
-			completed_at=$2, failure_code=NULL
-		WHERE id=$1 AND call_status='active'`, run.ID, configuration.Now)
+			completed_at=$2, failure_code=NULL,content_outcome=CASE WHEN content_policy_version=1 THEN $3::text END,
+			final_content_version=CASE WHEN content_policy_version=1 THEN $4::smallint END,content_stop_reason=CASE WHEN content_policy_version=1 THEN $5::text END
+		WHERE id=$1 AND call_status='active'`, run.ID, configuration.Now, pipeline.Outcome, pipeline.Version, pipeline.StopReason)
 	if err != nil {
 		return fmt.Errorf("settle valid generation: %w", err)
 	}
@@ -369,6 +504,46 @@ func (service *Service) CompleteValid(ctx context.Context, run Run, batch ai.Val
 	}
 	service.registry.SetStatus(run.ID, "valid")
 	return nil
+}
+
+func validPipelineOutcome(outcome string, reason *string) bool {
+	switch outcome {
+	case OutcomeBasic, OutcomeReviewPassed, OutcomeRepairedPassed, OutcomeLimitFinalized:
+		return reason == nil
+	case OutcomeServiceIncomplete:
+		if reason == nil {
+			return false
+		}
+		switch *reason {
+		case "content_timeout", "content_rate_limited", "content_transport_error", "content_protocol_error", "content_review_invalid", "fixed_edit_native_invalid", "repair_native_invalid":
+			return true
+		}
+	}
+	return false
+}
+
+func validPipelineForService(service entitlement.ContentService, pipeline PipelineResult) bool {
+	if !validPipelineOutcome(pipeline.Outcome, pipeline.StopReason) {
+		return false
+	}
+	if !service.ContentReviewEnabled {
+		return service.ContentRepairLimit == 0 && pipeline.Version == 1 && pipeline.Outcome == OutcomeBasic
+	}
+	if service.ContentRepairLimit < 1 || service.ContentRepairLimit > 99 || pipeline.Version < 1 || pipeline.Version > service.ContentRepairLimit+2 || pipeline.Outcome == OutcomeBasic {
+		return false
+	}
+	switch pipeline.Outcome {
+	case OutcomeReviewPassed:
+		return pipeline.Version == 2
+	case OutcomeRepairedPassed:
+		return pipeline.Version >= 3
+	case OutcomeLimitFinalized:
+		return pipeline.Version == service.ContentRepairLimit+2
+	case OutcomeServiceIncomplete:
+		return true
+	default:
+		return false
+	}
 }
 
 func (service *Service) CompleteFailure(ctx context.Context, runID uuid.UUID, status, failureCode string) error {
@@ -407,6 +582,7 @@ func (service *Service) Cancel(ctx context.Context, actor identity.Actor, runIDR
 	err = SettleTerminal(ctx, service.app, runID, "user_cancelled", "")
 	if err == nil {
 		service.registry.SetStatus(runID, "cancelled")
+		service.resolveSettlementUnknown(runID, false)
 		if cancel != nil {
 			cancel()
 		}
@@ -428,18 +604,19 @@ func (service *Service) Cancel(ctx context.Context, actor identity.Actor, runIDR
 		return CancelOutcome{}, ErrRunNotFound
 	}
 	if readErr != nil {
-		return CancelOutcome{}, fmt.Errorf("confirm generation cancellation: %w", errors.Join(writeErr, readErr))
+		return CancelOutcome{}, fmt.Errorf("%w: confirm generation cancellation: %w", ErrSettlementUnconfirmed, errors.Join(writeErr, readErr))
 	}
 	if status == "active" {
 		// The write is not confirmed. Do not pretend to cancel or refund it,
 		// and do not introduce an automatic cancellation retry.
 		if writeErr != nil {
-			return CancelOutcome{}, fmt.Errorf("cancel generation: %w", writeErr)
+			return CancelOutcome{}, fmt.Errorf("%w: cancel generation: %w", ErrSettlementUnconfirmed, writeErr)
 		}
-		return CancelOutcome{}, errors.New("generation cancellation remains active")
+		return CancelOutcome{}, ErrSettlementUnconfirmed
 	}
 	outcome := cancelProjection(status)
 	service.registry.SetStatus(runID, outcome.Status)
+	service.resolveSettlementUnknown(runID, false)
 	if outcome.Status == "cancelled" && cancel != nil {
 		cancel()
 	}

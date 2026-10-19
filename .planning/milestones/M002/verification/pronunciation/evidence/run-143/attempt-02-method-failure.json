@@ -1,0 +1,10 @@
+{
+  "attempt": 2,
+  "result": "FAIL_METHOD",
+  "candidate_build_aggregate": "48054f4be82d69bf71cb76d3b1a5b493e3f26703347bac300dbf665cfbc63235",
+  "failed_assertion": "REPLAY-CANCELS-OLD",
+  "expected_by_second_harness": "cancel count increases when replay is clicked",
+  "actual": "cancel count stayed at 1",
+  "assessment": "The harness waited for B to end before clicking it again, so no active utterance remained to cancel. This did not exercise the approved playing-state replay case.",
+  "next": "Click replay immediately after B native start, require B interruption and replay start/end, then retain route-leave interruption separately."
+}

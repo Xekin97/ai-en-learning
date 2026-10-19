@@ -1,0 +1,62 @@
+{
+  "status": "PASS_DEVELOPER_AWAITING_INDEPENDENT_QA",
+  "transition": "TRANSITION-M003-093",
+  "source_contract": "M003-TECH-04 / M003-FE-CR310 / M003-UI-12 / CR-310",
+  "production_files": [
+    "frontend/app/presentation/components/GenerationWorkspace.vue",
+    "frontend/app/runtime/stores/generation.ts",
+    "frontend/app/assets/css/theme.css",
+    "frontend/i18n/locales/en-US.json",
+    "frontend/i18n/locales/zh-CN.json"
+  ],
+  "checks": [
+    {
+      "name": "node24-typecheck",
+      "result": "PASS exit 0; zero TypeScript diagnostics; known Vue route plugin path warning retained",
+      "log": "01-typecheck-node24.log",
+      "runtime": "v24.21.0"
+    },
+    {
+      "name": "changed-file-eslint",
+      "result": "PASS exit 0",
+      "log": "02-eslint.log"
+    },
+    {
+      "name": "generation-lifecycle",
+      "result": "PASS 29/29",
+      "log": "03-lifecycle-unit.log"
+    },
+    {
+      "name": "cr310-browser",
+      "result": "PASS 6; 4 deliberate mobile-project skips for desktop-only boundaries",
+      "log": "04-browser.log",
+      "viewports": [
+        "1440x720",
+        "Pixel 7"
+      ]
+    },
+    {
+      "name": "scoped-diff-check",
+      "result": "PASS exit 0",
+      "log": "05-diff-check.log"
+    }
+  ],
+  "archive": {
+    "path": "cr310-frontend-source.tar.gz",
+    "sha256": "8cda508dfaf1eef3b12cf84301dddb3a1bd46096b2b4dd58f092ec38ddea7f85"
+  },
+  "manifest_sha256": "dae55218c332ea1b8d96966a83cd92012a788f90bb21f7df64e9518bd68a15e8",
+  "incremental_patch_sha256": "9250140eac7fc51d17e9b5374f46eeb3ee6278bf74e929e19d98932c4cc44e25",
+  "before_archive_sha256": "363882a3afa7def3178dd09e51183ab967fd29c9a0b6a847341d06eb15becab0",
+  "before_manifest_sha256": "34dff0a157cc0cda67e2bce21ad443d0f673c5fb99f65c620a9095088d324812",
+  "screenshots": {
+    "regenerate-warning-desktop.png": "f404ecdad978108ce401fd4902f86ca4cbecd3f10ab5754f0e453b4d1ca02cae",
+    "regenerate-warning-mobile.png": "7d7fd603a85c97c1c8cea7c0427ac48d558c3a3d0480ae93921dfac2ba986f19"
+  },
+  "development_fixture_correction": "00-browser-fixture-correction.md",
+  "boundaries": [
+    "independent QA pending",
+    "no real provider/backend/database/deployment/UAT",
+    "UAT3014 untouched"
+  ]
+}

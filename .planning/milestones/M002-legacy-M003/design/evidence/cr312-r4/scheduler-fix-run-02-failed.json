@@ -1,0 +1,54 @@
+{
+  "version": "M003-UI-13-R4-scheduler-fix",
+  "scope": "Targeted verification after removing forced one-grapheme-per-frame and adding direct-display Segmenter fallback.",
+  "provider_calls": 0,
+  "checks": [
+    {
+      "name": "R4F-01-rich-growth-and-deadline",
+      "passed": true,
+      "details": {
+        "first": 10,
+        "second": 32,
+        "target": 102,
+        "caught": {
+          "elapsed_ms": 654,
+          "shown": 140,
+          "received": 140
+        }
+      }
+    },
+    {
+      "name": "R4F-02-short-chunk-120hz-budget",
+      "passed": true,
+      "details": {
+        "immediate": 1,
+        "at18": 2,
+        "shortFinal": "We ",
+        "elapsed_ms": 52,
+        "expected_base_gps": 36
+      }
+    },
+    {
+      "name": "R4F-03-segmenter-fallback-direct",
+      "passed": true,
+      "details": {
+        "text": "We ",
+        "state": "segmenter-fallback",
+        "cursor": 0
+      }
+    },
+    {
+      "name": "browser-console",
+      "passed": true,
+      "details": {
+        "errors": []
+      }
+    }
+  ],
+  "console_errors": [],
+  "summary": {
+    "total": 4,
+    "passed": 4,
+    "failed": 0
+  }
+}

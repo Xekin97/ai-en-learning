@@ -1,0 +1,290 @@
+{
+  "version": "M003-UI-15",
+  "scope": "targeted CAP-502/CAP-503 and AC504/AC514 design recheck after item-level preview detail correction",
+  "design_simulation": true,
+  "provider_calls": 0,
+  "configuration_writes": 0,
+  "checks": [
+    {
+      "name": "models-preview-locates-every-change-and-aligns-current-baseline",
+      "passed": true,
+      "details": {
+        "groups": 3,
+        "open": [
+          true,
+          true,
+          true
+        ],
+        "rowCounts": [
+          1,
+          2,
+          1
+        ],
+        "identities": [
+          "model:model-d",
+          "model:model-a",
+          "model:model-c",
+          "model:model-b"
+        ],
+        "applied": [
+          "应用结果： 连接名称省略，按服务地址 hostname 生成“api.backup.example”；模型说明清空为“无说明”；最大输出 token 省略，应用为“本产品未设置”（不代表提供方无限制）。"
+        ],
+        "removed": "移出\n1\nOpenAI 生产连接 › Model B\nmodel:model-b\n\n从活动模型配置移出；历史短文与运行记录保留。",
+        "overflow": 0,
+        "currentBaseline": {
+          "names": [
+            "Model A",
+            "Model B",
+            "Model C"
+          ],
+          "modes": [
+            "example/model-ajson_schema",
+            "example/model-bjson_schema",
+            "example/model-cprompt"
+          ]
+        },
+        "baselineAligned": true
+      }
+    },
+    {
+      "name": "models-confirmation-explicitly-lists-removals",
+      "passed": true,
+      "details": {
+        "removalOpen": "",
+        "removalCount": 1,
+        "removalText": "移出\n1\nOpenAI 生产连接 › Model B\nmodel:model-b\n\n从活动模型配置移出；历史短文与运行记录保留。",
+        "acknowledge": 1,
+        "submitDisabled": true
+      }
+    },
+    {
+      "name": "plans-preview-locates-every-change-and-aligns-current-baseline",
+      "passed": true,
+      "details": {
+        "groups": 3,
+        "open": [
+          true,
+          true,
+          true
+        ],
+        "rowCounts": [
+          0,
+          3,
+          0
+        ],
+        "identities": [
+          "plan:visitor",
+          "plan:pro",
+          "plan:plus"
+        ],
+        "applied": [
+          "Applied result: The file explicitly provides null for the rolling 24-hour allowance, applied as “Unlimited”; this is an explicit value for a required field, not an omitted default."
+        ],
+        "removed": "Remove\n0\n\nNone",
+        "overflow": 0,
+        "currentBaseline": {
+          "proInputs": [
+            "2",
+            "16",
+            "10",
+            "2"
+          ]
+        },
+        "baselineAligned": true
+      }
+    },
+    {
+      "name": "plans-confirmation-explicitly-lists-removals",
+      "passed": true,
+      "details": {
+        "removalOpen": "",
+        "removalCount": 0,
+        "removalText": "Remove\n0\n\nNone",
+        "acknowledge": 1,
+        "submitDisabled": true
+      }
+    },
+    {
+      "name": "items-preview-locates-every-change-and-aligns-current-baseline",
+      "passed": true,
+      "details": {
+        "groups": 3,
+        "open": [
+          true,
+          true,
+          true
+        ],
+        "rowCounts": [
+          0,
+          2,
+          1
+        ],
+        "identities": [
+          "item:extra",
+          "item:plan",
+          "item:model"
+        ],
+        "applied": [
+          "应用结果： 名称与说明均提供中文；英文说明显式为空，英文界面按现有规则回退显示中文说明，不继承目标旧英文译文。"
+        ],
+        "removed": "移出\n1\n模型体验卡\nitem:model\n\n从活动道具定义移出；库存、发放与使用流水保留。",
+        "overflow": 0,
+        "currentBaseline": {
+          "rows": [
+            "补签卡补签卡30已上架编辑奖励引用",
+            "额外次数卡额外次数卡30已上架编辑奖励引用",
+            "模型体验卡模型体验卡120已上架编辑奖励引用",
+            "计划体验卡计划体验卡200未上架编辑奖励引用"
+          ]
+        },
+        "baselineAligned": true
+      }
+    },
+    {
+      "name": "items-confirmation-explicitly-lists-removals",
+      "passed": true,
+      "details": {
+        "removalOpen": "",
+        "removalCount": 1,
+        "removalText": "移出\n1\n模型体验卡\nitem:model\n\n从活动道具定义移出；库存、发放与使用流水保留。",
+        "acknowledge": 1,
+        "submitDisabled": true
+      }
+    },
+    {
+      "name": "growth-preview-locates-every-change-and-aligns-current-baseline",
+      "passed": true,
+      "details": {
+        "groups": 3,
+        "open": [
+          true,
+          true,
+          true
+        ],
+        "rowCounts": [
+          2,
+          8,
+          1
+        ],
+        "identities": [
+          "level:4",
+          "achievement:mastered_words:500",
+          "checkin:base",
+          "checkin:step",
+          "level:2",
+          "level:3",
+          "achievement:checkin_streak:7",
+          "achievement:review_streak:7",
+          "achievement:mastered_words:100",
+          "achievement:saved_passages:20",
+          "achievement:saved_passages:5"
+        ],
+        "applied": [
+          "Applied result: No reward item is selected in the file and the applied result is “No item”."
+        ],
+        "removed": "Remove\n1\nSave 5 passages (legacy rule)\nachievement:saved_passages:5\n\nRemoved from active achievement rules; attainment and claim history remain.",
+        "overflow": 0,
+        "currentBaseline": {
+          "inputs": [
+            "4",
+            "2",
+            "10",
+            "10",
+            "5"
+          ]
+        },
+        "baselineAligned": true
+      }
+    },
+    {
+      "name": "growth-confirmation-explicitly-lists-removals",
+      "passed": true,
+      "details": {
+        "removalOpen": "",
+        "removalCount": 1,
+        "removalText": "Remove\n1\nSave 5 passages (legacy rule)\nachievement:saved_passages:5\n\nRemoved from active achievement rules; attainment and claim history remain.",
+        "acknowledge": 1,
+        "submitDisabled": true
+      }
+    },
+    {
+      "name": "internal-design-version-stays-outside-business-dialog",
+      "passed": true,
+      "details": {
+        "businessDialogVersionLabels": 0,
+        "demoRegionVersionLabels": 1,
+        "dialogTitle": "Import and replace model configuration"
+      }
+    },
+    {
+      "name": "model-dependency-block-references-current-removal",
+      "passed": true,
+      "details": {
+        "currentModels": [
+          "Model A",
+          "Model B",
+          "Model C"
+        ],
+        "references": [
+          "Pro 计划 引用将移出的“Model B”",
+          "首页预设 · Bookshop 引用将移出的“Model B”",
+          "模型体验卡 · 7 天 引用将移出的“Model B”"
+        ]
+      }
+    },
+    {
+      "name": "item-dependency-block-references-current-removal",
+      "passed": true,
+      "details": {
+        "currentRows": [
+          "补签卡补签卡30已上架编辑奖励引用",
+          "额外次数卡额外次数卡30已上架编辑奖励引用",
+          "模型体验卡模型体验卡120已上架编辑奖励引用",
+          "计划体验卡计划体验卡200未上架编辑奖励引用"
+        ],
+        "references": [
+          "等级 3 奖励 引用将移出的“模型体验卡”",
+          "连续签到 30 天 引用将移出的“模型体验卡”"
+        ]
+      }
+    },
+    {
+      "name": "mobile-item-detail-scroll-keeps-confirmation-actions-reachable",
+      "passed": true,
+      "details": {
+        "overflow": 0,
+        "removalVisible": 1,
+        "footerBottom": 835,
+        "viewportHeight": 844,
+        "targetHeights": [
+          70,
+          70
+        ]
+      }
+    },
+    {
+      "name": "browser-console",
+      "passed": true,
+      "details": {
+        "console_errors": [],
+        "page_errors": []
+      }
+    }
+  ],
+  "screenshots": [
+    "02-formal-models-preview-desktop-zh.png",
+    "04-formal-plans-preview-desktop-en.png",
+    "09-formal-items-preview-desktop-zh.png",
+    "06-formal-growth-preview-desktop-en.png",
+    "03-formal-models-dependency-blocked-desktop-zh.png",
+    "05-formal-items-blocked-desktop-zh.png",
+    "07-formal-model-confirm-mobile-en.png"
+  ],
+  "console_errors": [],
+  "page_errors": [],
+  "summary": {
+    "total": 13,
+    "passed": 13,
+    "failed": 0
+  }
+}

@@ -1,0 +1,196 @@
+{
+  "version": "M002-QA-PRON-01-R1",
+  "status": "PASS",
+  "method": "Controlled client-memory PAGE-402 state injection on frozen production build; real backend session/options, real browser speech, no generation request or DB write. Not final UAT evidence.",
+  "candidateBuildAggregate": "a6437e56fe8a60781a7ec9b9ccbdc86272ae73a8cc734a8dc4ca4cd32066071a",
+  "assertions": [
+    {
+      "id": "CONTROLLED-INJECTION",
+      "pass": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "id": "PLAN-CONTROL",
+      "pass": true,
+      "actual": 1,
+      "expected": 1
+    },
+    {
+      "id": "PLAN-SURFACE",
+      "pass": true,
+      "actual": "generation-plan:qa-controlled-draft",
+      "expected": "generation-plan:qa-controlled-draft"
+    },
+    {
+      "id": "PICKER-EXCLUDED",
+      "pass": true,
+      "actual": 0,
+      "expected": 0
+    },
+    {
+      "id": "PLAN-FOCUS-BEFORE-TRANSITION",
+      "pass": true,
+      "actual": "generation-plan:qa-controlled-draft",
+      "expected": "generation-plan:qa-controlled-draft"
+    },
+    {
+      "id": "PLAN-LEAVE-PRESENT-240MS",
+      "pass": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "id": "PLAN-LEAVE-INERT",
+      "pass": true,
+      "actual": "{\"planPresent\":true,\"planInert\":true,\"planAriaHidden\":\"true\",\"planActionDisabled\":true,\"resultControlCount\":1,\"resultSurface\":\"generation-result:qa-controlled-draft\",\"activeSurface\":\"generation-result:qa-controlled-draft\"}",
+      "expected": "inert + aria-hidden=true + disabled"
+    },
+    {
+      "id": "RESULT-CONTROL",
+      "pass": true,
+      "actual": 1,
+      "expected": 1
+    },
+    {
+      "id": "RESULT-NEW-SURFACE",
+      "pass": true,
+      "actual": "generation-result:qa-controlled-draft",
+      "expected": "generation-result:qa-controlled-draft"
+    },
+    {
+      "id": "FOCUS-TRANSFER",
+      "pass": true,
+      "actual": "generation-result:qa-controlled-draft",
+      "expected": "generation-result:qa-controlled-draft"
+    },
+    {
+      "id": "PLAN-REMOVED-AFTER-240MS",
+      "pass": true,
+      "actual": 0,
+      "expected": 0
+    },
+    {
+      "id": "RESULT-ACTION-ENABLED",
+      "pass": true,
+      "actual": "{\"disabled\":false,\"ancestorInert\":false,\"connected\":true}",
+      "expected": "connected + enabled + outside inert region"
+    },
+    {
+      "id": "RESULT-NO-AUTOPLAY",
+      "pass": true,
+      "actual": 1,
+      "expected": "1 (the user-started plan utterance only)"
+    },
+    {
+      "id": "PLAN-CANCELLED-ON-LEAVE",
+      "pass": true,
+      "actual": 1,
+      "expected": ">0"
+    },
+    {
+      "id": "PLAN-NATIVE-INTERRUPTED",
+      "pass": true,
+      "actual": "[{\"type\":\"start\",\"error\":null,\"at\":889.5},{\"type\":\"error\",\"error\":\"interrupted\",\"at\":898.0999999046326}]",
+      "expected": "start then intentional interruption"
+    },
+    {
+      "id": "RESULT-NATIVE-START-END",
+      "pass": true,
+      "actual": "{\"surface\":\"generation-result:qa-controlled-draft\",\"entryMatches\":true,\"entryCodepoints\":14,\"voiceLang\":\"en-GB\",\"events\":[{\"type\":\"start\",\"error\":null,\"at\":1227.8999998569489},{\"type\":\"end\",\"error\":null,\"at\":2491.0999999046326}]}",
+      "expected": "entry match + native start/end"
+    },
+    {
+      "id": "NO-CONTROLLED-DB-MODEL-WRITE",
+      "pass": true,
+      "actual": "{\"writes\":[],\"modelOrGeneration\":[]}",
+      "expected": 0
+    },
+    {
+      "id": "NO-CONTROLLED-PAGE-ERROR",
+      "pass": true,
+      "actual": "{\"pageErrors\":[],\"consoleErrors\":[]}",
+      "expected": 0
+    }
+  ],
+  "transition": {
+    "planPresent": true,
+    "planInert": true,
+    "planAriaHidden": "true",
+    "planActionDisabled": true,
+    "resultControlCount": 1,
+    "resultSurface": "generation-result:qa-controlled-draft",
+    "activeSurface": "generation-result:qa-controlled-draft"
+  },
+  "resultActionState": {
+    "disabled": false,
+    "ancestorInert": false,
+    "connected": true
+  },
+  "speechCountBeforeResultGesture": 1,
+  "focusSurface": "generation-result:qa-controlled-draft",
+  "focusSamples": [
+    {
+      "tag": "BUTTON",
+      "surface": "generation-result:qa-controlled-draft",
+      "planPresent": true
+    }
+  ],
+  "speech": {
+    "speaks": [
+      {
+        "surface": "generation-plan:qa-controlled-draft",
+        "entryMatches": true,
+        "entryCodepoints": 14,
+        "voiceLang": "en-GB",
+        "events": [
+          {
+            "type": "start",
+            "error": null,
+            "at": 889.5
+          },
+          {
+            "type": "error",
+            "error": "interrupted",
+            "at": 898.0999999046326
+          }
+        ]
+      },
+      {
+        "surface": "generation-result:qa-controlled-draft",
+        "entryMatches": true,
+        "entryCodepoints": 14,
+        "voiceLang": "en-GB",
+        "events": [
+          {
+            "type": "start",
+            "error": null,
+            "at": 1227.8999998569489
+          },
+          {
+            "type": "end",
+            "error": null,
+            "at": 2491.0999999046326
+          }
+        ]
+      }
+    ],
+    "cancels": [
+      {
+        "at": 893.3999998569489
+      }
+    ]
+  },
+  "requests": [
+    {
+      "method": "GET",
+      "path": "/_nuxt/builds/meta/2fca3e46-1e7b-49c7-92b3-68c95517b596.json"
+    }
+  ],
+  "pageErrors": [],
+  "consoleErrors": [],
+  "limits": [
+    "The plan/result business data is injected in browser memory and is not a generated or persisted article.",
+    "Final user UAT must use the real /create flow without this injection."
+  ]
+}

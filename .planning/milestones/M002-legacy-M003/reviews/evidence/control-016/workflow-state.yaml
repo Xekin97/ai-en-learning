@@ -1,0 +1,165 @@
+schema_version: 1
+profile: consumer-ai-web@1.0.0
+agt_revision: b5badf88cd7194400c3d4d0e9395e7c98490dc26
+retained_open_items:
+- id: CR039-L1
+  status: open
+  source: .planning/milestones/M001/changes/CR-039.md#retained-limitations
+- id: CR042-L1
+  status: open
+  source: .planning/milestones/M001/verification/CR-042-generation-evidence.md#retained-limitations
+- id: AI-QUALITY-90
+  status: unverified
+  source: .planning/milestones/M001/verification/ai-evaluation.md
+- id: W01
+  status: unverified
+  source: .planning/milestones/M002/verification/report.md#保留事项
+- id: QA26-MINIMAX
+  status: open
+  source: .planning/milestones/M002/verification/report.md#保留事项
+compatibility_policy:
+  decision_id: USER-COMPAT-001
+  record: .planning/milestones/M001/reviews/first-release-compatibility-policy.md
+  scope: Project-wide standing rule; M001 is the first release under development
+claim_deletion_policy:
+  decision_id: USER-CLAIM-DELETE-001
+  record: .planning/milestones/M001/reviews/claimed-batch-delete-retention-exception.md
+  scope: Explicit owner deletion of a saved batch removes its associated consumed
+    claim in the same transaction
+generation_quality_target:
+  decision_id: USER-GENERATION-QUALITY-129
+  confirmed_success_rate_minimum: 0.9
+  status: unverified
+  current_evidence: .planning/milestones/M001/verification/ai-evaluation.md
+  live_model_batch_authorized: false
+model_routing:
+  status: enabled
+  lock: .planning/agt/model-routing-v1.lock.json
+  adoption: .planning/agt/model-routing-adoption-001.md
+  policy: codex-balanced@1.0.0
+milestone: M003
+stage: uiux-design
+active_role: uiux/base
+active_agent: designer-tony
+status: awaiting_user_review
+required_artifacts:
+- .planning/milestones/M003/design/theme.css
+- .planning/milestones/M003/design/prototype/index.html
+- .planning/milestones/M003/design/interactions.md
+- .planning/milestones/M003/design/responsive-accessibility.md
+- .planning/milestones/M003/handoffs/uiux.md
+pending_user_decisions: []
+open_change_requests: []
+current_handoff: .planning/milestones/M003/handoffs/uiux.md
+previous_milestone:
+  id: M002
+  status: complete
+  completion_decision: TRANSITION-M002-123
+  handoff: .planning/milestones/M002/handoffs/verification.md
+  state_snapshot: .planning/milestones/M003/reviews/evidence/start/m002-state.yaml
+authorization_refs:
+- id: USER-M003-AGT-FLOW-20261010
+  scope: 按AGT文档启用独立控制检查及需求/设计接续，保留用户A的完整页面原型先评审要求
+  source: .planning/milestones/M003/reviews/evidence/control-014/task.json
+- id: USER-M003-UI-REVIEW-A
+  scope: 补齐现有完整页面可交互设计，先展示给用户评审再实施前端
+  source: .planning/milestones/M003/reviews/requirements-feedback.md
+- id: USER-M003-Q03-RANGE99
+  scope: 付费计划内容返修上限0～99；返修流程执行测试到2次即可，配置边界独立核对
+  source: .planning/milestones/M003/reviews/requirements-feedback.md
+- id: USER-M003-Q02-A
+  scope: 内容审校技术故障且已有基础校验有效稿时，保留最近有效稿、提示审校未完成，仍计一次生成
+  source: .planning/milestones/M003/reviews/requirements-feedback.md
+- id: USER-M003-Q01-B
+  scope: 各付费计划可分别配置内容返修上限，初始均为一次；具体有界范围待产品和后端设计反馈
+  source: .planning/milestones/M003/reviews/requirements-feedback.md
+- id: USER-M003-CONTENT-20261009
+  scope: Confirmed content-quality and plan-benefit scope; local product-to-development
+    workflow; excludes user UAT, deployment and new live-provider spending
+  source: .planning/milestones/M003/reviews/start.md
+- id: USER-M003-TWO-REPAIR-TYPES
+  scope: 明确区分基础漏词/格式纠错与内容审稿返修的配置说明；不据此扩大基础预算为后台可编辑
+  source: .planning/milestones/M003/reviews/requirements-feedback.md
+allowed_transitions:
+- technical-design
+- product-planning
+last_transition:
+  milestone: M003
+  timestamp: '2026-10-10T01:59:30.142846+00:00'
+  operation: activate-role
+  from: uiux-design
+  to: uiux-design
+  previous_role: gatekeeper
+  previous_agent: gatekeeper-owen
+  active_role: uiux/base
+  active_agent: designer-tony
+  authorized_by: USER-M003-UI-REVIEW-A
+  checked_by: gatekeeper-owen
+  recorded_by: root
+  decision_id: TRANSITION-M003-015
+  evidence: .planning/milestones/M003/reviews/gatekeeper-014.md
+  scope: Host mechanically applies independent read-only gate result; full-page UI04
+    delivery for user review, no design approval or stage transition
+context_entries:
+  current_handoff: .planning/milestones/M003/handoffs/uiux.md
+  task_index: .planning/milestones/M003/design/design-spec.md
+  constraints_index: .planning/milestones/M003/product/overview.md
+  locked_profile: .planning/milestones/M003/reviews/evidence/start/locked-profile.yaml
+  stage_review: .planning/milestones/M003/reviews/gatekeeper-014.md
+  latest_backend_submission: .planning/milestones/M003/handoffs/backend-architecture.md
+  requirement_feedback: .planning/milestones/M003/reviews/requirements-feedback.md
+  design_feedback: .planning/milestones/M003/reviews/requirements-feedback.md
+  backend_implementation_submission: .planning/milestones/M003/handoffs/backend-implementation.md
+product_approval:
+  version: M003-PRODUCT-03
+  status: accepted_under_delegation
+  source: .planning/milestones/M003/reviews/product-revision-006.md
+  archive: .planning/milestones/M003/reviews/evidence/product-006/artifacts.tar.gz
+design_approval:
+  version: M003-UI-03
+  status: reopened_for_full_page_design
+  source: .planning/milestones/M003/reviews/ui-recheck-011.md
+  archive: .planning/milestones/M003/reviews/evidence/design-011/artifacts.tar.gz
+  user_visual_review: awaiting_UI04_user_review
+  pending_version: M003-UI-04
+database_approval:
+  version: M003-DB-02
+  status: accepted_under_delegation
+  source: .planning/milestones/M003/reviews/database-revision-008.md
+  archive: .planning/milestones/M003/reviews/evidence/database-008/artifacts.tar.gz
+product_submission:
+  version: M003-PRODUCT-03
+  status: accepted_for_ui_revision_under_delegation
+  source: .planning/milestones/M003/handoffs/product.md
+  open_decisions: []
+backend_approval:
+  version: M003-BE-02
+  status: accepted_under_delegation
+  source: .planning/milestones/M003/reviews/backend-revision-009.md
+  archive: .planning/milestones/M003/reviews/evidence/backend-009/artifacts.tar.gz
+technical_approval:
+  version: M003-TECH-02
+  status: accepted_under_delegation
+  source: .planning/milestones/M003/reviews/technical-design-012.md
+  archive: .planning/milestones/M003/reviews/evidence/technical-012/artifacts.tar.gz
+  components:
+    database: M003-DB-02
+    backend: M003-BE-02
+    frontend: M003-FE-01
+  frontend_design_dependency: FE01 mapping to be checked against full-page UI04 before
+    frontend implementation
+backend_implementation_submission:
+  status: awaiting_review
+  source: .planning/milestones/M003/handoffs/backend-implementation.md
+  validation: .planning/milestones/M003/implementation/backend-validation.md
+  review_scope: Developer evidence submitted; partial items and independent QA outstanding
+design_submission:
+  version: M003-UI-04
+  status: awaiting_user_review
+  source: .planning/milestones/M003/handoffs/uiux.md
+  archive: .planning/milestones/M003/design/evidence/ui04/M003-UI-04-source.tar.gz
+  manifest: .planning/milestones/M003/design/evidence/ui04/M003-UI-04-source-manifest.json
+  validation: .planning/milestones/M003/design/evidence/ui04/M003-UI-04-browser.json
+  submitted_at: '2026-10-10T02:10:36.454006+00:00'
+  scope: Complete create/plans/presets prototype submitted for user visual and interaction
+    review; no technical-stage transition or frontend implementation authorization

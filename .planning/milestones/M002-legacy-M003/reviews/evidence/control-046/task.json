@@ -1,0 +1,27 @@
+{
+  "objective": "用户质疑BE06的2并发太少且是否极限。沿既有低成本设计委托，独立核对同阶段 activate-role 到 backend-alex 定向校正并发假设/验证策略，建议 TRANSITION-M003-047，不扩大实现。",
+  "inputs": [
+    ".planning/workflow/state.yaml",
+    ".planning/agt/agents.yaml",
+    ".planning/agt/project.yaml",
+    ".planning/milestones/M003/reviews/requirements-feedback.md",
+    ".planning/milestones/M003/handoffs/backend-architecture.md",
+    ".planning/milestones/M003/technical/capacity-and-deployment.md",
+    ".planning/milestones/M003/technical/evidence/be06-source-manifest.json",
+    ".planning/milestones/M003/reviews/evidence/start/locked-profile.yaml"
+  ],
+  "write_scope": [],
+  "acceptance": [
+    "只读流程检查，最终返回精简PASS/FAIL及目标状态，不写文件/重审技术/跑测试。",
+    "BE06旧源包不变，只重开容量初值及必要引用，不撤销UI/产品/DB/v5/忙碌合同。",
+    "本次有用户反馈和原委托设计授权，不重复要求选择具体参数。2槽不是已测极限；不替后端指定新的未验证容量。",
+    "建议backend_work M003-BE-06-R1 in_progress，frontend等待容量修订，阶段/交接/必需产物及技术总审批不变。",
+    "无部署、购买、付费调用、实现或架构平台扩张。"
+  ],
+  "risk": "normal",
+  "prior_attempts": [],
+  "report": [
+    "check_results",
+    "exact_target_state"
+  ]
+}

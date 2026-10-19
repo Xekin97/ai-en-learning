@@ -2,8 +2,10 @@ import { fileURLToPath } from "node:url";
 
 const backendInternalOrigin =
   process.env.NUXT_BACKEND_INTERNAL_ORIGIN ?? "http://backend:8080";
+const isolatedOutputDir = process.env.NUXT_OUTPUT_DIR;
 
 export default defineNuxtConfig({
+  buildDir: process.env.NUXT_BUILD_DIR ?? ".nuxt",
   compatibilityDate: "2026-09-01",
   devtools: { enabled: false },
   modules: ["@nuxtjs/i18n", "@nuxt/eslint"],
@@ -37,6 +39,7 @@ export default defineNuxtConfig({
   },
   nitro: {
     preset: "node-server",
+    ...(isolatedOutputDir ? { output: { dir: isolatedOutputDir } } : {}),
     devProxy: {
       "/api/v1": {
         target: `${backendInternalOrigin.replace(/\/$/, "")}/api/v1`,

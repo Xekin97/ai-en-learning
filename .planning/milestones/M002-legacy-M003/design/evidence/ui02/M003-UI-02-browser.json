@@ -1,0 +1,233 @@
+{
+  "version": "M003-UI-02",
+  "browser": "Chromium via Playwright 1.62.1",
+  "runAt": "2026-10-09T09:22:32.554Z",
+  "results": [
+    {
+      "name": "basic-readonly",
+      "query": "page=plans&plan=basic&adminState=edit&lang=zh",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "screenshot": "01-basic-readonly-1440.png",
+      "overflow": {
+        "width": 1440,
+        "scrollWidth": 1440
+      },
+      "errors": [],
+      "checks": {
+        "noConsoleErrors": true,
+        "noMissingCopy": true,
+        "noHorizontalOverflow": true,
+        "noTechnicalDraftCopy": true,
+        "basePolicyVisible": true,
+        "controlsLocked": true
+      },
+      "pass": true
+    },
+    {
+      "name": "limit-zero-preview",
+      "query": "page=plans&plan=pro&limit=0&adminState=preview&lang=zh",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "screenshot": "02-limit-zero-preview-1440.png",
+      "overflow": {
+        "width": 1440,
+        "scrollWidth": 1440
+      },
+      "errors": [],
+      "checks": {
+        "noConsoleErrors": true,
+        "noMissingCopy": true,
+        "noHorizontalOverflow": true,
+        "noTechnicalDraftCopy": true,
+        "linkedOff": true,
+        "impactAndSnapshot": true
+      },
+      "pass": true
+    },
+    {
+      "name": "limit-99-saved",
+      "query": "page=plans&plan=pro&limit=99&adminState=saved&lang=zh",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "screenshot": "03-limit-99-saved-1440.png",
+      "overflow": {
+        "width": 1440,
+        "scrollWidth": 1440
+      },
+      "errors": [],
+      "checks": {
+        "noConsoleErrors": true,
+        "noMissingCopy": true,
+        "noHorizontalOverflow": true,
+        "noTechnicalDraftCopy": true,
+        "saved99": true,
+        "switchOn": true
+      },
+      "pass": true
+    },
+    {
+      "name": "invalid-100-mobile",
+      "query": "page=plans&plan=pro&limit=100&adminState=edit&lang=zh",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "screenshot": "04-invalid-100-390.png",
+      "overflow": {
+        "width": 390,
+        "scrollWidth": 390
+      },
+      "errors": [],
+      "checks": {
+        "noConsoleErrors": true,
+        "noMissingCopy": true,
+        "noHorizontalOverflow": true,
+        "noTechnicalDraftCopy": true,
+        "invalidExposed": true,
+        "previewDisabled": true
+      },
+      "pass": true
+    },
+    {
+      "name": "second-repair",
+      "query": "page=create&plan=pro&limit=2&stage=repair2&lang=zh",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "screenshot": "05-second-repair-1440.png",
+      "overflow": {
+        "width": 1440,
+        "scrollWidth": 1440
+      },
+      "errors": [],
+      "checks": {
+        "noConsoleErrors": true,
+        "noMissingCopy": true,
+        "noHorizontalOverflow": true,
+        "noTechnicalDraftCopy": true,
+        "dynamicLimit": true,
+        "secondRound": true,
+        "noSaveDuringRepair": true
+      },
+      "pass": true
+    },
+    {
+      "name": "incomplete-valid-delivery",
+      "query": "page=create&plan=pro&limit=2&stage=incomplete&lang=zh",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "screenshot": "06-incomplete-delivery-390.png",
+      "overflow": {
+        "width": 390,
+        "scrollWidth": 390
+      },
+      "errors": [],
+      "checks": {
+        "noConsoleErrors": true,
+        "noMissingCopy": true,
+        "noHorizontalOverflow": true,
+        "noTechnicalDraftCopy": true,
+        "warningPersists": true,
+        "saveAllowed": true
+      },
+      "pass": true
+    },
+    {
+      "name": "remote-local-conflict",
+      "query": "page=plans&plan=pro&limit=99&remote=2&adminState=conflict&lang=zh",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "screenshot": "07-conflict-remote2-local99-390.png",
+      "overflow": {
+        "width": 390,
+        "scrollWidth": 390
+      },
+      "errors": [],
+      "checks": {
+        "noConsoleErrors": true,
+        "noMissingCopy": true,
+        "noHorizontalOverflow": true,
+        "noTechnicalDraftCopy": true,
+        "bothValues": true
+      },
+      "pass": true
+    },
+    {
+      "name": "preset-incomplete-fixed-one",
+      "query": "page=presets&mode=enhanced&previewState=incomplete&lang=zh",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "screenshot": "08-preset-incomplete-390.png",
+      "overflow": {
+        "width": 390,
+        "scrollWidth": 390
+      },
+      "errors": [],
+      "checks": {
+        "noConsoleErrors": true,
+        "noMissingCopy": true,
+        "noHorizontalOverflow": true,
+        "noTechnicalDraftCopy": true,
+        "fixedOne": true,
+        "incompletePublishable": true
+      },
+      "pass": true
+    },
+    {
+      "name": "boundary-and-terminal-structure",
+      "query": "page=create&plan=pro&limit=2&stage=complete&outcome=limit&lang=zh",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "screenshot": null,
+      "overflow": {
+        "width": 390,
+        "scrollWidth": 390
+      },
+      "errors": [],
+      "checks": {
+        "noConsoleErrors": true,
+        "noMissingCopy": true,
+        "noHorizontalOverflow": true,
+        "noTechnicalDraftCopy": true,
+        "limitCompletesNormally": true
+      },
+      "pass": true
+    },
+    {
+      "name": "boundary-interactions",
+      "query": "multiple",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "errors": [],
+      "checks": {
+        "reject_-1": true,
+        "reject_1.5": true,
+        "reject_empty": true,
+        "switchFromZeroUsesOne": true,
+        "failureHasNoSave": true,
+        "pendingHasNoSave": true
+      },
+      "pass": true
+    }
+  ],
+  "screenshotCount": 8,
+  "pass": true
+}

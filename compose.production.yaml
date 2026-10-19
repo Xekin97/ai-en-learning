@@ -1,0 +1,72 @@
+# Production overlay for the single-host BE6-C01 deployment envelope.
+# Supply application images as immutable repository@sha256:<64 hex> references.
+x-production-logging: &production-logging
+  driver: json-file
+  options:
+    max-size: "20m"
+    max-file: "3"
+
+services:
+  postgres:
+    pull_policy: always
+    command:
+      - postgres
+      - -c
+      - shared_buffers=256MB
+      - -c
+      - work_mem=4MB
+      - -c
+      - maintenance_work_mem=64MB
+      - -c
+      - autovacuum_work_mem=32MB
+      - -c
+      - max_connections=20
+    deploy:
+      resources:
+        limits:
+          memory: 1024M
+          cpus: "0.50"
+    logging: *production-logging
+
+  migrate:
+    image: ${BACKEND_IMAGE:?set BACKEND_IMAGE to an immutable repository@sha256 digest reference}
+    build: !reset null
+    pull_policy: always
+    logging: *production-logging
+
+  backend:
+    image: ${BACKEND_IMAGE:?set BACKEND_IMAGE to an immutable repository@sha256 digest reference}
+    build: !reset null
+    pull_policy: always
+    environment:
+      SHUTDOWN_TIMEOUT: "650s"
+    deploy:
+      replicas: 1
+      resources:
+        limits:
+          memory: 1536M
+          cpus: "1.0"
+    stop_grace_period: 660s
+    logging: *production-logging
+
+  frontend:
+    image: ${FRONTEND_IMAGE:?set FRONTEND_IMAGE to an immutable repository@sha256 digest reference}
+    build: !reset null
+    pull_policy: always
+    deploy:
+      resources:
+        limits:
+          memory: 512M
+          cpus: "0.30"
+    logging: *production-logging
+
+  nginx:
+    image: ${NGINX_IMAGE:?set NGINX_IMAGE to an immutable repository@sha256 digest reference}
+    build: !reset null
+    pull_policy: always
+    deploy:
+      resources:
+        limits:
+          memory: 128M
+          cpus: "0.10"
+    logging: *production-logging

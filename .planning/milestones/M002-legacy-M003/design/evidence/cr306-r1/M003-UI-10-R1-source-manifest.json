@@ -1,0 +1,201 @@
+{
+  "version": "M003-UI-10-R1",
+  "created_at": "2026-10-12T04:46:42.520Z",
+  "status": "ready_for_user_review",
+  "scope": "CR-306 PAGE-208 UI/UX modal correction and recoverable design source; static prototype, not application implementation",
+  "supersedes": {
+    "version": "M003-UI-10",
+    "reason": "PAGE-208 used non-modal <dialog open>; old source and evidence retained unchanged",
+    "archive": ".planning/milestones/M003/design/evidence/cr306/M003-UI-10-source.tar.gz",
+    "sha256": "7fcb7f67b1fceebe8133bd437a3cb542961a91e09f1d66edcca36cb27c1dd4e4"
+  },
+  "visual_baseline": "M002 formal tokens and provider/model components plus read-only production AppDialog/models observation",
+  "interaction_inputs": [
+    {
+      "path": ".planning/milestones/M003/technical/fixtures/cr306/index.json",
+      "sha256": "e0ce28bc4f31459aba769625dda3912072f1cf649eb4ec3f6837ba73bd5ba161"
+    },
+    {
+      "path": ".planning/milestones/M003/technical/fixtures/cr306/management.json",
+      "sha256": "5a4feeb1805db6b789490c977fd266ad592384699502207c7cbccda38d2e2cfe"
+    },
+    {
+      "path": ".planning/milestones/M003/technical/fixtures/cr306/errors.json",
+      "sha256": "1c20d3b27f8208af55f9f50c2ededda9fa8a8024d3fb86a5cde12700d2207506"
+    },
+    {
+      "path": ".planning/milestones/M003/technical/fixtures/cr306/streams.json",
+      "sha256": "cfe56aa3b99249507d2b057f98783ca393e9f9c71c2d392b05d637c0844b84c1"
+    },
+    {
+      "path": ".planning/milestones/M003/technical/fixtures/cr306/gateway.json",
+      "sha256": "364eb7ff1a088171e14c71a1460fdc73102b7de1154a5d93cbdbcc1c8d95404f"
+    },
+    {
+      "path": ".planning/milestones/M003/technical/fixtures/stream-v5/index.json",
+      "sha256": "1f1368a2480350b762395c47603ea8d93928a47224ee314a3301f866ea6087f9"
+    }
+  ],
+  "production_read_only_references": [
+    {
+      "path": "frontend/app/presentation/components/AppDialog.vue",
+      "sha256": "98cd2dd116541ecf757bf9bed6b1748015b9d9c6bec5782e5a0541688633f640"
+    },
+    {
+      "path": "frontend/app/pages/admin/models.vue",
+      "sha256": "1b1732c9bb14b838e43dc734199a0b01f6792f597804e476c603ff224dad76e8"
+    },
+    {
+      "path": "frontend/app/assets/css/theme.css",
+      "sha256": "557cc7a6ea9715f493ed5951700ea2c96b156267d5090373eb4f0cbba3c5edd0"
+    }
+  ],
+  "baseline_verification": {
+    "archive": ".planning/milestones/M003/reviews/evidence/cr306-design-baselines/ui-before-cr306.tar.gz",
+    "sha256": "2bb4601582b39c6b43e028e9723645105079a48bb35c66f7cea1bf4c993375c6",
+    "unchanged": true
+  },
+  "page208_modal_source_checks": {
+    "uses_showModal": true,
+    "admin_model_shell_has_open_attribute": false,
+    "uses_dialog_body": true,
+    "uses_nested_discard_modal": true
+  },
+  "files": [
+    {
+      "path": ".planning/milestones/M003/design/copy.json",
+      "sha256": "8141eb3da81219161a70468c483e1baa539a35fbfc2616003e7a71ecfcad25e5"
+    },
+    {
+      "path": ".planning/milestones/M003/design/design-spec.md",
+      "sha256": "3f56d9567bfda1df2426c5b4ca28d67b4396a71eee78104d3c3c6a93a61ffa57"
+    },
+    {
+      "path": ".planning/milestones/M003/design/evidence/cr306-r1/observe-live.mjs",
+      "sha256": "f55300d39848d8a8a2851293a3cccf03ae3060d86727d98016f28295b8e1c43e"
+    },
+    {
+      "path": ".planning/milestones/M003/design/evidence/cr306-r1/verify-modal-r1.mjs",
+      "sha256": "9851522e0c84e1698d86dfbef56e398dbef23c372dd512b7cedb9e3e258a3a66"
+    },
+    {
+      "path": ".planning/milestones/M003/design/interactions.md",
+      "sha256": "576ae2f1cc240cdf86e225c443d394592ef5489b9b6d87399de8370199e9f330"
+    },
+    {
+      "path": ".planning/milestones/M003/design/prototype/app.js",
+      "sha256": "5e76cc1dde1d26aeff2c17e47cbb60f2223dddd67a0b79a61376a6981ffc50b3"
+    },
+    {
+      "path": ".planning/milestones/M003/design/prototype/fixtures.json",
+      "sha256": "e8a347e3d0dac3714c4d5aae040e7b4bf5b3ec897b5d44ebe0fb65e0ecbdccc9"
+    },
+    {
+      "path": ".planning/milestones/M003/design/prototype/index.html",
+      "sha256": "e3163bf2bf346ac8f71ea35bf9a2da6abf4976e50df58b92a0d3c06a42ebdaa9"
+    },
+    {
+      "path": ".planning/milestones/M003/design/prototype/m002/assets/README.md",
+      "sha256": "5e231103d7dba40199da4d94952cde52890cdc44cdd208aa3d5261fce025995f"
+    },
+    {
+      "path": ".planning/milestones/M003/design/prototype/m002/assets/lucide-LICENSE.txt",
+      "sha256": "b495047bd93a9b06913511076f504daba17d5bbeb3e0650f3bb53a4220329c57"
+    },
+    {
+      "path": ".planning/milestones/M003/design/prototype/m002/assets/lucide.json",
+      "sha256": "a58d2d1fe82bc234278304b22ee3492509c30ce6471298d548b7975b1b9eb80a"
+    },
+    {
+      "path": ".planning/milestones/M003/design/prototype/m002/icons.js",
+      "sha256": "2783d01913158b4415248f8da13422ff92c1d7663bef684ff4d77ee891ad388b"
+    },
+    {
+      "path": ".planning/milestones/M003/design/prototype/m002/select.js",
+      "sha256": "82711d22c19bb635aa2088c545993881644b534e70f809487b2ad79111dddb1b"
+    },
+    {
+      "path": ".planning/milestones/M003/design/prototype/m002/word-picker.js",
+      "sha256": "5cf6860b3e92e6c286eb6fc16ccae3e4ab7a8f5cd54e3589f21639658b77ab89"
+    },
+    {
+      "path": ".planning/milestones/M003/design/responsive-accessibility.md",
+      "sha256": "55bc7112eb895e65f0d8cd35a273c32c9011138cb1e9a88dd2f4410f0a4efa52"
+    },
+    {
+      "path": ".planning/milestones/M003/design/theme.css",
+      "sha256": "045c93ecc785d24df5dcb3325954f7d78252c0a298d29830381977c47ac3c352"
+    },
+    {
+      "path": ".planning/milestones/M003/handoffs/uiux.md",
+      "sha256": "e0abd5785810fcbd67fe0f05733a67c3eb904c5d05e2bc268532ae471415e014"
+    }
+  ],
+  "archive": {
+    "path": ".planning/milestones/M003/design/evidence/cr306-r1/M003-UI-10-R1-source.tar.gz",
+    "sha256": "d3738830f8222067afef27e55fca1699fa49d61e7a25242abb9246d8c2a666f5"
+  },
+  "evidence": [
+    {
+      "path": ".planning/milestones/M003/design/evidence/cr306-r1/live-appdialog-observation.json",
+      "sha256": "a1554aad83119066abf6eb49d5f037871dcaa6ba434aa1813cdb9f1e527a6b4c"
+    },
+    {
+      "path": ".planning/milestones/M003/design/evidence/cr306-r1/00-live-model-list-1440.png",
+      "sha256": "f0a2d54181f9cdc1b615be40f653e9e69b6b1124099557c13c8942c4b8951088"
+    },
+    {
+      "path": ".planning/milestones/M003/design/evidence/cr306-r1/01-live-editor-modal-1440.png",
+      "sha256": "e77acd5e3a64d470027938d5e276dd15133d5a09e3adb47aa81c3fdeee02d08f"
+    },
+    {
+      "path": ".planning/milestones/M003/design/evidence/cr306-r1/02-live-editor-modal-390.png",
+      "sha256": "36d10b81d3c7e292e9d21044a7a5fd36f712172739542ff135563834a2d530e1"
+    },
+    {
+      "path": ".planning/milestones/M003/design/evidence/cr306-r1/modal-rework-browser.json",
+      "sha256": "135a5c90a7ec7308fc0fbb103e27317ff67ad9697e6d80fc9ead4ef9359fbebc"
+    },
+    {
+      "path": ".planning/milestones/M003/design/evidence/cr306-r1/10-r1-list-1440.png",
+      "sha256": "ab93f161dffd0943e82280e0dc40e03fab9eceab41d39b198e74976f5fd17943"
+    },
+    {
+      "path": ".planning/milestones/M003/design/evidence/cr306-r1/11-r1-modal-initial-1440.png",
+      "sha256": "e8b7c6f4b4e5f6a6a7a15ee8b305bf67fc3d409c93efc7a6e119f143c1c423b7"
+    },
+    {
+      "path": ".planning/milestones/M003/design/evidence/cr306-r1/12-r1-modal-json-1440.png",
+      "sha256": "dcfce0a6eb1de38e8fa34f9180843747dc5d1d845f6bb36ffc6bf7a5bbf81b2d"
+    },
+    {
+      "path": ".planning/milestones/M003/design/evidence/cr306-r1/13-r1-modal-initial-390.png",
+      "sha256": "d6bcf3f7365d1b961794508b8ef45d44c04a1005fd19dc2ab9df32a6dfcd0f8a"
+    },
+    {
+      "path": ".planning/milestones/M003/design/evidence/cr306-r1/14-r1-modal-error-390.png",
+      "sha256": "f133afa5523a967c596b9b2ab5f6f95972264d8312c666f18abdbebc7a9c0597"
+    },
+    {
+      "path": ".planning/milestones/M003/design/evidence/cr306-r1/15-r1-discard-confirm-390.png",
+      "sha256": "709237d577c6a3f39f27f5d71945553d3ff8eb9412bd216179694af7fbbfe9fb"
+    }
+  ],
+  "browser_results": {
+    "live_observation": "PASS",
+    "prototype": {
+      "completed": true,
+      "result": "PASS"
+    }
+  },
+  "independent_receipt": {
+    "path": ".planning/milestones/M003/reviews/evidence/cr306-modal-rework-073/revised-modal-receipt.json",
+    "sha256": "69c2baf721522e0855c35dc21481b2c32366a91f86ea1148c8ca0451d72c4d22",
+    "result": "PASS"
+  },
+  "limitations": [
+    "No production frontend source changed by designer-tony",
+    "No save, test, delete, or model call was made against the running UAT site",
+    "CR-306 remains open and UI10-R1 awaits user visual review"
+  ]
+}

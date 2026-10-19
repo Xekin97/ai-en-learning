@@ -69,6 +69,7 @@ func TestM002SaveStateHTTP(t *testing.T) {
 		var err error
 		switch status {
 		case "valid":
+			recordSuccessfulGenerationFacts(t, ctx, seedAPI, run)
 			err = seedAPI.generation.CompleteValid(ctx, run, snapshot)
 		case "user_cancelled":
 			_, err = seedAPI.generation.Cancel(ctx, actor, run.ID.String(), run.Token)

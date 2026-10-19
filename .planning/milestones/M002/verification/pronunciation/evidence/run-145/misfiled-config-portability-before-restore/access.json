@@ -1,0 +1,50 @@
+{
+  "version": "M002-QA-PRON-01-R1",
+  "run_label": "uat-local-20261016",
+  "status": "ready_for_user_uat",
+  "local_only": true,
+  "leave_running": true,
+  "public_origin": "http://localhost:3016",
+  "login_url": "http://localhost:3016/login",
+  "routes": {
+    "models": "http://localhost:3016/admin/models",
+    "plans": "http://localhost:3016/admin/plans",
+    "items": "http://localhost:3016/admin/growth",
+    "growth": "http://localhost:3016/admin/growth",
+    "pronunciation_saved_article": "http://localhost:3016/library/01a14352-828b-743a-b0fb-09bc1d6d85ee",
+    "pronunciation_create": "http://localhost:3016/create"
+  },
+  "authentication": {
+    "role": "admin",
+    "method": "username_password",
+    "credentials_file": "/private/tmp/wordweave-m002-cr313-uat-20261016/credentials.env",
+    "credentials_file_mode": "0600",
+    "username_env": "WORDWEAVE_UAT_ADMIN_USERNAME",
+    "password_env": "WORDWEAVE_UAT_ADMIN_PASSWORD",
+    "password_value_archived": false
+  },
+  "samples": {
+    "models_ordinary": "/private/tmp/wordweave-m002-cr313-uat-20261016/samples/models-ordinary.json",
+    "models_encrypted": "/private/tmp/wordweave-m002-cr313-uat-20261016/samples/models-encrypted.json",
+    "models_encrypted_password_env": "WORDWEAVE_UAT_PACKAGE_PASSPHRASE",
+    "plans": "/private/tmp/wordweave-m002-cr313-uat-20261016/samples/plans.json",
+    "items": "/private/tmp/wordweave-m002-cr313-uat-20261016/samples/items.json",
+    "growth": "/private/tmp/wordweave-m002-cr313-uat-20261016/samples/growth.json"
+  },
+  "runtime": "/private/tmp/wordweave-m002-cr313-uat-20261016",
+  "lifecycle": {
+    "start": "/private/tmp/wordweave-m002-cr313-uat-20261016/uat-start.sh",
+    "status": "/private/tmp/wordweave-m002-cr313-uat-20261016/uat-status.sh",
+    "restart": "/private/tmp/wordweave-m002-cr313-uat-20261016/uat-restart.sh",
+    "stop_preserve": "/private/tmp/wordweave-m002-cr313-uat-20261016/uat-stop.sh"
+  },
+  "user_uat_accepted": false,
+  "pronunciation_authentication": {
+    "role": "learner",
+    "method": "username_password",
+    "credentials_file": "/private/tmp/wordweave-m002-cr313-uat-20261016/uat-private.json",
+    "credentials_file_mode": "0600",
+    "password_value_archived": false
+  },
+  "pronunciation_evidence": ".planning/milestones/M002/verification/pronunciation/report.md"
+}

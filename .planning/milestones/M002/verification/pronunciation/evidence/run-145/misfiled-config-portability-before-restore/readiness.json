@@ -1,0 +1,126 @@
+{
+  "version": "M002-QA-PRON-01-R1",
+  "run_label": "uat-local-20261016",
+  "status": "READY_FOR_USER_UAT",
+  "user_uat_accepted": false,
+  "left_running": true,
+  "final_live_status": "evidence/final-live-status.json",
+  "environment": {
+    "public_frontend": "http://localhost:3016",
+    "frontend_internal": "http://127.0.0.1:3017",
+    "backend": "http://127.0.0.1:43331",
+    "postgres": "127.0.0.1:63562/wordweave_cr313_uat",
+    "metrics": "http://127.0.0.1:39562",
+    "mocks": false,
+    "database": "isolated synthetic persistent UAT",
+    "existing_services_touched": false
+  },
+  "processes": {
+    "public_proxy_pid": 20933,
+    "frontend_server_pid": 20828,
+    "backend_pid": 24845,
+    "postgres_pid": 24625
+  },
+  "source_and_build": {
+    "source_files_checked": 699,
+    "source_mismatches": 0,
+    "node": "v24.21.0",
+    "pnpm": "10.33.0",
+    "build_exit": 0,
+    "build_output_external": true,
+    "build_output_file_count": 462,
+    "build_output_bytes": 6761641,
+    "manifest": "source-manifest.json",
+    "pronunciation_version": "M002-FI-PRON-01-R1",
+    "pronunciation_source_files_checked": 23,
+    "pronunciation_validation_files_checked": 1,
+    "pronunciation_mismatches": 0,
+    "build_aggregate_sha256": "a6437e56fe8a60781a7ec9b9ccbdc86272ae73a8cc734a8dc4ca4cd32066071a"
+  },
+  "browser_readiness": {
+    "normal_login": "PASS",
+    "admin_role": true,
+    "models_route_entries": "PASS",
+    "plans_route_entries": "PASS",
+    "items_tab_entries": "PASS",
+    "growth_tab_entries": "PASS",
+    "ordinary_exports": {
+      "models": "PASS",
+      "plans": "PASS",
+      "items": "PASS",
+      "growth": "PASS"
+    },
+    "representative_preview_cancel": {
+      "category": "plans",
+      "preview": "PASS",
+      "cancel": "PASS",
+      "revision_unchanged": true,
+      "import_submitted": false
+    },
+    "evidence": "evidence/readiness-smoke.json"
+  },
+  "safety": {
+    "model_configuration_changed_by_qa": false,
+    "database_changed_by_pronunciation_qa": false,
+    "provider_calls_by_pronunciation_qa": 0,
+    "credentials_in_evidence": false,
+    "credential_storage": "external runtime mode 0600",
+    "database_reset_on_restart": false
+  },
+  "setup_and_method_failures_retained": [
+    {
+      "kind": "setup",
+      "actual": "direct production Nitro returned 404 for /api/v1/bootstrap because nuxt devProxy is development-only",
+      "resolution": "runtime-only real reverse proxy on 3016 forwards UI to built Nitro 3017 and /api/v1 unchanged to real backend 43331",
+      "product_defect": false
+    },
+    {
+      "evidence": "evidence/readiness-smoke-attempt-01.json",
+      "kind": "harness locator",
+      "actual": "login submit locator used non-rendered copy",
+      "product_defect": false
+    },
+    {
+      "evidence": "evidence/readiness-smoke-attempt-02.json",
+      "kind": "harness locator",
+      "actual": "preview waited for a non-heading copy string after login, routes and four exports had already passed",
+      "product_defect": false
+    }
+  ],
+  "pronunciation_readiness": {
+    "status": "PASS",
+    "real_browser": "headed Google Chrome",
+    "real_saved_article_controls": 5,
+    "real_library_assertions": "35/35",
+    "r1_controlled_plan_result": "18/18",
+    "post_switch_smoke": "6/6",
+    "native_start_end": true,
+    "no_autoplay": true,
+    "a_to_b_replay_route_cancel": true,
+    "playback_business_writes": 0,
+    "defect_pron_001": "FIXED_RETEST_PASS",
+    "human_audibility": "PENDING_USER_UAT",
+    "real_phone": "PENDING_USER_UAT",
+    "evidence": ".planning/milestones/M002/verification/pronunciation/report.md"
+  },
+  "runtime_update": {
+    "updated_at": "2026-10-16T11:06:45.795768+00:00",
+    "frontend_only": true,
+    "backend_pid_unchanged": true,
+    "postgres_pid_unchanged": true,
+    "old_output_backup": "/private/tmp/wordweave-m002-cr313-uat-20261016/frontend-output.pre-pronunciation-20261016T190516",
+    "candidate_ports_released": [
+      3018,
+      3019
+    ]
+  },
+  "legacy_config_portability_safety_snapshot": {
+    "real_provider_calls": 0,
+    "models_enabled": false,
+    "models_visibly_synthetic": true,
+    "provider_base": "loopback port 9",
+    "credentials_in_evidence": false,
+    "credential_storage": "external runtime mode 0600",
+    "database_reset_on_restart": false
+  }
+}

@@ -1,0 +1,416 @@
+{
+  "runs": [
+    {
+      "id": "01a12f03-ee90-780e-85f4-891ecd51ae98",
+      "started_at": "2026-10-12T15:29:09.252165+08:00",
+      "group_code_snapshot": "pro",
+      "content_repair_limit_snapshot": 2,
+      "call_status": "validation_failed",
+      "disposition": "pending",
+      "content_outcome": "failed",
+      "final_content_version": null,
+      "quota_charged": false,
+      "model_request_parameters_snapshot": {
+        "version": "custom-parameters-v1",
+        "output_mode": "json_schema",
+        "structured_route": "unchanged",
+        "custom_parameters": {
+          "reasoning": {
+            "enabled": true
+          },
+          "temperature": 0.15
+        },
+        "max_output_tokens": null
+      }
+    },
+    {
+      "id": "01a12f03-ffaa-75ac-9a75-b2cdeb652430",
+      "started_at": "2026-10-12T15:29:13.640125+08:00",
+      "group_code_snapshot": "registered",
+      "content_repair_limit_snapshot": 0,
+      "call_status": "provider_failed",
+      "disposition": "pending",
+      "content_outcome": "failed",
+      "final_content_version": null,
+      "quota_charged": false,
+      "model_request_parameters_snapshot": {
+        "version": "custom-parameters-v1",
+        "output_mode": "json_schema",
+        "structured_route": "unchanged",
+        "custom_parameters": {
+          "reasoning": {
+            "enabled": false
+          },
+          "temperature": 0.85
+        },
+        "max_output_tokens": null
+      }
+    },
+    {
+      "id": "01a12f04-0ebb-7ab1-8f49-d19a18f2b764",
+      "started_at": "2026-10-12T15:29:17.497663+08:00",
+      "group_code_snapshot": "pro",
+      "content_repair_limit_snapshot": 2,
+      "call_status": "validation_failed",
+      "disposition": "pending",
+      "content_outcome": "failed",
+      "final_content_version": null,
+      "quota_charged": false,
+      "model_request_parameters_snapshot": {
+        "version": "custom-parameters-v1",
+        "output_mode": "json_schema",
+        "structured_route": "unchanged",
+        "custom_parameters": {
+          "reasoning": {
+            "enabled": false
+          },
+          "temperature": 0.4
+        },
+        "max_output_tokens": null
+      }
+    },
+    {
+      "id": "01a12f04-17b5-7225-9f51-6697bf53f2be",
+      "started_at": "2026-10-12T15:29:19.795488+08:00",
+      "group_code_snapshot": "pro",
+      "content_repair_limit_snapshot": 2,
+      "call_status": "validation_failed",
+      "disposition": "pending",
+      "content_outcome": "failed",
+      "final_content_version": null,
+      "quota_charged": false,
+      "model_request_parameters_snapshot": {
+        "version": "custom-parameters-v1",
+        "output_mode": "json_schema",
+        "structured_route": "unchanged",
+        "custom_parameters": {
+          "temperature": 0.2
+        },
+        "max_output_tokens": null
+      }
+    },
+    {
+      "id": "01a12f04-20ca-7829-a32a-f4a5dfc886ee",
+      "started_at": "2026-10-12T15:29:22.120947+08:00",
+      "group_code_snapshot": "registered",
+      "content_repair_limit_snapshot": 0,
+      "call_status": "provider_failed",
+      "disposition": "pending",
+      "content_outcome": "failed",
+      "final_content_version": null,
+      "quota_charged": false,
+      "model_request_parameters_snapshot": {
+        "version": "custom-parameters-v1",
+        "output_mode": "json_schema",
+        "structured_route": "unchanged",
+        "custom_parameters": {},
+        "max_output_tokens": null
+      }
+    },
+    {
+      "id": "01a12f04-2212-75cc-ab02-caa2c8059ad2",
+      "started_at": "2026-10-12T15:29:22.448469+08:00",
+      "group_code_snapshot": "registered",
+      "content_repair_limit_snapshot": 0,
+      "call_status": "user_cancelled",
+      "disposition": "pending",
+      "content_outcome": "cancelled",
+      "final_content_version": null,
+      "quota_charged": true,
+      "model_request_parameters_snapshot": {
+        "version": "custom-parameters-v1",
+        "output_mode": "json_schema",
+        "structured_route": "unchanged",
+        "custom_parameters": {
+          "metadata": {
+            "qa_scenario": "cancel"
+          }
+        },
+        "max_output_tokens": null
+      }
+    }
+  ],
+  "calls": [
+    {
+      "user_run_id": "01a12f03-ee90-780e-85f4-891ecd51ae98",
+      "call_no": 1,
+      "call_stage": "planning",
+      "prompt_version": "m003-plan-v1",
+      "usage_status": "unknown",
+      "provider_invoked": true,
+      "review_result": "not_applicable",
+      "reason_codes": [],
+      "repair_requested": false
+    },
+    {
+      "user_run_id": "01a12f03-ee90-780e-85f4-891ecd51ae98",
+      "call_no": 2,
+      "call_stage": "generation",
+      "prompt_version": "m003-draft-v3",
+      "usage_status": "unknown",
+      "provider_invoked": true,
+      "review_result": "not_applicable",
+      "reason_codes": [],
+      "repair_requested": false
+    },
+    {
+      "user_run_id": "01a12f03-ee90-780e-85f4-891ecd51ae98",
+      "call_no": 3,
+      "call_stage": "fixed_edit",
+      "prompt_version": "m003-fixed-edit-v1",
+      "usage_status": "unknown",
+      "provider_invoked": true,
+      "review_result": "not_applicable",
+      "reason_codes": [],
+      "repair_requested": false
+    },
+    {
+      "user_run_id": "01a12f03-ee90-780e-85f4-891ecd51ae98",
+      "call_no": 4,
+      "call_stage": "technical_repair",
+      "prompt_version": "m003-native-v1",
+      "usage_status": "unknown",
+      "provider_invoked": true,
+      "review_result": "not_applicable",
+      "reason_codes": [],
+      "repair_requested": false
+    },
+    {
+      "user_run_id": "01a12f03-ee90-780e-85f4-891ecd51ae98",
+      "call_no": 5,
+      "call_stage": "technical_repair",
+      "prompt_version": "m003-native-v1",
+      "usage_status": "unknown",
+      "provider_invoked": true,
+      "review_result": "not_applicable",
+      "reason_codes": [],
+      "repair_requested": false
+    },
+    {
+      "user_run_id": "01a12f03-ffaa-75ac-9a75-b2cdeb652430",
+      "call_no": 1,
+      "call_stage": "planning",
+      "prompt_version": "m003-plan-v1",
+      "usage_status": "unknown",
+      "provider_invoked": true,
+      "review_result": "not_applicable",
+      "reason_codes": [],
+      "repair_requested": false
+    },
+    {
+      "user_run_id": "01a12f03-ffaa-75ac-9a75-b2cdeb652430",
+      "call_no": 2,
+      "call_stage": "generation",
+      "prompt_version": "m003-draft-v3",
+      "usage_status": "unknown",
+      "provider_invoked": true,
+      "review_result": "not_applicable",
+      "reason_codes": [],
+      "repair_requested": false
+    },
+    {
+      "user_run_id": "01a12f03-ffaa-75ac-9a75-b2cdeb652430",
+      "call_no": 3,
+      "call_stage": "technical_repair",
+      "prompt_version": "m003-native-v1",
+      "usage_status": "unknown",
+      "provider_invoked": true,
+      "review_result": "not_applicable",
+      "reason_codes": [],
+      "repair_requested": false
+    },
+    {
+      "user_run_id": "01a12f03-ffaa-75ac-9a75-b2cdeb652430",
+      "call_no": 4,
+      "call_stage": "technical_repair",
+      "prompt_version": "m003-native-v1",
+      "usage_status": "unknown",
+      "provider_invoked": true,
+      "review_result": "not_applicable",
+      "reason_codes": [],
+      "repair_requested": false
+    },
+    {
+      "user_run_id": "01a12f04-0ebb-7ab1-8f49-d19a18f2b764",
+      "call_no": 1,
+      "call_stage": "planning",
+      "prompt_version": "m003-plan-v1",
+      "usage_status": "unknown",
+      "provider_invoked": true,
+      "review_result": "not_applicable",
+      "reason_codes": [],
+      "repair_requested": false
+    },
+    {
+      "user_run_id": "01a12f04-0ebb-7ab1-8f49-d19a18f2b764",
+      "call_no": 2,
+      "call_stage": "generation",
+      "prompt_version": "m003-draft-v3",
+      "usage_status": "unknown",
+      "provider_invoked": true,
+      "review_result": "not_applicable",
+      "reason_codes": [],
+      "repair_requested": false
+    },
+    {
+      "user_run_id": "01a12f04-0ebb-7ab1-8f49-d19a18f2b764",
+      "call_no": 3,
+      "call_stage": "fixed_edit",
+      "prompt_version": "m003-fixed-edit-v1",
+      "usage_status": "unknown",
+      "provider_invoked": true,
+      "review_result": "not_applicable",
+      "reason_codes": [],
+      "repair_requested": false
+    },
+    {
+      "user_run_id": "01a12f04-0ebb-7ab1-8f49-d19a18f2b764",
+      "call_no": 4,
+      "call_stage": "technical_repair",
+      "prompt_version": "m003-native-v1",
+      "usage_status": "unknown",
+      "provider_invoked": true,
+      "review_result": "not_applicable",
+      "reason_codes": [],
+      "repair_requested": false
+    },
+    {
+      "user_run_id": "01a12f04-0ebb-7ab1-8f49-d19a18f2b764",
+      "call_no": 5,
+      "call_stage": "technical_repair",
+      "prompt_version": "m003-native-v1",
+      "usage_status": "unknown",
+      "provider_invoked": true,
+      "review_result": "not_applicable",
+      "reason_codes": [],
+      "repair_requested": false
+    },
+    {
+      "user_run_id": "01a12f04-17b5-7225-9f51-6697bf53f2be",
+      "call_no": 1,
+      "call_stage": "planning",
+      "prompt_version": "m003-plan-v1",
+      "usage_status": "unknown",
+      "provider_invoked": true,
+      "review_result": "not_applicable",
+      "reason_codes": [],
+      "repair_requested": false
+    },
+    {
+      "user_run_id": "01a12f04-17b5-7225-9f51-6697bf53f2be",
+      "call_no": 2,
+      "call_stage": "generation",
+      "prompt_version": "m003-draft-v3",
+      "usage_status": "unknown",
+      "provider_invoked": true,
+      "review_result": "not_applicable",
+      "reason_codes": [],
+      "repair_requested": false
+    },
+    {
+      "user_run_id": "01a12f04-17b5-7225-9f51-6697bf53f2be",
+      "call_no": 3,
+      "call_stage": "fixed_edit",
+      "prompt_version": "m003-fixed-edit-v1",
+      "usage_status": "unknown",
+      "provider_invoked": true,
+      "review_result": "not_applicable",
+      "reason_codes": [],
+      "repair_requested": false
+    },
+    {
+      "user_run_id": "01a12f04-17b5-7225-9f51-6697bf53f2be",
+      "call_no": 4,
+      "call_stage": "technical_repair",
+      "prompt_version": "m003-native-v1",
+      "usage_status": "unknown",
+      "provider_invoked": true,
+      "review_result": "not_applicable",
+      "reason_codes": [],
+      "repair_requested": false
+    },
+    {
+      "user_run_id": "01a12f04-17b5-7225-9f51-6697bf53f2be",
+      "call_no": 5,
+      "call_stage": "technical_repair",
+      "prompt_version": "m003-native-v1",
+      "usage_status": "unknown",
+      "provider_invoked": true,
+      "review_result": "not_applicable",
+      "reason_codes": [],
+      "repair_requested": false
+    },
+    {
+      "user_run_id": "01a12f04-20ca-7829-a32a-f4a5dfc886ee",
+      "call_no": 1,
+      "call_stage": "planning",
+      "prompt_version": "m003-plan-v1",
+      "usage_status": "unknown",
+      "provider_invoked": true,
+      "review_result": "not_applicable",
+      "reason_codes": [],
+      "repair_requested": false
+    },
+    {
+      "user_run_id": "01a12f04-2212-75cc-ab02-caa2c8059ad2",
+      "call_no": 1,
+      "call_stage": "planning",
+      "prompt_version": "m003-plan-v1",
+      "usage_status": "unknown",
+      "provider_invoked": true,
+      "review_result": "not_applicable",
+      "reason_codes": [],
+      "repair_requested": false
+    }
+  ],
+  "charges": [
+    {
+      "run_id": "01a12f03-ee90-780e-85f4-891ecd51ae98",
+      "source_kind": "plan",
+      "plan_code": "pro",
+      "origin": "base",
+      "units": 1,
+      "state": "refunded"
+    },
+    {
+      "run_id": "01a12f03-ffaa-75ac-9a75-b2cdeb652430",
+      "source_kind": "plan",
+      "plan_code": "registered",
+      "origin": "base",
+      "units": 1,
+      "state": "refunded"
+    },
+    {
+      "run_id": "01a12f04-0ebb-7ab1-8f49-d19a18f2b764",
+      "source_kind": "plan",
+      "plan_code": "pro",
+      "origin": "base",
+      "units": 1,
+      "state": "refunded"
+    },
+    {
+      "run_id": "01a12f04-17b5-7225-9f51-6697bf53f2be",
+      "source_kind": "plan",
+      "plan_code": "pro",
+      "origin": "base",
+      "units": 1,
+      "state": "refunded"
+    },
+    {
+      "run_id": "01a12f04-20ca-7829-a32a-f4a5dfc886ee",
+      "source_kind": "plan",
+      "plan_code": "registered",
+      "origin": "base",
+      "units": 1,
+      "state": "refunded"
+    },
+    {
+      "run_id": "01a12f04-2212-75cc-ab02-caa2c8059ad2",
+      "source_kind": "plan",
+      "plan_code": "registered",
+      "origin": "base",
+      "units": 1,
+      "state": "consumed"
+    }
+  ]
+}

@@ -46,5 +46,28 @@ export function mapPresetDetail(dto: PresetDetailDto): PresetDetailModel {
     },
     canStart: dto.can_start,
     blockReason: dto.block_reason,
+    effectivePlan: {
+      code: dto.effective_plan.code,
+      origin: dto.effective_plan.origin,
+      trialEndsAt: dto.effective_plan.trial_ends_at,
+    },
+    configurationRevision: dto.configuration_revision,
+    contentService: dto.content_service.content_review_enabled
+      ? {
+          nativeValidation: true,
+          contentReviewEnabled: true,
+          contentRepairLimit: dto.content_service.content_repair_limit,
+        }
+      : {
+          nativeValidation: true,
+          contentReviewEnabled: false,
+          contentRepairLimit: 0,
+        },
+    nativeCorrectionPolicy: {
+      version: dto.native_correction_policy.version,
+      scope: dto.native_correction_policy.scope,
+      maxCalls: dto.native_correction_policy.max_calls,
+      editable: dto.native_correction_policy.editable,
+    },
   };
 }

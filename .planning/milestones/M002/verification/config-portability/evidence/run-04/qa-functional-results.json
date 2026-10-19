@@ -1,0 +1,124 @@
+{
+  "version": "M002-QA-CR313-01",
+  "started_at": "2026-10-16T03:15:39.460Z",
+  "environment": {
+    "frontend_origin": "http://127.0.0.1:43230",
+    "browser": "chromium",
+    "database": "isolated disposable synthetic fixture",
+    "secrets_persisted": false
+  },
+  "cases": [
+    {
+      "id": "QA313-01-auth",
+      "status": "PASS",
+      "duration_ms": 757,
+      "facts": {
+        "anonymous_status": 401,
+        "learner_status": 403,
+        "missing_csrf_status": 403
+      }
+    },
+    {
+      "id": "QA313-01-export-scope",
+      "status": "PASS",
+      "duration_ms": 18,
+      "facts": {
+        "categories": [
+          "models",
+          "plans",
+          "items",
+          "growth"
+        ],
+        "models_connections": 2,
+        "plans": 4,
+        "items": 4,
+        "growth_levels": 2,
+        "package_hashes": {
+          "models": "9563fbf269b84a27aee6fadbac3b0505a1718984ef592eba49d0224735e11e2e",
+          "plans": "bc3c654e3ea22d6728ee9604ac8706723fcab8af7b68b61f7d25475430a0d824",
+          "items": "6a0477f38ff53004b0e411792c47f90e2b276235c39143030745bafdcc07e635",
+          "growth": "aa23cf6b6963851db5784451fbd28634ff0dcb8e95607553c771ee76f64636a7"
+        }
+      }
+    },
+    {
+      "id": "QA313-02-credentials",
+      "status": "PASS",
+      "duration_ms": 169,
+      "facts": {
+        "encrypted_hash": "1931b88869020933cfd03c9f149aab34f83266b783fcdfed12c03f3ca4ba8a3b",
+        "connection_count": 2,
+        "wrong_password": {
+          "status": 422,
+          "code": "decryption_failed"
+        },
+        "tamper": {
+          "status": 422,
+          "code": "decryption_failed"
+        },
+        "ordinary_package": {
+          "status": 422,
+          "code": "credentials_required"
+        }
+      }
+    },
+    {
+      "id": "QA313-03-plans",
+      "status": "PASS",
+      "duration_ms": 50,
+      "facts": {
+        "preview_revision_unchanged": true,
+        "applied_revision_changed": true,
+        "repeated_operation_same_result_revision": true,
+        "stale_reason": "revision_changed",
+        "invalid_recovery_token": {
+          "status": 403,
+          "code": "recovery_token_invalid"
+        },
+        "representative_values": {
+          "explicit_zero": true,
+          "explicit_false": true,
+          "explicit_empty_arrays": true,
+          "explicit_unlimited_null_present": true
+        },
+        "missing_plan": {
+          "status": 422,
+          "code": "validation_failed"
+        },
+        "missing_required": {
+          "status": 422,
+          "code": "validation_failed"
+        }
+      }
+    },
+    {
+      "id": "QA313-04-history-blockers",
+      "status": "PASS",
+      "duration_ms": 21,
+      "facts": {
+        "item_blocker": {
+          "can_commit": false,
+          "blocker_codes": [
+            "active_reference",
+            "ever_issued"
+          ],
+          "target_identity_matches_fixture": true
+        },
+        "growth": {
+          "history_preserved": true,
+          "usage_reset": false,
+          "trial_dates_changed": false,
+          "status": "applied",
+          "effective_day": "2026-10-17"
+        }
+      }
+    }
+  ],
+  "screenshots": [],
+  "provider_requests": "reported separately by fixture owner",
+  "failure": {
+    "code": "locator.click: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: 'Tier priority', exact: true })\u001b[22m\n"
+  },
+  "finished_at": "2026-10-16T03:16:11.756Z",
+  "status": "FAIL"
+}

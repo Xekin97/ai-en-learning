@@ -1,3 +1,7 @@
+> **CR313 / M002-BI-CR313-01 后端入口（2026-10-16，接收修正R2）**：配置可移植性四类别后端实现已完成开发验证；R2补齐model_trial附属读取、空growth 422与resolve/KDF边界，状态 `awaiting_user_review`。实施计划、helper所有权及边界见 [config-portability/backend-worktree-plan.md](config-portability/backend-worktree-plan.md)；下方旧正文逐字保留，不代表CR313已完成用户UAT或阶段关闭。
+
+> **M002续做索引124**：本里程碑包含原M003全部需求。[较新同类原件](../../M002-legacy-M003/implementation/backend-worktree-plan.md)及其已记录的逐项接收/验证均归M002；旧编号只是历史标识。当前工作与未完成项见[续做索引](../continuation.md)，下方前期记录保留，不能据旧完成态关闭当前M002。
+
 ## 当前增量 BE4-I01 / CR027
 
 2026-10-01，backend-ethan，068 已接收 BE04/FE04，按既有 API004 限制修复 limit 转换前校验。仅 catalog_handlers.go 与定向测试；单工作区顺序执行，无委派/合并，保留所有既有未提交改动。验证 BE4-V01–03：真实隔离数据库/HTTP 的管理员搜索与非法输入、角色隔离及 provider 0 调用；复用既有 harness，不改运营数据或调用正式模型。先保留失败，再修复并运行针对性 race/vet。当前 implemented_developer_verified：定向 HTTP/race、vet通过，交接到前端与QA；原失败与准确改动见 evidence/backend-cr027。

@@ -1,0 +1,131 @@
+--- pre-fix/backend/internal/httpapi/generation_handlers.go
++++ current/backend/internal/httpapi/generation_handlers.go
+@@ -410,11 +410,19 @@
+ 	case errors.Is(err, generation.ErrGenerationUnavailable), errors.Is(err, ai.ErrCredentialMissing):
+ 		writeProblem(writer, request, http.StatusServiceUnavailable, "generation_unavailable", "Generation unavailable", "Generation is not configured right now.")
+ 	case errors.Is(err, generation.ErrGenerationBusy):
+-		writer.Header().Set("Retry-After", strconv.Itoa(server.generation.CapacityRetryAfterSeconds()))
+-		writeProblemContext(writer, request, http.StatusServiceUnavailable, "generation_busy", "Generation is busy", "Keep your input and try again after the indicated delay.", map[string]any{"accepted": false})
++		server.writeGenerationBusyProblem(writer, request)
+ 	case errors.As(err, &providerError):
+ 		writeProblem(writer, request, http.StatusServiceUnavailable, "generation_unavailable", "Generation unavailable", "The model provider is temporarily unavailable.")
+ 	default:
+ 		writeProblem(writer, request, http.StatusInternalServerError, "internal_error", "Internal error", "The request could not be completed.")
+ 	}
+ }
++
++func (server *Server) writeGenerationBusyProblem(writer http.ResponseWriter, request *http.Request) {
++	retryAfterSeconds := server.generation.CapacityRetryAfterSeconds()
++	writer.Header().Set("Retry-After", strconv.Itoa(retryAfterSeconds))
++	writeProblemContext(writer, request, http.StatusServiceUnavailable, "generation_busy", "Generation temporarily busy", "Generation is temporarily unavailable. Try again later.", map[string]any{
++		"accepted":            false,
++		"retry_after_seconds": retryAfterSeconds,
++	})
++}
+--- pre-fix/backend/internal/httpapi/admin_handlers.go
++++ current/backend/internal/httpapi/admin_handlers.go
+@@ -668,8 +668,7 @@
+ 	case errors.Is(err, ai.ErrCredentialMissing):
+ 		writeProblem(writer, request, http.StatusUnprocessableEntity, "credential_missing", "API key required", "Enter an API key for this connection.")
+ 	case errors.Is(err, capacity.ErrBusy):
+-		writer.Header().Set("Retry-After", strconv.Itoa(server.generation.CapacityRetryAfterSeconds()))
+-		writeProblemContext(writer, request, http.StatusServiceUnavailable, "generation_busy", "Generation is busy", "Try the connection check again after the indicated delay.", map[string]any{"accepted": false})
++		server.writeGenerationBusyProblem(writer, request)
+ 	case errors.As(err, &providerError):
+ 		status := http.StatusBadGateway
+ 		code := "model_connection_unavailable"
+--- pre-fix/backend/internal/httpapi/capacity_test.go
++++ current/backend/internal/httpapi/capacity_test.go
+@@ -4,6 +4,7 @@
+ 	"encoding/json"
+ 	"net/http"
+ 	"net/http/httptest"
++	"strconv"
+ 	"testing"
+ 	"time"
+ 
+@@ -26,26 +27,60 @@
+ 	return &Server{generation: service}
+ }
+ 
++func assertCapacityBusyProblem(t *testing.T, recorder *httptest.ResponseRecorder, wantRetryAfter int) {
++	t.Helper()
++	if recorder.Code != http.StatusServiceUnavailable {
++		t.Fatalf("status=%d body=%s", recorder.Code, recorder.Body.String())
++	}
++	if got := recorder.Header().Get("Retry-After"); got != strconv.Itoa(wantRetryAfter) {
++		t.Fatalf("Retry-After=%q, want=%d", got, wantRetryAfter)
++	}
++	if got := recorder.Header().Get("Cache-Control"); got != "no-store" {
++		t.Fatalf("Cache-Control=%q, want=no-store", got)
++	}
++	if got := recorder.Header().Get("Content-Type"); got != "application/problem+json; charset=utf-8" {
++		t.Fatalf("Content-Type=%q", got)
++	}
++	var problem struct {
++		Code    string                     `json:"code"`
++		Context map[string]json.RawMessage `json:"context"`
++	}
++	if err := json.Unmarshal(recorder.Body.Bytes(), &problem); err != nil {
++		t.Fatal(err)
++	}
++	if problem.Code != "generation_busy" {
++		t.Fatalf("code=%q", problem.Code)
++	}
++	if len(problem.Context) != 2 {
++		t.Fatalf("context=%s, want exactly accepted and retry_after_seconds", problem.Context)
++	}
++	var accepted bool
++	if err := json.Unmarshal(problem.Context["accepted"], &accepted); err != nil {
++		t.Fatalf("accepted: %v", err)
++	}
++	var retryAfterSeconds int
++	if err := json.Unmarshal(problem.Context["retry_after_seconds"], &retryAfterSeconds); err != nil {
++		t.Fatalf("retry_after_seconds: %v", err)
++	}
++	if accepted || retryAfterSeconds != wantRetryAfter || strconv.Itoa(retryAfterSeconds) != recorder.Header().Get("Retry-After") {
++		t.Fatalf("accepted=%t retry_after_seconds=%d Retry-After=%q", accepted, retryAfterSeconds, recorder.Header().Get("Retry-After"))
++	}
++}
++
+ func TestGenerationBusyProblemIsExplicitlyNotAccepted(t *testing.T) {
+ 	server := capacityServer(t)
+ 	recorder := httptest.NewRecorder()
+ 	request := httptest.NewRequest(http.MethodPost, "/api/v1/generations/stream", nil)
+ 	server.writeGenerationProblem(recorder, request, capacity.ErrBusy)
+-	if recorder.Code != http.StatusServiceUnavailable || recorder.Header().Get("Retry-After") != "7" {
+-		t.Fatalf("status=%d retry-after=%q", recorder.Code, recorder.Header().Get("Retry-After"))
+-	}
+-	var problem struct {
+-		Code    string `json:"code"`
+-		Context struct {
+-			Accepted bool `json:"accepted"`
+-		} `json:"context"`
+-	}
+-	if err := json.Unmarshal(recorder.Body.Bytes(), &problem); err != nil {
+-		t.Fatal(err)
+-	}
+-	if problem.Code != "generation_busy" || problem.Context.Accepted {
+-		t.Fatalf("unexpected problem: %+v", problem)
+-	}
++	assertCapacityBusyProblem(t, recorder, 7)
++}
++
++func TestPresetPreviewBusyUsesSameCapacityProblem(t *testing.T) {
++	server := capacityServer(t)
++	recorder := httptest.NewRecorder()
++	request := httptest.NewRequest(http.MethodPost, "/api/v1/admin/presets/example/previews/stream", nil)
++	server.writePresetProblem(recorder, request, generation.ErrGenerationBusy)
++	assertCapacityBusyProblem(t, recorder, 7)
+ }
+ 
+ func TestAdminProbeBusyUsesSameCapacityProblem(t *testing.T) {
+@@ -53,7 +88,5 @@
+ 	recorder := httptest.NewRecorder()
+ 	request := httptest.NewRequest(http.MethodPost, "/api/v1/admin/model-connections/probe", nil)
+ 	server.writeAdminProblem(recorder, request, capacity.ErrBusy)
+-	if recorder.Code != http.StatusServiceUnavailable || recorder.Header().Get("Retry-After") != "7" {
+-		t.Fatalf("status=%d retry-after=%q body=%s", recorder.Code, recorder.Header().Get("Retry-After"), recorder.Body.String())
+-	}
++	assertCapacityBusyProblem(t, recorder, 7)
+ }

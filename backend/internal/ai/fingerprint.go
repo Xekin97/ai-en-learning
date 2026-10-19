@@ -21,7 +21,7 @@ func ContractFingerprints() (template, schema, lexical string, err error) {
 			if protocol == ProtocolAnthropic && mode == "json_schema" {
 				continue
 			}
-			snap := connectionSnapshot{connection: Connection{Protocol: protocol}, outputMode: mode}
+			snap := connectionSnapshot{connection: Connection{Protocol: protocol}, outputMode: mode, customParameters: json.RawMessage(`{}`)}
 			for _, phase := range []string{"initial", "probe", "continuation", "correction"} {
 				current := spec
 				switch phase {

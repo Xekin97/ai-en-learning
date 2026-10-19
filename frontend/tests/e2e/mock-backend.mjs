@@ -7,6 +7,7 @@ import {
 import { adminFixture } from "./m002-admin-fixture.mjs";
 import { growthFixture } from "./m002-growth-fixture.mjs";
 import { reviewFixture } from "./m002-review-fixture.mjs";
+import { configPortabilityFixture } from "./m002-config-portability-fixture.mjs";
 import { createServer } from "node:http";
 import { readFileSync } from "node:fs";
 import { createHash } from "node:crypto";
@@ -59,6 +60,7 @@ const model = {
     masked_hint: "••••demo",
   },
   max_output_tokens: null,
+  custom_parameters: {},
   output_mode: "prompt",
   retired_at: null,
   enabled: true,
@@ -127,6 +129,7 @@ async function handle(request, response) {
   if (await adminPresetsFixture(request, response, url)) return;
   if (await adminGrowthFixture(request, response, url)) return;
   if (await operationsFixture(request, response, url)) return;
+  if (await configPortabilityFixture(request, response, url)) return;
   if (await adminFixture(request, response, url)) return;
   if (await reviewFixture(request, response, url)) return;
   if (await growthFixture(request, response, url)) return;
@@ -384,6 +387,23 @@ async function handle(request, response) {
         extra_quota: { remaining: 0, earliest_expires_at: null },
         can_start: true,
         block_reason: null,
+        effective_plan: {
+          code: "visitor",
+          origin: "visitor",
+          trial_ends_at: null,
+        },
+        configuration_revision: "configuration-revision",
+        content_service: {
+          native_validation: true,
+          content_review_enabled: false,
+          content_repair_limit: 0,
+        },
+        native_correction_policy: {
+          version: "m003-native-policy-v1",
+          scope: "logical_request",
+          max_calls: 2,
+          editable: false,
+        },
       },
       meta: { request_id: "req-preset" },
     });
@@ -554,6 +574,18 @@ async function handle(request, response) {
           window_hours: 24,
           refreshes_at: "2026-09-02T00:00:00+08:00",
         },
+        configuration_revision: "configuration-revision",
+        content_service: {
+          native_validation: true,
+          content_review_enabled: false,
+          content_repair_limit: 0,
+        },
+        native_correction_policy: {
+          version: "m003-native-policy-v1",
+          scope: "logical_request",
+          max_calls: 2,
+          editable: false,
+        },
       },
       meta: { request_id: "req-options" },
     });
@@ -621,25 +653,301 @@ async function handle(request, response) {
       "cache-control": "no-store",
       "content-type": "text/event-stream; charset=utf-8",
     });
-    response.end(
-      [
-        sse("generation.started", {
-          run_id: "run-e2e",
-          generation_token: "generation-token-e2e",
-        }),
-        sse("passage.delta", {
-          text: "Teams adapt quickly when the context changes.",
-        }),
-        sse("generation.validated", {
-          run_id: "run-e2e",
-          result: {
-            passage: batchDetail.passage,
-            tags: batchDetail.tags,
-            targets: batchDetail.targets,
+    const frames = [
+      sse("generation.started", {
+        seq: 1,
+        contract_version: "m003-stream-v6",
+        stream_id: "stream-e2e",
+        run_id: "run-e2e",
+        generation_token: "generation-token-e2e",
+        snapshot: {
+          configuration_revision: "configuration-revision",
+          effective_plan: {
+            code: role === "visitor" ? "visitor" : "basic",
+            origin: role === "visitor" ? "visitor" : "base",
           },
-        }),
-      ].join(""),
-    );
+          content_service: {
+            native_validation: true,
+            content_review_enabled: false,
+            content_repair_limit: 0,
+          },
+          native_correction_policy: {
+            version: "m003-native-policy-v1",
+            scope: "logical_request",
+            max_calls: 2,
+            editable: false,
+          },
+        },
+      }),
+      sse("generation.progress", { seq: 2, phase: "planning" }),
+      sse("generation.plan_item", {
+        seq: 3,
+        plan_id: "plan-e2e",
+        meaning_language: "en",
+        item: { kind: "scene", text: "A team responds to change." },
+      }),
+      sse("generation.plan_item", {
+        seq: 4,
+        plan_id: "plan-e2e",
+        meaning_language: "en",
+        item: {
+          kind: "word_use",
+          entry: "adapt",
+          form: "adapt",
+          sense: "change to fit",
+          phrase: "adapt quickly",
+        },
+      }),
+      sse("generation.progress", { seq: 5, phase: "composing" }),
+      sse("generation.draft", {
+        seq: 6,
+        action: "begin",
+        draft_id: "draft-e2e",
+        content_version: 1,
+        mode: "initial",
+        base_rev: 0,
+      }),
+      sse("generation.edit", {
+        seq: 7,
+        draft_id: "draft-e2e",
+        content_version: 1,
+        base_rev: 0,
+        rev: 1,
+        at: 0,
+        delete_count: 0,
+        insert: "Teams adapt quickly when the context changes.",
+        source: "provider",
+      }),
+      sse("generation.draft", {
+        seq: 8,
+        action: "body_complete",
+        draft_id: "draft-e2e",
+        content_version: 1,
+        base_rev: 1,
+        body_length: Array.from("Teams adapt quickly when the context changes.")
+          .length,
+        paragraph_count: 1,
+      }),
+      sse("generation.progress", { seq: 9, phase: "finalizing" }),
+      sse("generation.validated", {
+        seq: 10,
+        run_id: "run-e2e",
+        final_content_version: 1,
+        result: {
+          passage: batchDetail.passage,
+          tags: batchDetail.tags,
+          targets: batchDetail.targets,
+        },
+        content_outcome: "basic",
+        completion_notice: null,
+      }),
+    ];
+    if (request.headers.cookie?.includes("wordweave_cr312_rich=1")) {
+      const oldFirst = "Teams adapt quickly.\n\n";
+      const unchangedSecond = "They learn together.\n\n";
+      const oldTail = "Art makes them curious.\n\nThe story stays.";
+      const initial = `${oldFirst}${unchangedSecond}${oldTail}`;
+      const changedFirst =
+        "Friends adapt together when their art project changes, and they calmly learn how to improve it by sharing ideas, testing another plan, and listening to every teammate.\n\n";
+      const changedThird = "Art helps them learn.";
+      const finalPassage = `${changedFirst}${unchangedSecond}${changedThird}`;
+      const richFrames = [
+        [
+          sse("generation.started", {
+            seq: 1,
+            contract_version: "m003-stream-v6",
+            stream_id: "stream-e2e",
+            run_id: "run-e2e",
+            generation_token: "generation-token-e2e",
+            snapshot: {
+              configuration_revision: "configuration-revision",
+              effective_plan: { code: "pro", origin: "base" },
+              content_service: {
+                native_validation: true,
+                content_review_enabled: true,
+                content_repair_limit: 1,
+              },
+              native_correction_policy: {
+                version: "m003-native-policy-v1",
+                scope: "logical_request",
+                max_calls: 2,
+                editable: false,
+              },
+            },
+          }),
+          15,
+        ],
+        [frames[1], 15],
+        [frames[2], 15],
+        [frames[3], 15],
+        [frames[4], 15],
+        [sse("generation.activity", { seq: 6, activity: "writing" }), 15],
+        [
+          sse("generation.draft", {
+            seq: 7,
+            action: "begin",
+            draft_id: "draft-cr312-initial",
+            content_version: 1,
+            mode: "initial",
+            base_rev: 0,
+          }),
+          15,
+        ],
+        [
+          sse("generation.edit", {
+            seq: 8,
+            draft_id: "draft-cr312-initial",
+            content_version: 1,
+            base_rev: 0,
+            rev: 1,
+            at: 0,
+            delete_count: 0,
+            insert: "Teams ",
+            source: "provider",
+          }),
+          140,
+        ],
+        [
+          sse("generation.edit", {
+            seq: 9,
+            draft_id: "draft-cr312-initial",
+            content_version: 1,
+            base_rev: 1,
+            rev: 2,
+            at: 6,
+            delete_count: 0,
+            insert: initial.slice(6),
+            source: "provider",
+          }),
+          420,
+        ],
+        [
+          sse("generation.draft", {
+            seq: 10,
+            action: "body_complete",
+            draft_id: "draft-cr312-initial",
+            content_version: 1,
+            base_rev: 2,
+            body_length: Array.from(initial).length,
+            paragraph_count: 4,
+          }),
+          40,
+        ],
+        [sse("generation.activity", { seq: 11, activity: "improving" }), 40],
+        [
+          sse("generation.draft", {
+            seq: 12,
+            action: "begin",
+            draft_id: "draft-cr312-replace",
+            content_version: 2,
+            mode: "replace",
+            base_rev: 2,
+          }),
+          40,
+        ],
+        [
+          sse("generation.edit", {
+            seq: 13,
+            draft_id: "draft-cr312-replace",
+            content_version: 2,
+            base_rev: 2,
+            rev: 3,
+            at: 0,
+            delete_count: Array.from(oldFirst).length,
+            insert: changedFirst,
+            source: "provider",
+          }),
+          80,
+        ],
+        [
+          sse("generation.draft", {
+            seq: 14,
+            action: "paragraph_complete",
+            draft_id: "draft-cr312-replace",
+            content_version: 2,
+            base_rev: 3,
+            paragraph_index: 0,
+          }),
+          300,
+        ],
+        [
+          sse("generation.draft", {
+            seq: 15,
+            action: "paragraph_complete",
+            draft_id: "draft-cr312-replace",
+            content_version: 2,
+            base_rev: 3,
+            paragraph_index: 1,
+          }),
+          80,
+        ],
+        [
+          sse("generation.edit", {
+            seq: 16,
+            draft_id: "draft-cr312-replace",
+            content_version: 2,
+            base_rev: 3,
+            rev: 4,
+            at:
+              Array.from(changedFirst).length +
+              Array.from(unchangedSecond).length,
+            delete_count: Array.from(oldTail).length,
+            insert: changedThird,
+            source: "provider",
+          }),
+          120,
+        ],
+        [
+          sse("generation.draft", {
+            seq: 17,
+            action: "body_complete",
+            draft_id: "draft-cr312-replace",
+            content_version: 2,
+            base_rev: 4,
+            body_length: Array.from(finalPassage).length,
+            paragraph_count: 3,
+          }),
+          260,
+        ],
+        [sse("generation.progress", { seq: 18, phase: "finalizing" }), 500],
+        [
+          sse("generation.validated", {
+            seq: 19,
+            run_id: "run-e2e",
+            final_content_version: 2,
+            result: {
+              passage: finalPassage,
+              tags: ["growth"],
+              targets: [
+                {
+                  entry: "adapt",
+                  entry_meaning: "change to fit a new situation",
+                  hint_phrase: "adapt together",
+                  hint_blanks: [{ start: 8, end: 13 }],
+                  occurrences: [{ surface: "adapt", start: 8, end: 13 }],
+                },
+              ],
+            },
+            content_outcome: "repaired_passed",
+            completion_notice: null,
+          }),
+          0,
+        ],
+      ];
+      for (const [frame, pause] of richFrames) {
+        if (response.destroyed) return;
+        response.write(frame);
+        if (pause) await new Promise((resolve) => setTimeout(resolve, pause));
+      }
+      response.end();
+      return;
+    }
+    if (request.headers.cookie?.includes("wordweave_cr309_hold=1")) {
+      response.write(frames.slice(0, 7).join(""));
+      response.on("close", () => {});
+      return;
+    }
+    response.end(frames.join(""));
     return;
   }
 

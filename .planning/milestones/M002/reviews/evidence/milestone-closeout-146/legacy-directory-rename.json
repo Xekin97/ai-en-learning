@@ -1,0 +1,63 @@
+{
+  "id": "USER-M002-LEGACY-DIRECTORY-RENAME-20261016",
+  "at": "2026-10-16T11:50:39.872382+00:00",
+  "user_text": "额，即使如此，也至少改个名字吧，避免后续开 003 的时候开错了",
+  "status": "PASS",
+  "mapping": {
+    ".planning/milestones/M003": ".planning/milestones/M002-legacy-M003",
+    ".planning/milestones/M004": ".planning/milestones/M002-legacy-M004"
+  },
+  "canonical_milestone": "M002",
+  "stage_unchanged": "milestone-complete",
+  "original_names_available": true,
+  "old_name_symlinks_created": false,
+  "historical_instance_scope": "Mistaken starts in October 2026 only; future authorized M003/M004 are independent.",
+  "frozen_evidence_policy": "Evidence payloads, manifests, archives and append-only history are not globally rewritten. Recorded old prefixes resolve through this mapping, never through a future new M003/M004. Original bytes for mechanical live-document link updates are in before-legacy-rename.tar.gz; old frozen SHA checks can read those archive members.",
+  "originals_archive": ".planning/milestones/M002/reviews/evidence/milestone-closeout-146/before-legacy-rename.tar.gz",
+  "originals_archive_sha256": "cdf7ed8fbd806e908b63e640a545220565dc7cece74e1df0c3c2d12c83ad8728",
+  "files_manifest": ".planning/milestones/M002/reviews/evidence/milestone-closeout-146/legacy-relocation-files.json",
+  "relocated_file_count": 2068,
+  "reference_updates": 151,
+  "path_only_source_changes": [
+    "backend/internal/ai/custom_parameters_test.go",
+    "frontend/playwright.cr306-live.config.ts",
+    "frontend/playwright.cr306.config.ts",
+    "frontend/playwright.cr307.config.ts",
+    "frontend/playwright.cr312.config.ts",
+    "frontend/scripts/sync-design.mjs",
+    "frontend/tests/e2e/m003-cr306-models.spec.ts",
+    "frontend/tests/e2e/m003-cr307-focus.spec.ts",
+    "frontend/tests/e2e/m003-cr309-visual.spec.ts",
+    "frontend/tests/e2e/m003-cr310-regenerate.spec.ts",
+    "frontend/tests/e2e/m003-cr311-312.spec.ts",
+    "frontend/tests/e2e/m003-live.spec.ts",
+    "frontend/tests/unit/cr312-draft-fixtures.test.ts",
+    "frontend/tests/unit/custom-parameters.test.ts"
+  ],
+  "current_source_manifest": ".planning/milestones/M002/reviews/evidence/milestone-closeout-146/accepted-source-after-rename.json",
+  "state_transition": false,
+  "runtime_changes": false,
+  "new_milestone_started": false,
+  "tests": {
+    "frontend": "42/42 passed: custom-parameters and cr312-draft-fixtures",
+    "backend": "PASS: go test ./internal/ai -run ^TestCompactByteSharedVectors$ -count=1",
+    "design_sync": "PASS: Node 24 scripts/sync-design.mjs"
+  },
+  "generated_source_drift_after_sync": [],
+  "integrity": {
+    "relocated_files": 2068,
+    "exact_original_reference_files_recoverable": 151,
+    "frozen_manifest_entries_verified_via_originals_and_path_mapping": {
+      ".planning/milestones/M002/reviews/evidence/milestone-closeout-check-146/accepted-source-manifest.json": 713,
+      ".planning/milestones/M002/reviews/evidence/cr313-verification-submission-131/delivery-manifest.json": 34,
+      ".planning/milestones/M002/reviews/evidence/pronunciation-uat-ready-145/delivery-manifest.json": 43,
+      ".planning/milestones/M002/reviews/evidence/m003-ownership-correction-124/m003-preservation-manifest.json": 2043
+    },
+    "markdown_links_checked": 1372,
+    "newly_broken_markdown_links": [],
+    "prior_history_preserved": true,
+    "milestone_stage_unchanged": true,
+    "old_names_absent_including_symlinks": true
+  },
+  "independent_new_session_handoff_test": "NOT_RUN; static verification only"
+}

@@ -82,10 +82,13 @@ func cr039SeedRun(t *testing.T, ctx context.Context, api *Server, pool *pgxpool.
 	if err != nil {
 		t.Fatal(err)
 	}
-	if _, err := pool.Exec(ctx, `INSERT INTO wordweave.generation_runs(id,account_id,credited_account_id,group_code_snapshot,model_id,model_display_name_snapshot,provider_model_id_snapshot,meaning_language,scenario,length_code,minimum_words_snapshot,max_entries_snapshot)
-	VALUES ($1,$2,$2,'registered',$3,'Synthetic CR039','test/no-online-provider','en','discussion','short',1,1)`, run.ID, actor.ID, model); err != nil {
+	if _, err := pool.Exec(ctx, `INSERT INTO wordweave.generation_runs(id,account_id,credited_account_id,group_code_snapshot,model_id,model_display_name_snapshot,provider_model_id_snapshot,meaning_language,scenario,length_code,minimum_words_snapshot,max_entries_snapshot,content_policy_version,configuration_revision_snapshot,content_review_enabled_snapshot,content_repair_limit_snapshot,pipeline_version_snapshot,plan_origin_snapshot,model_request_parameters_snapshot)
+	VALUES ($1,$2,$2,'registered',$3,'Synthetic CR039','test/no-online-provider','en','discussion','short',1,1,1,
+		(SELECT revision FROM wordweave.growth_settings WHERE singleton),false,0,$4,'base','{"version":"custom-parameters-v1","custom_parameters":{},"output_mode":"prompt","max_output_tokens":null,"structured_route":"unchanged"}')`, run.ID, actor.ID, model, entitlement.PipelineVersion); err != nil {
 		t.Fatal(err)
 	}
+	run.Spec.ProviderModelID = "test/no-online-provider"
+	run.Snapshot.ContentService = entitlement.ContentService{NativeValidation: true}
 	if _, err := pool.Exec(ctx, `INSERT INTO wordweave.generation_run_entries(run_id,vocabulary_entry_id,input_order,source_entry_snapshot) SELECT $1,id,0,entry FROM wordweave.vocabulary_entries WHERE entry=$2`, run.ID, entry); err != nil {
 		t.Fatal(err)
 	}
@@ -189,6 +192,7 @@ func TestCR040CurrentStoredSnapshotRoundTrip(t *testing.T) {
 			snapshot := cr039Snapshot(t)
 			snapshot.ValidatorVersion = version
 			run := cr039SeedRun(t, ctx, api, pool, actor, model, snapshot.Targets[0].Entry)
+			recordSuccessfulGenerationFacts(t, ctx, api, run)
 			if err := api.generation.CompleteValid(ctx, run, snapshot); err != nil {
 				t.Fatal(err)
 			}

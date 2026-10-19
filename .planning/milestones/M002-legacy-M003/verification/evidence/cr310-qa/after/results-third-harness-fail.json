@@ -1,0 +1,101 @@
+{
+  "result": "FAIL",
+  "scope": "CR-310 independent targeted functional QA",
+  "node": "v24.21.0",
+  "isolated_frontend": "http://127.0.0.1:55013",
+  "synthetic_backend": "http://127.0.0.1:55015",
+  "live_uat_3014_touched": false,
+  "real_provider_calls": 0,
+  "checks": [
+    {
+      "id": "CR310-Q1",
+      "status": "PASS",
+      "roles": [
+        "learner"
+      ],
+      "editable_after_valid": true,
+      "standalone_discard": false
+    },
+    {
+      "id": "CR310-Q2",
+      "status": "PASS",
+      "old_result_stable": true,
+      "edited": {
+        "words": [
+          "gentle"
+        ],
+        "values": [
+          "model-fast",
+          "discussion",
+          "medium",
+          "zh"
+        ]
+      }
+    },
+    {
+      "id": "CR310-Q3-desktop",
+      "status": "PASS",
+      "close_paths": 4,
+      "zero_discard": true,
+      "zero_new_generation": true
+    },
+    {
+      "id": "CR310-Q1-visitor-mobile",
+      "status": "PASS",
+      "editable_after_valid": true,
+      "old_result_stable": true
+    },
+    {
+      "id": "CR310-Q3-mobile-zh",
+      "status": "PASS",
+      "close_paths": 4,
+      "zero_discard": true,
+      "zero_new_generation": true
+    },
+    {
+      "id": "CR310-Q4",
+      "status": "PASS",
+      "order": [
+        "generate:1",
+        "discard:run-e2e",
+        "generate:2"
+      ],
+      "new_snapshot": {
+        "model_id": "model-fast",
+        "meaning_language": "zh",
+        "scenario": "discussion",
+        "length": "medium",
+        "entries": [
+          "gentle"
+        ]
+      },
+      "duplicate_confirm_discard_count": 1,
+      "duplicate_confirm_generation_count": 1
+    },
+    {
+      "id": "CR310-Q6",
+      "status": "PASS",
+      "duplicate_confirm": "one discard and one fresh generation"
+    },
+    {
+      "id": "CR310-Q5",
+      "status": "PASS",
+      "discards": 1,
+      "streams": 1,
+      "retained": true
+    },
+    {
+      "id": "CR310-Q7-save",
+      "status": "PASS",
+      "saves": 1,
+      "discards": 0,
+      "streams": 1,
+      "navigation_blocked_while_save_pending": true
+    }
+  ],
+  "page_errors": [],
+  "failure": {
+    "message": "page.waitForURL: Timeout 20000ms exceeded.\n=========================== logs ===========================\nwaiting for navigation until \"load\"\n============================================================",
+    "stack": "page.waitForURL: Timeout 20000ms exceeded.\n=========================== logs ===========================\nwaiting for navigation until \"load\"\n============================================================\n    at leaveOwnership (/Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/.planning/milestones/M003/verification/evidence/cr310-qa/after/qa-cr310.mjs:265:32)\n    at async file:///Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/.planning/milestones/M003/verification/evidence/cr310-qa/after/qa-cr310.mjs:335:26"
+  }
+}

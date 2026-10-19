@@ -1,0 +1,86 @@
+{
+  "version": "M003-UI-10-R1.1",
+  "checked_at": "2026-10-12T05:52:01.545Z",
+  "scope": "API-306 copy and error mapping clarification only",
+  "completed": true,
+  "result": "PASS",
+  "scenarios": [
+    {
+      "name": "bilingual static and template keys exist",
+      "passed": true,
+      "details": {
+        "keys": [
+          "zh.cr306.custom.empty",
+          "en.cr306.custom.empty",
+          "zh.cr306.error.request_too_large",
+          "en.cr306.error.request_too_large",
+          "zh.gm.test.note",
+          "en.gm.test.note",
+          "zh.cr306.probe.rejected",
+          "en.cr306.probe.rejected",
+          "zh.cr306.probe.stale",
+          "en.cr306.probe.stale"
+        ],
+        "templateKeys": [
+          "zh.cr306.error.too_large",
+          "en.cr306.error.too_large",
+          "zh.cr306.custom.size",
+          "en.cr306.custom.size"
+        ]
+      }
+    },
+    {
+      "name": "fixture supplies exact compact UTF-8 boundaries",
+      "passed": true,
+      "details": {
+        "accepted": {
+          "id": "compact_utf8_16384",
+          "object_recipe": "{\"x\":\"a*N\"}",
+          "N": 16376,
+          "expected": "accepted_local_only"
+        },
+        "rejected": {
+          "id": "compact_utf8_16385",
+          "N": 16377,
+          "expected": "422 too_large"
+        }
+      }
+    },
+    {
+      "name": "API source names too_large, request_too_large, and 256 probe limit",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "blank is invalid JSON and compact count is unavailable",
+      "passed": true,
+      "details": {
+        "counter": "紧凑 JSON — / 16 KiB",
+        "modal": true,
+        "raw": "",
+        "invalid": "true",
+        "error": "JSON 格式不完整，请检查括号、引号和逗号。你的输入已保留。"
+      }
+    },
+    {
+      "name": "raw whitespace does not trigger compact-size rejection",
+      "passed": true,
+      "details": {
+        "raw_length": 17231,
+        "counter": "紧凑 JSON 31 / 16 KiB",
+        "modal_closed": true
+      }
+    },
+    {
+      "name": "compact 16385 maps to field too_large and preserves input",
+      "passed": true,
+      "details": {
+        "counter": "紧凑 JSON 16,385 / 16 KiB",
+        "modal": true,
+        "rawLength": 16385,
+        "error": "自定义参数超过 16 KiB（16,384 字节）。请精简后重试；你的输入已保留。"
+      }
+    }
+  ],
+  "run_error": null
+}

@@ -1,0 +1,23 @@
+{
+  "id": "PRON-DEFECT-001",
+  "status": "FIXED_RETEST_PASS",
+  "fixed_version": "M002-FI-PRON-01-R1",
+  "build_aggregate": "a6437e56fe8a60781a7ec9b9ccbdc86272ae73a8cc734a8dc4ca4cd32066071a",
+  "root_cause": "GenerationVocabularyList optional Boolean pronunciationActive defaulted false when omitted; result action was disabled and focus restoration skipped it.",
+  "fix": "Explicit default true for pronunciationActive while keeping pronunciationEnabled opt-in.",
+  "retest_evidence": "controlled-plan-result-r1.json",
+  "retest": {
+    "assertions": 18,
+    "result_action_state": {
+      "disabled": false,
+      "ancestorInert": false,
+      "connected": true
+    },
+    "focus_surface": "generation-result:qa-controlled-draft",
+    "speech_count_before_result_gesture": 1,
+    "result_native_start_end": true,
+    "no_write": true
+  },
+  "unaffected_evidence_reused": ".planning/milestones/M002/verification/pronunciation/evidence/run-143/real-native-results.json (35/35; shared library path unchanged)",
+  "user_uat_accepted": false
+}

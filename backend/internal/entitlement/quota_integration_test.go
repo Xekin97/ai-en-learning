@@ -43,7 +43,7 @@ func reserve(t *testing.T, ctx context.Context, pool *pgxpool.Pool, actor identi
 		t.Fatal(err)
 	}
 	var run uuid.UUID
-	if err = tx.QueryRow(ctx, `INSERT INTO wordweave.generation_runs(account_id,credited_account_id,group_code_snapshot,model_id,model_display_name_snapshot,provider_model_id_snapshot,meaning_language,scenario,length_code,minimum_words_snapshot,max_entries_snapshot) VALUES($1,$1,$2,$3,'Quota model','test/quota','en','story','short',50,5) RETURNING id`, actor.ID, p.Code, model).Scan(&run); err != nil {
+	if err = tx.QueryRow(ctx, `INSERT INTO wordweave.generation_runs(account_id,credited_account_id,group_code_snapshot,model_id,model_display_name_snapshot,provider_model_id_snapshot,meaning_language,scenario,length_code,minimum_words_snapshot,max_entries_snapshot,content_policy_version,model_request_parameters_snapshot) VALUES($1,$1,$2,$3,'Quota model','test/quota','en','story','short',50,5,NULL,'{"version":"custom-parameters-v1","custom_parameters":{},"output_mode":"prompt","max_output_tokens":null,"structured_route":"unchanged"}') RETURNING id`, actor.ID, p.Code, model).Scan(&run); err != nil {
 		return uuid.Nil, err
 	}
 	if err = entitlement.Reserve(ctx, tx, actor, p, run, c.Now); err != nil {

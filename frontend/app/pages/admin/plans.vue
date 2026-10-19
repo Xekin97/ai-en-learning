@@ -4,7 +4,11 @@ import type {
   PassageLength,
   AppFailure,
 } from "@application/shared/models";
-import type { GroupDraft, GroupImpact } from "@application/admin/configuration";
+import type {
+  GroupDraft,
+  GroupImpact,
+  PriorityImpact,
+} from "@application/admin/configuration";
 import { mergeEdited } from "@application/admin/growth-drafts";
 import { normalizeFailure } from "@application/shared/failure";
 definePageMeta({ middleware: "admin", layout: "admin" });
@@ -12,24 +16,26 @@ const admin = useAdminStore(),
   { copy } = useDesignCopy(),
   session = useSessionStore();
 const selected = ref<GroupCode>("visitor"),
-  drafts = reactive<Partial<Record<GroupCode, GroupDraft>>>({});
+  drafts = reactive<Partial<Record<GroupCode, PlanFormDraft>>>({});
+type PlanFormDraft = Omit<GroupDraft, "contentRepairLimit"> & {
+  contentRepairLimitRaw: string;
+};
 const lengths: PassageLength[] = ["short", "medium", "long", "xlong"];
 const failure = shallowRef<AppFailure | null>(null),
   pending = shallowRef<{
     code: GroupCode;
     input: GroupDraft;
     impact: GroupImpact;
+    editRevision: number;
   } | null>(null);
+const editRevisions = reactive<Partial<Record<GroupCode, number>>>({}),
+  lastPositiveLimits = reactive<Partial<Record<GroupCode, string>>>({});
 const prioritiesOpen = ref(false),
   priorities = ref<{ code: GroupCode; priority: number }[]>([]),
   priorityBaseline = ref<{ code: GroupCode; priority: number }[]>([]),
   priorityRemote = ref<{ code: GroupCode; priority: number }[] | null>(null),
   priorityRevision = ref(""),
-  priorityImpact = shallowRef<{
-    affectedBaseUsers: number;
-    affectedTrialUsers: number;
-    revision: string;
-  } | null>(null);
+  priorityImpact = shallowRef<PriorityImpact | null>(null);
 const busy = computed(() =>
     ["loading", "saving"].includes(admin.state.value.status),
   ),
@@ -49,12 +55,12 @@ const warnings = computed(() => {
     value.rolling24hLimit === 0 ? "a.plan.zero" : null,
   ].filter((key): key is string => key !== null);
 });
-const baselines = reactive<Partial<Record<GroupCode, GroupDraft>>>({}),
-  remotes = reactive<Partial<Record<GroupCode, GroupDraft>>>({});
+const baselines = reactive<Partial<Record<GroupCode, PlanFormDraft>>>({}),
+  remotes = reactive<Partial<Record<GroupCode, PlanFormDraft>>>({});
 const clone = <T,>(v: T): T => JSON.parse(JSON.stringify(v));
 function groupValue(
   group: (typeof admin.state.value.groups)[number],
-): GroupDraft {
+): PlanFormDraft {
   return {
     priority: group.priority,
     rolling24hLimit: group.rolling24hLimit,
@@ -62,14 +68,71 @@ function groupValue(
     allowedLengths: [...group.allowedLengths],
     modelIds: group.models.map((m) => m.id),
     expectedRevision: group.revision,
+    contentReviewEnabled: group.contentReviewEnabled,
+    contentRepairLimitRaw: String(group.contentRepairLimit),
   };
+}
+const contentLimitValid = computed(() => {
+  const value = draft.value?.contentRepairLimitRaw ?? "";
+  return /^(0|[1-9][0-9]?)$/.test(value);
+});
+const contentEditable = computed(() =>
+  ["pro", "plus"].includes(selected.value),
+);
+const contentEnabled = computed(() => {
+  const raw = draft.value?.contentRepairLimitRaw ?? "";
+  return contentLimitValid.value
+    ? Number(raw) > 0
+    : (baselines[selected.value]?.contentReviewEnabled ?? false);
+});
+function invalidate(code = selected.value) {
+  editRevisions[code] = (editRevisions[code] ?? 0) + 1;
+  pending.value = null;
+}
+function toggleContent(event: Event) {
+  const value = draft.value;
+  if (!value || !contentEditable.value) return;
+  const checked = (event.target as HTMLInputElement).checked;
+  if (
+    !checked &&
+    contentLimitValid.value &&
+    Number(value.contentRepairLimitRaw) > 0
+  )
+    lastPositiveLimits[selected.value] = value.contentRepairLimitRaw;
+  value.contentRepairLimitRaw = checked
+    ? (lastPositiveLimits[selected.value] ?? "1")
+    : "0";
+  value.contentReviewEnabled = checked;
+  invalidate();
+}
+function contentLimitChanged() {
+  const value = draft.value;
+  if (!value || !contentEditable.value) return;
+  if (contentLimitValid.value) {
+    const enabled = Number(value.contentRepairLimitRaw) > 0;
+    value.contentReviewEnabled = enabled;
+    if (enabled)
+      lastPositiveLimits[selected.value] = value.contentRepairLimitRaw;
+  }
+  invalidate();
+}
+function selectGroup(code: GroupCode) {
+  if (code === selected.value) return;
+  invalidate(selected.value);
+  selected.value = code;
 }
 function initialize() {
   for (const group of admin.state.value.groups) {
     const value = groupValue(group);
     drafts[group.code] = value;
     baselines[group.code] = clone(value);
+    editRevisions[group.code] = 0;
+    if (group.contentRepairLimit > 0)
+      lastPositiveLimits[group.code] = String(group.contentRepairLimit);
   }
+}
+async function refreshPortabilityHost() {
+  await Promise.all([admin.loadGroups(), admin.loadModels()]);
 }
 await usePageLoader("admin-plans", async () => {
   await admin.loadGroups();
@@ -99,14 +162,28 @@ async function preview() {
   }
   const value = drafts[code]!;
   failure.value = null;
+  if (!contentLimitValid.value) return;
+  const contentRepairLimit = Number(value.contentRepairLimitRaw);
   const input: GroupDraft = {
     ...value,
+    contentReviewEnabled: contentRepairLimit > 0,
+    contentRepairLimit,
     modelIds: [...value.modelIds],
     allowedLengths: [...value.allowedLengths],
   };
-  const impact = await admin.previewGroup(selected.value, input);
-  if (impact) pending.value = { code: selected.value, input, impact };
-  else await reconcile(selected.value);
+  Reflect.deleteProperty(
+    input as unknown as Record<string, unknown>,
+    "contentRepairLimitRaw",
+  );
+  const editRevision = editRevisions[code] ?? 0;
+  const impact = await admin.previewGroup(code, input);
+  if (
+    impact &&
+    selected.value === code &&
+    editRevision === (editRevisions[code] ?? 0)
+  )
+    pending.value = { code, input, impact, editRevision };
+  else if (!impact) await reconcile(code);
 }
 async function reconcile(code: GroupCode) {
   const epoch = session.epoch.value;
@@ -119,16 +196,45 @@ async function reconcile(code: GroupCode) {
 
 async function save() {
   const intent = pending.value;
-  if (!intent) return;
+  if (
+    !intent ||
+    selected.value !== intent.code ||
+    (editRevisions[intent.code] ?? 0) !== intent.editRevision
+  )
+    return;
   try {
     await admin.saveGroup(intent.code, intent.input);
     pending.value = null;
     await admin.loadGroups();
-    const group = admin.state.value.groups.find((g) => g.code === intent.code);
-    if (group) {
-      drafts[intent.code] = groupValue(group);
-      baselines[intent.code] = clone(drafts[intent.code]!);
-      Reflect.deleteProperty(remotes, intent.code);
+    for (const group of admin.state.value.groups) {
+      const fresh = groupValue(group),
+        local = drafts[group.code],
+        baseline = baselines[group.code];
+      if (group.code === intent.code) {
+        drafts[group.code] = fresh;
+        baselines[group.code] = clone(fresh);
+        editRevisions[group.code] = 0;
+        if (group.contentRepairLimit > 0)
+          lastPositiveLimits[group.code] = String(group.contentRepairLimit);
+        Reflect.deleteProperty(remotes, group.code);
+      } else if (local && baseline) {
+        const localAtBaselineRevision = {
+          ...local,
+          expectedRevision: baseline.expectedRevision,
+        };
+        if (
+          JSON.stringify(localAtBaselineRevision) === JSON.stringify(baseline)
+        ) {
+          drafts[group.code] = fresh;
+          Reflect.deleteProperty(remotes, group.code);
+        } else {
+          drafts[group.code] = {
+            ...local,
+            expectedRevision: fresh.expectedRevision,
+          };
+        }
+        baselines[group.code] = clone(fresh);
+      }
     }
   } catch {
     pending.value = null;
@@ -209,9 +315,15 @@ watch(session.epoch, () => {
   <div>
     <div class="page-head">
       <h1>{{ copy("a.plans") }}</h1>
-      <button class="btn" :disabled="busy || !draft" @click="openPriorities">
-        {{ copy("priority") }}
-      </button>
+      <div class="actions">
+        <ConfigPortabilityActions
+          category="plans"
+          :refresh="refreshPortabilityHost"
+        />
+        <button class="btn" :disabled="busy || !draft" @click="openPriorities">
+          {{ copy("priority") }}
+        </button>
+      </div>
     </div>
     <AppError :failure="failure ?? admin.state.value.failure" />
     <div class="tabs">
@@ -221,7 +333,7 @@ watch(session.epoch, () => {
         class="btn"
         :class="{ selected: selected === group.code }"
         :disabled="busy"
-        @click="selected = group.code"
+        @click="selectGroup(group.code)"
       >
         {{ copy("a.plan." + group.code) }}
       </button>
@@ -263,8 +375,24 @@ watch(session.epoch, () => {
           }}
         </dd>
       </div>
+      <div>
+        <dt>{{ copy("m003.review.title") }}</dt>
+        <dd>
+          {{
+            remotes[selected]!.contentReviewEnabled
+              ? remotes[selected]!.contentRepairLimitRaw
+              : "0"
+          }}
+        </dd>
+      </div>
     </dl>
-    <form v-if="draft" class="panel" @submit.prevent="preview">
+    <form
+      v-if="draft"
+      class="panel m003-page"
+      @input="invalidate()"
+      @change="invalidate()"
+      @submit.prevent="preview"
+    >
       <details class="form-help">
         <summary>{{ copy("help.rules") }}</summary>
         <p class="notice">{{ copy("plan.effect") }}</p>
@@ -346,8 +474,64 @@ watch(session.epoch, () => {
             <p class="muted">{{ copy("a.plan.window") }}</p>
           </div>
         </div>
+        <section id="service-settings" class="m003-service-settings">
+          <div class="section-head">
+            <div>
+              <h2>{{ copy("m003.service.title") }}</h2>
+              <p class="muted">{{ copy("m003.review.rule") }}</p>
+            </div>
+            <span class="pill">{{
+              copy(
+                contentEnabled ? "m003.service.enhanced" : "m003.service.basic",
+              )
+            }}</span>
+          </div>
+          <div class="form-grid">
+            <label class="field"
+              ><span>{{ copy("m003.basic.budget") }}</span
+              ><input
+                :value="
+                  admin.state.value.groups.find(
+                    (group) => group.code === selected,
+                  )?.nativeCorrectionPolicy.maxCalls ?? 2
+                "
+                readonly
+                disabled
+              /><small>{{ copy("m003.basic.readonly") }}</small></label
+            >
+            <div>
+              <label class="field inline"
+                ><input
+                  id="content-review-enabled"
+                  type="checkbox"
+                  :checked="contentEnabled"
+                  :disabled="!contentEditable"
+                  @change="toggleContent"
+                /><span>{{ copy("m003.review.title") }}</span></label
+              >
+              <label class="field"
+                ><span>{{ copy("m003.review.limit") }}</span
+                ><input
+                  id="content-repair-limit"
+                  v-model="draft.contentRepairLimitRaw"
+                  inputmode="numeric"
+                  :disabled="!contentEditable"
+                  :aria-invalid="!contentLimitValid"
+                  @input.stop="contentLimitChanged"
+                /><small>{{ copy("m003.review.help") }}</small></label
+              >
+              <p v-if="!contentLimitValid" class="notice error" role="alert">
+                {{ copy("m003.review.invalid") }}
+              </p>
+            </div>
+          </div>
+        </section>
         <div class="form-footer">
-          <button class="btn primary" type="submit">
+          <button
+            class="btn primary"
+            type="submit"
+            :disabled="!contentLimitValid"
+          >
             <AppIcon name="save" />
             {{ copy("a.save") }}
           </button>
@@ -365,8 +549,39 @@ watch(session.epoch, () => {
           {{ copy("a.plan.nomodel") }}
         </p>
         <p>
+          {{
+            copy("m003.impact", {
+              basic: pending.impact.baseUsers,
+              trial: pending.impact.activeTrialUsers,
+            })
+          }}
+        </p>
+        <p>
           {{ copy("a.plan." + pending.code) }} · {{ copy("priority") }}
           {{ pending.input.priority }}
+        </p>
+        <dl class="admin-facts">
+          <div>
+            <dt>{{ copy("m003.current") }}</dt>
+            <dd>
+              {{
+                pending.impact.contentServiceChange.before.contentRepairLimit
+              }}
+            </dd>
+          </div>
+          <div>
+            <dt>{{ copy("m003.after") }}</dt>
+            <dd>
+              {{ pending.impact.contentServiceChange.after.contentRepairLimit }}
+            </dd>
+          </div>
+        </dl>
+        <p v-if="pending.impact.warnings.length" class="notice warn">
+          {{ pending.impact.warnings.join(" · ") }}
+        </p>
+        <p class="muted">
+          {{ copy("m003.effect.new") }} {{ copy("m003.effect.inflight") }}
+          {{ copy("m003.effect.usage") }}
         </p></template
       ><template #footer
         ><button class="btn" :disabled="busy" @click="pending = null">
@@ -377,9 +592,11 @@ watch(session.epoch, () => {
       ></AppDialog
     >
     <AppDialog
-      id="plan-priorities"
+      id="priority-editor"
       :open="prioritiesOpen"
       :title="copy('priority')"
+      :backdrop-close-disabled="true"
+      initial-focus="input"
       @close="!busy && (prioritiesOpen = false)"
       ><AppError :failure="failure" />
       <dl v-if="priorityRemote" class="admin-facts notice">
@@ -401,8 +618,38 @@ watch(session.epoch, () => {
           /></label>
         </fieldset>
       </form>
-      <template v-if="priorityImpact"
-        ><p class="notice">{{ copy("plan.effect") }}</p></template
+      <template v-if="priorityImpact">
+        <p class="notice">{{ copy("plan.effect") }}</p>
+        <p>
+          {{
+            copy("m003.impact", {
+              basic: priorityImpact.affectedBaseUsers,
+              trial: priorityImpact.affectedTrialUsers,
+            })
+          }}
+        </p>
+        <dl class="admin-facts">
+          <div
+            v-for="service in priorityImpact.contentServiceByPlan"
+            :key="service.code"
+          >
+            <dt>{{ copy("a.plan." + service.code) }}</dt>
+            <dd>
+              {{
+                service.contentReviewEnabled
+                  ? service.contentRepairLimit
+                  : copy("m003.service.basic")
+              }}
+            </dd>
+          </div>
+        </dl>
+        <p v-if="priorityImpact.mayChangeContentService" class="notice warn">
+          {{ copy("m003.service.desc") }}
+        </p>
+        <p class="muted">
+          {{ copy("m003.effect.new") }} {{ copy("m003.effect.inflight") }}
+          {{ copy("m003.effect.usage") }}
+        </p> </template
       ><template #footer
         ><button
           class="btn"

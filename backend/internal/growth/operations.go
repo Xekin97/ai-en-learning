@@ -26,7 +26,7 @@ func Activate(ctx context.Context, pool *pgxpool.Pool) (time.Time, error) {
 		return *c.ActivatedAt, nil
 	}
 	var ready bool
-	err = tx.QueryRow(ctx, `SELECT EXISTS(SELECT 1 FROM wordweave.growth_levels WHERE level_no=1 AND min_experience=0) AND EXISTS(SELECT 1 FROM wordweave.checkin_rules WHERE effective_day<=$1)`, business.LearningDay(c.Now)).Scan(&ready)
+	err = tx.QueryRow(ctx, `SELECT EXISTS(SELECT 1 FROM wordweave.growth_levels WHERE retired_at IS NULL AND level_no=1 AND min_experience=0) AND EXISTS(SELECT 1 FROM wordweave.checkin_rules WHERE effective_day<=$1)`, business.LearningDay(c.Now)).Scan(&ready)
 	if err != nil {
 		return time.Time{}, err
 	}

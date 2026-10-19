@@ -1,0 +1,37 @@
+{
+  "version": "M002-BI-CR313-01",
+  "submitted_at": "2026-10-16T02:24:52.340159+00:00",
+  "recorded_by": "root",
+  "status": "awaiting_user_review",
+  "approved": false,
+  "stage_transition_performed": false,
+  "last_transition": "TRANSITION-M002-129",
+  "stage_owner": "backend-ethan",
+  "source_manifest": ".planning/milestones/M002/reviews/evidence/cr313-backend-submission-129/delivery-manifest.json",
+  "source_archive": ".planning/milestones/M002/reviews/evidence/cr313-backend-submission-129/M002-BI-CR313-01-source.tar.gz",
+  "reception_check": ".planning/milestones/M002/reviews/evidence/cr313-backend-submission-129/reception-check.json",
+  "backend_diff": {
+    "files": 45,
+    "insertions": 5408,
+    "deletions": 108,
+    "method": "git diff --no-index --numstat against129 source archive"
+  },
+  "executed_checks": "passed; see scoped validation and test-log, final R2 actual stdout retained",
+  "unverified_boundaries": [
+    "真实 TCP COMMIT ACK 丢失及进程强制终止未注入；已测同 CursorKey 重建 Service 与 fixture pool 关闭后的 unknown 语义。",
+    "发卡与导入双时序未单独做并发 barrier 测试。",
+    "04:00 跨日未做真实 wall-clock 等待测试。",
+    "KDF RSS/延迟压力基准未执行；已测并发2和每管理员10/min准入。",
+    "前端接入、浏览器QA/UAT及部署属于后续工作，本次没有执行。"
+  ],
+  "history_sha256_unchanged": "838f0737a6108dffc17a7799e9676fe32365320b0e149c248b9dd39107712a45",
+  "frontend_implementation": "pending",
+  "pronunciation_UI32": "awaiting_user_review",
+  "CR313": "open",
+  "M002_closeout": "not_approved",
+  "UAT_services": "unchanged",
+  "isolated_test_resources": "removed by implementation owner",
+  "final_build_check": ".planning/milestones/M002/reviews/evidence/cr313-backend-submission-129/final-build-check.json",
+  "source_and_archive_hash_checks": 56,
+  "control_consistency": "passed"
+}

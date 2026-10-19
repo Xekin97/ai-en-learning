@@ -120,7 +120,7 @@ func TestOBS042ValidCommitSurvivesTerminalDeliveryFailure(t *testing.T) {
 			if !w.triggered {
 				t.Fatal("terminal writer fault did not fire")
 			}
-			f.assertSettled(t, "valid", true, 1)
+			f.assertSettled(t, "valid", true, 1, 1)
 			s := obsSummary(t, &logs)
 			if s.Outcome != "valid" || s.Refunded || s.Stages[gt.Delivery].State != gt.Failed || s.Stages[gt.Delivery].Detail.Reason != mode+"_failed" {
 				t.Fatalf("valid and delivery facts confused %+v", s)

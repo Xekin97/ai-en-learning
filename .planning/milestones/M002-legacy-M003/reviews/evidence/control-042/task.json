@@ -1,0 +1,30 @@
+{
+  "objective": "用户明确授权低成本初创部署容量、响应速度、过载与可升级路线设计。独立核对同 technical-design 阶段一次 activate-role 至 backend-architect/base / backend-alex，建议 TRANSITION-M003-043。FE02尚未启动，仅等待后端容量补充，设计批准UI09-R2保持。",
+  "inputs": [
+    ".planning/workflow/state.yaml",
+    ".planning/agt/project.yaml",
+    ".planning/agt/agents.yaml",
+    ".planning/milestones/M003/reviews/requirements-feedback.md",
+    ".planning/milestones/M003/reviews/evidence/start/locked-profile.yaml",
+    ".planning/milestones/M003/reviews/start.md",
+    ".planning/milestones/M003/handoffs/backend-architecture.md",
+    ".planning/milestones/M003/technical/backend.md",
+    ".planning/milestones/M003/handoffs/database.md",
+    ".planning/milestones/M003/reviews/ui09-frontend-handoff-040.md"
+  ],
+  "write_scope": [],
+  "acceptance": [
+    "只读控制检查，不写文件/源码/设计/状态，不跑应用测试，最终返回精简可保存报告。",
+    "按 agt-stage-gate 完整读取适用基座契约，目标是受限设计授权，USER-M003-STARTUP-CAPACITY 已明确委托，不重复询问常规设计选择。",
+    "保持 technical-design 和全部技术必需产物，UI09-R2批准不变；BE05-R1作为基线不认定已实施；新容量数值是设计初值非用户指定或测量。",
+    "建议backend_work M003-BE-06 in_progress 范围仅容量/部署/过载及必要API对齐、FE02等待接收；保留CR302与全部开放项，不启动实现/迁移/付费调用/部署。",
+    "输出 PASS/FAIL、精确目标状态和未决项；没有权力替后端选择具体并发或MQ。"
+  ],
+  "risk": "normal",
+  "prior_attempts": [],
+  "report": [
+    "check_results",
+    "exact_target_state",
+    "unresolved_findings"
+  ]
+}

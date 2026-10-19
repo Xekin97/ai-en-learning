@@ -1,0 +1,1233 @@
+--- a/frontend/app/presentation/components/GenerationWorkspace.vue
++++ b/frontend/app/presentation/components/GenerationWorkspace.vue
+@@ -1,5 +1,6 @@
+ <script setup lang="ts">
+ import type {
++  GenerationRequestModel,
+   MeaningLanguage,
+   PassageLength,
+   Scenario,
+@@ -37,8 +38,11 @@
+     usage: target.hintPhrase,
+   })),
+ );
+-const busy = computed(() =>
+-  ["streaming", "pending", "valid"].includes(generation.value.phase),
++const generationBusy = computed(() =>
++  ["streaming", "pending"].includes(generation.value.phase),
++);
++const hasUnsavedResult = computed(
++  () => generation.value.phase === "valid" && generation.value.result !== null,
+ );
+ const words = computed(() =>
+   locked.value
+@@ -54,7 +58,18 @@
+     : options.value?.extraQuota.remaining,
+ );
+ const settings = ref<HTMLDetailsElement>();
+-const saving = ref(false);
++const generateButton = ref<HTMLButtonElement | null>(null);
++const regenerateCancelButton = ref<HTMLButtonElement | null>(null);
++const actionOwner = ref<"save" | "regenerate" | "leave" | null>(null);
++const interactionLocked = computed(
++  () => generationBusy.value || actionOwner.value !== null,
++);
++const protectLeave = computed(
++  () => generationBusy.value || hasUnsavedResult.value,
++);
++const regenerateFailure = ref(false);
++let actionSequence = 0;
++let componentActive = true;
+ let allowLeave = false;
+ workspace.startNewTask();
+ await usePageLoader(`generation:${props.presetId ?? "ordinary"}`, () =>
+@@ -63,24 +78,67 @@
+ onMounted(() => {
+   if (settings.value) settings.value.open = locked.value || innerWidth > 1100;
+ });
+-async function generate() {
++function requestSnapshot(): GenerationRequestModel | null {
+   const selected = preset.value;
+-  const ok = await workspace.generate(
+-    locked.value && selected
++  if (locked.value)
++    return selected
+       ? {
+           kind: "preset",
+           presetId: selected.id,
+           publishedVersion: selected.publishedVersion,
+         }
+-      : undefined,
+-  );
++      : null;
++  const value = state.value;
++  if (
++    !value.modelId ||
++    !value.meaningLanguage ||
++    !value.scenario ||
++    !value.length ||
++    value.selectedEntries.length === 0 ||
++    !workspace.canSubmit.value
++  )
++    return null;
++  return {
++    modelId: value.modelId,
++    meaningLanguage: value.meaningLanguage,
++    scenario: value.scenario,
++    length: value.length,
++    entries: [...value.selectedEntries],
++  };
++}
++async function startGeneration(snapshot: GenerationRequestModel) {
++  const ok = await workspace.generate(snapshot);
+   if (locked.value && props.presetId && !ok)
+     await presets.detail(props.presetId);
+   else if (!locked.value) await workspace.loadOptions(true);
+ }
++type RegenerateBinding = {
++  generation: typeof generation.value;
++  runId: string;
++  sessionEpoch: number;
++};
++let regenerateBinding: RegenerateBinding | null = null;
++async function generate() {
++  if (actionOwner.value || generationBusy.value) return;
++  regenerateFailure.value = false;
++  if (hasUnsavedResult.value) {
++    const current = generation.value;
++    if (!current.runId) return;
++    regenerateBinding = {
++      generation: current,
++      runId: current.runId,
++      sessionEpoch: session.epoch.value,
++    };
++    confirmation.value = "regenerate";
++    return;
++  }
++  const snapshot = requestSnapshot();
++  if (snapshot) await startGeneration(snapshot);
++}
+ async function save() {
+-  if (saving.value) return;
+-  saving.value = true;
++  if (actionOwner.value || generationBusy.value) return;
++  const owner = ++actionSequence;
++  actionOwner.value = "save";
+   try {
+     const result = await workspace.save();
+     allowLeave = true;
+@@ -92,46 +150,167 @@
+   } catch {
+     feedback.show("failed");
+   } finally {
+-    saving.value = false;
++    if (owner === actionSequence && actionOwner.value === "save")
++      actionOwner.value = null;
+   }
+ }
+ const { t } = useI18n();
+ const blockReasonCopy = (key: string) =>
+   key.startsWith("error.") ? t(key) : copy(key);
+-const confirmation = ref<"leave" | "cancel" | "discard" | null>(null);
++const confirmation = ref<"leave" | "cancel" | "regenerate" | null>(null);
+ let leaveResolve: ((value: boolean) => void) | null = null;
+ function closeConfirmation() {
++  if (actionOwner.value === "regenerate") return;
+   confirmation.value = null;
++  regenerateBinding = null;
+   leaveResolve?.(false);
+   leaveResolve = null;
+ }
++async function focusConfirmation() {
++  if (confirmation.value !== "regenerate") return;
++  await nextTick();
++  regenerateCancelButton.value?.focus({ preventScroll: true });
++}
++function ownsRegenerateAction(
++  owner: number,
++  binding: RegenerateBinding,
++): boolean {
++  return (
++    componentActive &&
++    actionOwner.value === "regenerate" &&
++    actionSequence === owner &&
++    session.epoch.value === binding.sessionEpoch
++  );
++}
++async function confirmRegenerate() {
++  const binding = regenerateBinding;
++  const snapshot = requestSnapshot();
++  if (
++    actionOwner.value ||
++    confirmation.value !== "regenerate" ||
++    !binding ||
++    !snapshot ||
++    generation.value !== binding.generation ||
++    generation.value.runId !== binding.runId ||
++    !hasUnsavedResult.value ||
++    session.epoch.value !== binding.sessionEpoch
++  ) {
++    closeConfirmation();
++    return;
++  }
++  const owner = ++actionSequence;
++  actionOwner.value = "regenerate";
++  try {
++    const receipt = await workspace.discard();
++    if (
++      !ownsRegenerateAction(owner, binding) ||
++      !receipt ||
++      receipt.runId !== binding.runId ||
++      workspace.state.value.generation !== receipt.clearedGeneration
++    ) {
++      confirmation.value = null;
++      regenerateBinding = null;
++      return;
++    }
++  } catch {
++    if (ownsRegenerateAction(owner, binding)) {
++      regenerateFailure.value = true;
++      confirmation.value = null;
++      regenerateBinding = null;
++    }
++    return;
++  } finally {
++    if (
++      owner === actionSequence &&
++      actionOwner.value === "regenerate" &&
++      (regenerateFailure.value || confirmation.value === null)
++    )
++      actionOwner.value = null;
++  }
++  if (!ownsRegenerateAction(owner, binding)) return;
++  confirmation.value = null;
++  regenerateBinding = null;
++  const generationTask = startGeneration(snapshot);
++  if (owner === actionSequence && actionOwner.value === "regenerate")
++    actionOwner.value = null;
++  try {
++    await generationTask;
++  } finally {
++    if (owner === actionSequence && actionOwner.value === "regenerate")
++      actionOwner.value = null;
++  }
++}
+ async function confirm() {
+   const action = confirmation.value;
++  if (action === "regenerate") {
++    await confirmRegenerate();
++    return;
++  }
+   confirmation.value = null;
+   if (action === "cancel") await workspace.cancel();
+-  if (action === "discard") await workspace.discard();
+   if (action === "leave") {
+-    if (generation.value.phase === "streaming") workspace.abortPassive();
+-    else await workspace.discard();
+-    leaveResolve?.(true);
+-    leaveResolve = null;
++    const resolver = leaveResolve;
++    if (actionOwner.value) {
++      resolver?.(false);
++      if (leaveResolve === resolver) leaveResolve = null;
++      return;
++    }
++    const owner = ++actionSequence;
++    const boundGeneration = generation.value;
++    const boundRunId = boundGeneration.runId;
++    const boundEpoch = session.epoch.value;
++    const ownsLeaveAction = () =>
++      componentActive &&
++      actionOwner.value === "leave" &&
++      actionSequence === owner &&
++      session.epoch.value === boundEpoch;
++    actionOwner.value = "leave";
++    try {
++      if (generation.value.phase === "streaming") workspace.abortPassive();
++      else if (generation.value.phase === "valid") {
++        const receipt = await workspace.discard();
++        if (
++          !ownsLeaveAction() ||
++          generation.value === boundGeneration ||
++          !receipt ||
++          receipt.runId !== boundRunId ||
++          generation.value !== receipt.clearedGeneration
++        ) {
++          resolver?.(false);
++          return;
++        }
++      } else await workspace.discard();
++      resolver?.(ownsLeaveAction());
++    } catch {
++      if (ownsLeaveAction()) {
++        feedback.show("failed");
++      }
++      resolver?.(false);
++    } finally {
++      if (leaveResolve === resolver) leaveResolve = null;
++      if (owner === actionSequence && actionOwner.value === "leave")
++        actionOwner.value = null;
++    }
+   }
+ }
+ onBeforeRouteLeave(() => {
+-  if (allowLeave || !busy.value) return;
++  if (allowLeave || !protectLeave.value) return;
++  if (actionOwner.value || leaveResolve) return false;
+   confirmation.value = "leave";
+   return new Promise<boolean>((resolve) => {
+     leaveResolve = resolve;
+   });
+ });
+ function beforeUnload(event: BeforeUnloadEvent) {
+-  if (busy.value) {
++  if (protectLeave.value || actionOwner.value) {
+     event.preventDefault();
+     event.returnValue = "";
+   }
+ }
+ onMounted(() => window.addEventListener("beforeunload", beforeUnload));
+ onBeforeUnmount(() => {
++  componentActive = false;
++  actionSequence++;
+   workspace.setVocabularyQuery("");
+   workspace.abortPassive();
+   window.removeEventListener("beforeunload", beforeUnload);
+@@ -180,7 +359,7 @@
+           "
+         />
+       </summary>
+-      <fieldset class="generation-fields" :disabled="busy">
++      <fieldset class="generation-fields" :disabled="interactionLocked">
+         <div class="config-fields">
+           <GenerationSettings
+             v-if="locked && preset"
+@@ -293,7 +472,7 @@
+           :candidates="state.candidates"
+           :query="state.query"
+           :search-status="state.searchStatus"
+-          :disabled="busy"
++          :disabled="interactionLocked"
+           :max-entries="options?.maxEntries ?? 0"
+           :random-pending="state.randomPending"
+           show-random
+@@ -318,7 +497,9 @@
+           {{ copy("preset.invaliddesc") }}
+         </p>
+         <p
+-          v-else-if="options && !options.availability.canGenerate && !busy"
++          v-else-if="
++            options && !options.availability.canGenerate && !interactionLocked
++          "
+           class="note warn"
+         >
+           {{
+@@ -335,11 +516,20 @@
+             )
+           }}
+         </p>
++        <p
++          v-if="regenerateFailure"
++          class="notice error m003-regenerate-error"
++          role="alert"
++        >
++          {{ copy("m003.regenerate.failure") }}
++        </p>
+         <div class="actions">
+           <button
++            ref="generateButton"
+             class="btn primary"
+             :disabled="
+-              busy || !(locked ? detail?.canStart : workspace.canSubmit.value)
++              interactionLocked ||
++              !(locked ? detail?.canStart : workspace.canSubmit.value)
+             "
+             @click="generate"
+           >
+@@ -457,7 +647,13 @@
+             >
+               {{ copy("m003.incomplete") }}
+             </p>
+-            <h2>{{ words.join(" · ") }}</h2>
++            <h2>
++              {{
++                generation.result.targets
++                  .map((target) => target.entry)
++                  .join(" · ")
++              }}
++            </h2>
+             <p class="story-text">
+               <template
+                 v-for="(segment, index) in generation.result.passageSegments"
+@@ -480,16 +676,12 @@
+               :heading="copy('l.resources')"
+             />
+             <div class="actions">
+-              <button class="btn primary" :disabled="saving" @click="save">
+-                {{
+-                  copy(session.isLearner.value ? "collect" : "guestcollect")
+-                }}</button
+-              ><button
+-                class="btn quiet"
+-                :disabled="saving"
+-                @click="confirmation = 'discard'"
++              <button
++                class="btn primary"
++                :disabled="interactionLocked"
++                @click="save"
+               >
+-                {{ copy("l.discard") }}
++                {{ copy(session.isLearner.value ? "collect" : "guestcollect") }}
+               </button>
+             </div>
+           </div>
+@@ -522,20 +714,52 @@
+   </div>
+   <NuxtLink v-else class="btn" to="/explore">{{ copy("explore") }}</NuxtLink>
+   <AppDialog
+-    id="generation-confirm"
++    :id="
++      confirmation === 'regenerate'
++        ? 'regenerate-confirm'
++        : 'generation-confirm'
++    "
+     :open="confirmation !== null"
++    :return-focus="() => generateButton"
+     :title="
+-      copy(confirmation === 'discard' ? 'l.discard.title' : 'l.leave.title')
++      copy(
++        confirmation === 'regenerate'
++          ? 'm003.regenerate.title'
++          : 'l.leave.title',
++      )
+     "
+     @close="closeConfirmation"
++    @shown="focusConfirmation"
+     ><p>
+-      {{ copy(confirmation === "discard" ? "l.discard.desc" : "l.leave.desc") }}
++      {{
++        copy(
++          confirmation === "regenerate"
++            ? "m003.regenerate.body"
++            : "l.leave.desc",
++        )
++      }}
+     </p>
+     <template #footer
+-      ><button class="btn" @click="closeConfirmation">
++      ><button
++        ref="regenerateCancelButton"
++        class="btn"
++        :disabled="actionOwner === 'regenerate'"
++        @click="closeConfirmation"
++      >
+         {{ copy("cancel") }}</button
+-      ><button class="btn primary" @click="confirm">
+-        {{ copy("confirm") }}
++      ><button
++        class="btn"
++        :class="confirmation === 'regenerate' ? 'danger' : 'primary'"
++        :disabled="actionOwner === 'regenerate'"
++        @click="confirm"
++      >
++        {{
++          copy(
++            confirmation === "regenerate"
++              ? "m003.regenerate.confirm"
++              : "confirm",
++          )
++        }}
+       </button></template
+     ></AppDialog
+   >
+--- a/frontend/app/runtime/stores/generation.ts
++++ b/frontend/app/runtime/stores/generation.ts
+@@ -97,6 +97,7 @@
+       retryAt: null,
+     }),
+   );
++  const exposedState = readonly(state);
+ 
+   runtime.vocabularySearch ??= createVocabularySearch(
+     (q, signal) => api.searchVocabulary(q, signal),
+@@ -200,7 +201,7 @@
+   function addEntry(entry: string, fromRandom = false): void {
+     const max = state.value.options?.maxEntries ?? 0;
+     if (
+-      ["streaming", "valid"].includes(state.value.generation.phase) ||
++      ["streaming", "pending"].includes(state.value.generation.phase) ||
+       (!fromRandom &&
+         (state.value.searchStatus !== "ready" ||
+           !state.value.candidates.includes(entry))) ||
+@@ -420,12 +421,12 @@
+     } while (owns(request));
+   }
+   async function generate(
+-    preset?: Extract<GenerationRequestModel, { kind: "preset" }>,
++    requestModel?: GenerationRequestModel,
+   ): Promise<boolean> {
+-    const inputModel = preset ?? input();
++    const inputModel = requestModel ?? input();
+     if (
+       !inputModel ||
+-      state.value.generation.phase === "streaming" ||
++      ["streaming", "pending"].includes(state.value.generation.phase) ||
+       (state.value.retryAt !== null && state.value.retryAt > Date.now())
+     )
+       return false;
+@@ -644,7 +645,7 @@
+     return { kind: "claim", expiresAt: lease.expiresAt };
+   }
+ 
+-  async function discard(): Promise<void> {
++  async function discard() {
+     const generation = state.value.generation;
+     const epoch = session.epoch.value;
+     const isCurrent = () =>
+@@ -652,11 +653,18 @@
+     const runId = generation.runId;
+     if (runId && generation.phase === "valid") {
+       await session.refreshSecurityContext();
+-      if (!isCurrent()) return;
++      if (!isCurrent()) return null;
+       await api.discardGeneration(runId);
++      if (!isCurrent()) return null;
++      state.value.generation = initialGenerationState();
++      return {
++        runId,
++        clearedGeneration: exposedState.value.generation,
++      };
+     }
+-    if (!isCurrent()) return;
++    if (!isCurrent()) return null;
+     state.value.generation = initialGenerationState();
++    return null;
+   }
+ 
+   function startNewTask(): void {
+@@ -708,13 +716,13 @@
+   }
+ 
+   return {
+-    state: readonly(state),
++    state: exposedState,
+     canSubmit: computed(
+       () =>
+         input() !== null &&
+         state.value.optionsStatus === "ready" &&
+         state.value.options?.availability.canGenerate === true &&
+-        state.value.generation.phase !== "streaming" &&
++        !["streaming", "pending"].includes(state.value.generation.phase) &&
+         (state.value.retryAt === null || state.value.retryAt <= Date.now()),
+     ),
+     selectedModel: computed(() => modelById(state.value.modelId)),
+--- a/frontend/app/assets/css/theme.css
++++ b/frontend/app/assets/css/theme.css
+@@ -1465,6 +1465,7 @@
+     padding-bottom: 20px;
+   }
+ }
++
+ @media (max-width: 360px) {
+   .account-content .items-grid,
+   .account-content .achievement-grid {
+@@ -6560,3 +6561,55 @@
+     line-height: 1.78;
+   }
+ }
++
++/* UI12 / CR-310: confirmation for replacing the current unsaved result. */
++.m003-regenerate-dialog,
++#regenerate-confirm {
++  width: min(430px, calc(100vw - 32px));
++  padding: 0;
++  overflow: hidden;
++}
++.m003-regenerate-dialog > h2,
++#regenerate-confirm > h2 {
++  margin: 0;
++  padding: 24px 60px 12px 24px;
++  font-size: 23px;
++}
++.m003-regenerate-dialog > .dialog-body,
++#regenerate-confirm > .dialog-body {
++  padding: 0 24px 6px;
++}
++.m003-regenerate-dialog > .dialog-body p,
++#regenerate-confirm > .dialog-body p {
++  margin: 0;
++  color: var(--muted);
++}
++.m003-regenerate-dialog > .dialog-actions,
++#regenerate-confirm > .dialog-actions {
++  margin: 18px 0 0;
++  padding: 16px 24px;
++  border-top: 1px solid var(--line);
++  background: var(--canvas);
++}
++.m003-regenerate-error {
++  margin: 16px 0 0;
++}
++@media (max-width: 760px) {
++  .m003-regenerate-dialog,
++  #regenerate-confirm {
++    width: calc(100vw - 24px);
++  }
++  .m003-regenerate-dialog > h2,
++  #regenerate-confirm > h2 {
++    padding: 21px 52px 10px 18px;
++    font-size: 21px;
++  }
++  .m003-regenerate-dialog > .dialog-body,
++  #regenerate-confirm > .dialog-body {
++    padding-inline: 18px;
++  }
++  .m003-regenerate-dialog > .dialog-actions,
++  #regenerate-confirm > .dialog-actions {
++    padding: 13px 14px;
++  }
++}
+--- a/frontend/i18n/locales/en-US.json
++++ b/frontend/i18n/locales/en-US.json
+@@ -1237,6 +1237,10 @@
+     "m003__eof": "The connection ended before confirmation. Check again.",
+     "m003__protocol": "The update could not be safely applied. The current content stays read-only; check again.",
+     "m003__recheck": "Check again",
++    "m003__regenerate__title": "Generate a new story?",
++    "m003__regenerate__body": "Continuing will permanently discard the current unsaved story and its learning information.",
++    "m003__regenerate__confirm": "Discard and generate",
++    "m003__regenerate__failure": "The current result could not be discarded. Your story and new settings are still here; try again.",
+     "m003__complete": "Story ready",
+     "m003__complete__body": "The complete story and study resources are ready.",
+     "m003__incomplete": "Content review is incomplete. This complete valid story can still be saved.",
+--- a/frontend/i18n/locales/zh-CN.json
++++ b/frontend/i18n/locales/zh-CN.json
+@@ -1237,6 +1237,10 @@
+     "m003__eof": "连接已结束，结果仍未确认。请重新核对。",
+     "m003__protocol": "收到的更新无法继续安全应用。当前内容保持只读，请重新核对。",
+     "m003__recheck": "重新核对",
++    "m003__regenerate__title": "生成新的短文？",
++    "m003__regenerate__body": "继续生成会永久放弃当前未收录的短文和学习信息。",
++    "m003__regenerate__confirm": "放弃并生成",
++    "m003__regenerate__failure": "暂时无法放弃当前结果。当前短文和新配置均已保留，请重试。",
+     "m003__complete": "短文已完成",
+     "m003__complete__body": "完整短文和学习资源已经准备好。",
+     "m003__incomplete": "内容审校未完成。当前完整有效稿仍可保存。",
+--- a/frontend/tests/unit/generation-lifecycle.test.ts
++++ b/frontend/tests/unit/generation-lifecycle.test.ts
+@@ -470,6 +470,123 @@
+ });
+ 
+ describe("G14 saved/discarded draft ownership", () => {
++  it("returns a receipt only after the current valid run is discarded", async () => {
++    const h = harness();
++    await h.select();
++    const generated = h.store.generate();
++    await tick();
++    h.streams[0]!.emit({ kind: "started", runId: "old" });
++    h.streams[0]!.emit(validated("old"));
++    h.streams[0]!.done.resolve(undefined);
++    await generated;
++
++    const discarded = h.store.discard();
++    await tick();
++    expect(h.api.discardGeneration).toHaveBeenCalledWith("old");
++    h.discardedReply.resolve(undefined);
++    const receipt = await discarded;
++    expect(receipt).toEqual({
++      runId: "old",
++      clearedGeneration: h.store.state.value.generation,
++    });
++    expect(receipt?.clearedGeneration).toBe(h.store.state.value.generation);
++    expect(h.store.state.value.generation.phase).toBe("idle");
++    h.scope.stop();
++  });
++
++  it("returns no discard receipt when identity changes during security refresh", async () => {
++    const h = harness();
++    await h.select();
++    const generated = h.store.generate();
++    await tick();
++    h.streams[0]!.emit({ kind: "started", runId: "old" });
++    h.streams[0]!.emit(validated("old"));
++    h.streams[0]!.done.resolve(undefined);
++    await generated;
++    const refresh = deferred<undefined>();
++    h.security.mockImplementation(() => refresh.promise);
++
++    const discarded = h.store.discard();
++    h.changeIdentity();
++    refresh.resolve(undefined);
++    expect(await discarded).toBeNull();
++    expect(h.api.discardGeneration).not.toHaveBeenCalled();
++    expect(h.store.state.value.generation.phase).toBe("idle");
++    h.scope.stop();
++  });
++
++  it("does not clear a new task when a stale discard reply arrives", async () => {
++    const h = harness();
++    await h.select();
++    const generated = h.store.generate();
++    await tick();
++    h.streams[0]!.emit({ kind: "started", runId: "old" });
++    h.streams[0]!.emit(validated("old"));
++    h.streams[0]!.done.resolve(undefined);
++    await generated;
++
++    const discarded = h.store.discard();
++    await tick();
++    h.store.startNewTask();
++    await h.select();
++    const next = h.store.generate();
++    await tick();
++    h.streams[1]!.emit({ kind: "started", runId: "new" });
++    h.discardedReply.resolve(undefined);
++
++    expect(await discarded).toBeNull();
++    expect(h.store.state.value.generation).toMatchObject({
++      phase: "streaming",
++      runId: "new",
++    });
++    h.store.abortPassive();
++    h.streams[1]!.done.resolve(undefined);
++    await next;
++    h.scope.stop();
++  });
++
++  it("keeps the valid result when discard fails", async () => {
++    const h = harness();
++    await h.select();
++    const generated = h.store.generate();
++    await tick();
++    h.streams[0]!.emit({ kind: "started", runId: "old" });
++    h.streams[0]!.emit(validated("old"));
++    h.streams[0]!.done.resolve(undefined);
++    await generated;
++
++    const discarded = h.store.discard();
++    await tick();
++    h.discardedReply.reject(new Error("discard unavailable"));
++    await expect(discarded).rejects.toThrow("discard unavailable");
++    expect(h.store.state.value.generation).toMatchObject({
++      phase: "valid",
++      runId: "old",
++      result: { passage: "We learn." },
++    });
++    h.scope.stop();
++  });
++
++  it("rejects a direct generation while settlement is pending", async () => {
++    const h = harness();
++    await h.select();
++    const first = h.store.generate();
++    await tick();
++    h.streams[0]!.emit({ kind: "started", runId: "old" });
++    h.streams[0]!.emit({
++      kind: "settlement_pending",
++      code: "settlement_unconfirmed",
++      requestId: "request",
++    });
++    expect(h.store.state.value.generation.phase).toBe("pending");
++    expect(h.store.canSubmit.value).toBe(false);
++    expect(await h.store.generate()).toBe(false);
++    expect(h.api.streamGeneration).toHaveBeenCalledTimes(1);
++    h.streams[0]!.done.resolve(undefined);
++    await first;
++    h.scope.stop();
++  });
++
+   it.each(["save", "discard"] as const)(
+     "does not apply a late %s to a new task",
+     async (action) => {
+--- /dev/null
++++ b/frontend/tests/e2e/m003-cr310-regenerate.spec.ts
+@@ -0,0 +1,489 @@
++import {
++  expect,
++  test,
++  type Locator,
++  type Page,
++  type Route,
++} from "@playwright/test";
++import { mkdirSync, readFileSync } from "node:fs";
++import { selectValue } from "./select-control";
++
++const copySource = JSON.parse(
++  readFileSync(
++    new URL(
++      "../../../.planning/milestones/M002/design/copy.json",
++      import.meta.url,
++    ),
++    "utf8",
++  ),
++);
++const copy = (key: string) =>
++  (copySource.static[`en.${key}`] ??
++    copySource.templates[`en.${key}`]) as string;
++const evidence =
++  "../.planning/milestones/M003/implementation/evidence/cr310-frontend";
++
++async function ready(page: Page) {
++  await page.waitForFunction(
++    () => document.documentElement.dataset.appReady === "true",
++  );
++}
++
++async function configure(page: Page) {
++  const settings = page.locator("details.settings");
++  if (
++    !(await settings.evaluate(
++      (element) => (element as HTMLDetailsElement).open,
++    ))
++  )
++    await settings.locator("summary").click();
++  await selectValue(
++    page.getByRole("combobox", { name: copy("model"), exact: true }),
++    "model-fast",
++  );
++  await selectValue(
++    page.getByRole("combobox", { name: copy("explain"), exact: true }),
++    "en",
++  );
++  await page.getByRole("button", { name: copy("random"), exact: true }).click();
++  await expect(page.locator(".workspace .word-token")).toContainText("adapt");
++}
++
++async function generateOldResult(page: Page) {
++  await configure(page);
++  await page.getByRole("button", { name: copy("start"), exact: true }).click();
++  await expect(page.locator("#final-result .story-text")).toHaveText(
++    "Teams adapt quickly when the context changes.",
++  );
++}
++
++async function editNextInput(page: Page) {
++  await selectValue(
++    page.getByRole("combobox", { name: copy("style"), exact: true }),
++    "discussion",
++  );
++  await selectValue(
++    page.getByRole("combobox", { name: copy("length"), exact: true }),
++    "medium",
++  );
++  await selectValue(
++    page.getByRole("combobox", { name: copy("explain"), exact: true }),
++    "zh",
++  );
++  await page.getByRole("button", { name: "Remove adapt", exact: true }).click();
++  const search = page.getByRole("combobox", {
++    name: copy("wordsearch"),
++    exact: true,
++  });
++  await search.fill("gentle");
++  await page.getByRole("option", { name: "gentle", exact: true }).click();
++  await expect(page.locator(".workspace .word-token")).toContainText("gentle");
++}
++
++async function openRegenerate(page: Page) {
++  const generate = page.getByRole("button", {
++    name: copy("start"),
++    exact: true,
++  });
++  await generate.click();
++  const dialog = page.locator("#regenerate-confirm");
++  await expect(dialog).toBeVisible();
++  await expect(dialog.getByRole("heading")).toHaveText("Generate a new story?");
++  await expect(dialog.locator(".dialog-body")).toHaveText(
++    "Continuing will permanently discard the current unsaved story and its learning information.",
++  );
++  return { dialog, generate };
++}
++
++async function closeAndCheckFocus(
++  page: Page,
++  close: (dialog: Locator) => Promise<void>,
++) {
++  const { dialog, generate } = await openRegenerate(page);
++  await close(dialog);
++  await expect(dialog).toBeHidden();
++  await expect(generate).toBeFocused();
++}
++
++function successfulDiscard(route: Route) {
++  return route.fulfill({ status: 204, body: "" });
++}
++
++function sse(event: string, data: object) {
++  return `event: ${event}\ndata: ${JSON.stringify(data)}\n\n`;
++}
++
++function editedGenerationStream() {
++  const snapshot = {
++    configuration_revision: "configuration-revision-next",
++    effective_plan: { code: "basic", origin: "base" },
++    content_service: {
++      native_validation: true,
++      content_review_enabled: false,
++      content_repair_limit: 0,
++    },
++    native_correction_policy: {
++      version: "m003-native-policy-v1",
++      scope: "logical_request",
++      max_calls: 2,
++      editable: false,
++    },
++  };
++  return [
++    sse("generation.started", {
++      seq: 1,
++      contract_version: "m003-stream-v5",
++      stream_id: "stream-cr310-next",
++      run_id: "run-cr310-next",
++      generation_token: "generation-token-cr310-next",
++      snapshot,
++    }),
++    sse("generation.progress", { seq: 2, phase: "planning" }),
++    sse("generation.plan_item", {
++      seq: 3,
++      plan_id: "plan-cr310-next",
++      meaning_language: "zh",
++      item: { kind: "scene", text: "A calm discussion." },
++    }),
++    sse("generation.plan_item", {
++      seq: 4,
++      plan_id: "plan-cr310-next",
++      meaning_language: "zh",
++      item: {
++        kind: "word_use",
++        entry: "gentle",
++        form: "gentle",
++        sense: "温和的",
++        phrase: "a gentle answer",
++      },
++    }),
++    sse("generation.progress", { seq: 5, phase: "composing" }),
++    sse("generation.edit", {
++      seq: 6,
++      draft_id: "draft-cr310-next",
++      content_version: 1,
++      base_rev: 0,
++      rev: 1,
++      at: 0,
++      delete_count: 0,
++      insert: "A gentle answer helps.",
++      source: "provider",
++    }),
++    sse("generation.progress", { seq: 7, phase: "finalizing" }),
++    sse("generation.validated", {
++      seq: 8,
++      run_id: "run-cr310-next",
++      final_content_version: 1,
++      result: {
++        passage: "A gentle answer helps.",
++        tags: ["discussion"],
++        targets: [
++          {
++            entry: "gentle",
++            entry_meaning: "温和的",
++            hint_phrase: "a gentle answer",
++            hint_blanks: [{ start: 2, end: 8 }],
++            occurrences: [{ surface: "gentle", start: 2, end: 8 }],
++          },
++        ],
++      },
++      content_outcome: "basic",
++      completion_notice: null,
++    }),
++  ].join("");
++}
++
++test.beforeEach(async ({ context }, testInfo) => {
++  mkdirSync(evidence, { recursive: true });
++  await context.addCookies([
++    {
++      name: "wordweave_session",
++      value: "learner",
++      url: "http://127.0.0.1:3300",
++    },
++  ]);
++  await context.clearCookies({ name: "wordweave_ui_locale" });
++  testInfo.setTimeout(60_000);
++});
++
++test("CR310 retains the old result until one confirmed discard starts one snapshotted generation", async ({
++  page,
++}, testInfo) => {
++  const generationBodies: unknown[] = [];
++  const order: string[] = [];
++  let discardCalls = 0;
++  let releaseDiscard: (() => void) | undefined;
++  const discardGate = new Promise<void>((resolve) => {
++    releaseDiscard = resolve;
++  });
++  await page.route("**/api/v1/generations/stream", async (route) => {
++    generationBodies.push(route.request().postDataJSON());
++    order.push(`generate:${generationBodies.length}`);
++    if (generationBodies.length === 1) {
++      await route.continue();
++      return;
++    }
++    await route.fulfill({
++      status: 200,
++      contentType: "text/event-stream; charset=utf-8",
++      headers: { "cache-control": "no-store" },
++      body: editedGenerationStream(),
++    });
++  });
++  await page.route("**/api/v1/generations/run-e2e/discard", async (route) => {
++    discardCalls++;
++    order.push("discard:run-e2e");
++    await discardGate;
++    await successfulDiscard(route);
++  });
++
++  await page.goto("/create");
++  await ready(page);
++  await generateOldResult(page);
++  const oldTitle = await page.locator("#final-result h2").textContent();
++  const oldPassage = await page
++    .locator("#final-result .story-text")
++    .textContent();
++  const oldMeanings = await page
++    .locator("#final-result .m003-result-meanings")
++    .textContent();
++
++  await editNextInput(page);
++  await expect(page.locator("#final-result h2")).toHaveText(oldTitle!);
++  await expect(page.locator("#final-result .story-text")).toHaveText(
++    oldPassage!,
++  );
++  await expect(page.locator("#final-result .m003-result-meanings")).toHaveText(
++    oldMeanings!,
++  );
++  expect(discardCalls).toBe(0);
++  expect(generationBodies).toHaveLength(1);
++
++  await closeAndCheckFocus(page, async (dialog) => {
++    await expect(
++      dialog.getByRole("button", { name: copy("cancel"), exact: true }),
++    ).toBeFocused();
++    await dialog
++      .getByRole("button", { name: copy("cancel"), exact: true })
++      .click();
++  });
++  await closeAndCheckFocus(page, async () => page.keyboard.press("Escape"));
++  await closeAndCheckFocus(page, async (dialog) => {
++    await dialog.getByRole("button", { name: "Close", exact: true }).click();
++  });
++  await closeAndCheckFocus(page, async (dialog) => {
++    await dialog.evaluate((element) =>
++      element.dispatchEvent(new MouseEvent("click", { bubbles: true })),
++    );
++  });
++  expect(discardCalls).toBe(0);
++  expect(generationBodies).toHaveLength(1);
++  await expect(page.locator(".workspace .word-token")).toContainText("gentle");
++  await expect(page.locator("#final-result .story-text")).toHaveText(
++    oldPassage!,
++  );
++
++  const { dialog } = await openRegenerate(page);
++  await page.screenshot({
++    path: `${evidence}/regenerate-warning-${testInfo.project.name}.png`,
++  });
++  const confirm = dialog.getByRole("button", {
++    name: "Discard and generate",
++    exact: true,
++  });
++  await confirm.click();
++  await expect.poll(() => discardCalls).toBe(1);
++  await confirm.evaluate((button: HTMLButtonElement) => {
++    button.click();
++    button.click();
++  });
++  await expect(
++    page.getByRole("button", { name: copy("collect") }),
++  ).toBeDisabled();
++  await expect(
++    page.getByRole("button", { name: copy("start") }),
++  ).toBeDisabled();
++  expect(discardCalls).toBe(1);
++  expect(generationBodies).toHaveLength(1);
++  releaseDiscard!();
++
++  await expect.poll(() => generationBodies.length).toBe(2);
++  await expect(page.locator("#final-result .story-text")).toBeVisible();
++  expect(order).toEqual(["generate:1", "discard:run-e2e", "generate:2"]);
++  expect(generationBodies[1]).toEqual({
++    model_id: "model-fast",
++    meaning_language: "zh",
++    scenario: "discussion",
++    length: "medium",
++    entries: ["gentle"],
++  });
++});
++
++test("CR310 keeps result and edited inputs when discard fails", async ({
++  page,
++}, testInfo) => {
++  test.skip(testInfo.project.name === "mobile", "desktop failure boundary");
++  let generations = 0;
++  let discards = 0;
++  page.on("request", (request) => {
++    if (request.url().endsWith("/generations/stream")) generations++;
++  });
++  await page.route("**/api/v1/generations/run-e2e/discard", async (route) => {
++    discards++;
++    await route.fulfill({
++      status: 503,
++      contentType: "application/problem+json",
++      body: JSON.stringify({
++        type: "about:blank",
++        status: 503,
++        code: "provider_unavailable",
++        title: "Discard unavailable",
++        detail: "Synthetic failure",
++      }),
++    });
++  });
++  await page.goto("/create");
++  await ready(page);
++  await generateOldResult(page);
++  await editNextInput(page);
++  const { dialog } = await openRegenerate(page);
++  await dialog
++    .getByRole("button", { name: "Discard and generate", exact: true })
++    .click();
++  await expect(page.locator(".m003-regenerate-error")).toHaveText(
++    "The current result could not be discarded. Your story and new settings are still here; try again.",
++  );
++  await expect(page.locator("#final-result .story-text")).toHaveText(
++    "Teams adapt quickly when the context changes.",
++  );
++  await expect(page.locator(".workspace .word-token")).toContainText("gentle");
++  await expect(page.getByRole("button", { name: copy("start") })).toBeFocused();
++  expect(discards).toBe(1);
++  expect(generations).toBe(1);
++});
++
++test("CR310 owns a held leave discard against save and regenerate", async ({
++  page,
++}, testInfo) => {
++  test.skip(testInfo.project.name === "mobile", "desktop ownership boundary");
++  let releaseDiscard: (() => void) | undefined;
++  const gate = new Promise<void>((resolve) => {
++    releaseDiscard = resolve;
++  });
++  let generations = 0;
++  let discards = 0;
++  let saves = 0;
++  page.on("request", (request) => {
++    if (request.url().endsWith("/generations/stream")) generations++;
++    if (request.url().endsWith("/generations/run-e2e/save")) saves++;
++  });
++  await page.route("**/api/v1/generations/run-e2e/discard", async (route) => {
++    discards++;
++    await gate;
++    await successfulDiscard(route);
++  });
++  await page.goto("/create");
++  await ready(page);
++  await generateOldResult(page);
++  await editNextInput(page);
++  await page.locator('a[href="/"]').first().click();
++  const leave = page.locator("#generation-confirm");
++  await expect(leave).toBeVisible();
++  await leave
++    .getByRole("button", { name: copy("confirm"), exact: true })
++    .click();
++  await expect.poll(() => discards).toBe(1);
++  const generate = page.getByRole("button", { name: copy("start") });
++  const save = page.getByRole("button", { name: copy("collect") });
++  await expect(generate).toBeDisabled();
++  await expect(save).toBeDisabled();
++  await generate.evaluate((button: HTMLButtonElement) => button.click());
++  await save.evaluate((button: HTMLButtonElement) => button.click());
++  expect(generations).toBe(1);
++  expect(saves).toBe(0);
++  expect(discards).toBe(1);
++  releaseDiscard!();
++  await expect(page).toHaveURL(/\/$/);
++});
++
++test("CR310 releases the replace lock when the next stream starts so it can be cancelled", async ({
++  page,
++  context,
++}, testInfo) => {
++  test.skip(
++    testInfo.project.name === "mobile",
++    "desktop cancellation boundary",
++  );
++  let generations = 0;
++  let cancels = 0;
++  page.on("request", (request) => {
++    if (request.url().endsWith("/generations/stream")) generations++;
++  });
++  await page.route("**/api/v1/generations/run-e2e/cancel", async (route) => {
++    cancels++;
++    await route.fulfill({
++      status: 200,
++      contentType: "application/json",
++      body: JSON.stringify({
++        data: { status: "cancelled", quota_refunded: false },
++        meta: { request_id: "req-cr310-cancel" },
++      }),
++    });
++  });
++  await page.goto("/create");
++  await ready(page);
++  await generateOldResult(page);
++  await context.addCookies([
++    {
++      name: "wordweave_cr309_hold",
++      value: "1",
++      url: "http://127.0.0.1:3300",
++    },
++  ]);
++  const { dialog } = await openRegenerate(page);
++  await dialog
++    .getByRole("button", { name: "Discard and generate", exact: true })
++    .click();
++  const stop = page.getByRole("button", {
++    name: copy("cancelgen"),
++    exact: true,
++  });
++  await expect(stop).toBeEnabled();
++  await stop.click();
++  const cancelDialog = page.locator("#generation-confirm");
++  await expect(cancelDialog).toBeVisible();
++  await expect(
++    cancelDialog.getByRole("button", { name: copy("confirm"), exact: true }),
++  ).toBeEnabled();
++  await cancelDialog
++    .getByRole("button", { name: copy("confirm"), exact: true })
++    .click();
++  await expect(
++    page.getByRole("heading", { name: copy("create.cancelled") }),
++  ).toBeVisible();
++  expect(generations).toBe(2);
++  expect(cancels).toBe(1);
++});
++
++test("CR310 keeps a repeated preset generation on the published snapshot", async ({
++  page,
++}, testInfo) => {
++  test.skip(testInfo.project.name === "mobile", "desktop preset boundary");
++  const bodies: unknown[] = [];
++  page.on("request", (request) => {
++    if (request.url().includes("/presets/preset-en/generations/stream"))
++      bodies.push(request.postDataJSON());
++  });
++  await page.goto("/trial/preset-en");
++  await ready(page);
++  await expect(page.locator(".workspace select")).toHaveCount(0);
++  await page.getByRole("button", { name: copy("start") }).click();
++  await expect(page.locator("#final-result")).toBeVisible();
++  await openRegenerate(page);
++  await page
++    .locator("#regenerate-confirm")
++    .getByRole("button", { name: copy("cancel"), exact: true })
++    .click();
++  expect(bodies).toEqual([{ published_version: "published-1" }]);
++  await expect(page.locator(".workspace select")).toHaveCount(0);
++});

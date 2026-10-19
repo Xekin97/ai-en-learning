@@ -1,0 +1,478 @@
+{
+  "version": "M003-UI-05",
+  "fixtureVersion": "M003-BE-03",
+  "browser": "Chromium",
+  "scenarios": [
+    {
+      "name": "create-initial-no-output",
+      "query": "page=create&scenario=basic&event=0&status=0&lang=zh",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "screenshot": null,
+      "pass": true,
+      "errors": [],
+      "metrics": {
+        "documentWidth": 1440,
+        "viewportWidth": 1440,
+        "missingCopy": false,
+        "skipLinkBottom": -22
+      },
+      "observed": {
+        "exactWords": {
+          "pass": true
+        },
+        "noArticle": {
+          "pass": true,
+          "selector": ".article-result"
+        },
+        "noSave": {
+          "pass": true,
+          "selector": "[data-action=\"save-story\"]"
+        },
+        "noEntitlementBanner": {
+          "pass": true,
+          "selector": "#benefit-summary"
+        },
+        "fetchedIndexAndScenarios": {
+          "pass": true,
+          "count": 9
+        }
+      }
+    },
+    {
+      "name": "create-accepted-then-composing",
+      "query": "page=create&scenario=basic&event=1&status=0&lang=zh",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "screenshot": null,
+      "pass": true,
+      "errors": [],
+      "metrics": {
+        "documentWidth": 1440,
+        "viewportWidth": 1440,
+        "missingCopy": false,
+        "skipLinkBottom": -22
+      },
+      "observed": {
+        "accepted": {
+          "pass": true,
+          "selector": "#generation-status",
+          "value": "请求已受理"
+        },
+        "noArticle": {
+          "pass": true,
+          "selector": ".article-result"
+        },
+        "publicOnly": {
+          "pass": true,
+          "selector": "#generation-status",
+          "values": [
+            "审稿",
+            "返修",
+            "/ 2",
+            "百分比"
+          ]
+        }
+      }
+    },
+    {
+      "name": "create-learning-only-mobile",
+      "query": "page=create&scenario=basic&event=3&status=0&lang=zh",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "screenshot": "01-create-learning-390.png",
+      "pass": true,
+      "errors": [],
+      "metrics": {
+        "documentWidth": 390,
+        "viewportWidth": 390,
+        "missingCopy": false,
+        "skipLinkBottom": -22
+      },
+      "observed": {
+        "meanings": {
+          "pass": true
+        },
+        "noArticle": {
+          "pass": true,
+          "selector": ".article-result"
+        },
+        "noSave": {
+          "pass": true,
+          "selector": "[data-action=\"save-story\"]"
+        },
+        "noTags": {
+          "pass": true,
+          "selector": ".result-tags"
+        }
+      }
+    },
+    {
+      "name": "create-finalizing-keeps-meanings",
+      "query": "page=create&scenario=basic&event=4&status=0&lang=zh",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "screenshot": "02-create-finalizing-1440.png",
+      "pass": true,
+      "errors": [],
+      "metrics": {
+        "documentWidth": 1440,
+        "viewportWidth": 1440,
+        "missingCopy": false,
+        "skipLinkBottom": -22
+      },
+      "observed": {
+        "finalizing": {
+          "pass": true,
+          "selector": "#generation-status",
+          "value": "正在完成"
+        },
+        "meaningsStillVisible": {
+          "pass": true
+        },
+        "noArticle": {
+          "pass": true,
+          "selector": ".article-result"
+        },
+        "noSave": {
+          "pass": true,
+          "selector": "[data-action=\"save-story\"]"
+        }
+      }
+    },
+    {
+      "name": "create-enhanced-v3-same-public-flow",
+      "query": "page=create&scenario=enhanced-two-repairs&event=5&status=0&lang=zh",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "screenshot": "03-create-final-v3-1440.png",
+      "pass": true,
+      "errors": [],
+      "metrics": {
+        "documentWidth": 1440,
+        "viewportWidth": 1440,
+        "missingCopy": false,
+        "skipLinkBottom": -22
+      },
+      "observed": {
+        "complete": {
+          "pass": true,
+          "selector": ".article-result"
+        },
+        "targetHighlights": {
+          "pass": true
+        },
+        "studyResources": {
+          "pass": true
+        },
+        "finalV3Meaning": {
+          "pass": true,
+          "selector": ".study-resources",
+          "value": "分享；分担"
+        },
+        "noInternalRounds": {
+          "pass": true,
+          "selector": "#generation-status",
+          "values": [
+            "审稿",
+            "返修",
+            "上限",
+            "k/N",
+            "2 / 2"
+          ]
+        },
+        "saveEnabled": {
+          "pass": true
+        }
+      }
+    },
+    {
+      "name": "create-q02-saveable-mobile",
+      "query": "page=create&scenario=incomplete-last-valid&event=5&status=0&lang=zh",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "screenshot": "04-create-q02-390.png",
+      "pass": true,
+      "errors": [],
+      "metrics": {
+        "documentWidth": 390,
+        "viewportWidth": 390,
+        "missingCopy": false,
+        "skipLinkBottom": -22
+      },
+      "observed": {
+        "notice": {
+          "pass": true,
+          "selector": "#generation-status",
+          "value": "内容审校未完成"
+        },
+        "article": {
+          "pass": true,
+          "selector": ".article-result"
+        },
+        "saveEnabled": {
+          "pass": true
+        }
+      }
+    },
+    {
+      "name": "pending-active-then-status-valid",
+      "query": "page=create&scenario=pending-resolves&event=5&status=0&lang=zh",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "screenshot": "05-create-pending-resolved-valid-1440.png",
+      "pass": true,
+      "errors": [],
+      "metrics": {
+        "documentWidth": 1440,
+        "viewportWidth": 1440,
+        "missingCopy": false,
+        "skipLinkBottom": -272
+      },
+      "observed": {
+        "finiteStatusFlow": {
+          "pass": true,
+          "active": "pending",
+          "valid": "valid",
+          "highlights": 3
+        }
+      }
+    },
+    {
+      "name": "eof-unknown-and-failure-clear",
+      "query": "page=create&scenario=eof-unknown&event=3&status=1&lang=en",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "screenshot": null,
+      "pass": true,
+      "errors": [],
+      "metrics": {
+        "documentWidth": 768,
+        "viewportWidth": 768,
+        "missingCopy": false,
+        "skipLinkBottom": -22
+      },
+      "observed": {
+        "eof": {
+          "pass": true,
+          "selector": "#generation-status",
+          "value": "connection ended"
+        },
+        "noSave": {
+          "pass": true,
+          "selector": "[data-action=\"save-story\"]"
+        },
+        "meaningsRetained": {
+          "pass": true
+        },
+        "english": {
+          "pass": true,
+          "selector": "h1",
+          "value": "Turn words into a story"
+        }
+      }
+    },
+    {
+      "name": "failed-and-cancelled-no-preview",
+      "query": "page=create&scenario=failed-no-valid&event=3&status=0&lang=zh",
+      "viewport": {
+        "width": 320,
+        "height": 700
+      },
+      "screenshot": null,
+      "pass": true,
+      "errors": [],
+      "metrics": {
+        "documentWidth": 320,
+        "viewportWidth": 320,
+        "missingCopy": false,
+        "skipLinkBottom": -22
+      },
+      "observed": {
+        "failed": {
+          "pass": true,
+          "selector": "#generation-status",
+          "value": "生成失败"
+        },
+        "noCards": {
+          "pass": true
+        },
+        "noSave": {
+          "pass": true,
+          "selector": "[data-action=\"save-story\"]"
+        },
+        "cancelledAlsoClears": {
+          "pass": true,
+          "state": "cancelled",
+          "cards": 0,
+          "save": 0
+        }
+      }
+    },
+    {
+      "name": "plans-zero-99-and-invalid",
+      "query": "page=plans&plan=pro&limit=99&adminState=preview&lang=zh",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "screenshot": "06-plans-99-1440.png",
+      "pass": true,
+      "errors": [],
+      "metrics": {
+        "documentWidth": 1440,
+        "viewportWidth": 1440,
+        "missingCopy": false,
+        "skipLinkBottom": -22
+      },
+      "observed": {
+        "fullFields": {
+          "pass": true,
+          "selector": ".existing-settings"
+        },
+        "twoBudgets": {
+          "pass": true
+        },
+        "limit99": {
+          "pass": true,
+          "selector": "#change-preview",
+          "value": "最多99次"
+        },
+        "noTestPolicyInProductCard": {
+          "pass": true,
+          "selector": "#content-service",
+          "values": [
+            "只验证",
+            "不执行 99",
+            "测试"
+          ]
+        },
+        "boundaryOnlyInDemoLayer": {
+          "pass": true
+        },
+        "zeroTurnsServiceOff": {
+          "pass": true
+        }
+      }
+    },
+    {
+      "name": "plans-invalid-and-conflict-mobile",
+      "query": "page=plans&plan=pro&limit=100&adminState=edit&lang=zh",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "screenshot": null,
+      "pass": true,
+      "errors": [],
+      "metrics": {
+        "documentWidth": 390,
+        "viewportWidth": 390,
+        "missingCopy": false,
+        "skipLinkBottom": -22
+      },
+      "observed": {
+        "invalid": {
+          "pass": true
+        },
+        "previewDisabled": {
+          "pass": true
+        },
+        "switchToConflict": {
+          "pass": true
+        }
+      }
+    },
+    {
+      "name": "preset-enhanced-q02-qualification",
+      "query": "page=presets&mode=enhanced&event=5&status=0&lang=zh",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "screenshot": "07-presets-q02-1440.png",
+      "pass": true,
+      "errors": [],
+      "metrics": {
+        "documentWidth": 1440,
+        "viewportWidth": 1440,
+        "missingCopy": false,
+        "skipLinkBottom": -816
+      },
+      "observed": {
+        "exactMode": {
+          "pass": true
+        },
+        "q02": {
+          "pass": true,
+          "selector": "#preview-result",
+          "value": "内容审校未完成"
+        },
+        "publishBlockedBeforeStatus": {
+          "pass": true
+        },
+        "qualifyThenConfirm": {
+          "pass": true,
+          "beforeConfirm": true,
+          "afterConfirm": true
+        }
+      }
+    },
+    {
+      "name": "preset-basic-does-not-replay-enhanced",
+      "query": "page=presets&mode=base&event=0&status=0&lang=en",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "screenshot": null,
+      "pass": true,
+      "errors": [],
+      "metrics": {
+        "documentWidth": 390,
+        "viewportWidth": 390,
+        "missingCopy": false,
+        "skipLinkBottom": -1542
+      },
+      "observed": {
+        "baseMode": {
+          "pass": true
+        },
+        "noResult": {
+          "pass": true,
+          "selector": "#preview-result .article-result"
+        },
+        "publishDisabled": {
+          "pass": true
+        },
+        "demoScope": {
+          "pass": true
+        }
+      }
+    }
+  ],
+  "summary": {
+    "passed": 13,
+    "failed": 0,
+    "total": 13,
+    "screenshots": 7,
+    "timingMeasured": false,
+    "modelOrProviderCalled": false
+  }
+}

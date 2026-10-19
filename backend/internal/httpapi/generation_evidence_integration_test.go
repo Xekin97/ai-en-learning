@@ -107,6 +107,17 @@ func TestOBS042CGenerationCaptureServiceEquivalence(t *testing.T) {
 			var calls atomic.Int32
 			provider := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 				calls.Add(1)
+				var request map[string]any
+				if err := json.NewDecoder(r.Body).Decode(&request); err != nil {
+					t.Error(err)
+					w.WriteHeader(http.StatusBadRequest)
+					return
+				}
+				if isPlanProviderRequest(request) {
+					entries, _ := body["entries"].([]string)
+					writeChatObject(w, testScenePlan(entries...))
+					return
+				}
 				if name == "write_failure" && captureOn.Load() {
 					for _, id := range m.IDs() {
 						if err := os.Chmod(filepath.Join(dir, id+".jsonl"), 0400); err != nil {
@@ -205,9 +216,9 @@ func TestOBS042CGenerationCaptureServiceEquivalence(t *testing.T) {
 					if !result.Valid && (strings.Count(string(raw), "event: generation.failed") != 1 || !strings.Contains(string(raw), "\"quota_refunded\":true")) {
 						t.Fatal("failure/refund projection changed")
 					}
-					expectedCalls := int32(1)
+					expectedCalls := int32(2)
 					if name == "hint_missing" || name == "relation" || name == "changed_configuration" {
-						expectedCalls = 3
+						expectedCalls = 4
 					}
 					if calls.Load()-callBefore != expectedCalls {
 						t.Fatalf("unexpected provider call count: got %d want %d", calls.Load()-callBefore, expectedCalls)

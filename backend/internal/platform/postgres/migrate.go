@@ -257,7 +257,76 @@ func verifyCurrent(ctx context.Context, pool databaseReader) error {
 	if err := verifyEntryMeaningColumn(ctx, pool); err != nil {
 		return err
 	}
-	return verifyM002Structure(ctx, pool)
+	if err := verifyM002Structure(ctx, pool); err != nil {
+		return err
+	}
+	if err := verifyM003Structure(ctx, pool); err != nil {
+		return err
+	}
+	return verifyConfigPortabilityStructure(ctx, pool)
+}
+
+func verifyConfigPortabilityStructure(ctx context.Context, db databaseReader) error {
+	var columns, constraints, triggers, functions int
+	var receiptUpdate, aiReceiptAccess bool
+	err := db.QueryRow(ctx, `
+		SELECT
+		  (SELECT count(*) FROM information_schema.columns WHERE table_schema='wordweave' AND
+		    ((table_name='ai_providers' AND column_name='retired_at') OR
+		     (table_name='growth_levels' AND column_name IN ('retired_at','active_min_experience')) OR
+		     (table_name='achievement_tiers' AND column_name IN ('retired_at','active_threshold')))),
+		  (SELECT count(*) FROM pg_constraint WHERE connamespace='wordweave'::regnamespace AND convalidated AND conname IN
+		    ('ai_providers_retired_unconfigured','growth_levels_active_min_experience_unique','achievement_tiers_active_threshold_unique','config_import_receipts_pkey')),
+		  (SELECT count(*) FROM pg_trigger WHERE NOT tgisinternal AND tgname='config_import_receipt_immutable'),
+		  (SELECT count(*) FROM pg_proc WHERE pronamespace='wordweave'::regnamespace AND proname IN ('retire_provider_credential','config_import_receipt_immutable','purge_config_import_receipts')),
+		  has_table_privilege('wordweave_app','wordweave.config_import_receipts','UPDATE'),
+		  has_table_privilege('wordweave_ai','wordweave.config_import_receipts','SELECT')
+	`).Scan(&columns, &constraints, &triggers, &functions, &receiptUpdate, &aiReceiptAccess)
+	if err != nil {
+		return fmt.Errorf("verify config portability schema: %w", err)
+	}
+	if columns != 5 || constraints != 4 || triggers != 1 || functions != 3 || receiptUpdate || aiReceiptAccess {
+		return errors.New("config portability columns, constraints, receipt immutability, or privileges differ from the approved schema")
+	}
+	return nil
+}
+
+func verifyM003Structure(ctx context.Context, db databaseReader) error {
+	var generationColumns, previewColumns, modelColumns, validatedConstraints, immutableTriggers int
+	var entitlementOK bool
+	var definitions string
+	err := db.QueryRow(ctx, `
+		SELECT
+		  (SELECT count(*) FROM information_schema.columns WHERE table_schema='wordweave' AND table_name='generation_runs' AND column_name IN
+		    ('content_policy_version','configuration_revision_snapshot','content_review_enabled_snapshot','content_repair_limit_snapshot','pipeline_version_snapshot','plan_origin_snapshot','content_outcome','final_content_version','content_stop_reason','model_request_parameters_snapshot')),
+		  (SELECT count(*) FROM information_schema.columns WHERE table_schema='wordweave' AND table_name='preset_preview_runs' AND column_name IN
+		    ('content_policy_version','configuration_revision_snapshot','content_review_enabled_snapshot','content_repair_limit_snapshot','pipeline_version_snapshot','content_outcome','final_content_version','content_stop_reason','model_request_parameters_snapshot')),
+		  (SELECT count(*) FROM information_schema.columns WHERE table_schema='wordweave' AND table_name='ai_models' AND column_name='custom_parameters' AND data_type='jsonb' AND is_nullable='NO'),
+		  (SELECT count(*) FROM pg_constraint WHERE connamespace='wordweave'::regnamespace AND convalidated AND conname IN
+		    ('entitlement_groups_content_service_valid','generation_runs_m003_content_facts_valid','preset_preview_runs_m003_content_facts_valid',
+		     'preset_versions_preview_content_mode_valid','ai_call_usage_m003_stage_valid','ai_call_usage_m003_prompt_valid','ai_call_usage_m003_review_valid',
+		     'ai_models_custom_parameters_object','generation_runs_request_parameters_valid','preset_preview_runs_request_parameters_valid')),
+		  (SELECT count(*) FROM pg_trigger WHERE NOT tgisinternal AND tgname IN
+		    ('generation_runs_request_parameters_immutable','preset_preview_runs_request_parameters_immutable')),
+		  NOT EXISTS (SELECT 1 FROM wordweave.entitlement_groups WHERE NOT ((
+		    (code IN ('visitor','registered') AND content_review_enabled IS FALSE AND content_repair_limit=0) OR
+		    (code IN ('pro','plus') AND ((content_review_enabled IS FALSE AND content_repair_limit=0) OR
+		      (content_review_enabled IS TRUE AND content_repair_limit BETWEEN 1 AND 99)))) IS TRUE)),
+		  COALESCE((SELECT string_agg(pg_get_constraintdef(oid),' ') FROM pg_constraint
+		    WHERE connamespace='wordweave'::regnamespace AND conname IN
+		      ('generation_runs_m003_content_facts_valid','preset_preview_runs_m003_content_facts_valid','ai_call_usage_m003_stage_valid','ai_call_usage_m003_prompt_valid','ai_call_usage_m003_review_valid',
+		       'ai_models_custom_parameters_object','generation_runs_request_parameters_valid','preset_preview_runs_request_parameters_valid')), '')
+	`).Scan(&generationColumns, &previewColumns, &modelColumns, &validatedConstraints, &immutableTriggers, &entitlementOK, &definitions)
+	if err != nil {
+		return fmt.Errorf("verify M003 content schema: %w", err)
+	}
+	if generationColumns != 10 || previewColumns != 9 || modelColumns != 1 || validatedConstraints != 10 || immutableTriggers != 2 || !entitlementOK ||
+		!strings.Contains(definitions, "m003-content-v5") || !strings.Contains(definitions, "planning") ||
+		!strings.Contains(definitions, "fixed_edit") || !strings.Contains(definitions, "content_repair") ||
+		!strings.Contains(definitions, "custom-parameters-v1") || !strings.Contains(definitions, "openrouter_require_parameters") {
+		return errors.New("M003 content policy columns, constraints, or entitlement configuration differ from current schema")
+	}
+	return nil
 }
 
 func verifyEntryMeaningColumn(ctx context.Context, db databaseReader) error {

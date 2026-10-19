@@ -14,6 +14,7 @@ import {
 } from "@application/admin/growth-drafts";
 import { createAdminGrowthRepository } from "@infrastructure/http/repositories/admin-growth-repository";
 import { createAdminPresetsRepository } from "@infrastructure/http/repositories/admin-presets-repository";
+import { createAdminConfigurationRepository } from "@infrastructure/http/repositories/admin-configuration-repository";
 import { TokenVault } from "@runtime/session/token-vault";
 const options = () => ({
   models: [{ id: "model", name: "Model", description: null }],
@@ -23,6 +24,15 @@ const options = () => ({
   vocabulary_version: "vocabulary",
   revision: "revision",
   availability: { can_preview: true, reason: null },
+  preview_content_modes: ["basic", "enhanced"],
+  default_preview_content_mode: "basic",
+  preview_content_repair_limit: 1,
+  native_correction_policy: {
+    version: "m003-native-policy-v1",
+    scope: "logical_request",
+    max_calls: 2,
+    editable: false,
+  },
 });
 const achievement = () => ({
   threshold: 7,
@@ -306,6 +316,7 @@ describe("M002 admin contract boundaries", () => {
         repo.streamPresetPreview(
           "id",
           "version",
+          "basic",
           () => {},
           new AbortController().signal,
         ),
@@ -320,7 +331,7 @@ describe("M002 admin contract boundaries", () => {
       {
         send: async () =>
           new Response(
-            'event: preview.started\ndata: {"preview_run_id":"run","preview_token":"secret"}\n\nevent: passage.delta\ndata: {"text":"Partial"}\n\n',
+            'event: preview.started\ndata: {"seq":1,"contract_version":"m003-stream-v6","stream_id":"stream","preview_run_id":"run","preview_token":"secret","draft_version":"version","preview_content_mode":"basic","content_service":{"native_validation":true,"content_review_enabled":false,"content_repair_limit":0},"native_correction_policy":{"version":"m003-native-policy-v1","scope":"logical_request","max_calls":2,"editable":false}}\n\nevent: preview.progress\ndata: {"seq":2,"phase":"planning"}\n\n',
             { headers: { "content-type": "text/event-stream" } },
           ),
       },
@@ -330,11 +341,81 @@ describe("M002 admin contract boundaries", () => {
       repo.streamPresetPreview(
         "id",
         "version",
+        "basic",
         (event) => events.push(event.kind),
         new AbortController().signal,
       ),
     ).rejects.toMatchObject({ kind: "network" });
-    expect(events).toEqual(["started", "delta"]);
-    expect(() => vault.confirmation("preset-preview:run")).toThrow();
+    expect(events).toEqual(["started", "progress"]);
+    expect(vault.confirmation("preset-preview:run")).toBe("secret");
+  });
+  it("maps the complete priority impact while keeping the request to four priority rows", async () => {
+    const vault = new TokenVault();
+    vault.setCsrf("csrf");
+    let body: Record<string, unknown> | null = null;
+    const repo = createAdminConfigurationRepository(
+      {
+        async send(path, init) {
+          expect(path).toBe("/api/v1/admin/groups/priority-impact");
+          body = JSON.parse(String(init?.body));
+          return reply({
+            affected_base_users: 3,
+            affected_trial_users: 2,
+            revision: "revision",
+            content_service_by_plan: [
+              ["visitor", false, 0],
+              ["basic", false, 0],
+              ["pro", true, 1],
+              ["plus", true, 2],
+            ].map(([code, enabled, limit]) => ({
+              code,
+              content_review_enabled: enabled,
+              content_repair_limit: limit,
+            })),
+            may_change_content_service: true,
+            applies_to: "new_requests",
+            in_flight_policy: "accepted_snapshot",
+            usage_reset: false,
+            trial_dates_changed: false,
+            native_correction_policy: {
+              version: "m003-native-policy-v1",
+              scope: "logical_request",
+              max_calls: 2,
+              editable: false,
+            },
+          });
+        },
+      },
+      vault,
+    );
+    const impact = await repo.previewPriorities(
+      [
+        { code: "visitor", priority: 0 },
+        { code: "basic", priority: 1 },
+        { code: "pro", priority: 2 },
+        { code: "plus", priority: 3 },
+      ],
+      "revision",
+    );
+    expect(body).toEqual({
+      expected_revision: "revision",
+      priorities: [
+        { code: "visitor", priority: 0 },
+        { code: "basic", priority: 1 },
+        { code: "pro", priority: 2 },
+        { code: "plus", priority: 3 },
+      ],
+    });
+    expect(impact).toMatchObject({
+      affectedBaseUsers: 3,
+      affectedTrialUsers: 2,
+      mayChangeContentService: true,
+      appliesTo: "new_requests",
+      inFlightPolicy: "accepted_snapshot",
+      usageReset: false,
+      trialDatesChanged: false,
+      nativeCorrectionPolicy: { maxCalls: 2, editable: false },
+    });
+    expect(impact.contentServiceByPlan).toHaveLength(4);
   });
 });

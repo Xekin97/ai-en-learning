@@ -1,0 +1,150 @@
+ M .env.example
+ M .planning/agt/agents.yaml
+ M .planning/agt/project.yaml
+ M .planning/workflow/history.yaml
+ M .planning/workflow/state.yaml
+ M backend/.env.example
+ M backend/cmd/wordweave/main.go
+ M backend/internal/admin/groups.go
+ M backend/internal/admin/m002_integration_test.go
+ M backend/internal/admin/models.go
+ M backend/internal/admin/user_detail_integration_test.go
+ M backend/internal/ai/annotations_test.go
+ M backend/internal/ai/completion_prompt_test.go
+ M backend/internal/ai/continuation.go
+ M backend/internal/ai/contract.go
+ M backend/internal/ai/cr040_test.go
+ M backend/internal/ai/gateway.go
+ M backend/internal/ai/openrouter.go
+ M backend/internal/ai/openrouter_test.go
+ M backend/internal/ai/prose_prompt_test.go
+ M backend/internal/ai/protocol_stream.go
+ M backend/internal/ai/usage.go
+ M backend/internal/ai/usage_test.go
+ M backend/internal/entitlement/quota_integration_test.go
+ M backend/internal/entitlement/service.go
+ M backend/internal/generation/charge.go
+ M backend/internal/generation/preset_catalog.go
+ M backend/internal/generation/preset_preview.go
+ M backend/internal/generation/preset_usage.go
+ M backend/internal/generation/presets.go
+ M backend/internal/generation/presets_integration_test.go
+ M backend/internal/generation/service.go
+ M backend/internal/generation/settlement.go
+ M backend/internal/generation/trace.go
+ M backend/internal/generation/usage.go
+ M backend/internal/generationtrace/trace.go
+ M backend/internal/growth/configuration_integration_test.go
+ M backend/internal/httpapi/admin_handlers.go
+ M backend/internal/httpapi/admin_quota_integration_test.go
+ M backend/internal/httpapi/catalog_handlers.go
+ M backend/internal/httpapi/claimed_batch_delete_integration_test.go
+ M backend/internal/httpapi/configuration_decode.go
+ M backend/internal/httpapi/configuration_decode_test.go
+ M backend/internal/httpapi/continuation_integration_test.go
+ M backend/internal/httpapi/cr039_mapping_integration_test.go
+ M backend/internal/httpapi/cr039_snapshot_integration_test.go
+ M backend/internal/httpapi/cr040_snapshot_integration_test.go
+ M backend/internal/httpapi/draft_lifecycle_integration_test.go
+ M backend/internal/httpapi/e2e_integration_test.go
+ M backend/internal/httpapi/generation_evidence_integration_test.go
+ M backend/internal/httpapi/generation_handlers.go
+ M backend/internal/httpapi/generation_matrix_integration_test.go
+ M backend/internal/httpapi/generation_races_integration_test.go
+ M backend/internal/httpapi/generation_trace.go
+ M backend/internal/httpapi/generation_trace_integration_test.go
+ M backend/internal/httpapi/generation_trace_test.go
+ M backend/internal/httpapi/group_handlers.go
+ M backend/internal/httpapi/inline_mapping_integration_test.go
+ M backend/internal/httpapi/m002_presets_integration_test.go
+ M backend/internal/httpapi/m002_save_state_integration_test.go
+ M backend/internal/httpapi/middleware.go
+ M backend/internal/httpapi/observability_exits_integration_test.go
+ M backend/internal/httpapi/preset_handlers.go
+ M backend/internal/httpapi/preset_preview_handlers.go
+ M backend/internal/httpapi/refund_recovery_integration_test.go
+ M backend/internal/httpapi/response_no_content_integration_test.go
+ M backend/internal/httpapi/server.go
+ M backend/internal/httpapi/stream_boundaries_integration_test.go
+ M backend/internal/maintenance/m002_integration_test.go
+ M backend/internal/maintenance/maintenance.go
+ M backend/internal/observability/generation.go
+ M backend/internal/observability/generation_test.go
+ M backend/internal/platform/config/config.go
+ M backend/internal/platform/config/config_test.go
+ M backend/internal/platform/postgres/migrate.go
+ M compose.yaml
+ M frontend/app/application/admin/configuration.ts
+ M frontend/app/application/admin/presets.ts
+ M frontend/app/application/admin/usage.ts
+ M frontend/app/application/generation/reducer.ts
+ M frontend/app/application/presets/models.ts
+ M frontend/app/application/shared/models.ts
+ M frontend/app/application/shared/ports.ts
+ M frontend/app/assets/css/theme.css
+ M frontend/app/infrastructure/http/mappers/admin-presets-mapper.ts
+ M frontend/app/infrastructure/http/mappers/analytics-mapper.ts
+ M frontend/app/infrastructure/http/mappers/index.ts
+ M frontend/app/infrastructure/http/mappers/presets-mapper.ts
+ M frontend/app/infrastructure/http/mappers/problem-mapper.ts
+ M frontend/app/infrastructure/http/repositories/admin-configuration-repository.ts
+ M frontend/app/infrastructure/http/repositories/admin-presets-repository.ts
+ M frontend/app/infrastructure/http/repositories/api-repository.ts
+ M frontend/app/infrastructure/http/repositories/repository-support.ts
+ M frontend/app/infrastructure/http/schemas/admin-presets.ts
+ M frontend/app/infrastructure/http/schemas/admin.ts
+ M frontend/app/infrastructure/http/schemas/analytics.ts
+ M frontend/app/infrastructure/http/schemas/generation.ts
+ M frontend/app/infrastructure/http/schemas/presets.ts
+ M frontend/app/pages/admin/plans.vue
+ M frontend/app/pages/admin/presets.vue
+ M frontend/app/presentation/components/GenerationWorkspace.vue
+ M frontend/app/runtime/stores/admin-presets.ts
+ M frontend/app/runtime/stores/generation.ts
+ M frontend/design/source-manifest.json
+ M frontend/i18n/locales/en-US.json
+ M frontend/i18n/locales/zh-CN.json
+ M frontend/playwright.config.ts
+ M frontend/scripts/sync-design.mjs
+ M frontend/tests/e2e/m002-admin-presets-fixture.mjs
+ M frontend/tests/e2e/m002-operations-fixture.mjs
+ M frontend/tests/e2e/mock-backend.mjs
+ M frontend/tests/unit/entry-meaning-contract.test.ts
+ M frontend/tests/unit/generation-lifecycle.test.ts
+ M frontend/tests/unit/generation-reducer.test.ts
+ M frontend/tests/unit/generation-refund-contract.test.ts
+ M frontend/tests/unit/generation-stream.test.ts
+ M frontend/tests/unit/m002-admin-contracts.test.ts
+ M nginx/templates/default.conf.template
+?? .planning/milestones/M002/implementation/evidence/frontend-ui26/regression-batch-mobile.png
+?? .planning/milestones/M002/implementation/evidence/frontend-ui26/regression-create-mobile.png
+?? .planning/milestones/M002/implementation/evidence/frontend-ui26/regression-explore-mobile.png
+?? .planning/milestones/M003/
+?? backend/db/migrations/0017_m003_content_review.sql
+?? backend/internal/admin/m003_groups_integration_test.go
+?? backend/internal/ai/capacity_test.go
+?? backend/internal/ai/content_tasks.go
+?? backend/internal/ai/content_tasks_test.go
+?? backend/internal/capacity/
+?? backend/internal/generation/content_frequency.go
+?? backend/internal/generation/content_frequency_integration_test.go
+?? backend/internal/generation/content_outcome.go
+?? backend/internal/generation/content_outcome_test.go
+?? backend/internal/generation/m003_migration_integration_test.go
+?? backend/internal/generation/m003_status_integration_test.go
+?? backend/internal/generation/pipeline.go
+?? backend/internal/generation/pipeline_test.go
+?? backend/internal/generation/status.go
+?? backend/internal/generation/usage_facts_integration_test.go
+?? backend/internal/httpapi/capacity_test.go
+?? backend/internal/httpapi/m003_pipeline_integration_test.go
+?? backend/internal/httpapi/pipeline_cleanup.go
+?? backend/internal/httpapi/pipeline_cleanup_test.go
+?? backend/internal/httpapi/usage_facts_integration_test.go
+?? backend/internal/platform/postgres/m003_migration_integration_test.go
+?? compose.production.yaml
+?? docs/
+?? frontend/playwright.m003-live.config.ts
+?? frontend/tests/e2e/m003-live.spec.ts
+?? frontend/tests/unit/admin-preview-lifecycle.test.ts
+?? frontend/tests/unit/m003-generation-contract.test.ts

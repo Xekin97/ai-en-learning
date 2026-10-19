@@ -1,0 +1,25 @@
+tar_members: 40 expected=40 unique=40
+tar_member_order_or_set: PASS
+manifest_file_hashes: PASS mismatches=0
+embedded_manifest: PASS
+archive_sha256: 98b0b793a994d8eddc99157a27b13cc3c926a00fc6ec83c2f22e34110d85c506
+manifest_sha256: a8e0b17164d75e989f973eaa0da68e2632932a3ce9f08457c3d1f40005c23402
+protected_inputs: PASS checked=797 changed_or_missing=0
+baseline_delta_current: PASS modified=26 new=9 deleted=0
+isolated_port_3322: CLEAR
+isolated_port_38122: CLEAR
+isolated_port_3300: CLEAR
+isolated_port_38080: CLEAR
+recorded_commands:
+  exit=0 | pnpm exec vitest run tests/unit | implementation checkpoint: 45 files / 449 tests passed
+  exit=0 | pnpm exec vitest run tests/unit/m003-generation-contract.test.ts tests/unit/generation-lifecycle.test.ts tests/unit/content-presentation.test.ts | final accuracy delta: 3 files / 46 tests passed
+  exit=0 | pnpm exec playwright test tests/e2e/m003-cr310-regenerate.spec.ts --project=desktop --workers=1 | 5 passed
+  exit=0 | pnpm exec playwright test --config playwright.cr312.config.ts | 5 passed / 5 deliberate project skips (not rerun for test-only accuracy delta)
+  exit=0 | pnpm exec eslint --no-error-on-unmatched-pattern <35 gate102-delta paths> | 0 errors / 4 ignored CSS-JSON warnings
+  exit=0 | pnpm exec eslint tests/unit/m003-generation-contract.test.ts tests/unit/generation-lifecycle.test.ts tests/unit/content-presentation.test.ts | final accuracy delta: 0 errors / 0 warnings
+  exit=0 | pnpm lint:boundaries | 268 modules / 298 dependencies / 0 violations
+  exit=0 | pnpm exec prettier --check <35 gate102-delta paths> | all matched files formatted
+  exit=0 | pnpm exec prettier --check <3 accuracy test files> | all matched files formatted
+  exit=0 | pnpm typecheck | rerun after accuracy delta: 0 diagnostics
+  exit=0 | pnpm build | Nuxt client/server/Nitro build complete before test-only accuracy delta
+overall: PASS

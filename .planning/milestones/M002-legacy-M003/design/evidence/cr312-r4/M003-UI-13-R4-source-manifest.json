@@ -1,0 +1,50 @@
+{
+  "version": "M003-UI-13-R4",
+  "authorization": "USER-M003-UI13-TYPING-20261013",
+  "status": "awaiting_user_review",
+  "archive": "M003-UI-13-R4-source.tar.gz",
+  "archive_sha256": "d379800b172c4b87b92594a4d87e8dc2a0f6e87f4596d85ebfc6847c9f129eae",
+  "source_files": {
+    "design/design-spec.md": "22c488f5155b1affd6ecae70cef1f151da8c4dc0391dd4e0cd258fceaad6ee2c",
+    "design/copy.json": "f9e011d22d65c6c56b1066f114c2dd8ccabfa3187c0831ade2cd8ef004ee9308",
+    "design/theme.css": "18688b1e2ee23ddef06e3c1046ee5d0d5ae9979b6c97dbec95f7879de3c9eb0e",
+    "design/prototype/index.html": "ffdc4c8574bc065d52ab479a87687f1d7c8dbcdbdb619c393235eea068f6a9fd",
+    "design/prototype/app.js": "6c934c190eb3afd2ea8af1cdeeaf55f40044a3e42a4783d36a0eb1d1a26b5464",
+    "design/prototype/fixtures.json": "c4e0b7cecd7e836311ebe7e562f18a5f4c4b2b18d2d4432e417be099140aefe3",
+    "design/fixtures/ui13-r3-bookshop.json": "c96d66d78f63769aa0f2aef4fbacb84e07cee40d4c7f1db4345193a9ead48e7a",
+    "design/interactions.md": "b6ceb1636799ee042d1585c82d57fba3cbd706bf448eda543c22dde7fda74473",
+    "design/responsive-accessibility.md": "ff44d8fd45524e7a22960ed0c65900195b716901d02b2ec427c0e05f6045ce1a",
+    "handoffs/uiux.md": "d958a4d56b8c3188ff2b396df0c4e0941a8ce76acf507384f82d6abf509178e9",
+    "changes/CR-312.md": "c0ff95904328da88e5f0caf3e4f46075b70b3620ca3d9a4f3f7e6942dc2c042b"
+  },
+  "evidence_files": {
+    "design/evidence/cr312-r4/before.tar.gz": "a0361c8bf2c678587b24f48128c9fff9d8055e0a00c2cea14ce3ca318acfecb8",
+    "design/evidence/cr312-r4/before-manifest.json": "31deb32bee0df01d37810b201f5c22905056c35c50d617307f8fb66d61102a66",
+    "design/evidence/cr312-r4/typing-check.mjs": "976391357282abebd3a082289ec7e9f714faf2d26ba252d2fe4f55e07b15818f",
+    "design/evidence/cr312-r4/M003-UI-13-R4-typing.json": "d1f91f46ba384b04fa546283675fc6b1ad808607ca4e1c4cc79d8adc61a7fcc5",
+    "design/evidence/cr312-r4/typing-scheduler-check.mjs": "f7514451f27094a902ccac9c61ca5152c81ebd1306386941583f6ff0b7b6e196",
+    "design/evidence/cr312-r4/M003-UI-13-R4-scheduler-fix.json": "d8fdc513884825d888d3360a95bb0db4870f2dc7d0307f291d1996f53fe55dc8",
+    "design/evidence/cr312-r4/scheduler-fix-run-01-failed.json": "b7311f602be6e1c4f165b399e24741ad303c80beb7ca0be092c79903dda8cc81",
+    "design/evidence/cr312-r4/scheduler-fix-run-02-failed.json": "4cd5b08b736e1b77aebda97c4b23fbff232ef6ab49c7417fe69e29b4cc6d131c",
+    "design/evidence/cr312-r4/source-check.json": "154b9bc8cdc8bc9f7d5ab58292ea736e9837a782b22903911d1e2bdf27b10d29",
+    "design/evidence/cr312-r4/source-check-run-01-failed.txt": "a9e480f815598a62c7b3b9f47491ab49baf1d6b8deb3857ccd3326386dda7e51",
+    "design/evidence/cr312-r4/01-initial-typing-desktop-zh.png": "939bcfced55dba8a8f5f83dd6c972bd1adbf3cc25cded9562d605c2e0cbd2ebb",
+    "design/evidence/cr312-r4/02-initial-typing-mobile-en-page212.png": "9d62c856a6e8911bcf12f0f344745a6d11281b88916212d083825c882fa48636"
+  },
+  "verification": {
+    "typing_lifecycle": "6/6 PASS",
+    "scheduler_fix": "5/5 PASS",
+    "source_check": "10/10 PASS",
+    "console_errors": 0,
+    "provider_calls": 0,
+    "visual_inspection": "2/2 representative captures inspected",
+    "prior_evidence": "UI13/R1/R2/R3 frozen and reused"
+  },
+  "timing_contract": {
+    "base_graphemes_per_second": 36,
+    "catch_up_budget_ms": 650,
+    "paint_tolerance": "one browser render frame",
+    "scheduler": "one requestAnimationFrame loop; at most one DOM patch per frame"
+  },
+  "scope_note": "R4 changes only the design preview typing presenter and current design guidance. Application frontend/backend/API/DB/model/BE08 fixtures/real UAT are unchanged."
+}

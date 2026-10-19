@@ -15,12 +15,12 @@ func TestProsePromptGuidanceAcrossConfigurations(t *testing.T) {
 				spec := GenerationSpec{Entries: []string{"deteriorate", "undermine"}, MeaningLanguage: language, Scenario: scenario, MinimumWords: minimum}
 				prompt := systemPrompt(spec)
 				for _, rule := range []string{
-					"without a title or heading", "Aim near target_words", "not an upper limit",
-					"Before closing the passage string, cover every entry",
-					"at least minimum_words English words excluding annotations",
-					"give the passage a natural ending", `paragraphs with \n\n inside the JSON string`,
-					"Start and end the passage without whitespace",
-					"deteriorate(deteriorate) over time; undermine(undermine) confidence",
+					"No heading, no outer whitespace", "target_words is guidance, not a maximum",
+					"Include every exact selected entry through a natural word form",
+					"Reach minimum_words excluding inline labels",
+					"Separate sentences with spaces and paragraphs with JSON-escaped newlines",
+					"Use the paragraph structure that fits the text",
+					"young(young), grapes(grape), enforced(enforce), vulnerability(vulnerable)",
 					entryMeaningInstruction,
 				} {
 					if !strings.Contains(prompt, rule) {

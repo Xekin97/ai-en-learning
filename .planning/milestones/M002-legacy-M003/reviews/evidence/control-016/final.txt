@@ -1,0 +1,59 @@
+门禁结论：**通过一次 `recover-or-rollback` 接续到技术设计，激活 `backend-alex`。** 这不是 UI04 批准、UAT 接受、实施授权，亦不创建或批准 BE03。
+
+- 当前：M003 / `uiux-design` / `gatekeeper-owen` / active
+- 目标：M003 / `technical-design` / `backend-architect/base` / `backend-alex` / active
+- 建议迁移：`TRANSITION-M003-017`
+- 授权：`USER-M003-STREAM-FIRST` 已明确指定“后台流设计先行，再更新原型”。
+- 合法性：`uiux-design → technical-design` 已允许；`backend-architect/base` 属于 Profile 1.0 的技术设计角色；`backend-alex` 已注册且名称校验通过。
+- 技术设计八项必需原件均存在；未审源码、未运行测试。
+
+原始依据：[用户 STREAM-FIRST 决定](</Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/.planning/milestones/M003/reviews/requirements-feedback.md:95>)、[BE02 交接](</Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/.planning/milestones/M003/handoffs/backend-architecture.md:1>)、[UI04 待审交接](</Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/.planning/milestones/M003/handoffs/uiux.md:1>)、[TECH-02 门禁](</Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/.planning/milestones/M003/reviews/technical-design-012.md:1>)。
+
+宿主应机械写入的精确状态变更：
+
+```yaml
+stage: technical-design
+active_role: backend-architect/base
+active_agent: backend-alex
+status: active
+required_artifacts:
+  - .planning/milestones/M003/technical/database.md
+  - .planning/milestones/M003/technical/backend.md
+  - .planning/milestones/M003/technical/api/index.md
+  - .planning/milestones/M003/technical/frontend.md
+  - .planning/milestones/M003/technical/ai-integration.md
+  - .planning/milestones/M003/handoffs/database.md
+  - .planning/milestones/M003/handoffs/backend-architecture.md
+  - .planning/milestones/M003/handoffs/frontend-architecture.md
+allowed_transitions: [implementation, product-planning, uiux-design]
+current_handoff: .planning/milestones/M003/handoffs/backend-architecture.md
+```
+
+受影响批准字段应只标记重开，不改写冻结原件：
+
+```yaml
+backend_approval:
+  version: M003-BE-02
+  status: reopened_for_stream_first_redesign
+technical_approval:
+  version: M003-TECH-02
+  status: reopened_for_backend_stream_first_redesign
+  components:
+    database: M003-DB-02
+    backend: M003-BE-02
+    frontend: M003-FE-01
+  frontend_design_dependency: FE01 mapping and UI04 require recheck after revised public-stream contract
+design_approval:
+  version: M003-UI-03
+  status: reopened_for_full_page_design
+  user_visual_review: revision_requested_by_USER-M003-STREAM-FIRST
+design_submission:
+  version: M003-UI-04
+  status: revision_requested
+```
+
+保留不变：UI04 源码快照、BE02/FE01/TECH-02 冻结记录、后端待审实现提交及全局开放项 `CR039-L1`、`CR042-L1`、`AI-QUALITY-90`、`W01`、`QA26-MINIMAX`。
+
+待后端架构师处理：公开流事件与内部审校/返修实际关系、正文/释义版本一致性、完成/保存/中断/故障语义；不得新增成本、权益或业务计次变更。随后才交 `designer-tony` 依据新流契约修订 UI04，且仍须用户视觉评审。
+
+已改路径：无（只读控制检查）。建议宿主写入报告：[backend-stream-first-016.md](</Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/.planning/milestones/M003/reviews/backend-stream-first-016.md>)。

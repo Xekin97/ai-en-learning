@@ -1,0 +1,41 @@
+{
+  "generated_at": "2026-10-14T12:00:58.964995+08:00",
+  "status": "READY_FOR_USER_UAT",
+  "origin": "http://127.0.0.1:3015",
+  "create_url": "http://127.0.0.1:3015/create",
+  "admin_models_url": "http://127.0.0.1:3015/admin/models",
+  "accounts_file": "/tmp/wordweave-m003-uat-real-003/uat-accounts.json",
+  "provider_mode": "real_only",
+  "mock_services": 0,
+  "api_interception": false,
+  "models": [
+    {
+      "display_name": "DeepSeek V4 Flash",
+      "provider_model_id": "deepseek/deepseek-v4.1-flash",
+      "provider_name": "OpenRouter｜真实 UAT",
+      "enabled": true
+    },
+    {
+      "display_name": "mimo-v2.6-pro",
+      "provider_model_id": "mimo-v2.6-pro",
+      "provider_name": "MiMo Token Plan",
+      "enabled": true
+    },
+    {
+      "display_name": "mimo-v2.6-flash",
+      "provider_model_id": "mimo-v2.6-flash",
+      "provider_name": "MiMo Token Plan",
+      "enabled": true
+    }
+  ],
+  "version": "M003 CR-311/312 QA07 tested refresh",
+  "user_uat": "NOT RUN",
+  "real_generation_during_preparation": false,
+  "provider_probe_during_preparation": false,
+  "provider_call_ledger": "23 before / 23 after; exact hash unchanged",
+  "quality_score": null,
+  "notes": [
+    "Only the user should click Generate or Generate preview; those actions call the saved real provider and may incur cost.",
+    "Q02/content repair is conditional on natural provider output; do not inject failures or expect a rejection."
+  ]
+}

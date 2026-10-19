@@ -22,8 +22,14 @@ import {
   previewValidatedSchema,
   previewFailedSchema,
   previewCancelledSchema,
+  previewProgressSchema,
+  previewPlanItemSchema,
+  previewActivitySchema,
+  previewDraftSchema,
+  previewEditSchema,
+  previewSettlementPendingSchema,
+  previewStatusEnvelopeSchema,
 } from "../schemas/admin-presets";
-import { passageDeltaEventSchema } from "../schemas/generation";
 import {
   mapAdminGenerationOptions,
   mapAdminPreset,
@@ -34,6 +40,7 @@ const key = (id: string) => "preset-preview:" + id;
 const path = (id: string) => "/api/v1/admin/presets/" + encodeURIComponent(id);
 const encode = (input: PresetInputModel) => ({
   title: input.title,
+  preview_content_mode: input.previewContentMode,
   configuration: {
     model_id: input.configuration.modelId,
     entries: [...input.configuration.entries],
@@ -103,7 +110,6 @@ export function createAdminPresetsRepository(
         init("POST", {
           draft_version: draftVersion,
           expected_revision: expectedRevision,
-          confirmed: true,
         }),
         id,
       ),
@@ -128,9 +134,43 @@ export function createAdminPresetsRepository(
         )
       ).data.status;
     },
+    async getPresetPreviewStatus(id, signal) {
+      const headers = new Headers({
+        "x-preview-token": vault.confirmation(key(id)),
+      });
+      const data = (
+        await json(
+          transport,
+          "/api/v1/admin/preset-previews/" + encodeURIComponent(id) + "/status",
+          previewStatusEnvelopeSchema,
+          signal ? { headers, signal } : { headers },
+        )
+      ).data;
+      if (data.preview_run_id !== id) throw contractFailure();
+      const common = {
+        runId: data.preview_run_id,
+        draftVersion: data.draft_version,
+        mode: data.preview_content_mode,
+        usage: mapUsage(data.usage),
+      };
+      if (data.status === "active") return { ...common, status: "active" };
+      if (data.status === "failed" || data.status === "cancelled")
+        return { ...common, status: data.status };
+      return {
+        ...common,
+        status: "valid",
+        finalContentVersion: data.final_content_version!,
+        result: data.result ? mapGenerationResultDto(data.result) : null,
+        contentOutcome: data.content_outcome as Exclude<
+          typeof data.content_outcome,
+          null | "failed" | "cancelled"
+        >,
+        completionNotice: data.completion_notice,
+      };
+    },
     clearPresetPreview: (id) => vault.setConfirmation(key(id), null),
-    streamPresetPreview: (id, version, onEvent, signal) =>
-      streamPreview(transport, vault, id, version, onEvent, signal),
+    streamPresetPreview: (id, version, mode, onEvent, signal) =>
+      streamPreview(transport, vault, id, version, mode, onEvent, signal),
     async listPresetPreviewUsage(startDate, endDate, cursor) {
       const query = new URLSearchParams({
         start_date: startDate,
@@ -165,6 +205,7 @@ async function streamPreview(
   vault: TokenVault,
   id: string,
   version: string,
+  mode: "basic" | "enhanced",
   onEvent: (event: PreviewEventModel) => void,
   signal: AbortSignal,
 ) {
@@ -176,7 +217,10 @@ async function streamPreview(
       "content-type": "application/json",
       "x-csrf-token": vault.csrf(),
     },
-    body: JSON.stringify({ draft_version: version }),
+    body: JSON.stringify({
+      draft_version: version,
+      preview_content_mode: mode,
+    }),
   });
   if (!response.ok) throw await problemFromResponse(response);
   const requestId = response.headers.get("x-request-id"),
@@ -190,46 +234,147 @@ async function streamPreview(
   }
   let runId: string | null = null,
     terminal = false,
-    parseError: ReturnType<typeof normalizeFailure> | null = null;
+    parseError: ReturnType<typeof normalizeFailure> | null = null,
+    previousEvent: string | null = null,
+    previousWire: string | null = null;
   const parser = createParser({
-    maxBufferSize: 1_048_576,
+    maxBufferSize: 32 * 1_048_576,
     onError() {
       if (!terminal) parseError = invalid();
     },
     onEvent(message) {
       if (terminal || parseError) return;
       try {
+        const eventName = message.event ?? "";
+        const raw: unknown = JSON.parse(message.data);
+        const wire = `${eventName}\n${JSON.stringify(raw)}`;
         if (
-          (runId === null && message.event !== "preview.started") ||
-          (runId !== null && message.event === "preview.started")
+          runId !== null &&
+          eventName === "preview.started" &&
+          previousEvent === "preview.started" &&
+          previousWire === wire
+        )
+          return;
+        if (
+          (runId === null && eventName !== "preview.started") ||
+          (runId !== null && eventName === "preview.started")
         )
           throw invalid();
-        const raw: unknown = JSON.parse(message.data);
         let event: PreviewEventModel;
-        switch (message.event) {
+        switch (eventName) {
           case "preview.started": {
             const d = previewStartedSchema.parse(raw);
+            if (d.draft_version !== version || d.preview_content_mode !== mode)
+              throw invalid();
             runId = d.preview_run_id;
             vault.setConfirmation(key(runId), d.preview_token);
-            event = { kind: "started", runId };
-            break;
-          }
-          case "passage.delta":
             event = {
-              kind: "delta",
-              text: passageDeltaEventSchema.parse(raw).text,
+              kind: "started",
+              seq: d.seq,
+              runId,
+              streamId: d.stream_id,
+              draftVersion: d.draft_version,
+              mode: d.preview_content_mode,
+              contentService: {
+                nativeValidation: true,
+                contentReviewEnabled: d.content_service.content_review_enabled,
+                contentRepairLimit: d.content_service.content_repair_limit,
+              } as Extract<
+                PreviewEventModel,
+                { kind: "started" }
+              >["contentService"],
+              nativeCorrectionPolicy: {
+                version: d.native_correction_policy.version,
+                scope: d.native_correction_policy.scope,
+                maxCalls: d.native_correction_policy.max_calls,
+                editable: d.native_correction_policy.editable,
+              },
             };
             break;
+          }
+          case "preview.progress": {
+            const d = previewProgressSchema.parse(raw);
+            event = { kind: "progress", seq: d.seq, phase: d.phase };
+            break;
+          }
+          case "preview.plan_item": {
+            const d = previewPlanItemSchema.parse(raw);
+            event = {
+              kind: "plan_item",
+              seq: d.seq,
+              planId: d.plan_id,
+              meaningLanguage: d.meaning_language,
+              item: d.item,
+            };
+            break;
+          }
+          case "preview.activity": {
+            const d = previewActivitySchema.parse(raw);
+            event = { kind: "activity", seq: d.seq, activity: d.activity };
+            break;
+          }
+          case "preview.draft": {
+            const d = previewDraftSchema.parse(raw);
+            const common = {
+              kind: "draft" as const,
+              seq: d.seq,
+              draftId: d.draft_id,
+              contentVersion: d.content_version,
+              baseRev: d.base_rev,
+            };
+            if (d.action === "begin")
+              event = { ...common, action: "begin", mode: d.mode };
+            else if (d.action === "paragraph_complete")
+              event = {
+                ...common,
+                action: "paragraph_complete",
+                paragraphIndex: d.paragraph_index,
+              };
+            else if (d.action === "body_complete")
+              event = {
+                ...common,
+                action: "body_complete",
+                bodyLength: d.body_length,
+                paragraphCount: d.paragraph_count,
+              };
+            else event = { ...common, action: "discard" };
+            break;
+          }
+          case "preview.edit": {
+            const d = previewEditSchema.parse(raw);
+            event = {
+              kind: "edit",
+              seq: d.seq,
+              draftId: d.draft_id,
+              contentVersion: d.content_version,
+              baseRev: d.base_rev,
+              rev: d.rev,
+              at: d.at,
+              deleteCount: d.delete_count,
+              insert: d.insert,
+              source: d.source,
+            };
+            break;
+          }
           case "preview.validated": {
             const d = previewValidatedSchema.parse(raw);
-            if (d.preview_run_id !== runId || d.draft_version !== version)
+            if (
+              d.preview_run_id !== runId ||
+              d.draft_version !== version ||
+              d.preview_content_mode !== mode
+            )
               throw invalid();
             event = {
               kind: "validated",
+              seq: d.seq,
               runId: d.preview_run_id,
               draftVersion: d.draft_version,
               result: mapGenerationResultDto(d.result),
               usage: mapUsage(d.usage),
+              mode: d.preview_content_mode,
+              finalContentVersion: d.final_content_version,
+              contentOutcome: d.content_outcome,
+              completionNotice: d.completion_notice,
             };
             terminal = true;
             break;
@@ -238,6 +383,7 @@ async function streamPreview(
             const d = previewFailedSchema.parse(raw);
             event = {
               kind: "failed",
+              seq: d.seq,
               code: d.code,
               retryable: d.retryable,
               requestId: d.request_id,
@@ -246,14 +392,28 @@ async function streamPreview(
             break;
           }
           case "preview.cancelled":
-            previewCancelledSchema.parse(raw);
-            event = { kind: "cancelled" };
+            event = {
+              kind: "cancelled",
+              seq: previewCancelledSchema.parse(raw).seq,
+            };
             terminal = true;
             break;
+          case "preview.settlement_pending": {
+            const d = previewSettlementPendingSchema.parse(raw);
+            event = {
+              kind: "settlement_pending",
+              seq: d.seq,
+              requestId: d.request_id,
+            };
+            terminal = true;
+            break;
+          }
           default:
             throw invalid();
         }
         onEvent(event);
+        previousEvent = eventName;
+        previousWire = wire;
       } catch (error) {
         parseError = { ...normalizeFailure(error), requestId };
       }
@@ -288,6 +448,8 @@ async function streamPreview(
     signal.removeEventListener("abort", abort);
     await reader.cancel().catch(() => {});
     reader.releaseLock();
-    if (runId) vault.setConfirmation(key(runId), null);
+    if (runId && terminal) {
+      // Keep valid/pending capabilities for the required status/readback path.
+    }
   }
 }

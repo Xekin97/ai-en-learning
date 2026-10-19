@@ -6,11 +6,66 @@ const props = defineProps<{
   closeLabel?: string;
   notice?: boolean;
   bodyKey?: string | undefined;
+  dialogClass?: string;
+  closeDisabled?: boolean;
+  backdropCloseDisabled?: boolean;
+  initialFocus?: string;
+  returnFocus?: () => HTMLElement | null;
 }>();
 const emit = defineEmits<{ close: []; shown: [key: string | undefined] }>();
 const dialog = ref<HTMLDialogElement | null>(null);
 const feedback = useFeedbackStore();
 let opener: HTMLElement | null = null;
+const focusableSelector = [
+  "a[href]",
+  "button:not([disabled])",
+  "input:not([disabled]):not([type='hidden'])",
+  "select:not([disabled])",
+  "textarea:not([disabled])",
+  "details > summary:first-of-type",
+  "[contenteditable='true']",
+  "[tabindex]:not([tabindex^='-'])",
+].join(",");
+
+function focusableTargets(el: HTMLDialogElement) {
+  return [...el.querySelectorAll<HTMLElement>(focusableSelector)].filter(
+    (target) =>
+      target.tabIndex >= 0 &&
+      !target.matches(":disabled") &&
+      target.getClientRects().length > 0 &&
+      !target.closest("[inert], [aria-hidden='true']"),
+  );
+}
+
+function trapFocus(event: KeyboardEvent) {
+  const el = dialog.value;
+  if (event.key !== "Tab" || !el?.open || feedback.host.value !== el) return;
+  const targets = focusableTargets(el),
+    first = targets[0],
+    last = targets.at(-1),
+    active = document.activeElement,
+    activeIndex = active instanceof HTMLElement ? targets.indexOf(active) : -1;
+  if (!first || !last) {
+    event.preventDefault();
+    return;
+  }
+  if (event.shiftKey ? activeIndex <= 0 : activeIndex < 0 || active === last) {
+    event.preventDefault();
+    (event.shiftKey ? last : first).focus();
+  }
+}
+
+function restoreOpener() {
+  const target = props.returnFocus?.() ?? opener,
+    parentDialog = target?.closest("dialog");
+  if (
+    target?.isConnected &&
+    !target.matches(":disabled") &&
+    (!parentDialog || parentDialog.open)
+  )
+    target.focus({ preventScroll: true });
+}
+
 async function syncOpen() {
   await nextTick();
   const el = dialog.value;
@@ -23,12 +78,18 @@ async function syncOpen() {
     el.showModal();
     feedback.modal(el, true);
     emit("shown", props.bodyKey);
+    await nextTick();
+    const target = props.initialFocus
+      ? el.querySelector<HTMLElement>(props.initialFocus)
+      : focusableTargets(el)[0];
+    target?.focus({ preventScroll: true });
   }
   if (!props.open && el.open) {
     feedback.modal(el, false);
     await nextTick();
     el.close();
-    if (opener?.isConnected) opener.focus();
+    await nextTick();
+    restoreOpener();
   }
 }
 watch(() => props.open, syncOpen);
@@ -46,7 +107,12 @@ onBeforeUnmount(() => {
   if (dialog.value) feedback.modal(dialog.value, false);
 });
 function backdrop(event: MouseEvent) {
-  if (event.target === event.currentTarget) emit("close");
+  if (
+    event.target === event.currentTarget &&
+    !props.closeDisabled &&
+    !props.backdropCloseDisabled
+  )
+    emit("close");
 }
 </script>
 <template>
@@ -54,16 +120,18 @@ function backdrop(event: MouseEvent) {
     ><dialog
       :id="id"
       ref="dialog"
-      :class="{ 'notice-dialog': notice }"
+      :class="[dialogClass, { 'notice-dialog': notice }]"
       :aria-labelledby="`${id}-dialog-title`"
-      @cancel.prevent="emit('close')"
+      @cancel.prevent="!closeDisabled && emit('close')"
       @click="backdrop"
+      @keydown="trapFocus"
     >
       <button
         class="btn quiet dialog-close"
         type="button"
+        :disabled="closeDisabled"
         :aria-label="$t('common.close')"
-        @click="emit('close')"
+        @click="!closeDisabled && emit('close')"
       >
         <template v-if="closeLabel">{{ closeLabel }}</template>
         <AppIcon v-else name="x" />

@@ -1,0 +1,131 @@
+{
+  "version": "M003-UI-13-R4",
+  "scope": "Initial append typing presenter only: real-time growth, 650ms catch-up, immediate terminal flush/cancel, replay isolation, reduced motion, and shared 390px PAGE-212 observation. R3 content and R2 revision motion are reused.",
+  "timing_contract": {
+    "base_graphemes_per_second": 36,
+    "max_visual_lag_ms": 650,
+    "scheduler": "one requestAnimationFrame loop; one DOM patch per frame at most"
+  },
+  "provider_calls": 0,
+  "checks": [
+    {
+      "name": "R4-01-two-time-growth-and-catchup",
+      "passed": true,
+      "details": {
+        "first_count": 9,
+        "second_count": 27,
+        "first_target_count": 102,
+        "firstMeta": {
+          "state": "running",
+          "shown": 10,
+          "received": 102,
+          "cursor": true,
+          "busy": "true"
+        },
+        "secondMeta": {
+          "state": "running",
+          "shown": 28,
+          "received": 102,
+          "cursor": true
+        },
+        "caught": {
+          "elapsed_ms": 644,
+          "event": 14,
+          "text": "Mia liked to wander through the old town. One morning, she heard a gentle voice from a small bookshop.\nShe grew curious and stepped inside.",
+          "meta": {
+            "shown": 140,
+            "received": 140,
+            "cursor": false,
+            "busy": false
+          },
+          "text_count": 139
+        }
+      }
+    },
+    {
+      "name": "R4-02-body-and-valid-flush-immediately",
+      "passed": true,
+      "details": {
+        "body": {
+          "text": "Mia liked to wander through the old town. One morning, she heard a gentle voice from a small bookshop.\n\nShe grew curious and stepped inside.\n\nWith steady practice in the shop's writing group, she learned to weave everyday moments into stories.\n\nTo her delight, the bookshop soon felt like home.",
+          "cursor": 0,
+          "state": "flushed",
+          "text_matches": true
+        },
+        "valid": {
+          "text": "Mia loved to wander through the old town. One morning, a gentle voice called from a tiny bookshop.\n\nShe grew curious and stepped inside.\n\nWith steady practice in its writing group, she learned to weave small moments into stories.\n\nTo her delight, the little shop soon felt like home.",
+          "cursor": 0,
+          "settingsDisabled": false,
+          "action": "generate",
+          "text_matches": true
+        }
+      }
+    },
+    {
+      "name": "R4-03-cancel-and-replay-isolation",
+      "passed": true,
+      "details": {
+        "before_cancel_count": 15,
+        "cancelledImmediate": {
+          "state": "cancelled",
+          "typing": 0,
+          "draft": 0,
+          "event": 0
+        },
+        "cancelledLater": {
+          "state": "cancelled",
+          "typing": 0,
+          "draft": 0,
+          "event": 0
+        },
+        "replay": {
+          "text": "Mia liked to wa",
+          "state": "running",
+          "typing": 1,
+          "text_count": 15
+        }
+      }
+    },
+    {
+      "name": "R4-04-reduced-motion-direct",
+      "passed": true,
+      "details": {
+        "text": "Mia liked to wander through the old town. One morning, she heard a gentle voice from a small bookshop.",
+        "typing": 0,
+        "state": "reduced",
+        "text_matches": true
+      }
+    },
+    {
+      "name": "R4-05-page212-mobile-shared",
+      "passed": true,
+      "details": {
+        "mobileState": {
+          "event": 13,
+          "count": 27,
+          "target": 102,
+          "typing": 1,
+          "overflow": 0,
+          "planUses": 6
+        }
+      }
+    },
+    {
+      "name": "browser-console",
+      "passed": true,
+      "details": {
+        "errors": []
+      }
+    }
+  ],
+  "screenshots": [
+    "01-initial-typing-desktop-zh.png",
+    "02-initial-typing-mobile-en-page212.png"
+  ],
+  "console_errors": [],
+  "summary": {
+    "total": 6,
+    "passed": 6,
+    "failed": 0
+  }
+}

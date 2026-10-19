@@ -1,0 +1,25 @@
+{
+  "recorded_at": "2026-10-14T12:00:59.046502+08:00",
+  "result": "method_issues_resolved",
+  "items": [
+    {
+      "step": "initial backend/frontend post-build hashing",
+      "observation": "backend build and first frontend build completed, but shell locale broke shasum; first frontend build also used the Node22 pnpm shim",
+      "classification": "build method",
+      "resolution": "frontend rebuilt from clean staging with explicit runtime Node24.21; Python SHA-256 manifest generated before switch"
+    },
+    {
+      "step": "initial live API script",
+      "observation": "limit=50 exceeded endpoint maximum20, then the temporary blocked-word list used the wrong catalog",
+      "classification": "fixture/method",
+      "resolution": "limit corrected to20 and exact current 41-entry CR311 catalog verified; canonical 6/6 PASS"
+    },
+    {
+      "step": "initial live browser script",
+      "observation": "expected outdated empty-state copy and queried a nonexistent settings class",
+      "classification": "selector/expectation method",
+      "resolution": "current rendered copy and sibling panel geometry used; canonical 6/6 PASS"
+    }
+  ],
+  "product_defects": []
+}

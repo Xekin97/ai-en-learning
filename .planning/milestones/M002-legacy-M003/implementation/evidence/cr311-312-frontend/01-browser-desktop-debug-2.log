@@ -1,0 +1,47 @@
+
+Running 2 tests using 1 worker
+
+  ✘  1 [desktop] › tests/e2e/m003-cr311-312.spec.ts:46:1 › 1440 Chinese create preserves nodes through typing, repair, and valid (5.7s)
+  -  2 [desktop] › tests/e2e/m003-cr311-312.spec.ts:297:1 › 390 English PAGE212 shares live content and preserves preview readiness
+
+
+  1) [desktop] › tests/e2e/m003-cr311-312.spec.ts:46:1 › 1440 Chinese create preserves nodes through typing, repair, and valid 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 1
+
+    @@ -1,8 +1,8 @@
+      Object {
+        "action": true,
+    -   "focused": true,
+    +   "focused": false,
+        "overflow": true,
+        "paragraph": true,
+        "passage": true,
+        "selection": "They learn together.
+      ",
+
+      281 |       };
+      282 |     }),
+    > 283 |   ).toEqual({
+          |     ^
+      284 |     passage: true,
+      285 |     paragraph: true,
+      286 |     unchanged: true,
+        at /Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/frontend/tests/e2e/m003-cr311-312.spec.ts:283:5
+
+    Error Context: test-results/m003-cr311-312-1440-Chines-24c4b-ugh-typing-repair-and-valid-desktop/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/m003-cr311-312-1440-Chines-24c4b-ugh-typing-repair-and-valid-desktop/trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace test-results/m003-cr311-312-1440-Chines-24c4b-ugh-typing-repair-and-valid-desktop/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [desktop] › tests/e2e/m003-cr311-312.spec.ts:46:1 › 1440 Chinese create preserves nodes through typing, repair, and valid 
+  1 skipped

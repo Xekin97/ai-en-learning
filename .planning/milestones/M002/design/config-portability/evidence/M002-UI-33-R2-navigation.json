@@ -1,0 +1,137 @@
+{
+  "version": "M002-UI-33-R2",
+  "mode": "user-click navigation and dynamic growth category regression",
+  "provider_calls": 0,
+  "configuration_writes": 0,
+  "checks": [
+    {
+      "name": "default-sidebar-models-to-plans-stays-in-formal-host",
+      "passed": true,
+      "details": {
+        "start": {
+          "url": "http://127.0.0.1:4176/formal/?page=models&category=models&portState=idle&lang=zh&state=list",
+          "formal": true,
+          "providers": 3,
+          "actions": 2
+        },
+        "plan": {
+          "url": "http://127.0.0.1:4176/formal/?page=plans&category=plans&lang=zh",
+          "formal": true,
+          "lang": "zh",
+          "tabs": 4,
+          "repair": 1,
+          "actions": 2,
+          "priorityEditor": true,
+          "priorityPreview": 1,
+          "prioritySave": 1,
+          "priorityClosed": true
+        }
+      }
+    },
+    {
+      "name": "browser-back-forward-preserves-formal-host-and-inherited-pages",
+      "passed": true,
+      "details": {
+        "back": {
+          "url": "http://127.0.0.1:4176/formal/?page=models&category=models&portState=idle&lang=zh&state=list",
+          "formal": true,
+          "providers": 3
+        },
+        "forward": {
+          "url": "http://127.0.0.1:4176/formal/?page=plans&category=plans&lang=zh",
+          "formal": true,
+          "tabs": 4
+        }
+      }
+    },
+    {
+      "name": "growth-tabs-map-item-to-items-and-other-tabs-to-complete-growth",
+      "passed": true,
+      "details": {
+        "growthEntry": {
+          "url": "http://127.0.0.1:4176/formal/?page=operations&category=items&lang=zh&state=normal",
+          "formal": true,
+          "selected": "optab:itemsettings",
+          "rows": 4,
+          "actions": 2
+        },
+        "categories": {
+          "itemsettings": "items",
+          "signsettings": "growth",
+          "levelsettings": "growth",
+          "achievementsettings": "growth"
+        }
+      }
+    },
+    {
+      "name": "operations-sidebar-models-returns-to-current-inherited-model-host",
+      "passed": true,
+      "details": {
+        "url": "http://127.0.0.1:4176/formal/?page=models&category=models&lang=zh&state=edit&provider=10000000-0000-4000-8000-000000000001",
+        "formal": true,
+        "editorOpen": true,
+        "protocol": 1
+      }
+    },
+    {
+      "name": "language-switch-and-next-sidebar-route-preserve-formal-host-and-english",
+      "passed": true,
+      "details": {
+        "afterLanguage": {
+          "url": "http://127.0.0.1:4176/formal/?page=plans&category=plans&portState=idle&lang=en",
+          "formal": true,
+          "lang": "en",
+          "title": "Plans",
+          "action": "Import configuration"
+        },
+        "enGrowth": {
+          "url": "http://127.0.0.1:4176/formal/?page=operations&category=items&lang=en&state=normal",
+          "formal": true,
+          "lang": "en",
+          "title": "Growth operations",
+          "action": "Import configuration"
+        }
+      }
+    },
+    {
+      "name": "mobile-sidebar-navigation-keeps-formal-host-without-horizontal-overflow",
+      "passed": true,
+      "details": {
+        "mobilePlan": {
+          "url": "http://127.0.0.1:4176/formal/?page=plans&category=plans&lang=en",
+          "formal": true,
+          "actions": 2,
+          "tabs": 4,
+          "overflow": 0
+        },
+        "mobileGrowth": {
+          "url": "http://127.0.0.1:4176/formal/?page=operations&category=items&lang=en&state=normal",
+          "formal": true,
+          "actions": 2,
+          "overflow": 0
+        }
+      }
+    },
+    {
+      "name": "browser-console-and-page-errors",
+      "passed": true,
+      "details": {
+        "console_errors": [],
+        "page_errors": []
+      }
+    }
+  ],
+  "screenshots": [
+    "R2-01-sidebar-plan-desktop-zh.png",
+    "R2-02-growth-tab-category-desktop-zh.png",
+    "R2-03-language-and-growth-desktop-en.png",
+    "R2-04-sidebar-growth-mobile-en.png"
+  ],
+  "console_errors": [],
+  "page_errors": [],
+  "summary": {
+    "total": 7,
+    "passed": 7,
+    "failed": 0
+  }
+}

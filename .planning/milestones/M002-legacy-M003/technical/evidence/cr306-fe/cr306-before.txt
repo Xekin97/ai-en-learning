@@ -1,0 +1,78 @@
+---
+id: CR-306
+status: open
+milestone: M003
+raised_by: user
+owner_stage: technical-design
+date: 2026-10-12
+---
+
+# 真实模型规划超时与模型推理参数缺失
+
+用户使用游客身份、OpenRouter DeepSeek V4 Flash 0731，持续停留在构思，无词义预览，最终提示服务暂不可用。原请求在规划阶段 180 秒超时，额度退回。
+
+同词组限时重放发现，默认配置持续返回推理、没有正式内容；关闭推理能较快返回，但 prompt 模式输出带 Markdown 围栏，仍不满足结构契约。low 与结构化输出组合在 45 秒观察窗内也未产生正式内容。本问题尚未修复，不能因此前两次短连接检查通过而判定真实业务链路可用。
+
+用户进一步要求调研模型管理中的推理设置。[调研、证据、管理台建议及验证边界](../verification/model-reasoning-research.md)为当前入口。
+
+建议返回技术设计处理模型级配置与供应商能力适配；产品明确管理台交互，设计沿 M002 正式视觉接入。当前是研究建议，未切换阶段，未实施产品/API/数据库变更。
+
+验收需要覆盖完整真实生成、首个业务内容时间与格式有效性；保持已批准的规划任务、套餐审稿权益、两类返修上限及配额语义。保留既有合成环境 QA 证据，不将其扩展为本问题已通过。
+
+
+<a id="cr306-product-repair"></a>
+## 产品处理与修复交接（PRODUCT09 / 2026-10-12 / product-maya）
+
+**当前处理状态：产品定向修订完成，待独立交接；本CR仍open，未实现、未复验。** 原故障/研究正文保持；原文“未切换阶段”描述研究时点，当前已按[TRANSITION-M003-068](../reviews/cr306-custom-parameters-gate-068.md)回溯到product-planning。当前状态只由workflow控制，不由本记录修改。CR-302的保留事项不被本修复关闭。
+
+确认来源：[USER-M003-CR306-REPAIR](../reviews/requirements-feedback.md#cr-306-修复编排user-m003-cr306-repair)及[USER-M003-CUSTOM-PARAMETERS](../reviews/requirements-feedback.md#cr-306-自定义请求参数简化user-m003-custom-parameters)。每模型高级自定义JSON已明确，空对象不追加，管理员按平台文档填写；原PRODUCT08专用模式/强度/自动能力目录候选撤销。受保护字段与既有受控字段冲突、保存0模型调用、同请求快照和原业务保持。无当前业务阻塞；具体名单/合并/大小/存储/错误码交后端定稿，无需逐字段再问。新增业务/费用上限/供应商策略才回用户，新视觉仍须评审。
+产品真源：[D3-10](../product/overview.md#d3-10)、[DATA-306](../product/data-assets.md#data-306)、[CAP-306](../product/abilities.md#cap-306)、[AI故障补充](../product/ai-behavior.md#cr306-reasoning)、[完整页面范围](../product/pages/index.md#cr306-pages)。全部新增验收见 [AC-317–322](../product/abilities.md#cr306-acceptance)，现均未验证。PRODUCT07原件与审批边界保留于[修订前包](../reviews/evidence/cr306-control-066/product-before-cr306.tar.gz)及[清单](../reviews/evidence/cr306-control-066/product-before-manifest.json)；PRODUCT08已存[068冻结包](../reviews/evidence/cr306-control-068/product08-before-custom-parameters.tar.gz)及[清单](../reviews/evidence/cr306-control-068/product08-before-manifest.json)。PRODUCT09只证明本轮方向同步，不批准技术/视觉；BE07旧方向草稿未提交，由backend-alex替换，不当作已接收基线。
+
+### 顺序、责任与完成条件（交接任务，不自行激活角色）
+
+| 顺序 / ID / 状态 | 责任与必需输入 | 应交产物 / 完成条件 |
+|---|---|---|
+| 1 CR306-BE / pending | backend-alex；PRODUCT09、研究/故障原件、现行BE06-R1/API-AI BE06与实施证据 | 先定模型级JSON对象/空对象语义、受保护名单、体积/深度、本地校验、受控字段冲突与合并合同、既有协议参数位置、批量原子保存、统一快照、上游拒绝反馈及无业务内容超时/失败/结算。输出受影响backend/API/AI原件、管理/流式失败fixture和接收说明；明确AC-317–321如何验证。不能放宽格式、跳plan、暗换模型、无限延180秒，不建自动能力目录/专用推理控件或任意URL/headers入口。完成后交DB及完整页设计所需合同；不宣称性能已改善 |
+| 2 CR306-DB / pending | dba-diana；BE已定配置/快照语义、现DB03、USER-M003-NO-DATA-MIGRATION | 只在确有持久化差异时同步未发布schema/约束与数据合同，无差异则给可追踪接收结论。明确空对象默认、JSON合法性、并发保存/快照与原记录关系；验证使用可丢弃空库初始化，不迁移/回填或重置现UAT数据 |
+| 3 CR306-UI / pending | designer-tony；BE字段/状态/fixture、产品页面与AC-322、M002正式设计/当前UI09-R3 | 完整模型管理页原型及受影响造文/预设状态→M002基准正式设计、双语文案/响应式/键盘与前端接收定位。展示JSON编辑/格式/受保护与冲突错误、真实等待、保存与连接/完整预览的区别；向用户展示并记录新视觉评审，之前不得开始对应前端实施 |
+| 4 CR306-FE / pending | frontend-bob；BE/DB定稿、用户接受的新视觉及CAP-306 | 更新前端架构对字段/schema/mapper、JSON编辑/校验、草稿/并发冲突、失败/取消/终态的接收规则；保留原三协议和两类预算。给出可实施范围、文件入口及AC-317/318/320/322覆盖；不自行增加字段透传/覆盖规则或省略设计 |
+| 5 CR306-IMPL / pending | backend-ethan、frontend-claire；各自获接收合同及相应实施门禁 | 按定向合同修改各自源码与本地确定性测试，保存0调用、参数/快照/失败/退款等逐项有证据；前端依新视觉实现完整页面。提交可恢复源码版本、测试命令/结果、未覆盖事项；不破坏他人工作区、现UAT数据/服务，不部署 |
+| 6 CR306-QA / pending | qa-quinn；实施交接、AC-317–322、原失败词组/配置和受支持候选 | 独立核对确定性合同与完整页面；有界真实复验游客原样本完整链路，并针对增强及预设受影响路径复用现有入口验证，记录实际版本/配置/费用unknown。条件返修不超过2轮；单样本失败不无限重试、不扩成质量批次。仅在完整有效生成及相关回归有证据时提出CR关闭建议；短OK/三次规划/合成QA均不算真实修复通过 |
+| 7 CR306-UAT / pending | 用户；独立QA结果及当前可用UAT入口 | 用户重试原场景及配置操作并给验收结论；QA或角色交接不能代用户确认。现UAT故障状态与既有报告保留，由控制流程处理后续状态 |
+
+每一步按既有独立门禁接交；backend先行，不等同跳过UI。后端合同后的DB差异与UI准备可按依赖编排，不让未定字段进入前端实施。上述是修复工作顺序，不是本产品角色批准下游方案或改变Profile阶段图；门禁负责合法单步迁移。
+
+### 保留事实与尚欠证据
+
+- 原UAT规划180秒超时、无plan预览且退额度；原费用和推理用量未知。三个诊断只测规划，关闭推理仍有围栏格式失败，low＋schema又同时改两变量。不得将其合为完整生成成功率或承诺秒数。
+- 待补：可执行技术合同、DB接收、新视觉用户评审、实现、确定性回归、完整真实链路与用户UAT。QA原合成环境通过及CR-304/305结论不因本CR自动失效或覆盖真实故障。
+- 推理设置不改变共同plan/增强固定编辑、同目标模型、两类预算、Q02、取消/退款/DB未知、基础/增强预览和手动发布。无需新增监控平台、能力市场、阶段参数矩阵、历史迁移或性能SLA。
+
+<a id="cr306-backend-repair"></a>
+## 后端处理与接续（BE07 / 2026-10-12 / backend-alex）
+
+CR306-BE当前为**设计已交付、待独立接收**；不改本CR open，不自批阶段。按PRODUCT09和TRANSITION-M003-069，将未提交typed/目录稿原位替换为每模型custom_parameters对象：保护列表外平台原生扩展透传、16KiB/深度8/重复键与字段冲突拒绝、原子保存0调用、受理同份快照贯穿所有任务。DTO/合并/错误唯一来源[API-306](../technical/api/administration.md#api-306)，三协议及OR结构化业务保护见[AI7](../technical/ai-integration.md#ai7-reasoning)。没有目录或新测试平台，没有放宽Plan/输出schema、预算/180/600/Q02/结算。
+
+[当前交接](../handoffs/backend-architecture.md)与[BE7-DB](../technical/backend.md#be7-db)给DBA最小模型JSONB/两run安全快照语义；[fixtures](../technical/fixtures/cr306/index.json)给完整页面设计。当前产品责任表中的CR306-BE/pending是产品交付时点，后端本记录更新为待接收；其他CR306-DB/UI/FE/IMPL/QA/UAT尚未完成，原任务顺序不变。新视觉仍需用户评审，参数实际效果/完整生成均未证实。
+
+本轮仅静态合同与fixture检查，见[check.json](../technical/evidence/cr306/check.json)；无代码/DB/浏览器/真实模型调用，未更改3013配置/数据/服务。067已接收原件、068未提交候选以及原真实失败/研究证据保留。原失败样本完整真实复验由后续QA按AC321接续，不能将连接测试或off围栏规划记为修复成功。
+
+<a id="cr306-database-repair"></a>
+## 数据库处理与接续（DB04 / 2026-10-12 / dba-diana）
+
+CR306-DB当前为**定向设计已交付、待独立接收**；本CR仍open。按070激活、PRODUCT09与BE07接收最小三列：模型custom_parameters默认{}、两run完整不可变版本化安全包；[DB04](../technical/database.md#db4-cr306)明确API严格校验/DB对象与组合约束分工、原CAS和受理原子性、读权限/删除及精确未发布schema实施接点。API可表达而JSONB不可无损存储的U+0000边界已由backend-alex在API-306明确为入库前安全422拒绝，DB已接收，无当前合同阻塞；未由DBA代改API或静默替换。
+
+[当前交接](../handoffs/database.md)及[静态证据](../technical/evidence/cr306-db/check.json)为原件。写入前核对DB03两文件与冻结包；没有应用/DDL/数据库/模型调用，也未改变现3013 UAT配置、数据、服务。USER-M003-NO-DATA-MIGRATION取代旧升级/回填建议；后续仅可丢弃空库验证。无新usage列/表/目录/MQ，同模型、Plan/增强流程、两预算、180/600、Q02/扣退次/DB未知保持。
+
+产品责任表CR306-DB/pending为产品交付时点，本DB段提供当前接收状态；UI/FE/实施/QA/真实完整链路/用户UAT均未完成。建议独立接收后交designer-tony做完整页面与M002正式视觉并请用户评审，不自批后续阶段或关闭既有事项。
+
+<a id="cr306-ui-repair"></a>
+## UI/UX 处理与接续（UI10-R1 / 2026-10-12 / designer-tony）
+
+**整改覆盖（USER-M003-UI10-MODAL-REWORK）：** 用户否定 UI10 的 PAGE-208 弹窗交付；原型仅有 `<dialog open>`、不在 top layer，原 UI10 受影响视觉/交互及其模态通过解释立即失效。旧 `design/evidence/cr306/` 和 `M003-UI-10-source.tar.gz` 保留不覆盖，不能实施。当前同一 `uiux-design / designer-tony` 已以 UI10-R1 重做真实 `showModal()`、遮罩、背景隔离、内部滚动、固定 footer、脏确认、焦点约束/恢复及新增/编辑/多模型交互；新证据只进入 `design/evidence/cr306-r1/`。CR-306 继续 open，阶段不变。
+
+CR306-UI 已完成**完整页面交互原型与 M002 基准正式设计，等待用户视觉评审**；本 CR 继续 `open`，未实施、未真实复验。依据 PRODUCT09、BE07/API-306、DB04、071 门禁与 `USER-M003-CUSTOM-PARAMETERS`，PAGE-208 保留现有服务商分组和完整模型表单，只在每模型高级选项加入自定义请求参数 JSON；`{}` 不追加，按供应商文档填写。专用推理 mode/effort 和能力目录旧方向退出。最大输出 tokens 与结构化输出仍是专用单一权威字段。
+
+[UI10 规格](../design/design-spec.md)及[交接](../handoffs/uiux.md)覆盖格式/重复键/对象/16KiB/深度8/数值/U+0000、保护字段与既有字段冲突、版本冲突、取消保留、保存成功、保存0模型调用、显式短流 probe、配置修改后旧测试失效。具体错误紧贴 JSON 输入；长保护/格式规则按需展开。PAGE-204/216/212 只复用 BE07 `streams.json` 已有 timeout/fenced/cancelled/pending/preview_timeout，不投影私有推理、不突出审稿/次数、不新造事件；旧 v5、Plan 和未受影响业务保持。
+
+[UI10-R1 浏览器证据](../design/evidence/cr306-r1/modal-rework-browser.json)只有完整执行后才可 PASS，当前为 `completed=true/result=PASS`；[源清单](../design/evidence/cr306-r1/M003-UI-10-R1-source-manifest.json)确认 CR 前 UI09-R3 冻结包 hash 未变并提供 R1 恢复包。现网 AppDialog 只读观察、R1 原型与精确 Vue 接点见 [交接](../handoffs/uiux.md)。原型直接消费合成 fixture，只证明可评审设计，不证明 Vue/API/DB/真实供应商或完整生成已修复。新视觉仍须用户接受；接受后才可由独立门禁交 frontend-bob 更新前端架构/实施。当前不切阶段、不自批视觉、不关闭 CR-306。

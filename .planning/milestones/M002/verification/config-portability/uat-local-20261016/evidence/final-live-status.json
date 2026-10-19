@@ -1,0 +1,39 @@
+{
+  "version": "M002-CR313-UAT-01",
+  "checked_at": "2026-10-16T03:35:28.871424+00:00",
+  "leave_running": true,
+  "http": [
+    {
+      "url": "http://localhost:3016/login",
+      "status": 200,
+      "content_type": "text/html"
+    },
+    {
+      "url": "http://localhost:3016/api/v1/bootstrap",
+      "status": 200,
+      "content_type": "application/json"
+    }
+  ],
+  "tcp": {
+    "3016": true,
+    "3017": true,
+    "43331": true,
+    "63562": true,
+    "39562": true
+  },
+  "processes": {
+    "public_proxy": 30505,
+    "frontend_server": 30406,
+    "backend": 24845,
+    "postgres": 24625
+  },
+  "processes_alive": {
+    "public_proxy": true,
+    "frontend_server": true,
+    "backend": true,
+    "postgres": true
+  },
+  "readiness_smoke_sha256": "036b405b28ba5e0d96cc4352caa5de22862609361a514dc5340795cafc854488",
+  "source_manifest_sha256": "6e3b4308ece4a490ce5a7af225c748c4de3350819dac5fdd9f4ebf43fcf2d615",
+  "user_uat_accepted": false
+}

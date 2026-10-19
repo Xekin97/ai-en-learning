@@ -1,0 +1,31 @@
+{
+  "result": "FAIL",
+  "checks": [],
+  "failures": [
+    {
+      "type": "assertion",
+      "message": "expect(locator).toBeEnabled() failed\n\nLocator:  getByRole('button', { name: 'Generate story', exact: true })\nExpected: enabled\nReceived: disabled\nTimeout:  5000ms\n\nCall log:\n  - Expect \"to.be.enabled\" with timeout 5000ms\n  - waiting for getByRole('button', { name: 'Generate story', exact: true })\n    14 × locator resolved to <button disabled class=\"btn primary\">…</button>\n       - unexpected value \"disabled\"\n"
+    }
+  ],
+  "requests": [
+    {
+      "path": "/api/v1/bootstrap",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/analytics/events",
+      "status": 204
+    },
+    {
+      "path": "/api/v1/vocabulary/search",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/analytics/events",
+      "status": 204
+    }
+  ],
+  "api_interception": false,
+  "mocked_responses": 0,
+  "real_generation_executed": false
+}

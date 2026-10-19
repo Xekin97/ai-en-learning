@@ -1,0 +1,37 @@
+{
+  "version": "M003-BE-06",
+  "previous_document_sha256": {
+    ".planning/milestones/M003/technical/backend.md": "3131734d419eea1e1e66a1ec0305e890d8da9d6a86925343da324575a2fbc898",
+    ".planning/milestones/M003/technical/ai-integration.md": "d05cab109392a57c7f5e8a553b3e2392e5174bfc2fea1e405cc5bd5c49e7b56f",
+    ".planning/milestones/M003/technical/api/index.md": "3f6e6311457472f066f9d20c3b78b16e425a89e3fde3b7a18a9ce2bcb62be41b",
+    ".planning/milestones/M003/technical/api/generation.md": "a458fcb354326013866d3c0cd797bbffaf59a501fbcc9d44d71799b0130df7be",
+    ".planning/milestones/M003/technical/api/administration.md": "bc86dd67374d9f25a95d04cb957729e8bf1ab1480f58f5e399b0de7e46bf1b5e",
+    ".planning/milestones/M003/technical/api/presets.md": "2e6cbbb1c6509a543df5eb7ef517fceeeeb9a99217537a6bd65ab6537016277e",
+    ".planning/milestones/M003/handoffs/backend-architecture.md": "5e36a092a1e885084e5b3aa7686b04c50e8f6966c34abea932cacd9ca9767426"
+  },
+  "before_document_characters": 70644,
+  "event_schema_rows": {
+    ".planning/milestones/M003/technical/api/generation.md": [
+      "| generation.started | `{seq:int,contract_version:\"m003-stream-v5\",stream_id:string,run_id:string,generation_token:string,snapshot:RunSnapshot}` |",
+      "| generation.progress | `{seq:int,phase:planning|composing|finalizing}` |",
+      "| generation.plan_item | `{seq:int,plan_id:string,meaning_language:zh|en|ja,item:PlanPreviewItem}` |",
+      "| generation.edit | `{seq:int,draft_id:string,content_version:V,base_rev:int,rev:int,at:int,delete_count:int,insert:string,source:provider|retained}` |",
+      "| generation.validated | `{seq:int,run_id:string,final_content_version:V,result:Result,content_outcome:ValidContentOutcome,completion_notice:CompletionNotice}` |",
+      "| generation.failed | `{seq:int,code:FailureCode,quota_refunded:true,retryable:bool,request_id:string}` |",
+      "| generation.cancelled | `{seq:int,quota_refunded:false}` |",
+      "| generation.settlement_pending | `{seq:int,code:\"settlement_unconfirmed\",request_id:string}` |"
+    ],
+    ".planning/milestones/M003/technical/api/presets.md": [
+      "| preview.started | `{seq:int,contract_version:\"m003-stream-v5\",stream_id:string,preview_run_id:string,preview_token:string,draft_version:string,preview_content_mode:basic|enhanced,content_service:ContentService,native_correction_policy:NativePolicy}` |",
+      "| preview.progress | `{seq:int,phase:planning|composing|finalizing}` |",
+      "| preview.plan_item | `{seq:int,plan_id:string,meaning_language:zh|en|ja,item:PlanPreviewItem}` |",
+      "| preview.edit | `{seq:int,draft_id:string,content_version:V,base_rev:int,rev:int,at:int,delete_count:int,insert:string,source:provider|retained}` |",
+      "| preview.validated | `{seq:int,preview_run_id:string,draft_version:string,preview_content_mode:basic|enhanced,final_content_version:int[1,3],result:Result,content_outcome:ValidContentOutcome,completion_notice:CompletionNotice,usage:UsageSummary}` |",
+      "| preview.failed | `{seq:int,code:FailureCode,retryable:bool,request_id:string}` |",
+      "| preview.cancelled | `{seq:int}` |",
+      "| preview.settlement_pending | `{seq:int,code:\"settlement_unconfirmed\",request_id:string}` |"
+    ]
+  },
+  "previous_archive": ".planning/milestones/M003/reviews/evidence/control-038/M003-BE-05-R1-source.tar.gz",
+  "previous_archive_sha256": "83ae1df2b695b13eeaf5e6b0476fdac0bb235d3917dd405ec528acefc4387ddd"
+}

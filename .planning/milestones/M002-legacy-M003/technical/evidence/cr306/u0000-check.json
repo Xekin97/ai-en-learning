@@ -1,0 +1,38 @@
+{
+  "version": "M003-BE-07",
+  "scope": "targeted document/fixture consistency only; not runtime JSON validation or PostgreSQL test",
+  "passed": true,
+  "checks": {
+    "fixture_decodes_to_u0000": true,
+    "correct_422_and_safe_pointer": true,
+    "zero_calls_zero_writes": true,
+    "literal_escape_is_not_nul": true,
+    "contract_covers_keys_and_values": true,
+    "no_lossy_replacement": true,
+    "updated_hashes_match": true
+  },
+  "before_archive": ".planning/milestones/M003/technical/evidence/cr306/u0000-before.tar.gz",
+  "before_archive_sha256": "c57d800332c49324a3bdc6502e7557adacb9566ee20881903d8cb949e71c578a",
+  "changed_files": [
+    {
+      "path": ".planning/milestones/M003/technical/api/administration.md",
+      "sha256": "f458a2860d61d51115c8f6f99ee576abf48c0e8e7ce0969b13fe58d25a97de93"
+    },
+    {
+      "path": ".planning/milestones/M003/technical/fixtures/cr306/errors.json",
+      "sha256": "1c20d3b27f8208af55f9f50c2ededda9fa8a8024d3fb86a5cde12700d2207506"
+    },
+    {
+      "path": ".planning/milestones/M003/handoffs/backend-architecture.md",
+      "sha256": "87a37c2fa8fbc3d5407cffb653ec433ed4735c5ae250ec35699140e49cba41db"
+    }
+  ],
+  "old_131_check_preserved": true,
+  "not_executed": [
+    "application",
+    "database",
+    "live provider",
+    "browser",
+    "full 131-item checker"
+  ]
+}

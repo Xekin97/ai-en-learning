@@ -1,0 +1,21 @@
+COMMAND A
+GOTOOLCHAIN=go1.26.7 make generate
+
+RESULT A
+sqlc v1.31.1 generation completed. EXIT 0.
+
+COMMAND B
+GOTOOLCHAIN=go1.26.7 go vet ./... && GOTOOLCHAIN=go1.26.7 go build ./cmd/...
+
+STDOUT B
+(empty)
+
+EXIT B 0
+
+COMMAND C
+git diff --check [owned tracked paths] and gofmt -d [owned untracked Go paths]
+
+STDOUT C
+(empty)
+
+EXIT C 0

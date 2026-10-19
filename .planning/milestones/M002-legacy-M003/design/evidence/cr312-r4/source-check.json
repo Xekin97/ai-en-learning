@@ -1,0 +1,92 @@
+{
+  "version": "M003-UI-13-R4",
+  "authorization": "USER-M003-UI13-TYPING-20261013",
+  "scope": "Current typing source/docs plus bounded lifecycle and scheduler evidence. Prior UI13/R1/R2/R3 matrices reused without rerun.",
+  "provider_calls": 0,
+  "checks": [
+    {
+      "name": "typing-lifecycle",
+      "passed": true,
+      "details": {
+        "total": 6,
+        "passed": 6,
+        "failed": 0
+      }
+    },
+    {
+      "name": "scheduler-fix",
+      "passed": true,
+      "details": {
+        "total": 5,
+        "passed": 5,
+        "failed": 0
+      }
+    },
+    {
+      "name": "r1-copy-r3-fixture-frozen",
+      "passed": true,
+      "details": {
+        "design/copy.json": true,
+        "design/fixtures/ui13-r3-bookshop.json": true,
+        "design/prototype/fixtures.json": true
+      }
+    },
+    {
+      "name": "frontend-source-read-only",
+      "passed": true,
+      "details": {
+        "sha256": "511c6dd7525ccc9339366c432b6142380263172a0f21c61ddbe6ca443a2d9e59"
+      }
+    },
+    {
+      "name": "prototype-js-syntax",
+      "passed": true,
+      "details": ""
+    },
+    {
+      "name": "typing-source-contract",
+      "passed": true,
+      "details": {
+        "single_scheduler": true,
+        "per_character_timer": false
+      }
+    },
+    {
+      "name": "current-docs-no-r2-typing-conflict",
+      "passed": true,
+      "details": {
+        "forbidden_found": []
+      }
+    },
+    {
+      "name": "preview-http",
+      "passed": true,
+      "details": {
+        "status": 200
+      }
+    },
+    {
+      "name": "capture-budget",
+      "passed": true,
+      "details": [
+        "01-initial-typing-desktop-zh.png",
+        "02-initial-typing-mobile-en-page212.png"
+      ]
+    },
+    {
+      "name": "prior-evidence-reused",
+      "passed": true,
+      "details": [
+        "design/evidence/cr312/M003-UI-13-browser.json",
+        "design/evidence/cr312-r1/copy-observation.json",
+        "design/evidence/cr312-r2/M003-UI-13-R2-motion.json",
+        "design/evidence/cr312-r3/M003-UI-13-R3-browser.json"
+      ]
+    }
+  ],
+  "summary": {
+    "total": 10,
+    "passed": 10,
+    "failed": 0
+  }
+}

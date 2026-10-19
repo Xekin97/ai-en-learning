@@ -51,9 +51,9 @@ func TestAdminQuotaHTTPV14(t *testing.T) {
 	), runs AS (
 		INSERT INTO wordweave.generation_runs(account_id,credited_account_id,group_code_snapshot,model_id,model_display_name_snapshot,
 		provider_model_id_snapshot,meaning_language,scenario,length_code,minimum_words_snapshot,max_entries_snapshot,call_status,disposition,
-		quota_charged,counts_toward_cumulative,started_at,completed_at)
+		quota_charged,counts_toward_cumulative,started_at,completed_at,content_policy_version,model_request_parameters_snapshot)
 		SELECT $1,$1,'registered',model.id,'Quota fixture','test/quota','en','story','short',30,5,'valid','saved',
-		true,true,statement_timestamp()-interval '1 hour',statement_timestamp() FROM model CROSS JOIN generate_series(1,3)
+		true,true,statement_timestamp()-interval '1 hour',statement_timestamp(),NULL,'{"version":"custom-parameters-v1","custom_parameters":{},"output_mode":"prompt","max_output_tokens":null,"structured_route":"unchanged"}'::jsonb FROM model CROSS JOIN generate_series(1,3)
 		RETURNING id) SELECT id FROM runs LIMIT 1`, id).Scan(&runID); err != nil {
 		t.Fatal(err)
 	}

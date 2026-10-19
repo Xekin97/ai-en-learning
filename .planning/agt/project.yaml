@@ -48,23 +48,30 @@ initialization:
   workflow_state: .planning/workflow/state.yaml
 milestone:
   id: M002
-  status: complete
   initial_stage: product-planning
-  active_role: null
-  active_agent: null
-  started_at: '2026-09-16T08:41:31.598970+00:00'
-  current_handoff: .planning/milestones/M002/handoffs/verification.md
   initialization_record: .planning/milestones/M002/reviews/start.md
   previous_completion:
-    completed_at: '2026-10-01T10:49:31.845499+00:00'
-    completion_decision: TRANSITION-M002-091
-    completion_record: .planning/milestones/M002/reviews/verification-acceptance-091.md
-  reopened_at: '2026-10-01T11:44:46.948774+00:00'
-  reopen_record: .planning/milestones/M002/reviews/model-generalization-092.md
-  verification_status: QA38 accepted_with_retained_limitations
-  completed_at: '2026-10-04'
-  completion_decision: TRANSITION-M002-123
-  completion_record: .planning/milestones/M002/reviews/verification-acceptance-123.md
+    id: M001
+    completion_decision: TRANSITION-M001-138
+    completion_record: .planning/milestones/M001/handoffs/verification.md
+  started_at: '2026-09-16T08:41:31.598970+00:00'
+  reopened_at: '2026-10-15T08:49:25.224902+00:00'
+  status: complete
+  stage: milestone-complete
+  active_role: null
+  active_agent: null
+  current_handoff: .planning/milestones/M002/continuation.md
+  current_scope: All accepted M002 delivery, including withdrawn M003/M004 scopes
+  milestone_closeout_status: complete
+  completion_decision: TRANSITION-M002-146
+  completed_at: '2026-10-16T11:45:07.295018+00:00'
+  closeout_review: .planning/milestones/M002/reviews/milestone-closeout.md
+  merged_milestones:
+  - M003
+  - M004
+  current_uat_status: accepted
+  current_uat_guide: .planning/milestones/M002/verification/pronunciation/uat-local-20261016/guide.md
+  next_pending_scope: null
 model_routing:
   status: enabled
   policy: codex-balanced@1.0.0
@@ -82,3 +89,33 @@ delivery_snapshot:
   profile_lock_unchanged: true
   original_agt_revision_retained: true
   evidence: .planning/milestones/M001/reviews/evidence/m001-closeout-138.json
+qa_scope_policy:
+  decision_id: USER-QA-MODEL-QUALITY-BOUNDARY-20261012
+  status: confirmed
+  source: .planning/agt/qa-scope-policy.md
+  scope: Project-wide QA excludes article-quality judgement and model semantic review accuracy; verifies functionality
+    and implementation
+milestone_authorization_policy:
+  new_milestone_requires_explicit_user_request_or_confirmation: true
+  next_step_does_not_authorize_new_milestone: true
+  source: .planning/milestones/M002/reviews/evidence/m003-ownership-correction-124/authorization.json
+milestone_ownership_correction:
+  record: .planning/milestones/M002/reviews/milestone-ownership-correction-124.md
+  source_index: .planning/milestones/M002/continuation.md
+  legacy_source_mapping: .planning/milestones/M002/reviews/evidence/m003-ownership-correction-124/rehome-map.json
+  withdrawn_milestones:
+  - M003
+  - M004
+  retained_history: Historical instances renamed under M002 ownership; frozen recorded paths resolve through directory
+    mapping.
+  completion_record: .planning/milestones/M002/reviews/milestone-closeout.md
+  legacy_instance_scope: Only the mistakenly created instances on 2026-10-15; future explicitly authorized M003/M004
+    are distinct.
+  directory_mapping:
+    .planning/milestones/M003: .planning/milestones/M002-legacy-M003
+    .planning/milestones/M004: .planning/milestones/M002-legacy-M004
+  path_resolution_record: .planning/milestones/M002/reviews/evidence/milestone-closeout-146/legacy-directory-rename.json
+archived_context:
+  index: .planning/milestones/M002/reviews/evidence/milestone-closeout-146/archive-index.json
+  archive: .planning/milestones/M002/reviews/evidence/milestone-closeout-146/before-controls.tar.gz
+  member: .planning/agt/project.yaml

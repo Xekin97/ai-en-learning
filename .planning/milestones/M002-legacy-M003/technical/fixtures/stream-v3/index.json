@@ -1,0 +1,40 @@
+{
+  "fixture_version": "M003-BE-03",
+  "contract_version": "m003-stream-v3",
+  "files": [
+    "basic.json",
+    "enhanced-two-repairs.json",
+    "incomplete-last-valid.json",
+    "pending-resolves.json",
+    "eof-unknown.json",
+    "failed-no-valid.json",
+    "cancelled.json",
+    "preview-incomplete.json"
+  ],
+  "packages": "packages.json",
+  "wire_shape": "wire[] = {event,data}; data is the exact SSE JSON object, no envelope",
+  "status_shape": "status_responses[].body is the exact JSON success envelope",
+  "display_allowlist": [
+    "progress.phase",
+    "learning_ready.entries",
+    "validated.result",
+    "validated.completion_notice",
+    "failed.code",
+    "failed.quota_refunded",
+    "cancelled.quota_refunded"
+  ],
+  "not_for_display": [
+    "internal_evidence",
+    "expected",
+    "seq",
+    "run_id",
+    "generation_token",
+    "preview_token",
+    "content_version",
+    "final_content_version",
+    "snapshot.content_service.content_repair_limit",
+    "snapshot.native_correction_policy",
+    "content_outcome"
+  ],
+  "timing": "No production latency measurements; event playback is synthetic. Do not invent stages between frames."
+}

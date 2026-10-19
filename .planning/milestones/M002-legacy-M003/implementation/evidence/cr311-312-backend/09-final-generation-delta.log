@@ -1,0 +1,10 @@
+COMMAND
+gofmt -w internal/generation/pipeline.go internal/generation/pipeline_test.go && GOTOOLCHAIN=go1.26.7 go test -race -timeout 90s ./internal/generation && GOTOOLCHAIN=go1.26.7 go vet ./internal/generation && git diff --check -- internal/generation/pipeline.go internal/generation/pipeline_test.go
+
+STDOUT
+ok  	wordweave/internal/generation	4.558s
+
+EXIT 0
+
+ASSERTED
+The final narrow correction derives append paragraph_index from actual paragraph_count, so an empty or whitespace-only completed passage starts its same-version continuation at paragraph 0. No broader behavior changed.

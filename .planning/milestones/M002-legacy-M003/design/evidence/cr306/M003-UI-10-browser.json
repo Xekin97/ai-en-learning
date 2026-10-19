@@ -1,0 +1,164 @@
+{
+  "version": "M003-UI-10",
+  "checked_at": "2026-10-12T04:07:03.276Z",
+  "scope": "CR-306 complete PAGE-208 model editor plus bounded PAGE-204/216/212 waiting and failure states",
+  "source_fixtures": "../../technical/fixtures/cr306/index.json",
+  "checks": [
+    {
+      "name": "page208-complete-desktop",
+      "passed": true,
+      "details": {
+        "providers": 3,
+        "models": 4,
+        "dialog": true,
+        "customLabel": "自定义请求参数（JSON）",
+        "customValue": "{\n  \"reasoning\": {\n    \"enabled\": false\n  }\n}",
+        "maxTokens": true,
+        "structured": true,
+        "noCall": true,
+        "overflow": 0,
+        "viewport": [
+          1440,
+          1050
+        ]
+      }
+    },
+    {
+      "name": "json-label-keyboard-help",
+      "passed": true,
+      "details": {
+        "activeTag": "SUMMARY",
+        "describedBy": "custom-parameters-help",
+        "hasHelp": true
+      }
+    },
+    {
+      "name": "cancel-keep-preserves-json",
+      "passed": true,
+      "details": {
+        "confirmVisible": true,
+        "retained": "{\"temperature\":0.2}"
+      }
+    },
+    {
+      "name": "protected-field-mobile",
+      "passed": true,
+      "details": {
+        "value": "{\"model\":\"other-model\"}",
+        "invalid": "true",
+        "alert": "Custom parameters cannot be savedThis field is protected or already has a dedicated setting. Remove it from custom parameters. Your input is preserved.",
+        "label": "Custom request parameters (JSON)",
+        "overflow": 0,
+        "viewport": [
+          390,
+          844
+        ]
+      }
+    },
+    {
+      "name": "configuration-change-invalidates-test",
+      "passed": true,
+      "details": {
+        "stale": "配置已修改，上一次测试结果已失效。保存前请重新测试。"
+      }
+    },
+    {
+      "name": "save-success-zero-call-copy",
+      "passed": true,
+      "details": {
+        "url": "?view=formal&rev=ui10&page=models&lang=zh&state=saved",
+        "status": "服务商配置已保存模型配置已更新。此前的连接测试结果已失效；需要时请重新测试。",
+        "dialog": false
+      }
+    },
+    {
+      "name": "revision-conflict",
+      "passed": true,
+      "details": {
+        "conflict": "配置已在其他位置更新刷新后会合并远端版本并保留你正在编辑的参数；请重新核对后保存。刷新并保留修改"
+      }
+    },
+    {
+      "name": "explicit-probe-rejected",
+      "passed": true,
+      "details": {
+        "rejected": "服务商拒绝了当前参数。配置未保存，请按服务商文档检查后重试。"
+      }
+    },
+    {
+      "name": "generation-timeout",
+      "passed": true,
+      "details": {
+        "state": "failed",
+        "expected": "failed",
+        "noReasoning": true,
+        "overflow": 0,
+        "viewport": [
+          1440,
+          1050
+        ]
+      }
+    },
+    {
+      "name": "generation-cancelled",
+      "passed": true,
+      "details": {
+        "state": "cancelled",
+        "expected": "cancelled",
+        "noReasoning": true,
+        "overflow": 0,
+        "viewport": [
+          1440,
+          1050
+        ]
+      }
+    },
+    {
+      "name": "generation-pending",
+      "passed": true,
+      "details": {
+        "state": "pending",
+        "expected": "pending",
+        "noReasoning": true,
+        "overflow": 0,
+        "viewport": [
+          1440,
+          1050
+        ]
+      }
+    },
+    {
+      "name": "preview-timeout",
+      "passed": true,
+      "details": {
+        "state": "failed",
+        "expected": "failed",
+        "noReasoning": true,
+        "overflow": 0,
+        "viewport": [
+          1440,
+          1050
+        ]
+      }
+    },
+    {
+      "name": "browser-console",
+      "passed": true,
+      "details": {
+        "errors": []
+      }
+    }
+  ],
+  "console_errors": [],
+  "screenshots": [
+    "01-model-editor-1440-zh.png",
+    "02-model-protected-error-390-en.png",
+    "03-model-saved-1440-zh.png",
+    "04-create-timeout-1440-zh.png"
+  ],
+  "summary": {
+    "total": 13,
+    "passed": 13,
+    "failed": 0
+  }
+}

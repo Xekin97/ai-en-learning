@@ -88,7 +88,7 @@ func TestM001EndToEnd(t *testing.T) {
 		t.Fatal(err)
 	}
 	createdModel := postJSON(t, adminClient, application.URL+"/api/v1/admin/models", adminCSRF, map[string]any{
-		"display_name": "Integration model", "description": nil, "provider_model_id": "provider/integration", "connection_id": ai.LegacyProviderID, "output_mode": "json_schema", "expected_revision": configurationRevisionHTTP(t, adminClient, application.URL),
+		"display_name": "Integration model", "description": nil, "provider_model_id": "provider/integration", "connection_id": ai.LegacyProviderID, "output_mode": "json_schema", "custom_parameters": map[string]any{}, "expected_revision": configurationRevisionHTTP(t, adminClient, application.URL),
 	})
 	requireStatus(t, createdModel, http.StatusCreated)
 	modelID := nestedString(t, createdModel.body, "data", "model", "id")
@@ -98,11 +98,11 @@ func TestM001EndToEnd(t *testing.T) {
 		t.Fatal("model was not enabled")
 	}
 	group := putJSON(t, adminClient, application.URL+"/api/v1/admin/groups/basic", adminCSRF, map[string]any{
-		"expected_revision": configurationRevisionHTTP(t, adminClient, application.URL), "priority": 1, "rolling_24h_limit": nil, "max_entries": 5, "allowed_lengths": []string{"short", "medium", "long", "xlong"}, "model_ids": []string{modelID},
+		"expected_revision": configurationRevisionHTTP(t, adminClient, application.URL), "priority": 1, "rolling_24h_limit": nil, "max_entries": 5, "allowed_lengths": []string{"short", "medium", "long", "xlong"}, "model_ids": []string{modelID}, "content_review_enabled": false, "content_repair_limit": 0,
 	})
 	requireStatus(t, group, http.StatusOK)
 	visitorGroup := putJSON(t, adminClient, application.URL+"/api/v1/admin/groups/visitor", adminCSRF, map[string]any{
-		"expected_revision": configurationRevisionHTTP(t, adminClient, application.URL), "priority": 0, "rolling_24h_limit": 1, "max_entries": 5, "allowed_lengths": []string{"short"}, "model_ids": []string{modelID},
+		"expected_revision": configurationRevisionHTTP(t, adminClient, application.URL), "priority": 0, "rolling_24h_limit": 1, "max_entries": 5, "allowed_lengths": []string{"short"}, "model_ids": []string{modelID}, "content_review_enabled": false, "content_repair_limit": 0,
 	})
 	requireStatus(t, visitorGroup, http.StatusOK)
 
@@ -318,8 +318,8 @@ func TestM001EndToEnd(t *testing.T) {
 		INSERT INTO wordweave.generation_runs(
 			account_id,credited_account_id,group_code_snapshot,model_id,model_display_name_snapshot,
 			provider_model_id_snapshot,meaning_language,scenario,length_code,minimum_words_snapshot,
-			quota_limit_snapshot,max_entries_snapshot
-		) VALUES ($1,$1,'registered',$2,'Integration model','provider/integration','en','discussion','short',50,NULL,5)
+			quota_limit_snapshot,max_entries_snapshot,content_policy_version,model_request_parameters_snapshot
+		) VALUES ($1,$1,'registered',$2,'Integration model','provider/integration','en','discussion','short',50,NULL,5,NULL,'{"version":"custom-parameters-v1","custom_parameters":{},"output_mode":"prompt","max_output_tokens":null,"structured_route":"unchanged"}')
 		RETURNING id`, learnerID, modelID).Scan(&orphanedRunID); err != nil {
 		t.Fatal(err)
 	}
@@ -351,6 +351,8 @@ func integrationConfig(databaseURL, providerURL string) config.Config {
 		MasterKeys: map[int][]byte{1: []byte(strings.Repeat("m", 32))}, CurrentKey: 1,
 		CookieSecure: false, AppDBMaxConns: 4, AIDBMaxConns: 4, DraftTTL: 30 * time.Minute,
 		ClaimTTL: 30 * time.Minute, AttemptTTL: 2 * time.Hour, ShutdownTimeout: 5 * time.Second,
+		GenerationMaxInFlight: 20, PreviewMaxInFlight: 1, ProbeMaxInFlight: 1,
+		PreflightMax: 20, ConnectionMaxInFlight: 20, DefaultConnectionGroup: "integration", GenerationRetryAfter: 5 * time.Second,
 	}
 }
 
@@ -419,10 +421,9 @@ func newFakeOpenRouter(t *testing.T) *httptest.Server {
 			_, _ = io.WriteString(writer, `{"data":[{"id":"provider/integration","supported_parameters":["structured_outputs"]}]}`)
 		case request.Method == http.MethodPost && request.URL.Path == "/chat/completions":
 			var providerRequest struct {
-				Model    string `json:"model"`
-				Messages []struct {
-					Content string `json:"content"`
-				} `json:"messages"`
+				Model          string           `json:"model"`
+				Messages       []map[string]any `json:"messages"`
+				ResponseFormat map[string]any   `json:"response_format"`
 			}
 			if err := json.NewDecoder(request.Body).Decode(&providerRequest); err != nil {
 				http.Error(writer, "bad request", http.StatusBadRequest)
@@ -437,9 +438,18 @@ func newFakeOpenRouter(t *testing.T) *httptest.Server {
 				<-request.Context().Done()
 				return
 			}
+			messages := make([]any, len(providerRequest.Messages))
+			for index := range providerRequest.Messages {
+				messages[index] = providerRequest.Messages[index]
+			}
+			if isPlanProviderRequest(map[string]any{"response_format": providerRequest.ResponseFormat, "messages": messages}) {
+				writeChatObject(writer, testScenePlan("learn"))
+				return
+			}
 			responseCandidate := candidateJSON
 			for _, message := range providerRequest.Messages {
-				if strings.Contains(message.Content, "fixed compatibility probe") {
+				content, _ := message["content"].(string)
+				if strings.Contains(content, "fixed compatibility probe") {
 					responseCandidate = probeJSON
 				}
 			}

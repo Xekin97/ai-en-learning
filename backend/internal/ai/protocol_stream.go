@@ -14,6 +14,23 @@ type protocolDecoder struct {
 	costReportedInCredits bool
 	finished              bool
 	stopReason            string
+	terminalEvent         string
+}
+
+func (d *protocolDecoder) normalTermination() bool {
+	if d == nil || !d.finished {
+		return false
+	}
+	switch d.protocol {
+	case ProtocolChat:
+		return d.terminalEvent == "done"
+	case ProtocolResponses:
+		return d.terminalEvent == "response.completed"
+	case ProtocolAnthropic:
+		return d.terminalEvent == "message_stop"
+	default:
+		return false
+	}
 }
 
 func protocolFailure() error { return streamFailure("invalid_stream") }
@@ -31,6 +48,7 @@ func (d *protocolDecoder) event(data string) (string, error) {
 			return "", protocolFailure()
 		}
 		d.finished = true
+		d.terminalEvent = "done"
 		return "[DONE]", nil
 	}
 	var root map[string]json.RawMessage
@@ -121,6 +139,7 @@ func (d *protocolDecoder) event(data string) (string, error) {
 			normalized["id"] = e.Response.ID
 			normalized["usage"] = normalizedTokenUsage(e.Response.Usage)
 			done = true
+			d.terminalEvent = "response.completed"
 		}
 		if kind == "error" || kind == "response.failed" || kind == "response.incomplete" || strings.HasPrefix(kind, "response.refusal.") {
 			return "", protocolFailure()
@@ -174,6 +193,7 @@ func (d *protocolDecoder) event(data string) (string, error) {
 				return "", protocolFailure()
 			}
 			done = true
+			d.terminalEvent = "message_stop"
 		case "error":
 			return "", protocolFailure()
 		}

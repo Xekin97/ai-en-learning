@@ -102,12 +102,21 @@ func run(ctx context.Context) error {
 	select {
 	case <-ctx.Done():
 		apiServer.SetReady(false)
-		shutdownCtx, cancel := context.WithTimeout(context.Background(), cfg.ShutdownTimeout)
-		shutdownErr := server.Shutdown(shutdownCtx)
-		cancel()
-		settleCtx, settleCancel := context.WithTimeout(context.Background(), 5*time.Second)
+		apiServer.BeginDrain()
+		shutdownCtx, shutdownCancel := context.WithTimeout(context.Background(), cfg.ShutdownTimeout)
+		defer shutdownCancel()
+		drainCtx, drainCancel := context.WithTimeout(shutdownCtx, generationDrainBudget(cfg.ShutdownTimeout))
+		drainErr := apiServer.WaitGenerationDrain(drainCtx)
+		drainCancel()
+		if drainErr != nil {
+			slog.Warn("generation drain deadline reached; cancelling remaining work", "error", drainErr)
+		}
+		settleCtx, settleCancel := context.WithTimeout(shutdownCtx, 20*time.Second)
 		settleErr := apiServer.Stop(settleCtx)
 		settleCancel()
+		httpCtx, httpCancel := context.WithTimeout(shutdownCtx, 10*time.Second)
+		shutdownErr := server.Shutdown(httpCtx)
+		httpCancel()
 		if shutdownErr != nil {
 			_ = server.Close()
 		}
@@ -124,6 +133,16 @@ func run(ctx context.Context) error {
 		_ = metricsServer.Close()
 		return errors.Join(err, stopErr)
 	}
+}
+
+func generationDrainBudget(total time.Duration) time.Duration {
+	if total >= 650*time.Second {
+		return 610 * time.Second
+	}
+	if total > 40*time.Second {
+		return total - 40*time.Second
+	}
+	return total / 2
 }
 
 func normalizeServerError(err error) error {

@@ -1,0 +1,86 @@
+{
+  "version": "M002-CR313-UAT-01",
+  "run_label": "uat-local-20261016",
+  "status": "READY",
+  "user_uat_accepted": false,
+  "left_running": true,
+  "final_live_status": "evidence/final-live-status.json",
+  "environment": {
+    "public_frontend": "http://localhost:3016",
+    "frontend_internal": "http://127.0.0.1:3017",
+    "backend": "http://127.0.0.1:43331",
+    "postgres": "127.0.0.1:63562/wordweave_cr313_uat",
+    "metrics": "http://127.0.0.1:39562",
+    "mocks": false,
+    "database": "isolated synthetic persistent UAT",
+    "existing_services_touched": false
+  },
+  "processes": {
+    "public_proxy_pid": 30505,
+    "frontend_server_pid": 30406,
+    "backend_pid": 24845,
+    "postgres_pid": 24625
+  },
+  "source_and_build": {
+    "source_files_checked": 699,
+    "source_mismatches": 0,
+    "node": "v24.21.0",
+    "pnpm": "10.33.0",
+    "build_exit": 0,
+    "build_output_external": true,
+    "build_output_file_count": 459,
+    "build_output_bytes": 6761641,
+    "manifest": "source-manifest.json"
+  },
+  "browser_readiness": {
+    "normal_login": "PASS",
+    "admin_role": true,
+    "models_route_entries": "PASS",
+    "plans_route_entries": "PASS",
+    "items_tab_entries": "PASS",
+    "growth_tab_entries": "PASS",
+    "ordinary_exports": {
+      "models": "PASS",
+      "plans": "PASS",
+      "items": "PASS",
+      "growth": "PASS"
+    },
+    "representative_preview_cancel": {
+      "category": "plans",
+      "preview": "PASS",
+      "cancel": "PASS",
+      "revision_unchanged": true,
+      "import_submitted": false
+    },
+    "evidence": "evidence/readiness-smoke.json"
+  },
+  "safety": {
+    "real_provider_calls": 0,
+    "models_enabled": false,
+    "models_visibly_synthetic": true,
+    "provider_base": "loopback port 9",
+    "credentials_in_evidence": false,
+    "credential_storage": "external runtime mode 0600",
+    "database_reset_on_restart": false
+  },
+  "setup_and_method_failures_retained": [
+    {
+      "kind": "setup",
+      "actual": "direct production Nitro returned 404 for /api/v1/bootstrap because nuxt devProxy is development-only",
+      "resolution": "runtime-only real reverse proxy on 3016 forwards UI to built Nitro 3017 and /api/v1 unchanged to real backend 43331",
+      "product_defect": false
+    },
+    {
+      "evidence": "evidence/readiness-smoke-attempt-01.json",
+      "kind": "harness locator",
+      "actual": "login submit locator used non-rendered copy",
+      "product_defect": false
+    },
+    {
+      "evidence": "evidence/readiness-smoke-attempt-02.json",
+      "kind": "harness locator",
+      "actual": "preview waited for a non-heading copy string after login, routes and four exports had already passed",
+      "product_defect": false
+    }
+  ]
+}

@@ -1,0 +1,30 @@
+{
+  "objective": "BE05-R1 已按用户 USER-M003-PLAN-RETAIN 完成定向显示契约修订并冻结。检查单次 TRANSITION-M003-039 recover technical-design→uiux-design / uiux/base / designer-tony，修改UI07-R1使规划与正文同时保留到最终valid。用户直接要求此修改，沿原后台先行到原型授权，不需新问题。",
+  "inputs": [
+    ".planning/workflow/state.yaml",
+    ".planning/agt/agents.yaml",
+    ".planning/agt/project.yaml",
+    ".planning/milestones/M003/reviews/evidence/start/locked-profile.yaml",
+    ".planning/milestones/M003/reviews/requirements-feedback.md",
+    ".planning/milestones/M003/handoffs/backend-architecture.md",
+    ".planning/milestones/M003/handoffs/uiux.md",
+    ".planning/milestones/M003/reviews/evidence/control-038/M003-BE-05-R1-source-manifest.json",
+    ".planning/milestones/M003/technical/evidence/be05-r1-display-policy.json"
+  ],
+  "write_scope": [
+    ".planning/milestones/M003/reviews/planning-retention-ui-038.md"
+  ],
+  "acceptance": [
+    "仅核交接/授权/恢复/角色，不语义复验或重跑检查。",
+    "BE05-R1修改显示生命周期而未变wire/数据库/调用；无新增业务待决，不需返回产品或DBA。原v5显示expectation历史保留，由R1明确覆盖，UI依wire而非expected驱动。",
+    "仅回UI07-R1制作与定向观察，当前UI未批准、不进入FE/实现。保留CR302下游pending及全局项。",
+    "给039精确状态。原型保留规划直到权威valid完整包(包括Q02)，pending/EOF保留、失败取消清理；正常造文和后台preview一致，避免新增模型更新构思。"
+  ],
+  "risk": "normal",
+  "prior_attempts": [],
+  "report": [
+    "check_results",
+    "exact_target_state",
+    "unresolved_findings"
+  ]
+}

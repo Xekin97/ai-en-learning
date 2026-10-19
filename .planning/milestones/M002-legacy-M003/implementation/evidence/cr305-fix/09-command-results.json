@@ -1,0 +1,52 @@
+{
+  "runtime": "Node 24.21.0 via project-scoped temporary binary; no global version change",
+  "checks": [
+    {
+      "command": "pnpm typecheck",
+      "result": "PASS",
+      "evidence": "06-final-checks.log"
+    },
+    {
+      "command": "pnpm exec eslint app/presentation/components/GenerationWorkspace.vue app/pages/admin/presets.vue",
+      "result": "PASS",
+      "evidence": "06-final-checks.log",
+      "note": "ESLint is silent on success."
+    },
+    {
+      "command": "pnpm exec prettier --check app/presentation/components/GenerationWorkspace.vue app/pages/admin/presets.vue",
+      "result": "PASS",
+      "evidence": "06-final-checks.log"
+    },
+    {
+      "command": "pnpm exec prettier --check <frontend-validation.md> <frontend-implementation.md>",
+      "result": "PASS",
+      "evidence": "07-doc-format.log"
+    },
+    {
+      "command": "targeted static Vue structure + approved CSS rule inspection",
+      "result": "PASS",
+      "evidence": "03-structure-check.json"
+    }
+  ],
+  "retained_failures": [
+    {
+      "command": "initial targeted ESLint",
+      "result": "FAIL",
+      "cause": "Project requires self-closing <i /> syntax.",
+      "evidence": "02-lint-format.log"
+    },
+    {
+      "command": "first final targeted Prettier check",
+      "result": "FAIL",
+      "cause": "Admin preset markup required project formatting.",
+      "evidence": "04-final-checks.log"
+    }
+  ],
+  "not_run": [
+    "browser runtime",
+    "screenshot regression",
+    "backend or database stack",
+    "full Vitest/lint/build suite"
+  ],
+  "not_run_reason": "TRANSITION-M003-063 authorized a low-impact markup repair; independent QA owns the focused real-browser retest."
+}

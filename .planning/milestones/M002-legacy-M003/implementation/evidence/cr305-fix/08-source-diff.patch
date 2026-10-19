@@ -1,0 +1,69 @@
+--- a/frontend/app/presentation/components/GenerationWorkspace.vue
++++ b/frontend/app/presentation/components/GenerationWorkspace.vue
+@@ -365,6 +365,9 @@
+             >
+               <header>
+                 <span class="eyebrow">{{ copy("m003.plan.label") }}</span>
++                <div class="m003-writing" aria-hidden="true">
++                  <i /><i /><i />
++                </div>
+               </header>
+               <h2>{{ copy("m003.plan.title") }}</h2>
+               <p class="m003-plan-note muted">{{ copy("m003.plan.note") }}</p>
+@@ -399,6 +402,9 @@
+             >
+               <header>
+                 <h2>{{ copy("m003.draft.title") }}</h2>
++                <div class="m003-writing" aria-hidden="true">
++                  <i /><i /><i />
++                </div>
+               </header>
+               <p class="story-text live-draft-text" lang="en">
+                 {{ generation.streamedText }}
+--- a/frontend/app/pages/admin/presets.vue
++++ b/frontend/app/pages/admin/presets.vue
+@@ -711,7 +711,10 @@
+             id="planning-preview"
+             class="m003-plan-preview"
+           >
+-            <h3>{{ copy("m003.plan.title") }}</h3>
++            <header>
++              <h3>{{ copy("m003.plan.title") }}</h3>
++              <div class="m003-writing" aria-hidden="true"><i /><i /><i /></div>
++            </header>
+             <p class="muted">{{ copy("m003.plan.note") }}</p>
+             <template
+               v-for="item in store.stream.value.planItems"
+@@ -724,17 +727,21 @@
+               </p>
+             </template>
+           </section>
+-          <h3>{{ draft.value.title }}</h3>
+-          <p v-if="livePreview" class="story-text" lang="en">
+-            {{ store.stream.value.text }}
+-          </p>
+-          <p
+-            v-else-if="draft.lastPreview"
+-            class="story-text preset-sample-text"
+-            lang="en"
+-          >
+-            {{ draft.lastPreview?.result.passage }}
+-          </p>
++          <section v-if="livePreview" id="live-draft" class="m003-live-draft">
++            <header>
++              <h3>{{ draft.value.title }}</h3>
++              <div class="m003-writing" aria-hidden="true"><i /><i /><i /></div>
++            </header>
++            <p class="story-text" lang="en">
++              {{ store.stream.value.text }}
++            </p>
++          </section>
++          <template v-else-if="draft.lastPreview">
++            <h3>{{ draft.value.title }}</h3>
++            <p class="story-text preset-sample-text" lang="en">
++              {{ draft.lastPreview?.result.passage }}
++            </p>
++          </template>
+           <PresetWordMeanings
+             v-if="draft.lastPreview"
+             :targets="draft.lastPreview.result.targets"

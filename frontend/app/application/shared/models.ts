@@ -58,6 +58,26 @@ export interface AppFailure {
   requestId: string | null;
   fields: Readonly<Record<string, string>>;
   retryable: boolean;
+  retryAfterSeconds?: number;
+  accepted?: false;
+}
+
+export type ContentServiceModel =
+  | {
+      nativeValidation: true;
+      contentReviewEnabled: false;
+      contentRepairLimit: 0;
+    }
+  | {
+      nativeValidation: true;
+      contentReviewEnabled: true;
+      contentRepairLimit: number;
+    };
+export interface NativePolicyModel {
+  version: "m003-native-policy-v1";
+  scope: "logical_request";
+  maxCalls: 2;
+  editable: false;
 }
 
 export interface ModelOptionModel {
@@ -102,6 +122,9 @@ export interface GenerationOptionsModel {
     | { canGenerate: true; reason: null }
     | { canGenerate: false; reason: GenerationAvailabilityReason };
   quota: QuotaModel;
+  configurationRevision: string;
+  contentService: ContentServiceModel;
+  nativeCorrectionPolicy: NativePolicyModel;
 }
 
 export interface VocabularyResultModel {
@@ -135,6 +158,95 @@ export interface GenerationResultModel {
   targets: GeneratedTargetModel[];
 }
 
+export type ContentOutcomeModel =
+  | "basic"
+  | "review_passed"
+  | "repaired_passed"
+  | "limit_finalized"
+  | "service_incomplete";
+export type CompletionNoticeModel = "content_review_incomplete" | null;
+export type PlanPreviewItemModel =
+  | { kind: "scene"; text: string }
+  | {
+      kind: "word_use";
+      entry: string;
+      form: string;
+      sense: string;
+      phrase: string;
+    };
+
+export type ContentActivityModel = "writing" | "improving";
+export type ContentDraftModeModel =
+  "initial" | "replace" | "append" | "restore";
+export type ContentDraftEventModel =
+  | {
+      kind: "draft";
+      seq: number;
+      action: "begin";
+      draftId: string;
+      contentVersion: number;
+      baseRev: number;
+      mode: ContentDraftModeModel;
+    }
+  | {
+      kind: "draft";
+      seq: number;
+      action: "paragraph_complete";
+      draftId: string;
+      contentVersion: number;
+      baseRev: number;
+      paragraphIndex: number;
+    }
+  | {
+      kind: "draft";
+      seq: number;
+      action: "body_complete";
+      draftId: string;
+      contentVersion: number;
+      baseRev: number;
+      bodyLength: number;
+      paragraphCount: number;
+    }
+  | {
+      kind: "draft";
+      seq: number;
+      action: "discard";
+      draftId: string;
+      contentVersion: number;
+      baseRev: number;
+    };
+export interface ContentParagraphModel {
+  index: number;
+  text: string;
+}
+export interface ContentDraftStateModel {
+  working: string;
+  published: string;
+  workingCodePointLength: number;
+  publishedParagraphs: ContentParagraphModel[];
+  draftId: string | null;
+  mode: ContentDraftModeModel | null;
+  contentVersion: number | null;
+  latestProviderVersion: number | null;
+  revision: number;
+  retiredDraftIds: string[];
+  beginParagraphs: string[];
+  nextParagraphIndex: number;
+  bodyComplete: boolean;
+  discarded: boolean;
+  everStarted: boolean;
+  beginCodePointLength: number;
+  committedPrefixCodePoints: number;
+  committedPrefixUtf16: number;
+  editCursorCodePoints: number;
+  editCursorUtf16: number;
+  transactionEndCodePoints: number;
+  presentationRevision: number;
+  presentationIntent:
+    "reset" | "initial_append" | "paragraph" | "body" | "discard";
+  changedParagraphs: number[];
+}
+
 export interface GenerationInputModel {
   modelId: string;
   meaningLanguage: MeaningLanguage;
@@ -148,21 +260,76 @@ export type GenerationRequestModel =
   | { kind: "preset"; presetId: string; publishedVersion: string };
 
 export type GenerationEventModel =
-  | { kind: "started"; runId: string }
-  | { kind: "delta"; text: string }
-  | { kind: "validated"; runId: string; result: GenerationResultModel }
+  | {
+      kind: "started";
+      seq: 1;
+      streamId: string;
+      runId: string;
+      snapshot: {
+        configurationRevision: string;
+        effectivePlan: {
+          code: GroupCode;
+          origin: "base" | "trial" | "visitor";
+        };
+        contentService: ContentServiceModel;
+        nativeCorrectionPolicy: NativePolicyModel;
+      };
+    }
+  | {
+      kind: "progress";
+      seq: number;
+      phase: "planning" | "composing" | "finalizing";
+    }
+  | {
+      kind: "plan_item";
+      seq: number;
+      planId: string;
+      meaningLanguage: MeaningLanguage;
+      item: PlanPreviewItemModel;
+    }
+  | { kind: "activity"; seq: number; activity: ContentActivityModel }
+  | ContentDraftEventModel
+  | {
+      kind: "edit";
+      seq: number;
+      draftId: string;
+      contentVersion: number;
+      baseRev: number;
+      rev: number;
+      at: number;
+      deleteCount: number;
+      insert: string;
+      source: "provider" | "retained";
+    }
+  | {
+      kind: "validated";
+      seq: number;
+      runId: string;
+      finalContentVersion: number;
+      result: GenerationResultModel;
+      contentOutcome: ContentOutcomeModel;
+      completionNotice: CompletionNoticeModel;
+    }
   | {
       kind: "failed";
+      seq: number;
       code: string;
       quotaRefunded: boolean;
       retryable: boolean;
       requestId: string;
     }
-  | { kind: "cancelled"; quotaRefunded: false };
+  | { kind: "cancelled"; seq: number; quotaRefunded: false }
+  | {
+      kind: "settlement_pending";
+      seq: number;
+      code: "settlement_unconfirmed";
+      requestId: string;
+    };
 
 export type GenerationPhase =
   | "idle"
   | "streaming"
+  | "pending"
   | "valid"
   | "saved"
   | "discarded"
@@ -173,9 +340,53 @@ export interface GenerationStateModel {
   phase: GenerationPhase;
   runId: string | null;
   streamedText: string;
+  draft: ContentDraftStateModel;
+  activity: ContentActivityModel | null;
+  requestPhase: "accepted" | "planning" | "composing" | "finalizing" | null;
+  acceptedContentService: ContentServiceModel | null;
+  acceptedSnapshot: GenerationStatusModel["snapshot"] | null;
+  lastSeq: number;
+  lastFrame: string | null;
+  planId: string | null;
+  planMeaningLanguage: MeaningLanguage | null;
+  planItems: PlanPreviewItemModel[];
+  requestedEntries: string[];
+  requestedMeaningLanguage: MeaningLanguage | null;
+  draftId: string | null;
+  retiredDraftIds: string[];
+  contentVersion: number | null;
+  revision: number;
+  codePointLength: number;
   result: GenerationResultModel | null;
+  finalContentVersion: number | null;
+  contentOutcome: ContentOutcomeModel | null;
+  completionNotice: CompletionNoticeModel;
+  resultUnavailable: boolean;
+  canSave: boolean;
   failure: AppFailure | null;
 }
+
+export type GenerationStatusModel = {
+  runId: string;
+  snapshot: {
+    configurationRevision: string;
+    effectivePlan: { code: GroupCode; origin: "base" | "trial" | "visitor" };
+    contentService: ContentServiceModel;
+    nativeCorrectionPolicy: NativePolicyModel;
+  };
+} & (
+  | { status: "active" }
+  | {
+      status: "valid";
+      finalContentVersion: number;
+      result: GenerationResultModel | null;
+      contentOutcome: ContentOutcomeModel;
+      completionNotice: CompletionNoticeModel;
+      canSave: boolean;
+      quotaRefunded: false;
+    }
+  | { status: "failed" | "cancelled"; quotaRefunded: boolean }
+);
 
 export interface SavedBatchResult {
   batchId: string;
@@ -410,6 +621,36 @@ export type ReviewActionOutcomeModel =
 
 export type ModelProtocol =
   "openai_chat" | "openai_responses" | "anthropic_messages";
+export type JsonPrimitive = null | boolean | number | string;
+type JsonValueAtDepth8 =
+  | JsonPrimitive
+  | { readonly [key: string]: JsonPrimitive }
+  | readonly JsonPrimitive[];
+type JsonValueAtDepth7 =
+  | JsonPrimitive
+  | { readonly [key: string]: JsonValueAtDepth8 }
+  | readonly JsonValueAtDepth8[];
+type JsonValueAtDepth6 =
+  | JsonPrimitive
+  | { readonly [key: string]: JsonValueAtDepth7 }
+  | readonly JsonValueAtDepth7[];
+type JsonValueAtDepth5 =
+  | JsonPrimitive
+  | { readonly [key: string]: JsonValueAtDepth6 }
+  | readonly JsonValueAtDepth6[];
+type JsonValueAtDepth4 =
+  | JsonPrimitive
+  | { readonly [key: string]: JsonValueAtDepth5 }
+  | readonly JsonValueAtDepth5[];
+type JsonValueAtDepth3 =
+  | JsonPrimitive
+  | { readonly [key: string]: JsonValueAtDepth4 }
+  | readonly JsonValueAtDepth4[];
+export type JsonValue =
+  | JsonPrimitive
+  | { readonly [key: string]: JsonValueAtDepth3 }
+  | readonly JsonValueAtDepth3[];
+export type JsonObject = { readonly [key: string]: JsonValue };
 export interface ModelConnectionModel {
   id: string;
   name: string;
@@ -431,6 +672,7 @@ export interface ModelConfigurationInput {
   } | null;
   maxOutputTokens: number | null;
   outputMode: "prompt" | "json_schema";
+  customParameters: JsonObject;
   enabled: boolean;
   expectedRevision: string;
 }
@@ -442,6 +684,7 @@ export type NewModelConfiguration = Pick<
   | "providerModelId"
   | "maxOutputTokens"
   | "outputMode"
+  | "customParameters"
   | "enabled"
 >;
 export interface ModelBatchConfigurationInput {
@@ -471,6 +714,7 @@ export interface AdminModelModel {
   connection: ModelConnectionModel;
   maxOutputTokens: number | null;
   outputMode: "prompt" | "json_schema";
+  customParameters: JsonObject;
   enabled: boolean;
   assignedGroupCodes: GroupCode[];
   createdAt: string;
@@ -485,6 +729,9 @@ export interface GroupPolicyModel {
   maxEntries: number;
   allowedLengths: PassageLength[];
   models: Array<{ id: string; displayName: string; enabled: boolean }>;
+  contentReviewEnabled: boolean;
+  contentRepairLimit: number;
+  nativeCorrectionPolicy: NativePolicyModel;
 }
 
 export interface AdminUserSummaryModel {
@@ -530,7 +777,66 @@ export function initialGenerationState(): GenerationStateModel {
     phase: "idle",
     runId: null,
     streamedText: "",
+    draft: initialContentDraftState(),
+    activity: null,
+    requestPhase: null,
+    acceptedContentService: null,
+    acceptedSnapshot: null,
+    lastSeq: 0,
+    lastFrame: null,
+    planId: null,
+    planMeaningLanguage: null,
+    planItems: [],
+    requestedEntries: [],
+    requestedMeaningLanguage: null,
+    draftId: null,
+    retiredDraftIds: [],
+    contentVersion: null,
+    revision: 0,
+    codePointLength: 0,
     result: null,
+    finalContentVersion: null,
+    contentOutcome: null,
+    completionNotice: null,
+    resultUnavailable: false,
+    canSave: false,
     failure: null,
   };
+}
+
+export function initialContentDraftState(): ContentDraftStateModel {
+  return {
+    working: "",
+    published: "",
+    workingCodePointLength: 0,
+    publishedParagraphs: [],
+    draftId: null,
+    mode: null,
+    contentVersion: null,
+    latestProviderVersion: null,
+    revision: 0,
+    retiredDraftIds: [],
+    beginParagraphs: [],
+    nextParagraphIndex: 0,
+    bodyComplete: false,
+    discarded: false,
+    everStarted: false,
+    beginCodePointLength: 0,
+    committedPrefixCodePoints: 0,
+    committedPrefixUtf16: 0,
+    editCursorCodePoints: 0,
+    editCursorUtf16: 0,
+    transactionEndCodePoints: 0,
+    presentationRevision: 0,
+    presentationIntent: "reset",
+    changedParagraphs: [],
+  };
+}
+
+export function resetContentDraftState(
+  previous?: ContentDraftStateModel,
+): ContentDraftStateModel {
+  const state = initialContentDraftState();
+  if (previous) state.presentationRevision = previous.presentationRevision + 1;
+  return state;
 }

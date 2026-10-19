@@ -3,9 +3,12 @@
 package admin
 
 import (
+	"context"
 	"errors"
-	"github.com/google/uuid"
 	"testing"
+
+	"github.com/google/uuid"
+	"github.com/jackc/pgx/v5/pgxpool"
 	"wordweave/internal/ai"
 	"wordweave/internal/platform/business"
 	"wordweave/internal/platform/security"
@@ -39,10 +42,10 @@ func TestM002ModelsRetireAndReuseProviderAsNewIdentity(t *testing.T) {
 	if err != nil || removed.RetiredAt == nil || removed.Enabled || len(removed.AssignedGroupCodes) != 0 || len(groups) != 1 {
 		t.Fatalf("retirement not atomic: %+v %v", removed, err)
 	}
-	if _, err = s.SetModelEnabled(ctx, model.ID, removed.Revision, true); !errors.Is(err, ErrModelRetired) {
+	if _, err = s.SetModelEnabled(ctx, model.ID, removed.Revision, true); !errors.Is(err, ErrNotFound) {
 		t.Fatalf("retired model enabled: %v", err)
 	}
-	if _, err = s.PatchModel(ctx, model.ID, removed.Revision, ModelPatch{ProviderModelIDSet: true, ProviderModelID: "test/new"}); !errors.Is(err, ErrModelRetired) {
+	if _, err = s.PatchModel(ctx, model.ID, removed.Revision, ModelPatch{ProviderModelIDSet: true, ProviderModelID: "test/new"}); !errors.Is(err, ErrNotFound) {
 		t.Fatal("retired identity edited")
 	}
 	replacement, err := s.CreateModel(ctx, "Reusable model", nil, "test/model")
@@ -96,15 +99,22 @@ func TestM002PlanPrioritySwapIsAtomicAndRevisionProtected(t *testing.T) {
 
 func TestM002CredentialCASAndRoleBoundary(t *testing.T) {
 	pool, ctx := testdb.Open(t)
-	actor := testdb.Learner(t, ctx, pool)
+	learner := testdb.Learner(t, ctx, pool)
+	actor := cr313AdminActor(t, ctx, pool)
 	envelope, err := security.NewEnvelope(map[int][]byte{1: make([]byte, 32)}, 1)
 	if err != nil {
 		t.Fatal(err)
 	}
 	store := ai.NewCredentialStore(pool, envelope)
-	initial := int64(1)
+	var initial int64
+	if err = pool.QueryRow(ctx, `SELECT revision FROM wordweave.growth_settings WHERE singleton`).Scan(&initial); err != nil {
+		t.Fatal(err)
+	}
+	if _, _, _, err = store.Replace(ctx, learner, "fixture-forbidden-key", &initial); err == nil {
+		t.Fatal("learner replaced the provider credential")
+	}
 	status, revision, applied, err := store.Replace(ctx, actor, "fixture-first-key", &initial)
-	if err != nil || !applied || revision != 2 || !status.Configured {
+	if err != nil || !applied || revision != initial+1 || !status.Configured {
 		t.Fatalf("credential change failed: %+v %d %v %v", status, revision, applied, err)
 	}
 	_, same, applied, err := store.Replace(ctx, actor, "fixture-stale-key", &initial)
@@ -142,6 +152,15 @@ func TestM002CredentialCASAndRoleBoundary(t *testing.T) {
 	}
 }
 
+func cr313AdminActor(t *testing.T, ctx context.Context, pool *pgxpool.Pool) uuid.UUID {
+	t.Helper()
+	var actor uuid.UUID
+	if err := pool.QueryRow(ctx, `INSERT INTO wordweave.accounts(username,password_hash,role,status) VALUES($1,'synthetic-admin-hash','admin','active') RETURNING id`, "credential_admin_"+uuid.NewString()[:8]).Scan(&actor); err != nil {
+		t.Fatal(err)
+	}
+	return actor
+}
+
 func TestM002BaseResetKeepsTrialUsageAndExpiry(t *testing.T) {
 	pool, ctx := testdb.Open(t)
 	s := NewService(pool, nil, nil, nil, []byte("admin-plans"))
@@ -153,7 +172,7 @@ func TestM002BaseResetKeepsTrialUsageAndExpiry(t *testing.T) {
 	if _, err := pool.Exec(ctx, `WITH trial AS(INSERT INTO wordweave.plan_trials(owner_id,target_plan_code,started_at,ends_at) VALUES($1,'pro',clock_timestamp(),clock_timestamp()+interval '6 days')) INSERT INTO wordweave.plan_quota_states(owner_id,plan_code,origin,reset_at) VALUES($1,'pro','trial','-infinity')`, owner); err != nil {
 		t.Fatal(err)
 	}
-	if _, err := pool.Exec(ctx, `WITH runs AS(INSERT INTO wordweave.generation_runs(account_id,credited_account_id,group_code_snapshot,model_id,model_display_name_snapshot,provider_model_id_snapshot,meaning_language,scenario,length_code,minimum_words_snapshot,max_entries_snapshot,call_status,quota_charged,counts_toward_cumulative,completed_at) SELECT $1,$1,'pro',$2,'Fixture','test/quota','en','story','short',30,5,'valid',true,true,clock_timestamp() FROM generate_series(1,8) RETURNING id,started_at,completed_at) INSERT INTO wordweave.generation_charges(run_id,account_id,source_kind,plan_code,origin,quota_epoch,state,charged_at,settled_at) SELECT id,$1,'plan','pro','trial',0,'consumed',started_at,completed_at FROM runs`, owner, model); err != nil {
+	if _, err := pool.Exec(ctx, `WITH runs AS(INSERT INTO wordweave.generation_runs(account_id,credited_account_id,group_code_snapshot,model_id,model_display_name_snapshot,provider_model_id_snapshot,meaning_language,scenario,length_code,minimum_words_snapshot,max_entries_snapshot,call_status,quota_charged,counts_toward_cumulative,completed_at,content_policy_version,model_request_parameters_snapshot) SELECT $1,$1,'pro',$2,'Fixture','test/quota','en','story','short',30,5,'valid',true,true,clock_timestamp(),NULL,'{"version":"custom-parameters-v1","custom_parameters":{},"output_mode":"prompt","max_output_tokens":null,"structured_route":"unchanged"}'::jsonb FROM generate_series(1,8) RETURNING id,started_at,completed_at) INSERT INTO wordweave.generation_charges(run_id,account_id,source_kind,plan_code,origin,quota_epoch,state,charged_at,settled_at) SELECT id,$1,'plan','pro','trial',0,'consumed',started_at,completed_at FROM runs`, owner, model); err != nil {
 		t.Fatal(err)
 	}
 	before, err := s.GetUser(ctx, owner)

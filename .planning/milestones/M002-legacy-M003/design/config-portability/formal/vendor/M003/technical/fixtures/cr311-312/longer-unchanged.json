@@ -1,0 +1,370 @@
+{
+  "fixture_version": "M003-BE-08",
+  "contract_version": "m003-stream-v6",
+  "synthetic": true,
+  "coverage": [
+    "AC-325",
+    "AC-326"
+  ],
+  "request": {
+    "entries": [
+      "art",
+      "go"
+    ],
+    "meaning_language": "zh"
+  },
+  "wire": [
+    {
+      "event": "generation.started",
+      "data": {
+        "seq": 1,
+        "contract_version": "m003-stream-v6",
+        "stream_id": "stream-longer-unchanged",
+        "run_id": "run-longer-unchanged",
+        "generation_token": "fixture-not-a-real-token",
+        "snapshot": {
+          "configuration_revision": "fixture-revision",
+          "effective_plan": {
+            "code": "pro",
+            "origin": "base"
+          },
+          "content_service": {
+            "native_validation": true,
+            "content_review_enabled": true,
+            "content_repair_limit": 1
+          },
+          "native_correction_policy": {
+            "version": "m003-native-policy-v1",
+            "scope": "logical_request",
+            "max_calls": 2,
+            "editable": false
+          }
+        }
+      }
+    },
+    {
+      "event": "generation.progress",
+      "data": {
+        "seq": 2,
+        "phase": "planning"
+      }
+    },
+    {
+      "event": "generation.plan_item",
+      "data": {
+        "seq": 3,
+        "plan_id": "plan-longer-unchanged",
+        "meaning_language": "zh",
+        "item": {
+          "kind": "scene",
+          "text": "朋友去看艺术作品。"
+        }
+      }
+    },
+    {
+      "event": "generation.plan_item",
+      "data": {
+        "seq": 4,
+        "plan_id": "plan-longer-unchanged",
+        "meaning_language": "zh",
+        "item": {
+          "kind": "word_use",
+          "entry": "art",
+          "form": "art",
+          "sense": "暂定本篇用法",
+          "phrase": "modern art"
+        }
+      }
+    },
+    {
+      "event": "generation.plan_item",
+      "data": {
+        "seq": 5,
+        "plan_id": "plan-longer-unchanged",
+        "meaning_language": "zh",
+        "item": {
+          "kind": "word_use",
+          "entry": "go",
+          "form": "go",
+          "sense": "暂定本篇用法",
+          "phrase": "go home"
+        }
+      }
+    },
+    {
+      "event": "generation.progress",
+      "data": {
+        "seq": 6,
+        "phase": "composing"
+      }
+    },
+    {
+      "event": "generation.activity",
+      "data": {
+        "seq": 7,
+        "activity": "writing"
+      }
+    },
+    {
+      "event": "generation.draft",
+      "data": {
+        "seq": 8,
+        "action": "begin",
+        "draft_id": "longer-unchanged-d1",
+        "content_version": 1,
+        "mode": "initial",
+        "base_rev": 0
+      }
+    },
+    {
+      "event": "generation.edit",
+      "data": {
+        "seq": 9,
+        "draft_id": "longer-unchanged-d1",
+        "content_version": 1,
+        "base_rev": 0,
+        "rev": 1,
+        "at": 0,
+        "delete_count": 0,
+        "insert": "We ",
+        "source": "provider"
+      }
+    },
+    {
+      "event": "generation.edit",
+      "data": {
+        "seq": 10,
+        "draft_id": "longer-unchanged-d1",
+        "content_version": 1,
+        "base_rev": 1,
+        "rev": 2,
+        "at": 3,
+        "delete_count": 0,
+        "insert": "see art.\n\nWe go home.\n\nThe art stays.",
+        "source": "provider"
+      }
+    },
+    {
+      "event": "generation.draft",
+      "data": {
+        "seq": 11,
+        "action": "body_complete",
+        "draft_id": "longer-unchanged-d1",
+        "content_version": 1,
+        "base_rev": 2,
+        "body_length": 40,
+        "paragraph_count": 3
+      }
+    },
+    {
+      "event": "generation.activity",
+      "data": {
+        "seq": 12,
+        "activity": "improving"
+      }
+    },
+    {
+      "event": "generation.draft",
+      "data": {
+        "seq": 13,
+        "action": "begin",
+        "draft_id": "longer-unchanged-d2",
+        "content_version": 2,
+        "mode": "replace",
+        "base_rev": 2
+      }
+    },
+    {
+      "event": "generation.draft",
+      "data": {
+        "seq": 14,
+        "action": "paragraph_complete",
+        "draft_id": "longer-unchanged-d2",
+        "content_version": 2,
+        "base_rev": 2,
+        "paragraph_index": 0
+      }
+    },
+    {
+      "event": "generation.edit",
+      "data": {
+        "seq": 15,
+        "draft_id": "longer-unchanged-d2",
+        "content_version": 2,
+        "base_rev": 2,
+        "rev": 3,
+        "at": 13,
+        "delete_count": 13,
+        "insert": "We go to the art fair.\n\n",
+        "source": "provider"
+      }
+    },
+    {
+      "event": "generation.draft",
+      "data": {
+        "seq": 16,
+        "action": "paragraph_complete",
+        "draft_id": "longer-unchanged-d2",
+        "content_version": 2,
+        "base_rev": 3,
+        "paragraph_index": 1
+      }
+    },
+    {
+      "event": "generation.edit",
+      "data": {
+        "seq": 17,
+        "draft_id": "longer-unchanged-d2",
+        "content_version": 2,
+        "base_rev": 3,
+        "rev": 4,
+        "at": 37,
+        "delete_count": 14,
+        "insert": "We go back.\n\n",
+        "source": "provider"
+      }
+    },
+    {
+      "event": "generation.draft",
+      "data": {
+        "seq": 18,
+        "action": "paragraph_complete",
+        "draft_id": "longer-unchanged-d2",
+        "content_version": 2,
+        "base_rev": 4,
+        "paragraph_index": 2
+      }
+    },
+    {
+      "event": "generation.edit",
+      "data": {
+        "seq": 19,
+        "draft_id": "longer-unchanged-d2",
+        "content_version": 2,
+        "base_rev": 4,
+        "rev": 5,
+        "at": 50,
+        "delete_count": 0,
+        "insert": "We remember art.",
+        "source": "provider"
+      }
+    },
+    {
+      "event": "generation.draft",
+      "data": {
+        "seq": 20,
+        "action": "body_complete",
+        "draft_id": "longer-unchanged-d2",
+        "content_version": 2,
+        "base_rev": 5,
+        "body_length": 66,
+        "paragraph_count": 4
+      }
+    },
+    {
+      "event": "generation.progress",
+      "data": {
+        "seq": 21,
+        "phase": "finalizing"
+      }
+    },
+    {
+      "event": "generation.validated",
+      "data": {
+        "seq": 22,
+        "run_id": "run-longer-unchanged",
+        "final_content_version": 2,
+        "result": {
+          "passage": "We see art.\n\nWe go to the art fair.\n\nWe go back.\n\nWe remember art.",
+          "tags": [
+            "日常"
+          ],
+          "targets": [
+            {
+              "entry": "art",
+              "entry_meaning": "艺术",
+              "hint_phrase": "modern art",
+              "hint_blanks": [
+                {
+                  "start": 7,
+                  "end": 10
+                }
+              ],
+              "occurrences": [
+                {
+                  "surface": "art",
+                  "start": 7,
+                  "end": 10
+                },
+                {
+                  "surface": "art",
+                  "start": 26,
+                  "end": 29
+                },
+                {
+                  "surface": "art",
+                  "start": 62,
+                  "end": 65
+                }
+              ]
+            },
+            {
+              "entry": "go",
+              "entry_meaning": "去",
+              "hint_phrase": "go home",
+              "hint_blanks": [
+                {
+                  "start": 0,
+                  "end": 2
+                }
+              ],
+              "occurrences": [
+                {
+                  "surface": "go",
+                  "start": 16,
+                  "end": 18
+                },
+                {
+                  "surface": "go",
+                  "start": 40,
+                  "end": 42
+                }
+              ]
+            }
+          ]
+        },
+        "content_outcome": "review_passed",
+        "completion_notice": null
+      }
+    }
+  ],
+  "checkpoints": [
+    {
+      "after_seq": 9,
+      "label": "initial first safe word immediately visible",
+      "published": "We ",
+      "working": "We ",
+      "rev": 1,
+      "can_save": false
+    },
+    {
+      "after_seq": 11,
+      "label": "initial body complete, private metadata/validation still pending",
+      "published": "We see art.\n\nWe go home.\n\nThe art stays.",
+      "working": "We see art.\n\nWe go home.\n\nThe art stays.",
+      "rev": 2,
+      "can_save": false
+    },
+    {
+      "after_seq": 14,
+      "label": "unchanged paragraph boundary; no edit/no highlight",
+      "published": "We see art.\n\nWe go home.\n\nThe art stays.",
+      "working": "We see art.\n\nWe go home.\n\nThe art stays.",
+      "rev": 2,
+      "can_save": false
+    }
+  ],
+  "notes": [
+    "Ordinal correspondence, no semantic paragraph matching."
+  ]
+}

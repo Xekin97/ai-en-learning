@@ -1,0 +1,31 @@
+ok  	wordweave/internal/platform/postgres	12.078s
+--- FAIL: TestM002PreviewUsageUnknownTotalsAndOptions (1.15s)
+    presets_integration_test.go:248: ERROR: null value in column "reason_codes" of relation "ai_call_usage" violates not-null constraint (SQLSTATE 23502)
+--- FAIL: TestM002PresetCleanupKeepsPublishedPreviewActiveCallsAndUsage (0.94s)
+    presets_integration_test.go:342: ERROR: null value in column "call_stage" of relation "ai_call_usage" violates not-null constraint (SQLSTATE 23502)
+FAIL
+FAIL	wordweave/internal/generation	6.185s
+--- FAIL: TestM002CredentialCASAndRoleBoundary (0.95s)
+    m002_integration_test.go:108: credential change failed: {Configured:false MaskedHint:<nil> UpdatedAt:<nil>} 2 false <nil>
+--- FAIL: TestM002BaseResetKeepsTrialUsageAndExpiry (0.85s)
+    m002_integration_test.go:157: ERROR: new row for relation "generation_runs" violates check constraint "generation_runs_m003_content_facts_valid" (SQLSTATE 23514)
+--- FAIL: TestAdminQuotaDatabase (0.86s)
+    --- FAIL: TestAdminQuotaDatabase/charged_facts (0.00s)
+        user_detail_integration_test.go:42: ERROR: new row for relation "generation_runs" violates check constraint "generation_runs_m003_content_facts_valid" (SQLSTATE 23514)
+    --- FAIL: TestAdminQuotaDatabase/reset_boundary (0.01s)
+        user_detail_integration_test.go:90: ERROR: new row for relation "generation_runs" violates check constraint "generation_runs_m003_content_facts_valid" (SQLSTATE 23514)
+    --- FAIL: TestAdminQuotaDatabase/window_boundary (0.00s)
+        user_detail_integration_test.go:90: ERROR: new row for relation "generation_runs" violates check constraint "generation_runs_m003_content_facts_valid" (SQLSTATE 23514)
+    --- FAIL: TestAdminQuotaDatabase/group_reset (0.00s)
+        user_detail_integration_test.go:107: ERROR: new row for relation "generation_runs" violates check constraint "generation_runs_m003_content_facts_valid" (SQLSTATE 23514)
+--- FAIL: TestAdminQuotaQueryPlan (0.62s)
+    user_detail_integration_test.go:452: ERROR: new row for relation "generation_runs" violates check constraint "generation_runs_m003_content_facts_valid" (SQLSTATE 23514)
+FAIL
+FAIL	wordweave/internal/admin	10.328s
+--- FAIL: TestBaseAndTrialSamePlanRetainIndependentQuota (1.04s)
+    quota_integration_test.go:69: ERROR: new row for relation "generation_runs" violates check constraint "generation_runs_m003_content_facts_valid" (SQLSTATE 23514)
+--- FAIL: TestExtraRefundRestoresExpiredOriginalSourceOnce (0.96s)
+    quota_integration_test.go:129: ERROR: new row for relation "generation_runs" violates check constraint "generation_runs_m003_content_facts_valid" (SQLSTATE 23514)
+FAIL
+FAIL	wordweave/internal/entitlement	2.837s
+EXIT_CODE=143

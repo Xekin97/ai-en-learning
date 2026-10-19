@@ -2,6 +2,7 @@ import type {
   AdminModelModel,
   GroupCode,
   GroupPolicyModel,
+  NativePolicyModel,
   PassageLength,
 } from "@application/shared/models";
 export interface GroupDraft {
@@ -11,6 +12,8 @@ export interface GroupDraft {
   allowedLengths: PassageLength[];
   modelIds: string[];
   expectedRevision: string;
+  contentReviewEnabled: boolean;
+  contentRepairLimit: number;
 }
 export interface ModelRemovalImpact {
   model: AdminModelModel;
@@ -27,6 +30,31 @@ export interface GroupImpact {
   mayChangeEffectivePlan: boolean;
   losesAllModels: boolean;
   revision: string;
+  contentServiceChange: {
+    before: { contentReviewEnabled: boolean; contentRepairLimit: number };
+    after: { contentReviewEnabled: boolean; contentRepairLimit: number };
+  };
+  appliesTo: "new_requests";
+  inFlightPolicy: "accepted_snapshot";
+  usageReset: false;
+  trialDatesChanged: false;
+  warnings: string[];
+}
+export interface PriorityImpact {
+  affectedBaseUsers: number;
+  affectedTrialUsers: number;
+  revision: string;
+  contentServiceByPlan: {
+    code: GroupCode;
+    contentReviewEnabled: boolean;
+    contentRepairLimit: number;
+  }[];
+  mayChangeContentService: boolean;
+  appliesTo: "new_requests";
+  inFlightPolicy: "accepted_snapshot";
+  usageReset: false;
+  trialDatesChanged: false;
+  nativeCorrectionPolicy: NativePolicyModel;
 }
 export interface AdminConfigurationPort {
   previewModelRemoval(id: string): Promise<ModelRemovalImpact>;
@@ -36,11 +64,7 @@ export interface AdminConfigurationPort {
   previewPriorities(
     priorities: { code: GroupCode; priority: number }[],
     expectedRevision: string,
-  ): Promise<{
-    affectedBaseUsers: number;
-    affectedTrialUsers: number;
-    revision: string;
-  }>;
+  ): Promise<PriorityImpact>;
   savePriorities(
     priorities: { code: GroupCode; priority: number }[],
     expectedRevision: string,

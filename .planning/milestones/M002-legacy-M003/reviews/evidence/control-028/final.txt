@@ -1,0 +1,45 @@
+门禁结论：**通过**。建议执行单次 `TRANSITION-M003-029`：`uiux-design → product-planning`，激活 `product-maya` 进行研究基线差异审计与可审阅的重策划建议。
+
+检查结果：
+
+- 当前控制例外合法：M003 / `uiux-design` / `gatekeeper-owen` / active。
+- `uiux-design → product-planning` 为合法回溯；`product-maya` 已注册、唯一，名称校验通过。
+- 独立研究与规划来源存在；`USER-M003-RESEARCH-ALIGN` 明确要求据此核对 M003 偏离、形成重策划范围。
+- UI06、PRODUCT05、BE04 的可恢复快照均存在，冻结历史不需覆盖。
+- 已确认的 0–99、两预算、同模型、上限定稿、Q02、基础预算分离、唯一计次及全局政策保持。
+- 本门只重开产品责任范围：不批准恢复全部研究约束，不批准 API/DB/原型/代码变更，也不进行研究语义审计。
+
+原始依据：[研究对齐授权与边界](</Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/.planning/milestones/M003/reviews/requirements-feedback.md:143>)、[UI06 当前交接](</Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/.planning/milestones/M003/handoffs/uiux.md:12>)、[短文质量调研](</Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/docs/research/short-passage-quality.md>)、[内容审校与返修规划](</Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/docs/plans/content-review-and-repair.md>)。
+
+宿主应机械写入：
+
+```yaml
+decision_id: TRANSITION-M003-029
+operation: recover-or-rollback
+from: uiux-design
+to: product-planning
+active_role: product/to-c
+active_agent: product-maya
+status: active
+current_handoff: .planning/milestones/M003/handoffs/product.md
+required_artifacts:
+  - .planning/milestones/M003/product/overview.md
+  - .planning/milestones/M003/product/data-assets.md
+  - .planning/milestones/M003/product/abilities.md
+  - .planning/milestones/M003/product/pages/index.md
+  - .planning/milestones/M003/product/ai-behavior.md
+  - .planning/milestones/M003/handoffs/product.md
+allowed_transitions: [uiux-design]
+authorized_by: USER-M003-RESEARCH-ALIGN
+```
+
+未解决但不阻塞本迁移：
+
+- 写作前规划、固定编辑的权益归属与规划故障解释需由产品角色标为 `PROPOSED` 或 `OPEN`，不得由历史研究自动升级为已确认。
+- 是否增加调用预算、恢复全部研究链路或改变技术方案均未获授权。
+- UI06、BE04、FE01、待审源码及前端实施仍不接收为通过。
+- `CR039-L1`、`CR042-L1`、`AI-QUALITY-90`、`W01`、`QA26-MINIMAX` 保持开放。
+
+下一动作：`product-maya` 只产出可审阅的基线差异、受影响范围、方案选项及待用户决定项；关键解释未闭环前，不得接续 API、DB、原型或实施。
+
+已改路径：无（只读）。宿主可写入 [research-alignment-return-028.md](</Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/.planning/milestones/M003/reviews/research-alignment-return-028.md)。

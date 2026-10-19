@@ -1,0 +1,380 @@
+{
+  "fixture_version": "M003-BE-08",
+  "contract_version": "m003-stream-v6",
+  "synthetic": true,
+  "coverage": [
+    "AC-325",
+    "AC-327",
+    "AC-328"
+  ],
+  "request": {
+    "entries": [
+      "art",
+      "go"
+    ],
+    "meaning_language": "zh"
+  },
+  "wire": [
+    {
+      "event": "generation.started",
+      "data": {
+        "seq": 1,
+        "contract_version": "m003-stream-v6",
+        "stream_id": "stream-q02-after-body",
+        "run_id": "run-q02-after-body",
+        "generation_token": "fixture-not-a-real-token",
+        "snapshot": {
+          "configuration_revision": "fixture-revision",
+          "effective_plan": {
+            "code": "pro",
+            "origin": "base"
+          },
+          "content_service": {
+            "native_validation": true,
+            "content_review_enabled": true,
+            "content_repair_limit": 1
+          },
+          "native_correction_policy": {
+            "version": "m003-native-policy-v1",
+            "scope": "logical_request",
+            "max_calls": 2,
+            "editable": false
+          }
+        }
+      }
+    },
+    {
+      "event": "generation.progress",
+      "data": {
+        "seq": 2,
+        "phase": "planning"
+      }
+    },
+    {
+      "event": "generation.plan_item",
+      "data": {
+        "seq": 3,
+        "plan_id": "plan-q02-after-body",
+        "meaning_language": "zh",
+        "item": {
+          "kind": "scene",
+          "text": "朋友去看艺术作品。"
+        }
+      }
+    },
+    {
+      "event": "generation.plan_item",
+      "data": {
+        "seq": 4,
+        "plan_id": "plan-q02-after-body",
+        "meaning_language": "zh",
+        "item": {
+          "kind": "word_use",
+          "entry": "art",
+          "form": "art",
+          "sense": "暂定本篇用法",
+          "phrase": "modern art"
+        }
+      }
+    },
+    {
+      "event": "generation.plan_item",
+      "data": {
+        "seq": 5,
+        "plan_id": "plan-q02-after-body",
+        "meaning_language": "zh",
+        "item": {
+          "kind": "word_use",
+          "entry": "go",
+          "form": "go",
+          "sense": "暂定本篇用法",
+          "phrase": "go home"
+        }
+      }
+    },
+    {
+      "event": "generation.progress",
+      "data": {
+        "seq": 6,
+        "phase": "composing"
+      }
+    },
+    {
+      "event": "generation.activity",
+      "data": {
+        "seq": 7,
+        "activity": "writing"
+      }
+    },
+    {
+      "event": "generation.draft",
+      "data": {
+        "seq": 8,
+        "action": "begin",
+        "draft_id": "q02-after-body-d1",
+        "content_version": 1,
+        "mode": "initial",
+        "base_rev": 0
+      }
+    },
+    {
+      "event": "generation.edit",
+      "data": {
+        "seq": 9,
+        "draft_id": "q02-after-body-d1",
+        "content_version": 1,
+        "base_rev": 0,
+        "rev": 1,
+        "at": 0,
+        "delete_count": 0,
+        "insert": "We ",
+        "source": "provider"
+      }
+    },
+    {
+      "event": "generation.edit",
+      "data": {
+        "seq": 10,
+        "draft_id": "q02-after-body-d1",
+        "content_version": 1,
+        "base_rev": 1,
+        "rev": 2,
+        "at": 3,
+        "delete_count": 0,
+        "insert": "see art.\n\nWe go home.\n\nThe art stays.",
+        "source": "provider"
+      }
+    },
+    {
+      "event": "generation.draft",
+      "data": {
+        "seq": 11,
+        "action": "body_complete",
+        "draft_id": "q02-after-body-d1",
+        "content_version": 1,
+        "base_rev": 2,
+        "body_length": 40,
+        "paragraph_count": 3
+      }
+    },
+    {
+      "event": "generation.activity",
+      "data": {
+        "seq": 12,
+        "activity": "improving"
+      }
+    },
+    {
+      "event": "generation.draft",
+      "data": {
+        "seq": 13,
+        "action": "begin",
+        "draft_id": "q02-after-body-d2",
+        "content_version": 2,
+        "mode": "replace",
+        "base_rev": 2
+      }
+    },
+    {
+      "event": "generation.edit",
+      "data": {
+        "seq": 14,
+        "draft_id": "q02-after-body-d2",
+        "content_version": 2,
+        "base_rev": 2,
+        "rev": 3,
+        "at": 0,
+        "delete_count": 13,
+        "insert": "We enjoy art.\n\n",
+        "source": "provider"
+      }
+    },
+    {
+      "event": "generation.draft",
+      "data": {
+        "seq": 15,
+        "action": "paragraph_complete",
+        "draft_id": "q02-after-body-d2",
+        "content_version": 2,
+        "base_rev": 3,
+        "paragraph_index": 0
+      }
+    },
+    {
+      "event": "generation.edit",
+      "data": {
+        "seq": 16,
+        "draft_id": "q02-after-body-d2",
+        "content_version": 2,
+        "base_rev": 3,
+        "rev": 4,
+        "at": 15,
+        "delete_count": 27,
+        "insert": "We go outside.",
+        "source": "provider"
+      }
+    },
+    {
+      "event": "generation.draft",
+      "data": {
+        "seq": 17,
+        "action": "body_complete",
+        "draft_id": "q02-after-body-d2",
+        "content_version": 2,
+        "base_rev": 4,
+        "body_length": 29,
+        "paragraph_count": 2
+      }
+    },
+    {
+      "event": "generation.draft",
+      "data": {
+        "seq": 18,
+        "action": "discard",
+        "draft_id": "q02-after-body-d2",
+        "content_version": 2,
+        "base_rev": 4
+      }
+    },
+    {
+      "event": "generation.draft",
+      "data": {
+        "seq": 19,
+        "action": "begin",
+        "draft_id": "q02-after-body-d3",
+        "content_version": 1,
+        "mode": "restore",
+        "base_rev": 4
+      }
+    },
+    {
+      "event": "generation.edit",
+      "data": {
+        "seq": 20,
+        "draft_id": "q02-after-body-d3",
+        "content_version": 1,
+        "base_rev": 4,
+        "rev": 5,
+        "at": 0,
+        "delete_count": 29,
+        "insert": "We see art.\n\nWe go home.\n\nThe art stays.",
+        "source": "retained"
+      }
+    },
+    {
+      "event": "generation.draft",
+      "data": {
+        "seq": 21,
+        "action": "body_complete",
+        "draft_id": "q02-after-body-d3",
+        "content_version": 1,
+        "base_rev": 5,
+        "body_length": 40,
+        "paragraph_count": 3
+      }
+    },
+    {
+      "event": "generation.progress",
+      "data": {
+        "seq": 22,
+        "phase": "finalizing"
+      }
+    },
+    {
+      "event": "generation.validated",
+      "data": {
+        "seq": 23,
+        "run_id": "run-q02-after-body",
+        "final_content_version": 1,
+        "result": {
+          "passage": "We see art.\n\nWe go home.\n\nThe art stays.",
+          "tags": [
+            "日常"
+          ],
+          "targets": [
+            {
+              "entry": "art",
+              "entry_meaning": "艺术",
+              "hint_phrase": "modern art",
+              "hint_blanks": [
+                {
+                  "start": 7,
+                  "end": 10
+                }
+              ],
+              "occurrences": [
+                {
+                  "surface": "art",
+                  "start": 7,
+                  "end": 10
+                },
+                {
+                  "surface": "art",
+                  "start": 30,
+                  "end": 33
+                }
+              ]
+            },
+            {
+              "entry": "go",
+              "entry_meaning": "去",
+              "hint_phrase": "go home",
+              "hint_blanks": [
+                {
+                  "start": 0,
+                  "end": 2
+                }
+              ],
+              "occurrences": [
+                {
+                  "surface": "go",
+                  "start": 16,
+                  "end": 18
+                }
+              ]
+            }
+          ]
+        },
+        "content_outcome": "service_incomplete",
+        "completion_notice": "content_review_incomplete"
+      }
+    }
+  ],
+  "checkpoints": [
+    {
+      "after_seq": 9,
+      "label": "initial first safe word immediately visible",
+      "published": "We ",
+      "working": "We ",
+      "rev": 1,
+      "can_save": false
+    },
+    {
+      "after_seq": 11,
+      "label": "initial body complete, private metadata/validation still pending",
+      "published": "We see art.\n\nWe go home.\n\nThe art stays.",
+      "working": "We see art.\n\nWe go home.\n\nThe art stays.",
+      "rev": 2,
+      "can_save": false
+    },
+    {
+      "after_seq": 17,
+      "label": "body complete but malformed later targets; not lastValid",
+      "published": "We enjoy art.\n\nWe go outside.",
+      "working": "We enjoy art.\n\nWe go outside.",
+      "rev": 4,
+      "can_save": false
+    },
+    {
+      "after_seq": 20,
+      "label": "retained restore staged, no new provider text",
+      "published": "We enjoy art.\n\nWe go outside.",
+      "working": "We see art.\n\nWe go home.\n\nThe art stays.",
+      "rev": 5,
+      "can_save": false
+    }
+  ],
+  "notes": [
+    "lastValid is full initial package, not published mixed text."
+  ]
+}

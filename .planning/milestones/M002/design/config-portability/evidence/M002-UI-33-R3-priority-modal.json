@@ -1,0 +1,153 @@
+{
+  "version": "M002-UI-33-R3",
+  "mode": "priority editor modal defect regression",
+  "before": {
+    "modal": false,
+    "position": "absolute",
+    "top": 1471.256103515625,
+    "bottom": 2009.381103515625,
+    "viewport": 950,
+    "source": "R2 browser reproduction before the R3 adapter change"
+  },
+  "provider_calls": 0,
+  "configuration_writes": 0,
+  "checks": [
+    {
+      "name": "desktop-opens-in-top-layer-centered-with-backdrop",
+      "passed": true,
+      "details": {
+        "modal": true,
+        "position": "fixed",
+        "rect": {
+          "top": 205.9375,
+          "right": 1020,
+          "bottom": 744.0625,
+          "left": 420,
+          "width": 600,
+          "height": 538.125
+        },
+        "viewport": {
+          "width": 1440,
+          "height": 950
+        },
+        "activeInside": true
+      }
+    },
+    {
+      "name": "backdrop-blocks-background-and-keeps-draft",
+      "passed": true,
+      "details": {
+        "modalStillOpen": true,
+        "value": "37",
+        "urlUnchanged": true
+      }
+    },
+    {
+      "name": "tab-focus-remains-in-modal",
+      "passed": true,
+      "details": {
+        "samples": 12,
+        "all_inside": true
+      }
+    },
+    {
+      "name": "preview-redraw-preserves-draft-and-restores-modal",
+      "passed": true,
+      "details": {
+        "modal": true,
+        "value": "37",
+        "notice": 1,
+        "focusOnNotice": true
+      }
+    },
+    {
+      "name": "save-closes-and-returns-focus-to-opener",
+      "passed": true,
+      "details": {
+        "closed": true,
+        "focusReturned": true
+      }
+    },
+    {
+      "name": "cancel-closes-and-returns-focus-to-opener",
+      "passed": true,
+      "details": {
+        "closed": true,
+        "focusReturned": true
+      }
+    },
+    {
+      "name": "escape-closes-and-returns-focus-to-opener",
+      "passed": true,
+      "details": {
+        "closed": true,
+        "focusReturned": true
+      }
+    },
+    {
+      "name": "close-button-closes-and-returns-focus-to-opener",
+      "passed": true,
+      "details": {
+        "closed": true,
+        "focusReturned": true
+      }
+    },
+    {
+      "name": "portability-modal-still-opens-after-priority-close",
+      "passed": true,
+      "details": {
+        "modal": true
+      }
+    },
+    {
+      "name": "r2-plan-to-growth-navigation-remains-intact",
+      "passed": true,
+      "details": {
+        "path": "/formal/",
+        "page": "operations",
+        "overflow": 0
+      }
+    },
+    {
+      "name": "mobile-english-modal-fits-scrolls-and-keeps-actions-reachable",
+      "passed": true,
+      "details": {
+        "modal": true,
+        "rect": {
+          "top": 114.796875,
+          "right": 382,
+          "bottom": 729.203125,
+          "left": 8
+        },
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "actionBottom": 706.203125,
+        "value": "41",
+        "documentOverflow": 0,
+        "dialogOverflow": 0
+      }
+    },
+    {
+      "name": "browser-console-and-page-errors",
+      "passed": true,
+      "details": {
+        "console_errors": [],
+        "page_errors": []
+      }
+    }
+  ],
+  "screenshots": [
+    "R3-01-priority-modal-desktop-zh.png",
+    "R3-02-priority-preview-desktop-zh.png",
+    "R3-03-priority-preview-mobile-en.png"
+  ],
+  "console_errors": [],
+  "page_errors": [],
+  "summary": {
+    "total": 12,
+    "passed": 12,
+    "failed": 0
+  }
+}

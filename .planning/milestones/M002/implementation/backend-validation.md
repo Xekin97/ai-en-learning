@@ -1,3 +1,7 @@
+> **CR313 / M002-BI-CR313-01 后端验证入口（2026-10-16，接收修正R2）**：四类别 portability、0018、BE501-06 runtime、model_trial附属读取、空growth 422、resolve unknown及KDF准入的隔离PG/HTTP实际结果见 [config-portability/backend-validation.md](config-portability/backend-validation.md)，命令、实际stdout与失败修复见 [test-log.md](config-portability/evidence/backend/test-log.md)。状态 `awaiting_user_review`；下方旧正文保留。
+
+> **M002续做索引124**：本里程碑包含原M003全部需求。[较新同类原件](../../M002-legacy-M003/implementation/backend-validation.md)及其已记录的逐项接收/验证均归M002；旧编号只是历史标识。当前工作与未完成项见[续做索引](../continuation.md)，下方前期记录保留，不能据旧完成态关闭当前M002。
+
 ---
 milestone: M002
 stage: implementation

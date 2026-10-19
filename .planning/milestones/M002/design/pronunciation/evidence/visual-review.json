@@ -1,0 +1,27 @@
+{
+  "version": "M002-UI-32-R1",
+  "reviewer": "designer-tony (root carrying active role; no new agent runtime)",
+  "timestamp": "2026-10-16T06:29:07.969681+00:00",
+  "viewed": [
+    "picker-desktop.png",
+    "result-desktop.png",
+    "library-mobile-error.png",
+    "plan-mobile-menu.png"
+  ],
+  "observed": [
+    "Picker retains original complete tool layout and has no audio controls",
+    "Result meanings use compact word-local controls on inherited paper and green palette",
+    "Mobile retry is in-place; meanings remain separate and unchanged",
+    "Mobile accent menu is anchored to the word control; keyboard focus visible"
+  ],
+  "unverified": [
+    "real audio",
+    "production app integration",
+    "device voices",
+    "audio license"
+  ],
+  "failure_resolution": {
+    "run01": "English accent caption exceeded available width by about 1px: main control increased 116 to 120px. Bounding-box 0.000061px rounding and transient menu transform led to harness false failures; compare <0.01 CSS px and sample settled menu in one frame.",
+    "run02": "One touch-bound assertion hit same float rounding; targeted recheck found all computed/settled heights 44px. No design-source changes after run02."
+  }
+}

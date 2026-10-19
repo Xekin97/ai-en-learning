@@ -35,7 +35,7 @@ func (server *Server) requestContext(next http.Handler) http.Handler {
 		finishMetrics := server.metrics.Begin()
 		wrapped := &statusWriter{ResponseWriter: writer, status: http.StatusOK}
 		ctx := context.WithValue(request.Context(), requestIDKey, requestIDValue)
-		if request.Method == http.MethodPost && request.URL.Path == "/api/v1/generations/stream" {
+		if request.Method == http.MethodPost && isGenerationStreamPath(request.URL.Path) {
 			trace := server.metrics.GenerationTrace(requestIDValue)
 			ctx = generationtrace.With(ctx, trace)
 			trace.Begin(generationtrace.Request)
@@ -51,12 +51,22 @@ func (server *Server) requestContext(next http.Handler) http.Handler {
 	})
 }
 
+func isGenerationStreamPath(path string) bool {
+	if path == "/api/v1/generations/stream" {
+		return true
+	}
+	return strings.HasPrefix(path, "/api/v1/presets/") && strings.HasSuffix(path, "/generations/stream") ||
+		strings.HasPrefix(path, "/api/v1/admin/presets/") && strings.HasSuffix(path, "/previews/stream")
+}
+
 func (server *Server) recoverPanic(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(writer http.ResponseWriter, request *http.Request) {
 		defer func() {
 			if recovered := recover(); recovered != nil {
 				if trace := generationtrace.From(request.Context()); trace != nil {
 					trace.End(generationtrace.Request, generationtrace.Failed, generationtrace.Why("panic"))
+					slog.Error("http panic", "request_id", requestID(request.Context()), "reason", "panic")
+				} else if isSensitiveRequestPath(request.URL.Path) {
 					slog.Error("http panic", "request_id", requestID(request.Context()), "reason", "panic")
 				} else {
 					slog.Error("http panic", "request_id", requestID(request.Context()), "error", recovered, "stack", string(debug.Stack()))
@@ -66,6 +76,10 @@ func (server *Server) recoverPanic(next http.Handler) http.Handler {
 		}()
 		next.ServeHTTP(writer, request)
 	})
+}
+
+func isSensitiveRequestPath(path string) bool {
+	return strings.HasPrefix(path, "/api/v1/admin/config-portability/")
 }
 
 func (server *Server) securityHeaders(next http.Handler) http.Handler {

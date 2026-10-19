@@ -25,6 +25,13 @@ const kinds = {
   mastered_words: "mastered",
   saved_passages: "stories",
 };
+const portabilityCategory = computed(() =>
+  tab.value === "itemsettings" ? "items" : "growth",
+);
+async function refreshPortabilityHost() {
+  if (portabilityCategory.value === "items") await items.load();
+  else await growth.load();
+}
 await usePageLoader("admin-growth", () =>
   Promise.allSettled([growth.load(), items.load(), admin.loadModels()]).then(
     () => {},
@@ -52,6 +59,10 @@ function reference(value: ItemReferenceModel) {
         <h1>{{ copy("operations") }}</h1>
         <p class="muted">{{ copy("admin.desc") }}</p>
       </div>
+      <ConfigPortabilityActions
+        :category="portabilityCategory"
+        :refresh="refreshPortabilityHost"
+      />
     </div>
     <div class="tabs">
       <button

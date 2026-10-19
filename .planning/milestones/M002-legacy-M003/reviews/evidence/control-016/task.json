@@ -1,0 +1,31 @@
+{
+  "objective": "你是独立 gatekeeper-owen。本次用户 USER-M003-STREAM-FIRST 明确要求先由后台架构重新设计生成流与流式结构，再结合该设计更新原型；UI04没有获批。检查并给出单次 recover-or-rollback 接续技术设计/backend-alex 的门禁结果，不能把这次责任回溯记为UI04验收通过。你是只读CLI控制检查，返回具体结论及精确状态变更清单，由宿主机械写回；不尝试扩大权限。",
+  "inputs": [
+    ".planning/agt/project.yaml",
+    ".planning/agt/agents.yaml",
+    ".planning/workflow/state.yaml",
+    ".planning/milestones/M003/reviews/evidence/start/locked-profile.yaml",
+    ".planning/milestones/M003/reviews/requirements-feedback.md",
+    ".planning/milestones/M003/handoffs/backend-architecture.md",
+    ".planning/milestones/M003/handoffs/uiux.md",
+    ".planning/milestones/M003/reviews/technical-design-012.md"
+  ],
+  "write_scope": [
+    ".planning/milestones/M003/reviews/backend-stream-first-016.md"
+  ],
+  "acceptance": [
+    "完整读agt-stage-gate及继承契约；当前业务stage仍uiux-design，控制角色例外已明确激活。按当前入口、USER-M003-STREAM-FIRST和相关ID定向检查，不全量扫历史。保持Profile1.0和模型v1锁。",
+    "用户明确改变用户端可见流程，并授权后台先行。原PRODUCT03/UI04中强调审稿返修及k/N的显示条款已由这次明确指示取代，不重复询问；业务计次/付费权益/管理台配置未变。专业原件如需同步由责任角色处理，你不改写。",
+    "本次是已有BE02受影响范围重开，不是接受UI04后正常推进技术，也不是已批准新BE03。检查uiux-design允许technical-design，以及backend-architect/base和backend-alex名称/注册合法。如成立返回TRANSITION-M003-017建议和同阶段状态/required_artifacts/allowed_transitions/当前handoff/影响批准字段的精确清单。",
+    "后端架构先提交公开流与内部流程的真实对应关系，用户已授权之后基于方案做原型；该顺序不授权新成本/业务变更或自动实施。有关设计未获批、FE01映射和既有代码依赖需要标记待复核。只检查本次接续条件，不审源码不跑测试。",
+    "旧UI04源码快照、BE02/FE01 technical-012、backend实现待审提交和所有全局开放项保留。检查通过也不得代用户批准未来新稿；只读报告直接列原始产物链接、通过/阻塞、授权及下一角色，避免重写专业内容。"
+  ],
+  "risk": "normal",
+  "prior_attempts": [],
+  "report": [
+    "check_results",
+    "original_sources",
+    "exact_target_state",
+    "unresolved_findings"
+  ]
+}

@@ -1,0 +1,170 @@
+[WebServer] (node:51298) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:51395) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] 
+[WebServer]  ERROR  (node:51405) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use node --trace-warnings ... to show where the warning was created)
+[WebServer] 
+[WebServer] (node:51598) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:51597) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 4 tests using 2 workers
+
+(node:51804) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:51805) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  2 [desktop] › tests/e2e/m002-learning.spec.ts:19:1 › ordinary workspace defaults, random selection, validated save and editable batch title (8.1s)
+  ✘  1 [mobile] › tests/e2e/m002-learning.spec.ts:19:1 › ordinary workspace defaults, random selection, validated save and editable batch title (8.2s)
+(node:52189) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:52190) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  3 [desktop] › tests/e2e/m002-learning.spec.ts:104:1 › gallery loads all cursors before counts, filters language and enters a locked manual-start workspace (6.5s)
+  ✘  4 [mobile] › tests/e2e/m002-learning.spec.ts:104:1 › gallery loads all cursors before counts, filters language and enters a locked manual-start workspace (6.4s)
+
+
+  1) [desktop] › tests/e2e/m002-learning.spec.ts:19:1 › ordinary workspace defaults, random selection, validated save and editable batch title 
+
+    Error: expect(locator).toHaveValue(expected) failed
+
+    Locator:  getByRole('combobox', { name: 'Style', exact: true }).locator('..').locator('select')
+    Expected: "story"
+    Received: ""
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveValue" with timeout 5000ms
+      - waiting for getByRole('combobox', { name: 'Style', exact: true }).locator('..').locator('select')
+        14 × locator resolved to <select value="" tabindex="-1" aria-hidden="true" class="ww-select-proxy">…</select>
+           - unexpected value ""
+
+
+      38 |       .locator("..")
+      39 |       .locator("select"),
+    > 40 |   ).toHaveValue("story");
+         |     ^
+      41 |   await expect(
+      42 |     page
+      43 |       .getByRole("combobox", { name: text("length"), exact: true })
+        at /Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/frontend/tests/e2e/m002-learning.spec.ts:40:5
+
+    Error Context: test-results/m002-learning-ordinary-wor-89de7-ve-and-editable-batch-title-desktop/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/m002-learning-ordinary-wor-89de7-ve-and-editable-batch-title-desktop/trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace test-results/m002-learning-ordinary-wor-89de7-ve-and-editable-batch-title-desktop/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [desktop] › tests/e2e/m002-learning.spec.ts:104:1 › gallery loads all cursors before counts, filters language and enters a locked manual-start workspace 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: locator('[data-region=generation-result] .story-text')
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" with timeout 5000ms
+      - waiting for locator('[data-region=generation-result] .story-text')
+
+
+      130 |   await expect(
+      131 |     page.locator("[data-region=generation-result] .story-text"),
+    > 132 |   ).toBeVisible();
+          |     ^
+      133 |   expect(generations).toBe(1);
+      134 |   await page
+      135 |     .getByRole("button", { name: text("guestcollect"), exact: true })
+        at /Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/frontend/tests/e2e/m002-learning.spec.ts:132:5
+
+    Error Context: test-results/m002-learning-gallery-load-7c716-cked-manual-start-workspace-desktop/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/m002-learning-gallery-load-7c716-cked-manual-start-workspace-desktop/trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace test-results/m002-learning-gallery-load-7c716-cked-manual-start-workspace-desktop/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3) [mobile] › tests/e2e/m002-learning.spec.ts:19:1 › ordinary workspace defaults, random selection, validated save and editable batch title 
+
+    Error: expect(locator).toHaveValue(expected) failed
+
+    Locator:  getByRole('combobox', { name: 'Style', exact: true }).locator('..').locator('select')
+    Expected: "story"
+    Received: ""
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveValue" with timeout 5000ms
+      - waiting for getByRole('combobox', { name: 'Style', exact: true }).locator('..').locator('select')
+        14 × locator resolved to <select value="" tabindex="-1" aria-hidden="true" class="ww-select-proxy">…</select>
+           - unexpected value ""
+
+
+      38 |       .locator("..")
+      39 |       .locator("select"),
+    > 40 |   ).toHaveValue("story");
+         |     ^
+      41 |   await expect(
+      42 |     page
+      43 |       .getByRole("combobox", { name: text("length"), exact: true })
+        at /Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/frontend/tests/e2e/m002-learning.spec.ts:40:5
+
+    Error Context: test-results/m002-learning-ordinary-wor-89de7-ve-and-editable-batch-title-mobile/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/m002-learning-ordinary-wor-89de7-ve-and-editable-batch-title-mobile/trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace test-results/m002-learning-ordinary-wor-89de7-ve-and-editable-batch-title-mobile/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  4) [mobile] › tests/e2e/m002-learning.spec.ts:104:1 › gallery loads all cursors before counts, filters language and enters a locked manual-start workspace 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: locator('[data-region=generation-result] .story-text')
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" with timeout 5000ms
+      - waiting for locator('[data-region=generation-result] .story-text')
+
+
+      130 |   await expect(
+      131 |     page.locator("[data-region=generation-result] .story-text"),
+    > 132 |   ).toBeVisible();
+          |     ^
+      133 |   expect(generations).toBe(1);
+      134 |   await page
+      135 |     .getByRole("button", { name: text("guestcollect"), exact: true })
+        at /Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/frontend/tests/e2e/m002-learning.spec.ts:132:5
+
+    Error Context: test-results/m002-learning-gallery-load-7c716-cked-manual-start-workspace-mobile/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/m002-learning-gallery-load-7c716-cked-manual-start-workspace-mobile/trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace test-results/m002-learning-gallery-load-7c716-cked-manual-start-workspace-mobile/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  4 failed
+    [desktop] › tests/e2e/m002-learning.spec.ts:19:1 › ordinary workspace defaults, random selection, validated save and editable batch title 
+    [desktop] › tests/e2e/m002-learning.spec.ts:104:1 › gallery loads all cursors before counts, filters language and enters a locked manual-start workspace 
+    [mobile] › tests/e2e/m002-learning.spec.ts:19:1 › ordinary workspace defaults, random selection, validated save and editable batch title 
+    [mobile] › tests/e2e/m002-learning.spec.ts:104:1 › gallery loads all cursors before counts, filters language and enters a locked manual-start workspace 

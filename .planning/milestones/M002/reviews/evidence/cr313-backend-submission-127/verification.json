@@ -1,0 +1,97 @@
+{
+  "backend_checks": [
+    {
+      "check": "scoped_metadata",
+      "passed": true,
+      "detail": "All three scoped documents remain awaiting_user_review"
+    },
+    {
+      "check": "acceptance_ids",
+      "passed": true,
+      "detail": "AC-501 through AC-514 present; semantic coverage requires review"
+    },
+    {
+      "check": "receiving_ids",
+      "passed": true,
+      "detail": "All upstream handoff IDs represented"
+    },
+    {
+      "check": "api_ids",
+      "passed": true,
+      "detail": "Five endpoints defined"
+    },
+    {
+      "check": "local_links",
+      "passed": true,
+      "detail": {
+        "checked": 32,
+        "errors": []
+      }
+    },
+    {
+      "check": "canonical_old_body_byte_identity",
+      "passed": true,
+      "detail": [
+        {
+          "path": ".planning/milestones/M002/technical/backend.md",
+          "old_sha256": "af3a490ee02204b521a0107cb5b5f432061d29e4c878192ce21e8ce571e358c3",
+          "preserved_body_sha256": "af3a490ee02204b521a0107cb5b5f432061d29e4c878192ce21e8ce571e358c3",
+          "byte_identical": true
+        },
+        {
+          "path": ".planning/milestones/M002/technical/api/index.md",
+          "old_sha256": "55cd7e4fb09d221dab7c45b33cce002b014218bdf4adcc81b499f7a58215b4eb",
+          "preserved_body_sha256": "55cd7e4fb09d221dab7c45b33cce002b014218bdf4adcc81b499f7a58215b4eb",
+          "byte_identical": true
+        },
+        {
+          "path": ".planning/milestones/M002/handoffs/backend-architecture.md",
+          "old_sha256": "35cef37d9dfafcf2beb7b389fda31264ff5c1664fceda84919e7f7acb5ed0f1c",
+          "preserved_body_sha256": "35cef37d9dfafcf2beb7b389fda31264ff5c1664fceda84919e7f7acb5ed0f1c",
+          "byte_identical": true
+        }
+      ]
+    },
+    {
+      "check": "selected_inputs_unchanged",
+      "passed": true,
+      "detail": {
+        "changed": [],
+        "scope": "selected 51 source/input files; not full repository audit"
+      }
+    }
+  ],
+  "delivery_files_verified": 6,
+  "protected": {
+    "product": {
+      "count": 8,
+      "mismatches": [],
+      "pass": true
+    },
+    "design": {
+      "count": 106,
+      "mismatches": [],
+      "pass": true
+    },
+    "database": {
+      "count": 4,
+      "mismatches": [],
+      "pass": true
+    },
+    "application": {
+      "count": 594,
+      "mismatches": [],
+      "pass": true
+    },
+    "legacy": {
+      "count": 2043,
+      "mismatches": [],
+      "pass": true
+    }
+  },
+  "canonical_bodies_preserved": {
+    ".planning/milestones/M002/technical/backend.md": true,
+    ".planning/milestones/M002/technical/api/index.md": true,
+    ".planning/milestones/M002/handoffs/backend-architecture.md": true
+  }
+}

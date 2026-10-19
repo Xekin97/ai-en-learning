@@ -25,7 +25,7 @@ describe("provider workspace drafts", () => {
     expect(input.connection.apiKey).toBe("synthetic-key");
     expect(input.models.every((m) => !("connection" in m))).toBe(true);
   });
-  it("merges by identity, retains local additions, includes remote additions and drops retired rows", () => {
+  it("merges by identity and preserves local rows deleted remotely for explicit resolution", () => {
     const old = {
       ...modelEntryDraft("old-key"),
       modelId: "one",
@@ -52,13 +52,23 @@ describe("provider workspace drafts", () => {
       [{ ...old, displayName: "Local edit" }, removed, added],
       [remote, remoteNew],
     );
-    expect(merged.map((m) => m.modelId)).toEqual(["one", null, "two"]);
+    expect(merged.map((m) => m.modelId)).toEqual([
+      "one",
+      "retired",
+      null,
+      "two",
+    ]);
     expect(merged[0]).toMatchObject({
       key: "old-key",
       displayName: "Local edit",
       maxOutputTokens: "8000",
     });
-    expect(merged[1]).toEqual(added);
+    expect(merged[1]).toMatchObject({
+      ...removed,
+      remoteDeleted: true,
+      customConflict: false,
+    });
+    expect(merged[2]).toEqual(added);
   });
   it("accepts an empty provider while rejecting exposed credentials in a grouped response", () => {
     const connection = {

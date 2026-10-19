@@ -29,6 +29,8 @@ export const mapUsage = (v: UsageDto): UsageSummaryModel => ({
   outputTokens: v.output_tokens,
   cost: v.cost ? { amount: v.cost.amount, unit: v.cost.unit } : null,
   unknownCalls: v.unknown_calls,
+  invocationUnknownCalls: v.invocation_unknown_calls,
+  notInvokedCalls: v.not_invoked_calls,
 });
 const base = (
   d: TrafficDto | FunnelDto | RetentionDto | OverviewDto,

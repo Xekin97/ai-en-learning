@@ -39,6 +39,7 @@ function reset() {
       connection: connections[0],
       max_output_tokens: null,
       output_mode: "prompt",
+      custom_parameters: {},
       enabled: true,
       retired_at: null,
       assigned_group_codes: ["visitor", "basic", "pro", "plus"],
@@ -53,8 +54,16 @@ function reset() {
     max_entries: 8,
     allowed_lengths: ["short", "medium"],
     models: [{ id: "model-admin", display_name: "Admin model", enabled: true }],
+    content_review_enabled: i > 1,
+    content_repair_limit: i > 1 ? 1 : 0,
   }));
 }
+const nativeCorrectionPolicy = {
+  version: "m003-native-policy-v1",
+  scope: "logical_request",
+  max_calls: 2,
+  editable: false,
+};
 reset();
 const summary = (id) => ({
   id,
@@ -248,6 +257,7 @@ export async function adminFixture(request, response, url) {
       connection,
       max_output_tokens: m.max_output_tokens ?? null,
       output_mode: m.output_mode,
+      custom_parameters: m.custom_parameters,
       enabled: m.enabled,
       retired_at: null,
       assigned_group_codes:
@@ -316,6 +326,7 @@ export async function adminFixture(request, response, url) {
       connection,
       max_output_tokens: item.max_output_tokens ?? null,
       output_mode: item.output_mode,
+      custom_parameters: item.custom_parameters,
       enabled: item.enabled,
       retired_at: null,
       assigned_group_codes: [],
@@ -339,6 +350,7 @@ export async function adminFixture(request, response, url) {
       connection: resolveConnection(value),
       max_output_tokens: value.max_output_tokens ?? null,
       output_mode: value.output_mode,
+      custom_parameters: value.custom_parameters,
       enabled: value.enabled,
       retired_at: null,
       assigned_group_codes: [],
@@ -373,6 +385,7 @@ export async function adminFixture(request, response, url) {
       model.connection = resolveConnection(value);
       model.max_output_tokens = value.max_output_tokens;
       model.output_mode = value.output_mode;
+      model.custom_parameters = value.custom_parameters;
       if (value.display_name !== undefined)
         model.display_name = value.display_name;
       if (value.description !== undefined)
@@ -400,7 +413,11 @@ export async function adminFixture(request, response, url) {
     return json({ model, revision: revision() });
   }
   if (path === "/groups" && method === "GET")
-    return json({ items: groups, revision: revision() });
+    return json({
+      items: groups,
+      revision: revision(),
+      native_correction_policy: nativeCorrectionPolicy,
+    });
   if (path === "/groups/priority-impact" || path === "/groups/priorities") {
     const value = await body();
     if (value.expected_revision !== revision())
@@ -416,7 +433,11 @@ export async function adminFixture(request, response, url) {
     version++;
     for (const priority of value.priorities)
       groups.find((g) => g.code === priority.code).priority = priority.priority;
-    return json({ items: groups, revision: revision() });
+    return json({
+      items: groups,
+      revision: revision(),
+      native_correction_policy: nativeCorrectionPolicy,
+    });
   }
   const groupMatch = path.match(
     /^\/groups\/(visitor|basic|pro|plus)(\/impact-preview)?$/,
@@ -446,7 +467,11 @@ export async function adminFixture(request, response, url) {
       }),
     });
     version++;
-    return json({ group, revision: revision() });
+    return json({
+      group,
+      revision: revision(),
+      native_correction_policy: nativeCorrectionPolicy,
+    });
   }
   if (path === "/users") {
     const query = (url.searchParams.get("username") ?? "").toLowerCase();

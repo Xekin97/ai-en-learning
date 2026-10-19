@@ -4,6 +4,7 @@ package admin
 
 import (
 	"context"
+	"encoding/json"
 	"errors"
 	"strings"
 	"testing"
@@ -18,7 +19,7 @@ import (
 
 func TestGenericModelConnectionsAtomicAndIsolated(t *testing.T) {
 	pool, ctx := testdb.Open(t)
-	actor := testdb.Learner(t, ctx, pool)
+	actor := cr313AdminActor(t, ctx, pool)
 	rolePool := func(role string) *pgxpool.Pool {
 		cfg := pool.Config()
 		cfg.ConnConfig.RuntimeParams["role"] = role
@@ -43,12 +44,12 @@ func TestGenericModelConnectionsAtomicAndIsolated(t *testing.T) {
 		}
 		return r
 	}
-	input := ModelInput{DisplayName: "First", ProviderModelID: "vendor/Case-ID", OutputMode: "prompt", Expected: revision(), Enabled: true, Connection: &ai.ConnectionDraft{Name: "Provider A", Protocol: ai.ProtocolChat, BaseURL: "https://a.example/custom/v1/", APIKey: "synthetic-key-one"}}
+	input := ModelInput{DisplayName: "First", ProviderModelID: "vendor/Case-ID", OutputMode: "prompt", CustomParameters: json.RawMessage(`{"temperature":0.2}`), Expected: revision(), Enabled: true, Connection: &ai.ConnectionDraft{Name: "Provider A", Protocol: ai.ProtocolChat, BaseURL: "https://a.example/custom/v1/", APIKey: "synthetic-key-one"}}
 	first, err := s.SaveModel(ctx, actor, uuid.Nil, input)
 	if err != nil {
 		t.Fatal(err)
 	}
-	if first.Connection.BaseURL != input.Connection.BaseURL || first.ProviderModelID != input.ProviderModelID || !first.Enabled {
+	if first.Connection.BaseURL != input.Connection.BaseURL || first.ProviderModelID != input.ProviderModelID || !strings.Contains(string(first.CustomParameters), "0.2") || !first.Enabled {
 		t.Fatal("saved configuration was rewritten")
 	}
 	input.DisplayName = "Second"
@@ -142,7 +143,7 @@ func TestGenericModelConnectionsAtomicAndIsolated(t *testing.T) {
 
 func TestModelBatchOneConnectionAtomicRollbackAndRevision(t *testing.T) {
 	pool, ctx := testdb.Open(t)
-	actor := testdb.Learner(t, ctx, pool)
+	actor := cr313AdminActor(t, ctx, pool)
 	rolePool := func(role string) *pgxpool.Pool {
 		cfg := pool.Config()
 		cfg.ConnConfig.RuntimeParams["role"] = role
@@ -163,7 +164,8 @@ func TestModelBatchOneConnectionAtomicRollbackAndRevision(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	input := ModelBatchInput{Expected: revision, Connection: &ai.ConnectionDraft{Name: "Batch provider", Protocol: ai.ProtocolResponses, BaseURL: "https://batch.example/v1", APIKey: "synthetic-batch-key"}, Models: []NewModelInput{{ProviderModelID: "Vendor/First", OutputMode: "prompt", Enabled: true}, {ProviderModelID: "Vendor/Second", DisplayName: "Named model", OutputMode: "json_schema"}}}
+	empty := json.RawMessage(`{}`)
+	input := ModelBatchInput{Expected: revision, Connection: &ai.ConnectionDraft{Name: "Batch provider", Protocol: ai.ProtocolResponses, BaseURL: "https://batch.example/v1", APIKey: "synthetic-batch-key"}, Models: []NewModelInput{{ProviderModelID: "Vendor/First", OutputMode: "prompt", CustomParameters: empty, Enabled: true}, {ProviderModelID: "Vendor/Second", DisplayName: "Named model", OutputMode: "json_schema", CustomParameters: empty}}}
 	items, next, err := s.CreateModels(ctx, actor, input)
 	if err != nil {
 		t.Fatal(err)
@@ -184,7 +186,7 @@ func TestModelBatchOneConnectionAtomicRollbackAndRevision(t *testing.T) {
 	input.ConnectionID = &items[0].Connection.ID
 	input.Expected = next
 	// The second INSERT collides with an existing model; the first must roll back.
-	input.Models = []NewModelInput{{ProviderModelID: "Vendor/Third", OutputMode: "prompt"}, {ProviderModelID: "Vendor/First", OutputMode: "prompt"}}
+	input.Models = []NewModelInput{{ProviderModelID: "Vendor/Third", OutputMode: "prompt", CustomParameters: empty}, {ProviderModelID: "Vendor/First", OutputMode: "prompt", CustomParameters: empty}}
 	if _, _, err = s.CreateModels(ctx, actor, input); !errors.Is(err, ErrConflict) {
 		t.Fatalf("expected conflict: %v", err)
 	}
@@ -196,7 +198,7 @@ func TestModelBatchOneConnectionAtomicRollbackAndRevision(t *testing.T) {
 		t.Fatal("failed batch changed revision")
 	}
 	input.Expected = revision
-	input.Models = []NewModelInput{{ProviderModelID: "Another", OutputMode: "prompt"}}
+	input.Models = []NewModelInput{{ProviderModelID: "Another", OutputMode: "prompt", CustomParameters: empty}}
 	var conflict *business.RevisionConflict
 	if _, _, err = s.CreateModels(ctx, actor, input); !errors.As(err, &conflict) {
 		t.Fatal("stale batch accepted")
@@ -204,15 +206,20 @@ func TestModelBatchOneConnectionAtomicRollbackAndRevision(t *testing.T) {
 	input.Expected = next
 	input.ConnectionID = nil
 	input.Connection = &ai.ConnectionDraft{Name: "Not persisted", Protocol: ai.ProtocolChat, BaseURL: "https://new.example", APIKey: "synthetic-new-key"}
-	input.Models = []NewModelInput{{ProviderModelID: "Same", OutputMode: "prompt"}, {ProviderModelID: "Same", OutputMode: "prompt"}}
+	input.Models = []NewModelInput{{ProviderModelID: "Same", OutputMode: "prompt", CustomParameters: empty}, {ProviderModelID: "Same", OutputMode: "prompt", CustomParameters: empty}}
 	if _, _, err = s.CreateModels(ctx, actor, input); !errors.Is(err, ErrConflict) {
 		t.Fatal("duplicate batch accepted")
 	}
 	if err = pool.QueryRow(ctx, `SELECT count(*) FROM wordweave.ai_providers WHERE name='Not persisted'`).Scan(&count); err != nil || count != 0 {
 		t.Fatal("failed batch left a connection")
 	}
-	input.Models = []NewModelInput{{ProviderModelID: "Valid", OutputMode: "prompt"}, {ProviderModelID: "Invalid", OutputMode: "unknown"}}
+	input.Models = []NewModelInput{{ProviderModelID: "Valid", OutputMode: "prompt", CustomParameters: empty}, {ProviderModelID: "Invalid", OutputMode: "unknown", CustomParameters: empty}}
 	if _, _, err = s.CreateModels(ctx, actor, input); !errors.Is(err, ErrValidation) {
 		t.Fatal("invalid member accepted")
+	}
+	input.Models = []NewModelInput{{ProviderModelID: "Valid custom", OutputMode: "prompt", CustomParameters: empty}, {ProviderModelID: "Protected custom", OutputMode: "prompt", CustomParameters: json.RawMessage(`{"model":"forbidden"}`)}}
+	var customError *ai.CustomParameterError
+	if _, _, err = s.CreateModels(ctx, actor, input); !errors.As(err, &customError) || customError.Pointer != "/models/1/custom_parameters/model" {
+		t.Fatalf("protected batch member error=%v", err)
 	}
 }

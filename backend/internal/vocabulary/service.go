@@ -18,6 +18,18 @@ import (
 
 var ErrInvalidQuery = errors.New("invalid vocabulary query")
 
+// blockedCandidateEntries is the exact DATA-307 catalogue. It applies only to
+// new search/random suggestions; selected entries, presets, resolution and
+// historical batches deliberately keep using the unfiltered vocabulary.
+var blockedCandidateEntries = []string{
+	"i", "me", "you", "he", "him", "she", "her", "it", "we", "us", "they", "them",
+	"my", "mine", "your", "yours", "his", "hers", "its", "our", "ours", "their", "theirs",
+	"a", "an", "the",
+	"be", "am", "is", "are", "was", "were", "been", "being",
+	"and", "or", "but", "so",
+	"yes", "no", "yeah",
+}
+
 type Service struct {
 	pool    *pgxpool.Pool
 	queries *dbgen.Queries
@@ -78,7 +90,7 @@ func (s *Service) Random(ctx context.Context, actor identity.Actor, selected []s
 		return result, nil
 	}
 	var entry string
-	err = tx.QueryRow(ctx, randomCandidateSQL, entries, actor.ID, actor.IsLearner()).Scan(&entry)
+	err = tx.QueryRow(ctx, randomCandidateSQL, entries, actor.ID, actor.IsLearner(), blockedCandidateEntries).Scan(&entry)
 	if errors.Is(err, pgx.ErrNoRows) {
 		reason := "no_candidates"
 		result.Reason = &reason
@@ -100,7 +112,7 @@ func (s *Service) Search(ctx context.Context, query string, limit int32) (Search
 	if !utf8.ValidString(query) || utf8.RuneCountInString(query) < 1 || utf8.RuneCountInString(query) > 64 || limit < 1 || limit > 20 {
 		return SearchResult{}, ErrInvalidQuery
 	}
-	rows, err := s.queries.SearchVocabulary(ctx, dbgen.SearchVocabularyParams{Query: query, ResultLimit: limit})
+	rows, err := s.queries.SearchVocabulary(ctx, dbgen.SearchVocabularyParams{Query: query, BlockedEntries: blockedCandidateEntries, ResultLimit: limit})
 	if err != nil {
 		return SearchResult{}, fmt.Errorf("search vocabulary: %w", err)
 	}
@@ -112,4 +124,5 @@ func (s *Service) Search(ctx context.Context, query string, limit int32) (Search
 }
 
 const randomCandidateSQL = `SELECT v.entry FROM wordweave.vocabulary_entries v JOIN wordweave.vocabulary_snapshots s ON s.id=v.snapshot_id WHERE s.version='m001' AND NOT(v.entry=ANY($1))
+	 AND lower(v.entry) <> ALL($4::text[])
 	 AND (NOT $3 OR NOT EXISTS(SELECT 1 FROM wordweave.batch_targets t JOIN wordweave.vocabulary_entries member ON member.id=t.vocabulary_entry_id WHERE t.owner_id=$2 AND member.lexeme_id=v.lexeme_id)) ORDER BY random() LIMIT 1`

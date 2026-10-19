@@ -1,0 +1,294 @@
+{
+  "fixture_version": "M003-BE-08",
+  "contract_version": "m003-stream-v6",
+  "synthetic": true,
+  "coverage": [
+    "AC-325",
+    "AC-327",
+    "AC-328"
+  ],
+  "request": {
+    "entries": [
+      "art",
+      "go"
+    ],
+    "meaning_language": "zh"
+  },
+  "wire": [
+    {
+      "event": "preview.started",
+      "data": {
+        "seq": 1,
+        "contract_version": "m003-stream-v6",
+        "stream_id": "stream-preview",
+        "preview_run_id": "run-preview",
+        "preview_token": "fixture-not-a-real-token",
+        "draft_version": "fixture-draft",
+        "preview_content_mode": "enhanced",
+        "content_service": {
+          "native_validation": true,
+          "content_review_enabled": true,
+          "content_repair_limit": 1
+        },
+        "native_correction_policy": {
+          "version": "m003-native-policy-v1",
+          "scope": "logical_request",
+          "max_calls": 2,
+          "editable": false
+        }
+      }
+    },
+    {
+      "event": "preview.progress",
+      "data": {
+        "seq": 2,
+        "phase": "planning"
+      }
+    },
+    {
+      "event": "preview.plan_item",
+      "data": {
+        "seq": 3,
+        "plan_id": "plan-preview",
+        "meaning_language": "zh",
+        "item": {
+          "kind": "scene",
+          "text": "朋友去看艺术作品。"
+        }
+      }
+    },
+    {
+      "event": "preview.plan_item",
+      "data": {
+        "seq": 4,
+        "plan_id": "plan-preview",
+        "meaning_language": "zh",
+        "item": {
+          "kind": "word_use",
+          "entry": "art",
+          "form": "art",
+          "sense": "暂定本篇用法",
+          "phrase": "modern art"
+        }
+      }
+    },
+    {
+      "event": "preview.plan_item",
+      "data": {
+        "seq": 5,
+        "plan_id": "plan-preview",
+        "meaning_language": "zh",
+        "item": {
+          "kind": "word_use",
+          "entry": "go",
+          "form": "go",
+          "sense": "暂定本篇用法",
+          "phrase": "go home"
+        }
+      }
+    },
+    {
+      "event": "preview.progress",
+      "data": {
+        "seq": 6,
+        "phase": "composing"
+      }
+    },
+    {
+      "event": "preview.activity",
+      "data": {
+        "seq": 7,
+        "activity": "writing"
+      }
+    },
+    {
+      "event": "preview.draft",
+      "data": {
+        "seq": 8,
+        "action": "begin",
+        "draft_id": "preview-d1",
+        "content_version": 1,
+        "mode": "initial",
+        "base_rev": 0
+      }
+    },
+    {
+      "event": "preview.edit",
+      "data": {
+        "seq": 9,
+        "draft_id": "preview-d1",
+        "content_version": 1,
+        "base_rev": 0,
+        "rev": 1,
+        "at": 0,
+        "delete_count": 0,
+        "insert": "We ",
+        "source": "provider"
+      }
+    },
+    {
+      "event": "preview.edit",
+      "data": {
+        "seq": 10,
+        "draft_id": "preview-d1",
+        "content_version": 1,
+        "base_rev": 1,
+        "rev": 2,
+        "at": 3,
+        "delete_count": 0,
+        "insert": "see art.\n\nWe go home.\n\nThe art stays.",
+        "source": "provider"
+      }
+    },
+    {
+      "event": "preview.draft",
+      "data": {
+        "seq": 11,
+        "action": "body_complete",
+        "draft_id": "preview-d1",
+        "content_version": 1,
+        "base_rev": 2,
+        "body_length": 40,
+        "paragraph_count": 3
+      }
+    },
+    {
+      "event": "preview.activity",
+      "data": {
+        "seq": 12,
+        "activity": "improving"
+      }
+    },
+    {
+      "event": "preview.draft",
+      "data": {
+        "seq": 13,
+        "action": "begin",
+        "draft_id": "preview-d2",
+        "content_version": 2,
+        "mode": "replace",
+        "base_rev": 2
+      }
+    },
+    {
+      "event": "preview.edit",
+      "data": {
+        "seq": 14,
+        "draft_id": "preview-d2",
+        "content_version": 2,
+        "base_rev": 2,
+        "rev": 3,
+        "at": 0,
+        "delete_count": 40,
+        "insert": "We enjoy art and go home.",
+        "source": "provider"
+      }
+    },
+    {
+      "event": "preview.draft",
+      "data": {
+        "seq": 15,
+        "action": "body_complete",
+        "draft_id": "preview-d2",
+        "content_version": 2,
+        "base_rev": 3,
+        "body_length": 25,
+        "paragraph_count": 1
+      }
+    },
+    {
+      "event": "preview.progress",
+      "data": {
+        "seq": 16,
+        "phase": "finalizing"
+      }
+    },
+    {
+      "event": "preview.validated",
+      "data": {
+        "seq": 17,
+        "preview_run_id": "run-preview",
+        "draft_version": "fixture-draft",
+        "preview_content_mode": "enhanced",
+        "usage": {
+          "logical_runs": 1,
+          "provider_calls": 2,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cost": null,
+          "unknown_calls": 2,
+          "invocation_unknown_calls": 0,
+          "not_invoked_calls": 0
+        },
+        "final_content_version": 2,
+        "result": {
+          "passage": "We enjoy art and go home.",
+          "tags": [
+            "日常"
+          ],
+          "targets": [
+            {
+              "entry": "art",
+              "entry_meaning": "艺术",
+              "hint_phrase": "modern art",
+              "hint_blanks": [
+                {
+                  "start": 7,
+                  "end": 10
+                }
+              ],
+              "occurrences": [
+                {
+                  "surface": "art",
+                  "start": 9,
+                  "end": 12
+                }
+              ]
+            },
+            {
+              "entry": "go",
+              "entry_meaning": "去",
+              "hint_phrase": "go home",
+              "hint_blanks": [
+                {
+                  "start": 0,
+                  "end": 2
+                }
+              ],
+              "occurrences": [
+                {
+                  "surface": "go",
+                  "start": 17,
+                  "end": 19
+                }
+              ]
+            }
+          ]
+        },
+        "content_outcome": "review_passed",
+        "completion_notice": null
+      }
+    }
+  ],
+  "checkpoints": [
+    {
+      "after_seq": 9,
+      "label": "initial first safe word immediately visible",
+      "published": "We ",
+      "working": "We ",
+      "rev": 1,
+      "can_save": false
+    },
+    {
+      "after_seq": 11,
+      "label": "initial body complete, private metadata/validation still pending",
+      "published": "We see art.\n\nWe go home.\n\nThe art stays.",
+      "working": "We see art.\n\nWe go home.\n\nThe art stays.",
+      "rev": 2,
+      "can_save": false
+    }
+  ],
+  "notes": [
+    "preview namespace uses preview token/version/usage, no user charge fields."
+  ]
+}

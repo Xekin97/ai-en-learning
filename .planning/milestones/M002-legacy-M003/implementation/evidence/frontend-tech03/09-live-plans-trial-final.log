@@ -1,0 +1,40 @@
+
+Running 2 tests using 1 worker
+
+(node:40823) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  1 [chromium] › tests/e2e/m003-live.spec.ts:135:1 › Pro N0 and Plus N99 persist independently without starting generation (2.8s)
+  ✘  2 [chromium] › tests/e2e/m003-live.spec.ts:184:1 › published preset trial consumes the v5 stream and completes at 768px (30.1s)
+
+
+  1) [chromium] › tests/e2e/m003-live.spec.ts:184:1 › published preset trial consumes the v5 stream and completes at 768px 
+
+    Test timeout of 30000ms exceeded.
+
+    Error: locator.click: Test timeout of 30000ms exceeded.
+    Call log:
+      - waiting for getByRole('button', { name: 'Generate story', exact: true })
+
+
+      203 |   await page
+      204 |     .getByRole("button", { name: "Generate story", exact: true })
+    > 205 |     .click();
+          |      ^
+      206 |   await expect(page.locator(".m003-final-result")).toBeVisible({
+      207 |     timeout: 30_000,
+      208 |   });
+        at /Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/frontend/tests/e2e/m003-live.spec.ts:205:6
+
+    Error Context: test-results/m003-live-published-preset-3d8fe-ream-and-completes-at-768px-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/m003-live-published-preset-3d8fe-ream-and-completes-at-768px-chromium/trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace test-results/m003-live-published-preset-3d8fe-ream-and-completes-at-768px-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [chromium] › tests/e2e/m003-live.spec.ts:184:1 › published preset trial consumes the v5 stream and completes at 768px 
+  1 passed (33.5s)

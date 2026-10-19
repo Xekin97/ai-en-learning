@@ -1,0 +1,25 @@
+COMMAND
+Parse source-manifest.json; recompute the 14 source/test hashes, four delivery-document hashes and archive hash; list archive members; recompute all 804 protected hashes; compare recovered backend baseline; run git diff --check on owned paths.
+
+STDOUT
+manifest_errors 0
+archive_entries 18
+protected 804 changed 0 missing 0
+historical_backend_changed 9
+backend/db/queries/vocabulary.sql
+backend/internal/ai/continuation.go
+backend/internal/ai/openrouter.go
+backend/internal/ai/usage.go
+backend/internal/dbgen/vocabulary.sql.go
+backend/internal/generation/pipeline.go
+backend/internal/httpapi/generation_handlers.go
+backend/internal/httpapi/preset_preview_handlers.go
+backend/internal/vocabulary/service.go
+.planning/milestones/M003/changes/CR-311.md:3:status: open
+.planning/milestones/M003/changes/CR-312.md:3:status: open
+ M backend/internal/dbgen/vocabulary.sql.go
+
+EXIT 0
+
+INTERPRETATION
+The nine recovered-baseline production differences are exactly the intended CR311/312 production paths. Test files were not present in that historical archive and are covered by the current manifest. The unintended `dbgen/models.go` difference is absent.

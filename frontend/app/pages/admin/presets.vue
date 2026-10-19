@@ -27,6 +27,7 @@ type Fields = {
   meaningLanguage: MeaningLanguage | "";
   scenario: Scenario;
   length: PassageLength;
+  previewContentMode: "basic" | "enhanced";
 };
 type Draft = {
   id: string | null;
@@ -41,6 +42,7 @@ type Draft = {
   lastPreview: {
     result: NonNullable<AdminPresetModel["preview"]>["result"];
     configuration: AdminPresetModel["configuration"];
+    previewContentMode: "basic" | "enhanced";
   } | null;
 };
 const vocabulary = useVocabularySearch();
@@ -48,7 +50,8 @@ const selected = ref("new"),
   drafts = ref<Record<string, Draft>>({}),
   action = ref<"publish" | "unlist" | "leave" | "discard" | null>(null),
   pending = ref(false),
-  invalid = ref(false);
+  invalid = ref(false),
+  q02Confirmed = ref(false);
 const blank = (): Fields => ({
   title: "",
   words: [],
@@ -56,6 +59,7 @@ const blank = (): Fields => ({
   meaningLanguage: "",
   scenario: "story",
   length: "short",
+  previewContentMode: "basic",
 });
 const fields = (p: AdminPresetModel): Fields => ({
   title: p.title,
@@ -64,6 +68,7 @@ const fields = (p: AdminPresetModel): Fields => ({
   meaningLanguage: p.configuration.meaningLanguage,
   scenario: p.configuration.scenario,
   length: p.configuration.length,
+  previewContentMode: p.previewContentMode,
 });
 function from(
   record: DeepReadonly<AdminPresetRecord>,
@@ -79,6 +84,7 @@ function from(
           configuration: clone(
             record.preset.configuration,
           ) as AdminPresetModel["configuration"],
+          previewContentMode: record.preset.preview.previewContentMode,
         }
       : previous,
     id: record.preset.id,
@@ -121,6 +127,13 @@ ensureNew();
 if (store.state.value.items[0]) selected.value = store.state.value.items[0].id;
 const draft = computed(() => drafts.value[selected.value]!);
 watch(selected, () => vocabulary.reset(), { flush: "sync" });
+watch(
+  () => draft.value?.value,
+  () => {
+    q02Confirmed.value = false;
+  },
+  { deep: true },
+);
 function addWord(word: string) {
   if (
     busy.value ||
@@ -150,12 +163,31 @@ const previewStale = computed(() => {
     v.meaningLanguage !== c.meaningLanguage ||
     v.scenario !== c.scenario ||
     v.length !== c.length ||
+    v.previewContentMode !== previous.previewContentMode ||
     d.record?.draftState === "needs_preview"
   );
 });
 const streaming = computed(() =>
   ["starting", "streaming"].includes(store.stream.value.phase),
 );
+const previewPending = computed(() => store.stream.value.phase === "pending");
+const livePreview = computed(
+  () =>
+    store.stream.value.presetId === draft.value?.id &&
+    (streaming.value || previewPending.value),
+);
+const lastPreviewVocabulary = computed(() =>
+  (draft.value?.lastPreview?.result.targets ?? []).map((target) => ({
+    entry: target.entry,
+    meaning: target.entryMeaning,
+    usage: target.hintPhrase,
+  })),
+);
+const languageNames: Record<MeaningLanguage, string> = {
+  zh: "中文",
+  en: "English",
+  ja: "日本語",
+};
 const busy = computed(
   () => pending.value || store.busy.value || streaming.value,
 );
@@ -249,6 +281,7 @@ function input(): PresetInputModel | null {
       scenario: d.scenario,
       length: d.length,
     },
+    previewContentMode: d.previewContentMode,
   };
 }
 async function reconcile(d: Draft) {
@@ -328,7 +361,12 @@ async function preview() {
   if (!d.record || d.remote || d.reconciling) return;
   const epoch = session.epoch.value,
     key = selected.value;
-  await store.preview(d.record.id, d.record.draftVersion);
+  q02Confirmed.value = false;
+  await store.preview(
+    d.record.id,
+    d.record.draftVersion,
+    d.record.previewContentMode,
+  );
   if (epoch !== session.epoch.value) return;
   try {
     const record = await store.read(d.record.id);
@@ -363,6 +401,12 @@ async function confirm() {
     key = selected.value,
     epoch = session.epoch.value;
   if (!d.record || !d.revision) return;
+  if (
+    kind === "publish" &&
+    d.record.preview?.completionNotice === "content_review_incomplete" &&
+    !q02Confirmed.value
+  )
+    return;
   pending.value = true;
   try {
     const result =
@@ -573,8 +617,30 @@ watch(session.epoch, () => {
                 </AppSelect></label
               >
             </div>
+            <fieldset id="preview-mode" class="m003-preview-mode">
+              <legend>{{ copy("m003.preview.mode") }}</legend>
+              <label
+                v-for="mode in options?.previewContentModes ?? [
+                  'basic',
+                  'enhanced',
+                ]"
+                :key="mode"
+                class="option-row"
+              >
+                <input
+                  v-model="draft.value.previewContentMode"
+                  type="radio"
+                  :value="mode"
+                />
+                <span>
+                  <strong>{{ copy(`m003.preview.${mode}`) }}</strong>
+                  <small>{{ copy(`m003.preview.${mode}.body`) }}</small>
+                </span>
+              </label>
+              <p class="muted">{{ copy("m003.preview.mode.note") }}</p>
+            </fieldset>
           </fieldset>
-          <div class="actions form-footer">
+          <div id="preset-actions" class="actions form-footer">
             <button
               class="btn"
               type="submit"
@@ -621,30 +687,68 @@ watch(session.epoch, () => {
             </button>
           </div>
         </form>
-        <p v-if="streaming" class="notice">{{ copy("create.generating") }}</p>
+        <p v-if="previewPending" class="notice warn">
+          {{ copy("m003.pending.body") }}
+          <button class="btn small" type="button" @click="store.recheck">
+            {{ copy("m003.recheck") }}
+          </button>
+        </p>
         <p v-else-if="phase === 'cancelled'" class="notice warn">
           {{ copy("create.cancelled") }}
         </p>
-        <section v-if="streaming || draft.lastPreview" class="article section">
-          <div class="section-head">
+        <p
+          v-if="
+            draft.record?.preview?.completionNotice ===
+              'content_review_incomplete' ||
+            draft.record?.published?.completionNotice ===
+              'content_review_incomplete'
+          "
+          class="notice warn"
+          data-testid="preset-q02-notice"
+        >
+          {{ copy("m003.preview.incomplete") }}
+        </p>
+        <section
+          v-if="livePreview || draft.lastPreview"
+          id="preview-result"
+          class="article section m003-preview-paper"
+        >
+          <div v-if="!livePreview" class="section-head">
             <h2>{{ copy("preview") }}</h2>
             <span class="pill">{{ copy("sample") }}</span>
           </div>
-          <h3>{{ draft.value.title }}</h3>
-          <p v-if="streaming" class="story-text" aria-live="polite">
-            {{ store.stream.value.text }}
-          </p>
-          <p v-if="draft.lastPreview" class="story-text preset-sample-text">
-            {{ draft.lastPreview?.result.passage }}
-          </p>
-          <PresetWordMeanings
-            v-if="draft.lastPreview"
-            :targets="draft.lastPreview.result.targets"
-            :meaning-language="draft.lastPreview.configuration.meaningLanguage"
-          />
-          <p v-if="previewStale" class="notice warn">
-            {{ copy("preview.required") }}
-          </p>
+          <div class="m003-result-body">
+            <GenerationContent
+              v-if="livePreview"
+              :draft="store.stream.value.draft"
+              :plan-items="store.stream.value.planItems"
+              :result="store.stream.value.result"
+              :phase="store.stream.value.phase"
+              :request-phase="store.stream.value.requestPhase"
+              :activity="store.stream.value.activity"
+              :completion-notice="store.stream.value.completionNotice"
+              :result-heading="draft.value.title"
+              variant="preview"
+            />
+            <template v-else-if="draft.lastPreview">
+              <h3>{{ draft.value.title }}</h3>
+              <p class="story-text preset-sample-text" lang="en">
+                {{ draft.lastPreview?.result.passage }}
+              </p>
+            </template>
+            <GenerationVocabularyList
+              v-if="draft.lastPreview"
+              :items="lastPreviewVocabulary"
+              variant="result"
+              :heading="copy('preset.meanings')"
+              :language-label="
+                languageNames[draft.lastPreview.configuration.meaningLanguage]
+              "
+            />
+            <p v-if="previewStale" class="notice warn">
+              {{ copy("preview.required") }}
+            </p>
+          </div>
         </section>
         <PresetWordMeanings
           v-if="!draft.lastPreview"
@@ -688,10 +792,31 @@ watch(session.epoch, () => {
           )
         }}
       </p>
+      <label
+        v-if="
+          action === 'publish' &&
+          draft.record?.preview?.completionNotice ===
+            'content_review_incomplete'
+        "
+        class="choice-row notice warn"
+      >
+        <input v-model="q02Confirmed" type="checkbox" />
+        <span>{{ copy("m003.q02.confirm") }}</span>
+      </label>
       <template #footer
         ><button class="btn" :disabled="pending" @click="close">
           {{ copy("cancel") }}</button
-        ><button class="btn primary" :disabled="pending" @click="confirm">
+        ><button
+          class="btn primary"
+          :disabled="
+            pending ||
+            (action === 'publish' &&
+              draft.record?.preview?.completionNotice ===
+                'content_review_incomplete' &&
+              !q02Confirmed)
+          "
+          @click="confirm"
+        >
           {{ copy("confirm") }}
         </button></template
       ></AppDialog

@@ -69,6 +69,25 @@ func TestInlineAnnotationJSONEveryByteBoundary(t *testing.T) {
 	}
 }
 
+func TestPassageExtractorConsumesEscapesIncrementally(t *testing.T) {
+	extractor := passageExtractor{}
+	chunks := []string{
+		` {"pass`, `age" : "Caf`, "\xc3", "\xa9 ", `\ud8`, `3d\u`, `de42 gra`,
+		`pes(gr`, `ape)."`, `,"tags":["fruit"],"targets":{}}`,
+	}
+	var got strings.Builder
+	for _, chunk := range chunks {
+		delta, err := extractor.Push(context.Background(), chunk)
+		if err != nil {
+			t.Fatalf("chunk %q: %v", chunk, err)
+		}
+		got.WriteString(delta)
+	}
+	if got.String() != "Café 🙂 grapes." || !extractor.closed || !extractor.annotations.finished {
+		t.Fatalf("unexpected incremental passage: %q", got.String())
+	}
+}
+
 func TestInlineAnnotationMalformedAndIncompleteNeverFlush(t *testing.T) {
 	for _, raw := range []string{"grapes(grape", "grapes(", "grapes()", "grapes( grape)", "grapes(grape )", "grapes(gr(ape))", "grapes(grape)(grape)", "grapes(grape))", "grapes(" + strings.Repeat("x", 129) + ")"} {
 		t.Run(raw, func(t *testing.T) {
@@ -198,7 +217,7 @@ func TestInlineAnnotationLimitsUseCleanContentAndCancellation(t *testing.T) {
 	if _, err := parser.Push(ctx, "grapes(grape)", true); !errors.Is(err, context.Canceled) {
 		t.Fatalf("cancellation lost: %v", err)
 	}
-	if PromptVersion != "m002-v1-r1" || ValidatorVersion != "m001-v5-wn31-r2" {
+	if PromptVersion != "m003-draft-v3" || ValidatorVersion != "m001-v5-wn31-r2" {
 		t.Fatal(fmt.Sprintf("unexpected protocol versions: %s %s", PromptVersion, ValidatorVersion))
 	}
 }

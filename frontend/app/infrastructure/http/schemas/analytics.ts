@@ -17,6 +17,8 @@ export const usageSchema = z.strictObject({
     })
     .nullable(),
   unknown_calls: count,
+  invocation_unknown_calls: count,
+  not_invoked_calls: count,
 });
 export const metricSchema = z
   .strictObject({

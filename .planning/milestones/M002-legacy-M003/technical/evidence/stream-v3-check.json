@@ -1,0 +1,62 @@
+{
+  "version": "M003-BE-03",
+  "contract_version": "m003-stream-v3",
+  "status": "PASS",
+  "scope": "static Markdown and synthetic fixture consistency only",
+  "scenario_count": 8,
+  "event_count": 35,
+  "documented_event_types": [
+    "generation.cancelled",
+    "generation.failed",
+    "generation.learning_ready",
+    "generation.progress",
+    "generation.settlement_pending",
+    "generation.started",
+    "generation.validated",
+    "preview.cancelled",
+    "preview.failed",
+    "preview.learning_ready",
+    "preview.progress",
+    "preview.settlement_pending",
+    "preview.started",
+    "preview.validated"
+  ],
+  "negative_mutations_rejected": [
+    "seq_gap",
+    "private_counter",
+    "wrong_preview_meaning",
+    "mixed_final_package",
+    "missing_notice"
+  ],
+  "local_link_targets_checked": 44,
+  "current_seven_document_characters": 51153,
+  "runtime_tokens": "unknown",
+  "production_latency": "unmeasured",
+  "not_run": [
+    "Go business tests",
+    "database migration",
+    "real provider calls",
+    "browser prototype",
+    "UAT3302"
+  ],
+  "source_sha256": {
+    "technical/backend.md": "9919e936550208902d01291784ef910233fe39d35634860d882bc22370748c7d",
+    "technical/ai-integration.md": "43b726f85a6e9760caa08b80012ec6c47c8bde6b7b0ce0eefc9cc8e669fede61",
+    "technical/api/index.md": "1744ac62606abe6d9bce9b46cbbd4769c51355195974908b2458537b72773c38",
+    "technical/api/generation.md": "4bf5302c300534be65e3b15cd3a0fff38355a1c3c536d73ff463191fc3bf587d",
+    "technical/api/administration.md": "0de8673a7332628c1445351544d2b137b9b3adc503a820f8c04f1b9458bd072d",
+    "technical/api/presets.md": "7b8f1985361d436d8c3238175accf855f73b091ec388a4455569c2cb8dd035a6",
+    "handoffs/backend-architecture.md": "f6268c2c641ea193ace3914620d3765a646affe51110f23064533fec77bdcfee",
+    "technical/fixtures/stream-v3/basic.json": "3fff48ac1e5c38b5590306167819da3581b9d14cf2ab239caef69db4d246b3e3",
+    "technical/fixtures/stream-v3/cancelled.json": "97cc718ee123faca385ad48715bce5d6a2e4fb57c4103a128ad9c89334c551c7",
+    "technical/fixtures/stream-v3/enhanced-two-repairs.json": "db055d0fa99fad2f0e6d89cbfa8387a899aa5d9e498d6461faaff99ee6069c46",
+    "technical/fixtures/stream-v3/eof-unknown.json": "894540448f6d1ab3715413e44a20e35efed13a6b5b2296679abfd13e4d37dd77",
+    "technical/fixtures/stream-v3/failed-no-valid.json": "17c1fea4f83b0c5072274e0da089861ab5a0385f3bde4ddf52a9e26bd4f09238",
+    "technical/fixtures/stream-v3/incomplete-last-valid.json": "f976353ae2aca0aca078b4f479ca71d3697d0b3412353024d7641d02587dc6c6",
+    "technical/fixtures/stream-v3/index.json": "592e4c019498ea34a758aa9fa438c743b333d01ce0daa63b60a44a42691356c0",
+    "technical/fixtures/stream-v3/packages.json": "02b64f470efe28dae6662998b07d87b45e9dac00014422fda917b85f31340cd4",
+    "technical/fixtures/stream-v3/pending-resolves.json": "db6aed54bf7cb701aa3744cec2420172fc1836d41e68a7d65e2d6e128966b7fa",
+    "technical/fixtures/stream-v3/preview-incomplete.json": "4103461b908defd670abd498372f7998c237ce6296c81854c6553ca1ed86f9fa",
+    "technical/evidence/check_stream_v3.py": "e2472c77dbd919834e5341544b65fe5280a0991bcbb0e3294352518909986d31"
+  }
+}

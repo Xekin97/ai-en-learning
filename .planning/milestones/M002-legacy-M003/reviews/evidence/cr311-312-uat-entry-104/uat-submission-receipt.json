@@ -1,0 +1,50 @@
+{
+  "recorded_at": "2026-10-14T04:03:38.812382+00:00",
+  "scope": "CR311/312 real UAT3015 readiness receipt; user UAT pending",
+  "reviewer": "root",
+  "specialist": "qa-quinn",
+  "authorization": "USER-M003-CR311312-UAT-NEXT-20261014",
+  "result": "PASS",
+  "evidence_files_verified": 23,
+  "deployed_artifacts_verified": 457,
+  "deployed_source_files_verified": 407,
+  "protected_source_files": 990,
+  "protected_source_changes": [],
+  "live_status": {
+    "status": "ready",
+    "origin": "http://127.0.0.1:3015",
+    "listening": {
+      "nginx": true,
+      "postgres": true,
+      "backend": true,
+      "metrics": true,
+      "frontend": true
+    },
+    "processes": {
+      "backend": 9382,
+      "frontend": 9480,
+      "nginx": 66351
+    },
+    "mock_services": 0,
+    "provider_mode": "real_only"
+  },
+  "readiness_receipt_sha256": "9c36b1d6fcd92faef5e9c98a2a95bf42ea7ce2eb44cb574ba15eb96780c14a17",
+  "evidence_manifest_sha256": "639f88bb0c3ebcfd2c37277d3fe7118605b09b286fe8f50abf55d3c38460c81a",
+  "data_schema_model_config_preserved": true,
+  "natural_readiness_mutations_excluded": [
+    "account_sessions",
+    "accounts.last_login_at",
+    "visitor identities",
+    "traffic/analytics events"
+  ],
+  "provider_calls_during_preparation": 0,
+  "private_file_permissions_verified": true,
+  "user_uat": "NOT RUN",
+  "rollback_available": true,
+  "current_documents": {
+    ".planning/milestones/M003/handoffs/verification.md": "275e1924065c0e4b8a66d60b437ed6cc8a3394724c9f18a8af5c6b3adb6c2d0b",
+    ".planning/milestones/M003/verification/coverage-matrix.md": "e002734f5f1e2230e10325827756bb2382ebbbeb9b0aaa7bc0b0208cbb1ce46a",
+    ".planning/milestones/M003/verification/report.md": "080f2512ac588c3cf1c26741753c96e6fb6cf304c0a46789a550c1b7d0365ca3",
+    ".planning/milestones/M003/verification/uat.md": "d4e4da5b8d608eaa5f463c3412bdaeaefc37d83e4ada99c559de7757bc60bed0"
+  }
+}

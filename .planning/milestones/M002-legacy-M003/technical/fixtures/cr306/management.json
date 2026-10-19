@@ -1,0 +1,318 @@
+{
+  "fixture_version": "M003-BE-07",
+  "scope": "Synthetic full PAGE208 data; no capability or runtime-success claim.",
+  "get": {
+    "method": "GET",
+    "path": "/api/v1/admin/model-providers",
+    "status": 200,
+    "body": {
+      "data": {
+        "items": [
+          {
+            "connection": {
+              "id": "10000000-0000-4000-8000-000000000001",
+              "name": "OpenRouter",
+              "protocol": "openai_chat",
+              "base_url": "https://openrouter.ai/api/v1",
+              "credential_configured": true,
+              "masked_hint": "••••demo"
+            },
+            "models": [
+              {
+                "id": "20000000-0000-4000-8000-000000000001",
+                "display_name": "DeepSeek candidate",
+                "description": "Synthetic configuration; platform support not verified.",
+                "provider_model_id": "deepseek/deepseek-v4-flash-0731",
+                "enabled": true,
+                "retired_at": null,
+                "assigned_group_codes": [
+                  "visitor",
+                  "basic"
+                ],
+                "connection": {
+                  "id": "10000000-0000-4000-8000-000000000001",
+                  "name": "OpenRouter",
+                  "protocol": "openai_chat",
+                  "base_url": "https://openrouter.ai/api/v1",
+                  "credential_configured": true,
+                  "masked_hint": "••••demo"
+                },
+                "max_output_tokens": null,
+                "output_mode": "json_schema",
+                "custom_parameters": {
+                  "reasoning": {
+                    "enabled": false
+                  }
+                },
+                "created_at": "2026-10-12T00:00:00Z",
+                "updated_at": "2026-10-12T00:00:00Z"
+              },
+              {
+                "id": "20000000-0000-4000-8000-000000000002",
+                "display_name": "Unmodified model",
+                "description": "Synthetic configuration; platform support not verified.",
+                "provider_model_id": "example/model",
+                "enabled": true,
+                "retired_at": null,
+                "assigned_group_codes": [
+                  "visitor",
+                  "basic"
+                ],
+                "connection": {
+                  "id": "10000000-0000-4000-8000-000000000001",
+                  "name": "OpenRouter",
+                  "protocol": "openai_chat",
+                  "base_url": "https://openrouter.ai/api/v1",
+                  "credential_configured": true,
+                  "masked_hint": "••••demo"
+                },
+                "max_output_tokens": null,
+                "output_mode": "prompt",
+                "custom_parameters": {},
+                "created_at": "2026-10-12T00:00:00Z",
+                "updated_at": "2026-10-12T00:00:00Z"
+              }
+            ]
+          },
+          {
+            "connection": {
+              "id": "10000000-0000-4000-8000-000000000002",
+              "name": "Responses example",
+              "protocol": "openai_responses",
+              "base_url": "https://responses.example.invalid/v1",
+              "credential_configured": true,
+              "masked_hint": "••••demo"
+            },
+            "models": [
+              {
+                "id": "20000000-0000-4000-8000-000000000003",
+                "display_name": "Responses model",
+                "description": "Synthetic configuration; platform support not verified.",
+                "provider_model_id": "example-responses",
+                "enabled": true,
+                "retired_at": null,
+                "assigned_group_codes": [
+                  "visitor",
+                  "basic"
+                ],
+                "connection": {
+                  "id": "10000000-0000-4000-8000-000000000002",
+                  "name": "Responses example",
+                  "protocol": "openai_responses",
+                  "base_url": "https://responses.example.invalid/v1",
+                  "credential_configured": true,
+                  "masked_hint": "••••demo"
+                },
+                "max_output_tokens": null,
+                "output_mode": "json_schema",
+                "custom_parameters": {
+                  "reasoning": {
+                    "effort": "low"
+                  }
+                },
+                "created_at": "2026-10-12T00:00:00Z",
+                "updated_at": "2026-10-12T00:00:00Z"
+              }
+            ]
+          },
+          {
+            "connection": {
+              "id": "10000000-0000-4000-8000-000000000003",
+              "name": "Messages example",
+              "protocol": "anthropic_messages",
+              "base_url": "https://messages.example.invalid/v1",
+              "credential_configured": true,
+              "masked_hint": "••••demo"
+            },
+            "models": [
+              {
+                "id": "20000000-0000-4000-8000-000000000004",
+                "display_name": "Messages model",
+                "description": "Synthetic configuration; platform support not verified.",
+                "provider_model_id": "example-messages",
+                "enabled": true,
+                "retired_at": null,
+                "assigned_group_codes": [
+                  "visitor",
+                  "basic"
+                ],
+                "connection": {
+                  "id": "10000000-0000-4000-8000-000000000003",
+                  "name": "Messages example",
+                  "protocol": "anthropic_messages",
+                  "base_url": "https://messages.example.invalid/v1",
+                  "credential_configured": true,
+                  "masked_hint": "••••demo"
+                },
+                "max_output_tokens": null,
+                "output_mode": "prompt",
+                "custom_parameters": {
+                  "thinking": {
+                    "type": "disabled"
+                  }
+                },
+                "created_at": "2026-10-12T00:00:00Z",
+                "updated_at": "2026-10-12T00:00:00Z"
+              }
+            ]
+          }
+        ],
+        "revision": "fixture-cfg-100"
+      },
+      "meta": {
+        "request_id": "fixture-request"
+      }
+    }
+  },
+  "save": {
+    "method": "PATCH",
+    "path": "/api/v1/admin/model-providers/10000000-0000-4000-8000-000000000001",
+    "body": {
+      "connection": {
+        "name": "OpenRouter",
+        "protocol": "openai_chat",
+        "base_url": "https://openrouter.ai/api/v1",
+        "api_key": ""
+      },
+      "models": [
+        {
+          "id": "20000000-0000-4000-8000-000000000001",
+          "display_name": "DeepSeek candidate",
+          "description": "Synthetic configuration; platform support not verified.",
+          "provider_model_id": "deepseek/deepseek-v4-flash-0731",
+          "max_output_tokens": null,
+          "output_mode": "json_schema",
+          "enabled": true,
+          "custom_parameters": {
+            "reasoning": {
+              "enabled": false
+            }
+          }
+        },
+        {
+          "id": "20000000-0000-4000-8000-000000000002",
+          "display_name": "Unmodified model",
+          "description": "Synthetic configuration; platform support not verified.",
+          "provider_model_id": "example/model",
+          "max_output_tokens": null,
+          "output_mode": "prompt",
+          "enabled": true,
+          "custom_parameters": {}
+        }
+      ],
+      "expected_revision": "fixture-cfg-100"
+    },
+    "response_status": 200,
+    "response": {
+      "data": {
+        "provider": {
+          "connection": {
+            "id": "10000000-0000-4000-8000-000000000001",
+            "name": "OpenRouter",
+            "protocol": "openai_chat",
+            "base_url": "https://openrouter.ai/api/v1",
+            "credential_configured": true,
+            "masked_hint": "••••demo"
+          },
+          "models": [
+            {
+              "id": "20000000-0000-4000-8000-000000000001",
+              "display_name": "DeepSeek candidate",
+              "description": "Synthetic configuration; platform support not verified.",
+              "provider_model_id": "deepseek/deepseek-v4-flash-0731",
+              "enabled": true,
+              "retired_at": null,
+              "assigned_group_codes": [
+                "visitor",
+                "basic"
+              ],
+              "connection": {
+                "id": "10000000-0000-4000-8000-000000000001",
+                "name": "OpenRouter",
+                "protocol": "openai_chat",
+                "base_url": "https://openrouter.ai/api/v1",
+                "credential_configured": true,
+                "masked_hint": "••••demo"
+              },
+              "max_output_tokens": null,
+              "output_mode": "json_schema",
+              "custom_parameters": {
+                "reasoning": {
+                  "enabled": false
+                }
+              },
+              "created_at": "2026-10-12T00:00:00Z",
+              "updated_at": "2026-10-12T00:00:00Z"
+            },
+            {
+              "id": "20000000-0000-4000-8000-000000000002",
+              "display_name": "Unmodified model",
+              "description": "Synthetic configuration; platform support not verified.",
+              "provider_model_id": "example/model",
+              "enabled": true,
+              "retired_at": null,
+              "assigned_group_codes": [
+                "visitor",
+                "basic"
+              ],
+              "connection": {
+                "id": "10000000-0000-4000-8000-000000000001",
+                "name": "OpenRouter",
+                "protocol": "openai_chat",
+                "base_url": "https://openrouter.ai/api/v1",
+                "credential_configured": true,
+                "masked_hint": "••••demo"
+              },
+              "max_output_tokens": null,
+              "output_mode": "prompt",
+              "custom_parameters": {},
+              "created_at": "2026-10-12T00:00:00Z",
+              "updated_at": "2026-10-12T00:00:00Z"
+            }
+          ]
+        },
+        "revision": "fixture-cfg-101"
+      },
+      "meta": {
+        "request_id": "fixture-request"
+      }
+    },
+    "expected": {
+      "model_calls": 0,
+      "catalog_calls": 0,
+      "atomic": true
+    }
+  },
+  "probe": {
+    "method": "POST",
+    "path": "/api/v1/admin/model-connection-test",
+    "body": {
+      "connection_id": "10000000-0000-4000-8000-000000000001",
+      "provider_model_id": "deepseek/deepseek-v4-flash-0731",
+      "max_output_tokens": null,
+      "output_mode": "json_schema",
+      "custom_parameters": {
+        "reasoning": {
+          "enabled": false
+        }
+      }
+    },
+    "success_status": 200,
+    "success_body": {
+      "data": {
+        "ok": true
+      },
+      "meta": {
+        "request_id": "fixture-request"
+      }
+    },
+    "expected": {
+      "saved": false,
+      "logical_charges": 0,
+      "provider_calls": 1,
+      "proves": "short_stream_only",
+      "parameter_effect": "unknown",
+      "schema_tested": false
+    }
+  }
+}

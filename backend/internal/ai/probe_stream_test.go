@@ -105,3 +105,29 @@ func TestProbeRequiresStreamingTextAndCleanTermination(t *testing.T) {
 		})
 	}
 }
+
+func TestProbeMapsRejectedRequestWithoutProviderText(t *testing.T) {
+	for _, status := range []int{http.StatusBadRequest, http.StatusUnprocessableEntity} {
+		t.Run(fmt.Sprint(status), func(t *testing.T) {
+			server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+				var body map[string]any
+				if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
+					t.Error(err)
+				}
+				if body["max_output_tokens"] != float64(256) || body["temperature"] != 0.2 {
+					t.Errorf("probe controls/custom parameters missing: %#v", body)
+				}
+				w.WriteHeader(status)
+				fmt.Fprint(w, `{"error":"provider private diagnostic"}`)
+			}))
+			defer server.Close()
+			gateway := NewGateway(nil, "", "")
+			gateway.client = server.Client()
+			err := gateway.Probe(context.Background(), Connection{Protocol: ProtocolResponses, BaseURL: server.URL}, "secret", "model", nil, "prompt", json.RawMessage(`{"temperature":0.2}`))
+			var rejected *ModelRequestRejected
+			if !errors.As(err, &rejected) || rejected.UpstreamStatus != status || strings.Contains(err.Error(), "private") {
+				t.Fatalf("unexpected probe error: %#v", err)
+			}
+		})
+	}
+}

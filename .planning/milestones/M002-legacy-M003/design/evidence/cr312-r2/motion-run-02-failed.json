@@ -1,0 +1,167 @@
+{
+  "version": "M003-UI-13-R2",
+  "checked_at": "2026-10-13T11:37:17.200Z",
+  "scope": "Bounded continuity/motion check for the changed generation surface only; prior UI13 10/10 protocol evidence is reused.",
+  "provider_calls": 0,
+  "checks": [
+    {
+      "name": "R2-01-keyed-plan-and-paragraph",
+      "passed": true,
+      "details": {
+        "plan": {
+          "same": true,
+          "rows": 2,
+          "scene": 1
+        },
+        "initial": "We see art.\nWe go home.\nThe art stays.",
+        "before": {
+          "text": "We see art.\nWe go home.\nThe art stays.",
+          "replacing": 0
+        },
+        "during": {
+          "text": "We enjoy art.\nWe go home.\nThe art stays.",
+          "replacing": 1,
+          "previous": "We see art.",
+          "same": true,
+          "duration": "0.22s"
+        },
+        "after": {
+          "text": "We enjoy art.\nWe go home.\nThe art stays.",
+          "replacing": 0,
+          "previous": null
+        }
+      }
+    },
+    {
+      "name": "R2-02-reader-position-and-focus",
+      "passed": true,
+      "details": {
+        "positionBefore": {
+          "y": 520,
+          "active": "cancel-generation"
+        },
+        "positionDuring": {
+          "y": 520,
+          "active": "cancel-generation"
+        }
+      }
+    },
+    {
+      "name": "R2-03-body-to-valid-handoff",
+      "passed": true,
+      "details": {
+        "bodyComplete": {
+          "text": "We enjoy art.\nWe go together.",
+          "plan": 1,
+          "save": 0
+        },
+        "finalizing": {
+          "label": "整理短文与释义",
+          "sameStatus": true
+        },
+        "immediateFinal": {
+          "state": "valid",
+          "sameStory": true,
+          "save": 1,
+          "slot": 1,
+          "story": "We enjoy art.\nWe go together."
+        },
+        "settledFinal": {
+          "slot": 0,
+          "settling": 0,
+          "story": "We enjoy art.\nWe go together."
+        }
+      }
+    },
+    {
+      "name": "R2-04-interruption-cleans-motion",
+      "passed": true,
+      "details": {
+        "interrupted": {
+          "state": "cancelled",
+          "result": 0,
+          "motionArtifacts": 0,
+          "event": 0
+        }
+      }
+    },
+    {
+      "name": "R2-05-long-paragraph-boundary",
+      "passed": true,
+      "details": {
+        "beforeLength": 38,
+        "longDuring": {
+          "same": true,
+          "replacing": 1,
+          "length": 20958
+        }
+      }
+    },
+    {
+      "name": "R2-06-narrow-motion-fit",
+      "passed": false,
+      "details": {
+        "narrow": {
+          "same": true,
+          "replacing": 1,
+          "overflow": 0,
+          "label": "让表达更自然"
+        }
+      }
+    },
+    {
+      "name": "R2-07-reduced-motion-immediate-continuity",
+      "passed": true,
+      "details": {
+        "reducedParagraph": {
+          "same": true,
+          "replacing": 0,
+          "animation": "none",
+          "background": "rgba(228, 239, 207, 0.45)"
+        },
+        "reducedFinal": {
+          "same": true,
+          "slot": 0,
+          "save": 1
+        }
+      }
+    },
+    {
+      "name": "R2-08-page212-shared-continuity",
+      "passed": true,
+      "details": {
+        "previewBody": {
+          "same": true,
+          "replacing": 1,
+          "save": 0,
+          "text": "We enjoy art and go home."
+        },
+        "previewFinal": {
+          "same": true,
+          "save": 0,
+          "result": 1
+        }
+      }
+    },
+    {
+      "name": "browser-console",
+      "passed": true,
+      "details": {
+        "errors": []
+      }
+    }
+  ],
+  "screenshots": [
+    "01-paragraph-before-desktop-zh.png",
+    "02-paragraph-during-desktop-zh.png",
+    "03-paragraph-after-desktop-zh.png",
+    "04-final-handoff-desktop-zh.png",
+    "05-paragraph-during-mobile-en.png"
+  ],
+  "console_errors": [],
+  "summary": {
+    "total": 9,
+    "passed": 8,
+    "failed": 1
+  }
+}

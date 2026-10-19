@@ -1,0 +1,36 @@
+{
+  "purpose": "Preserve and adjudicate first-run QA failures without rewriting their evidence.",
+  "production_source_changed_during_qa": false,
+  "corrections": [
+    {
+      "source": "api-results.json",
+      "original_checks": ["enhanced_n1_q02_q02_notice"],
+      "classification": "qa_assertion_error",
+      "reason": "The first assertion coupled the required Q02 completion notice to retention of an earlier draft frame. The approved terminal contract requires service_incomplete plus content_review_incomplete and an atomic complete saved package; it does not require the earlier frame when the current complete package remains valid.",
+      "adjudication": "The immutable first result already records service_incomplete, final_content_version 2, content_review_incomplete, successful status recovery and q02_save_allowed. No product defect."
+    },
+    {
+      "source": "api-results.json",
+      "original_checks": ["enhanced_n2_mixed_terminal", "enhanced_n2_mixed_notice_absent", "n2_stage_order", "mixed_reason_frequency_facts"],
+      "classification": "synthetic_provider_method_error",
+      "reason": "The synthetic content-review finding quoted text that was not an exact substring of the reviewed clean passage, so the implementation correctly rejected the finding before repair.",
+      "adjudication": "After changing only synthetic evidence to exact quotes, n2-method-retest-final.json passed: limit_finalized V4, two repairs, three reviews, forced_wording and contradiction persisted, and internal rounds stayed out of the public stream."
+    },
+    {
+      "source": "browser-results-initial.json/browser-results-attempt2.json/browser-results-attempt3.json",
+      "original_checks": ["approved_plan_item_structure_present", "create_focus_not_stolen", "plans_edit_invalidates_open_impact", "browser_script_completed"],
+      "classification": "browser_locator_or_assertion_error",
+      "reason": "The initial browser method required prototype class names, inferred focus from body text, assumed a closed dialog remained mounted, and used labels that differed from approved copy.",
+      "adjudication": "browser-results-final.json uses visual/interaction outcomes, a stable Home-link focus identity, hidden-or-unmounted dialog behavior, and approved labels Preset title plus Essential/Enhanced generation. All affected checks pass."
+    }
+  ],
+  "confirmed_product_defects": ["CR-304", "CR-305"],
+  "immutable_originals": [
+    "api-results.json",
+    "browser-results-initial.json",
+    "browser-results-attempt2.json",
+    "browser-results-attempt3.json",
+    "n2-method-retest.json",
+    "n2-method-retest-attempt2.json"
+  ]
+}

@@ -1,0 +1,44 @@
+{
+  "id": "PRON-DEFECT-001",
+  "status": "OPEN",
+  "severity": "medium",
+  "responsible_owner": "frontend-claire",
+  "version": "M002-FI-PRON-01",
+  "build_aggregate": "48054f4be82d69bf71cb76d3b1a5b493e3f26703347bac300dbf665cfbc63235",
+  "sources": [
+    "frontend/app/presentation/components/GenerationContent.vue",
+    "frontend/app/presentation/components/GenerationVocabularyList.vue"
+  ],
+  "expected_sources": [
+    "technical/pronunciation/frontend-browser-only.md: planLeaving focus transfer rule",
+    "product/pronunciation/browser-only/abilities.md AC-405",
+    "design/pronunciation R3/TA1 inherited focus behavior"
+  ],
+  "reproduction": [
+    "Use the frozen production candidate on 3019 with a real learner session.",
+    "Inject a client-memory-only PAGE-402 plan with one word_use; do not send a generation request or write DB.",
+    "Focus and start the plan pronunciation action, confirming document.activeElement is on generation-plan:qa-controlled-draft.",
+    "In one reactive update clear planItems and supply the final result with the same entry.",
+    "Observe the 240ms leaving plan and the newly mounted result action."
+  ],
+  "expected": "When focus was on the leaving plan pronunciation action, focus moves without scrolling to the same-entry generation-result action; no auto-play.",
+  "actual": {
+    "before_transition_active_surface": "generation-plan:qa-controlled-draft",
+    "leaving_plan": {
+      "present": true,
+      "inert": true,
+      "aria_hidden": "true",
+      "action_disabled": true
+    },
+    "result": {
+      "control_count": 1,
+      "surface": "generation-result:qa-controlled-draft",
+      "action_after_plan_removed": "remained disabled"
+    },
+    "focus_samples": "20 samples over about 500ms all had activeElement BODY; result focus never occurred"
+  },
+  "confirmed_root_cause": "GenerationVocabularyList declared pronunciationActive as an optional Boolean without a default. Vue casts an omitted Boolean prop to false, so the result region, which intentionally omits the prop, rendered its pronunciation action disabled. GenerationContent therefore found the matching result action but correctly skipped focusing a disabled button.",
+  "impact": "The result-card pronunciation action is unavailable, and keyboard users also lose their place when plan becomes result even though the same word remains visible.",
+  "method_boundary": "The plan/result data is controlled client-memory test injection; it does not mock speech, change DB, or call a model. Final UAT remains no-mock.",
+  "retest": "After an original-owner fix and new source/build manifest, rerun only the controlled plan-result chain and affected focus/cancel path; reuse real library evidence."
+}

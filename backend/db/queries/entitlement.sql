@@ -7,7 +7,8 @@ WHERE code = sqlc.arg(code);
 SELECT m.id, m.display_name, m.description, m.enabled
 FROM wordweave.group_models gm
 JOIN wordweave.ai_models m ON m.id = gm.model_id
-WHERE gm.group_code = sqlc.arg(group_code) AND m.enabled
+JOIN wordweave.ai_providers p ON p.id = m.provider_id
+WHERE gm.group_code = sqlc.arg(group_code) AND m.enabled AND m.retired_at IS NULL AND p.retired_at IS NULL
 ORDER BY lower(m.display_name), m.id;
 
 -- name: ListGroupLengths :many
@@ -17,7 +18,7 @@ WHERE group_code = sqlc.arg(group_code)
 ORDER BY CASE length_code WHEN 'short' THEN 1 WHEN 'medium' THEN 2 WHEN 'long' THEN 3 WHEN 'xlong' THEN 4 END;
 
 -- name: HasModelCredential :one
-SELECT EXISTS(SELECT 1 FROM wordweave.ai_providers WHERE credential_configured);
+SELECT EXISTS(SELECT 1 FROM wordweave.ai_providers WHERE credential_configured AND retired_at IS NULL);
 
 -- name: CountAccountRollingUsage :one
 SELECT count(*)::integer AS used,

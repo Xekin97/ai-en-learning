@@ -1,0 +1,51 @@
+{
+  "route": {
+    "mode": "model",
+    "stage": "control",
+    "role": "gatekeeper",
+    "task": "stage-work",
+    "risk": "normal",
+    "failures": 0,
+    "tier": "balanced",
+    "model": "gpt-5.6-terra",
+    "effort": "medium",
+    "skill": "agt-stage-gate",
+    "selection": "requested-not-runtime-attested"
+  },
+  "updates": {
+    "codex_version_changed": true,
+    "policy_changed": true,
+    "added_models": [
+      "gpt-6.1-sol",
+      "gpt-6-sol",
+      "gpt-6-luna"
+    ],
+    "removed_models": [
+      "gpt-5.5",
+      "gpt-5.4-mini",
+      "gpt-5.3-codex-spark"
+    ],
+    "capability_changes": [],
+    "issues": [],
+    "upgrades": [],
+    "automatic_rebinding": false,
+    "action": "keep_lock_review_new_candidates"
+  },
+  "args": [
+    "exec",
+    "--model",
+    "gpt-5.6-terra",
+    "-c",
+    "model_reasoning_effort=\"medium\"",
+    "-C",
+    "/Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning",
+    "--json",
+    "--output-last-message",
+    "/Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/.planning/milestones/M003/reviews/evidence/control-016/final.txt",
+    "-"
+  ],
+  "prompt_hash": "659a4b6798925d43c5a64a12e194d0f2423fc03ded4158a3ffd807c445c9caeb",
+  "actual_model": "not_observed",
+  "workflow_stage": "uiux-design",
+  "permissions": "inherited; independent read-only control report, host executes authorized state changes"
+}

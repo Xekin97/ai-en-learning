@@ -73,13 +73,13 @@ func TestNoContentConsumersEnforcePrivateNoStoreResponse(t *testing.T) {
 		t.Fatal(err)
 	}
 	createdModel := postJSON(t, adminClient, application.URL+"/api/v1/admin/models", adminCSRF, map[string]any{
-		"display_name": "CR038 synthetic model", "description": nil, "provider_model_id": "provider/integration", "connection_id": ai.LegacyProviderID, "output_mode": "json_schema", "expected_revision": configurationRevisionHTTP(t, adminClient, application.URL),
+		"display_name": "CR038 synthetic model", "description": nil, "provider_model_id": "provider/integration", "connection_id": ai.LegacyProviderID, "output_mode": "json_schema", "custom_parameters": map[string]any{}, "expected_revision": configurationRevisionHTTP(t, adminClient, application.URL),
 	})
 	requireStatus(t, createdModel, http.StatusCreated)
 	modelID := nestedString(t, createdModel.body, "data", "model", "id")
 	requireStatus(t, postJSON(t, adminClient, application.URL+"/api/v1/admin/models/"+modelID+"/enable", adminCSRF, map[string]any{"expected_revision": configurationRevisionHTTP(t, adminClient, application.URL)}), http.StatusOK)
 	requireStatus(t, putJSON(t, adminClient, application.URL+"/api/v1/admin/groups/basic", adminCSRF, map[string]any{
-		"priority": 1, "expected_revision": configurationRevisionHTTP(t, adminClient, application.URL), "rolling_24h_limit": nil, "max_entries": 5, "allowed_lengths": []string{"short"}, "model_ids": []string{modelID},
+		"priority": 1, "expected_revision": configurationRevisionHTTP(t, adminClient, application.URL), "rolling_24h_limit": nil, "max_entries": 5, "allowed_lengths": []string{"short"}, "model_ids": []string{modelID}, "content_review_enabled": false, "content_repair_limit": 0,
 	}), http.StatusOK)
 
 	learnerClient := newBrowserClient(t)

@@ -1,0 +1,11 @@
+你是 backend-alex，CR-306 后端架构责任人。请先核对 state 已激活 technical-design/backend-architect/base/backend-alex 后再工作；否则返回阻塞。产品根为 /Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning，框架 ../agt-coding-v2。你不是独自在代码库工作，不撤销他人修改；仅拥有以下设计文件：technical/backend.md、ai-integration.md、api/index.md、api/administration.md、api/generation.md、api/presets.md、handoffs/backend-architecture.md（均在 .planning/milestones/M003 下）、必要 technical/fixtures/cr306 与 technical/evidence/cr306，以及 CR-306 仅后端处理段（CR保持open）。不要改产品、DB、UI、FE、业务代码或workflow/registry/history。修改前已冻结7份原件于 reviews/evidence/cr306-control-067/backend-before-cr306.tar.gz 和 manifest，请检查它们不覆盖。其他技术原件保持。
+
+使用 agt-backend-design（完整阅读 ../agt-coding-v2/.agents/skills/agt-backend-design/SKILL.md 与其必需契约、角色/模板）。路由锁 .planning/agt/model-routing-v1.lock.json，requested gpt-6-astra/high，actual unknown；Profile 必须使用 reviews/evidence/start/locked-profile.yaml 1.0.0，不采用基座2.0。
+
+任务：按 PRODUCT08、CR306、真实故障/研究、当前 TECH03/BE06-R1/API-AI BE06 与实际源码，作最小充分修复技术设计；先定契约供 DBA 与完整页面设计接续。用户已经“编排一下修复吧”，此前后台先行/完整原型/M002正式设计/新视觉评审继续。不要重复问每一例行实现字段，实质新业务/费用/供应商扩展才回报。
+
+重点：每模型 follow/off/on + 已支持effort，OpenRouter Chat适配（不可污染任意兼容协议）；能力目录识别、未知/刷新失败/mandatory/合法强度/已有值失效；保存无模型调用及批量原子性、旧协议follow不变；配置/能力/API读写与错误fixture、请求准入时快照贯穿 Plan/writer/fixed_edit/native修正/review/rewrite；结构化输出不放宽格式，JSON schema 与 provider参数支持相符。无需每次生成取目录、MQ或新监控平台。选最小持久化方案明确交DB，不自己设计/修改DB真源。
+
+原失败游客 DeepSeek V4 Flash0731 5词 machine/preclude/interim/juvenile/retroactive、zh释义、Story/Brief，Plan180s无公开内容且退款。研究 saved default45s只有推理，off3.3s首内容10s完但围栏invalidJSON，low+schema45s无正式内容；不是完整成功。本轮不发付费模型调用、不改UAT配置、不停止现3013服务、不迁移已有数据；可读本地代码及已有官方来源，需补新外部事实用官方浏览。现有同模型业务规划/付费固定编辑审稿/基础2次与内容N0–99、流程测最多2、Q02/配额/600s总180s每调用等保持，若增加首公开内容有限超时须清楚说明依据与后续验证，不以延长等待遮故障。推理不可投影给用户，首业务内容只计完整可展示plan项或正文。
+
+输出可实施的配置DTO/能力状态/适配映射/快照/失败/取消/结算/最小观测与复验合同，给DBA、designer-tony、FE及实施QA精准接点。管理台完整页用fixtures，沿现框架完整预览入口，无新增测试平台。下游还未设计/实现/验证不可称已修复。定向维护当前正文不要堆叠旧新冲突；保留历史档案。不泛化重做M003；完成适量静态合同一致性检查，handoff写清选择、输入原件、缺项、下一责任人。不要改控制面/自批/自行切角色/提交/部署。

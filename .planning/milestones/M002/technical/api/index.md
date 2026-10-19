@@ -1,3 +1,9 @@
+<!-- M002-BE-CR313-01 current entry -->
+> 当前 CR313：M002-BE-CR313-01，backend-alex，awaiting_user_review。[CR313 文件/API合同](../config-portability/api.md) · [后端方案](../config-portability/backend.md)。本轮仅技术设计；旧批准正文逐字保留如下，不代表本稿获批。
+<!-- M002-BE-CR313-01 preserved body below -->
+
+> **M002续做124**：[较新API基线原件](../../../M002-legacy-M003/technical/api/index.md)属于M002；当前范围见[续做索引](../../continuation.md)。下方早期API目录保留为历史基线。
+
 > 当前CR029模型配置与协议以 [通用模型契约](model-connections.md) 为准，替代本文旧OpenRouter全局部分，其余功能不变。
 
 ---

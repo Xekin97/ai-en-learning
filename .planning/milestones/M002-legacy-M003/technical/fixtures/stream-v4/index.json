@@ -1,0 +1,42 @@
+{
+  "fixture_version": "M003-BE-04",
+  "contract_version": "m003-stream-v4",
+  "files": [
+    "basic.json",
+    "paid-no-rewrite.json",
+    "rewrite-once.json",
+    "rewrite-twice-recover.json",
+    "native-continuation.json",
+    "pending-status.json",
+    "eof-unknown.json",
+    "cancelled.json",
+    "no-valid-failure.json",
+    "preview-rewrite.json"
+  ],
+  "packages": "packages.json",
+  "wire_shape": "wire[] = {event,data}; data is exact SSE JSON, without an envelope",
+  "edit_unit": "Unicode code point; use incremental code point count, not UTF-16 string.length",
+  "playback": "playback[i].after_ms schedules wire[i]; synthetic only, never a production latency claim",
+  "source_trace": "internal_evidence.source_trace gives synthetic safe provider fragments and retained snapshots; UI must not use it to drive state",
+  "display_allowlist": [
+    "rendered draft after edit",
+    "progress.phase",
+    "validated.result",
+    "validated.completion_notice",
+    "failed.code",
+    "quota_refunded"
+  ],
+  "not_for_display": [
+    "draft_id",
+    "content_version",
+    "base_rev",
+    "rev",
+    "seq",
+    "at",
+    "delete_count",
+    "source",
+    "internal_evidence",
+    "expected",
+    "snapshot.content_service.content_repair_limit"
+  ]
+}

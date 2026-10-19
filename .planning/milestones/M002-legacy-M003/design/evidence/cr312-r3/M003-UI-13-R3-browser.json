@@ -1,0 +1,194 @@
+{
+  "version": "M003-UI-13-R3",
+  "scope": "New rich bookshop sample only: desktop full replay, PAGE-212 reuse, and 390px zh/en readability. R2 motion and prior protocol matrices are reused.",
+  "source": {
+    "path": "frontend/app/presentation/home/sample-stories.ts",
+    "sha256": "511c6dd7525ccc9339366c432b6142380263172a0f21c61ddbe6ca443a2d9e59",
+    "record_index": 0,
+    "title": "A story around the corner.",
+    "reused_exactly": [
+      "words",
+      "final prose text after removing paragraph whitespace",
+      "weave zh meaning"
+    ],
+    "paragraphation": "Only spaces between source sentences were replaced with paragraph breaks."
+  },
+  "provider_calls": 0,
+  "checks": [
+    {
+      "name": "R3-01-desktop-full-replay",
+      "passed": true,
+      "details": {
+        "initialState": {
+          "selected": [
+            "wander",
+            "gentle",
+            "curious",
+            "steady",
+            "weave",
+            "delight"
+          ],
+          "planUses": 6,
+          "paragraphs": [
+            "Mia liked to wander through the old town. One morning, she heard a gentle voice from a small bookshop.",
+            "She grew curious and stepped inside.",
+            "With steady practice in the shop's writing group, she learned to weave everyday moments into stories.",
+            "To her delight, the bookshop soon felt like home."
+          ]
+        },
+        "waiting": "让表达更自然",
+        "stagedP0": "Mia liked to wander through the old town. One morning, she heard a gentle voice from a small bookshop.",
+        "commit0": {
+          "paragraphs": [
+            "Mia loved to wander through the old town. One morning, a gentle voice called from a tiny bookshop.",
+            "She grew curious and stepped inside.",
+            "With steady practice in the shop's writing group, she learned to weave everyday moments into stories.",
+            "To her delight, the bookshop soon felt like home."
+          ],
+          "replacing": 1
+        },
+        "half2": "With steady practice in the shop's writing group, she learned to weave everyday moments into stories.",
+        "fullButUncommitted2": "With steady practice in the shop's writing group, she learned to weave everyday moments into stories.",
+        "commit2": {
+          "paragraphs": [
+            "Mia loved to wander through the old town. One morning, a gentle voice called from a tiny bookshop.",
+            "She grew curious and stepped inside.",
+            "With steady practice in its writing group, she learned to weave small moments into stories.",
+            "To her delight, the bookshop soon felt like home."
+          ],
+          "replacing": 1,
+          "unchangedSame": true
+        },
+        "commit3": "To her delight, the little shop soon felt like home.",
+        "bodyComplete": [
+          "Mia loved to wander through the old town. One morning, a gentle voice called from a tiny bookshop.",
+          "She grew curious and stepped inside.",
+          "With steady practice in its writing group, she learned to weave small moments into stories.",
+          "To her delight, the little shop soon felt like home."
+        ]
+      }
+    },
+    {
+      "name": "R3-02-scroll-focus-and-valid",
+      "passed": true,
+      "details": {
+        "beforePosition": {
+          "y": 760,
+          "active": "cancel-generation"
+        },
+        "afterPosition": {
+          "y": 760,
+          "active": "cancel-generation"
+        },
+        "validImmediate": {
+          "storySame": true,
+          "targets": [
+            "wander",
+            "gentle",
+            "curious",
+            "steady",
+            "weave",
+            "delight"
+          ],
+          "paragraphs": [
+            "Mia loved to wander through the old town. One morning, a gentle voice called from a tiny bookshop.",
+            "She grew curious and stepped inside.",
+            "With steady practice in its writing group, she learned to weave small moments into stories.",
+            "To her delight, the little shop soon felt like home."
+          ],
+          "marks": 6,
+          "settingsDisabled": false,
+          "searchDisabled": false,
+          "active": "generate",
+          "sameAction": true,
+          "slot": 1
+        },
+        "finalSettled": {
+          "slot": 0,
+          "paragraphs": [
+            "Mia loved to wander through the old town. One morning, a gentle voice called from a tiny bookshop.",
+            "She grew curious and stepped inside.",
+            "With steady practice in its writing group, she learned to weave small moments into stories.",
+            "To her delight, the little shop soon felt like home."
+          ]
+        }
+      }
+    },
+    {
+      "name": "R3-03-page212-shared-sample",
+      "passed": true,
+      "details": {
+        "previewInitial": {
+          "planUses": 6,
+          "paragraphs": [
+            "Mia liked to wander through the old town. One morning, she heard a gentle voice from a small bookshop.",
+            "She grew curious and stepped inside.",
+            "With steady practice in the shop's writing group, she learned to weave everyday moments into stories.",
+            "To her delight, the bookshop soon felt like home."
+          ]
+        },
+        "previewFinal": {
+          "same": true,
+          "targets": [
+            "wander",
+            "gentle",
+            "curious",
+            "steady",
+            "weave",
+            "delight"
+          ],
+          "paragraphs": [
+            "Mia loved to wander through the old town. One morning, a gentle voice called from a tiny bookshop.",
+            "She grew curious and stepped inside.",
+            "With steady practice in its writing group, she learned to weave small moments into stories.",
+            "To her delight, the little shop soon felt like home."
+          ],
+          "userSave": 0
+        }
+      }
+    },
+    {
+      "name": "R3-04-mobile-zh",
+      "passed": true,
+      "details": {
+        "narrowZh": {
+          "overflow": 0,
+          "targets": 6,
+          "paragraphs": 4,
+          "columns": "324px"
+        }
+      }
+    },
+    {
+      "name": "R3-05-mobile-en",
+      "passed": true,
+      "details": {
+        "narrowEn": {
+          "overflow": 0,
+          "label": "Making the wording more natural",
+          "planUses": 6,
+          "paragraphs": 4
+        }
+      }
+    },
+    {
+      "name": "browser-console",
+      "passed": true,
+      "details": {
+        "errors": []
+      }
+    }
+  ],
+  "screenshots": [
+    "01-rich-revision-desktop-zh.png",
+    "02-rich-final-desktop-zh.png",
+    "03-rich-final-mobile-zh.png",
+    "04-rich-revision-mobile-en.png"
+  ],
+  "console_errors": [],
+  "summary": {
+    "total": 6,
+    "passed": 6,
+    "failed": 0
+  }
+}

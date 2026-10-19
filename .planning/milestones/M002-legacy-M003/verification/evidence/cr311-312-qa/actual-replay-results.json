@@ -1,0 +1,59 @@
+{
+  "source": "owned fresh PostgreSQL + current Go backend + deterministic local provider",
+  "syntheticContent": true,
+  "checks": {
+    "real_stack_login": {
+      "pass": true,
+      "detail": {
+        "status": 200
+      }
+    },
+    "request_matches_capture": {
+      "pass": true,
+      "detail": {
+        "postedPayload": {
+          "model_id": "01a1387c-2722-7413-941b-6b91a4a62a85",
+          "meaning_language": "en",
+          "scenario": "story",
+          "length": "short",
+          "entries": [
+            "wander",
+            "gentle",
+            "curious",
+            "steady",
+            "weave"
+          ]
+        },
+        "expected": {
+          "model_id": "01a1387c-2722-7413-941b-6b91a4a62a85",
+          "meaning_language": "en",
+          "scenario": "story",
+          "length": "short",
+          "entries": [
+            "wander",
+            "gentle",
+            "curious",
+            "steady",
+            "weave"
+          ]
+        }
+      }
+    },
+    "captured_v6_exact_terminal_consumed": {
+      "pass": true,
+      "detail": {
+        "runId": "01a13882-c1f9-7aac-ba55-71b5c2f54c06",
+        "eventCount": 38,
+        "terminal": "generation.validated",
+        "dom": {
+          "status": "Your text is ready",
+          "draftAriaLive": 0,
+          "overflow": true,
+          "planVisible": false
+        }
+      }
+    }
+  },
+  "failures": [],
+  "result": "PASS"
+}

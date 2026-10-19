@@ -5,6 +5,10 @@ import type {
   ModelProtocol,
   ModelBatchConfigurationInput,
 } from "@application/shared/models";
+import {
+  formatCustomParameters,
+  requireCustomParameters,
+} from "./custom-parameters";
 
 export type EditableModel = Pick<
   AdminModelModel,
@@ -15,6 +19,7 @@ export type EditableModel = Pick<
   | "connection"
   | "maxOutputTokens"
   | "outputMode"
+  | "customParameters"
   | "enabled"
   | "revision"
 >;
@@ -32,6 +37,7 @@ export function modelDraft(model?: EditableModel, revision = "") {
     apiKey: "",
     maxOutputTokens: model?.maxOutputTokens?.toString() ?? "",
     outputMode: model?.outputMode ?? "prompt",
+    customParametersText: formatCustomParameters(model?.customParameters ?? {}),
     enabled: model?.enabled ?? false,
     expectedRevision: model?.revision ?? revision,
   };
@@ -72,6 +78,7 @@ export function modelConfiguration(
       draft.maxOutputTokens === "" ? null : Number(draft.maxOutputTokens),
     outputMode:
       draft.protocol === "anthropic_messages" ? "prompt" : draft.outputMode,
+    customParameters: requireCustomParameters(draft.customParametersText),
     enabled: draft.enabled,
     expectedRevision: draft.expectedRevision,
   };
@@ -102,7 +109,10 @@ export function modelEntryDraft(key: string, model?: EditableModel) {
     description: draft.description,
     maxOutputTokens: draft.maxOutputTokens,
     outputMode: draft.outputMode,
+    customParametersText: draft.customParametersText,
     enabled: draft.enabled,
+    customConflict: false,
+    remoteDeleted: false,
   };
 }
 export type ModelEntryDraft = ReturnType<typeof modelEntryDraft>;
@@ -124,6 +134,7 @@ export function modelBatchConfiguration(
         description: input.description,
         maxOutputTokens: input.maxOutputTokens,
         outputMode: input.outputMode,
+        customParameters: input.customParameters,
         enabled: input.enabled,
       };
     }),

@@ -1,0 +1,50 @@
+{
+  "at": "2026-10-16T07:36:38.036Z",
+  "environment": "Headless Chromium on current workstation; isolated loopback page",
+  "mock": false,
+  "tlsBypass": false,
+  "sample": {
+    "text": "/həˈləʊ/",
+    "audio": "https://api.dictionaryapi.dev/media/pronunciations/en/hello-uk.mp3",
+    "sourceUrl": "https://commons.wikimedia.org/w/index.php?curid=9021983",
+    "license": {
+      "name": "BY 3.0 US",
+      "url": "https://creativecommons.org/licenses/by/3.0/us"
+    }
+  },
+  "requests": [
+    {
+      "url": "http://127.0.0.1:59494/",
+      "method": "GET",
+      "resourceType": "document"
+    },
+    {
+      "url": "https://api.dictionaryapi.dev/api/v2/entries/en/hello",
+      "method": "GET",
+      "resourceType": "fetch"
+    },
+    {
+      "url": "https://api.dictionaryapi.dev/media/pronunciations/en/hello-uk.mp3",
+      "method": "GET",
+      "resourceType": "media"
+    }
+  ],
+  "humanListening": false,
+  "browserVersion": "151.0.7922.34",
+  "dictionary": {
+    "error": "TimeoutError: signal timed out",
+    "milliseconds": 5004
+  },
+  "audio": {
+    "outcome": "probe_timeout",
+    "events": [],
+    "duration": null,
+    "currentTime": 0,
+    "milliseconds": 10001,
+    "mediaError": null
+  },
+  "speech": {
+    "outcome": "no_english_voice",
+    "totalVoices": 0
+  }
+}

@@ -1,11 +1,49 @@
 package httpapi
 
 import (
+	"fmt"
 	"net/http/httptest"
 	"strings"
 	"testing"
 	"wordweave/internal/growth"
 )
+
+func TestM003GroupContentConfigurationBoundaries(t *testing.T) {
+	command := func(content string) string {
+		return fmt.Sprintf(`{"expected_revision":"r","priority":2,"rolling_24h_limit":null,"max_entries":5,"allowed_lengths":["short"],"model_ids":[],%s}`, content)
+	}
+	for _, tc := range []struct {
+		name, code, content string
+		ok                  bool
+		status              int
+		field               string
+	}{
+		{"disabled zero", "pro", `"content_review_enabled":false,"content_repair_limit":0`, true, 0, ""},
+		{"enabled upper boundary", "plus", `"content_review_enabled":true,"content_repair_limit":99`, true, 0, ""},
+		{"negative", "pro", `"content_review_enabled":true,"content_repair_limit":-1`, false, 422, "/content_repair_limit"},
+		{"over upper boundary", "pro", `"content_review_enabled":true,"content_repair_limit":100`, false, 422, "/content_repair_limit"},
+		{"fraction", "pro", `"content_review_enabled":true,"content_repair_limit":1.5`, false, 422, "/content_repair_limit"},
+		{"null", "pro", `"content_review_enabled":true,"content_repair_limit":null`, false, 422, "/content_repair_limit"},
+		{"missing", "pro", `"content_review_enabled":true`, false, 422, "/content_repair_limit"},
+		{"enabled zero mismatch", "pro", `"content_review_enabled":true,"content_repair_limit":0`, false, 422, "/content_repair_limit"},
+		{"disabled nonzero mismatch", "pro", `"content_review_enabled":false,"content_repair_limit":1`, false, 422, "/content_repair_limit"},
+		{"basic cannot enable", "basic", `"content_review_enabled":true,"content_repair_limit":1`, false, 422, "/content_review_enabled"},
+		{"quoted integer", "pro", `"content_review_enabled":true,"content_repair_limit":"1"`, false, 400, ""},
+		{"native policy is read only", "pro", `"content_review_enabled":true,"content_repair_limit":1,"native_correction_policy":{"max_calls":99}`, false, 400, ""},
+	} {
+		t.Run(tc.name, func(t *testing.T) {
+			w := httptest.NewRecorder()
+			r := httptest.NewRequest("PUT", "/", strings.NewReader(command(tc.content)))
+			_, ok := decodeGroupInput(w, r, tc.code)
+			if ok != tc.ok {
+				t.Fatalf("decode=%v status=%d body=%s", ok, w.Code, w.Body.String())
+			}
+			if !tc.ok && (w.Code != tc.status || !strings.Contains(w.Body.String(), tc.field)) {
+				t.Fatalf("wrong error: %d %s", w.Code, w.Body.String())
+			}
+		})
+	}
+}
 
 func TestGrowthConfigurationFieldErrors(t *testing.T) {
 	cases := []struct {

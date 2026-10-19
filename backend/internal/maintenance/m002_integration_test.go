@@ -65,7 +65,7 @@ func TestM002MaintenanceSkipsBusyOwnerAndRecoversCharges(t *testing.T) {
 	if err = pool.QueryRow(ctx, `INSERT INTO wordweave.ai_models(display_name,provider_model_id) VALUES('Test recovery','test/recovery') RETURNING id`).Scan(&model); err != nil {
 		t.Fatal(err)
 	}
-	if err = pool.QueryRow(ctx, `INSERT INTO wordweave.generation_runs(account_id,credited_account_id,group_code_snapshot,model_id,model_display_name_snapshot,provider_model_id_snapshot,meaning_language,scenario,length_code,minimum_words_snapshot,max_entries_snapshot) VALUES($1,$1,'registered',$2,'Test recovery','test/recovery','en','story','short',50,5) RETURNING id`, owner, model).Scan(&run); err != nil {
+	if err = pool.QueryRow(ctx, `INSERT INTO wordweave.generation_runs(account_id,credited_account_id,group_code_snapshot,model_id,model_display_name_snapshot,provider_model_id_snapshot,meaning_language,scenario,length_code,minimum_words_snapshot,max_entries_snapshot,content_policy_version,model_request_parameters_snapshot) VALUES($1,$1,'registered',$2,'Test recovery','test/recovery','en','story','short',50,5,NULL,'{"version":"custom-parameters-v1","custom_parameters":{},"output_mode":"prompt","max_output_tokens":null,"structured_route":"unchanged"}') RETURNING id`, owner, model).Scan(&run); err != nil {
 		t.Fatal(err)
 	}
 	if _, err = pool.Exec(ctx, `INSERT INTO wordweave.plan_quota_states(owner_id,plan_code,origin,reset_at) VALUES($1,'registered','base',clock_timestamp())`, owner); err != nil {

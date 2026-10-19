@@ -142,6 +142,7 @@ func TestCR039InputVocabularyMappingPersistenceAndTerminalCAS(t *testing.T) {
 	if len(validated.Targets[0].PassageOccurrences) != 2 {
 		t.Fatal("omitted plural not recovered")
 	}
+	recordSuccessfulGenerationFacts(t, ctx, api, run)
 	if err := api.generation.CompleteValid(ctx, run, validated); err != nil {
 		t.Fatal(err)
 	}
@@ -177,6 +178,7 @@ func TestCR039InputVocabularyMappingPersistenceAndTerminalCAS(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
+	recordSuccessfulGenerationFacts(t, ctx, api, visitorRun)
 	if err := api.generation.CompleteValid(ctx, visitorRun, validated); err != nil {
 		t.Fatal(err)
 	}

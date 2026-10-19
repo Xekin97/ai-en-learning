@@ -1,0 +1,34 @@
+{
+  "objective": "独立检查唯一目标 TRANSITION-M003-061: recover-or-rollback verification→implementation / backend-implementer/base / backend-ethan，先修CR304；CR305排入同阶段frontend-claire定向修复。已确认缺陷修复及复验，不涉及新设计/新业务决定。",
+  "inputs": [
+    ".planning/workflow/state.yaml",
+    ".planning/agt/project.yaml",
+    ".planning/agt/agents.yaml",
+    ".planning/milestones/M003/reviews/evidence/start/locked-profile.yaml",
+    ".planning/milestones/M003/reviews/requirements-feedback.md",
+    ".planning/milestones/M003/changes/CR-302.md",
+    ".planning/milestones/M003/changes/CR-304.md",
+    ".planning/milestones/M003/changes/CR-305.md",
+    ".planning/milestones/M003/verification/coverage-matrix.md",
+    ".planning/milestones/M003/verification/report.md",
+    ".planning/milestones/M003/verification/ai-evaluation.md",
+    ".planning/milestones/M003/verification/uat.md",
+    ".planning/milestones/M003/handoffs/verification.md",
+    ".planning/milestones/M003/handoffs/backend-implementation.md",
+    ".planning/milestones/M003/handoffs/frontend-implementation.md",
+    ".planning/milestones/M003/implementation/backend-validation.md",
+    ".planning/milestones/M003/implementation/frontend-validation.md",
+    ".planning/milestones/M003/reviews/evidence/qa-start-059/pre-fix-integrity.json"
+  ],
+  "write_scope": [],
+  "risk": "normal",
+  "acceptance": [
+    "严格只读；按agt-stage-gate及完整继承契约执行。不要重跑测试/审代码/代写专业文档/修改控制面。",
+    "用户已授权本地完整AGT流程与本轮QA中的必要缺陷修复及复验（USER-M003-QA-NEXT）；不重复请求同一授权。若发现真正新范围则标阻塞。",
+    "CR304为API302 busy payload缺字段，CR305为已批准生成中书写指示缺失。当前返修只修这两个实现偏差，不重开已批准设计。",
+    "QA已清理独占隔离栈；冻结原始失败与更正方法记录，准确区分方法错误与真实缺陷。",
+    "只允许一个精确目标迁移/角色激活。保持CR302和所有既有保留事项；不得代用户UAT、付费模型测试、部署或milestone-complete。",
+    "同阶段后端→前端仅激活角色不换stage；返修后implementation→verification仅接收修复开发证据，QA验收另做。",
+    "原样输出可封存Markdown门检报告与精确目标YAML；根代理机械应用报告批准的控制变化，专业工作由下一角色单独执行。"
+  ]
+}

@@ -9,7 +9,10 @@ import {
   successEnvelopeSchema,
 } from "./common";
 import {
+  contentServiceSchema,
+  effectivePlanSchema,
   generationValidatedEventSchema,
+  nativePolicySchema,
   quotaSchema,
   extraQuotaSchema,
 } from "./generation";
@@ -46,6 +49,10 @@ export const presetDetailEnvelopeSchema = successEnvelopeSchema(
     extra_quota: extraQuotaSchema,
     can_start: z.boolean(),
     block_reason: str.nullable(),
+    effective_plan: effectivePlanSchema,
+    configuration_revision: str,
+    content_service: contentServiceSchema,
+    native_correction_policy: nativePolicySchema,
   }),
 );
 export type PresetDto = z.infer<typeof presetSchema>;

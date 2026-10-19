@@ -1,0 +1,63 @@
+[WebServer] (node:55278) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:55374) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] 
+[WebServer]  ERROR  (node:55384) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use node --trace-warnings ... to show where the warning was created)
+[WebServer] 
+[WebServer] (node:55488) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:55487) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 4 tests using 2 workers
+
+(node:55795) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:55796) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  2 [desktop] › tests/e2e/m002-learning.spec.ts:19:1 › ordinary workspace defaults, random selection, validated save and editable batch title (5.7s)
+  ✓  3 [desktop] › tests/e2e/m002-learning.spec.ts:104:1 › gallery loads all cursors before counts, filters language and enters a locked manual-start workspace (1.3s)
+  ✘  1 [mobile] › tests/e2e/m002-learning.spec.ts:19:1 › ordinary workspace defaults, random selection, validated save and editable batch title (10.8s)
+(node:56307) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  4 [mobile] › tests/e2e/m002-learning.spec.ts:104:1 › gallery loads all cursors before counts, filters language and enters a locked manual-start workspace (1.2s)
+
+
+  1) [mobile] › tests/e2e/m002-learning.spec.ts:19:1 › ordinary workspace defaults, random selection, validated save and editable batch title 
+
+    Error: expect(locator).toHaveText(expected) failed
+
+    Locator: locator('#saved-batch-title')
+    Expected: "A changed title"
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toHaveText" with timeout 5000ms
+      - waiting for locator('#saved-batch-title')
+
+
+      88 |     .getByRole("button", { name: text("l.title.save"), exact: true })
+      89 |     .click();
+    > 90 |   await expect(page.locator("#saved-batch-title")).toHaveText(
+         |                                                    ^
+      91 |     "A changed title",
+      92 |   );
+      93 |   await expect(page.locator(".batch-settings .trial-model")).toBeVisible();
+        at /Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/frontend/tests/e2e/m002-learning.spec.ts:90:52
+
+    Error Context: test-results/m002-learning-ordinary-wor-89de7-ve-and-editable-batch-title-mobile/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/m002-learning-ordinary-wor-89de7-ve-and-editable-batch-title-mobile/trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace test-results/m002-learning-ordinary-wor-89de7-ve-and-editable-batch-title-mobile/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [mobile] › tests/e2e/m002-learning.spec.ts:19:1 › ordinary workspace defaults, random selection, validated save and editable batch title 
+  3 passed (24.6s)

@@ -1,0 +1,17 @@
+RESTORE
+backend/internal/dbgen/models.go was clean at task start and matched HEAD/UAT003 SHA-256 3edcbb4caa2185cec1172f5347593b9d7a5dabc6c86265ecbecd368abee615a2. A broad sqlc generation rewrote it incidentally. It was restored from the proven identical HEAD bytes; `backend/internal/dbgen/vocabulary.sql.go` remains the sole intended dbgen delta.
+
+POST-RESTORE STATUS
+3edcbb4caa2185cec1172f5347593b9d7a5dabc6c86265ecbecd368abee615a2 backend/internal/dbgen/models.go
+ M backend/internal/dbgen/vocabulary.sql.go
+ backend/internal/dbgen/vocabulary.sql.go | 10 ++++++----
+
+COMMAND
+GOTOOLCHAIN=go1.26.7 go test -timeout 90s ./internal/dbgen ./internal/vocabulary ./internal/generation && GOTOOLCHAIN=go1.26.7 go build ./cmd/... && git diff --check -- backend/internal/dbgen backend/internal/generation
+
+STDOUT
+?   	wordweave/internal/dbgen	[no test files]
+ok  	wordweave/internal/vocabulary	(cached)
+ok  	wordweave/internal/generation	0.692s
+
+EXIT 0

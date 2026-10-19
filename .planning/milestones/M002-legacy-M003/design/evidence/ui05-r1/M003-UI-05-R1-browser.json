@@ -1,0 +1,154 @@
+{
+  "version": "M003-UI-05-R1",
+  "fixtureVersion": "M003-BE-03",
+  "browser": "Chromium",
+  "scenarios": [
+    {
+      "name": "create-normal-click-autoplays-wire",
+      "pass": true,
+      "errors": [],
+      "observed": {
+        "elapsed_ms": 5461,
+        "sequence": [
+          {
+            "at_ms": 2,
+            "state": "accepted",
+            "resource_cards": 0,
+            "save_actions": 0
+          },
+          {
+            "at_ms": 668,
+            "state": "composing",
+            "resource_cards": 0,
+            "save_actions": 0
+          },
+          {
+            "at_ms": 1912,
+            "state": "learning",
+            "resource_cards": 3,
+            "save_actions": 0
+          },
+          {
+            "at_ms": 4222,
+            "state": "finalizing",
+            "resource_cards": 3,
+            "save_actions": 0
+          },
+          {
+            "at_ms": 5460,
+            "state": "valid",
+            "resource_cards": 3,
+            "save_actions": 1
+          }
+        ]
+      },
+      "historyBefore": 2,
+      "historyAfter": 2,
+      "demoOpen": null,
+      "finalUrl": "http://127.0.0.1:4174/M003/design/prototype/?page=create&scenario=basic&event=5&status=0&lang=zh"
+    },
+    {
+      "name": "cancel-stops-old-generation-and-restart-is-clean",
+      "pass": true,
+      "errors": [],
+      "afterOldDeadline": "cancelled",
+      "articleAfterCancel": 0,
+      "idleAfterRetry": "idle",
+      "restarted": {
+        "elapsed_ms": 5525,
+        "sequence": [
+          {
+            "at_ms": 0,
+            "state": "accepted",
+            "resource_cards": 0,
+            "save_actions": 0
+          },
+          {
+            "at_ms": 739,
+            "state": "composing",
+            "resource_cards": 0,
+            "save_actions": 0
+          },
+          {
+            "at_ms": 1979,
+            "state": "learning",
+            "resource_cards": 3,
+            "save_actions": 0
+          },
+          {
+            "at_ms": 4286,
+            "state": "finalizing",
+            "resource_cards": 3,
+            "save_actions": 0
+          },
+          {
+            "at_ms": 5523,
+            "state": "valid",
+            "resource_cards": 3,
+            "save_actions": 1
+          }
+        ]
+      }
+    },
+    {
+      "name": "navigation-and-manual-step-stop-old-timer",
+      "pass": true,
+      "errors": [],
+      "stateAfterNavigation": "composing",
+      "manualState": "composing",
+      "stateAfterManualWait": "composing"
+    },
+    {
+      "name": "enhanced-preview-normal-click-autoplays-and-qualifies-q02",
+      "pass": true,
+      "errors": [],
+      "elapsed_ms": 6482,
+      "sequence": [
+        {
+          "at_ms": 1,
+          "state": "accepted",
+          "cards": 0
+        },
+        {
+          "at_ms": 682,
+          "state": "composing",
+          "cards": 0
+        },
+        {
+          "at_ms": 1917,
+          "state": "learning",
+          "cards": 3
+        },
+        {
+          "at_ms": 4221,
+          "state": "finalizing",
+          "cards": 3
+        },
+        {
+          "at_ms": 5539,
+          "state": "validating",
+          "cards": 3
+        },
+        {
+          "at_ms": 6363,
+          "state": "ready",
+          "cards": 3
+        }
+      ],
+      "checkboxVisible": true,
+      "checkboxChecked": false,
+      "publishDisabled": true,
+      "historyBefore": 2,
+      "historyAfter": 2
+    }
+  ],
+  "summary": {
+    "passed": 4,
+    "failed": 0,
+    "total": 4,
+    "screenshots": 3,
+    "syntheticPlaybackTimingMeasured": true,
+    "productionLatencyMeasured": false,
+    "modelOrProviderCalled": false
+  }
+}

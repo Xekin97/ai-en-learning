@@ -1,0 +1,115 @@
+{
+  "version": "M003-UI-07-R1",
+  "sourceBackend": "M003-BE-05-R1",
+  "contractVersion": "m003-stream-v5",
+  "scope": "planning display retention only",
+  "browser": "Chromium",
+  "scenarios": [
+    {
+      "name": "normal-and-enhanced-drafts-retain-plan",
+      "pass": true,
+      "errors": [],
+      "runs": [
+        {
+          "name": "basic",
+          "firstDraftChars": 60,
+          "checkpointEvent": 18,
+          "finalPlanCount": 0,
+          "errors": []
+        },
+        {
+          "name": "rewrite-once",
+          "firstDraftChars": 60,
+          "checkpointEvent": 47,
+          "finalPlanCount": 0,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "name": "q02-recovery-retains-plan-until-valid-on-mobile",
+      "pass": true,
+      "errors": [],
+      "retainedThroughEvent": 57,
+      "finalPlanCount": 0,
+      "mobileOverflow": false
+    },
+    {
+      "name": "pending-and-eof-keep-plan-until-authoritative-result",
+      "pass": true,
+      "errors": [],
+      "pendingPlanItems": 4,
+      "eofPlanItems": 4,
+      "statusValidPlanCount": 0
+    },
+    {
+      "name": "failure-and-cancel-clear-plan",
+      "pass": true,
+      "errors": [],
+      "runs": [
+        {
+          "name": "planning-fails",
+          "plan": 0,
+          "draft": 0,
+          "errors": []
+        },
+        {
+          "name": "invalid-first-edit-fails",
+          "plan": 0,
+          "draft": 0,
+          "errors": []
+        }
+      ],
+      "cancelled": {
+        "plan": 0,
+        "draft": 0,
+        "errors": []
+      }
+    },
+    {
+      "name": "both-preview-modes-retain-plan-until-qualified-result",
+      "pass": true,
+      "errors": [],
+      "runs": [
+        {
+          "mode": "basic",
+          "retainedItems": 3,
+          "finalPlanCount": 0,
+          "publishEnabled": true,
+          "errors": []
+        },
+        {
+          "mode": "enhanced",
+          "retainedItems": 4,
+          "finalPlanCount": 0,
+          "publishEnabled": true,
+          "errors": []
+        }
+      ]
+    }
+  ],
+  "summary": {
+    "passed": 5,
+    "failed": 0,
+    "total": 5,
+    "screenshots": 3,
+    "pageErrors": 0,
+    "actualButtonPlayback": true,
+    "wireModified": false,
+    "modelOrProviderCalled": false,
+    "oldUi07SuiteRerun": false
+  },
+  "visualReview": {
+    "viewed": [
+      "01-create-plan-with-rewrite-1440.png",
+      "02-create-plan-with-recovery-390.png",
+      "03-preview-plan-with-draft-1280.png"
+    ],
+    "finding": "Plan and live draft are simultaneously readable on desktop, 390px mobile, and admin preview; no horizontal overflow, malformed step marker, persistent skip link, or engineering disclaimer was visible.",
+    "userApproval": "pending"
+  },
+  "historicalEvidence": {
+    "ui07Frozen": true,
+    "oldPlanHiddenExpectationNotUsed": true
+  }
+}

@@ -1,0 +1,84 @@
+{
+  "version": "M003-UI-13-R4-scheduler-fix",
+  "scope": "Targeted verification after removing forced one-grapheme-per-frame and adding direct-display Segmenter fallback.",
+  "provider_calls": 0,
+  "checks": [
+    {
+      "name": "R4F-01-rich-growth-and-deadline",
+      "passed": true,
+      "details": {
+        "first": 10,
+        "second": 32,
+        "target": 102,
+        "caught": {
+          "elapsed_ms": 650,
+          "shown": 140,
+          "received": 140
+        }
+      }
+    },
+    {
+      "name": "R4F-02-short-chunk-120hz-budget",
+      "passed": true,
+      "details": {
+        "immediate": 1,
+        "at18": 2,
+        "shortFinal": "We ",
+        "elapsed_ms": 51,
+        "expected_base_gps": 36
+      }
+    },
+    {
+      "name": "R4F-03-segmenter-fallback-direct",
+      "passed": true,
+      "details": {
+        "text": "We ",
+        "state": "segmenter-fallback",
+        "cursor": 0
+      }
+    },
+    {
+      "name": "R4F-04-cross-chunk-grapheme-recompose",
+      "passed": true,
+      "details": {
+        "beforeAccent": {
+          "text": "e",
+          "state": "caught-up",
+          "shown": 1,
+          "received": 1
+        },
+        "accent": {
+          "text": "é",
+          "state": "caught-up",
+          "shown": 1,
+          "received": 1
+        },
+        "beforeZwj": {
+          "text": "👩",
+          "state": "caught-up",
+          "shown": 1,
+          "received": 1
+        },
+        "zwj": {
+          "text": "👩‍💻",
+          "state": "caught-up",
+          "shown": 1,
+          "received": 1
+        }
+      }
+    },
+    {
+      "name": "browser-console",
+      "passed": true,
+      "details": {
+        "errors": []
+      }
+    }
+  ],
+  "console_errors": [],
+  "summary": {
+    "total": 5,
+    "passed": 5,
+    "failed": 0
+  }
+}

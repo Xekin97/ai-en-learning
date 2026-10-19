@@ -1,0 +1,56 @@
+{
+  "recorded_at": "2026-10-12T10:17:39.035683+00:00",
+  "authorization": "USER-M003-UAT-PREPARE-20261012",
+  "result": "READY",
+  "user_uat": "not_started",
+  "main_url": "http://127.0.0.1:3014/create",
+  "login_url": "http://127.0.0.1:3014/login",
+  "admin_models_url": "http://127.0.0.1:3014/admin/models",
+  "language": "Use the header language switch; there is no /zh route prefix.",
+  "accounts": {
+    "path": "/tmp/wordweave-m003-uat-local-002/uat-accounts.json",
+    "mode": "0o600",
+    "contents": "local UAT usernames/passwords only; no provider, database, or encryption key"
+  },
+  "runtime": {
+    "backend": {
+      "result": "ready",
+      "processes": {
+        "backend": {
+          "pid": 89188,
+          "alive": true,
+          "port_open": true
+        },
+        "provider": {
+          "pid": 89187,
+          "alive": true,
+          "port_open": true
+        }
+      },
+      "postgres_port_open": true,
+      "metrics_port_open": true,
+      "api_origin": "http://127.0.0.1:54873",
+      "frontend_origin": "http://127.0.0.1:3014",
+      "database_origin": "127.0.0.1:54872",
+      "provider_origin": "127.0.0.1:54875"
+    },
+    "frontend": {
+      "status": "running",
+      "pid": 90423,
+      "origin": "http://127.0.0.1:3014",
+      "backend": "http://127.0.0.1:54873",
+      "log": "/private/tmp/wordweave-m003-uat002-frontend/frontend.log"
+    },
+    "older_uat_managed": false
+  },
+  "control": {
+    "status": "python3 .planning/milestones/M003/verification/evidence/uat-local-002/uat-control.py status",
+    "start": "python3 .planning/milestones/M003/verification/evidence/uat-local-002/uat-control.py start",
+    "stop": "python3 .planning/milestones/M003/verification/evidence/uat-local-002/uat-control.py stop",
+    "stop_preserves_data": true,
+    "older_uat_managed": false
+  },
+  "readiness_evidence": "readiness.json",
+  "post_smoke_real_provider_calls": 0,
+  "keep_running": true
+}

@@ -32,6 +32,8 @@ func finishTrace(ctx context.Context, stage generationtrace.Stage, err error) {
 			reason = "generation_in_progress"
 		case errors.Is(err, ErrGenerationUnavailable):
 			reason = "generation_unavailable"
+		case errors.Is(err, ErrGenerationBusy):
+			reason = "generation_busy"
 		case errors.Is(err, ErrTerminalRace):
 			reason = "terminal_race"
 		case errors.Is(err, ai.ErrInvalidCandidate):

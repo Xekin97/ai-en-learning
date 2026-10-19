@@ -1,0 +1,117 @@
+schema_version: 1
+profile: consumer-ai-web@1.0.0
+agt_revision: b5badf88cd7194400c3d4d0e9395e7c98490dc26
+agents:
+- role: product/to-c
+  kind: specialist
+  display_name: product-maya
+  runtime_name: product_maya_stream
+  runtime_id: /root/product_maya_stream
+  status: registered
+  registered_at: '2026-08-28T11:00:33Z'
+  activated_at: '2026-10-10T03:52:08.812965+00:00'
+  requested_model: gpt-6-astra
+  requested_effort: high
+  model_source: .planning/agt/model-routing-v1.lock.json
+  actual_model: unknown
+  runtime_note: Reusing product_maya_stream at locked requested gpt-6-astra/high for research alignment
+    audit and proposals; actual serving metadata unknown.
+- role: uiux/base
+  kind: specialist
+  display_name: designer-tony
+  runtime_name: designer_tony_fullpages
+  runtime_id: /root/designer_tony_fullpages
+  status: registered
+  registered_at: '2026-08-28T11:00:33Z'
+  activated_at: '2026-10-10T05:51:45.578292+00:00'
+  requested_model: gpt-5.6-sol
+  requested_effort: high
+  model_source: .planning/agt/model-routing-v1.lock.json
+  actual_model: unknown
+  runtime_note: Reusing designer_tony_fullpages for UI07-R1 retention display, requested gpt-5.6-sol/high;
+    actual model unknown.
+- role: dba/base
+  kind: specialist
+  display_name: dba-diana
+  runtime_name: dba_diana_alignment
+  runtime_id: /root/dba_diana_alignment
+  status: registered
+  registered_at: '2026-08-28T11:00:33Z'
+  activated_at: '2026-10-10T04:42:39.126034+00:00'
+  requested_model: gpt-6-astra
+  requested_effort: high
+  model_source: .planning/agt/model-routing-v1.lock.json
+  actual_model: unknown
+  runtime_note: New runtime for DB03 research alignment under requested gpt-6-astra/high; old runtime
+    unavailable, actual serving metadata unknown.
+- role: backend-architect/base
+  kind: specialist
+  display_name: backend-alex
+  runtime_name: backend_alex_stream
+  runtime_id: /root/backend_alex_stream
+  status: registered
+  registered_at: '2026-08-28T11:00:33Z'
+  activated_at: '2026-10-10T07:06:42.496540+00:00'
+  requested_model: gpt-6-astra
+  requested_effort: high
+  model_source: .planning/agt/model-routing-v1.lock.json
+  actual_model: unknown
+  runtime_note: Reusing backend_alex_stream for BE06 capacity/startup deployment design at locked requested
+    gpt-6-astra/high; serving metadata unknown.
+- role: frontend-architect/base
+  kind: specialist
+  display_name: frontend-bob
+  runtime_name: frontend_bob
+  runtime_id: /root/frontend_bob
+  status: active
+  registered_at: '2026-08-28T11:00:33Z'
+  activated_at: '2026-10-10T07:17:59.348183+00:00'
+  requested_model: gpt-6-astra
+  requested_effort: high
+  model_source: .planning/agt/model-routing-v1.lock.json
+  actual_model: unknown
+  runtime_note: FE02 architecture role reactivated by TRANSITION-M003-045 with BE06 input; retained runtime
+    reference historical; professional FE02 execution pending.
+- role: backend-implementer/base
+  kind: specialist
+  display_name: backend-ethan
+  runtime_name: backend_ethan
+  runtime_id: /root/backend_ethan
+  status: registered
+  registered_at: '2026-08-28T11:00:33Z'
+  activated_at: '2026-10-09T09:59:55.439586+00:00'
+  requested_model: gpt-5.6-sol
+  requested_effort: high
+  model_source: .planning/agt/model-routing-v1.lock.json
+  actual_model: unknown
+  runtime_note: High-risk implementation (schema, permissions, quota and concurrency) uses locked strong
+    floor; serving metadata unavailable.
+- role: frontend-implementer/base
+  kind: specialist
+  display_name: frontend-claire
+  runtime_name: frontend_claire
+  runtime_id: null
+  status: registered
+  registered_at: '2026-08-28T11:00:33Z'
+  activated_at: '2026-10-01T17:09:46.403358+00:00'
+- role: quality/base
+  kind: specialist
+  display_name: qa-quinn
+  runtime_name: qa_quinn
+  runtime_id: null
+  status: registered
+  registered_at: '2026-08-28T11:00:33Z'
+  activated_at: '2026-10-01T17:11:47.031309+00:00'
+- role: gatekeeper
+  kind: control
+  display_name: gatekeeper-owen
+  runtime_name: gatekeeper_owen_cli
+  runtime_id: 01a123a6-2c9f-7512-830b-704821434d89
+  status: registered
+  registered_at: '2026-08-28T11:00:33Z'
+  activated_at: '2026-10-10T07:17:11.189428+00:00'
+  requested_model: gpt-5.6-terra
+  requested_effort: medium
+  model_source: .planning/agt/model-routing-v1.lock.json
+  actual_model: unknown
+  runtime_note: Independent BE05-R1 to UI07-R1 display-only handoff.

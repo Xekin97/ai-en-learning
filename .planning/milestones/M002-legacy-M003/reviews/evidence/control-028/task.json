@@ -1,0 +1,31 @@
+{
+  "objective": "用户要求以独立短文质量调研核对 M003 并评估产品/技术重策划。已证实研究有显式规划与固定编辑、M003已删减。独立检查单次 TRANSITION-M003-029 从 uiux-design 返回 product-planning，激活 product-maya 作基线差异审计与重策划建议；不是批准恢复全部旧研究约束、技术方案或实施。",
+  "inputs": [
+    ".planning/workflow/state.yaml",
+    ".planning/agt/project.yaml",
+    ".planning/agt/agents.yaml",
+    ".planning/milestones/M003/reviews/requirements-feedback.md",
+    ".planning/milestones/M003/handoffs/uiux.md",
+    ".planning/milestones/M003/handoffs/product.md",
+    ".planning/milestones/M003/handoffs/backend-architecture.md",
+    ".planning/milestones/M003/reviews/evidence/start/locked-profile.yaml",
+    "docs/research/short-passage-quality.md",
+    "docs/plans/content-review-and-repair.md"
+  ],
+  "write_scope": [
+    ".planning/milestones/M003/reviews/research-alignment-return-028.md"
+  ],
+  "acceptance": [
+    "只检查回到责任阶段的范围、来源、可恢复性和授权；不代产品做完整研究语义审计，不跑代码或模型。",
+    "旧 UI06/PRODUCT05/BE04 均有冻结包可恢复。仅撤销无证据的取消规划/固定编辑解释，研究历史不同批次不得混为当前结论。已确认业务规则保留；固定编辑权益归属、规划故障等解释交产品标注建议/待决。",
+    "合法目标 uiux-design → product-planning，唯一 product-maya；要求给出精确 required_artifacts/allowed_transitions/current_handoff。",
+    "当前任务只到可审阅产品重策划建议及技术影响清单；未确认重大范围不进入 API/DB/原型/实现，不把本次回溯当完整方案批准。"
+  ],
+  "risk": "normal",
+  "prior_attempts": [],
+  "report": [
+    "check_results",
+    "exact_target_state",
+    "unresolved_findings"
+  ]
+}

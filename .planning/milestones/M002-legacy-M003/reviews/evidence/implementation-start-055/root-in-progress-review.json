@@ -1,0 +1,79 @@
+{
+  "recorded_at": "2026-10-10T08:04:50.399513+00:00",
+  "status": "in_progress_feedback_not_final_submission_review",
+  "owner": "backend-ethan",
+  "findings": [
+    {
+      "id": "ROOT-BE-01",
+      "path": "backend/internal/generation/pipeline.go",
+      "finding": "Timer flush and safe-prefix delivery must work even when provider stops sending; no additional-delta dependency.",
+      "status": "sent_to_owner_pending_implementation"
+    },
+    {
+      "id": "ROOT-BE-02",
+      "path": "backend/internal/ai/continuation.go",
+      "finding": "Native continuation needs same content version, a new draft_id, prefix inheritance, and closure/flush of prior emitter.",
+      "status": "sent_to_owner_pending_implementation"
+    },
+    {
+      "id": "ROOT-BE-03",
+      "path": "backend/internal/ai/content_tasks.go",
+      "finding": "Enhanced safe complete raw Candidate with invalid ancillary schema must reach fixed editor with bounded machine_errors; unsafe/malformed output must not.",
+      "status": "sent_to_owner_pending_implementation"
+    },
+    {
+      "id": "ROOT-BE-04",
+      "path": "backend/internal/ai/openrouter.go",
+      "finding": "Replace repeated whole-prefix passage scanning/JSON decoding with incremental extraction.",
+      "status": "sent_to_owner_pending_implementation"
+    },
+    {
+      "id": "ROOT-BE-05",
+      "path": "backend/internal/ai/content_tasks.go",
+      "finding": "Bound aggregate multi-line SSE event data and verify protocol completion rules for Plan/Review.",
+      "status": "sent_to_owner_pending_implementation"
+    },
+    {
+      "id": "ROOT-BE-06",
+      "path": "backend/db/migrations/0017_m003_content_review.sql",
+      "finding": "Allow pro/plus and trial-effective paid group with enhancement disabled/N0; current CHECK only admits paid enhanced true/N1..99.",
+      "status": "sent_to_owner_pending_implementation"
+    },
+    {
+      "id": "ROOT-BE-07",
+      "path": "backend/internal/platform/postgres/m003_migration_integration_test.go",
+      "finding": "Replace M003 historical-upgrade test with fresh current-schema verification, per user no-migration instruction.",
+      "status": "sent_to_owner_pending_implementation"
+    },
+    {
+      "id": "ROOT-BE-08",
+      "path": "compose.yaml",
+      "finding": "Deliver approved local-reviewable production overlay with prebuilt pinned images and resource/log limits; no deployment.",
+      "status": "sent_to_owner_pending_implementation"
+    },
+    {
+      "id": "ROOT-BE-09",
+      "path": "backend/internal/platform/config/config.go",
+      "finding": "Enforce preview/probe fixed1 and configure capacity group mapping for multiple connection UUIDs using one real account.",
+      "status": "sent_to_owner_pending_implementation"
+    },
+    {
+      "id": "ROOT-BE-10",
+      "path": "backend/internal/capacity/gate.go",
+      "finding": "ReleaseUnknown takes Gate mutex then Lease sync.Once; normal Release takes sync.Once then Gate mutex. Unify lock order to avoid deadlock and add bounded concurrent regression.",
+      "status": "sent_to_owner_pending_implementation"
+    },
+    {
+      "id": "ROOT-BE-11",
+      "path": "backend/internal/httpapi/generation_handlers.go",
+      "finding": "Cancellation/write failure returns release capacity before joining pipeline goroutine. Cover normal and preview with delayed-exit provider and ensure close/cancel/join precedes release.",
+      "status": "sent_to_owner_pending_implementation"
+    },
+    {
+      "id": "ROOT-BE-12",
+      "path": "backend/internal/generation/service.go",
+      "finding": "CompletePipeline and CompletePreviewPipeline need DB03/BE3-03 transaction validation of actual ordered usage facts, target model, independent budgets and final review outcome; N/V/outcome shape check alone is insufficient. Preserve production checks and update test fixtures truthfully.",
+      "status": "sent_to_owner_pending_implementation"
+    }
+  ]
+}

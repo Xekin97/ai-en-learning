@@ -1,0 +1,344 @@
+{
+  "scope": "Independent formal HTTP API against a new PostgreSQL 18 current-schema database and synthetic upstream; no real-provider or production-capacity claim.",
+  "environment": {
+    "api_origin": "http://127.0.0.1:54773",
+    "frontend_origin": "http://127.0.0.1:54713",
+    "database_policy": "new empty PostgreSQL 18 database initialized with all current migrations including unpublished 0017; no historical upgrade or backfill",
+    "source_commit": "45a4ab123c3308fa0a83868b6030c6b84a96f67d"
+  },
+  "checks": {
+    "non_admin_write_rejected": {
+      "pass": true,
+      "detail": {
+        "status": 403,
+        "code": "forbidden",
+        "field_errors": null,
+        "context": null
+      }
+    },
+    "aggregate_missing_member_atomic": {
+      "pass": true,
+      "detail": null
+    },
+    "provider_create_success": {
+      "pass": true,
+      "detail": 201
+    },
+    "model_parameters_isolated_and_empty_exact": {
+      "pass": true,
+      "detail": {
+        "synthetic/qa080-independent-a": {
+          "reasoning": {
+            "enabled": false
+          },
+          "temperature": 0.15
+        },
+        "synthetic/qa080-independent-b": {}
+      }
+    },
+    "provider_readback_equal": {
+      "pass": true,
+      "detail": null
+    },
+    "all_saves_zero_provider_calls": {
+      "pass": true,
+      "detail": {
+        "before": 0,
+        "after": 0
+      }
+    },
+    "stale_revision_preserves_all_models": {
+      "pass": true,
+      "detail": null
+    },
+    "reject_array_root": {
+      "pass": true,
+      "detail": {
+        "status": 422,
+        "code": "validation_failed",
+        "field_errors": [
+          {
+            "field": "/custom_parameters",
+            "code": "object_required"
+          }
+        ],
+        "context": null
+      }
+    },
+    "reject_null_root": {
+      "pass": true,
+      "detail": {
+        "status": 422,
+        "code": "validation_failed",
+        "field_errors": [
+          {
+            "field": "/custom_parameters",
+            "code": "required"
+          }
+        ],
+        "context": null
+      }
+    },
+    "reject_protected_model": {
+      "pass": true,
+      "detail": {
+        "status": 422,
+        "code": "custom_parameter_conflict",
+        "field_errors": [
+          {
+            "field": "/custom_parameters/model",
+            "code": "protected_field"
+          }
+        ],
+        "context": null
+      }
+    },
+    "reject_controlled_max_tokens": {
+      "pass": true,
+      "detail": {
+        "status": 422,
+        "code": "custom_parameter_conflict",
+        "field_errors": [
+          {
+            "field": "/custom_parameters/max_tokens",
+            "code": "protected_field"
+          }
+        ],
+        "context": null
+      }
+    },
+    "reject_nested_headers": {
+      "pass": true,
+      "detail": {
+        "status": 422,
+        "code": "custom_parameter_conflict",
+        "field_errors": [
+          {
+            "field": "/custom_parameters/vendor/headers",
+            "code": "protected_field"
+          }
+        ],
+        "context": null
+      }
+    },
+    "reject_nul_value": {
+      "pass": true,
+      "detail": {
+        "status": 422,
+        "code": "validation_failed",
+        "field_errors": [
+          {
+            "field": "/custom_parameters/note",
+            "code": "unsupported_character"
+          }
+        ],
+        "context": null
+      }
+    },
+    "reject_too_deep": {
+      "pass": false,
+      "detail": {
+        "status": 201,
+        "code": null,
+        "field_errors": null,
+        "context": null
+      }
+    },
+    "reject_too_large": {
+      "pass": true,
+      "detail": {
+        "status": 422,
+        "code": "validation_failed",
+        "field_errors": [
+          {
+            "field": "/custom_parameters",
+            "code": "too_large"
+          }
+        ],
+        "context": null
+      }
+    },
+    "reject_duplicate_key_with_pointer": {
+      "pass": true,
+      "detail": {
+        "status": 400,
+        "code": "invalid_json",
+        "field_errors": [
+          {
+            "field": "/custom_parameters/reasoning/enabled",
+            "code": "duplicate_key"
+          }
+        ],
+        "context": null
+      }
+    },
+    "aggregate_413_is_form_level": {
+      "pass": true,
+      "detail": {
+        "status": 413,
+        "code": "request_too_large",
+        "field_errors": null,
+        "context": null
+      }
+    },
+    "all_invalid_writes_atomic_and_zero_call": {
+      "pass": false,
+      "detail": null
+    },
+    "upstream_rejection_is_explicit_without_retry": {
+      "pass": true,
+      "detail": {
+        "status": 422,
+        "code": "model_request_rejected",
+        "field_errors": null,
+        "context": {
+          "upstream_status": 422
+        }
+      }
+    },
+    "rejected_probe_does_not_delete_parameters": {
+      "pass": true,
+      "detail": {
+        "qa_reject": true
+      }
+    }
+  },
+  "problems": {
+    "missing_aggregate_member": {
+      "status": 422,
+      "code": "validation_failed",
+      "field_errors": [
+        {
+          "field": "/models/1/custom_parameters",
+          "code": "required"
+        }
+      ],
+      "context": null
+    },
+    "stale_revision": {
+      "status": 409,
+      "code": "revision_conflict",
+      "field_errors": null,
+      "context": {
+        "current_revision": "QZkldCgJkwAq1h4XVXhm8pllO24cyGT9zVKvdXGWmq4"
+      }
+    },
+    "array_root": {
+      "status": 422,
+      "code": "validation_failed",
+      "field_errors": [
+        {
+          "field": "/custom_parameters",
+          "code": "object_required"
+        }
+      ],
+      "context": null
+    },
+    "null_root": {
+      "status": 422,
+      "code": "validation_failed",
+      "field_errors": [
+        {
+          "field": "/custom_parameters",
+          "code": "required"
+        }
+      ],
+      "context": null
+    },
+    "protected_model": {
+      "status": 422,
+      "code": "custom_parameter_conflict",
+      "field_errors": [
+        {
+          "field": "/custom_parameters/model",
+          "code": "protected_field"
+        }
+      ],
+      "context": null
+    },
+    "controlled_max_tokens": {
+      "status": 422,
+      "code": "custom_parameter_conflict",
+      "field_errors": [
+        {
+          "field": "/custom_parameters/max_tokens",
+          "code": "protected_field"
+        }
+      ],
+      "context": null
+    },
+    "nested_headers": {
+      "status": 422,
+      "code": "custom_parameter_conflict",
+      "field_errors": [
+        {
+          "field": "/custom_parameters/vendor/headers",
+          "code": "protected_field"
+        }
+      ],
+      "context": null
+    },
+    "nul_value": {
+      "status": 422,
+      "code": "validation_failed",
+      "field_errors": [
+        {
+          "field": "/custom_parameters/note",
+          "code": "unsupported_character"
+        }
+      ],
+      "context": null
+    },
+    "too_deep": {
+      "status": 201,
+      "code": null,
+      "field_errors": null,
+      "context": null
+    },
+    "too_large": {
+      "status": 422,
+      "code": "validation_failed",
+      "field_errors": [
+        {
+          "field": "/custom_parameters",
+          "code": "too_large"
+        }
+      ],
+      "context": null
+    },
+    "duplicate_key": {
+      "status": 400,
+      "code": "invalid_json",
+      "field_errors": [
+        {
+          "field": "/custom_parameters/reasoning/enabled",
+          "code": "duplicate_key"
+        }
+      ],
+      "context": null
+    },
+    "aggregate_request_too_large": {
+      "status": 413,
+      "code": "request_too_large",
+      "field_errors": null,
+      "context": null
+    },
+    "explicit_probe_rejected": {
+      "status": 422,
+      "code": "model_request_rejected",
+      "field_errors": null,
+      "context": {
+        "upstream_status": 422
+      }
+    }
+  },
+  "failures": [
+    "reject_too_deep",
+    "all_invalid_writes_atomic_and_zero_call"
+  ],
+  "reused_developer_evidence": {
+    "compact_byte_exact_vectors": ".planning/milestones/M003/technical/fixtures/cr306/compact-byte-vectors.json consumed by implementation checks; QA independently sampled semantic too_large and transport 413 rather than rerunning unit tests",
+    "three_protocol_empty_object_and_openrouter_route_matrix": ".planning/milestones/M003/implementation/evidence/cr306-backend/05-cr306-integration-final.log"
+  },
+  "result": "FAIL"
+}

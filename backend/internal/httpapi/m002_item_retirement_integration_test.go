@@ -186,7 +186,7 @@ func TestM002RetiredCardPriceEditingAndRefundHTTP(t *testing.T) {
 		})
 	}
 	// Once explicitly removed, the historical reference cannot be reintroduced.
-	replacement := postJSON(t, admin, application.URL+"/api/v1/admin/models", adminCSRF, map[string]any{"display_name": "Replacement", "provider_model_id": "test/replacement", "connection_id": "00000000-0000-4000-8000-000000000001", "output_mode": "prompt", "expected_revision": configurationRevisionHTTP(t, admin, application.URL)})
+	replacement := postJSON(t, admin, application.URL+"/api/v1/admin/models", adminCSRF, map[string]any{"display_name": "Replacement", "provider_model_id": "test/replacement", "connection_id": "00000000-0000-4000-8000-000000000001", "output_mode": "prompt", "custom_parameters": map[string]any{}, "expected_revision": configurationRevisionHTTP(t, admin, application.URL)})
 	requireStatus(t, replacement, 201)
 	replacementID := uuid.MustParse(nestedString(t, replacement.body, "data", "model", "id"))
 	update = input("50", model, replacementID)

@@ -1,0 +1,11 @@
+你是 frontend-bob，按 agt-frontend-design 执行 M003/CR-306 前端架构修订，目标交付 M003-FE-03。先核 state technical-design/frontend-architect/base/frontend-bob/active 和 TRANSITION-M003-075，未激活不得工作。产品根 /Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning；框架根 ../agt-coding-v2。用户已明确委托 AGT 角色流程，并在 UI10-R1 正式预览后说“下一步”：USER-M003-UI10R1-NEXT 接受修订并交前端架构。
+
+读取框架 .agents/skills/agt-frontend-design/SKILL.md、继承 role-contract/workflow/roles/frontend-architect/base、design-delivery 相应协议和 model-routing；读锁定项目/Profile1.0（reviews/evidence/start/locked-profile.yaml）、状态/注册表/当前交接及适用未决索引，按稳定ID定向读约束而非全量历史。model routing v1 锁 frontier=gpt-6-astra/high；此次 runtime 已按锁请求，actual serving/usage unknown。不要迁移 Profile 或路由。
+
+输入：PRODUCT09/handoffs/product.md，BE07/handoffs/backend-architecture.md、technical/backend.md、AI/API-306及cr306 fixture当前合同；DB04/handoffs/database.md；正式 UI10-R1/handoffs/uiux.md、design-spec/copy/theme/prototype源/interactions/responsive，R1 manifest与真正modal证据；既有 FE02 technical/frontend.md + handoffs/frontend-architecture.md；实际前端代码。原 UI10 modal=false 及旧13项结论已失效不能继承。075/074门禁及 USER-M003-CUSTOM-PARAMETERS、UI10-MODAL-REWORK、UI10R1-NEXT 为确认链。
+
+任务是当前前端设计的最小 CR306 增量，不能变成重构：精确映射现有 AppDialog/modal/header/body/footer/close/dirty-confirm/focus，保住 M002 与现有模型管理页；每个 modelEntryDraft 自有 raw JSON，解析/校验/错误位置/dirty/增删模型/版本合并/显式probe/保存0调用与 DTO+schema+mapper+仓储 typed contracts 路径都要明确，按 API306 真实字段和错误形状，不能从 demo query 自造字段。区别 raw文本保留与提交对象、JSON strict duplicate/16KiB/depth8/U+0000/numeric等合同的客户端与服务端责任，避免普通 JSON.parse 静默丢重复键。具体错误与对应模型定位、不泄漏配置到学习者、现有typed max output与output mode单一权威。Plan/生成/预览只接 BE07现有状态与fixture的必要变更，继续v5/保留词义场景/取消/pending/终态，不加进度或私有推理展示。保持现有Nuxt分层，无新编辑器/框架/供应商能力目录。若发现跨owner契约实质不一致，报告root交对应责任人，勿自改其他专业文档。
+
+你只拥有：technical/frontend.md、handoffs/frontend-architecture.md、technical/evidence/cr306-fe/ 新证据、changes/CR-306.md 中前端架构处理段。不得改产品/BE/DB/UI原件、工作流/注册表/审批、生产frontend/backend、UAT/数据库/真实模型配置。你不是独自在代码库中工作，不得回滚他人修改，要适配现有未提交工作。root已保存FE02修订前两个原件：reviews/evidence/cr306-frontend-entry-075/M003-FE-02-before-cr306.tar.gz + frontend-before-manifest.json，旧其他快照保持。不要自行commit。
+
+请就地收敛现有FE当前文档和交接，保留未受影响规则与稳定ID，旧任务已实施事实按现有证据准确更新，不把整个M003重新列为未开发。把本次代码接点/依赖/可验收完成条件写入现有FE计划，不新建竞争任务系统。明确需求确认闭环和未决/未验证项；仅必要静态引用/合同/证据自检，别重复跑产品测试，不宣称真实API/模型修好。交付manifest/source恢复包，限定保护范围验证。本次不进实现，建议提交门检。完成后直接给root简洁结果+原件链接、真正阻塞项或无阻塞、下一角色接点，保留CR306 open。

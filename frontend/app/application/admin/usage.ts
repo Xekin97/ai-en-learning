@@ -5,4 +5,6 @@ export interface UsageSummaryModel {
   outputTokens: number | null;
   cost: { amount: string; unit: "openrouter_credits" } | null;
   unknownCalls: number;
+  invocationUnknownCalls: number;
+  notInvokedCalls: number;
 }

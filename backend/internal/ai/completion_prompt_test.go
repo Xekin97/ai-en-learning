@@ -40,7 +40,7 @@ func TestCompletionExamplesMatchRequestedLength(t *testing.T) {
 				}
 				assertTenEntryExampleCoverage(t, batch)
 				prompt := systemPrompt(spec)
-				if strings.Count(prompt, "<example>") != 1 || strings.Count(prompt, raw) != 1 ||
+				if strings.Count(prompt, "EXAMPLE_INPUT:") != 1 || strings.Count(prompt, "EXAMPLE_OUTPUT:") != 1 || strings.Count(prompt, raw) != 1 ||
 					!strings.Contains(prompt, promptExampleInput(language, tc.minimum)) {
 					t.Fatal("system contains the wrong example or stacks multiple examples")
 				}
@@ -70,13 +70,13 @@ func TestCompletionPromptKeepsWholeWordAndCoverageRules(t *testing.T) {
 		for _, language := range []string{"zh", "en", "ja"} {
 			prompt := systemPrompt(GenerationSpec{MinimumWords: minimum, MeaningLanguage: language})
 			for _, rule := range []string{
-				"Before closing the passage string, cover every entry",
-				"an opening paragraph alone is not a complete passage",
-				"Words in tags, meanings or hints do not count",
-				"All inflection letters go before the opening parenthesis",
-				"enforced(enforce), deteriorated(deteriorate)",
-				"Never insert a label between a word's stem and suffix",
-				"Apply this to both passage and hint_phrase",
+				"Include every exact selected entry through a natural word form",
+				"Reach minimum_words excluding inline labels",
+				"target_words is guidance, not a maximum",
+				"Write the whole surface word first",
+				"young(young), grapes(grape), enforced(enforce), vulnerability(vulnerable)",
+				"Never insert a label inside a word",
+				"In each hint_phrase annotate every occurrence",
 			} {
 				if !strings.Contains(prompt, rule) {
 					t.Fatal("missing completion guidance", rule)

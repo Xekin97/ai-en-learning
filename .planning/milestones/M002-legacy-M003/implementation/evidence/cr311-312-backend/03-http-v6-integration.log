@@ -1,0 +1,17 @@
+ENVIRONMENT
+Same disposable PostgreSQL 18 cluster. Provider is local httptest only; no real provider call.
+
+COMMAND
+TEST_DATABASE_URL='postgres://postgres@127.0.0.1:55491/postgres?sslmode=disable' OPENROUTER_TEST_API_KEY='' OPENROUTER_TEST_MODEL='' GOTOOLCHAIN=go1.26.7 go test -race -tags=integration -run 'TestM003Enhanced(Gateway|Preview)HTTPPersistsTruthfulPipelineFacts' ./internal/httpapi
+
+STDOUT
+ok  	wordweave/internal/httpapi	13.889s
+
+EXIT 0
+
+ASSERTED
+- Gateway and preview advertise `m003-stream-v6`; event seq is contiguous.
+- Actual-send `writing` precedes initial draft begin; safe passage close precedes initial body_complete.
+- Actual-send `improving` precedes replace begin; replace body_complete precedes validated.
+- Private Review is absent from the public wire.
+- Persistence remains `m003-content-v5`, with existing stage facts, call counts and one-charge/no-preview-charge rules.

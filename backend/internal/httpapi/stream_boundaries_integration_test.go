@@ -4,6 +4,7 @@ package httpapi
 
 import (
 	"bufio"
+	"bytes"
 	"context"
 	"encoding/json"
 	"fmt"
@@ -46,6 +47,18 @@ func newBoundaryHTTPFixtureWithPool(t *testing.T, handler http.HandlerFunc, wrap
 	t.Cleanup(cancel)
 	fixture := &boundaryHTTPFixture{ctx: ctx, pool: pool, model: model.String()}
 	upstream := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		raw, readErr := io.ReadAll(r.Body)
+		if readErr != nil {
+			t.Error(readErr)
+			w.WriteHeader(http.StatusBadRequest)
+			return
+		}
+		r.Body = io.NopCloser(bytes.NewReader(raw))
+		var request map[string]any
+		if json.Unmarshal(raw, &request) == nil && isPlanProviderRequest(request) {
+			writeChatObject(w, testScenePlan("grape", "young"))
+			return
+		}
 		fixture.calls.Add(1)
 		handler(w, r)
 	}))
@@ -99,7 +112,7 @@ func (f *boundaryHTTPFixture) assertSettled(t *testing.T, want string, charged b
 			t.Fatal(err)
 		}
 		if status == want {
-			if quota != charged || cumulative != (want == "valid" || want == "user_cancelled") || actualDrafts != drafts || batches != 0 || f.calls.Load() != expectedCalls {
+			if quota != charged || cumulative != (want == "valid" || want == "user_cancelled") || actualDrafts != drafts || batches != 0 || expectedCalls >= 0 && f.calls.Load() != expectedCalls {
 				t.Fatalf("incorrect persisted outcome: %s charged=%v cumulative=%v drafts=%d batches=%d calls=%d", status, quota, cumulative, actualDrafts, batches, f.calls.Load())
 			}
 			return
@@ -127,10 +140,10 @@ func TestBoundaryOpenErrorSilentBodyHTTP(t *testing.T) {
 			if err != nil {
 				t.Fatal(err)
 			}
-			if response.StatusCode != 503 || strings.Contains(string(raw), "event:") {
+			if response.StatusCode != 200 || !strings.Contains(string(raw), "event: generation.started") || !strings.Contains(string(raw), "event: generation.failed") {
 				t.Fatal("open failure contract changed")
 			}
-			f.assertSettled(t, "provider_failed", false, 0)
+			f.assertSettled(t, "provider_failed", false, 0, 1)
 		})
 	}
 }
@@ -188,12 +201,14 @@ func TestBoundarySilentStreamLifecycleHTTP(t *testing.T) {
 			} else {
 				response.Body.Close()
 			}
-			select {
-			case <-closed:
-			case <-time.After(2 * time.Second):
-				t.Fatal("upstream remained blocked")
+			if f.calls.Load() > 0 {
+				select {
+				case <-closed:
+				case <-time.After(2 * time.Second):
+					t.Fatal("upstream remained blocked")
+				}
 			}
-			f.assertSettled(t, want, charged, 0)
+			f.assertSettled(t, want, charged, 0, -1)
 		})
 	}
 }

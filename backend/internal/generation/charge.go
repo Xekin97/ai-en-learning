@@ -95,11 +95,15 @@ func SettleTerminal(ctx context.Context, pool *pgxpool.Pool, run uuid.UUID, stat
 		return err
 	}
 	cancelled := status == "user_cancelled"
+	contentOutcome := "failed"
+	if cancelled {
+		contentOutcome = "cancelled"
+	}
 	var failure any
 	if !cancelled {
 		failure = failureCode
 	}
-	result, err := tx.Exec(ctx, `UPDATE wordweave.generation_runs SET call_status=$2,quota_charged=$3,counts_toward_cumulative=$3,completed_at=$4,failure_code=$5 WHERE id=$1 AND call_status='active'`, run, status, cancelled, c.Now, failure)
+	result, err := tx.Exec(ctx, `UPDATE wordweave.generation_runs SET call_status=$2,quota_charged=$3,counts_toward_cumulative=$3,completed_at=$4,failure_code=$5,content_outcome=CASE WHEN content_policy_version=1 THEN $6 END,final_content_version=NULL,content_stop_reason=NULL WHERE id=$1 AND call_status='active'`, run, status, cancelled, c.Now, failure, contentOutcome)
 	if err != nil {
 		return err
 	}

@@ -1,0 +1,96 @@
+[WebServer] (node:39885) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:40077) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] 
+[WebServer]  ERROR  (node:40085) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use node --trace-warnings ... to show where the warning was created)
+[WebServer] 
+[WebServer] (node:40193) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:40194) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 2 tests using 1 worker
+
+(node:40378) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  1 [desktop] › tests/e2e/m003-cr307-focus.spec.ts:31:1 › CR307 traps the top dialog and restores the stable provider opener (8.4s)
+(node:40788) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  2 [mobile] › tests/e2e/m003-cr307-focus.spec.ts:31:1 › CR307 traps the top dialog and restores the stable provider opener (6.8s)
+
+
+  1) [desktop] › tests/e2e/m003-cr307-focus.spec.ts:31:1 › CR307 traps the top dialog and restores the stable provider opener 
+
+    Error: expect(locator).toBeFocused() failed
+
+    Locator:  locator('[data-provider-edit]').first()
+    Expected: focused
+    Received: inactive
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toBeFocused" with timeout 5000ms
+      - waiting for locator('[data-provider-edit]').first()
+        14 × locator resolved to <button class="btn small" data-provider-edit="">编辑服务商</button>
+           - unexpected value "inactive"
+
+
+      100 |   await discard.click();
+      101 |   await expect(dialog).not.toBeVisible();
+    > 102 |   await expect(opener).toBeFocused();
+          |                        ^
+      103 |   await opener.click();
+      104 |   await expect(dialog).toBeVisible();
+      105 |   await dialog.locator('[name="connectionName"]').fill("CR307 provider");
+        at /Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/frontend/tests/e2e/m003-cr307-focus.spec.ts:102:24
+
+    Error Context: test-results/m003-cr307-focus-CR307-tra-e2d93--the-stable-provider-opener-desktop/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/m003-cr307-focus-CR307-tra-e2d93--the-stable-provider-opener-desktop/trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace test-results/m003-cr307-focus-CR307-tra-e2d93--the-stable-provider-opener-desktop/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [mobile] › tests/e2e/m003-cr307-focus.spec.ts:31:1 › CR307 traps the top dialog and restores the stable provider opener 
+
+    Error: expect(locator).toBeFocused() failed
+
+    Locator:  locator('[data-provider-edit]').first()
+    Expected: focused
+    Received: inactive
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toBeFocused" with timeout 5000ms
+      - waiting for locator('[data-provider-edit]').first()
+        14 × locator resolved to <button class="btn small" data-provider-edit="">Edit provider</button>
+           - unexpected value "inactive"
+
+
+      100 |   await discard.click();
+      101 |   await expect(dialog).not.toBeVisible();
+    > 102 |   await expect(opener).toBeFocused();
+          |                        ^
+      103 |   await opener.click();
+      104 |   await expect(dialog).toBeVisible();
+      105 |   await dialog.locator('[name="connectionName"]').fill("CR307 provider");
+        at /Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/frontend/tests/e2e/m003-cr307-focus.spec.ts:102:24
+
+    Error Context: test-results/m003-cr307-focus-CR307-tra-e2d93--the-stable-provider-opener-mobile/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/m003-cr307-focus-CR307-tra-e2d93--the-stable-provider-opener-mobile/trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace test-results/m003-cr307-focus-CR307-tra-e2d93--the-stable-provider-opener-mobile/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2 failed
+    [desktop] › tests/e2e/m003-cr307-focus.spec.ts:31:1 › CR307 traps the top dialog and restores the stable provider opener 
+    [mobile] › tests/e2e/m003-cr307-focus.spec.ts:31:1 › CR307 traps the top dialog and restores the stable provider opener 

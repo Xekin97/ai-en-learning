@@ -2,6 +2,7 @@ package admin
 
 import (
 	"context"
+	"encoding/json"
 	"errors"
 	"github.com/google/uuid"
 	"github.com/jackc/pgx/v5"
@@ -18,7 +19,7 @@ type Model struct {
 	ID                   uuid.UUID
 	DisplayName          string
 	Description          *string
-	ProviderModelID    string
+	ProviderModelID      string
 	Enabled              bool
 	RetiredAt            *time.Time
 	AssignedGroupCodes   []string
@@ -27,6 +28,7 @@ type Model struct {
 	Connection           ai.Connection
 	MaxOutputTokens      *int
 	OutputMode           string
+	CustomParameters     json.RawMessage
 }
 type ModelCursor struct {
 	CreatedAt time.Time `json:"created_at"`
@@ -34,10 +36,10 @@ type ModelCursor struct {
 	Revision  string    `json:"revision"`
 }
 type ModelPatch struct {
-	DisplayNameSet       bool
-	DisplayName          string
-	DescriptionSet       bool
-	Description          *string
+	DisplayNameSet     bool
+	DisplayName        string
+	DescriptionSet     bool
+	Description        *string
 	ProviderModelIDSet bool
 	ProviderModelID    string
 }
@@ -53,11 +55,11 @@ func (s *Service) requireRevision(c business.Configuration, expected string) err
 }
 
 const modelSelect = `SELECT m.id,m.display_name,m.description,m.provider_model_id,m.enabled,m.retired_at,m.created_at,m.updated_at,
- coalesce((SELECT array_agg(CASE gm.group_code WHEN 'registered' THEN 'basic' ELSE gm.group_code END ORDER BY CASE gm.group_code WHEN 'visitor' THEN 1 WHEN 'registered' THEN 2 WHEN 'pro' THEN 3 ELSE 4 END) FROM wordweave.group_models gm WHERE gm.model_id=m.id),ARRAY[]::text[]),p.id,p.name,p.protocol,p.base_url,p.credential_configured,p.masked_hint,m.max_output_tokens,m.output_mode FROM wordweave.ai_models m JOIN wordweave.ai_providers p ON p.id=m.provider_id`
+ coalesce((SELECT array_agg(CASE gm.group_code WHEN 'registered' THEN 'basic' ELSE gm.group_code END ORDER BY CASE gm.group_code WHEN 'visitor' THEN 1 WHEN 'registered' THEN 2 WHEN 'pro' THEN 3 ELSE 4 END) FROM wordweave.group_models gm WHERE gm.model_id=m.id),ARRAY[]::text[]),p.id,p.name,p.protocol,p.base_url,p.credential_configured,p.masked_hint,m.max_output_tokens,m.output_mode,m.custom_parameters FROM wordweave.ai_models m JOIN wordweave.ai_providers p ON p.id=m.provider_id`
 
 func scanModel(row interface{ Scan(...any) error }) (Model, error) {
 	var m Model
-	err := row.Scan(&m.ID, &m.DisplayName, &m.Description, &m.ProviderModelID, &m.Enabled, &m.RetiredAt, &m.CreatedAt, &m.UpdatedAt, &m.AssignedGroupCodes, &m.Connection.ID, &m.Connection.Name, &m.Connection.Protocol, &m.Connection.BaseURL, &m.Connection.CredentialConfigured, &m.Connection.MaskedHint, &m.MaxOutputTokens, &m.OutputMode)
+	err := row.Scan(&m.ID, &m.DisplayName, &m.Description, &m.ProviderModelID, &m.Enabled, &m.RetiredAt, &m.CreatedAt, &m.UpdatedAt, &m.AssignedGroupCodes, &m.Connection.ID, &m.Connection.Name, &m.Connection.Protocol, &m.Connection.BaseURL, &m.Connection.CredentialConfigured, &m.Connection.MaskedHint, &m.MaxOutputTokens, &m.OutputMode, &m.CustomParameters)
 	if errors.Is(err, pgx.ErrNoRows) {
 		err = ErrNotFound
 	}
@@ -65,6 +67,9 @@ func scanModel(row interface{ Scan(...any) error }) (Model, error) {
 }
 func readModel(ctx context.Context, tx pgx.Tx, id uuid.UUID) (Model, error) {
 	return scanModel(tx.QueryRow(ctx, modelSelect+` WHERE m.id=$1`, id))
+}
+func readActiveModel(ctx context.Context, tx pgx.Tx, id uuid.UUID) (Model, error) {
+	return scanModel(tx.QueryRow(ctx, modelSelect+` WHERE m.id=$1 AND m.retired_at IS NULL AND p.retired_at IS NULL`, id))
 }
 func (s *Service) GetModel(ctx context.Context, id uuid.UUID) (Model, error) {
 	tx, err := s.pool.Begin(ctx)
@@ -76,7 +81,7 @@ func (s *Service) GetModel(ctx context.Context, id uuid.UUID) (Model, error) {
 	if err != nil {
 		return Model{}, err
 	}
-	m, err := readModel(ctx, tx, id)
+	m, err := readActiveModel(ctx, tx, id)
 	m.Revision = s.revision(c)
 	return m, err
 }
@@ -102,7 +107,7 @@ func (s *Service) ListModels(ctx context.Context, status string, cursor *ModelCu
 		at = cursor.CreatedAt
 		id = cursor.ID
 	}
-	rows, err := tx.Query(ctx, modelSelect+` WHERE ($1='' OR CASE WHEN m.retired_at IS NOT NULL THEN 'retired' WHEN m.enabled THEN 'enabled' ELSE 'disabled' END=$1) AND ($2::timestamptz IS NULL OR (m.created_at,m.id)>($2,$3)) ORDER BY m.created_at,m.id LIMIT $4`, status, at, id, limit+1)
+	rows, err := tx.Query(ctx, modelSelect+` WHERE p.retired_at IS NULL AND (($1='retired' AND m.retired_at IS NOT NULL) OR ($1<>'retired' AND m.retired_at IS NULL AND ($1='' OR CASE WHEN m.enabled THEN 'enabled' ELSE 'disabled' END=$1))) AND ($2::timestamptz IS NULL OR (m.created_at,m.id)>($2,$3)) ORDER BY m.created_at,m.id LIMIT $4`, status, at, id, limit+1)
 	if err != nil {
 		return nil, "", false, err
 	}
@@ -153,6 +158,13 @@ func (s *Service) CreateModel(ctx context.Context, name string, description *str
 	if err != nil {
 		return Model{}, err
 	}
+	var providerActive bool
+	if err = tx.QueryRow(ctx, `SELECT EXISTS(SELECT 1 FROM wordweave.ai_providers WHERE id=$1 AND retired_at IS NULL)`, ai.LegacyProviderID).Scan(&providerActive); err != nil {
+		return Model{}, err
+	}
+	if !providerActive {
+		return Model{}, ErrNotFound
+	}
 	var id uuid.UUID
 	err = tx.QueryRow(ctx, `INSERT INTO wordweave.ai_models(display_name,description,provider_model_id,enabled,created_at,updated_at) VALUES($1,$2,$3,false,$4,$4) RETURNING id`, strings.TrimSpace(name), trimmedOptional(description), strings.TrimSpace(provider), c.Now).Scan(&id)
 	if err != nil {
@@ -188,7 +200,7 @@ func (s *Service) PatchModel(ctx context.Context, id uuid.UUID, expected string,
 	if err = s.requireRevision(c, expected); err != nil {
 		return Model{}, err
 	}
-	model, err := readModel(ctx, tx, id)
+	model, err := readActiveModel(ctx, tx, id)
 	if err != nil {
 		return Model{}, err
 	}
@@ -216,6 +228,11 @@ func (s *Service) SetModelEnabled(ctx context.Context, id uuid.UUID, expected st
 	if enabled && !model.Connection.CredentialConfigured {
 		return Model{}, ai.ErrCredentialMissing
 	}
+	if enabled {
+		if _, err = ai.CanonicalCustomParameters(model.CustomParameters); err != nil {
+			return Model{}, ai.PrefixCustomParameterError(err, "/custom_parameters")
+		}
+	}
 	tx, err := s.pool.Begin(ctx)
 	if err != nil {
 		return Model{}, err
@@ -228,12 +245,17 @@ func (s *Service) SetModelEnabled(ctx context.Context, id uuid.UUID, expected st
 	if err = s.requireRevision(c, expected); err != nil {
 		return Model{}, err
 	}
-	model, err = readModel(ctx, tx, id)
+	model, err = readActiveModel(ctx, tx, id)
 	if err != nil {
 		return Model{}, err
 	}
 	if model.RetiredAt != nil {
 		return Model{}, ErrModelRetired
+	}
+	if enabled {
+		if _, err = ai.CanonicalCustomParameters(model.CustomParameters); err != nil {
+			return Model{}, ai.PrefixCustomParameterError(err, "/custom_parameters")
+		}
 	}
 	if _, err = tx.Exec(ctx, `UPDATE wordweave.ai_models SET enabled=$2,updated_at=$3 WHERE id=$1`, id, enabled, c.Now); err != nil {
 		return Model{}, err

@@ -1,3 +1,5 @@
+> **M002续做索引124**：本里程碑包含原M003全部需求。[较新同类原件](../../M002-legacy-M003/implementation/frontend-validation.md)及其已记录的逐项接收/验证均归M002；旧编号只是历史标识。当前工作与未完成项见[续做索引](../continuation.md)，下方前期记录保留，不能据旧完成态关闭当前M002。
+
 ---
 milestone: M002
 stage: implementation

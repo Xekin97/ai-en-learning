@@ -1,0 +1,42 @@
+{
+  "status": "running_for_user_uat",
+  "started_at": "2026-10-12T02:40:04.062930+00:00",
+  "origin": "http://127.0.0.1:3013",
+  "create_url": "http://127.0.0.1:3013/create",
+  "admin_url": "http://127.0.0.1:3013/admin/plans",
+  "accounts": [
+    "uat_basic",
+    "uat_pro",
+    "uat_plus",
+    "uat_admin"
+  ],
+  "credentials": "Generated local-only credentials in private work/env.json; shared directly with the requesting user",
+  "synthetic_only": false,
+  "generation_capacity": 1,
+  "capacity_note": "Intentional local UAT busy fixture, not production capacity",
+  "user_acceptance": "in_progress_with_reported_failure",
+  "runtime_location": "/var/folders/z9/99ckxr957v901zwwc8jdk8640000gn/T/ww-m003-uat-001-_dlbv8yg",
+  "stop_command": "python3 .planning/milestones/M003/verification/evidence/uat-local-001/local-stack.py stop",
+  "readiness": ".planning/milestones/M003/verification/evidence/uat-local-001/readiness.json",
+  "real_models": [
+    {
+      "id": "01a12e17-05b0-785e-8222-98f0e0dd152b",
+      "display_name": "DeepSeek V4 Flash 0731",
+      "provider_model_id": "deepseek/deepseek-v4-flash-0731",
+      "output_mode": "prompt",
+      "enabled": true
+    },
+    {
+      "id": "01a12e17-05b4-71f2-9f1e-ef73d8a49ef4",
+      "display_name": "GLM",
+      "provider_model_id": "z-ai/glm-5.3-flash",
+      "output_mode": "prompt",
+      "enabled": true
+    }
+  ],
+  "real_model_readiness": ".planning/milestones/M003/verification/evidence/uat-local-001/real-model-configuration.json",
+  "real_provider_probe_result": "PASS",
+  "real_provider_probes": ".planning/milestones/M003/verification/evidence/uat-local-001/real-model-probes.json",
+  "reported_failure": "CR-306",
+  "reasoning_research": ".planning/milestones/M003/verification/model-reasoning-research.md"
+}

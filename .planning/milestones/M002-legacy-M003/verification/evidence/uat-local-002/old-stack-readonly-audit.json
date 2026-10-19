@@ -1,0 +1,30 @@
+{
+  "result": "NOT_REUSABLE_PRESERVED",
+  "observed_at": "2026-10-12T10:13:13.925437+00:00",
+  "inspection_mode": "read-only",
+  "ports": {
+    "3013": "open",
+    "54672": "open",
+    "54673": "open",
+    "54674": "open",
+    "54675": "open"
+  },
+  "known_processes": {
+    "postgres": "80460 /opt/homebrew/Cellar/postgresql@18/18.6/bin/postgres -D /var/folders/z9/99ckxr957v901zwwc8jdk8640000gn/T/ww-m003-uat-001-_dlbv8yg/data -h 127.0.0.1 -p 54672 -k /var/folders/z9/99ckxr957v901zwwc8jdk8640000gn/T/ww-m003-uat-001-_dlbv8yg",
+    "synthetic_provider": "80708 /Library/Frameworks/Python.framework/Versions/3.12/Resources/Python.app/Contents/MacOS/Python /Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/.planning/milestones/M003/verification/evidence/uat-local-001/local-stack.py serve /var/folders/z9/99ckxr957v901zwwc8jdk8640000gn/T/ww-m003-uat-001-_dlbv8yg",
+    "backend": "80709 /var/folders/z9/99ckxr957v901zwwc8jdk8640000gn/T/ww-m003-uat-001-_dlbv8yg/wordweave",
+    "frontend": "80821 node /Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/frontend/node_modules/.bin/../nuxt/bin/nuxt.mjs dev --host 127.0.0.1 --port 3013"
+  },
+  "backend_binary_sha256": "4c63aef79eed4a6a4eea1b06fca5df8715dc725d175dc13ae87fa345e3957bac",
+  "current_backend_binary_sha256": "9c0d33500a128a04cb2824591b8a7374cadf4babdc9213b4098e83d26fba233f",
+  "schema_observation": {
+    "migration_0017_ledger_present": true,
+    "ai_models.custom_parameters": false,
+    "generation_runs.model_request_parameters_snapshot": false
+  },
+  "model_observation": {
+    "authorized_0731_output_mode": "prompt",
+    "other_saved_model_present": true
+  },
+  "decision": "Started a separate empty PostgreSQL 18 database on 54872 and current backend on 54873; no old data migration/backfill/write/restart/stop."
+}

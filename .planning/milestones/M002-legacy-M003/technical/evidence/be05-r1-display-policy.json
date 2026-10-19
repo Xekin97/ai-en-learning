@@ -1,0 +1,35 @@
+{
+  "version": "M003-BE-05-R1",
+  "authority": "USER-M003-PLAN-RETAIN",
+  "contract_version": "m003-stream-v5",
+  "wire_source": "../fixtures/stream-v5/index.json",
+  "label": "初始构思，文章和实际用法可能调整",
+  "retain_during": [
+    "initial_draft",
+    "fixed_edit",
+    "content_repair",
+    "retained_restore",
+    "finalizing",
+    "settlement_pending",
+    "unexpected_eof"
+  ],
+  "clear_on": [
+    "authoritative_valid_with_complete_result_including_Q02",
+    "failed",
+    "cancelled",
+    "new_request"
+  ],
+  "valid_without_result": "does_not_clear_existing_provisional_view_or_enable_save",
+  "render_source": "wire only; never expected/internal_evidence",
+  "historical_override": "Frozen v5 expected.plan_hidden_on_first_edit=true and matching checker assertions are superseded for display only. Do not modify/re-run them as current display evidence.",
+  "unchanged": [
+    "wire/schema",
+    "model_calls",
+    "server_retention",
+    "DB",
+    "billing",
+    "content_version",
+    "budgets"
+  ],
+  "verification": "static policy/version/link/preservation check only; UI07-R1 targeted browser verification pending"
+}

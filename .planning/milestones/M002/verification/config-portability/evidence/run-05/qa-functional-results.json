@@ -1,0 +1,153 @@
+{
+  "version": "M002-QA-CR313-01",
+  "started_at": "2026-10-16T03:16:17.380Z",
+  "environment": {
+    "frontend_origin": "http://127.0.0.1:43230",
+    "browser": "chromium",
+    "database": "isolated disposable synthetic fixture",
+    "secrets_persisted": false
+  },
+  "cases": [
+    {
+      "id": "QA313-01-auth",
+      "status": "PASS",
+      "duration_ms": 1035,
+      "facts": {
+        "anonymous_status": 401,
+        "learner_status": 403,
+        "missing_csrf_status": 403
+      }
+    },
+    {
+      "id": "QA313-01-export-scope",
+      "status": "PASS",
+      "duration_ms": 30,
+      "facts": {
+        "categories": [
+          "models",
+          "plans",
+          "items",
+          "growth"
+        ],
+        "models_connections": 2,
+        "plans": 4,
+        "items": 4,
+        "growth_levels": 2,
+        "package_hashes": {
+          "models": "5c9497e7e99bb91b36e625f81fdc444f3acec733387c4c570521d855f69d90fc",
+          "plans": "4c4260d1994cbb06fe1dcb45d958109fd5f87880e781e9dccffc137708a7c269",
+          "items": "6eda7dfaa9adf24b76e9534a502940331f6d1cc9f123e2020fd3415c2420b18c",
+          "growth": "04501a8e0d5f511bb6a2b7a5507bca95a7857ceaeadfb0ae889b8cd30b650090"
+        }
+      }
+    },
+    {
+      "id": "QA313-02-credentials",
+      "status": "PASS",
+      "duration_ms": 263,
+      "facts": {
+        "encrypted_hash": "d5784c13ad1b57ae6515df6530293585d8c5c1d7237666436aa11ec99f0173af",
+        "connection_count": 2,
+        "wrong_password": {
+          "status": 422,
+          "code": "decryption_failed"
+        },
+        "tamper": {
+          "status": 422,
+          "code": "decryption_failed"
+        },
+        "ordinary_package": {
+          "status": 422,
+          "code": "credentials_required"
+        }
+      }
+    },
+    {
+      "id": "QA313-03-plans",
+      "status": "PASS",
+      "duration_ms": 76,
+      "facts": {
+        "preview_revision_unchanged": true,
+        "applied_revision_changed": true,
+        "repeated_operation_same_result_revision": true,
+        "stale_reason": "revision_changed",
+        "invalid_recovery_token": {
+          "status": 403,
+          "code": "recovery_token_invalid"
+        },
+        "representative_values": {
+          "explicit_zero": true,
+          "explicit_false": true,
+          "explicit_empty_arrays": true,
+          "explicit_unlimited_null_present": true
+        },
+        "missing_plan": {
+          "status": 422,
+          "code": "validation_failed"
+        },
+        "missing_required": {
+          "status": 422,
+          "code": "validation_failed"
+        }
+      }
+    },
+    {
+      "id": "QA313-04-history-blockers",
+      "status": "PASS",
+      "duration_ms": 30,
+      "facts": {
+        "item_blocker": {
+          "can_commit": false,
+          "blocker_codes": [
+            "active_reference",
+            "ever_issued"
+          ],
+          "target_identity_matches_fixture": true
+        },
+        "growth": {
+          "history_preserved": true,
+          "usage_reset": false,
+          "trial_dates_changed": false,
+          "status": "applied",
+          "effective_day": "2026-10-17"
+        }
+      }
+    },
+    {
+      "id": "QA313-07-priority-modal",
+      "status": "PASS",
+      "duration_ms": 982,
+      "facts": {
+        "top_layer": true,
+        "draft_preserved_after_preview": true,
+        "backdrop_did_not_close": true,
+        "tab_samples_contained": 12,
+        "escape_focus_restored": true
+      }
+    },
+    {
+      "id": "QA313-06-unknown-resolve-ui",
+      "status": "PASS",
+      "duration_ms": 2527,
+      "facts": {
+        "import_requests": 1,
+        "current_did_not_change_operation_fact": true,
+        "resolve_terminal_status": "not_applied"
+      }
+    }
+  ],
+  "screenshots": [
+    {
+      "file": "desktop-zh-unknown-resolved.png",
+      "locale": "zh-CN",
+      "viewport": "1440x950",
+      "state": "models applied after dropped response resolve"
+    }
+  ],
+  "provider_requests": "reported separately by fixture owner",
+  "failure": {
+    "code": "mobile-target-height"
+  },
+  "finished_at": "2026-10-16T03:16:25.860Z",
+  "status": "FAIL"
+}

@@ -36,7 +36,7 @@ const userDetailQuery = `
  (SELECT count(*) FROM wordweave.generation_charges c JOIN wordweave.plan_quota_states q ON q.owner_id=c.account_id AND q.plan_code=c.plan_code AND q.origin=c.origin AND q.reset_epoch=c.quota_epoch
  WHERE c.account_id=a.id AND c.source_kind='plan' AND c.plan_code=a.effective_code AND c.origin=a.origin AND c.state<>'refunded' AND c.charged_at>=greatest(coalesce($2::timestamptz,statement_timestamp())-interval '24 hours',q.reset_at)) ELSE 0::bigint END,
  a.nickname,a.gender,a.last_login_at,a.last_learning_at,a.effective_code,coalesce(base_quota.reset_epoch,0),(a.quota_reset_at AT TIME ZONE 'UTC')::text,
- CASE WHEN a.role='learner' THEN (SELECT max(level_no) FROM wordweave.growth_levels WHERE min_experience<=coalesce(balance.experience,0)) END,
+ CASE WHEN a.role='learner' THEN (SELECT max(level_no) FROM wordweave.growth_levels WHERE retired_at IS NULL AND min_experience<=coalesce(balance.experience,0)) END,
  coalesce(balance.points,0),coalesce(balance.experience,0),coalesce(progress.mastered_total,0),coalesce(progress.saved_total,0)
  FROM chosen a LEFT JOIN wordweave.entitlement_groups g ON g.code=a.effective_code
  LEFT JOIN wordweave.plan_quota_states base_quota ON base_quota.owner_id=a.id AND base_quota.plan_code=a.group_code AND base_quota.origin='base'

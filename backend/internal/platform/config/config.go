@@ -2,42 +2,54 @@ package config
 
 import (
 	"encoding/base64"
+	"encoding/json"
 	"errors"
 	"fmt"
 	"math"
 	"net"
 	"net/url"
 	"os"
+	"regexp"
 	"strconv"
 	"strings"
 	"time"
+
+	"github.com/google/uuid"
 )
 
 const minSecretBytes = 32
 
 type Config struct {
-	ClarityProjectID  string
-	HTTPAddr          string
-	MetricsAddr       string
-	PublicOrigin      string
-	OpenRouterBaseURL string
-	AppDatabaseURL    string
-	AIDatabaseURL     string
-	SessionPepper     []byte
-	CapabilityKey     []byte
-	CSRFKey           []byte
-	CursorKey         []byte
-	MasterKeys        map[int][]byte
-	CurrentKey        int
-	CookieSecure      bool
-	LogLevel          string
-	AppDBMaxConns     int32
-	AIDBMaxConns      int32
-	ShutdownTimeout   time.Duration
-	DraftTTL          time.Duration
-	ClaimTTL          time.Duration
-	AttemptTTL        time.Duration
-	TrustedProxyCIDRs []*net.IPNet
+	ClarityProjectID       string
+	HTTPAddr               string
+	MetricsAddr            string
+	PublicOrigin           string
+	OpenRouterBaseURL      string
+	AppDatabaseURL         string
+	AIDatabaseURL          string
+	SessionPepper          []byte
+	CapabilityKey          []byte
+	CSRFKey                []byte
+	CursorKey              []byte
+	MasterKeys             map[int][]byte
+	CurrentKey             int
+	CookieSecure           bool
+	LogLevel               string
+	AppDBMaxConns          int32
+	AIDBMaxConns           int32
+	ShutdownTimeout        time.Duration
+	DraftTTL               time.Duration
+	ClaimTTL               time.Duration
+	AttemptTTL             time.Duration
+	GenerationMaxInFlight  int
+	PreviewMaxInFlight     int
+	ProbeMaxInFlight       int
+	PreflightMax           int
+	ConnectionMaxInFlight  int
+	ConnectionGroups       map[string]string
+	DefaultConnectionGroup string
+	GenerationRetryAfter   time.Duration
+	TrustedProxyCIDRs      []*net.IPNet
 }
 
 func Load() (Config, error) {
@@ -69,31 +81,67 @@ func Load() (Config, error) {
 	if err != nil {
 		return Config{}, err
 	}
+	generationMax, err := envRequiredPositiveInt("GENERATION_MAX_IN_FLIGHT")
+	if err != nil {
+		return Config{}, err
+	}
+	previewMax, err := envRequiredPositiveInt("PREVIEW_MAX_IN_FLIGHT")
+	if err != nil {
+		return Config{}, err
+	}
+	probeMax, err := envRequiredPositiveInt("GENERATION_PROBE_MAX_IN_FLIGHT")
+	if err != nil {
+		return Config{}, err
+	}
+	preflightMax, err := envRequiredPositiveInt("GENERATION_PREFLIGHT_MAX")
+	if err != nil {
+		return Config{}, err
+	}
+	connectionMax, err := envRequiredPositiveInt("AI_CONNECTION_MAX_IN_FLIGHT")
+	if err != nil {
+		return Config{}, err
+	}
+	connectionGroups, err := parseConnectionGroups(os.Getenv("AI_CONNECTION_CAPACITY_GROUPS"))
+	if err != nil {
+		return Config{}, err
+	}
+	retryAfter, err := envDurationStrict("GENERATION_BUSY_RETRY_AFTER", 5*time.Second)
+	if err != nil {
+		return Config{}, err
+	}
 	trustedProxyCIDRs, err := parseCIDRs(os.Getenv("TRUSTED_PROXY_CIDRS"))
 	if err != nil {
 		return Config{}, err
 	}
 	cfg := Config{
-		ClarityProjectID:  os.Getenv("CLARITY_PROJECT_ID"),
-		HTTPAddr:          envOr("HTTP_ADDR", ":8080"),
-		MetricsAddr:       envOr("METRICS_ADDR", ":9090"),
-		PublicOrigin:      os.Getenv("PUBLIC_ORIGIN"),
-		OpenRouterBaseURL: envOr("OPENROUTER_BASE_URL", "https://openrouter.ai/api/v1"),
-		AppDatabaseURL:    os.Getenv("APP_DATABASE_URL"),
-		AIDatabaseURL:     os.Getenv("AI_DATABASE_URL"),
-		SessionPepper:     []byte(os.Getenv("SESSION_PEPPER")),
-		CapabilityKey:     []byte(os.Getenv("CAPABILITY_PEPPER")),
-		CSRFKey:           []byte(os.Getenv("CSRF_HMAC_KEY")),
-		CursorKey:         []byte(os.Getenv("CURSOR_HMAC_KEY")),
-		CookieSecure:      cookieSecure,
-		LogLevel:          envOr("LOG_LEVEL", "info"),
-		AppDBMaxConns:     int32(appMaxConns),
-		AIDBMaxConns:      int32(aiMaxConns),
-		ShutdownTimeout:   shutdownTimeout,
-		DraftTTL:          draftTTL,
-		ClaimTTL:          claimTTL,
-		AttemptTTL:        attemptTTL,
-		TrustedProxyCIDRs: trustedProxyCIDRs,
+		ClarityProjectID:       os.Getenv("CLARITY_PROJECT_ID"),
+		HTTPAddr:               envOr("HTTP_ADDR", ":8080"),
+		MetricsAddr:            envOr("METRICS_ADDR", ":9090"),
+		PublicOrigin:           os.Getenv("PUBLIC_ORIGIN"),
+		OpenRouterBaseURL:      envOr("OPENROUTER_BASE_URL", "https://openrouter.ai/api/v1"),
+		AppDatabaseURL:         os.Getenv("APP_DATABASE_URL"),
+		AIDatabaseURL:          os.Getenv("AI_DATABASE_URL"),
+		SessionPepper:          []byte(os.Getenv("SESSION_PEPPER")),
+		CapabilityKey:          []byte(os.Getenv("CAPABILITY_PEPPER")),
+		CSRFKey:                []byte(os.Getenv("CSRF_HMAC_KEY")),
+		CursorKey:              []byte(os.Getenv("CURSOR_HMAC_KEY")),
+		CookieSecure:           cookieSecure,
+		LogLevel:               envOr("LOG_LEVEL", "info"),
+		AppDBMaxConns:          int32(appMaxConns),
+		AIDBMaxConns:           int32(aiMaxConns),
+		ShutdownTimeout:        shutdownTimeout,
+		DraftTTL:               draftTTL,
+		ClaimTTL:               claimTTL,
+		AttemptTTL:             attemptTTL,
+		GenerationMaxInFlight:  generationMax,
+		PreviewMaxInFlight:     previewMax,
+		ProbeMaxInFlight:       probeMax,
+		PreflightMax:           preflightMax,
+		ConnectionMaxInFlight:  connectionMax,
+		ConnectionGroups:       connectionGroups,
+		DefaultConnectionGroup: strings.TrimSpace(os.Getenv("AI_CONNECTION_DEFAULT_CAPACITY_GROUP")),
+		GenerationRetryAfter:   retryAfter,
+		TrustedProxyCIDRs:      trustedProxyCIDRs,
 	}
 
 	if cfg.AIDatabaseURL == "" {
@@ -155,7 +203,35 @@ func (c Config) validate() error {
 	if c.DraftTTL <= 0 || c.ClaimTTL <= 0 || c.AttemptTTL <= 0 || c.ShutdownTimeout <= 0 {
 		errs = append(errs, errors.New("configured durations must be positive"))
 	}
+	if c.GenerationMaxInFlight < 1 || c.PreviewMaxInFlight != 1 ||
+		c.ProbeMaxInFlight != 1 || c.PreflightMax < 1 ||
+		c.ConnectionMaxInFlight < 1 || c.ConnectionMaxInFlight > c.GenerationMaxInFlight || c.GenerationRetryAfter < time.Second || c.GenerationRetryAfter > 600*time.Second {
+		errs = append(errs, errors.New("generation capacity limits must be positive and sub-limits cannot exceed global capacity"))
+	}
+	if !validCapacityGroup(c.DefaultConnectionGroup) {
+		errs = append(errs, errors.New("AI_CONNECTION_DEFAULT_CAPACITY_GROUP must be a non-secret identifier of 1 to 64 safe characters"))
+	}
 	return errors.Join(errs...)
+}
+
+var capacityGroupPattern = regexp.MustCompile(`^[A-Za-z0-9._-]{1,64}$`)
+
+func validCapacityGroup(group string) bool { return capacityGroupPattern.MatchString(group) }
+
+func parseConnectionGroups(raw string) (map[string]string, error) {
+	groups := make(map[string]string)
+	if strings.TrimSpace(raw) == "" {
+		return groups, nil
+	}
+	if err := json.Unmarshal([]byte(raw), &groups); err != nil {
+		return nil, errors.New("AI_CONNECTION_CAPACITY_GROUPS must be a JSON object")
+	}
+	for connectionID, group := range groups {
+		if _, err := uuid.Parse(connectionID); err != nil || !validCapacityGroup(group) {
+			return nil, errors.New("AI_CONNECTION_CAPACITY_GROUPS must map UUIDs to safe group identifiers")
+		}
+	}
+	return groups, nil
 }
 
 func parseMasterKeys(raw, currentRaw string) (map[int][]byte, int, error) {
@@ -215,6 +291,18 @@ func envIntStrict(name string, fallback int) (int, error) {
 	value, err := strconv.Atoi(raw)
 	if err != nil || value > math.MaxInt32 {
 		return 0, fmt.Errorf("%s must be a 32-bit integer", name)
+	}
+	return value, nil
+}
+
+func envRequiredPositiveInt(name string) (int, error) {
+	raw := os.Getenv(name)
+	if raw == "" {
+		return 0, fmt.Errorf("%s is required", name)
+	}
+	value, err := strconv.Atoi(raw)
+	if err != nil || value < 1 || value > math.MaxInt32 {
+		return 0, fmt.Errorf("%s must be a positive 32-bit integer", name)
 	}
 	return value, nil
 }

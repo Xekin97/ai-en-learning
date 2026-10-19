@@ -1,0 +1,26 @@
+{
+  "version": "M003-UI-05",
+  "fixtureVersion": "M003-BE-03",
+  "kind": "first-pass-preserved",
+  "summary": {
+    "passed": 11,
+    "failed": 2,
+    "total": 13,
+    "screenshots": 7,
+    "visualDefectsObserved": 0
+  },
+  "failures": [
+    {
+      "scenario": "failed-and-cancelled-no-preview",
+      "assertion": "cancelledAlsoClears",
+      "error": "Please use browser.newContext()"
+    },
+    {
+      "scenario": "plans-zero-99-and-invalid",
+      "assertion": "zeroTurnsServiceOff",
+      "error": "Please use browser.newContext()"
+    }
+  ],
+  "assessment": "Both failures came from the verification script attempting context().newPage() on a page created by browser.newPage(). The affected product states had no implementation failure. The script now opens the secondary page through browser.newPage(); the unchanged assertions pass in the final 13/13 run.",
+  "visualReview": "The first-pass finalizing desktop and Q02 mobile screenshots were inspected and had no visual defect. Final evidence retains equivalent screenshots; no implementation change was made for these two harness failures."
+}

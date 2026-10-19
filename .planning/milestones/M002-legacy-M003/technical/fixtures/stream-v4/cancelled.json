@@ -1,0 +1,255 @@
+{
+  "fixture_version": "M003-BE-04",
+  "contract_version": "m003-stream-v4",
+  "wire": [
+    {
+      "event": "generation.started",
+      "data": {
+        "seq": 1,
+        "contract_version": "m003-stream-v4",
+        "stream_id": "stream-cancelled",
+        "run_id": "fixture-cancelled",
+        "generation_token": "fixture-not-a-real-token",
+        "snapshot": {
+          "configuration_revision": "fixture-revision-4",
+          "effective_plan": {
+            "code": "pro",
+            "origin": "base"
+          },
+          "content_service": {
+            "native_validation": true,
+            "content_review_enabled": true,
+            "content_repair_limit": 1
+          },
+          "native_correction_policy": {
+            "version": "m003-native-policy-v1",
+            "scope": "logical_request",
+            "max_calls": 2,
+            "editable": false
+          }
+        }
+      }
+    },
+    {
+      "event": "generation.progress",
+      "data": {
+        "seq": 2,
+        "phase": "composing"
+      }
+    },
+    {
+      "event": "generation.edit",
+      "data": {
+        "seq": 3,
+        "draft_id": "d-cancel",
+        "content_version": 1,
+        "base_rev": 0,
+        "rev": 1,
+        "at": 0,
+        "delete_count": 0,
+        "insert": "On Saturday, ",
+        "source": "provider"
+      }
+    },
+    {
+      "event": "generation.edit",
+      "data": {
+        "seq": 4,
+        "draft_id": "d-cancel",
+        "content_version": 1,
+        "base_rev": 1,
+        "rev": 2,
+        "at": 13,
+        "delete_count": 0,
+        "insert": "Zoë saw a 🌱 sign near the gate. ",
+        "source": "provider"
+      }
+    },
+    {
+      "event": "generation.edit",
+      "data": {
+        "seq": 5,
+        "draft_id": "d-cancel",
+        "content_version": 1,
+        "base_rev": 2,
+        "rev": 3,
+        "at": 45,
+        "delete_count": 0,
+        "insert": "Then Zoë went to the community ",
+        "source": "provider"
+      }
+    },
+    {
+      "event": "generation.edit",
+      "data": {
+        "seq": 6,
+        "draft_id": "d-cancel",
+        "content_version": 1,
+        "base_rev": 3,
+        "rev": 4,
+        "at": 76,
+        "delete_count": 0,
+        "insert": "garden with her neighbor Sam. ",
+        "source": "provider"
+      }
+    },
+    {
+      "event": "generation.edit",
+      "data": {
+        "seq": 7,
+        "draft_id": "d-cancel",
+        "content_version": 1,
+        "base_rev": 4,
+        "rev": 5,
+        "at": 106,
+        "delete_count": 0,
+        "insert": "They wanted to learn how to ",
+        "source": "provider"
+      }
+    },
+    {
+      "event": "generation.edit",
+      "data": {
+        "seq": 8,
+        "draft_id": "d-cancel",
+        "content_version": 1,
+        "base_rev": 5,
+        "rev": 6,
+        "at": 134,
+        "delete_count": 0,
+        "insert": "grow bea",
+        "source": "provider"
+      }
+    },
+    {
+      "event": "generation.cancelled",
+      "data": {
+        "seq": 9,
+        "quota_refunded": false
+      }
+    }
+  ],
+  "playback": [
+    {
+      "after_ms": 250
+    },
+    {
+      "after_ms": 200
+    },
+    {
+      "after_ms": 500
+    },
+    {
+      "after_ms": 90
+    },
+    {
+      "after_ms": 90
+    },
+    {
+      "after_ms": 90
+    },
+    {
+      "after_ms": 90
+    },
+    {
+      "after_ms": 90
+    },
+    {
+      "after_ms": 300
+    }
+  ],
+  "transport_end": "eof_after_terminal",
+  "status_responses": [
+    {
+      "after_ms": 400,
+      "http_status": 200,
+      "body": {
+        "data": {
+          "contract_version": "m003-stream-v4",
+          "run_id": "fixture-cancelled",
+          "status": "cancelled",
+          "snapshot": {
+            "configuration_revision": "fixture-revision-4",
+            "effective_plan": {
+              "code": "pro",
+              "origin": "base"
+            },
+            "content_service": {
+              "native_validation": true,
+              "content_review_enabled": true,
+              "content_repair_limit": 1
+            },
+            "native_correction_policy": {
+              "version": "m003-native-policy-v1",
+              "scope": "logical_request",
+              "max_calls": 2,
+              "editable": false
+            }
+          },
+          "final_content_version": null,
+          "result": null,
+          "can_save": false,
+          "quota_refunded": false,
+          "content_outcome": "cancelled",
+          "completion_notice": null
+        },
+        "meta": {
+          "request_id": "fixture-status"
+        }
+      }
+    }
+  ],
+  "expected": {
+    "ui_state": "cancelled",
+    "final_package": null,
+    "final_content_version": null,
+    "completion_notice": null,
+    "can_save": false,
+    "deletion_frames": [],
+    "resources_before_terminal": false
+  },
+  "internal_evidence": {
+    "N": 1,
+    "actual_content_repairs": 0,
+    "source_trace": [
+      {
+        "wire_seq": 3,
+        "kind": "switch",
+        "safe_input": "On Saturday, ",
+        "result_text_length": 13
+      },
+      {
+        "wire_seq": 4,
+        "kind": "append",
+        "safe_input": "Zoë saw a 🌱 sign near the gate. ",
+        "result_text_length": 45
+      },
+      {
+        "wire_seq": 5,
+        "kind": "append",
+        "safe_input": "Then Zoë went to the community ",
+        "result_text_length": 76
+      },
+      {
+        "wire_seq": 6,
+        "kind": "append",
+        "safe_input": "garden with her neighbor Sam. ",
+        "result_text_length": 106
+      },
+      {
+        "wire_seq": 7,
+        "kind": "append",
+        "safe_input": "They wanted to learn how to ",
+        "result_text_length": 134
+      },
+      {
+        "wire_seq": 8,
+        "kind": "append",
+        "safe_input": "grow bea",
+        "result_text_length": 142
+      }
+    ],
+    "notes": [],
+    "scope": "Synthetic safe-provider input substitutes only; not recorded live tokens or latency."
+  }
+}

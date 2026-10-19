@@ -1,0 +1,92 @@
+[WebServer] (node:67780) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:67982) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] 
+[WebServer]  ERROR  (node:67993) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use node --trace-warnings ... to show where the warning was created)
+[WebServer] 
+[WebServer] (node:68186) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:68187) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 4 tests using 1 worker
+
+(node:68291) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  1 [desktop] › tests/e2e/m003-cr311-312.spec.ts:46:1 › 1440 Chinese create preserves nodes through typing, repair, and valid (30.1s)
+(node:69890) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  -  2 [desktop] › tests/e2e/m003-cr311-312.spec.ts:164:1 › 390 English PAGE212 shares live content and preserves preview readiness
+(node:69898) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  -  3 [mobile] › tests/e2e/m003-cr311-312.spec.ts:46:1 › 1440 Chinese create preserves nodes through typing, repair, and valid
+  ✘  4 [mobile] › tests/e2e/m003-cr311-312.spec.ts:164:1 › 390 English PAGE212 shares live content and preserves preview readiness (6.7s)
+
+
+  1) [desktop] › tests/e2e/m003-cr311-312.spec.ts:46:1 › 1440 Chinese create preserves nodes through typing, repair, and valid 
+
+    Test timeout of 30000ms exceeded.
+
+    Error: locator.click: Test timeout of 30000ms exceeded.
+    Call log:
+      - waiting for locator('#generation-actions button')
+
+
+      72 |
+      73 |   const action = page.locator("#generation-actions button");
+    > 74 |   await action.click();
+         |                ^
+      75 |   await page.waitForFunction(() => {
+      76 |     const text = document.querySelector(
+      77 |       "#generation-content-passage .live-draft-text",
+        at /Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/frontend/tests/e2e/m003-cr311-312.spec.ts:74:16
+
+    Error Context: test-results/m003-cr311-312-1440-Chines-24c4b-ugh-typing-repair-and-valid-desktop/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/m003-cr311-312-1440-Chines-24c4b-ugh-typing-repair-and-valid-desktop/trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace test-results/m003-cr311-312-1440-Chines-24c4b-ugh-typing-repair-and-valid-desktop/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [mobile] › tests/e2e/m003-cr311-312.spec.ts:164:1 › 390 English PAGE212 shares live content and preserves preview readiness 
+
+    Error: expect(locator).toBeEnabled() failed
+
+    Locator: locator('#preset-actions .btn.primary')
+    Expected: enabled
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeEnabled" with timeout 5000ms
+      - waiting for locator('#preset-actions .btn.primary')
+
+
+      220 |     "Teams adapt quickly when the context changes.",
+      221 |   );
+    > 222 |   await expect(page.locator("#preset-actions .btn.primary")).toBeEnabled();
+          |                                                              ^
+      223 |   await expect(page.locator(".m003-plan-preview")).toHaveCount(0);
+      224 | });
+      225 |
+        at /Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/frontend/tests/e2e/m003-cr311-312.spec.ts:222:62
+
+    Error Context: test-results/m003-cr311-312-390-English-b9015-preserves-preview-readiness-mobile/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/m003-cr311-312-390-English-b9015-preserves-preview-readiness-mobile/trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace test-results/m003-cr311-312-390-English-b9015-preserves-preview-readiness-mobile/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2 failed
+    [desktop] › tests/e2e/m003-cr311-312.spec.ts:46:1 › 1440 Chinese create preserves nodes through typing, repair, and valid 
+    [mobile] › tests/e2e/m003-cr311-312.spec.ts:164:1 › 390 English PAGE212 shares live content and preserves preview readiness 
+  2 skipped

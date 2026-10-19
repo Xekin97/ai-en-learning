@@ -18,9 +18,18 @@ import {
 } from "@application/admin/provider-draft";
 import { mergeEdited } from "@application/admin/growth-drafts";
 import { normalizeFailure } from "@application/shared/failure";
+import {
+  parseCustomParameters,
+  type CustomParameterIssue,
+} from "@application/admin/custom-parameters";
+import {
+  customParameterCopyKey,
+  locateCustomParameterErrors,
+  type SubmittedModelKey,
+} from "@presentation/admin/custom-parameter-presenter";
 definePageMeta({ middleware: "admin", layout: "admin" });
 const admin = useAdminStore(),
-  { copy } = useDesignCopy(),
+  { copy, language } = useDesignCopy(),
   session = useSessionStore();
 const modelOpen = ref(false),
   discardOpen = ref(false),
@@ -28,6 +37,7 @@ const modelOpen = ref(false),
   testTarget = ref<string | null>(null),
   testMessage = ref("");
 const providerId = ref<string | null>(null),
+  providerReturnFocusId = ref<string | null>(null),
   form = reactive(providerDraft());
 let entrySequence = 0,
   testEpoch = 0;
@@ -39,6 +49,8 @@ const baseline = ref(clone(form)),
   conflicted = ref(false);
 const failure = shallowRef<AppFailure | null>(null),
   impact = shallowRef<ModelRemovalImpact | null>(null);
+const serverCustomErrors = ref<Record<string, string>>({}),
+  customFormError = ref<string | null>(null);
 const busy = computed(
   () =>
     admin.state.value.status === "saving" ||
@@ -46,6 +58,17 @@ const busy = computed(
 );
 const providers = computed(() => admin.state.value.providers);
 const duplicateIds = computed(() => repeatedModelIds(entries.value));
+const customResults = computed(() =>
+  Object.fromEntries(
+    entries.value.map((entry) => [
+      entry.key,
+      parseCustomParameters(entry.customParametersText),
+    ]),
+  ),
+);
+const unresolvedEntryConflicts = computed(() =>
+  entries.value.some((entry) => entry.customConflict || entry.remoteDeleted),
+);
 const keyRequired = computed(() =>
   needsConnectionKey(form, admin.state.value.connections),
 );
@@ -63,7 +86,10 @@ function openProvider(provider?: EditableProvider) {
   testing.value = false;
   testTarget.value = null;
   testEpoch++;
+  serverCustomErrors.value = {};
+  customFormError.value = null;
   providerId.value = provider?.connection.id ?? null;
+  providerReturnFocusId.value = provider?.connection.id ?? null;
   Object.assign(form, providerDraft(provider, admin.state.value.modelRevision));
   entries.value = provider
     ? provider.models.map((m) => modelEntryDraft("entry-" + ++entrySequence, m))
@@ -73,6 +99,14 @@ function openProvider(provider?: EditableProvider) {
   unknownCreate.value = false;
   conflicted.value = false;
   modelOpen.value = true;
+}
+function modelReturnFocus() {
+  const id = providerReturnFocusId.value;
+  if (!id) return null;
+  const card = [
+    ...document.querySelectorAll<HTMLElement>("[data-provider-id]"),
+  ].find((candidate) => candidate.dataset.providerId === id);
+  return card?.querySelector<HTMLElement>("[data-provider-edit]") ?? null;
 }
 function discardModel() {
   testEpoch++;
@@ -86,6 +120,8 @@ function discardModel() {
   providerId.value = null;
   modelOpen.value = false;
   discardOpen.value = false;
+  serverCustomErrors.value = {};
+  customFormError.value = null;
 }
 function closeModel() {
   if (busy.value) return;
@@ -110,7 +146,7 @@ async function removeEntry(key: string) {
   const index = entries.value.findIndex((e) => e.key === key);
   if (
     index < 0 ||
-    entries.value[index]?.modelId ||
+    (entries.value[index]?.modelId && !entries.value[index]?.remoteDeleted) ||
     (!providerId.value && entries.value.length < 2)
   )
     return;
@@ -122,6 +158,56 @@ async function removeEntry(key: string) {
       .getElementById(next.key)
       ?.querySelector<HTMLInputElement>('[name="providerModelId"]')
       ?.focus();
+}
+function customIssue(entry: ModelEntryDraft): CustomParameterIssue | null {
+  const result = customResults.value[entry.key];
+  return result && !result.ok ? result.issue : null;
+}
+function customErrorCode(entry: ModelEntryDraft) {
+  return (
+    serverCustomErrors.value[entry.key] ?? customIssue(entry)?.code ?? null
+  );
+}
+function customSize(entry: ModelEntryDraft) {
+  const result = customResults.value[entry.key];
+  return copy("cr306.custom.size", {
+    count: result?.ok ? result.compactBytes : "—",
+    limit: language.value === "zh" ? "16 KiB" : "16 KiB (16,384 bytes)",
+  });
+}
+function onCustomInput(entry: ModelEntryDraft) {
+  if (serverCustomErrors.value[entry.key]) {
+    serverCustomErrors.value = Object.fromEntries(
+      Object.entries(serverCustomErrors.value).filter(
+        ([key]) => key !== entry.key,
+      ),
+    );
+  }
+  entry.customConflict = false;
+  customFormError.value = null;
+}
+async function focusCustomEntry(entry: ModelEntryDraft) {
+  await nextTick();
+  const section = document.getElementById(entry.key),
+    details = section?.querySelector("details"),
+    field = section?.querySelector<HTMLTextAreaElement>(".custom-parameters"),
+    body = document.querySelector<HTMLElement>("#admin-model > .dialog-body");
+  if (details) details.open = true;
+  await nextTick();
+  if (field && body) {
+    body.scrollTo({ top: Math.max(0, field.offsetTop - body.offsetTop - 24) });
+    field.focus();
+    const issue = customIssue(entry);
+    if (issue)
+      field.setSelectionRange(issue.start, Math.max(issue.end, issue.start));
+  }
+}
+async function validateCustomEntries(target?: ModelEntryDraft) {
+  const rows = target ? [target] : entries.value;
+  const invalid = rows.find((entry) => !customResults.value[entry.key]?.ok);
+  if (!invalid) return true;
+  await focusCustomEntry(invalid);
+  return false;
 }
 function validForm(entry?: ModelEntryDraft) {
   const root = document.getElementById("model-form");
@@ -144,7 +230,12 @@ function validForm(entry?: ModelEntryDraft) {
   return true;
 }
 async function testConnection(model?: EditableModel, entry?: ModelEntryDraft) {
-  if (testing.value || busy.value || (!model && (!entry || !validForm(entry))))
+  if (
+    testing.value ||
+    busy.value ||
+    (!model &&
+      (!entry || !validForm(entry) || !(await validateCustomEntries(entry))))
+  )
     return;
   const epoch = session.epoch.value,
     token = ++testEpoch;
@@ -160,13 +251,27 @@ async function testConnection(model?: EditableModel, entry?: ModelEntryDraft) {
       ),
     );
     if (token === testEpoch && epoch === session.epoch.value)
-      testMessage.value = "gm.test.ok";
+      testMessage.value = "cr306.probe.ok";
   } catch (error) {
     if (token !== testEpoch || epoch !== session.epoch.value) return;
     const problem = normalizeFailure(error);
+    const target = model
+      ? { key: model.id, modelId: model.id }
+      : entry
+        ? { key: entry.key, modelId: entry.modelId }
+        : undefined;
+    if (target) {
+      const located = locateCustomParameterErrors(problem, [], target);
+      serverCustomErrors.value = {
+        ...serverCustomErrors.value,
+        ...located.entries,
+      };
+      customFormError.value = located.formCode;
+    }
     testMessage.value =
       (
         {
+          model_request_rejected: "cr306.probe.rejected",
           model_connection_auth: "gm.testing.auth",
           model_connection_protocol: "gm.testing.format",
           model_connection_rate_limited: "gm.rate",
@@ -202,6 +307,8 @@ async function refreshDraft() {
   }
   baseline.value = clone(current);
   conflicted.value = false;
+  serverCustomErrors.value = {};
+  customFormError.value = null;
   failure.value = null;
 }
 async function saveModel() {
@@ -210,23 +317,43 @@ async function saveModel() {
     unknownCreate.value ||
     conflicted.value ||
     duplicateIds.value.size ||
+    unresolvedEntryConflicts.value ||
     !validForm()
   )
     return;
+  if (!(await validateCustomEntries())) return;
   const epoch = session.epoch.value;
+  const submitted: SubmittedModelKey[] = entries.value.map((entry) => ({
+    key: entry.key,
+    modelId: entry.modelId,
+  }));
+  serverCustomErrors.value = {};
+  customFormError.value = null;
   try {
     await admin.saveModelProvider(
       providerId.value,
       providerConfiguration(form, entries.value),
     );
     if (epoch !== session.epoch.value) return;
-    discardModel();
     await admin.loadModelProviders();
+    if (epoch !== session.epoch.value) return;
+    discardModel();
   } catch (error) {
     if (epoch !== session.epoch.value) return;
     failure.value = normalizeFailure(error);
+    const located = locateCustomParameterErrors(failure.value, submitted);
+    serverCustomErrors.value = located.entries;
+    customFormError.value = located.formCode;
+    const firstEntry = entries.value.find(
+      (entry) => located.entries[entry.key] !== undefined,
+    );
+    if (firstEntry) await focusCustomEntry(firstEntry);
     conflicted.value = failure.value.code === "revision_conflict";
-    if (failure.value.status === null || (failure.value.status ?? 0) >= 500)
+    if (
+      failure.value.code !== "revision_conflict" &&
+      failure.value.status !== 413 &&
+      (failure.value.status === null || (failure.value.status ?? 0) >= 500)
+    )
       unknownCreate.value = true;
   }
 }
@@ -253,9 +380,10 @@ async function confirmRemoval() {
 watch(
   () => JSON.stringify({ form, entries: entries.value }),
   () => {
+    if (!modelOpen.value || !testTarget.value) return;
     testEpoch++;
     testing.value = false;
-    testMessage.value = "";
+    testMessage.value = "cr306.probe.stale";
   },
 );
 watch(session.epoch, () => {
@@ -275,9 +403,15 @@ onBeforeUnmount(() => {
         <h1>{{ copy("gm.title") }}</h1>
         <p>{{ copy("gm.subtitle") }}</p>
       </div>
-      <button class="btn primary" :disabled="busy" @click="openProvider()">
-        {{ copy("gm.add") }}
-      </button>
+      <div class="actions">
+        <ConfigPortabilityActions
+          category="models"
+          :refresh="admin.loadModelProviders"
+        />
+        <button class="btn primary" :disabled="busy" @click="openProvider()">
+          {{ copy("gm.add") }}
+        </button>
+      </div>
     </div>
     <AppError :failure="admin.state.value.failure" />
     <section class="generic-provider-list" :aria-label="copy('gm.title')">
@@ -314,6 +448,7 @@ onBeforeUnmount(() => {
           </div>
           <button
             class="btn small"
+            data-provider-edit
             :disabled="busy"
             @click="openProvider(provider)"
           >
@@ -386,9 +521,18 @@ onBeforeUnmount(() => {
       id="admin-model"
       :open="modelOpen"
       :title="copy(providerId ? 'gm.edit' : 'gm.add')"
+      :return-focus="modelReturnFocus"
       @close="closeModel"
     >
       <AppError :failure="failure" />
+      <div
+        v-if="customFormError && customParameterCopyKey(customFormError)"
+        class="notice error custom-json-error"
+        role="alert"
+      >
+        <strong>{{ copy("cr306.error.title") }}</strong>
+        <p>{{ copy(customParameterCopyKey(customFormError)!) }}</p>
+      </div>
       <p v-if="failure?.code === 'model_conflict'" class="notice warn">
         {{ copy("gm.batch.existing") }}
       </p>
@@ -502,7 +646,10 @@ onBeforeUnmount(() => {
               <div class="model-item-heading">
                 <h4>{{ copy("gm.models.section") }} {{ index + 1 }}</h4>
                 <button
-                  v-if="!entry.modelId && (providerId || entries.length > 1)"
+                  v-if="
+                    (!entry.modelId || entry.remoteDeleted) &&
+                    (providerId || entries.length > 1)
+                  "
                   type="button"
                   class="btn quiet small"
                   @click="removeEntry(entry.key)"
@@ -568,6 +715,65 @@ onBeforeUnmount(() => {
                     >
                     <p class="field-help">{{ copy("gm.structured.help") }}</p>
                   </div>
+                  <div class="model-field custom-json-field">
+                    <div class="field-label-row">
+                      <label :for="`custom-parameters-${entry.key}`">{{
+                        copy("cr306.custom.label")
+                      }}</label>
+                      <span class="field-counter">{{ customSize(entry) }}</span>
+                    </div>
+                    <textarea
+                      :id="`custom-parameters-${entry.key}`"
+                      v-model="entry.customParametersText"
+                      class="custom-parameters"
+                      spellcheck="false"
+                      :aria-invalid="customErrorCode(entry) ? 'true' : 'false'"
+                      :aria-describedby="`${customErrorCode(entry) ? `custom-parameters-error-${entry.key} ` : ''}custom-parameters-help-${entry.key}`"
+                      @input="onCustomInput(entry)"
+                    />
+                    <div
+                      v-if="
+                        customErrorCode(entry) &&
+                        customParameterCopyKey(customErrorCode(entry)!)
+                      "
+                      class="notice error custom-json-error"
+                      role="alert"
+                    >
+                      <strong>{{ copy("cr306.error.title") }}</strong>
+                      <p :id="`custom-parameters-error-${entry.key}`">
+                        {{
+                          copy(customParameterCopyKey(customErrorCode(entry)!)!)
+                        }}
+                      </p>
+                    </div>
+                    <p
+                      :id="`custom-parameters-help-${entry.key}`"
+                      class="field-help"
+                    >
+                      {{ copy("cr306.custom.help") }}
+                    </p>
+                    <div class="custom-json-guide">
+                      <p>
+                        <strong>{{ copy("cr306.custom.example") }}</strong>
+                        <code>{"reasoning":{"enabled":false}}</code>
+                      </p>
+                      <p>{{ copy("cr306.custom.empty") }}</p>
+                      <details class="custom-json-rules">
+                        <summary>
+                          {{ copy("cr306.custom.rules.toggle") }}
+                        </summary>
+                        <p>{{ copy("cr306.custom.protected") }}</p>
+                        <p>{{ copy("cr306.custom.rules") }}</p>
+                      </details>
+                    </div>
+                    <p
+                      v-if="entry.customConflict || entry.remoteDeleted"
+                      class="notice warn"
+                      role="status"
+                    >
+                      {{ copy("cr306.conflict.body") }}
+                    </p>
+                  </div>
                   <label class="field"
                     ><span>{{ copy("gm.description") }}</span
                     ><input
@@ -617,6 +823,7 @@ onBeforeUnmount(() => {
             <p v-if="entries.length >= 1000" class="field-help">
               {{ copy("gm.model.limit") }}
             </p>
+            <p class="field-help">{{ copy("cr306.save.no-call") }}</p>
             <p class="field-help">{{ copy("gm.test.note") }}</p>
           </section>
         </fieldset>
@@ -630,7 +837,11 @@ onBeforeUnmount(() => {
           type="submit"
           form="model-form"
           :disabled="
-            busy || unknownCreate || conflicted || duplicateIds.size > 0
+            busy ||
+            unknownCreate ||
+            conflicted ||
+            unresolvedEntryConflicts ||
+            duplicateIds.size > 0
           "
         >
           {{ copy(providerId ? "gm.save" : "gm.models.save") }}
@@ -642,7 +853,8 @@ onBeforeUnmount(() => {
       :open="discardOpen"
       :title="copy('gm.unsaved')"
       @close="discardOpen = false"
-      ><template #footer
+      ><p>{{ copy("cr306.discard.body") }}</p>
+      <template #footer
         ><button class="btn" @click="discardOpen = false">
           {{ copy("gm.keep") }}</button
         ><button class="btn danger" @click="discardModel">

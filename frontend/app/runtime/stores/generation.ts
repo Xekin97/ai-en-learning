@@ -15,6 +15,10 @@ import {
   type Scenario,
 } from "@application/shared/models";
 import { reduceGeneration } from "@application/generation/reducer";
+import {
+  authoritativeDraftState,
+  freezeDraftState,
+} from "@application/generation/draft-reducer";
 import { retainAvailableSelection } from "@application/generation/selection";
 
 interface GenerationWorkspaceState {
@@ -32,6 +36,7 @@ interface GenerationWorkspaceState {
   scenario: Scenario | null;
   length: PassageLength | null;
   generation: GenerationStateModel;
+  retryAt: number | null;
 }
 
 interface GenerationRequest {
@@ -39,8 +44,11 @@ interface GenerationRequest {
   epoch: number;
   cancelRequested: boolean;
   cancellation: Promise<void> | null;
-  frame: number | null;
-  buffer: string;
+  previous: GenerationStateModel;
+  reconciliation: number;
+  reconciliationController: AbortController | null;
+  reconciliationDeadline: number | null;
+  postDispatched: boolean;
 }
 
 interface WorkspaceRuntime {
@@ -49,6 +57,7 @@ interface WorkspaceRuntime {
   searchSequence: number;
   optionsSequence: number;
   generation: GenerationRequest | null;
+  cooldownTimer: ReturnType<typeof setTimeout> | null;
 }
 
 // Controllers belong to a Nuxt app, never to a process-wide user singleton.
@@ -65,6 +74,7 @@ export function useGenerationStore() {
       searchSequence: 0,
       optionsSequence: 0,
       generation: null,
+      cooldownTimer: null,
     };
     workspaces.set(app, existing);
   }
@@ -88,8 +98,10 @@ export function useGenerationStore() {
       scenario: null,
       length: null,
       generation: initialGenerationState(),
+      retryAt: null,
     }),
   );
+  const exposedState = readonly(state);
 
   runtime.vocabularySearch ??= createVocabularySearch(
     (q, signal) => api.searchVocabulary(q, signal),
@@ -121,6 +133,7 @@ export function useGenerationStore() {
         scenario: null,
         length: null,
         generation: initialGenerationState(),
+        retryAt: null,
       };
     },
   );
@@ -129,7 +142,9 @@ export function useGenerationStore() {
     const previous = runtime.generation;
     runtime.generation = null;
     previous?.controller.abort();
-    if (previous?.frame != null) cancelAnimationFrame(previous.frame);
+    previous?.reconciliationController?.abort();
+    if (runtime.cooldownTimer) clearTimeout(runtime.cooldownTimer);
+    runtime.cooldownTimer = null;
     runtime.vocabularyController?.abort();
     runtime.vocabularyController = null;
     runtime.searchSequence++;
@@ -190,7 +205,7 @@ export function useGenerationStore() {
   function addEntry(entry: string, fromRandom = false): void {
     const max = state.value.options?.maxEntries ?? 0;
     if (
-      ["streaming", "valid"].includes(state.value.generation.phase) ||
+      ["streaming", "pending"].includes(state.value.generation.phase) ||
       (!fromRandom &&
         (state.value.searchStatus !== "ready" ||
           !state.value.candidates.includes(entry))) ||
@@ -235,25 +250,206 @@ export function useGenerationStore() {
     };
   }
 
-  function flushDeltas(request: GenerationRequest) {
-    if (request.frame !== null) cancelAnimationFrame(request.frame);
-    request.frame = null;
-    if (
-      owns(request) &&
-      request.buffer &&
-      state.value.generation.phase === "streaming"
-    )
-      state.value.generation = reduceGeneration(state.value.generation, {
-        kind: "delta",
-        text: request.buffer,
-      });
-    request.buffer = "";
+  const wait = (milliseconds: number, signal: AbortSignal) =>
+    new Promise<void>((resolve) => {
+      const timer = setTimeout(resolve, milliseconds);
+      signal.addEventListener(
+        "abort",
+        () => {
+          clearTimeout(timer);
+          resolve();
+        },
+        { once: true },
+      );
+    });
+
+  function applyBusyCooldown(seconds: number): void {
+    const retryAt = Date.now() + seconds * 1_000;
+    state.value.retryAt = retryAt;
+    if (runtime.cooldownTimer) clearTimeout(runtime.cooldownTimer);
+    runtime.cooldownTimer = setTimeout(
+      () => {
+        runtime.cooldownTimer = null;
+        if (state.value.retryAt === retryAt) state.value.retryAt = null;
+      },
+      Math.max(0, retryAt - Date.now()),
+    );
+  }
+
+  async function reconcile(
+    request: GenerationRequest,
+    automatic = true,
+  ): Promise<void> {
+    const runId = state.value.generation.runId;
+    if (!runId || !owns(request)) return;
+    request.reconciliationDeadline ??= Date.now() + 10_000;
+    const deadline = request.reconciliationDeadline;
+    do {
+      const remaining = deadline - Date.now();
+      if (remaining <= 0) return;
+      const reconciliation = ++request.reconciliation;
+      const controller = new AbortController();
+      request.reconciliationController?.abort();
+      request.reconciliationController = controller;
+      const deadlineTimer = setTimeout(() => controller.abort(), remaining);
+      try {
+        const status = await api.getGenerationStatus(runId, controller.signal);
+        if (!owns(request) || reconciliation !== request.reconciliation) return;
+        if (
+          state.value.generation.acceptedSnapshot &&
+          JSON.stringify(status.snapshot) !==
+            JSON.stringify(state.value.generation.acceptedSnapshot)
+        ) {
+          state.value.generation = {
+            ...state.value.generation,
+            phase: "pending",
+            activity: null,
+            draft: freezeDraftState(state.value.generation.draft),
+            canSave: false,
+            failure: {
+              kind: "contract_violation",
+              code: "contract_violation",
+              status: null,
+              requestId: null,
+              fields: {},
+              retryable: true,
+            },
+          };
+          return;
+        }
+        if (status.status === "active") {
+          state.value.generation = {
+            ...state.value.generation,
+            phase: "pending",
+            activity: null,
+            draft: freezeDraftState(state.value.generation.draft),
+            canSave: false,
+          };
+        } else if (status.status === "valid") {
+          const requestedEntries = state.value.generation.requestedEntries;
+          if (
+            status.result &&
+            requestedEntries.length > 0 &&
+            JSON.stringify(
+              status.result.targets.map((target) => target.entry),
+            ) !== JSON.stringify(requestedEntries)
+          ) {
+            state.value.generation = {
+              ...state.value.generation,
+              phase: "pending",
+              activity: null,
+              draft: freezeDraftState(state.value.generation.draft),
+              canSave: false,
+              failure: {
+                kind: "contract_violation",
+                code: "contract_violation",
+                status: null,
+                requestId: null,
+                fields: {},
+                retryable: true,
+              },
+            };
+            return;
+          }
+          state.value.generation = status.result
+            ? {
+                ...state.value.generation,
+                phase: "valid",
+                requestPhase: null,
+                acceptedContentService: status.snapshot.contentService,
+                acceptedSnapshot: status.snapshot,
+                streamedText: status.result.passage,
+                activity: null,
+                draft: authoritativeDraftState(
+                  state.value.generation.draft,
+                  status.result.passage,
+                ),
+                planId: null,
+                planMeaningLanguage: null,
+                planItems: [],
+                draftId: null,
+                retiredDraftIds: [],
+                revision: 0,
+                codePointLength: Array.from(status.result.passage).length,
+                contentVersion: null,
+                result: status.result,
+                finalContentVersion: status.finalContentVersion,
+                contentOutcome: status.contentOutcome,
+                completionNotice: status.completionNotice,
+                resultUnavailable: false,
+                canSave: status.canSave,
+                failure: null,
+              }
+            : {
+                ...state.value.generation,
+                phase: "valid",
+                requestPhase: null,
+                activity: null,
+                draft: freezeDraftState(state.value.generation.draft),
+                acceptedContentService: status.snapshot.contentService,
+                acceptedSnapshot: status.snapshot,
+                result: null,
+                finalContentVersion: status.finalContentVersion,
+                contentOutcome: status.contentOutcome,
+                completionNotice: status.completionNotice,
+                resultUnavailable: true,
+                canSave: false,
+                failure: null,
+              };
+          return;
+        } else {
+          state.value.generation = {
+            ...initialGenerationState(),
+            phase: status.status,
+            runId,
+          };
+          return;
+        }
+      } catch (error) {
+        if (!owns(request)) return;
+        if (controller.signal.aborted && Date.now() >= deadline) return;
+        const failure = normalizeFailure(error);
+        if (failure.status === 404 || failure.status === 410) {
+          state.value.generation = {
+            ...state.value.generation,
+            phase: "pending",
+            activity: null,
+            draft: freezeDraftState(state.value.generation.draft),
+            canSave: false,
+            failure,
+          };
+          return;
+        }
+        state.value.generation = {
+          ...state.value.generation,
+          phase: "pending",
+          activity: null,
+          draft: freezeDraftState(state.value.generation.draft),
+          canSave: false,
+          failure,
+        };
+      } finally {
+        clearTimeout(deadlineTimer);
+        if (request.reconciliationController === controller)
+          request.reconciliationController = null;
+      }
+      if (!automatic || Date.now() + 2_000 >= deadline) return;
+      const sleepController = new AbortController();
+      request.reconciliationController = sleepController;
+      await wait(2_000, sleepController.signal);
+      if (request.reconciliationController === sleepController)
+        request.reconciliationController = null;
+    } while (owns(request));
   }
   async function generate(
-    preset?: Extract<GenerationRequestModel, { kind: "preset" }>,
+    requestModel?: GenerationRequestModel,
   ): Promise<boolean> {
-    const inputModel = preset ?? input();
-    if (!inputModel || state.value.generation.phase === "streaming")
+    const inputModel = requestModel ?? input();
+    if (
+      !inputModel ||
+      ["streaming", "pending"].includes(state.value.generation.phase) ||
+      (state.value.retryAt !== null && state.value.retryAt > Date.now())
+    )
       return false;
     analytics.action("start_generation");
     const request: GenerationRequest = {
@@ -261,35 +457,38 @@ export function useGenerationStore() {
       epoch: session.epoch.value,
       cancelRequested: false,
       cancellation: null,
-      frame: null,
-      buffer: "",
+      previous: state.value.generation,
+      reconciliation: 0,
+      reconciliationController: null,
+      reconciliationDeadline: null,
+      postDispatched: false,
     };
     runtime.generation?.controller.abort();
     runtime.generation = request;
     state.value.generation = {
       ...initialGenerationState(),
       phase: "streaming",
+      requestedEntries: "kind" in inputModel ? [] : [...inputModel.entries],
+      requestedMeaningLanguage:
+        "kind" in inputModel ? null : inputModel.meaningLanguage,
     };
     try {
       await session.refreshSecurityContext();
       if (!owns(request)) return false;
+      request.postDispatched = true;
       await api.streamGeneration(
         inputModel,
         (event) => {
           if (!owns(request) || request.controller.signal.aborted) return;
-          if (event.kind === "delta") {
-            request.buffer += event.text;
-            if (request.frame === null)
-              request.frame = requestAnimationFrame(() => flushDeltas(request));
-            return;
-          }
-          flushDeltas(request);
           state.value.generation = reduceGeneration(
             state.value.generation,
             event,
           );
           if (event.kind === "started" && request.cancelRequested)
             void sendCancellation(request);
+          if (state.value.generation.phase === "pending") {
+            request.controller.abort();
+          }
         },
         request.controller.signal,
       );
@@ -297,27 +496,61 @@ export function useGenerationStore() {
       if (state.value.generation.phase === "streaming") {
         state.value.generation = {
           ...state.value.generation,
-          phase: "failed",
-          result: null,
+          phase: "pending",
+          activity: null,
+          draft: freezeDraftState(state.value.generation.draft),
+          canSave: false,
           failure: normalizeFailure(
             new Error("Stream ended before terminal event"),
           ),
         };
+        await reconcile(request);
+      } else if (state.value.generation.phase === "pending") {
+        await reconcile(request);
       }
     } catch (error) {
       if (!owns(request)) return false;
-      flushDeltas(request);
+      if (state.value.generation.phase === "pending") {
+        await reconcile(request);
+        return (
+          (state.value.generation as GenerationStateModel).phase === "valid"
+        );
+      }
       // A committed terminal event cannot be replaced by a late transport error.
       if (state.value.generation.phase === "streaming") {
-        state.value.generation = {
-          ...state.value.generation,
-          phase: "failed",
-          result: null,
-          failure: normalizeFailure(error),
-        };
+        const failure = normalizeFailure(error);
+        if (failure.code === "generation_busy" && failure.accepted === false) {
+          applyBusyCooldown(failure.retryAfterSeconds ?? 1);
+          state.value.generation = { ...request.previous, failure };
+        } else if (state.value.generation.runId) {
+          state.value.generation = {
+            ...state.value.generation,
+            phase: "pending",
+            activity: null,
+            draft: freezeDraftState(state.value.generation.draft),
+            canSave: false,
+            failure,
+          };
+          await reconcile(request);
+        } else if (request.postDispatched) {
+          state.value.generation = {
+            ...state.value.generation,
+            phase: "pending",
+            activity: null,
+            draft: freezeDraftState(state.value.generation.draft),
+            result: null,
+            canSave: false,
+            failure,
+          };
+        } else {
+          state.value.generation = {
+            ...initialGenerationState(),
+            phase: "failed",
+            failure,
+          };
+        }
       }
     } finally {
-      if (request.frame !== null) cancelAnimationFrame(request.frame);
       if (owns(request)) runtime.generation = null;
     }
     return state.value.generation.phase === "valid";
@@ -334,14 +567,24 @@ export function useGenerationStore() {
         if (!owns(request) || state.value.generation.phase !== "streaming")
           return;
         if (outcome === "cancelled") {
-          state.value.generation = reduceGeneration(state.value.generation, {
-            kind: "cancelled",
-            quotaRefunded: false,
-          });
+          state.value.generation = {
+            ...initialGenerationState(),
+            phase: "cancelled",
+            runId,
+          };
           request.controller.abort();
         }
-        // valid/failed won in the database: keep reading the actual terminal
-        // payload. An acknowledgement alone is not a saveable result.
+        if (outcome === "valid" || outcome === "failed") {
+          request.controller.abort();
+          state.value.generation = {
+            ...state.value.generation,
+            phase: "pending",
+            activity: null,
+            draft: freezeDraftState(state.value.generation.draft),
+            canSave: false,
+          };
+          await reconcile(request);
+        }
       } catch (error) {
         if (owns(request) && state.value.generation.phase === "streaming")
           state.value.generation = {
@@ -370,6 +613,36 @@ export function useGenerationStore() {
     await sendCancellation(request);
   }
 
+  async function recheck(): Promise<void> {
+    if (
+      !(
+        state.value.generation.phase === "pending" ||
+        (state.value.generation.phase === "valid" &&
+          state.value.generation.resultUnavailable)
+      ) ||
+      !state.value.generation.runId ||
+      runtime.generation
+    )
+      return;
+    const request: GenerationRequest = {
+      controller: new AbortController(),
+      epoch: session.epoch.value,
+      cancelRequested: false,
+      cancellation: null,
+      previous: state.value.generation,
+      reconciliation: 0,
+      reconciliationController: null,
+      reconciliationDeadline: null,
+      postDispatched: false,
+    };
+    runtime.generation = request;
+    try {
+      await reconcile(request, false);
+    } finally {
+      if (owns(request)) runtime.generation = null;
+    }
+  }
+
   function abortPassive(): void {
     if (state.value.generation.phase !== "streaming") return;
     invalidateRequests();
@@ -384,7 +657,7 @@ export function useGenerationStore() {
     const isCurrent = () =>
       state.value.generation === generation && session.epoch.value === epoch;
     const runId = generation.runId;
-    if (generation.phase !== "valid" || !runId)
+    if (generation.phase !== "valid" || !generation.canSave || !runId)
       throw new Error("No validated generation is ready");
     await session.refreshSecurityContext();
     if (!isCurrent()) throw new Error("Generation is no longer current");
@@ -399,7 +672,7 @@ export function useGenerationStore() {
     return { kind: "claim", expiresAt: lease.expiresAt };
   }
 
-  async function discard(): Promise<void> {
+  async function discard() {
     const generation = state.value.generation;
     const epoch = session.epoch.value;
     const isCurrent = () =>
@@ -407,11 +680,18 @@ export function useGenerationStore() {
     const runId = generation.runId;
     if (runId && generation.phase === "valid") {
       await session.refreshSecurityContext();
-      if (!isCurrent()) return;
+      if (!isCurrent()) return null;
       await api.discardGeneration(runId);
+      if (!isCurrent()) return null;
+      state.value.generation = initialGenerationState();
+      return {
+        runId,
+        clearedGeneration: exposedState.value.generation,
+      };
     }
-    if (!isCurrent()) return;
+    if (!isCurrent()) return null;
     state.value.generation = initialGenerationState();
+    return null;
   }
 
   function startNewTask(): void {
@@ -463,13 +743,14 @@ export function useGenerationStore() {
   }
 
   return {
-    state: readonly(state),
+    state: exposedState,
     canSubmit: computed(
       () =>
         input() !== null &&
         state.value.optionsStatus === "ready" &&
         state.value.options?.availability.canGenerate === true &&
-        state.value.generation.phase !== "streaming",
+        !["streaming", "pending"].includes(state.value.generation.phase) &&
+        (state.value.retryAt === null || state.value.retryAt <= Date.now()),
     ),
     selectedModel: computed(() => modelById(state.value.modelId)),
     loadOptions,
@@ -480,6 +761,7 @@ export function useGenerationStore() {
     removeEntry,
     generate,
     cancel,
+    recheck,
     abortPassive,
     save,
     discard,

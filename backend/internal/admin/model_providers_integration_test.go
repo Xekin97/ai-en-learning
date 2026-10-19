@@ -3,6 +3,7 @@
 package admin
 
 import (
+	"encoding/json"
 	"errors"
 	"fmt"
 	"github.com/google/uuid"
@@ -17,7 +18,7 @@ import (
 
 func TestProviderWorkspaceStableIdentityAtomicUpdatesAndFullListing(t *testing.T) {
 	pool, ctx := testdb.Open(t)
-	actor := testdb.Learner(t, ctx, pool)
+	actor := cr313AdminActor(t, ctx, pool)
 	role := func(name string) *pgxpool.Pool {
 		cfg := pool.Config()
 		cfg.ConnConfig.RuntimeParams["role"] = name
@@ -39,7 +40,7 @@ func TestProviderWorkspaceStableIdentityAtomicUpdatesAndFullListing(t *testing.T
 	}
 	in := ModelProviderInput{Connection: ai.ConnectionDraft{Name: "Provider", Protocol: ai.ProtocolChat, BaseURL: "https://provider.example/v1", APIKey: "synthetic-original"}, Expected: revision}
 	for i := 0; i < 25; i++ {
-		in.Models = append(in.Models, ProviderModelInput{NewModelInput: NewModelInput{ProviderModelID: fmt.Sprintf("Vendor/ID-%02d", i), OutputMode: "prompt", Enabled: true}})
+		in.Models = append(in.Models, ProviderModelInput{NewModelInput: NewModelInput{ProviderModelID: fmt.Sprintf("Vendor/ID-%02d", i), OutputMode: "prompt", CustomParameters: json.RawMessage(`{}`), Enabled: true}})
 	}
 	created, revision, err := s.SaveProvider(ctx, actor, uuid.Nil, in)
 	if err != nil {
@@ -57,7 +58,7 @@ func TestProviderWorkspaceStableIdentityAtomicUpdatesAndFullListing(t *testing.T
 	if err = credentials.BindSpec(ctx, &pinned); err != nil {
 		t.Fatal(err)
 	}
-	otherInput := ModelProviderInput{Connection: ai.ConnectionDraft{Name: "Provider", Protocol: ai.ProtocolChat, BaseURL: in.Connection.BaseURL, APIKey: "synthetic-other"}, Expected: revision, Models: []ProviderModelInput{{NewModelInput: NewModelInput{ProviderModelID: first.ProviderModelID, OutputMode: "prompt"}}}}
+	otherInput := ModelProviderInput{Connection: ai.ConnectionDraft{Name: "Provider", Protocol: ai.ProtocolChat, BaseURL: in.Connection.BaseURL, APIKey: "synthetic-other"}, Expected: revision, Models: []ProviderModelInput{{NewModelInput: NewModelInput{ProviderModelID: first.ProviderModelID, OutputMode: "prompt", CustomParameters: json.RawMessage(`{}`)}}}}
 	other, revision, err := s.SaveProvider(ctx, actor, uuid.Nil, otherInput)
 	if err != nil {
 		t.Fatal(err)
@@ -66,7 +67,7 @@ func TestProviderWorkspaceStableIdentityAtomicUpdatesAndFullListing(t *testing.T
 		v := ModelProviderInput{Connection: ai.ConnectionDraft{Name: p.Connection.Name, Protocol: p.Connection.Protocol, BaseURL: p.Connection.BaseURL}, Expected: r}
 		for _, m := range p.Models {
 			uid := m.ID
-			v.Models = append(v.Models, ProviderModelInput{ID: &uid, NewModelInput: NewModelInput{DisplayName: m.DisplayName, ProviderModelID: m.ProviderModelID, Description: m.Description, OutputMode: m.OutputMode, MaxOutputTokens: m.MaxOutputTokens, Enabled: m.Enabled}})
+			v.Models = append(v.Models, ProviderModelInput{ID: &uid, NewModelInput: NewModelInput{DisplayName: m.DisplayName, ProviderModelID: m.ProviderModelID, Description: m.Description, OutputMode: m.OutputMode, MaxOutputTokens: m.MaxOutputTokens, CustomParameters: m.CustomParameters, Enabled: m.Enabled}})
 		}
 		return v
 	}
@@ -76,7 +77,7 @@ func TestProviderWorkspaceStableIdentityAtomicUpdatesAndFullListing(t *testing.T
 	in.Models[0].DisplayName = "Renamed"
 	in.Models[0].ProviderModelID = second.ProviderModelID
 	in.Models[1].ProviderModelID = first.ProviderModelID
-	in.Models = append(in.Models, ProviderModelInput{NewModelInput: NewModelInput{ProviderModelID: "Vendor/New", OutputMode: "json_schema"}})
+	in.Models = append(in.Models, ProviderModelInput{NewModelInput: NewModelInput{ProviderModelID: "Vendor/New", OutputMode: "json_schema", CustomParameters: json.RawMessage(`{}`)}})
 	saved, next, err := s.SaveProvider(ctx, actor, providerID, in)
 	if err != nil {
 		t.Fatal(err)
@@ -164,6 +165,15 @@ func TestProviderWorkspaceStableIdentityAtomicUpdatesAndFullListing(t *testing.T
 		return raw
 	}
 	before := snapshot()
+	in = makeInput(saved, revision)
+	in.Models[3].CustomParameters = json.RawMessage(`{"authorization":"forbidden"}`)
+	var customError *ai.CustomParameterError
+	if _, _, err = s.SaveProvider(ctx, actor, providerID, in); !errors.As(err, &customError) || customError.Pointer != "/models/3/custom_parameters/authorization" {
+		t.Fatalf("aggregate accepted protected custom parameters: %v", err)
+	}
+	if snapshot() != before {
+		t.Fatal("invalid custom parameters partially changed aggregate")
+	}
 	if _, err = pool.Exec(ctx, `CREATE FUNCTION wordweave.reject_test_model() RETURNS trigger LANGUAGE plpgsql AS $$ BEGIN IF NEW.provider_model_id='Reject/This' THEN RAISE EXCEPTION 'controlled failure'; END IF; RETURN NEW; END $$; CREATE TRIGGER reject_test_model BEFORE INSERT ON wordweave.ai_models FOR EACH ROW EXECUTE FUNCTION wordweave.reject_test_model()`); err != nil {
 		t.Fatal(err)
 	}
@@ -171,7 +181,7 @@ func TestProviderWorkspaceStableIdentityAtomicUpdatesAndFullListing(t *testing.T
 	in.Connection.Name = "Must roll back"
 	in.Connection.APIKey = "synthetic-rollback"
 	in.Models[0].DisplayName = "Must roll back"
-	in.Models = append(in.Models, ProviderModelInput{NewModelInput: NewModelInput{ProviderModelID: "Reject/This", OutputMode: "prompt"}})
+	in.Models = append(in.Models, ProviderModelInput{NewModelInput: NewModelInput{ProviderModelID: "Reject/This", OutputMode: "prompt", CustomParameters: json.RawMessage(`{}`)}})
 	if _, _, err = s.SaveProvider(ctx, actor, providerID, in); err == nil {
 		t.Fatal("injected database error missing")
 	}

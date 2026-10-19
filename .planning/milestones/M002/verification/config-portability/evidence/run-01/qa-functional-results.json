@@ -1,0 +1,136 @@
+{
+  "version": "M002-QA-CR313-01",
+  "started_at": "2026-10-16T03:13:44.820Z",
+  "environment": {
+    "frontend_origin": "http://127.0.0.1:43230",
+    "browser": "chromium",
+    "database": "isolated disposable synthetic fixture",
+    "secrets_persisted": false
+  },
+  "cases": [
+    {
+      "id": "QA313-01-auth",
+      "status": "PASS",
+      "duration_ms": 859,
+      "facts": {
+        "anonymous_status": 401,
+        "learner_status": 403,
+        "missing_csrf_status": 403
+      }
+    },
+    {
+      "id": "QA313-01-export-scope",
+      "status": "PASS",
+      "duration_ms": 23,
+      "facts": {
+        "categories": [
+          "models",
+          "plans",
+          "items",
+          "growth"
+        ],
+        "models_connections": 2,
+        "plans": 4,
+        "items": 4,
+        "growth_levels": 2,
+        "package_hashes": {
+          "models": "eda9f122838274c5d5e4cb3694b2c582b4e8c370bdb7d9c3de3822edb53ac860",
+          "plans": "a3b0f030b9beb5a424b3e42b272c382e54819b980293452b9700a5d44b3e82e9",
+          "items": "12d1de8ed848c0940d2eddd000b94875784b185585b3716d4fd0a9e88bef25ad",
+          "growth": "a59cb21bc1523adec69651cf648549009bd22f339d21b3d369bb59f64479aa6e"
+        }
+      }
+    },
+    {
+      "id": "QA313-02-credentials",
+      "status": "PASS",
+      "duration_ms": 205,
+      "facts": {
+        "encrypted_hash": "b181bdb1bd20908892e6fbaca8fccb79f729d0afb4212ff4cf745a4d69d65e3b",
+        "connection_count": 2,
+        "wrong_password": {
+          "status": 422,
+          "code": "decryption_failed"
+        },
+        "tamper": {
+          "status": 422,
+          "code": "decryption_failed"
+        },
+        "ordinary_package": {
+          "status": 422,
+          "code": "credentials_required"
+        }
+      }
+    },
+    {
+      "id": "QA313-03-plans",
+      "status": "PASS",
+      "duration_ms": 115,
+      "facts": {
+        "preview_revision_unchanged": true,
+        "applied_revision_changed": true,
+        "repeated_operation_same_result_revision": true,
+        "stale_reason": "revision_changed",
+        "invalid_recovery_token": {
+          "status": 403,
+          "code": "recovery_token_invalid"
+        },
+        "representative_values": {
+          "explicit_zero": true,
+          "explicit_false": true,
+          "explicit_empty_arrays": true,
+          "explicit_unlimited_null_present": true
+        },
+        "missing_plan": {
+          "status": 422,
+          "code": "validation_failed"
+        },
+        "missing_required": {
+          "status": 422,
+          "code": "validation_failed"
+        }
+      }
+    },
+    {
+      "id": "QA313-04-history-blockers",
+      "status": "PASS",
+      "duration_ms": 27,
+      "facts": {
+        "item_blocker": {
+          "can_commit": false,
+          "blocker_codes": [
+            "active_reference",
+            "ever_issued"
+          ],
+          "target_identity_matches_fixture": true
+        },
+        "growth": {
+          "history_preserved": true,
+          "usage_reset": false,
+          "trial_dates_changed": false,
+          "status": "applied",
+          "effective_day": "2026-10-17"
+        }
+      }
+    },
+    {
+      "id": "QA313-07-priority-modal",
+      "status": "PASS",
+      "duration_ms": 1023,
+      "facts": {
+        "top_layer": true,
+        "draft_preserved_after_preview": true,
+        "backdrop_did_not_close": true,
+        "tab_samples_contained": 12,
+        "escape_focus_restored": true
+      }
+    }
+  ],
+  "screenshots": [],
+  "provider_requests": "reported separately by fixture owner",
+  "failure": {
+    "code": "locator.selectOption: Error: strict mode violation: getByLabel('Language') resolved to 3 elements:\n    1) <select value=\"en-US\" tabindex=\"-1\" aria-hidden=\"true\" class=\"ww-select-proxy\">…</select> aka getByLabel('Switch language中文ENEN中文EN')\n    2) <button type=\"button\" role=\"combobox\" aria-expanded=\"false\" aria-required=\"false\" aria-haspopup=\"listbox\" class=\"ww-select-trigger\" aria-label=\"Switch language\" aria-controls=\"v-0-0-0-options\">…</button> aka getByRole('combobox', { name: 'Switch language' })\n    3) <span popover=\"auto\" role=\"listbox\" id=\"v-0-0-0-options\" class=\"ww-select-menu\" aria-label=\"Switch language\">…</span> aka locator('#v-0-0-0-options')\n\nCall log:\n\u001b[2m  - waiting for getByLabel('Language')\u001b[22m\n"
+  },
+  "finished_at": "2026-10-16T03:13:51.911Z",
+  "status": "FAIL"
+}

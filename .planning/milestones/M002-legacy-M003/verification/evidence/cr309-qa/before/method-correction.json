@@ -1,0 +1,9 @@
+{
+  "recorded_at": "2026-10-13T02:21:02.416006+00:00",
+  "scope": "CR-309 before-baseline method correction",
+  "fact": "The intercepted synthetic generation caused no generation/quota/provider/config write, but the first successful browser capture allowed 8 automatic analytics POSTs to reach the local UAT backend. Two earlier incomplete capture attempts may also have emitted analytics and cannot be separated from existing telemetry without a prior count. No database rollback or deletion was performed.",
+  "preserved_attempt": "attempt1-unexpected-analytics.json",
+  "correction": "Block /api/v1/analytics/events in the browser context before navigation; continue to intercept /api/v1/generations/stream in memory.",
+  "formal_verification": false,
+  "state_change_claim": false
+}

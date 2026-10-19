@@ -1,0 +1,25 @@
+{
+  "objective": "独立检查 CR-306 定向回溯修复入口，给出单步 verification → product-planning / product-maya 的门禁结果及后续受依赖约束的角色交接顺序。",
+  "inputs": [
+    ".planning/agt/project.yaml",
+    ".planning/workflow/state.yaml",
+    ".planning/agt/agents.yaml",
+    ".planning/milestones/M003/reviews/evidence/start/locked-profile.yaml",
+    ".planning/milestones/M003/handoffs/verification.md",
+    ".planning/milestones/M003/changes/CR-306.md",
+    ".planning/milestones/M003/verification/model-reasoning-research.md",
+    ".planning/milestones/M003/reviews/requirements-feedback.md#cr-306-修复编排user-m003-cr306-repair"
+  ],
+  "write_scope": [
+    ".planning/milestones/M003/reviews/cr306-repair-gate-066.md"
+  ],
+  "acceptance": [
+    "先读 agt-stage-gate SKILL 及完整共同/控制契约、gatekeeper角色；采用 locked Profile 1.0.0 快照，不自动采纳基座2.0。",
+    "检查用户最新“编排一下修复吧”与已明确的 scope，避免重复要求同一授权。检查当前 required artifacts 存在、原件不被覆盖、CR302保留。",
+    "只写控制检查，不能改产品/技术/设计源码/状态；root 按你的 PASS 建议机械同步状态。",
+    "推荐精确单步目标（decision TRANSITION-M003-066），保留之后后台架构先行、原型和正式设计、用户视觉评审、实现和独立QA的门禁，不宣称本次已完成后续阶段。",
+    "说明存在何种真实关键决策需问用户；例行实现细节不要增加审批。不改路由锁、迁移现有库、发真实模型调用或停止UAT。"
+  ],
+  "risk": "normal",
+  "prior_attempts": []
+}

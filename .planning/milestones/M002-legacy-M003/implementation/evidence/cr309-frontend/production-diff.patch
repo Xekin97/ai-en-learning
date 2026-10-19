@@ -1,0 +1,341 @@
+--- /tmp/wordweave-cr309-before.ktsXhk/frontend/app/presentation/components/GenerationWorkspace.vue	2026-10-12 10:14:35
++++ frontend/app/presentation/components/GenerationWorkspace.vue	2026-10-13 10:33:28
+@@ -17,6 +17,26 @@
+   preset = computed(() => detail.value?.preset);
+ const state = computed(() => workspace.state.value),
+   generation = computed(() => state.value.generation);
++const planVocabulary = computed(() =>
++  generation.value.planItems.flatMap((item) =>
++    item.kind === "word_use"
++      ? [
++          {
++            entry: item.entry,
++            meaning: item.sense,
++            usage: `${item.form} · ${item.phrase}`,
++          },
++        ]
++      : [],
++  ),
++);
++const resultVocabulary = computed(() =>
++  (generation.value.result?.targets ?? []).map((target) => ({
++    entry: target.entry,
++    meaning: target.entryMeaning,
++    usage: target.hintPhrase,
++  })),
++);
+ const busy = computed(() =>
+   ["streaming", "pending", "valid"].includes(generation.value.phase),
+ );
+@@ -338,7 +358,6 @@
+               ['streaming', 'pending'].includes(generation.phase) ||
+               generation.resultUnavailable
+             "
+-            class="article"
+           >
+             <div class="m003-result-heading">
+               <h2>
+@@ -377,23 +396,12 @@
+                   <p>{{ item.text }}</p>
+                 </div>
+               </div>
+-              <div class="m003-plan-uses">
+-                <article
+-                  v-for="item in generation.planItems.filter(
+-                    (value) => value.kind === 'word_use',
+-                  )"
+-                  :key="item.kind === 'word_use' ? item.entry : ''"
+-                  class="m003-plan-use"
+-                >
+-                  <template v-if="item.kind === 'word_use'"
+-                    ><strong lang="en">{{ item.entry }}</strong
+-                    ><span>{{ item.sense }}</span
+-                    ><small lang="en"
+-                      >{{ item.form }} · {{ item.phrase }}</small
+-                    ></template
+-                  >
+-                </article>
+-              </div>
++              <GenerationVocabularyList
++                v-if="planVocabulary.length"
++                :items="planVocabulary"
++                variant="plan"
++                :aria-label="copy('l.resources')"
++              />
+             </section>
+             <section
+               v-if="generation.streamedText"
+@@ -466,20 +474,11 @@
+                 >{{ tag }}</span
+               >
+             </div>
+-            <section class="study-resources">
+-              <h2>{{ copy("l.resources") }}</h2>
+-              <div class="resource-grid">
+-                <article
+-                  v-for="target in generation.result.targets"
+-                  :key="target.entry"
+-                  class="resource-card"
+-                >
+-                  <h3>{{ target.entry }}</h3>
+-                  <p>{{ target.entryMeaning }}</p>
+-                  <p class="muted">{{ target.hintPhrase }}</p>
+-                </article>
+-              </div>
+-            </section>
++            <GenerationVocabularyList
++              :items="resultVocabulary"
++              variant="result"
++              :heading="copy('l.resources')"
++            />
+             <div class="actions">
+               <button class="btn primary" :disabled="saving" @click="save">
+                 {{
+--- /dev/null	2026-10-13 10:42:02
++++ frontend/app/presentation/components/GenerationVocabularyList.vue	2026-10-13 10:33:56
+@@ -0,0 +1,47 @@
++<script setup lang="ts">
++type VocabularyItem = {
++  entry: string;
++  meaning: string;
++  usage: string;
++};
++
++const props = defineProps<{
++  items: readonly VocabularyItem[];
++  variant: "plan" | "result";
++  heading?: string;
++  languageLabel?: string;
++  ariaLabel?: string;
++}>();
++</script>
++
++<template>
++  <section
++    class="preset-meanings m003-vocabulary-panel"
++    :class="
++      props.variant === 'plan' ? 'm003-plan-meanings' : 'm003-result-meanings'
++    "
++    :aria-label="props.ariaLabel || props.heading"
++  >
++    <div
++      v-if="props.heading || props.languageLabel"
++      class="preset-meanings-head section-head"
++    >
++      <h3 v-if="props.heading">
++        <AppIcon name="book-open-text" />{{ props.heading }}
++      </h3>
++      <span v-if="props.languageLabel">{{ props.languageLabel }}</span>
++    </div>
++    <dl class="m003-vocabulary-list">
++      <div
++        v-for="item in props.items"
++        :key="item.entry"
++        :data-plan-kind="props.variant === 'plan' ? 'word_use' : undefined"
++        :data-plan-entry="props.variant === 'plan' ? item.entry : undefined"
++      >
++        <dt lang="en">{{ item.entry }}</dt>
++        <dd>{{ item.meaning }}</dd>
++        <dd class="muted" lang="en">{{ item.usage }}</dd>
++      </div>
++    </dl>
++  </section>
++</template>
+--- /tmp/wordweave-cr309-before.ktsXhk/frontend/app/pages/admin/presets.vue	2026-10-12 10:15:02
++++ frontend/app/pages/admin/presets.vue	2026-10-13 10:33:40
+@@ -176,6 +176,31 @@
+     store.stream.value.presetId === draft.value?.id &&
+     (streaming.value || previewPending.value),
+ );
++const livePlanVocabulary = computed(() =>
++  store.stream.value.planItems.flatMap((item) =>
++    item.kind === "word_use"
++      ? [
++          {
++            entry: item.entry,
++            meaning: item.sense,
++            usage: `${item.form} · ${item.phrase}`,
++          },
++        ]
++      : [],
++  ),
++);
++const lastPreviewVocabulary = computed(() =>
++  (draft.value?.lastPreview?.result.targets ?? []).map((target) => ({
++    entry: target.entry,
++    meaning: target.entryMeaning,
++    usage: target.hintPhrase,
++  })),
++);
++const languageNames: Record<MeaningLanguage, string> = {
++  zh: "中文",
++  en: "English",
++  ja: "日本語",
++};
+ const busy = computed(
+   () => pending.value || store.busy.value || streaming.value,
+ );
+@@ -706,50 +731,65 @@
+             <h2>{{ copy("preview") }}</h2>
+             <span class="pill">{{ copy("sample") }}</span>
+           </div>
+-          <section
+-            v-if="livePreview && store.stream.value.planItems.length"
+-            id="planning-preview"
+-            class="m003-plan-preview"
+-          >
+-            <header>
+-              <h3>{{ copy("m003.plan.title") }}</h3>
+-              <div class="m003-writing" aria-hidden="true"><i /><i /><i /></div>
+-            </header>
+-            <p class="muted">{{ copy("m003.plan.note") }}</p>
+-            <template
+-              v-for="item in store.stream.value.planItems"
+-              :key="item.kind === 'word_use' ? item.entry : 'scene'"
++          <div class="m003-result-body">
++            <section
++              v-if="livePreview && store.stream.value.planItems.length"
++              id="planning-preview"
++              class="m003-plan-preview"
+             >
+-              <p v-if="item.kind === 'scene'">{{ item.text }}</p>
+-              <p v-else>
+-                <strong lang="en">{{ item.entry }}</strong> · {{ item.sense }} ·
+-                <span lang="en">{{ item.form }} · {{ item.phrase }}</span>
++              <header>
++                <h3>{{ copy("m003.plan.title") }}</h3>
++                <div class="m003-writing" aria-hidden="true">
++                  <i /><i /><i />
++                </div>
++              </header>
++              <p class="m003-plan-note muted">{{ copy("m003.plan.note") }}</p>
++              <div
++                v-for="(item, index) in store.stream.value.planItems"
++                :key="index"
++              >
++                <div v-if="item.kind === 'scene'" class="m003-plan-scene">
++                  <small>{{ copy("m003.plan.scene") }}</small>
++                  <p>{{ item.text }}</p>
++                </div>
++              </div>
++              <GenerationVocabularyList
++                v-if="livePlanVocabulary.length"
++                :items="livePlanVocabulary"
++                variant="plan"
++                :aria-label="copy('l.resources')"
++              />
++            </section>
++            <section v-if="livePreview" id="live-draft" class="m003-live-draft">
++              <header>
++                <h3>{{ draft.value.title }}</h3>
++                <div class="m003-writing" aria-hidden="true">
++                  <i /><i /><i />
++                </div>
++              </header>
++              <p class="story-text" lang="en">
++                {{ store.stream.value.text }}
+               </p>
+-            </template>
+-          </section>
+-          <section v-if="livePreview" id="live-draft" class="m003-live-draft">
+-            <header>
++            </section>
++            <template v-else-if="draft.lastPreview">
+               <h3>{{ draft.value.title }}</h3>
+-              <div class="m003-writing" aria-hidden="true"><i /><i /><i /></div>
+-            </header>
+-            <p class="story-text" lang="en">
+-              {{ store.stream.value.text }}
++              <p class="story-text preset-sample-text" lang="en">
++                {{ draft.lastPreview?.result.passage }}
++              </p>
++            </template>
++            <GenerationVocabularyList
++              v-if="draft.lastPreview"
++              :items="lastPreviewVocabulary"
++              variant="result"
++              :heading="copy('preset.meanings')"
++              :language-label="
++                languageNames[draft.lastPreview.configuration.meaningLanguage]
++              "
++            />
++            <p v-if="previewStale" class="notice warn">
++              {{ copy("preview.required") }}
+             </p>
+-          </section>
+-          <template v-else-if="draft.lastPreview">
+-            <h3>{{ draft.value.title }}</h3>
+-            <p class="story-text preset-sample-text" lang="en">
+-              {{ draft.lastPreview?.result.passage }}
+-            </p>
+-          </template>
+-          <PresetWordMeanings
+-            v-if="draft.lastPreview"
+-            :targets="draft.lastPreview.result.targets"
+-            :meaning-language="draft.lastPreview.configuration.meaningLanguage"
+-          />
+-          <p v-if="previewStale" class="notice warn">
+-            {{ copy("preview.required") }}
+-          </p>
++          </div>
+         </section>
+         <PresetWordMeanings
+           v-if="!draft.lastPreview"
+--- /tmp/wordweave-cr309-before.ktsXhk/frontend/app/assets/css/theme.css	2026-10-12 14:49:40
++++ frontend/app/assets/css/theme.css	2026-10-13 10:33:43
+@@ -6508,4 +6508,55 @@
+     margin-left: 0;
+     text-align: left;
+   }
++}
++
++/* UI11 / CR-309: one vocabulary and reading surface across Plan and Result. */
++.m003-vocabulary-panel {
++  min-width: 0;
++}
++.m003-vocabulary-panel .m003-vocabulary-list {
++  display: grid;
++  grid-template-columns: repeat(2, minmax(0, 1fr));
++  gap: 0 24px;
++  margin: 0;
+ }
++.m003-vocabulary-panel .m003-vocabulary-list > div {
++  min-width: 0;
++  padding: 10px 0;
++  border-top: 1px solid var(--line);
++}
++.m003-vocabulary-panel .m003-vocabulary-list dt {
++  color: var(--green-dark);
++  font: 600 17px/1.4 var(--reading);
++  overflow-wrap: anywhere;
++}
++.m003-vocabulary-panel .m003-vocabulary-list dd {
++  margin: 4px 0 0;
++  color: var(--muted);
++  font-size: 13px;
++  line-height: 1.65;
++  overflow-wrap: anywhere;
++}
++.m003-plan-meanings {
++  margin-top: 14px;
++}
++.m003-live-draft .story-text,
++.m003-final-result .story-text,
++.m003-preview-paper .story-text {
++  width: 100%;
++  max-width: none;
++  margin: 18px 0 14px;
++  white-space: pre-wrap;
++  overflow-wrap: anywhere;
++  line-height: 1.85;
++}
++@media (max-width: 760px) {
++  .m003-vocabulary-panel .m003-vocabulary-list {
++    grid-template-columns: 1fr;
++  }
++  .m003-live-draft .story-text,
++  .m003-final-result .story-text,
++  .m003-preview-paper .story-text {
++    line-height: 1.78;
++  }
++}

@@ -1,0 +1,69 @@
+{
+  "version": "M002-QA-PRON-01-R1",
+  "run_label": "uat-local-20261016",
+  "status": "READY_FOR_USER_UAT",
+  "user_uat_accepted": false,
+  "left_running": true,
+  "environment": {
+    "public_frontend": "http://localhost:3016",
+    "frontend_internal": "http://127.0.0.1:3017",
+    "backend": "http://127.0.0.1:43331",
+    "postgres": "127.0.0.1:63562/wordweave_cr313_uat",
+    "mocks": false,
+    "database": "existing isolated persistent local UAT"
+  },
+  "processes_at_handoff": {
+    "public_proxy_pid": 20933,
+    "frontend_server_pid": 20828,
+    "backend_pid": 24845,
+    "postgres_pid": 24625,
+    "backend_pid_unchanged_during_switch": true,
+    "postgres_pid_unchanged_during_switch": true
+  },
+  "source_and_build": {
+    "implementation_version": "M002-FI-PRON-01-R1",
+    "product_source_files_checked": 23,
+    "validation_files_checked": 1,
+    "source_mismatches": 0,
+    "build_output_file_count": 462,
+    "build_aggregate_sha256": "a6437e56fe8a60781a7ec9b9ccbdc86272ae73a8cc734a8dc4ca4cd32066071a",
+    "installed_aggregate_match": true,
+    "actual_model": "unknown",
+    "manifest": "source-manifest.json"
+  },
+  "browser_readiness": {
+    "real_browser": "headed Google Chrome",
+    "normal_learner_login": "PASS",
+    "real_saved_article_controls": 5,
+    "real_library_assertions": "35/35 PASS",
+    "r1_controlled_plan_result": "18/18 PASS",
+    "post_switch_smoke": "6/6 PASS",
+    "native_start_end": "PASS",
+    "no_autoplay": "PASS",
+    "a_to_b_replay_route_cancel": "PASS",
+    "playback_business_writes": 0,
+    "defect_pron_001": "FIXED_RETEST_PASS"
+  },
+  "switch": {
+    "frontend_only": true,
+    "old_output_backup": "/private/tmp/wordweave-m002-cr313-uat-20261016/frontend-output.pre-pronunciation-20261016T190516",
+    "candidate_ports_released": [3018, 3019],
+    "backend_changed": false,
+    "postgres_changed": false,
+    "model_configuration_changed_by_qa": false,
+    "provider_calls_by_pronunciation_qa": 0
+  },
+  "evidence": {
+    "report": "../report.md",
+    "matrix": "../acceptance-matrix.md",
+    "r1_reception": "../evidence/run-145/r1-reception.json",
+    "r1_controlled_plan_result": "../evidence/run-145/controlled-plan-result-r1.json",
+    "switch_receipt": "../evidence/run-145/switch-receipt.json",
+    "post_switch_smoke": "../evidence/run-145/live-3016-smoke.json"
+  },
+  "pending_user_uat": [
+    "human audibility and correct perceived word",
+    "real phone browser behavior",
+    "real /create generation plan-to-result flow"
+  ]
+}

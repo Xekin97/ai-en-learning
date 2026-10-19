@@ -1,0 +1,74 @@
+{
+  "result": "PASS",
+  "configured_at": "2026-10-12T03:10:23.477781+00:00",
+  "source": "Existing local Docker OpenRouter configuration; source database read-only",
+  "base_url": "https://openrouter.ai/api/v1",
+  "real_models": [
+    {
+      "id": "01a12e17-05b0-785e-8222-98f0e0dd152b",
+      "display_name": "DeepSeek V4 Flash 0731",
+      "provider_model_id": "deepseek/deepseek-v4-flash-0731",
+      "output_mode": "prompt",
+      "enabled": true
+    },
+    {
+      "id": "01a12e17-05b4-71f2-9f1e-ef73d8a49ef4",
+      "display_name": "GLM",
+      "provider_model_id": "z-ai/glm-5.3-flash",
+      "output_mode": "prompt",
+      "enabled": true
+    }
+  ],
+  "checks": [
+    {
+      "role": "VISITOR",
+      "real_models_selectable": true,
+      "can_generate": true,
+      "content_service": {
+        "native_validation": true,
+        "content_review_enabled": false,
+        "content_repair_limit": 0
+      }
+    },
+    {
+      "role": "BASIC",
+      "real_models_selectable": true,
+      "can_generate": true,
+      "content_service": {
+        "native_validation": true,
+        "content_review_enabled": false,
+        "content_repair_limit": 0
+      }
+    },
+    {
+      "role": "PRO",
+      "real_models_selectable": true,
+      "can_generate": true,
+      "content_service": {
+        "native_validation": true,
+        "content_review_enabled": true,
+        "content_repair_limit": 1
+      }
+    },
+    {
+      "role": "PLUS",
+      "real_models_selectable": true,
+      "can_generate": true,
+      "content_service": {
+        "native_validation": true,
+        "content_review_enabled": true,
+        "content_repair_limit": 2
+      }
+    }
+  ],
+  "plan_limits_preserved": true,
+  "synthetic_models_preserved": true,
+  "secret_transfer": "Memory only, stored via local admin API under current UAT encryption key",
+  "provider_probe_calls": 2,
+  "passage_generation_calls": 0,
+  "quality_evaluation": "not_run",
+  "user_acceptance": "not_recorded",
+  "output_mode_note": "Legacy source has no per-model output mode; current prompt mode selected",
+  "provider_probe_result": "PASS",
+  "provider_probe_evidence": ".planning/milestones/M003/verification/evidence/uat-local-001/real-model-probes.json"
+}

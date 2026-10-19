@@ -1,0 +1,859 @@
+{
+  "fixture_version": "M003-BE-05",
+  "contract_version": "m003-stream-v5",
+  "request": {
+    "entries": [
+      "garden",
+      "learn",
+      "share"
+    ],
+    "meaning_language": "zh"
+  },
+  "wire": [
+    {
+      "event": "generation.started",
+      "data": {
+        "seq": 1,
+        "contract_version": "m003-stream-v5",
+        "stream_id": "stream-basic",
+        "run_id": "fixture-basic",
+        "generation_token": "fixture-not-a-real-token",
+        "snapshot": {
+          "configuration_revision": "fixture-revision-5",
+          "effective_plan": {
+            "code": "basic",
+            "origin": "base"
+          },
+          "content_service": {
+            "native_validation": true,
+            "content_review_enabled": false,
+            "content_repair_limit": 0
+          },
+          "native_correction_policy": {
+            "version": "m003-native-policy-v1",
+            "scope": "logical_request",
+            "max_calls": 2,
+            "editable": false
+          }
+        }
+      }
+    },
+    {
+      "event": "generation.progress",
+      "data": {
+        "seq": 2,
+        "phase": "planning"
+      }
+    },
+    {
+      "event": "generation.plan_item",
+      "data": {
+        "seq": 3,
+        "plan_id": "plan-basic",
+        "meaning_language": "zh",
+        "item": {
+          "kind": "scene",
+          "text": "邻居在社区花园一起播种，并向新来的志愿者示范。"
+        }
+      }
+    },
+    {
+      "event": "generation.plan_item",
+      "data": {
+        "seq": 4,
+        "plan_id": "plan-basic",
+        "meaning_language": "zh",
+        "item": {
+          "kind": "word_use",
+          "entry": "garden",
+          "form": "garden",
+          "sense": "本篇指居民共同照料的花圃",
+          "phrase": "a community garden"
+        }
+      }
+    },
+    {
+      "event": "generation.plan_item",
+      "data": {
+        "seq": 5,
+        "plan_id": "plan-basic",
+        "meaning_language": "zh",
+        "item": {
+          "kind": "word_use",
+          "entry": "learn",
+          "form": "learn",
+          "sense": "本篇指学会播种方法",
+          "phrase": "learn to sow seeds"
+        }
+      }
+    },
+    {
+      "event": "generation.plan_item",
+      "data": {
+        "seq": 6,
+        "plan_id": "plan-basic",
+        "meaning_language": "zh",
+        "item": {
+          "kind": "word_use",
+          "entry": "share",
+          "form": "share",
+          "sense": "本篇指一起分担园艺工作",
+          "phrase": "share the work"
+        }
+      }
+    },
+    {
+      "event": "generation.progress",
+      "data": {
+        "seq": 7,
+        "phase": "composing"
+      }
+    },
+    {
+      "event": "generation.edit",
+      "data": {
+        "seq": 8,
+        "draft_id": "d-basic-1",
+        "content_version": 1,
+        "base_rev": 0,
+        "rev": 1,
+        "at": 0,
+        "delete_count": 0,
+        "insert": "On ",
+        "source": "provider"
+      }
+    },
+    {
+      "event": "generation.edit",
+      "data": {
+        "seq": 9,
+        "draft_id": "d-basic-1",
+        "content_version": 1,
+        "base_rev": 1,
+        "rev": 2,
+        "at": 3,
+        "delete_count": 0,
+        "insert": "Saturday, Zoë saw a 🌱 sign ",
+        "source": "provider"
+      }
+    },
+    {
+      "event": "generation.edit",
+      "data": {
+        "seq": 10,
+        "draft_id": "d-basic-1",
+        "content_version": 1,
+        "base_rev": 2,
+        "rev": 3,
+        "at": 30,
+        "delete_count": 0,
+        "insert": "near the gate. Then Zoë went ",
+        "source": "provider"
+      }
+    },
+    {
+      "event": "generation.edit",
+      "data": {
+        "seq": 11,
+        "draft_id": "d-basic-1",
+        "content_version": 1,
+        "base_rev": 3,
+        "rev": 4,
+        "at": 59,
+        "delete_count": 0,
+        "insert": "to the community garden with ",
+        "source": "provider"
+      }
+    },
+    {
+      "event": "generation.edit",
+      "data": {
+        "seq": 12,
+        "draft_id": "d-basic-1",
+        "content_version": 1,
+        "base_rev": 4,
+        "rev": 5,
+        "at": 88,
+        "delete_count": 0,
+        "insert": "her neighbor Sam. They wanted ",
+        "source": "provider"
+      }
+    },
+    {
+      "event": "generation.edit",
+      "data": {
+        "seq": 13,
+        "draft_id": "d-basic-1",
+        "content_version": 1,
+        "base_rev": 5,
+        "rev": 6,
+        "at": 118,
+        "delete_count": 0,
+        "insert": "to learn how to grow beans in ",
+        "source": "provider"
+      }
+    },
+    {
+      "event": "generation.edit",
+      "data": {
+        "seq": 14,
+        "draft_id": "d-basic-1",
+        "content_version": 1,
+        "base_rev": 6,
+        "rev": 7,
+        "at": 148,
+        "delete_count": 0,
+        "insert": "a small wooden box. Sam ",
+        "source": "provider"
+      }
+    },
+    {
+      "event": "generation.edit",
+      "data": {
+        "seq": 15,
+        "draft_id": "d-basic-1",
+        "content_version": 1,
+        "base_rev": 7,
+        "rev": 8,
+        "at": 172,
+        "delete_count": 0,
+        "insert": "brought seeds, and Zoë carried ",
+        "source": "provider"
+      }
+    },
+    {
+      "event": "generation.edit",
+      "data": {
+        "seq": 16,
+        "draft_id": "d-basic-1",
+        "content_version": 1,
+        "base_rev": 8,
+        "rev": 9,
+        "at": 203,
+        "delete_count": 0,
+        "insert": "water from the tap near the ",
+        "source": "provider"
+      }
+    },
+    {
+      "event": "generation.edit",
+      "data": {
+        "seq": 17,
+        "draft_id": "d-basic-1",
+        "content_version": 1,
+        "base_rev": 9,
+        "rev": 10,
+        "at": 231,
+        "delete_count": 0,
+        "insert": "gate. An older volunteer ",
+        "source": "provider"
+      }
+    },
+    {
+      "event": "generation.edit",
+      "data": {
+        "seq": 18,
+        "draft_id": "d-basic-1",
+        "content_version": 1,
+        "base_rev": 10,
+        "rev": 11,
+        "at": 256,
+        "delete_count": 0,
+        "insert": "showed them how deep each seed ",
+        "source": "provider"
+      }
+    },
+    {
+      "event": "generation.edit",
+      "data": {
+        "seq": 19,
+        "draft_id": "d-basic-1",
+        "content_version": 1,
+        "base_rev": 11,
+        "rev": 12,
+        "at": 287,
+        "delete_count": 0,
+        "insert": "should go. They worked slowly ",
+        "source": "provider"
+      }
+    },
+    {
+      "event": "generation.edit",
+      "data": {
+        "seq": 20,
+        "draft_id": "d-basic-1",
+        "content_version": 1,
+        "base_rev": 12,
+        "rev": 13,
+        "at": 317,
+        "delete_count": 0,
+        "insert": "so that the rows stayed ",
+        "source": "provider"
+      }
+    },
+    {
+      "event": "generation.edit",
+      "data": {
+        "seq": 21,
+        "draft_id": "d-basic-1",
+        "content_version": 1,
+        "base_rev": 13,
+        "rev": 14,
+        "at": 341,
+        "delete_count": 0,
+        "insert": "straight. Before leaving, they ",
+        "source": "provider"
+      }
+    },
+    {
+      "event": "generation.edit",
+      "data": {
+        "seq": 22,
+        "draft_id": "d-basic-1",
+        "content_version": 1,
+        "base_rev": 14,
+        "rev": 15,
+        "at": 372,
+        "delete_count": 0,
+        "insert": "agreed to share the job of ",
+        "source": "provider"
+      }
+    },
+    {
+      "event": "generation.edit",
+      "data": {
+        "seq": 23,
+        "draft_id": "d-basic-1",
+        "content_version": 1,
+        "base_rev": 15,
+        "rev": 16,
+        "at": 399,
+        "delete_count": 0,
+        "insert": "watering during the week. Zoë ",
+        "source": "provider"
+      }
+    },
+    {
+      "event": "generation.edit",
+      "data": {
+        "seq": 24,
+        "draft_id": "d-basic-1",
+        "content_version": 1,
+        "base_rev": 16,
+        "rev": 17,
+        "at": 429,
+        "delete_count": 0,
+        "insert": "wrote their names on a small ",
+        "source": "provider"
+      }
+    },
+    {
+      "event": "generation.edit",
+      "data": {
+        "seq": 25,
+        "draft_id": "d-basic-1",
+        "content_version": 1,
+        "base_rev": 17,
+        "rev": 18,
+        "at": 458,
+        "delete_count": 0,
+        "insert": "card beside the box. On the ",
+        "source": "provider"
+      }
+    },
+    {
+      "event": "generation.edit",
+      "data": {
+        "seq": 26,
+        "draft_id": "d-basic-1",
+        "content_version": 1,
+        "base_rev": 18,
+        "rev": 19,
+        "at": 486,
+        "delete_count": 0,
+        "insert": "way home, she wondered which ",
+        "source": "provider"
+      }
+    },
+    {
+      "event": "generation.edit",
+      "data": {
+        "seq": 27,
+        "draft_id": "d-basic-1",
+        "content_version": 1,
+        "base_rev": 19,
+        "rev": 20,
+        "at": 515,
+        "delete_count": 0,
+        "insert": "seed would produce the first ",
+        "source": "provider"
+      }
+    },
+    {
+      "event": "generation.edit",
+      "data": {
+        "seq": 28,
+        "draft_id": "d-basic-1",
+        "content_version": 1,
+        "base_rev": 20,
+        "rev": 21,
+        "at": 544,
+        "delete_count": 0,
+        "insert": "green shoot.",
+        "source": "provider"
+      }
+    },
+    {
+      "event": "generation.progress",
+      "data": {
+        "seq": 29,
+        "phase": "finalizing"
+      }
+    },
+    {
+      "event": "generation.validated",
+      "data": {
+        "seq": 30,
+        "final_content_version": 1,
+        "result": {
+          "passage": "On Saturday, Zoë saw a 🌱 sign near the gate. Then Zoë went to the community garden with her neighbor Sam. They wanted to learn how to grow beans in a small wooden box. Sam brought seeds, and Zoë carried water from the tap near the gate. An older volunteer showed them how deep each seed should go. They worked slowly so that the rows stayed straight. Before leaving, they agreed to share the job of watering during the week. Zoë wrote their names on a small card beside the box. On the way home, she wondered which seed would produce the first green shoot.",
+          "tags": [
+            "园艺",
+            "社区"
+          ],
+          "targets": [
+            {
+              "entry": "garden",
+              "entry_meaning": "花园；园圃",
+              "hint_phrase": "a quiet garden",
+              "hint_blanks": [
+                {
+                  "start": 8,
+                  "end": 14
+                }
+              ],
+              "occurrences": [
+                {
+                  "surface": "garden",
+                  "start": 76,
+                  "end": 82
+                }
+              ]
+            },
+            {
+              "entry": "learn",
+              "entry_meaning": "学习；学会",
+              "hint_phrase": "learn a new skill",
+              "hint_blanks": [
+                {
+                  "start": 0,
+                  "end": 5
+                }
+              ],
+              "occurrences": [
+                {
+                  "surface": "learn",
+                  "start": 121,
+                  "end": 126
+                }
+              ]
+            },
+            {
+              "entry": "share",
+              "entry_meaning": "分享；共同使用",
+              "hint_phrase": "share a task",
+              "hint_blanks": [
+                {
+                  "start": 0,
+                  "end": 5
+                }
+              ],
+              "occurrences": [
+                {
+                  "surface": "share",
+                  "start": 382,
+                  "end": 387
+                }
+              ]
+            }
+          ]
+        },
+        "content_outcome": "basic",
+        "completion_notice": null,
+        "run_id": "fixture-basic"
+      }
+    }
+  ],
+  "playback": [
+    {
+      "after_ms": 100
+    },
+    {
+      "after_ms": 150
+    },
+    {
+      "after_ms": 350
+    },
+    {
+      "after_ms": 180
+    },
+    {
+      "after_ms": 180
+    },
+    {
+      "after_ms": 180
+    },
+    {
+      "after_ms": 100
+    },
+    {
+      "after_ms": 500
+    },
+    {
+      "after_ms": 85
+    },
+    {
+      "after_ms": 85
+    },
+    {
+      "after_ms": 85
+    },
+    {
+      "after_ms": 85
+    },
+    {
+      "after_ms": 85
+    },
+    {
+      "after_ms": 85
+    },
+    {
+      "after_ms": 85
+    },
+    {
+      "after_ms": 85
+    },
+    {
+      "after_ms": 85
+    },
+    {
+      "after_ms": 85
+    },
+    {
+      "after_ms": 85
+    },
+    {
+      "after_ms": 85
+    },
+    {
+      "after_ms": 85
+    },
+    {
+      "after_ms": 85
+    },
+    {
+      "after_ms": 85
+    },
+    {
+      "after_ms": 85
+    },
+    {
+      "after_ms": 85
+    },
+    {
+      "after_ms": 85
+    },
+    {
+      "after_ms": 85
+    },
+    {
+      "after_ms": 85
+    },
+    {
+      "after_ms": 650
+    },
+    {
+      "after_ms": 120
+    }
+  ],
+  "transport_end": "eof_after_terminal",
+  "status_responses": [],
+  "expected": {
+    "ui_state": "complete",
+    "final_package": "v1-zh",
+    "final_content_version": 1,
+    "completion_notice": null,
+    "can_save": true,
+    "deletion_frames": [],
+    "resources_before_terminal": false,
+    "plan_hidden_on_first_edit": true
+  },
+  "internal_evidence": {
+    "N": 0,
+    "actual_content_repairs": 0,
+    "planning_complete": true,
+    "validated_plan": {
+      "scene": "邻居在社区花园一起播种，并向新来的志愿者示范。",
+      "participants": [
+        {
+          "id": "Zoe",
+          "role": "a new volunteer"
+        },
+        {
+          "id": "neighbours",
+          "role": "garden volunteers"
+        }
+      ],
+      "fixed_facts": [
+        "The neighbours work in a shared garden."
+      ],
+      "beats": [
+        "The volunteers prepare the soil.",
+        "They show Zoe how to plant seeds.",
+        "They divide the remaining work."
+      ],
+      "word_uses": [
+        {
+          "entry": "garden",
+          "form": "garden",
+          "meaning": "本篇指居民共同照料的花圃",
+          "phrase": "a community garden",
+          "role": "与邻居合作照料花圃。"
+        },
+        {
+          "entry": "learn",
+          "form": "learn",
+          "meaning": "本篇指学会播种方法",
+          "phrase": "learn to sow seeds",
+          "role": "与邻居合作照料花圃。"
+        },
+        {
+          "entry": "share",
+          "form": "share",
+          "meaning": "本篇指一起分担园艺工作",
+          "phrase": "share the work",
+          "role": "与邻居合作照料花圃。"
+        }
+      ]
+    },
+    "plan_sha256": "e9964a0b3f6e0da62cf31c461c367149c02e01713918b3471ad2693ea45272fa",
+    "writer_input": {
+      "task": {
+        "entries": [
+          "garden",
+          "learn",
+          "share"
+        ],
+        "meaning_language": "Chinese",
+        "scenario": "story",
+        "minimum_words": 50,
+        "target_words": 60
+      },
+      "scene_plan": {
+        "scene": "邻居在社区花园一起播种，并向新来的志愿者示范。",
+        "participants": [
+          {
+            "id": "Zoe",
+            "role": "a new volunteer"
+          },
+          {
+            "id": "neighbours",
+            "role": "garden volunteers"
+          }
+        ],
+        "fixed_facts": [
+          "The neighbours work in a shared garden."
+        ],
+        "beats": [
+          "The volunteers prepare the soil.",
+          "They show Zoe how to plant seeds.",
+          "They divide the remaining work."
+        ],
+        "word_uses": [
+          {
+            "entry": "garden",
+            "form": "garden",
+            "meaning": "本篇指居民共同照料的花圃",
+            "phrase": "a community garden",
+            "role": "与邻居合作照料花圃。"
+          },
+          {
+            "entry": "learn",
+            "form": "learn",
+            "meaning": "本篇指学会播种方法",
+            "phrase": "learn to sow seeds",
+            "role": "与邻居合作照料花圃。"
+          },
+          {
+            "entry": "share",
+            "form": "share",
+            "meaning": "本篇指一起分担园艺工作",
+            "phrase": "share the work",
+            "role": "与邻居合作照料花圃。"
+          }
+        ]
+      }
+    },
+    "calls": [
+      {
+        "call_no": 1,
+        "call_stage": "planning",
+        "prompt_version": "m003-plan-v1",
+        "provider_invoked": true,
+        "content_version": null
+      },
+      {
+        "call_no": 2,
+        "call_stage": "generation",
+        "prompt_version": "m003-draft-v3",
+        "provider_invoked": true,
+        "content_version": 1,
+        "input_plan_sha256": "e9964a0b3f6e0da62cf31c461c367149c02e01713918b3471ad2693ea45272fa"
+      }
+    ],
+    "initial_native_check": {
+      "valid": true,
+      "technical_calls_before_fixed_edit": 0,
+      "editor_eligible": true,
+      "diagnostic_codes": []
+    },
+    "valid_packages": [
+      {
+        "after_seq": 28,
+        "version": 1,
+        "package": "v1-zh"
+      }
+    ],
+    "content_stop_reason": null,
+    "source_trace": [
+      {
+        "wire_seq": 8,
+        "kind": "switch",
+        "safe_input": "On ",
+        "result_text_length": 3
+      },
+      {
+        "wire_seq": 9,
+        "kind": "append",
+        "safe_input": "Saturday, Zoë saw a 🌱 sign ",
+        "result_text_length": 30
+      },
+      {
+        "wire_seq": 10,
+        "kind": "append",
+        "safe_input": "near the gate. Then Zoë went ",
+        "result_text_length": 59
+      },
+      {
+        "wire_seq": 11,
+        "kind": "append",
+        "safe_input": "to the community garden with ",
+        "result_text_length": 88
+      },
+      {
+        "wire_seq": 12,
+        "kind": "append",
+        "safe_input": "her neighbor Sam. They wanted ",
+        "result_text_length": 118
+      },
+      {
+        "wire_seq": 13,
+        "kind": "append",
+        "safe_input": "to learn how to grow beans in ",
+        "result_text_length": 148
+      },
+      {
+        "wire_seq": 14,
+        "kind": "append",
+        "safe_input": "a small wooden box. Sam ",
+        "result_text_length": 172
+      },
+      {
+        "wire_seq": 15,
+        "kind": "append",
+        "safe_input": "brought seeds, and Zoë carried ",
+        "result_text_length": 203
+      },
+      {
+        "wire_seq": 16,
+        "kind": "append",
+        "safe_input": "water from the tap near the ",
+        "result_text_length": 231
+      },
+      {
+        "wire_seq": 17,
+        "kind": "append",
+        "safe_input": "gate. An older volunteer ",
+        "result_text_length": 256
+      },
+      {
+        "wire_seq": 18,
+        "kind": "append",
+        "safe_input": "showed them how deep each seed ",
+        "result_text_length": 287
+      },
+      {
+        "wire_seq": 19,
+        "kind": "append",
+        "safe_input": "should go. They worked slowly ",
+        "result_text_length": 317
+      },
+      {
+        "wire_seq": 20,
+        "kind": "append",
+        "safe_input": "so that the rows stayed ",
+        "result_text_length": 341
+      },
+      {
+        "wire_seq": 21,
+        "kind": "append",
+        "safe_input": "straight. Before leaving, they ",
+        "result_text_length": 372
+      },
+      {
+        "wire_seq": 22,
+        "kind": "append",
+        "safe_input": "agreed to share the job of ",
+        "result_text_length": 399
+      },
+      {
+        "wire_seq": 23,
+        "kind": "append",
+        "safe_input": "watering during the week. Zoë ",
+        "result_text_length": 429
+      },
+      {
+        "wire_seq": 24,
+        "kind": "append",
+        "safe_input": "wrote their names on a small ",
+        "result_text_length": 458
+      },
+      {
+        "wire_seq": 25,
+        "kind": "append",
+        "safe_input": "card beside the box. On the ",
+        "result_text_length": 486
+      },
+      {
+        "wire_seq": 26,
+        "kind": "append",
+        "safe_input": "way home, she wondered which ",
+        "result_text_length": 515
+      },
+      {
+        "wire_seq": 27,
+        "kind": "append",
+        "safe_input": "seed would produce the first ",
+        "result_text_length": 544
+      },
+      {
+        "wire_seq": 28,
+        "kind": "append",
+        "safe_input": "green shoot.",
+        "result_text_length": 556
+      }
+    ],
+    "notes": [],
+    "scope": "Synthetic provider fragments/plan objects only; not live tokens, latency, quality or application execution."
+  }
+}

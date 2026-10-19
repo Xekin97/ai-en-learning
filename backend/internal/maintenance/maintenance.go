@@ -128,6 +128,11 @@ func (runner *Runner) cleanupOnce(ctx context.Context) error {
 		slog.ErrorContext(ctx, "preset_cleanup_failed", "reason", "database_operation_failed")
 	}
 	cancel()
+	attempt, cancel = context.WithTimeout(ctx, 15*time.Second)
+	if _, err := runner.pool.Exec(attempt, `SELECT wordweave.purge_config_import_receipts($1)`, cleanupBatchSize); err != nil {
+		slog.ErrorContext(ctx, "config_import_receipt_cleanup_failed", "reason", "database_operation_failed")
+	}
+	cancel()
 	if err := runner.cleanupExpired(ctx); err != nil {
 		return err
 	}
@@ -141,6 +146,13 @@ func (runner *Runner) cleanupOnce(ctx context.Context) error {
 func (runner *Runner) Stop(ctx context.Context) error {
 	runner.generation.Registry().CancelAll()
 	runner.generation.PreviewRegistry().CancelAll()
+	joinCtx, cancel := context.WithTimeout(ctx, 5*time.Second)
+	joinErr := runner.generation.WaitDrain(joinCtx)
+	cancel()
+	if errors.Is(joinErr, context.DeadlineExceeded) {
+		slog.WarnContext(ctx, "generation cleanup join deadline reached")
+		joinErr = nil
+	}
 	_, err := SettleActiveGenerations(ctx, runner.pool, "shutdown")
-	return err
+	return errors.Join(joinErr, err)
 }

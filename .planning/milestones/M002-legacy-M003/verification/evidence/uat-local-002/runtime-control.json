@@ -1,0 +1,53 @@
+{
+  "result": "PASS",
+  "observed_at": "2026-10-12T10:13:13.925437+00:00",
+  "idempotent_start_result": {
+    "result": "ready",
+    "processes": {
+      "backend": {
+        "pid": 89188,
+        "alive": true,
+        "port_open": true
+      },
+      "provider": {
+        "pid": 89187,
+        "alive": true,
+        "port_open": true
+      }
+    },
+    "postgres_port_open": true,
+    "metrics_port_open": true,
+    "api_origin": "http://127.0.0.1:54873",
+    "frontend_origin": "http://127.0.0.1:3014",
+    "database_origin": "127.0.0.1:54872",
+    "provider_origin": "127.0.0.1:54875"
+  },
+  "status_result": {
+    "result": "ready",
+    "processes": {
+      "backend": {
+        "pid": 89188,
+        "alive": true,
+        "port_open": true
+      },
+      "provider": {
+        "pid": 89187,
+        "alive": true,
+        "port_open": true
+      }
+    },
+    "postgres_port_open": true,
+    "metrics_port_open": true,
+    "api_origin": "http://127.0.0.1:54873",
+    "frontend_origin": "http://127.0.0.1:3014",
+    "database_origin": "127.0.0.1:54872",
+    "provider_origin": "127.0.0.1:54875"
+  },
+  "commands": {
+    "start": "/tmp/wordweave-m003-uat-local-002/start",
+    "stop": "/tmp/wordweave-m003-uat-local-002/stop",
+    "status": "/tmp/wordweave-m003-uat-local-002/status",
+    "ownership": "Only 54872-54875; frontend 3014 belongs to QA; old UAT is never managed."
+  },
+  "deletion_policy": "stop keeps data/runtime for restart; no command deletes or manages old UAT"
+}

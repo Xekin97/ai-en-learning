@@ -101,7 +101,7 @@ func TestM002MigrationPreservesLegacyContentReviewAndQuota(t *testing.T) {
 	}
 	for _, hours := range []int{1, 13, 25} {
 		if _, err := tx.Exec(ctx, `INSERT INTO wordweave.generation_runs(account_id,credited_account_id,group_code_snapshot,model_id,model_display_name_snapshot,provider_model_id_snapshot,meaning_language,scenario,length_code,minimum_words_snapshot,max_entries_snapshot,call_status,counts_toward_cumulative,started_at,completed_at)
-   VALUES($1,$1,'registered',$2,'Legacy model','test/legacy','en','story','short',50,5,'user_cancelled',true,now()-make_interval(hours=>$3),now()-make_interval(hours=>$3))`, owner, model, hours); err != nil {
+			VALUES($1,$1,'registered',$2,'Legacy model','test/legacy','en','story','short',50,5,'user_cancelled',true,now()-make_interval(hours=>$3),now()-make_interval(hours=>$3))`, owner, model, hours); err != nil {
 			t.Fatal(err)
 		}
 	}
@@ -112,8 +112,8 @@ func TestM002MigrationPreservesLegacyContentReviewAndQuota(t *testing.T) {
 	if err := pool.QueryRow(ctx, `SELECT md5(to_jsonb(b)::text) FROM wordweave.learning_batches b WHERE id=$1`, batch).Scan(&before); err != nil {
 		t.Fatal(err)
 	}
-	if err := Migrate(ctx, pool); err != nil {
-		t.Fatal(err)
+	for _, name := range []string{"0008_m002_identity_vocabulary.sql", "0009_m002_review_facts.sql", "0010_m002_growth_items.sql", "0011_m002_presets_quota.sql", "0012_m002_notices_analytics.sql", "0013_m002_operational_privileges.sql", "0014_notice_remind_once.sql", "0015_generic_model_connections.sql", "0016_provider_workspace.sql"} {
+		applyEmbeddedMigration(t, ctx, pool, name)
 	}
 	var after, title string
 	if err := pool.QueryRow(ctx, `SELECT md5((to_jsonb(b)-'title'-'title_revision'-'growth_event_id')::text),title FROM wordweave.learning_batches b WHERE id=$1`, batch).Scan(&after, &title); err != nil {
@@ -152,7 +152,9 @@ func TestM002MigrationPreservesLegacyContentReviewAndQuota(t *testing.T) {
 	if charged != 1 || cumulative != 3 {
 		t.Fatalf("quota/history changed: %d/%d", charged, cumulative)
 	}
-	verifyM002BackupRestore(t, ctx, pool)
+	// This fixture intentionally stops at the M002/0016 boundary. The unpublished
+	// M003 0017 schema is initialized only on an empty disposable database and is
+	// covered by TestM003EmptyDatabaseInitializesCurrentSchema.
 }
 
 func TestM002ConstraintsRejectPartialConfiguration(t *testing.T) {
@@ -184,7 +186,7 @@ func TestM002ConstraintsRejectPartialConfiguration(t *testing.T) {
 		t.Fatal(err)
 	}
 	defer tx.Rollback(ctx)
-	if _, err := tx.Exec(ctx, `SET CONSTRAINTS wordweave.growth_levels_min_experience_unique DEFERRED; UPDATE wordweave.growth_levels SET min_experience=200 WHERE level_no=2; UPDATE wordweave.growth_levels SET min_experience=300 WHERE level_no=3; SET CONSTRAINTS wordweave.growth_levels_min_experience_unique IMMEDIATE`); err != nil {
+	if _, err := tx.Exec(ctx, `SET CONSTRAINTS wordweave.growth_levels_active_min_experience_unique DEFERRED; UPDATE wordweave.growth_levels SET min_experience=200 WHERE level_no=2; UPDATE wordweave.growth_levels SET min_experience=300 WHERE level_no=3; SET CONSTRAINTS wordweave.growth_levels_active_min_experience_unique IMMEDIATE`); err != nil {
 		t.Fatal(err)
 	}
 	if err := tx.Commit(ctx); err != nil {
@@ -199,4 +201,98 @@ func TestM002ConstraintsRejectPartialConfiguration(t *testing.T) {
 			t.Fatal("AI role can access private inventory")
 		}
 	}
+}
+
+func TestConfigPortabilityReceiptConstraintsAndPrivileges(t *testing.T) {
+	pool, ctx := m002Database(t, false)
+	var actor uuid.UUID
+	if err := pool.QueryRow(ctx, `INSERT INTO wordweave.accounts(username,password_hash,role,status) VALUES('receipt_admin','synthetic','admin','active') RETURNING id`).Scan(&actor); err != nil {
+		t.Fatal(err)
+	}
+	insert := `INSERT INTO wordweave.config_import_receipts(operation_id,actor_id,category,request_fingerprint,status,baseline_revision,result_revision,effective_day,result_counts,reason_code,resolved_at,commit_not_after,retain_until)
+		VALUES(gen_random_uuid(),$1,$2,decode(repeat('00',32),'hex'),$3,10,$4,$5,$6::jsonb,$7,clock_timestamp(),clock_timestamp()+interval '5 minutes',clock_timestamp()+interval '1 day')`
+	reject := func(category, status string, result int, day any, counts, reason string) {
+		t.Helper()
+		if _, err := pool.Exec(ctx, insert, actor, category, status, result, day, counts, nullableString(reason)); err == nil {
+			t.Fatalf("invalid receipt accepted category=%s status=%s result=%d day=%v counts=%s reason=%q", category, status, result, day, counts, reason)
+		}
+	}
+	zero := `{"added":0,"updated":0,"removed":0,"unchanged":0}`
+	reject("plans", "not_applied", 10, nil, zero, "")
+	reject("plans", "not_applied", 10, nil, `{"added":1,"updated":0,"removed":0,"unchanged":0}`, "preview_expired")
+	reject("plans", "not_applied", 10, time.Now(), zero, "preview_expired")
+	reject("plans", "applied", 11, time.Now(), zero, "")
+	reject("growth", "applied", 11, nil, zero, "")
+	reject("plans", "not_applied", 10, nil, `{"added":0,"updated":0,"removed":0}`, "preview_expired")
+	if _, err := pool.Exec(ctx, insert, actor, "plans", "not_applied", 10, nil, zero, "preview_expired"); err != nil {
+		t.Fatalf("valid not_applied receipt rejected: %v", err)
+	}
+	if _, err := pool.Exec(ctx, insert, actor, "growth", "applied", 11, time.Now().Add(24*time.Hour), zero, nil); err != nil {
+		t.Fatalf("valid growth receipt rejected: %v", err)
+	}
+
+	checks := []struct {
+		role, object, privilege string
+		want                    bool
+	}{
+		{"wordweave_app", "wordweave.config_import_receipts", "UPDATE", false},
+		{"wordweave_ai", "wordweave.config_import_receipts", "SELECT", false},
+		{"wordweave_app", "wordweave.ai_provider_credentials", "SELECT", false},
+		{"wordweave_maintenance", "wordweave.config_import_receipts", "DELETE", true},
+	}
+	for _, check := range checks {
+		var got bool
+		if err := pool.QueryRow(ctx, `SELECT has_table_privilege($1,$2,$3)`, check.role, check.object, check.privilege).Scan(&got); err != nil {
+			t.Fatal(err)
+		}
+		if got != check.want {
+			t.Fatalf("%s %s on %s=%v want %v", check.role, check.privilege, check.object, got, check.want)
+		}
+	}
+
+	if _, err := pool.Exec(ctx, `UPDATE wordweave.config_import_receipts SET commit_not_after=clock_timestamp()-interval '2 days',retain_until=clock_timestamp()-interval '1 day' WHERE status='not_applied'`); err == nil {
+		t.Fatal("immutable receipt update unexpectedly succeeded")
+	}
+	if _, err := pool.Exec(ctx, `INSERT INTO wordweave.config_import_receipts(operation_id,actor_id,category,request_fingerprint,status,baseline_revision,result_revision,result_counts,reason_code,resolved_at,commit_not_after,retain_until)
+		VALUES(gen_random_uuid(),$1,'plans',decode(repeat('01',32),'hex'),'not_applied',10,10,$2::jsonb,'preview_expired',clock_timestamp()-interval '2 days',clock_timestamp()-interval '2 days',clock_timestamp()-interval '1 day')`, actor, zero); err != nil {
+		t.Fatal(err)
+	}
+	var removed int
+	if err := pool.QueryRow(ctx, `SELECT wordweave.purge_config_import_receipts(1)`).Scan(&removed); err != nil || removed != 1 {
+		t.Fatalf("purge removed=%d err=%v", removed, err)
+	}
+	if err := pool.QueryRow(ctx, `SELECT wordweave.purge_config_import_receipts(201)`).Scan(&removed); err == nil {
+		t.Fatal("purge accepted an unbounded limit")
+	}
+}
+
+func TestCR313CredentialFunctionsRejectRetiredProviders(t *testing.T) {
+	pool, ctx := m002Database(t, false)
+	var actor, provider uuid.UUID
+	if err := pool.QueryRow(ctx, `INSERT INTO wordweave.accounts(username,password_hash,role,status) VALUES('credential_admin','synthetic','admin','active') RETURNING id`).Scan(&actor); err != nil {
+		t.Fatal(err)
+	}
+	if err := pool.QueryRow(ctx, `INSERT INTO wordweave.ai_providers(name,protocol,base_url) VALUES('Credential provider','openai_chat','https://credential.invalid/v1') RETURNING id`).Scan(&provider); err != nil {
+		t.Fatal(err)
+	}
+	if _, err := pool.Exec(ctx, `SELECT wordweave.update_provider_credential($1,$2,$3,1,'synthetic',$4)`, provider, []byte{1}, []byte{2}, actor); err != nil {
+		t.Fatalf("active provider credential rejected: %v", err)
+	}
+	if _, err := pool.Exec(ctx, `SELECT wordweave.retire_provider_credential($1,clock_timestamp(),$2)`, provider, actor); err != nil {
+		t.Fatal(err)
+	}
+	if _, err := pool.Exec(ctx, `SELECT wordweave.update_provider_credential($1,$2,$3,1,'synthetic',$4)`, provider, []byte{3}, []byte{4}, actor); err == nil {
+		t.Fatal("retired provider credential was recreated")
+	}
+	var credentials int
+	if err := pool.QueryRow(ctx, `SELECT count(*) FROM wordweave.ai_provider_credentials WHERE provider_id=$1`, provider).Scan(&credentials); err != nil || credentials != 0 {
+		t.Fatalf("retired credentials=%d err=%v", credentials, err)
+	}
+}
+
+func nullableString(value string) any {
+	if value == "" {
+		return nil
+	}
+	return value
 }

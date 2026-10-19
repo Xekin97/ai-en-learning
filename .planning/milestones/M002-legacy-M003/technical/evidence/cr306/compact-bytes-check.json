@@ -1,0 +1,137 @@
+{
+  "version": "M003-BE-07",
+  "scope": "static contract vectors against Node ECMAScript JSON.stringify/TextEncoder; not BE/FE application verification or complete number-token validator",
+  "passed": true,
+  "checks": [
+    {
+      "id": "html_and_slash",
+      "pass": true,
+      "bytes": 12
+    },
+    {
+      "id": "escaped_html_same_value",
+      "pass": true,
+      "bytes": 12
+    },
+    {
+      "id": "line_separators",
+      "pass": true,
+      "bytes": 14
+    },
+    {
+      "id": "literal_backslash_u2028",
+      "pass": true,
+      "bytes": 15
+    },
+    {
+      "id": "emoji_pair",
+      "pass": true,
+      "bytes": 12
+    },
+    {
+      "id": "controls",
+      "pass": true,
+      "bytes": 24
+    },
+    {
+      "id": "spaces_only_outside_removed",
+      "pass": true,
+      "bytes": 11
+    },
+    {
+      "id": "negative_zero",
+      "pass": true,
+      "bytes": 7
+    },
+    {
+      "id": "integer_exponent",
+      "pass": true,
+      "bytes": 7
+    },
+    {
+      "id": "fraction_decimal",
+      "pass": true,
+      "bytes": 14
+    },
+    {
+      "id": "fraction_exponent",
+      "pass": true,
+      "bytes": 10
+    },
+    {
+      "id": "safe_integer_dot_zero",
+      "pass": true,
+      "bytes": 22
+    },
+    {
+      "id": "safe_integer_exponent",
+      "pass": true,
+      "bytes": 22
+    },
+    {
+      "id": "less_than_at_limit",
+      "pass": true,
+      "bytes": 16384
+    },
+    {
+      "id": "less_than_above_limit",
+      "pass": true,
+      "bytes": 16385
+    },
+    {
+      "id": "line_separator_at_limit",
+      "pass": true,
+      "bytes": 16384
+    },
+    {
+      "id": "line_separator_above_limit",
+      "pass": true,
+      "bytes": 16385
+    },
+    {
+      "id": "emoji_at_limit",
+      "pass": true,
+      "bytes": 16384
+    },
+    {
+      "id": "unsafe_integer_dot_zero",
+      "pass": true
+    },
+    {
+      "id": "unsafe_integer_exponent",
+      "pass": true
+    },
+    {
+      "id": "fraction_rounds_to_unsafe_integer",
+      "pass": true
+    },
+    {
+      "id": "manifest:technical/api/administration.md",
+      "pass": true
+    },
+    {
+      "id": "manifest:technical/fixtures/cr306/index.json",
+      "pass": true
+    },
+    {
+      "id": "manifest:technical/fixtures/cr306/compact-byte-vectors.json",
+      "pass": true
+    },
+    {
+      "id": "manifest:handoffs/backend-architecture.md",
+      "pass": true
+    }
+  ],
+  "fixture_sha256": "7e0f1b0315f7abaee8130656f0f8b11264e29f0bdf11a20c90bb4e5f668878ea",
+  "before_archive": ".planning/milestones/M003/technical/evidence/cr306/compact-bytes-before.tar.gz",
+  "before_archive_sha256": "d1d4277fb051c887922ff1812147317e0c2c8222774cd53e71734c5e7c271552",
+  "runtime": "v22.23.2",
+  "command": "node .planning/milestones/M003/technical/evidence/cr306/check_compact_bytes.mjs",
+  "not_executed": [
+    "application Go/FE tests",
+    "database",
+    "live provider",
+    "browser",
+    "full 131-item checker"
+  ]
+}

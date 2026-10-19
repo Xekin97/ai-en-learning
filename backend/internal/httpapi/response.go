@@ -114,7 +114,7 @@ func decodeStrict(writer http.ResponseWriter, request *http.Request, target any,
 func rejectDuplicateKeys(raw []byte) error {
 	decoder := json.NewDecoder(bytes.NewReader(raw))
 	decoder.UseNumber()
-	if err := inspectJSONValue(decoder); err != nil {
+	if err := inspectJSONValue(decoder, ""); err != nil {
 		return err
 	}
 	if _, err := decoder.Token(); !errors.Is(err, io.EOF) {
@@ -123,7 +123,11 @@ func rejectDuplicateKeys(raw []byte) error {
 	return nil
 }
 
-func inspectJSONValue(decoder *json.Decoder) error {
+type duplicateJSONKeyError struct{ Pointer string }
+
+func (e *duplicateJSONKeyError) Error() string { return "duplicate JSON key at " + e.Pointer }
+
+func inspectJSONValue(decoder *json.Decoder, pointer string) error {
 	token, err := decoder.Token()
 	if err != nil {
 		return err
@@ -145,10 +149,14 @@ func inspectJSONValue(decoder *json.Decoder) error {
 				return errors.New("JSON object key must be a string")
 			}
 			if _, exists := seen[key]; exists {
-				return fmt.Errorf("duplicate JSON key %q", key)
+				duplicatePointer := pointer
+				if !strings.ContainsRune(key, '\x00') {
+					duplicatePointer += "/" + escapeRequestJSONPointer(key)
+				}
+				return &duplicateJSONKeyError{Pointer: duplicatePointer}
 			}
 			seen[key] = struct{}{}
-			if err := inspectJSONValue(decoder); err != nil {
+			if err := inspectJSONValue(decoder, pointer+"/"+escapeRequestJSONPointer(key)); err != nil {
 				return err
 			}
 		}
@@ -157,8 +165,8 @@ func inspectJSONValue(decoder *json.Decoder) error {
 			return errors.New("unterminated JSON object")
 		}
 	case '[':
-		for decoder.More() {
-			if err := inspectJSONValue(decoder); err != nil {
+		for index := 0; decoder.More(); index++ {
+			if err := inspectJSONValue(decoder, fmt.Sprintf("%s/%d", pointer, index)); err != nil {
 				return err
 			}
 		}
@@ -172,6 +180,10 @@ func inspectJSONValue(decoder *json.Decoder) error {
 	return nil
 }
 
+func escapeRequestJSONPointer(value string) string {
+	return strings.ReplaceAll(strings.ReplaceAll(value, "~", "~0"), "/", "~1")
+}
+
 func decodeOrProblem(writer http.ResponseWriter, request *http.Request, target any, maxBytes int64) bool {
 	if err := decodeStrict(writer, request, target, maxBytes); err != nil {
 		var sizeError *http.MaxBytesError
@@ -180,6 +192,25 @@ func decodeOrProblem(writer http.ResponseWriter, request *http.Request, target a
 			return false
 		}
 		writeProblem(writer, request, http.StatusBadRequest, "malformed_request", "Malformed request", "The request body is not valid for this operation.")
+		return false
+	}
+	return true
+}
+
+func decodeModelOrProblem(writer http.ResponseWriter, request *http.Request, target any, maxBytes int64, pointer string) bool {
+	if err := decodeStrict(writer, request, target, maxBytes); err != nil {
+		var sizeError *http.MaxBytesError
+		if errors.As(err, &sizeError) {
+			writeProblem(writer, request, http.StatusRequestEntityTooLarge, "request_too_large", "Request is too large", "The request exceeds the transport size limit.")
+			return false
+		}
+		code := "invalid_json"
+		var duplicate *duplicateJSONKeyError
+		if errors.As(err, &duplicate) {
+			code = "duplicate_key"
+			pointer = duplicate.Pointer
+		}
+		writeProblem(writer, request, http.StatusBadRequest, "invalid_json", "Invalid JSON", "The request body is not valid JSON for this operation.", fieldError{Field: pointer, Code: code})
 		return false
 	}
 	return true

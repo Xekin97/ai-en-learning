@@ -1,0 +1,238 @@
+{
+  "config": {
+    "argv": [
+      "/Users/xekinzhuo/.npm/_npx/387698761821791d/node_modules/node/bin/node",
+      "/Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/frontend/node_modules/@playwright/test/cli.js",
+      "test",
+      "tests/e2e/m003-cr306-models.spec.ts",
+      "--workers=1",
+      "--reporter=line,json"
+    ],
+    "configFile": "/Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/frontend/playwright.config.ts",
+    "rootDir": "/Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/frontend/tests/e2e",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/frontend/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "desktop",
+        "name": "desktop",
+        "testDir": "/Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/frontend/tests/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "/m00[23]-.*\\.spec\\.ts$/"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "/Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/frontend/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "mobile",
+        "name": "mobile",
+        "testDir": "/Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/frontend/tests/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "/m00[23]-.*\\.spec\\.ts$/"
+        ],
+        "timeout": 30000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "line"
+      ],
+      [
+        "json"
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.62.1",
+    "workers": 1,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "m003-cr306-models.spec.ts",
+      "file": "m003-cr306-models.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "CR306 real AppDialog keeps raw JSON, stale probes, focus, and zero automatic probes",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop",
+              "projectName": "desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 2288,
+                  "error": {
+                    "message": "Error: locator.click: Error: strict mode violation: locator('#admin-model').locator('.generic-model-item').first().locator('summary') resolved to 2 elements:\n    1) <summary>高级选项</summary> aka getByText('高级选项')\n    2) <summary>查看格式与保护规则</summary> aka getByText('查看格式与保护规则')\n\nCall log:\n\u001b[2m  - waiting for locator('#admin-model').locator('.generic-model-item').first().locator('summary')\u001b[22m\n",
+                    "stack": "Error: locator.click: Error: strict mode violation: locator('#admin-model').locator('.generic-model-item').first().locator('summary') resolved to 2 elements:\n    1) <summary>高级选项</summary> aka getByText('高级选项')\n    2) <summary>查看格式与保护规则</summary> aka getByText('查看格式与保护规则')\n\nCall log:\n\u001b[2m  - waiting for locator('#admin-model').locator('.generic-model-item').first().locator('summary')\u001b[22m\n\n    at /Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/frontend/tests/e2e/m003-cr306-models.spec.ts:67:41",
+                    "location": {
+                      "file": "/Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/frontend/tests/e2e/m003-cr306-models.spec.ts",
+                      "column": 41,
+                      "line": 67
+                    },
+                    "snippet": "  65 |     ),\n  66 |   ).toBe(\"dialog\");\n> 67 |   await rows.first().locator(\"summary\").click();\n     |                                         ^\n  68 |   const firstJson = rows.first().locator(\".custom-parameters\");\n  69 |   await expect(firstJson).toHaveValue(\"{}\");\n  70 |   await expect(firstJson).toHaveAccessibleDescription("
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/frontend/tests/e2e/m003-cr306-models.spec.ts",
+                        "column": 41,
+                        "line": 67
+                      },
+                      "message": "Error: locator.click: Error: strict mode violation: locator('#admin-model').locator('.generic-model-item').first().locator('summary') resolved to 2 elements:\n    1) <summary>高级选项</summary> aka getByText('高级选项')\n    2) <summary>查看格式与保护规则</summary> aka getByText('查看格式与保护规则')\n\nCall log:\n\u001b[2m  - waiting for locator('#admin-model').locator('.generic-model-item').first().locator('summary')\u001b[22m\n\n\n  65 |     ),\n  66 |   ).toBe(\"dialog\");\n> 67 |   await rows.first().locator(\"summary\").click();\n     |                                         ^\n  68 |   const firstJson = rows.first().locator(\".custom-parameters\");\n  69 |   await expect(firstJson).toHaveValue(\"{}\");\n  70 |   await expect(firstJson).toHaveAccessibleDescription(\n    at /Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/frontend/tests/e2e/m003-cr306-models.spec.ts:67:41"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-12T06:46:47.907Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/frontend/test-results/m003-cr306-models-CR306-re-e4555-s-and-zero-automatic-probes-desktop/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/frontend/test-results/m003-cr306-models-CR306-re-e4555-s-and-zero-automatic-probes-desktop/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/frontend/tests/e2e/m003-cr306-models.spec.ts",
+                    "column": 41,
+                    "line": 67
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "985e87e002b62082cdc5-c82240ba44898d5c16c6",
+          "file": "m003-cr306-models.spec.ts",
+          "line": 31,
+          "column": 1
+        },
+        {
+          "title": "CR306 real AppDialog keeps raw JSON, stale probes, focus, and zero automatic probes",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile",
+              "projectName": "mobile",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 1003,
+                  "error": {
+                    "message": "Error: locator.click: Error: strict mode violation: locator('#admin-model').locator('.generic-model-item').first().locator('summary') resolved to 2 elements:\n    1) <summary>Advanced options</summary> aka getByText('Advanced options')\n    2) <summary>View format and protected-field rules</summary> aka getByText('View format and protected-')\n\nCall log:\n\u001b[2m  - waiting for locator('#admin-model').locator('.generic-model-item').first().locator('summary')\u001b[22m\n",
+                    "stack": "Error: locator.click: Error: strict mode violation: locator('#admin-model').locator('.generic-model-item').first().locator('summary') resolved to 2 elements:\n    1) <summary>Advanced options</summary> aka getByText('Advanced options')\n    2) <summary>View format and protected-field rules</summary> aka getByText('View format and protected-')\n\nCall log:\n\u001b[2m  - waiting for locator('#admin-model').locator('.generic-model-item').first().locator('summary')\u001b[22m\n\n    at /Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/frontend/tests/e2e/m003-cr306-models.spec.ts:67:41",
+                    "location": {
+                      "file": "/Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/frontend/tests/e2e/m003-cr306-models.spec.ts",
+                      "column": 41,
+                      "line": 67
+                    },
+                    "snippet": "  65 |     ),\n  66 |   ).toBe(\"dialog\");\n> 67 |   await rows.first().locator(\"summary\").click();\n     |                                         ^\n  68 |   const firstJson = rows.first().locator(\".custom-parameters\");\n  69 |   await expect(firstJson).toHaveValue(\"{}\");\n  70 |   await expect(firstJson).toHaveAccessibleDescription("
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/frontend/tests/e2e/m003-cr306-models.spec.ts",
+                        "column": 41,
+                        "line": 67
+                      },
+                      "message": "Error: locator.click: Error: strict mode violation: locator('#admin-model').locator('.generic-model-item').first().locator('summary') resolved to 2 elements:\n    1) <summary>Advanced options</summary> aka getByText('Advanced options')\n    2) <summary>View format and protected-field rules</summary> aka getByText('View format and protected-')\n\nCall log:\n\u001b[2m  - waiting for locator('#admin-model').locator('.generic-model-item').first().locator('summary')\u001b[22m\n\n\n  65 |     ),\n  66 |   ).toBe(\"dialog\");\n> 67 |   await rows.first().locator(\"summary\").click();\n     |                                         ^\n  68 |   const firstJson = rows.first().locator(\".custom-parameters\");\n  69 |   await expect(firstJson).toHaveValue(\"{}\");\n  70 |   await expect(firstJson).toHaveAccessibleDescription(\n    at /Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/frontend/tests/e2e/m003-cr306-models.spec.ts:67:41"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-12T06:46:50.797Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/frontend/test-results/m003-cr306-models-CR306-re-e4555-s-and-zero-automatic-probes-mobile/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/frontend/test-results/m003-cr306-models-CR306-re-e4555-s-and-zero-automatic-probes-mobile/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/frontend/tests/e2e/m003-cr306-models.spec.ts",
+                    "column": 41,
+                    "line": 67
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "985e87e002b62082cdc5-3f2f9d1e868f91a282ca",
+          "file": "m003-cr306-models.spec.ts",
+          "line": 31,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-12T06:46:39.176Z",
+    "duration": 12927.311,
+    "expected": 0,
+    "skipped": 0,
+    "unexpected": 2,
+    "flaky": 0
+  }
+}

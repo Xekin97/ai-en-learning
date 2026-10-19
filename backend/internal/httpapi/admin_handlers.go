@@ -14,6 +14,8 @@ import (
 
 	"wordweave/internal/admin"
 	"wordweave/internal/ai"
+	"wordweave/internal/capacity"
+	"wordweave/internal/entitlement"
 	"wordweave/internal/learning"
 	"wordweave/internal/platform/business"
 )
@@ -25,18 +27,19 @@ type adminCredentialDTO struct {
 }
 
 type adminModelDTO struct {
-	ID                 string        `json:"id"`
-	DisplayName        string        `json:"display_name"`
-	Description        *string       `json:"description"`
-	ProviderModelID    string        `json:"provider_model_id"`
-	Enabled            bool          `json:"enabled"`
-	RetiredAt          *time.Time    `json:"retired_at"`
-	AssignedGroupCodes []string      `json:"assigned_group_codes"`
-	Connection         ai.Connection `json:"connection"`
-	MaxOutputTokens    *int          `json:"max_output_tokens"`
-	OutputMode         string        `json:"output_mode"`
-	CreatedAt          string        `json:"created_at"`
-	UpdatedAt          string        `json:"updated_at"`
+	ID                 string          `json:"id"`
+	DisplayName        string          `json:"display_name"`
+	Description        *string         `json:"description"`
+	ProviderModelID    string          `json:"provider_model_id"`
+	Enabled            bool            `json:"enabled"`
+	RetiredAt          *time.Time      `json:"retired_at"`
+	AssignedGroupCodes []string        `json:"assigned_group_codes"`
+	Connection         ai.Connection   `json:"connection"`
+	MaxOutputTokens    *int            `json:"max_output_tokens"`
+	OutputMode         string          `json:"output_mode"`
+	CustomParameters   json.RawMessage `json:"custom_parameters"`
+	CreatedAt          string          `json:"created_at"`
+	UpdatedAt          string          `json:"updated_at"`
 }
 
 type adminGroupModelDTO struct {
@@ -46,12 +49,14 @@ type adminGroupModelDTO struct {
 }
 
 type adminGroupDTO struct {
-	Code            string               `json:"code"`
-	Priority        int                  `json:"priority"`
-	Rolling24hLimit *int                 `json:"rolling_24h_limit"`
-	MaxEntries      int                  `json:"max_entries"`
-	AllowedLengths  []string             `json:"allowed_lengths"`
-	Models          []adminGroupModelDTO `json:"models"`
+	Code                 string               `json:"code"`
+	Priority             int                  `json:"priority"`
+	Rolling24hLimit      *int                 `json:"rolling_24h_limit"`
+	MaxEntries           int                  `json:"max_entries"`
+	AllowedLengths       []string             `json:"allowed_lengths"`
+	Models               []adminGroupModelDTO `json:"models"`
+	ContentReviewEnabled bool                 `json:"content_review_enabled"`
+	ContentRepairLimit   int                  `json:"content_repair_limit"`
 }
 
 type adminUserSummaryDTO struct {
@@ -100,7 +105,8 @@ func mapAdminModel(model admin.Model) adminModelDTO {
 		ID: model.ID.String(), DisplayName: model.DisplayName, Description: model.Description,
 		ProviderModelID: model.ProviderModelID, Enabled: model.Enabled, AssignedGroupCodes: groups,
 		RetiredAt: model.RetiredAt, Connection: model.Connection, MaxOutputTokens: model.MaxOutputTokens, OutputMode: model.OutputMode,
-		CreatedAt: model.CreatedAt.Format(time.RFC3339Nano), UpdatedAt: model.UpdatedAt.Format(time.RFC3339Nano),
+		CustomParameters: model.CustomParameters,
+		CreatedAt:        model.CreatedAt.Format(time.RFC3339Nano), UpdatedAt: model.UpdatedAt.Format(time.RFC3339Nano),
 	}
 }
 
@@ -109,7 +115,7 @@ func mapAdminGroup(group admin.Group) adminGroupDTO {
 	if lengths == nil {
 		lengths = []string{}
 	}
-	dto := adminGroupDTO{Code: group.Code, Priority: group.Priority, Rolling24hLimit: group.Rolling24hLimit, MaxEntries: group.MaxEntries, AllowedLengths: lengths, Models: make([]adminGroupModelDTO, 0, len(group.Models))}
+	dto := adminGroupDTO{Code: group.Code, Priority: group.Priority, Rolling24hLimit: group.Rolling24hLimit, MaxEntries: group.MaxEntries, AllowedLengths: lengths, Models: make([]adminGroupModelDTO, 0, len(group.Models)), ContentReviewEnabled: group.ContentReviewEnabled, ContentRepairLimit: group.ContentRepairLimit}
 	for _, model := range group.Models {
 		dto.Models = append(dto.Models, adminGroupModelDTO{ID: model.ID.String(), DisplayName: model.DisplayName, Enabled: model.Enabled})
 	}
@@ -232,7 +238,7 @@ func (server *Server) adminGetModel(w http.ResponseWriter, r *http.Request) {
 
 func (server *Server) adminCreateModel(w http.ResponseWriter, r *http.Request) {
 	var body admin.ModelInput
-	if !decodeOrProblem(w, r, &body, 32<<10) {
+	if !decodeModelOrProblem(w, r, &body, 32<<10, "/custom_parameters") {
 		return
 	}
 	actor, _ := actorFromContext(r.Context())
@@ -241,7 +247,7 @@ func (server *Server) adminCreateModel(w http.ResponseWriter, r *http.Request) {
 }
 func (server *Server) adminCreateModels(w http.ResponseWriter, r *http.Request) {
 	var body admin.ModelBatchInput
-	if !decodeOrProblem(w, r, &body, 256<<10) {
+	if !decodeModelOrProblem(w, r, &body, 256<<10, "/models") {
 		return
 	}
 	actor, _ := actorFromContext(r.Context())
@@ -272,7 +278,7 @@ func (server *Server) adminModelConnections(w http.ResponseWriter, r *http.Reque
 }
 func (server *Server) adminTestModelConnection(w http.ResponseWriter, r *http.Request) {
 	var body admin.ModelInput
-	if !decodeOrProblem(w, r, &body, 32<<10) {
+	if !decodeModelOrProblem(w, r, &body, 32<<10, "/custom_parameters") {
 		return
 	}
 	if err := server.admin.TestConnection(r.Context(), body); err != nil {
@@ -360,7 +366,7 @@ func (server *Server) adminPatchModel(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	var body admin.ModelInput
-	if !decodeOrProblem(w, r, &body, 32<<10) {
+	if !decodeModelOrProblem(w, r, &body, 32<<10, "/custom_parameters") {
 		return
 	}
 	actor, _ := actorFromContext(r.Context())
@@ -388,9 +394,8 @@ func (server *Server) adminSetModelEnabled(writer http.ResponseWriter, request *
 		return
 	}
 	if enabled {
-		// Enabling performs a real structured stream compatibility check. Like a
-		// learner generation, it is governed by the request context and provider
-		// terminal event rather than the ordinary JSON response write timeout.
+		// Keep the response unconstrained by the ordinary JSON write deadline. The
+		// service validates the complete saved configuration without an upstream call.
 		_ = http.NewResponseController(writer).SetWriteDeadline(time.Time{})
 	}
 	model, err := server.admin.SetModelEnabled(request.Context(), modelID, body.Expected, enabled)
@@ -419,14 +424,15 @@ func (server *Server) adminListGroups(writer http.ResponseWriter, request *http.
 		dtos = append(dtos, mapAdminGroup(item))
 	}
 	writeJSON(writer, request, http.StatusOK, struct {
-		Items    []adminGroupDTO `json:"items"`
-		Revision string          `json:"revision"`
-	}{Items: dtos, Revision: revision})
+		Items                  []adminGroupDTO          `json:"items"`
+		Revision               string                   `json:"revision"`
+		NativeCorrectionPolicy entitlement.NativePolicy `json:"native_correction_policy"`
+	}{Items: dtos, Revision: revision, NativeCorrectionPolicy: entitlement.SystemNativePolicy()})
 }
 
 func (server *Server) adminPutGroup(writer http.ResponseWriter, request *http.Request) {
-	var body admin.GroupInput
-	if !decodeConfiguration(writer, request, &body) {
+	body, ok := decodeGroupInput(writer, request, chi.URLParam(request, "group_code"))
+	if !ok {
 		return
 	}
 	group, err := server.admin.PutGroup(request.Context(), chi.URLParam(request, "group_code"), body)
@@ -435,9 +441,10 @@ func (server *Server) adminPutGroup(writer http.ResponseWriter, request *http.Re
 		return
 	}
 	writeJSON(writer, request, http.StatusOK, struct {
-		Group    adminGroupDTO `json:"group"`
-		Revision string        `json:"revision"`
-	}{Group: mapAdminGroup(group), Revision: group.Revision})
+		Group                  adminGroupDTO            `json:"group"`
+		Revision               string                   `json:"revision"`
+		NativeCorrectionPolicy entitlement.NativePolicy `json:"native_correction_policy"`
+	}{Group: mapAdminGroup(group), Revision: group.Revision, NativeCorrectionPolicy: entitlement.SystemNativePolicy()})
 }
 
 func (server *Server) adminListUsers(writer http.ResponseWriter, request *http.Request) {
@@ -635,12 +642,22 @@ func parseAdminUUID(writer http.ResponseWriter, request *http.Request, parameter
 
 func (server *Server) writeAdminProblem(writer http.ResponseWriter, request *http.Request, err error) {
 	var providerError *ai.ProviderError
+	var customError *ai.CustomParameterError
+	var rejected *ai.ModelRequestRejected
 	var revision *business.RevisionConflict
 	switch {
+	case errors.As(err, &customError):
+		status := http.StatusUnprocessableEntity
+		if customError.ProblemCode == "invalid_json" {
+			status = http.StatusBadRequest
+		}
+		writeProblem(writer, request, status, customError.ProblemCode, "Custom parameters could not be accepted", "Fix the indicated custom parameter value.", fieldError{Field: customError.Pointer, Code: customError.FieldCode})
+	case errors.As(err, &rejected):
+		writeProblemContext(writer, request, http.StatusUnprocessableEntity, "model_request_rejected", "Model request rejected", "The provider rejected the probe request.", map[string]int{"upstream_status": rejected.UpstreamStatus})
 	case errors.Is(err, admin.ErrBasePlanChanged):
 		writeProblem(writer, request, 409, "base_plan_changed", "Base plan changed", "Read the user's current base plan before making a new adjustment.")
 	case errors.Is(err, admin.ErrDuplicatePriority):
-		writeProblem(writer, request, 422, "duplicate_priority", "Priority is already used", "Choose distinct plan priorities.")
+		writeProblem(writer, request, 409, "duplicate_priority", "Priority is already used", "Choose distinct plan priorities.")
 	case errors.Is(err, admin.ErrPreviewStale):
 		writeProblem(writer, request, 409, "preview_stale", "Confirmation expired", "Preview the changes again.")
 	case errors.Is(err, admin.ErrImpactChanged):
@@ -661,6 +678,8 @@ func (server *Server) writeAdminProblem(writer http.ResponseWriter, request *htt
 		writeProblem(writer, request, http.StatusUnprocessableEntity, "validation_failed", "Request could not be accepted", "One or more fields need attention.")
 	case errors.Is(err, ai.ErrCredentialMissing):
 		writeProblem(writer, request, http.StatusUnprocessableEntity, "credential_missing", "API key required", "Enter an API key for this connection.")
+	case errors.Is(err, capacity.ErrBusy):
+		server.writeGenerationBusyProblem(writer, request)
 	case errors.As(err, &providerError):
 		status := http.StatusBadGateway
 		code := "model_connection_unavailable"

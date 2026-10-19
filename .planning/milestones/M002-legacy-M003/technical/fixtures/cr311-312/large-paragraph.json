@@ -1,0 +1,464 @@
+{
+  "fixture_version": "M003-BE-08",
+  "contract_version": "m003-stream-v6",
+  "synthetic": true,
+  "coverage": [
+    "AC-325",
+    "AC-327"
+  ],
+  "request": {
+    "entries": [
+      "art",
+      "go"
+    ],
+    "meaning_language": "zh"
+  },
+  "wire": [
+    {
+      "event": "generation.started",
+      "data": {
+        "seq": 1,
+        "contract_version": "m003-stream-v6",
+        "stream_id": "stream-large-paragraph",
+        "run_id": "run-large-paragraph",
+        "generation_token": "fixture-not-a-real-token",
+        "snapshot": {
+          "configuration_revision": "fixture-revision",
+          "effective_plan": {
+            "code": "pro",
+            "origin": "base"
+          },
+          "content_service": {
+            "native_validation": true,
+            "content_review_enabled": true,
+            "content_repair_limit": 1
+          },
+          "native_correction_policy": {
+            "version": "m003-native-policy-v1",
+            "scope": "logical_request",
+            "max_calls": 2,
+            "editable": false
+          }
+        }
+      }
+    },
+    {
+      "event": "generation.progress",
+      "data": {
+        "seq": 2,
+        "phase": "planning"
+      }
+    },
+    {
+      "event": "generation.plan_item",
+      "data": {
+        "seq": 3,
+        "plan_id": "plan-large-paragraph",
+        "meaning_language": "zh",
+        "item": {
+          "kind": "scene",
+          "text": "朋友去看艺术作品。"
+        }
+      }
+    },
+    {
+      "event": "generation.plan_item",
+      "data": {
+        "seq": 4,
+        "plan_id": "plan-large-paragraph",
+        "meaning_language": "zh",
+        "item": {
+          "kind": "word_use",
+          "entry": "art",
+          "form": "art",
+          "sense": "暂定本篇用法",
+          "phrase": "modern art"
+        }
+      }
+    },
+    {
+      "event": "generation.plan_item",
+      "data": {
+        "seq": 5,
+        "plan_id": "plan-large-paragraph",
+        "meaning_language": "zh",
+        "item": {
+          "kind": "word_use",
+          "entry": "go",
+          "form": "go",
+          "sense": "暂定本篇用法",
+          "phrase": "go home"
+        }
+      }
+    },
+    {
+      "event": "generation.progress",
+      "data": {
+        "seq": 6,
+        "phase": "composing"
+      }
+    },
+    {
+      "event": "generation.activity",
+      "data": {
+        "seq": 7,
+        "activity": "writing"
+      }
+    },
+    {
+      "event": "generation.draft",
+      "data": {
+        "seq": 8,
+        "action": "begin",
+        "draft_id": "large-paragraph-d1",
+        "content_version": 1,
+        "mode": "initial",
+        "base_rev": 0
+      }
+    },
+    {
+      "event": "generation.edit",
+      "data": {
+        "seq": 9,
+        "draft_id": "large-paragraph-d1",
+        "content_version": 1,
+        "base_rev": 0,
+        "rev": 1,
+        "at": 0,
+        "delete_count": 0,
+        "insert": "We ",
+        "source": "provider"
+      }
+    },
+    {
+      "event": "generation.edit",
+      "data": {
+        "seq": 10,
+        "draft_id": "large-paragraph-d1",
+        "content_version": 1,
+        "base_rev": 1,
+        "rev": 2,
+        "at": 3,
+        "delete_count": 0,
+        "insert": "see art.\n\nWe go home.\n\nThe art stays.",
+        "source": "provider"
+      }
+    },
+    {
+      "event": "generation.draft",
+      "data": {
+        "seq": 11,
+        "action": "body_complete",
+        "draft_id": "large-paragraph-d1",
+        "content_version": 1,
+        "base_rev": 2,
+        "body_length": 40,
+        "paragraph_count": 3
+      }
+    },
+    {
+      "event": "generation.activity",
+      "data": {
+        "seq": 12,
+        "activity": "improving"
+      }
+    },
+    {
+      "event": "generation.draft",
+      "data": {
+        "seq": 13,
+        "action": "begin",
+        "draft_id": "large-paragraph-d2",
+        "content_version": 2,
+        "mode": "replace",
+        "base_rev": 2
+      }
+    },
+    {
+      "event": "generation.edit",
+      "data": {
+        "seq": 14,
+        "draft_id": "large-paragraph-d2",
+        "content_version": 2,
+        "base_rev": 2,
+        "rev": 3,
+        "at": 0,
+        "delete_count": 13,
+        "insert": "🎨 We study art and go slowly. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A us",
+        "source": "provider"
+      }
+    },
+    {
+      "event": "generation.edit",
+      "data": {
+        "seq": 15,
+        "draft_id": "large-paragraph-d2",
+        "content_version": 2,
+        "base_rev": 3,
+        "rev": 4,
+        "at": 2048,
+        "delete_count": 0,
+        "insert": "eful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. ",
+        "source": "provider"
+      }
+    },
+    {
+      "event": "generation.edit",
+      "data": {
+        "seq": 16,
+        "draft_id": "large-paragraph-d2",
+        "content_version": 2,
+        "base_rev": 4,
+        "rev": 5,
+        "at": 4096,
+        "delete_count": 0,
+        "insert": "A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful senten",
+        "source": "provider"
+      }
+    },
+    {
+      "event": "generation.edit",
+      "data": {
+        "seq": 17,
+        "draft_id": "large-paragraph-d2",
+        "content_version": 2,
+        "base_rev": 5,
+        "rev": 6,
+        "at": 6144,
+        "delete_count": 0,
+        "insert": "ce. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful se",
+        "source": "provider"
+      }
+    },
+    {
+      "event": "generation.edit",
+      "data": {
+        "seq": 18,
+        "draft_id": "large-paragraph-d2",
+        "content_version": 2,
+        "base_rev": 6,
+        "rev": 7,
+        "at": 8192,
+        "delete_count": 0,
+        "insert": "ntence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A usefu",
+        "source": "provider"
+      }
+    },
+    {
+      "event": "generation.edit",
+      "data": {
+        "seq": 19,
+        "draft_id": "large-paragraph-d2",
+        "content_version": 2,
+        "base_rev": 7,
+        "rev": 8,
+        "at": 10240,
+        "delete_count": 0,
+        "insert": "l sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A u",
+        "source": "provider"
+      }
+    },
+    {
+      "event": "generation.edit",
+      "data": {
+        "seq": 20,
+        "draft_id": "large-paragraph-d2",
+        "content_version": 2,
+        "base_rev": 8,
+        "rev": 9,
+        "at": 12288,
+        "delete_count": 0,
+        "insert": "seful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence.",
+        "source": "provider"
+      }
+    },
+    {
+      "event": "generation.edit",
+      "data": {
+        "seq": 21,
+        "draft_id": "large-paragraph-d2",
+        "content_version": 2,
+        "base_rev": 9,
+        "rev": 10,
+        "at": 14336,
+        "delete_count": 0,
+        "insert": " A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sente",
+        "source": "provider"
+      }
+    },
+    {
+      "event": "generation.edit",
+      "data": {
+        "seq": 22,
+        "draft_id": "large-paragraph-d2",
+        "content_version": 2,
+        "base_rev": 10,
+        "rev": 11,
+        "at": 16384,
+        "delete_count": 0,
+        "insert": "nce. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful s",
+        "source": "provider"
+      }
+    },
+    {
+      "event": "generation.edit",
+      "data": {
+        "seq": 23,
+        "draft_id": "large-paragraph-d2",
+        "content_version": 2,
+        "base_rev": 11,
+        "rev": 12,
+        "at": 18432,
+        "delete_count": 0,
+        "insert": "entence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A usef",
+        "source": "provider"
+      }
+    },
+    {
+      "event": "generation.edit",
+      "data": {
+        "seq": 24,
+        "draft_id": "large-paragraph-d2",
+        "content_version": 2,
+        "base_rev": 12,
+        "rev": 13,
+        "at": 20480,
+        "delete_count": 0,
+        "insert": "ul sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. \n\n",
+        "source": "provider"
+      }
+    },
+    {
+      "event": "generation.draft",
+      "data": {
+        "seq": 25,
+        "action": "paragraph_complete",
+        "draft_id": "large-paragraph-d2",
+        "content_version": 2,
+        "base_rev": 13,
+        "paragraph_index": 0
+      }
+    },
+    {
+      "event": "generation.edit",
+      "data": {
+        "seq": 26,
+        "draft_id": "large-paragraph-d2",
+        "content_version": 2,
+        "base_rev": 13,
+        "rev": 14,
+        "at": 20932,
+        "delete_count": 27,
+        "insert": "We go home.",
+        "source": "provider"
+      }
+    },
+    {
+      "event": "generation.draft",
+      "data": {
+        "seq": 27,
+        "action": "body_complete",
+        "draft_id": "large-paragraph-d2",
+        "content_version": 2,
+        "base_rev": 14,
+        "body_length": 20943,
+        "paragraph_count": 2
+      }
+    },
+    {
+      "event": "generation.progress",
+      "data": {
+        "seq": 28,
+        "phase": "finalizing"
+      }
+    },
+    {
+      "event": "generation.validated",
+      "data": {
+        "seq": 29,
+        "run_id": "run-large-paragraph",
+        "final_content_version": 2,
+        "result": {
+          "passage": "🎨 We study art and go slowly. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. \n\nWe go home.",
+          "tags": [
+            "日常"
+          ],
+          "targets": [
+            {
+              "entry": "art",
+              "entry_meaning": "艺术",
+              "hint_phrase": "modern art",
+              "hint_blanks": [
+                {
+                  "start": 7,
+                  "end": 10
+                }
+              ],
+              "occurrences": [
+                {
+                  "surface": "art",
+                  "start": 11,
+                  "end": 14
+                }
+              ]
+            },
+            {
+              "entry": "go",
+              "entry_meaning": "去",
+              "hint_phrase": "go home",
+              "hint_blanks": [
+                {
+                  "start": 0,
+                  "end": 2
+                }
+              ],
+              "occurrences": [
+                {
+                  "surface": "go",
+                  "start": 19,
+                  "end": 21
+                },
+                {
+                  "surface": "go",
+                  "start": 20935,
+                  "end": 20937
+                }
+              ]
+            }
+          ]
+        },
+        "content_outcome": "review_passed",
+        "completion_notice": null
+      }
+    }
+  ],
+  "checkpoints": [
+    {
+      "after_seq": 9,
+      "label": "initial first safe word immediately visible",
+      "published": "We ",
+      "working": "We ",
+      "rev": 1,
+      "can_save": false
+    },
+    {
+      "after_seq": 11,
+      "label": "initial body complete, private metadata/validation still pending",
+      "published": "We see art.\n\nWe go home.\n\nThe art stays.",
+      "working": "We see art.\n\nWe go home.\n\nThe art stays.",
+      "rev": 2,
+      "can_save": false
+    },
+    {
+      "after_seq": 24,
+      "label": "more than 16KiB staged across <=2048-codepoint edits; old whole draft remains",
+      "published": "We see art.\n\nWe go home.\n\nThe art stays.",
+      "working": "🎨 We study art and go slowly. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. A useful sentence. \n\nWe go home.\n\nThe art stays.",
+      "rev": 13,
+      "can_save": false
+    }
+  ],
+  "notes": [
+    "No long paragraph rejection; no artificial model paragraph splitting."
+  ]
+}

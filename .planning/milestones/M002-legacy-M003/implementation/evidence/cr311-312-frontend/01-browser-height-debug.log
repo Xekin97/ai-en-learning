@@ -1,0 +1,34 @@
+
+Running 1 test using 1 worker
+
+  ✘  1 [desktop] › tests/e2e/m003-cr311-312.spec.ts:46:1 › 1440 Chinese create preserves nodes through typing, repair, and valid (5.6s)
+
+
+  1) [desktop] › tests/e2e/m003-cr311-312.spec.ts:46:1 › 1440 Chinese create preserves nodes through typing, repair, and valid 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    Expected: {"duration": 220, "frames": ArrayContaining [StringMatching /px$/]}
+    Received: undefined
+
+      165 |       .find((entry) => entry.frames && entry.frames.length === 2),
+      166 |   );
+    > 167 |   expect(replacementHeightMotion).toEqual({
+          |                                   ^
+      168 |     duration: 220,
+      169 |     frames: expect.arrayContaining([expect.stringMatching(/px$/)]),
+      170 |   });
+        at /Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/frontend/tests/e2e/m003-cr311-312.spec.ts:167:35
+
+    Error Context: test-results/m003-cr311-312-1440-Chines-24c4b-ugh-typing-repair-and-valid-desktop/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/m003-cr311-312-1440-Chines-24c4b-ugh-typing-repair-and-valid-desktop/trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace test-results/m003-cr311-312-1440-Chines-24c4b-ugh-typing-repair-and-valid-desktop/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [desktop] › tests/e2e/m003-cr311-312.spec.ts:46:1 › 1440 Chinese create preserves nodes through typing, repair, and valid 

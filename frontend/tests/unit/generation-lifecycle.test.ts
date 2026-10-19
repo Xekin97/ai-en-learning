@@ -1,6 +1,7 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { computed, effectScope, readonly, ref, watch, type Ref } from "vue";
 import { useGenerationStore } from "@runtime/stores/generation";
+import { paragraphTexts } from "@application/generation/draft-reducer";
 import { resetPrivateStates } from "@runtime/session/private-state";
 import type { GenerationEventModel } from "@application/shared/models";
 
@@ -24,7 +25,14 @@ const validated = (id: string): GenerationEventModel => ({
     passage: "We learn.",
     passageSegments: [{ kind: "text", text: "We learn." }],
     tags: ["Study"],
-    targets: [],
+    targets: [
+      {
+        entry: "learn",
+        entryMeaning: "学习",
+        hintPhrase: "learn",
+        hintSegments: [{ kind: "text", text: "learn" }],
+      },
+    ],
   },
 });
 const tick = async () => {
@@ -37,6 +45,7 @@ function harness() {
     done: ReturnType<typeof deferred<undefined>>;
   }[] = [];
   const security = vi.fn(async () => {});
+  const feedback = { show: vi.fn() };
   const cancelReply = deferred<"cancelled" | "valid" | "failed">();
   const savedReply = deferred<{ batchId: string; savedAt: string }>();
   const discardedReply = deferred<undefined>();
@@ -45,14 +54,133 @@ function harness() {
       entries: ["learn"],
       version: "test",
     })),
+    randomEntry: vi.fn(async () => ({ entry: "practice", reason: null })),
     saveGeneration: vi.fn(() => savedReply.promise),
     discardGeneration: vi.fn(() => discardedReply.promise),
     streamGeneration: vi.fn((_input, emit, signal) => {
       const done = deferred<undefined>();
-      streams.push({ emit, signal, done });
+      let seq = 0,
+        rev = 0,
+        begun = false;
+      const draft = "draft";
+      let phase: "accepted" | "planning" | "composing" | "finalizing" =
+        "accepted";
+      const mapped = (
+        legacy: GenerationEventModel & { text?: string; at?: number },
+      ) => {
+        if (legacy.kind === "started") {
+          seq = 1;
+          emit({
+            kind: "started",
+            seq: 1,
+            streamId: "stream-" + legacy.runId,
+            runId: legacy.runId,
+            snapshot: {
+              configurationRevision: "rev",
+              effectivePlan: { code: "basic", origin: "base" },
+              contentService: {
+                nativeValidation: true,
+                contentReviewEnabled: false,
+                contentRepairLimit: 0,
+              },
+              nativeCorrectionPolicy: {
+                version: "m003-native-policy-v1",
+                scope: "logical_request",
+                maxCalls: 2,
+                editable: false,
+              },
+            },
+          });
+          return;
+        }
+        const composing = () => {
+          if (phase === "accepted") {
+            emit({ kind: "progress", seq: ++seq, phase: "planning" });
+            phase = "planning";
+          }
+          if (phase === "planning") {
+            emit({ kind: "progress", seq: ++seq, phase: "composing" });
+            phase = "composing";
+          }
+        };
+        if (legacy.kind === "progress") {
+          phase = legacy.phase;
+          emit({ ...legacy, seq: ++seq });
+          return;
+        }
+        if (legacy.kind === "plan_item") {
+          emit({ ...legacy, seq: ++seq });
+          return;
+        }
+        if (legacy.kind === "delta") {
+          composing();
+          if (!begun) {
+            emit({
+              kind: "draft",
+              seq: ++seq,
+              action: "begin",
+              draftId: draft,
+              contentVersion: 1,
+              baseRev: rev,
+              mode: "initial",
+            });
+            begun = true;
+          }
+          emit({
+            kind: "edit",
+            seq: ++seq,
+            draftId: draft,
+            contentVersion: 1,
+            baseRev: rev,
+            rev: ++rev,
+            at: legacy.at ?? 0,
+            deleteCount: 0,
+            insert: legacy.text,
+            source: "provider",
+          });
+          return;
+        }
+        if (legacy.kind === "validated") {
+          composing();
+          if (begun) {
+            emit({
+              kind: "draft",
+              seq: ++seq,
+              action: "body_complete",
+              draftId: draft,
+              contentVersion: 1,
+              baseRev: rev,
+              bodyLength: Array.from(legacy.result.passage).length,
+              paragraphCount: paragraphTexts(legacy.result.passage).length,
+            });
+          }
+          emit({ kind: "progress", seq: ++seq, phase: "finalizing" });
+          phase = "finalizing";
+          emit({
+            ...legacy,
+            seq: ++seq,
+            finalContentVersion: 1,
+            contentOutcome: "basic",
+            completionNotice: null,
+          });
+          return;
+        }
+        emit({ ...legacy, seq: ++seq });
+      };
+      streams.push({ emit: mapped, signal, done });
       return done.promise;
     }),
     cancelGeneration: vi.fn(() => cancelReply.promise),
+    getGenerationStatus: vi.fn(async () => {
+      throw {
+        kind: "capability_expired",
+        code: "capability_expired",
+        status: 410,
+        requestId: null,
+        fields: {},
+        retryable: false,
+      };
+    }),
     getGenerationOptions: vi.fn(async () => ({
       models: [{ id: "model", name: "Model", description: null }],
       meaningLanguages: ["en"],
@@ -66,7 +194,7 @@ function harness() {
   const app = { $api: api };
   const states = new Map<string, Ref<unknown>>();
   const epoch = ref(1);
-  vi.stubGlobal("useFeedbackStore", () => ({ show: vi.fn() }));
+  vi.stubGlobal("useFeedbackStore", () => feedback);
   vi.stubGlobal("useNuxtApp", () => app);
   vi.stubGlobal("useSessionStore", () => ({
     epoch,
@@ -96,6 +224,7 @@ function harness() {
     scope,
     streams,
     api,
+    feedback,
     security,
     cancelReply,
     savedReply,
@@ -107,9 +236,162 @@ function harness() {
     },
   };
 }
-afterEach(() => vi.unstubAllGlobals());
+afterEach(() => {
+  vi.useRealTimers();
+  vi.unstubAllGlobals();
+});
 
 describe("G14 generation request ownership", () => {
+  it("keeps a previously selected target while consuming filtered candidates and no-candidates", async () => {
+    const h = harness();
+    h.api.searchVocabulary.mockResolvedValueOnce({
+      entries: ["the"],
+      version: "before-policy",
+    });
+    await h.store.loadOptions();
+    h.store.setModel("model");
+    h.store.setMeaningLanguage("en");
+    h.store.setScenario("story");
+    h.store.setLength("short");
+    await h.store.searchVocabulary("the");
+    h.store.addEntry("the");
+
+    h.api.searchVocabulary.mockResolvedValueOnce({
+      entries: ["theater", "another"],
+      version: "candidate-policy-v1",
+    });
+    await h.store.searchVocabulary("the");
+    expect(h.store.state.value.selectedEntries).toEqual(["the"]);
+    expect(h.store.state.value.candidates).toEqual(["theater", "another"]);
+
+    h.api.randomEntry.mockResolvedValueOnce({
+      entry: null,
+      reason: "no_candidates",
+    });
+    await h.store.randomEntry();
+    expect(h.api.randomEntry).toHaveBeenLastCalledWith(["the"]);
+    expect(h.feedback.show).toHaveBeenLastCalledWith("random.none");
+
+    const generation = h.store.generate();
+    await tick();
+    expect(h.api.streamGeneration.mock.calls[0]?.[0]).toMatchObject({
+      entries: ["the"],
+    });
+    h.streams[0]!.emit({ kind: "started", runId: "old-target" });
+    const terminal = validated("old-target");
+    terminal.result.targets[0]!.entry = "the";
+    h.streams[0]!.emit(terminal);
+    h.streams[0]!.done.resolve(undefined);
+    await expect(generation).resolves.toBe(true);
+    h.scope.stop();
+  });
+
+  it("honors generation_busy Retry-After without automatically resubmitting", async () => {
+    const h = harness();
+    await h.select();
+    vi.useFakeTimers();
+    h.api.streamGeneration.mockRejectedValueOnce({
+      kind: "service_unavailable",
+      code: "generation_busy",
+      status: 503,
+      requestId: "busy-request",
+      fields: {},
+      retryable: true,
+      accepted: false,
+      retryAfterSeconds: 3,
+    });
+    expect(await h.store.generate()).toBe(false);
+    expect(h.store.canSubmit.value).toBe(false);
+    expect(h.api.streamGeneration).toHaveBeenCalledTimes(1);
+    await vi.advanceTimersByTimeAsync(2_999);
+    expect(h.store.canSubmit.value).toBe(false);
+    await vi.advanceTimersByTimeAsync(1);
+    expect(h.store.canSubmit.value).toBe(true);
+    expect(h.api.streamGeneration).toHaveBeenCalledTimes(1);
+    h.scope.stop();
+  });
+
+  it("cancels a hanging automatic status read at the ten-second deadline", async () => {
+    const h = harness();
+    await h.select();
+    vi.useFakeTimers();
+    let statusSignal: AbortSignal | undefined;
+    h.api.getGenerationStatus.mockImplementation(
+      (_runId: string, signal?: AbortSignal) => {
+        statusSignal = signal;
+        return new Promise((_resolve, reject) =>
+          signal?.addEventListener(
+            "abort",
+            () => reject(new DOMException("Aborted", "AbortError")),
+            { once: true },
+          ),
+        );
+      },
+    );
+    const pending = h.store.generate();
+    await tick();
+    h.streams[0]!.emit({ kind: "started", runId: "one" });
+    h.streams[0]!.emit({
+      kind: "settlement_pending",
+      code: "settlement_unconfirmed",
+      requestId: "request",
+    });
+    h.streams[0]!.done.resolve(undefined);
+    await tick();
+    expect(statusSignal?.aborted).toBe(false);
+    await vi.advanceTimersByTimeAsync(10_000);
+    expect(statusSignal?.aborted).toBe(true);
+    expect(await pending).toBe(false);
+    expect(h.store.state.value.generation.phase).toBe("pending");
+    h.scope.stop();
+  });
+
+  it("retains the visible plan and draft when valid status reports an unavailable result", async () => {
+    const h = harness();
+    await h.select();
+    const pending = h.store.generate();
+    await tick();
+    h.streams[0]!.emit({ kind: "started", runId: "one" });
+    h.streams[0]!.emit({ kind: "progress", phase: "planning" });
+    h.streams[0]!.emit({
+      kind: "plan_item",
+      planId: "plan",
+      meaningLanguage: "en",
+      item: { kind: "scene", text: "A library" },
+    });
+    h.streams[0]!.emit({ kind: "progress", phase: "composing" });
+    h.streams[0]!.emit({ kind: "delta", text: "Visible draft" });
+    const snapshot = h.store.state.value.generation.acceptedSnapshot!;
+    h.api.getGenerationStatus.mockResolvedValueOnce({
+      status: "valid",
+      runId: "one",
+      snapshot,
+      finalContentVersion: 1,
+      result: null,
+      contentOutcome: "service_incomplete",
+      completionNotice: "content_review_incomplete",
+      canSave: false,
+      quotaRefunded: false,
+    });
+    h.streams[0]!.emit({
+      kind: "settlement_pending",
+      code: "settlement_unconfirmed",
+      requestId: "request",
+    });
+    h.streams[0]!.done.resolve(undefined);
+    expect(await pending).toBe(true);
+    expect(h.store.state.value.generation).toMatchObject({
+      phase: "valid",
+      streamedText: "Visible draft",
+      planItems: [{ kind: "scene", text: "A library" }],
+      result: null,
+      resultUnavailable: true,
+      contentOutcome: "service_incomplete",
+      completionNotice: "content_review_incomplete",
+      canSave: false,
+    });
+    h.scope.stop();
+  });
   it("does not submit twice while refreshing the security context", async () => {
     const h = harness();
     await h.select();
@@ -207,7 +489,7 @@ describe("G14 generation request ownership", () => {
       h.scope.stop();
     },
   );
-  it("treats EOF without a terminal as failure and disallows saving", async () => {
+  it("keeps EOF without a terminal pending and disallows saving", async () => {
     const h = harness();
     await h.select();
     const pending = h.store.generate();
@@ -217,7 +499,7 @@ describe("G14 generation request ownership", () => {
     h.streams[0]!.done.resolve(undefined);
     expect(await pending).toBe(false);
     expect(h.store.state.value.generation).toMatchObject({
-      phase: "failed",
+      phase: "pending",
       result: null,
     });
     await expect(h.store.save()).rejects.toThrow();
@@ -261,6 +543,123 @@ describe("G14 generation request ownership", () => {
 });
 
 describe("G14 saved/discarded draft ownership", () => {
+  it("returns a receipt only after the current valid run is discarded", async () => {
+    const h = harness();
+    await h.select();
+    const generated = h.store.generate();
+    await tick();
+    h.streams[0]!.emit({ kind: "started", runId: "old" });
+    h.streams[0]!.emit(validated("old"));
+    h.streams[0]!.done.resolve(undefined);
+    await generated;
+
+    const discarded = h.store.discard();
+    await tick();
+    expect(h.api.discardGeneration).toHaveBeenCalledWith("old");
+    h.discardedReply.resolve(undefined);
+    const receipt = await discarded;
+    expect(receipt).toEqual({
+      runId: "old",
+      clearedGeneration: h.store.state.value.generation,
+    });
+    expect(receipt?.clearedGeneration).toBe(h.store.state.value.generation);
+    expect(h.store.state.value.generation.phase).toBe("idle");
+    h.scope.stop();
+  });
+
+  it("returns no discard receipt when identity changes during security refresh", async () => {
+    const h = harness();
+    await h.select();
+    const generated = h.store.generate();
+    await tick();
+    h.streams[0]!.emit({ kind: "started", runId: "old" });
+    h.streams[0]!.emit(validated("old"));
+    h.streams[0]!.done.resolve(undefined);
+    await generated;
+    const refresh = deferred<undefined>();
+    h.security.mockImplementation(() => refresh.promise);
+
+    const discarded = h.store.discard();
+    h.changeIdentity();
+    refresh.resolve(undefined);
+    expect(await discarded).toBeNull();
+    expect(h.api.discardGeneration).not.toHaveBeenCalled();
+    expect(h.store.state.value.generation.phase).toBe("idle");
+    h.scope.stop();
+  });
+
+  it("does not clear a new task when a stale discard reply arrives", async () => {
+    const h = harness();
+    await h.select();
+    const generated = h.store.generate();
+    await tick();
+    h.streams[0]!.emit({ kind: "started", runId: "old" });
+    h.streams[0]!.emit(validated("old"));
+    h.streams[0]!.done.resolve(undefined);
+    await generated;
+
+    const discarded = h.store.discard();
+    await tick();
+    h.store.startNewTask();
+    await h.select();
+    const next = h.store.generate();
+    await tick();
+    h.streams[1]!.emit({ kind: "started", runId: "new" });
+    h.discardedReply.resolve(undefined);
+
+    expect(await discarded).toBeNull();
+    expect(h.store.state.value.generation).toMatchObject({
+      phase: "streaming",
+      runId: "new",
+    });
+    h.store.abortPassive();
+    h.streams[1]!.done.resolve(undefined);
+    await next;
+    h.scope.stop();
+  });
+
+  it("keeps the valid result when discard fails", async () => {
+    const h = harness();
+    await h.select();
+    const generated = h.store.generate();
+    await tick();
+    h.streams[0]!.emit({ kind: "started", runId: "old" });
+    h.streams[0]!.emit(validated("old"));
+    h.streams[0]!.done.resolve(undefined);
+    await generated;
+
+    const discarded = h.store.discard();
+    await tick();
+    h.discardedReply.reject(new Error("discard unavailable"));
+    await expect(discarded).rejects.toThrow("discard unavailable");
+    expect(h.store.state.value.generation).toMatchObject({
+      phase: "valid",
+      runId: "old",
+      result: { passage: "We learn." },
+    });
+    h.scope.stop();
+  });
+
+  it("rejects a direct generation while settlement is pending", async () => {
+    const h = harness();
+    await h.select();
+    const first = h.store.generate();
+    await tick();
+    h.streams[0]!.emit({ kind: "started", runId: "old" });
+    h.streams[0]!.emit({
+      kind: "settlement_pending",
+      code: "settlement_unconfirmed",
+      requestId: "request",
+    });
+    expect(h.store.state.value.generation.phase).toBe("pending");
+    expect(h.store.canSubmit.value).toBe(false);
+    expect(await h.store.generate()).toBe(false);
+    expect(h.api.streamGeneration).toHaveBeenCalledTimes(1);
+    h.streams[0]!.done.resolve(undefined);
+    await first;
+    h.scope.stop();
+  });
+
   it.each(["save", "discard"] as const)(
     "does not apply a late %s to a new task",
     async (action) => {
@@ -325,29 +724,48 @@ describe("G14 saved/discarded draft ownership", () => {
 
 describe("G14 cancellation races", () => {
   it.each(["valid", "failed"] as const)(
-    "keeps reading when cancellation loses to %s",
+    "reads authoritative status when cancellation loses to %s",
     async (terminal) => {
       const h = harness();
       await h.select();
       const pending = h.store.generate();
       await tick();
       h.streams[0]!.emit({ kind: "started", runId: "one" });
+      const snapshot = {
+        configurationRevision: "rev",
+        effectivePlan: { code: "basic" as const, origin: "base" as const },
+        contentService: {
+          nativeValidation: true as const,
+          contentReviewEnabled: false as const,
+          contentRepairLimit: 0 as const,
+        },
+        nativeCorrectionPolicy: {
+          version: "m003-native-policy-v1" as const,
+          scope: "logical_request" as const,
+          maxCalls: 2 as const,
+          editable: false as const,
+        },
+      };
+      h.api.getGenerationStatus.mockResolvedValueOnce(
+        terminal === "valid"
+          ? {
+              status: "valid",
+              runId: "one",
+              snapshot,
+              finalContentVersion: 1,
+              result: validated("one").result,
+              contentOutcome: "basic",
+              completionNotice: null,
+              canSave: true,
+              quotaRefunded: false,
+            }
+          : { status: "failed", runId: "one", snapshot, quotaRefunded: true },
+      );
       const cancel = h.store.cancel();
       h.cancelReply.resolve(terminal);
       await cancel;
-      expect(h.streams[0]!.signal.aborted).toBe(false);
-      expect(h.store.state.value.generation.phase).toBe("streaming");
-      h.streams[0]!.emit(
-        terminal === "valid"
-          ? validated("one")
-          : {
-              kind: "failed",
-              code: "provider_unavailable",
-              quotaRefunded: true,
-              retryable: true,
-              requestId: "r",
-            },
-      );
+      expect(h.streams[0]!.signal.aborted).toBe(true);
+      expect(h.store.state.value.generation.phase).toBe(terminal);
       h.streams[0]!.done.resolve(undefined);
       await pending;
       expect(h.store.state.value.generation.phase).toBe(terminal);

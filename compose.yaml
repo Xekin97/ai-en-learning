@@ -17,6 +17,15 @@ x-backend-environment: &backend-environment
   LOG_LEVEL: ${LOG_LEVEL:-info}
   APP_DB_MAX_CONNS: ${APP_DB_MAX_CONNS:-4}
   AI_DB_MAX_CONNS: ${AI_DB_MAX_CONNS:-4}
+  SHUTDOWN_TIMEOUT: ${SHUTDOWN_TIMEOUT:-650s}
+  GENERATION_MAX_IN_FLIGHT: ${GENERATION_MAX_IN_FLIGHT:?set GENERATION_MAX_IN_FLIGHT to a validated production capacity}
+  PREVIEW_MAX_IN_FLIGHT: ${PREVIEW_MAX_IN_FLIGHT:?set PREVIEW_MAX_IN_FLIGHT (must be 1)}
+  GENERATION_PROBE_MAX_IN_FLIGHT: ${GENERATION_PROBE_MAX_IN_FLIGHT:?set GENERATION_PROBE_MAX_IN_FLIGHT (must be 1)}
+  GENERATION_PREFLIGHT_MAX: ${GENERATION_PREFLIGHT_MAX:?set GENERATION_PREFLIGHT_MAX to a validated positive capacity}
+  AI_CONNECTION_MAX_IN_FLIGHT: ${AI_CONNECTION_MAX_IN_FLIGHT:?set AI_CONNECTION_MAX_IN_FLIGHT to the verified provider/account limit}
+  AI_CONNECTION_DEFAULT_CAPACITY_GROUP: ${AI_CONNECTION_DEFAULT_CAPACITY_GROUP:?set a conservative group for unmapped connections}
+  AI_CONNECTION_CAPACITY_GROUPS: ${AI_CONNECTION_CAPACITY_GROUPS:-{}}
+  GENERATION_BUSY_RETRY_AFTER: ${GENERATION_BUSY_RETRY_AFTER:?set GENERATION_BUSY_RETRY_AFTER between 1s and 600s}
   TRUSTED_PROXY_CIDRS: ${TRUSTED_PROXY_CIDRS:-172.30.0.0/24}
 
 services:
@@ -54,6 +63,9 @@ services:
     build:
       context: ./backend
     environment: *backend-environment
+    deploy:
+      replicas: 1
+    stop_grace_period: 660s
     expose:
       - "8080"
       - "9090"

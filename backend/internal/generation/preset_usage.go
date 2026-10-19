@@ -34,7 +34,7 @@ func (s *Service) PreviewUsageHistory(ctx context.Context, start, end time.Time,
 		return summary, items, false, err
 	}
 	var cost *string
-	err = tx.QueryRow(ctx, `SELECT `+usageAggregate+` FROM wordweave.ai_call_usage u WHERE EXISTS(SELECT 1 FROM wordweave.preset_preview_runs r WHERE r.id=u.preview_run_id AND r.started_at>=$1 AND r.started_at<$2)`, from, until).Scan(&summary.ProviderCalls, &summary.InputTokens, &summary.OutputTokens, &cost, &summary.UnknownCalls)
+	err = tx.QueryRow(ctx, `SELECT `+usageAggregate+` FROM wordweave.ai_call_usage u WHERE EXISTS(SELECT 1 FROM wordweave.preset_preview_runs r WHERE r.id=u.preview_run_id AND r.started_at>=$1 AND r.started_at<$2)`, from, until).Scan(&summary.ProviderCalls, &summary.InputTokens, &summary.OutputTokens, &cost, &summary.UnknownCalls, &summary.InvocationUnknownCalls, &summary.NotInvokedCalls)
 	if err != nil {
 		return summary, items, false, err
 	}

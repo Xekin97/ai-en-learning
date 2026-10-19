@@ -6,10 +6,11 @@ import { createAnalyticsRepository } from "./analytics-repository";
 import { createAdminNoticesRepository } from "./admin-notices-repository";
 import { createAdminUserBenefitsRepository } from "./admin-user-benefits-repository";
 import { createAdminConfigurationRepository } from "./admin-configuration-repository";
+import { createConfigPortabilityRepository } from "./config-portability-repository";
 import { createBenefitsRepository } from "./benefits-repository";
 import { createGrowthRepository } from "./growth-repository";
 import { createReviewRepository } from "./review-repository";
-import { createParser, type EventSourceMessage } from "eventsource-parser";
+import { createParser } from "eventsource-parser";
 import { normalizeFailure } from "@application/shared/failure";
 import type { ApiPort } from "@application/shared/ports";
 import type {
@@ -31,11 +32,17 @@ import {
   claimEnvelopeSchema,
   generationCancelEnvelopeSchema,
   generationCancelledEventSchema,
+  generationActivityEventSchema,
+  generationDraftEventSchema,
+  generationEditEventSchema,
   generationFailedEventSchema,
   generationOptionsEnvelopeSchema,
+  generationPlanItemEventSchema,
+  generationProgressEventSchema,
+  generationSettlementPendingEventSchema,
   generationStartedEventSchema,
+  generationStatusEnvelopeSchema,
   generationValidatedEventSchema,
-  passageDeltaEventSchema,
   vocabularyEnvelopeSchema,
   randomEntryEnvelopeSchema,
 } from "../schemas/generation";
@@ -74,6 +81,7 @@ import {
   mapBootstrapDto,
   mapModelConnectionDto,
   mapGenerationOptionsDto,
+  mapGenerationStatusDto,
   mapGenerationValidatedDto,
   mapGroupDto,
   mapLearningSummaryDto,
@@ -109,6 +117,7 @@ export function createApiRepository(
     ...createAdminNoticesRepository(transport, vault),
     ...createAdminUserBenefitsRepository(transport, vault),
     ...createAdminConfigurationRepository(transport, vault),
+    ...createConfigPortabilityRepository(transport, vault),
     ...createNoticesRepository(transport),
     ...createPresetsRepository(transport),
     ...createReviewRepository(transport, vault),
@@ -274,6 +283,19 @@ export function createApiRepository(
       );
       return envelope.data.status;
     },
+    async getGenerationStatus(runId, signal) {
+      const headers = new Headers({
+        "x-generation-token": vault.generation(runId),
+      });
+      const envelope = await json(
+        transport,
+        `/api/v1/generations/${encodeURIComponent(runId)}/status`,
+        generationStatusEnvelopeSchema,
+        signal ? { headers, signal } : { headers },
+      );
+      if (envelope.data.run_id !== runId) throw contractFailure();
+      return mapGenerationStatusDto(envelope.data);
+    },
     async saveGeneration(runId) {
       const headers = mutation({
         "x-generation-token": vault.generation(runId),
@@ -431,6 +453,7 @@ export function createApiRepository(
               provider_model_id: m.providerModelId,
               max_output_tokens: m.maxOutputTokens,
               output_mode: m.outputMode,
+              custom_parameters: m.customParameters,
               enabled: m.enabled,
             })),
           }),
@@ -502,6 +525,7 @@ export function createApiRepository(
         providerModelId: "",
         maxOutputTokens: null,
         outputMode: "prompt",
+        customParameters: {},
         enabled: false,
       });
       const envelope = await json(
@@ -521,6 +545,7 @@ export function createApiRepository(
               provider_model_id: model.providerModelId,
               max_output_tokens: model.maxOutputTokens,
               output_mode: model.outputMode,
+              custom_parameters: model.customParameters,
               enabled: model.enabled,
             })),
           }),
@@ -564,7 +589,11 @@ export function createApiRepository(
         adminGroupsEnvelopeSchema,
       );
       return envelope.data.items.map((item) =>
-        mapGroupDto(item, envelope.data.revision),
+        mapGroupDto(
+          item,
+          envelope.data.revision,
+          envelope.data.native_correction_policy,
+        ),
       );
     },
     async putGroup(code, input) {
@@ -582,10 +611,16 @@ export function createApiRepository(
             max_entries: input.maxEntries,
             allowed_lengths: input.allowedLengths,
             model_ids: input.modelIds,
+            content_review_enabled: input.contentReviewEnabled,
+            content_repair_limit: input.contentRepairLimit,
           }),
         },
       );
-      return mapGroupDto(envelope.data.group, envelope.data.revision);
+      return mapGroupDto(
+        envelope.data.group,
+        envelope.data.revision,
+        envelope.data.native_correction_policy,
+      );
     },
     async listUsers(input = {}) {
       const query = new URLSearchParams({ limit: "20" });
@@ -722,32 +757,47 @@ async function streamGeneration(
   let runId: string | null = null;
   let terminal: GenerationEventModel["kind"] | null = null;
   let parseError: ReturnType<typeof normalizeFailure> | null = null;
+  let previousWire: string | null = null;
+  let previousEvent: string | null = null;
   const invalid = () => ({ ...contractFailure(), requestId });
   const parser = createParser({
-    maxBufferSize: 1_048_576,
+    maxBufferSize: 32 * 1_048_576,
     onError() {
       if (!terminal) parseError = invalid();
     },
     onEvent(message) {
       if (terminal || parseError) return;
       try {
+        const eventName = message.event ?? "";
+        const raw: unknown = JSON.parse(message.data);
+        const wire = `${eventName}\n${JSON.stringify(raw)}`;
         if (
-          (runId === null && message.event !== "generation.started") ||
-          (runId !== null && message.event === "generation.started")
+          runId !== null &&
+          eventName === "generation.started" &&
+          previousEvent === "generation.started" &&
+          previousWire === wire
+        )
+          return;
+        if (
+          (runId === null && eventName !== "generation.started") ||
+          (runId !== null && eventName === "generation.started")
         )
           throw invalid();
-        mapStreamMessage(message, vault, (event) => {
+        mapStreamMessage(eventName, raw, vault, (event) => {
           if (event.kind === "started") runId = event.runId;
           if (event.kind === "validated" && event.runId !== runId)
             throw invalid();
           if (
             event.kind === "validated" ||
             event.kind === "failed" ||
-            event.kind === "cancelled"
+            event.kind === "cancelled" ||
+            event.kind === "settlement_pending"
           )
             terminal = event.kind;
           onEvent(event);
         });
+        previousEvent = eventName;
+        previousWire = wire;
       } catch (error) {
         parseError = { ...normalizeFailure(error), requestId };
       }
@@ -784,35 +834,127 @@ async function streamGeneration(
     signal.removeEventListener("abort", abort);
     await reader.cancel().catch(() => {});
     reader.releaseLock();
-    if (runId !== null && terminal !== "validated")
+    if (runId !== null && (terminal === "failed" || terminal === "cancelled"))
       vault.clearGeneration(runId);
   }
 }
 
 function mapStreamMessage(
-  message: EventSourceMessage,
+  eventName: string,
+  raw: unknown,
   vault: TokenVault,
   onEvent: (event: GenerationEventModel) => void,
 ): void {
-  const raw: unknown = JSON.parse(message.data);
-  switch (message.event) {
+  switch (eventName) {
     case "generation.started": {
       const dto = generationStartedEventSchema.parse(raw);
       vault.setGeneration(dto.run_id, dto.generation_token);
-      onEvent({ kind: "started", runId: dto.run_id });
+      onEvent({
+        kind: "started",
+        seq: dto.seq,
+        streamId: dto.stream_id,
+        runId: dto.run_id,
+        snapshot: {
+          configurationRevision: dto.snapshot.configuration_revision,
+          effectivePlan: {
+            code: dto.snapshot.effective_plan.code,
+            origin: dto.snapshot.effective_plan.origin,
+          },
+          contentService: {
+            nativeValidation: true,
+            contentReviewEnabled:
+              dto.snapshot.content_service.content_review_enabled,
+            contentRepairLimit:
+              dto.snapshot.content_service.content_repair_limit,
+          } as Extract<
+            GenerationEventModel,
+            { kind: "started" }
+          >["snapshot"]["contentService"],
+          nativeCorrectionPolicy: {
+            version: dto.snapshot.native_correction_policy.version,
+            scope: dto.snapshot.native_correction_policy.scope,
+            maxCalls: dto.snapshot.native_correction_policy.max_calls,
+            editable: dto.snapshot.native_correction_policy.editable,
+          },
+        },
+      } as GenerationEventModel);
       return;
     }
-    case "passage.delta": {
-      const dto = passageDeltaEventSchema.parse(raw);
-      onEvent({ kind: "delta", text: dto.text });
+    case "generation.progress": {
+      const dto = generationProgressEventSchema.parse(raw);
+      onEvent({ kind: "progress", seq: dto.seq, phase: dto.phase });
+      return;
+    }
+    case "generation.plan_item": {
+      const dto = generationPlanItemEventSchema.parse(raw);
+      onEvent({
+        kind: "plan_item",
+        seq: dto.seq,
+        planId: dto.plan_id,
+        meaningLanguage: dto.meaning_language,
+        item: dto.item,
+      });
+      return;
+    }
+    case "generation.activity": {
+      const dto = generationActivityEventSchema.parse(raw);
+      onEvent({ kind: "activity", seq: dto.seq, activity: dto.activity });
+      return;
+    }
+    case "generation.draft": {
+      const dto = generationDraftEventSchema.parse(raw);
+      const common = {
+        kind: "draft" as const,
+        seq: dto.seq,
+        action: dto.action,
+        draftId: dto.draft_id,
+        contentVersion: dto.content_version,
+        baseRev: dto.base_rev,
+      };
+      if (dto.action === "begin")
+        onEvent({ ...common, action: "begin", mode: dto.mode });
+      else if (dto.action === "paragraph_complete")
+        onEvent({
+          ...common,
+          action: "paragraph_complete",
+          paragraphIndex: dto.paragraph_index,
+        });
+      else if (dto.action === "body_complete")
+        onEvent({
+          ...common,
+          action: "body_complete",
+          bodyLength: dto.body_length,
+          paragraphCount: dto.paragraph_count,
+        });
+      else onEvent({ ...common, action: "discard" });
+      return;
+    }
+    case "generation.edit": {
+      const dto = generationEditEventSchema.parse(raw);
+      onEvent({
+        kind: "edit",
+        seq: dto.seq,
+        draftId: dto.draft_id,
+        contentVersion: dto.content_version,
+        baseRev: dto.base_rev,
+        rev: dto.rev,
+        at: dto.at,
+        deleteCount: dto.delete_count,
+        insert: dto.insert,
+        source: dto.source,
+      });
       return;
     }
     case "generation.validated": {
       const dto = generationValidatedEventSchema.parse(raw);
       onEvent({
         kind: "validated",
+        seq: dto.seq,
         runId: dto.run_id,
+        finalContentVersion: dto.final_content_version,
         result: mapGenerationValidatedDto(dto),
+        contentOutcome: dto.content_outcome,
+        completionNotice: dto.completion_notice,
       });
       return;
     }
@@ -820,6 +962,7 @@ function mapStreamMessage(
       const dto = generationFailedEventSchema.parse(raw);
       onEvent({
         kind: "failed",
+        seq: dto.seq,
         code: dto.code,
         quotaRefunded: dto.quota_refunded,
         retryable: dto.retryable,
@@ -829,7 +972,21 @@ function mapStreamMessage(
     }
     case "generation.cancelled": {
       const dto = generationCancelledEventSchema.parse(raw);
-      onEvent({ kind: "cancelled", quotaRefunded: dto.quota_refunded });
+      onEvent({
+        kind: "cancelled",
+        seq: dto.seq,
+        quotaRefunded: dto.quota_refunded,
+      });
+      return;
+    }
+    case "generation.settlement_pending": {
+      const dto = generationSettlementPendingEventSchema.parse(raw);
+      onEvent({
+        kind: "settlement_pending",
+        seq: dto.seq,
+        code: dto.code,
+        requestId: dto.request_id,
+      });
       return;
     }
     default:
@@ -853,6 +1010,7 @@ function modelBody(input: ModelConfigurationInput) {
       : null,
     max_output_tokens: input.maxOutputTokens,
     output_mode: input.outputMode,
+    custom_parameters: input.customParameters,
     enabled: input.enabled,
     expected_revision: input.expectedRevision,
   };

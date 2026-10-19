@@ -1,0 +1,60 @@
+{
+  "version": "M002-FI-CR313-01",
+  "submitted_at": "2026-10-16T03:03:41.713589+00:00",
+  "recorded_by": "root",
+  "status": "awaiting_user_review",
+  "approved": false,
+  "stage_transition_performed": false,
+  "last_transition": "TRANSITION-M002-130",
+  "stage_owner": "frontend-claire",
+  "source_manifest": ".planning/milestones/M002/reviews/evidence/cr313-frontend-implementation-submission-130/delivery-manifest.json",
+  "source_archive": ".planning/milestones/M002/reviews/evidence/cr313-frontend-implementation-submission-130/M002-FI-CR313-01-source.tar.gz",
+  "reception_check": ".planning/milestones/M002/reviews/evidence/cr313-frontend-implementation-submission-130/reception-check.json",
+  "frontend_diff": {
+    "files": 30,
+    "modified": 15,
+    "added": 15,
+    "insertions": 5238,
+    "deletions": 26,
+    "method": "git diff --no-index --numstat against130 frontend archive"
+  },
+  "executed_checks": {
+    "unit": {
+      "files": 4,
+      "passed": 61
+    },
+    "typecheck": "passed",
+    "lint": "passed",
+    "boundaries": "passed",
+    "prettier": "passed",
+    "build": "passed with isolated Nuxt/Nitro outputs",
+    "mock_browser": {
+      "passed": 7,
+      "explicitly_skipped": 1
+    },
+    "real_backend_browser": {
+      "passed": 1,
+      "evidence": "runner passed receipt + specialist/fixture owner reports"
+    },
+    "design_runtime": {
+      "passed": 8
+    }
+  },
+  "unverified_boundaries": [
+    "移动端 blocked dependency 用例为明确跳过；桌面相同业务已验证。",
+    "真实403/410、不同管理员/多tab/关闭tab和全部 blocker/error/reason-code 组合尚未逐项验证。",
+    "未做全站、旧编辑器全部路径或中文生产截图的完整回归。",
+    "浏览器开发验证不证明数据库事务故障注入、真实TCP ACK丢失/进程kill、KDF压力或04:00真实跨日。",
+    "真实后端成功runner保留passed状态记录及角色报告；完整成功stdout未留存。",
+    "未执行QA阶段、UAT部署或用户验收；现有UAT及已批准专业源保持。"
+  ],
+  "history_sha256_unchanged": "00c2eef941f9328805846b1ed51842d7a778eee09e5854b210abc898ee6df54f",
+  "QA": "not_started",
+  "pronunciation_UI32": "awaiting_user_review",
+  "CR313": "open",
+  "M002_closeout": "not_approved",
+  "UAT_services": "unchanged",
+  "isolated_test_resources": "removed",
+  "source_and_archive_hash_checks": 82,
+  "controls_consistent": true
+}

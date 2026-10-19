@@ -1,0 +1,152 @@
+{
+  "config": {
+    "argv": [
+      "/Users/xekinzhuo/.npm/_npx/387698761821791d/node_modules/node/bin/node",
+      "/Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/frontend/node_modules/@playwright/test/cli.js",
+      "test",
+      "--config",
+      "playwright.cr306-live.config.ts"
+    ],
+    "configFile": "/Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/frontend/playwright.cr306-live.config.ts",
+    "rootDir": "/Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/frontend/tests/e2e",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/frontend/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "/Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/frontend/tests/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "/m003-cr306-live\\.spec\\.ts$/"
+        ],
+        "timeout": 30000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "json",
+        {
+          "outputFile": "../.planning/milestones/M003/implementation/evidence/cr306-frontend/cross-layer-results.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.62.1",
+    "workers": 1,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "m003-cr306-live.spec.ts",
+      "file": "m003-cr306-live.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "typed provider repository saves CR306 parameters to the isolated backend and reads them back",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 11408,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveValue\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: locator('#admin-model').locator('.generic-model-item').first().locator('.custom-parameters')\nTimeout: 5000ms\nExpected pattern: \u001b[32m/\"temperature\": 0.4[\\s\\S]*\"reasoning\"[\\s\\S]*\"enabled\": false/\u001b[39m\nReceived string:  \u001b[31m\"{\u001b[39m\n\u001b[31m  \\\"reasoning\\\": {\u001b[39m\n\u001b[31m    \\\"enabled\\\": false\u001b[39m\n\u001b[31m  },\u001b[39m\n\u001b[31m  \\\"temperature\\\": 0.4\u001b[39m\n\u001b[31m}\"\u001b[39m\n\nCall log:\n\u001b[2m  - Expect \"toHaveValue\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('#admin-model').locator('.generic-model-item').first().locator('.custom-parameters')\u001b[22m\n\u001b[2m    14 × locator resolved to <textarea spellcheck=\"false\" aria-invalid=\"false\" class=\"custom-parameters\" id=\"custom-parameters-entry-1\" aria-describedby=\"custom-parameters-help-entry-1\"></textarea>\u001b[22m\n\u001b[2m       - unexpected value \"{\u001b[22m\n\u001b[2m  \"reasoning\": {\u001b[22m\n\u001b[2m    \"enabled\": false\u001b[22m\n\u001b[2m  },\u001b[22m\n\u001b[2m  \"temperature\": 0.4\u001b[22m\n\u001b[2m}\"\u001b[22m\n",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveValue\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: locator('#admin-model').locator('.generic-model-item').first().locator('.custom-parameters')\nTimeout: 5000ms\nExpected pattern: \u001b[32m/\"temperature\": 0.4[\\s\\S]*\"reasoning\"[\\s\\S]*\"enabled\": false/\u001b[39m\nReceived string:  \u001b[31m\"{\u001b[39m\n\u001b[31m  \\\"reasoning\\\": {\u001b[39m\n\u001b[31m    \\\"enabled\\\": false\u001b[39m\n\u001b[31m  },\u001b[39m\n\u001b[31m  \\\"temperature\\\": 0.4\u001b[39m\n\u001b[31m}\"\u001b[39m\n\nCall log:\n\u001b[2m  - Expect \"toHaveValue\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('#admin-model').locator('.generic-model-item').first().locator('.custom-parameters')\u001b[22m\n\u001b[2m    14 × locator resolved to <textarea spellcheck=\"false\" aria-invalid=\"false\" class=\"custom-parameters\" id=\"custom-parameters-entry-1\" aria-describedby=\"custom-parameters-help-entry-1\"></textarea>\u001b[22m\n\u001b[2m       - unexpected value \"{\u001b[22m\n\u001b[2m  \"reasoning\": {\u001b[22m\n\u001b[2m    \"enabled\": false\u001b[22m\n\u001b[2m  },\u001b[22m\n\u001b[2m  \"temperature\": 0.4\u001b[22m\n\u001b[2m}\"\u001b[22m\n\n    at /Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/frontend/tests/e2e/m003-cr306-live.spec.ts:74:51",
+                    "location": {
+                      "file": "/Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/frontend/tests/e2e/m003-cr306-live.spec.ts",
+                      "column": 51,
+                      "line": 74
+                    },
+                    "snippet": "  72 |   await card.getByRole(\"button\", { name: \"Edit provider\" }).click();\n  73 |   await row.locator(\".generic-model-advanced > summary\").click();\n> 74 |   await expect(row.locator(\".custom-parameters\")).toHaveValue(\n     |                                                   ^\n  75 |     /\"temperature\": 0.4[\\s\\S]*\"reasoning\"[\\s\\S]*\"enabled\": false/,\n  76 |   );\n  77 |   expect(probes).toBe(0);"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/frontend/tests/e2e/m003-cr306-live.spec.ts",
+                        "column": 51,
+                        "line": 74
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveValue\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: locator('#admin-model').locator('.generic-model-item').first().locator('.custom-parameters')\nTimeout: 5000ms\nExpected pattern: \u001b[32m/\"temperature\": 0.4[\\s\\S]*\"reasoning\"[\\s\\S]*\"enabled\": false/\u001b[39m\nReceived string:  \u001b[31m\"{\u001b[39m\n\u001b[31m  \\\"reasoning\\\": {\u001b[39m\n\u001b[31m    \\\"enabled\\\": false\u001b[39m\n\u001b[31m  },\u001b[39m\n\u001b[31m  \\\"temperature\\\": 0.4\u001b[39m\n\u001b[31m}\"\u001b[39m\n\nCall log:\n\u001b[2m  - Expect \"toHaveValue\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('#admin-model').locator('.generic-model-item').first().locator('.custom-parameters')\u001b[22m\n\u001b[2m    14 × locator resolved to <textarea spellcheck=\"false\" aria-invalid=\"false\" class=\"custom-parameters\" id=\"custom-parameters-entry-1\" aria-describedby=\"custom-parameters-help-entry-1\"></textarea>\u001b[22m\n\u001b[2m       - unexpected value \"{\u001b[22m\n\u001b[2m  \"reasoning\": {\u001b[22m\n\u001b[2m    \"enabled\": false\u001b[22m\n\u001b[2m  },\u001b[22m\n\u001b[2m  \"temperature\": 0.4\u001b[22m\n\u001b[2m}\"\u001b[22m\n\n\n  72 |   await card.getByRole(\"button\", { name: \"Edit provider\" }).click();\n  73 |   await row.locator(\".generic-model-advanced > summary\").click();\n> 74 |   await expect(row.locator(\".custom-parameters\")).toHaveValue(\n     |                                                   ^\n  75 |     /\"temperature\": 0.4[\\s\\S]*\"reasoning\"[\\s\\S]*\"enabled\": false/,\n  76 |   );\n  77 |   expect(probes).toBe(0);\n    at /Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/frontend/tests/e2e/m003-cr306-live.spec.ts:74:51"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-12T06:55:41.952Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/frontend/test-results/m003-cr306-live-typed-prov-3c55b-backend-and-reads-them-back-chromium/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/frontend/test-results/m003-cr306-live-typed-prov-3c55b-backend-and-reads-them-back-chromium/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/frontend/tests/e2e/m003-cr306-live.spec.ts",
+                    "column": 51,
+                    "line": 74
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "a1d8ace8c3100feea2cd-cba2d265dbf0ce65fde0",
+          "file": "m003-cr306-live.spec.ts",
+          "line": 11,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-12T06:55:41.637Z",
+    "duration": 12268.278,
+    "expected": 0,
+    "skipped": 0,
+    "unexpected": 1,
+    "flaky": 0
+  }
+}

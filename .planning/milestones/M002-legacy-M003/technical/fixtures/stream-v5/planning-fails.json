@@ -1,0 +1,179 @@
+{
+  "fixture_version": "M003-BE-05",
+  "contract_version": "m003-stream-v5",
+  "request": {
+    "entries": [
+      "garden",
+      "learn",
+      "share"
+    ],
+    "meaning_language": "zh"
+  },
+  "wire": [
+    {
+      "event": "generation.started",
+      "data": {
+        "seq": 1,
+        "contract_version": "m003-stream-v5",
+        "stream_id": "stream-planning-fails",
+        "run_id": "fixture-planning-fails",
+        "generation_token": "fixture-not-a-real-token",
+        "snapshot": {
+          "configuration_revision": "fixture-revision-5",
+          "effective_plan": {
+            "code": "basic",
+            "origin": "base"
+          },
+          "content_service": {
+            "native_validation": true,
+            "content_review_enabled": false,
+            "content_repair_limit": 0
+          },
+          "native_correction_policy": {
+            "version": "m003-native-policy-v1",
+            "scope": "logical_request",
+            "max_calls": 2,
+            "editable": false
+          }
+        }
+      }
+    },
+    {
+      "event": "generation.progress",
+      "data": {
+        "seq": 2,
+        "phase": "planning"
+      }
+    },
+    {
+      "event": "generation.plan_item",
+      "data": {
+        "seq": 3,
+        "plan_id": "plan-planning-fails",
+        "meaning_language": "zh",
+        "item": {
+          "kind": "scene",
+          "text": "邻居在社区花园一起播种，并向新来的志愿者示范。"
+        }
+      }
+    },
+    {
+      "event": "generation.plan_item",
+      "data": {
+        "seq": 4,
+        "plan_id": "plan-planning-fails",
+        "meaning_language": "zh",
+        "item": {
+          "kind": "word_use",
+          "entry": "garden",
+          "form": "garden",
+          "sense": "本篇指居民共同照料的花圃",
+          "phrase": "a community garden"
+        }
+      }
+    },
+    {
+      "event": "generation.failed",
+      "data": {
+        "seq": 5,
+        "code": "schema_error",
+        "retryable": true,
+        "request_id": "fixture-failure",
+        "quota_refunded": true
+      }
+    }
+  ],
+  "playback": [
+    {
+      "after_ms": 100
+    },
+    {
+      "after_ms": 150
+    },
+    {
+      "after_ms": 350
+    },
+    {
+      "after_ms": 180
+    },
+    {
+      "after_ms": 350
+    }
+  ],
+  "transport_end": "eof_after_terminal",
+  "status_responses": [
+    {
+      "after_ms": 350,
+      "http_status": 200,
+      "body": {
+        "data": {
+          "contract_version": "m003-stream-v5",
+          "status": "failed",
+          "final_content_version": null,
+          "result": null,
+          "content_outcome": "failed",
+          "completion_notice": null,
+          "run_id": "fixture-planning-fails",
+          "snapshot": {
+            "configuration_revision": "fixture-revision-5",
+            "effective_plan": {
+              "code": "basic",
+              "origin": "base"
+            },
+            "content_service": {
+              "native_validation": true,
+              "content_review_enabled": false,
+              "content_repair_limit": 0
+            },
+            "native_correction_policy": {
+              "version": "m003-native-policy-v1",
+              "scope": "logical_request",
+              "max_calls": 2,
+              "editable": false
+            }
+          },
+          "can_save": false,
+          "quota_refunded": true
+        },
+        "meta": {
+          "request_id": "fixture-status"
+        }
+      }
+    }
+  ],
+  "expected": {
+    "ui_state": "failed",
+    "final_package": null,
+    "final_content_version": null,
+    "completion_notice": null,
+    "can_save": false,
+    "deletion_frames": [],
+    "resources_before_terminal": false,
+    "plan_hidden_on_first_edit": true
+  },
+  "internal_evidence": {
+    "N": 0,
+    "actual_content_repairs": 0,
+    "planning_complete": false,
+    "validated_plan": null,
+    "plan_sha256": null,
+    "writer_input": null,
+    "calls": [
+      {
+        "call_no": 1,
+        "call_stage": "planning",
+        "prompt_version": "m003-plan-v1",
+        "provider_invoked": true,
+        "content_version": null
+      }
+    ],
+    "initial_native_check": null,
+    "valid_packages": [],
+    "content_stop_reason": null,
+    "source_trace": [],
+    "notes": [
+      "Safe completed preview items existed; complete plan missing selected entries, no writer/skip/retry."
+    ],
+    "scope": "Synthetic provider fragments/plan objects only; not live tokens, latency, quality or application execution."
+  }
+}

@@ -2,6 +2,7 @@ package admin
 
 import (
 	"context"
+	"fmt"
 	"strings"
 
 	"github.com/google/uuid"
@@ -27,7 +28,7 @@ type ModelProviderInput struct {
 }
 
 func readProviders(ctx context.Context, tx pgx.Tx, id *uuid.UUID, revision string) ([]ModelProvider, error) {
-	rows, err := tx.Query(ctx, connectionSelect+` WHERE ($1::uuid IS NULL OR id=$1) ORDER BY created_at,id`, id)
+	rows, err := tx.Query(ctx, connectionSelect+` WHERE retired_at IS NULL AND ($1::uuid IS NULL OR id=$1) ORDER BY created_at,id`, id)
 	if err != nil {
 		return nil, err
 	}
@@ -46,7 +47,7 @@ func readProviders(ctx context.Context, tx pgx.Tx, id *uuid.UUID, revision strin
 	if err = rows.Err(); err != nil {
 		return nil, err
 	}
-	rows, err = tx.Query(ctx, modelSelect+` WHERE m.retired_at IS NULL AND ($1::uuid IS NULL OR m.provider_id=$1) ORDER BY m.created_at,m.id`, id)
+	rows, err = tx.Query(ctx, modelSelect+` WHERE m.retired_at IS NULL AND p.retired_at IS NULL AND ($1::uuid IS NULL OR m.provider_id=$1) ORDER BY m.created_at,m.id`, id)
 	if err != nil {
 		return nil, err
 	}
@@ -98,6 +99,11 @@ func (s *Service) SaveProvider(ctx context.Context, actor, id uuid.UUID, in Mode
 		if !validGenericModel(ModelInput{DisplayName: m.DisplayName, Description: m.Description, ProviderModelID: m.ProviderModelID, OutputMode: m.OutputMode, MaxOutputTokens: m.MaxOutputTokens}) {
 			return invalid(ErrValidation)
 		}
+		canonical, validationErr := ai.CanonicalCustomParameters(m.CustomParameters)
+		if validationErr != nil {
+			return invalid(ai.PrefixCustomParameterError(validationErr, fmt.Sprintf("/models/%d/custom_parameters", index)))
+		}
+		m.CustomParameters = canonical
 		if identifiers[m.ProviderModelID] {
 			return invalid(ErrConflict)
 		}
@@ -162,9 +168,9 @@ func (s *Service) SaveProvider(ctx context.Context, actor, id uuid.UUID, in Mode
 	}
 	for _, m := range in.Models {
 		if m.ID == nil {
-			_, err = tx.Exec(ctx, `INSERT INTO wordweave.ai_models(display_name,description,provider_model_id,provider_id,max_output_tokens,output_mode,enabled,created_at,updated_at) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$8)`, m.DisplayName, trimmedOptional(m.Description), m.ProviderModelID, id, m.MaxOutputTokens, m.OutputMode, m.Enabled, c.Now)
+			_, err = tx.Exec(ctx, `INSERT INTO wordweave.ai_models(display_name,description,provider_model_id,provider_id,max_output_tokens,output_mode,custom_parameters,enabled,created_at,updated_at) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$9)`, m.DisplayName, trimmedOptional(m.Description), m.ProviderModelID, id, m.MaxOutputTokens, m.OutputMode, m.CustomParameters, m.Enabled, c.Now)
 		} else {
-			_, err = tx.Exec(ctx, `UPDATE wordweave.ai_models SET display_name=$2,description=$3,provider_model_id=$4,max_output_tokens=$5,output_mode=$6,enabled=$7,updated_at=$8 WHERE id=$1`, m.ID, m.DisplayName, trimmedOptional(m.Description), m.ProviderModelID, m.MaxOutputTokens, m.OutputMode, m.Enabled, c.Now)
+			_, err = tx.Exec(ctx, `UPDATE wordweave.ai_models SET display_name=$2,description=$3,provider_model_id=$4,max_output_tokens=$5,output_mode=$6,custom_parameters=$7,enabled=$8,updated_at=$9 WHERE id=$1`, m.ID, m.DisplayName, trimmedOptional(m.Description), m.ProviderModelID, m.MaxOutputTokens, m.OutputMode, m.CustomParameters, m.Enabled, c.Now)
 		}
 		if err != nil {
 			return invalid(mapWriteError(err))

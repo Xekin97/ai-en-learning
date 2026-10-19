@@ -1,0 +1,328 @@
+--- a/frontend/app/presentation/components/AppDialog.vue
++++ b/frontend/app/presentation/components/AppDialog.vue
+@@ -6,11 +6,62 @@
+   closeLabel?: string;
+   notice?: boolean;
+   bodyKey?: string | undefined;
++  returnFocus?: () => HTMLElement | null;
+ }>();
+ const emit = defineEmits<{ close: []; shown: [key: string | undefined] }>();
+ const dialog = ref<HTMLDialogElement | null>(null);
+ const feedback = useFeedbackStore();
+ let opener: HTMLElement | null = null;
++const focusableSelector = [
++  "a[href]",
++  "button:not([disabled])",
++  "input:not([disabled]):not([type='hidden'])",
++  "select:not([disabled])",
++  "textarea:not([disabled])",
++  "details > summary:first-of-type",
++  "[contenteditable='true']",
++  "[tabindex]:not([tabindex^='-'])",
++].join(",");
++
++function focusableTargets(el: HTMLDialogElement) {
++  return [...el.querySelectorAll<HTMLElement>(focusableSelector)].filter(
++    (target) =>
++      target.tabIndex >= 0 &&
++      !target.matches(":disabled") &&
++      target.getClientRects().length > 0 &&
++      !target.closest("[inert], [aria-hidden='true']"),
++  );
++}
++
++function trapFocus(event: KeyboardEvent) {
++  const el = dialog.value;
++  if (event.key !== "Tab" || !el?.open || feedback.host.value !== el) return;
++  const targets = focusableTargets(el),
++    first = targets[0],
++    last = targets.at(-1),
++    active = document.activeElement,
++    activeIndex = active instanceof HTMLElement ? targets.indexOf(active) : -1;
++  if (!first || !last) {
++    event.preventDefault();
++    return;
++  }
++  if (event.shiftKey ? activeIndex <= 0 : activeIndex < 0 || active === last) {
++    event.preventDefault();
++    (event.shiftKey ? last : first).focus();
++  }
++}
++
++function restoreOpener() {
++  const target = props.returnFocus?.() ?? opener,
++    parentDialog = target?.closest("dialog");
++  if (
++    target?.isConnected &&
++    !target.matches(":disabled") &&
++    (!parentDialog || parentDialog.open)
++  )
++    target.focus({ preventScroll: true });
++}
++
+ async function syncOpen() {
+   await nextTick();
+   const el = dialog.value;
+@@ -28,7 +79,8 @@
+     feedback.modal(el, false);
+     await nextTick();
+     el.close();
+-    if (opener?.isConnected) opener.focus();
++    await nextTick();
++    restoreOpener();
+   }
+ }
+ watch(() => props.open, syncOpen);
+@@ -58,6 +110,7 @@
+       :aria-labelledby="`${id}-dialog-title`"
+       @cancel.prevent="emit('close')"
+       @click="backdrop"
++      @keydown="trapFocus"
+     >
+       <button
+         class="btn quiet dialog-close"
+--- a/frontend/app/pages/admin/models.vue
++++ b/frontend/app/pages/admin/models.vue
+@@ -37,6 +37,7 @@
+   testTarget = ref<string | null>(null),
+   testMessage = ref("");
+ const providerId = ref<string | null>(null),
++  providerReturnFocusId = ref<string | null>(null),
+   form = reactive(providerDraft());
+ let entrySequence = 0,
+   testEpoch = 0;
+@@ -88,6 +89,7 @@
+   serverCustomErrors.value = {};
+   customFormError.value = null;
+   providerId.value = provider?.connection.id ?? null;
++  providerReturnFocusId.value = provider?.connection.id ?? null;
+   Object.assign(form, providerDraft(provider, admin.state.value.modelRevision));
+   entries.value = provider
+     ? provider.models.map((m) => modelEntryDraft("entry-" + ++entrySequence, m))
+@@ -98,6 +100,14 @@
+   conflicted.value = false;
+   modelOpen.value = true;
+ }
++function modelReturnFocus() {
++  const id = providerReturnFocusId.value;
++  if (!id) return null;
++  const card = [
++    ...document.querySelectorAll<HTMLElement>("[data-provider-id]"),
++  ].find((candidate) => candidate.dataset.providerId === id);
++  return card?.querySelector<HTMLElement>("[data-provider-edit]") ?? null;
++}
+ function discardModel() {
+   testEpoch++;
+   testing.value = false;
+@@ -325,8 +335,9 @@
+       providerConfiguration(form, entries.value),
+     );
+     if (epoch !== session.epoch.value) return;
+-    discardModel();
+     await admin.loadModelProviders();
++    if (epoch !== session.epoch.value) return;
++    discardModel();
+   } catch (error) {
+     if (epoch !== session.epoch.value) return;
+     failure.value = normalizeFailure(error);
+@@ -431,6 +442,7 @@
+           </div>
+           <button
+             class="btn small"
++            data-provider-edit
+             :disabled="busy"
+             @click="openProvider(provider)"
+           >
+@@ -503,6 +515,7 @@
+       id="admin-model"
+       :open="modelOpen"
+       :title="copy(providerId ? 'gm.edit' : 'gm.add')"
++      :return-focus="modelReturnFocus"
+       @close="closeModel"
+     >
+       <AppError :failure="failure" />
+--- /dev/null
++++ b/frontend/tests/e2e/m003-cr307-focus.spec.ts
+@@ -0,0 +1,130 @@
++import { expect, test, type Page } from "@playwright/test";
++import { readFileSync } from "node:fs";
++
++const copySource = JSON.parse(
++  readFileSync(
++    new URL(
++      "../../../.planning/milestones/M003/design/copy.json",
++      import.meta.url,
++    ),
++    "utf8",
++  ),
++);
++const api = `${process.env.CR307_MOCK_ORIGIN ?? "http://127.0.0.1:38107"}/api/v1`;
++const ready = (page: Page) =>
++  page.waitForFunction(
++    () => document.documentElement.dataset.appReady === "true",
++  );
++
++test.beforeEach(async ({ request, context, baseURL }, info) => {
++  await request.post(api + "/__test/admin-reset");
++  await context.addCookies([
++    { name: "wordweave_session", value: "admin", url: baseURL! },
++    {
++      name: "wordweave_ui_locale",
++      value: info.project.name === "mobile" ? "en-US" : "zh-CN",
++      url: baseURL!,
++    },
++  ]);
++});
++
++test("CR307 traps the top dialog and restores the stable provider opener", async ({
++  page,
++}, info) => {
++  const lang = info.project.name === "mobile" ? "en" : "zh";
++  const t = (key: string) => copySource.static[`${lang}.${key}`] as string;
++  let probes = 0;
++  page.on("request", (request) => {
++    if (request.url().includes("/admin/model-connection-test")) probes++;
++  });
++
++  await page.goto("/admin/models");
++  await ready(page);
++  const opener = page.locator("[data-provider-edit]").first();
++  await opener.click();
++  const dialog = page.locator("#admin-model"),
++    close = dialog.locator(".dialog-close"),
++    footerCancel = dialog
++      .locator(".dialog-actions")
++      .getByRole("button", { name: t("cancel"), exact: true }),
++    save = dialog.getByRole("button", { name: t("gm.save"), exact: true });
++  await expect(dialog).toBeVisible();
++
++  await save.focus();
++  await page.keyboard.press("Tab");
++  await expect(close).toBeFocused();
++  await page.keyboard.press("Shift+Tab");
++  await expect(save).toBeFocused();
++  for (const key of [
++    ...Array<string>(32).fill("Tab"),
++    ...Array<string>(32).fill("Shift+Tab"),
++  ]) {
++    await page.keyboard.press(key);
++    expect(
++      await dialog.evaluate((element) =>
++        element.contains(document.activeElement),
++      ),
++    ).toBe(true);
++  }
++
++  await dialog.locator('[name="connectionName"]').fill("CR307 provider");
++  await footerCancel.click();
++  const confirm = page.locator("#model-discard"),
++    keep = confirm.getByRole("button", { name: t("gm.keep"), exact: true }),
++    discard = confirm.getByRole("button", {
++      name: t("gm.discard"),
++      exact: true,
++    });
++  await expect(confirm).toBeVisible();
++  await discard.focus();
++  await page.keyboard.press("Tab");
++  await expect(confirm.locator(".dialog-close")).toBeFocused();
++  await page.keyboard.press("Shift+Tab");
++  await expect(discard).toBeFocused();
++  expect(
++    await confirm.evaluate((element) =>
++      element.contains(document.activeElement),
++    ),
++  ).toBe(true);
++  expect(
++    await dialog.evaluate((element) =>
++      element.contains(document.activeElement),
++    ),
++  ).toBe(false);
++  await keep.click();
++  await expect(confirm).not.toBeVisible();
++  await expect(footerCancel).toBeFocused();
++
++  await footerCancel.click();
++  await expect(confirm).toBeVisible();
++  await discard.click();
++  await expect(dialog).not.toBeVisible();
++  await expect(opener).toBeFocused();
++  await opener.click();
++  await expect(dialog).toBeVisible();
++  await dialog.locator('[name="connectionName"]').fill("CR307 provider");
++
++  const staleOpener = await opener.elementHandle();
++  await opener.evaluate((button) => {
++    const replacement = button.cloneNode(true);
++    button.replaceWith(replacement);
++  });
++  expect(await staleOpener!.evaluate((button) => button.isConnected)).toBe(
++    false,
++  );
++
++  await save.click();
++  await expect(dialog).not.toBeVisible();
++  const currentOpener = page.locator("[data-provider-edit]").first();
++  await expect(currentOpener).toBeFocused();
++  await expect(
++    page.locator(".generic-provider-card").first().getByRole("heading", {
++      name: "CR307 provider",
++    }),
++  ).toBeVisible();
++  expect(probes).toBe(0);
++  await page.screenshot({
++    path: `../.planning/milestones/M003/implementation/evidence/cr307-frontend-fix/${info.project.name}-focus-return.png`,
++    fullPage: true,
++  });
++});
+--- /dev/null
++++ b/frontend/playwright.cr307.config.ts
+@@ -0,0 +1,49 @@
++import { defineConfig, devices } from "@playwright/test";
++
++const sourceRoot = process.env.CR307_FRONTEND_ROOT;
++if (!sourceRoot)
++  throw new Error(
++    "CR307_FRONTEND_ROOT must name an isolated frontend source copy",
++  );
++
++const uiPort = process.env.CR307_UI_PORT ?? "3317";
++const mockPort = process.env.CR307_MOCK_PORT ?? "38107";
++const uiOrigin = `http://127.0.0.1:${uiPort}`;
++const mockOrigin = `http://127.0.0.1:${mockPort}`;
++
++export default defineConfig({
++  testDir: "./tests/e2e",
++  testMatch: /m003-cr307-focus\.spec\.ts$/,
++  fullyParallel: false,
++  workers: 1,
++  reporter: [
++    ["list"],
++    [
++      "json",
++      {
++        outputFile:
++          "../.planning/milestones/M003/implementation/evidence/cr307-frontend-fix/browser-focus-results.json",
++      },
++    ],
++  ],
++  use: { baseURL: uiOrigin, trace: "retain-on-failure" },
++  projects: [
++    { name: "desktop", use: { ...devices["Desktop Chrome"] } },
++    { name: "mobile", use: { ...devices["Pixel 7"], browserName: "chromium" } },
++  ],
++  webServer: [
++    {
++      command: `WORDWEAVE_MOCK_PORT=${mockPort} node tests/e2e/mock-backend.mjs`,
++      url: `${mockOrigin}/api/v1/bootstrap`,
++      reuseExistingServer: false,
++      timeout: 30_000,
++    },
++    {
++      command: `pnpm --dir "${sourceRoot}" dev --host 127.0.0.1 --port ${uiPort}`,
++      url: uiOrigin,
++      reuseExistingServer: false,
++      timeout: 120_000,
++      env: { NUXT_BACKEND_INTERNAL_ORIGIN: mockOrigin },
++    },
++  ],
++});

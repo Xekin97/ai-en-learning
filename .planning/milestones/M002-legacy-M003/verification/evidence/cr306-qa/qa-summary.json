@@ -1,0 +1,141 @@
+{
+  "result": "PASS",
+  "blocking_change_request": null,
+  "recommended_resolved": [],
+  "acceptance": {
+    "AC-317": "PASS",
+    "AC-318": "PASS",
+    "AC-319": "PASS",
+    "AC-320": "PASS",
+    "AC-321": "PASS_FUNCTIONAL_MODEL_QUALITY_OUT_OF_SCOPE",
+    "AC-322": "PASS_AFTER_CR-307"
+  },
+  "deterministic": {
+    "api": "21/21 PASS",
+    "pipeline": "10/10 PASS",
+    "focus_retest": "5/5 PASS"
+  },
+  "real_model": {
+    "provider_model_id": "deepseek/deepseek-v4-flash-0731",
+    "output_mode": "json_schema",
+    "custom_parameters": {
+      "reasoning": {
+        "enabled": false
+      }
+    },
+    "complete_requests": 2,
+    "third_request": "not_run"
+  },
+  "r1": {
+    "run_id": "01a12f22-5018-7c1a-a693-88afe511a535",
+    "outcome": "basic",
+    "scene_plan_ms": 7722,
+    "first_word_plan_ms": "unknown",
+    "all_word_plan_complete_ms": "unknown",
+    "first_body_ms": 14159,
+    "total_ms": 21362,
+    "stage_counts": {
+      "planning": 1,
+      "generation": 1,
+      "fixed_edit": 0,
+      "technical_repair": 0,
+      "content_review": 0,
+      "content_repair": 0
+    },
+    "quota_before": 100,
+    "quota_after": 99,
+    "can_save": true,
+    "usage": {
+      "status": "known",
+      "input_tokens": 3531,
+      "output_tokens": 788
+    },
+    "cost": {
+      "amount": "0.00068306",
+      "currency": "openrouter_credits"
+    },
+    "quality": "OUT_OF_QA_SCOPE"
+  },
+  "r2": {
+    "run_id": "01a12f22-ecb8-7a4e-9def-426299b44a7f",
+    "outcome": "review_passed",
+    "scene_plan_ms": 8802,
+    "first_word_plan_ms": "unknown",
+    "all_word_plan_complete_ms": "unknown",
+    "first_body_ms": 17536,
+    "total_ms": 35788,
+    "stage_counts": {
+      "planning": 1,
+      "generation": 1,
+      "fixed_edit": 1,
+      "technical_repair": 0,
+      "content_review": 1,
+      "content_repair": 0
+    },
+    "quota_before": 97,
+    "quota_after": 96,
+    "can_save": true,
+    "usage": {
+      "status": "known",
+      "input_tokens": 8135,
+      "output_tokens": 1449
+    },
+    "cost": {
+      "amount": "0.001070272",
+      "currency": "openrouter_credits"
+    },
+    "native_review": {
+      "result": "pass",
+      "reason_codes": [],
+      "functional_handling": "PASS"
+    },
+    "quality": "OUT_OF_QA_SCOPE"
+  },
+  "bounded_observation": {
+    "complete_native_valid": "2/2",
+    "enhanced_review_runs": 1,
+    "content_repairs_triggered": "0/1",
+    "extrapolation_permitted": false,
+    "model_quality_interpretation": "historical only; excluded from QA conclusion",
+    "historical_pre_policy_observation": "preserved only in real-evaluation.md; not a QA metric"
+  },
+  "security": {
+    "credentials_archived": false,
+    "generation_tokens_archived": false,
+    "private_reasoning_archived": false
+  },
+  "cleanup": {
+    "result": "PASS",
+    "cleaned_at": "2026-10-12T08:08:30.083537+00:00",
+    "owner": "backend-ethan",
+    "scope": "QA080 disposable formal backend stack using a new empty PostgreSQL 18 database initialized at current schema including unpublished 0017; no historical migration or backfill",
+    "ports": {
+      "54772": "closed",
+      "54773": "closed",
+      "54774": "closed",
+      "54775": "closed"
+    },
+    "postgres": "stopped",
+    "private_runtime": "deleted",
+    "private_runtime_path": "/tmp/wordweave-cr306-qa080-backend",
+    "frontend_54713": "already stopped and removed by QA owner before this cleanup",
+    "old_uat_baseline": "ports 3013/54672/54673/54674/54675 were closed at QA080 task start and were not started or stopped by backend-ethan",
+    "source_docker": "not stopped, restarted, or modified by cleanup",
+    "secrets_archived": false
+  },
+  "qa_scope_policy": "USER-QA-MODEL-QUALITY-BOUNDARY-20261012",
+  "model_quality": {
+    "status": "out_of_scope",
+    "historical_observation": "real-evaluation.md preserved unchanged",
+    "qa_blocking": false,
+    "technical_rework_required": false
+  },
+  "user_uat": "NOT_STARTED",
+  "reclassified_nonblocking": [
+    "CR-308: closed as model limitation observation by explicit user scope decision; no semantic-fix claim"
+  ],
+  "resolved_change_requests": [
+    "CR-307"
+  ],
+  "scope_correction_record": ".planning/milestones/M003/reviews/qa-scope-correction-084.md"
+}

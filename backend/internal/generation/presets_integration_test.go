@@ -26,7 +26,7 @@ func presetFixture(t *testing.T) (*Service, *pgxpool.Pool, context.Context, iden
 	if err := pool.QueryRow(ctx, `INSERT INTO wordweave.accounts(username,password_hash,role) VALUES('preset_admin','fixture-only','admin') RETURNING id`).Scan(&admin); err != nil {
 		t.Fatal(err)
 	}
-	if err := pool.QueryRow(ctx, `INSERT INTO wordweave.ai_models(display_name,provider_model_id,enabled) VALUES('Preview model','test/preview',true) RETURNING id`).Scan(&model); err != nil {
+	if err := pool.QueryRow(ctx, `INSERT INTO wordweave.ai_models(display_name,provider_model_id,custom_parameters,enabled) VALUES('Preview model','test/preview','{"temperature":0.2}',true) RETURNING id`).Scan(&model); err != nil {
 		t.Fatal(err)
 	}
 	env, err := security.NewEnvelope(map[int][]byte{1: make([]byte, 32)}, 1)
@@ -56,6 +56,11 @@ func readyPreset(t *testing.T, s *Service, ctx context.Context, admin identity.A
 	if err != nil {
 		t.Fatal(err)
 	}
+	var requestParameters string
+	if err = s.app.QueryRow(ctx, `SELECT model_request_parameters_snapshot::text FROM wordweave.preset_preview_runs WHERE id=$1`, run.ID).Scan(&requestParameters); err != nil || !strings.Contains(requestParameters, `"custom_parameters": {"temperature": 0.2}`) {
+		t.Fatalf("preview request snapshot=%s err=%v", requestParameters, err)
+	}
+	recordSuccessfulPipelineFacts(t, ctx, s.app, run.Run, true)
 	if _, err = s.CompletePreview(ctx, run, samplePreset()); err != nil {
 		t.Fatal(err)
 	}
@@ -81,6 +86,7 @@ func TestM002PresetDraftPreviewPublicationIsolation(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
+	recordSuccessfulPipelineFacts(t, ctx, pool, run.Run, true)
 	if _, err = s.CompletePreview(ctx, run, samplePreset()); err != nil {
 		t.Fatal(err)
 	}
@@ -178,6 +184,7 @@ func TestM002PresetExceptionChargesOwnerAndKeepsRunningSnapshot(t *testing.T) {
 	if _, err = pool.Exec(ctx, `UPDATE wordweave.ai_models SET enabled=false,retired_at=clock_timestamp() WHERE id=$1`, in.Configuration.ModelID); err != nil {
 		t.Fatal(err)
 	}
+	recordSuccessfulPipelineFacts(t, ctx, pool, run, false)
 	if err = s.CompleteValid(ctx, run, samplePreset()); err != nil {
 		t.Fatalf("in-flight snapshot invalidated: %v", err)
 	}
@@ -195,6 +202,7 @@ func TestM002PreviewObsoleteVersionCannotSupplyNewDraft(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
+	recordSuccessfulPipelineFacts(t, ctx, s.app, run.Run, true)
 	in.Configuration.Scenario = "news"
 	p, rev, err = s.SavePreset(ctx, admin, p.ID, in, rev)
 	if err != nil {
@@ -243,25 +251,53 @@ func TestM002PreviewUsageUnknownTotalsAndOptions(t *testing.T) {
 		t.Fatal(err)
 	}
 	recorder := usageRecorder{pool: pool, run: run.ID, preview: true}
-	done, err := recorder.Begin(ctx, run.Spec)
+	handle, err := recorder.BeginCall(ctx, run.Spec)
 	if err != nil {
+		t.Fatal(err)
+	}
+	invoked := true
+	if err = handle.MarkInvoked(ctx, &invoked); err != nil {
 		t.Fatal(err)
 	}
 	input, output := int64(12), int64(0)
 	cost := "0.01234567890123456789"
-	done(ai.Usage{InputTokens: &input, OutputTokens: &output, Cost: &cost})
-	done, err = recorder.Begin(ctx, run.Spec)
+	if err = handle.FinishUsage(ctx, ai.Usage{InputTokens: &input, OutputTokens: &output, Cost: &cost}); err != nil {
+		t.Fatal(err)
+	}
+	handle, err = recorder.BeginCall(ctx, run.Spec)
 	if err != nil {
 		t.Fatal(err)
 	}
-	done(ai.Usage{InputTokens: &input})
+	if err = handle.MarkInvoked(ctx, &invoked); err != nil {
+		t.Fatal(err)
+	}
+	if err = handle.FinishUsage(ctx, ai.Usage{InputTokens: &input}); err != nil {
+		t.Fatal(err)
+	}
+	// A reserved call with no send evidence remains invocation-unknown. A
+	// separately confirmed pre-send rejection is counted as not invoked; neither
+	// inflates provider call or token/cost totals.
+	if _, err = recorder.BeginCall(ctx, run.Spec); err != nil {
+		t.Fatal(err)
+	}
+	handle, err = recorder.BeginCall(ctx, run.Spec)
+	if err != nil {
+		t.Fatal(err)
+	}
+	notInvoked := false
+	if err = handle.MarkInvoked(ctx, &notInvoked); err != nil {
+		t.Fatal(err)
+	}
+	if err = handle.FinishUsage(ctx, ai.Usage{}); err != nil {
+		t.Fatal(err)
+	}
 	u, err := s.PreviewUsage(ctx, run.ID)
-	if err != nil || u.ProviderCalls != 2 || u.InputTokens == nil || *u.InputTokens != 24 || u.OutputTokens != nil || u.Cost != nil || u.UnknownCalls != 1 {
+	if err != nil || u.ProviderCalls != 2 || u.InputTokens == nil || *u.InputTokens != 24 || u.OutputTokens != nil || u.Cost != nil || u.UnknownCalls != 1 || u.InvocationUnknownCalls != 1 || u.NotInvokedCalls != 1 {
 		t.Fatalf("unknown converted to zero: %+v %v", u, err)
 	}
 	day := business.LearningDay(time.Now())
 	summary, items, _, err := s.PreviewUsageHistory(ctx, day, day, nil, 20)
-	if err != nil || len(items) != 1 || summary.LogicalRuns != 1 || summary.ProviderCalls != 2 || summary.Cost != nil {
+	if err != nil || len(items) != 1 || summary.LogicalRuns != 1 || summary.ProviderCalls != 2 || summary.Cost != nil || summary.InvocationUnknownCalls != 1 || summary.NotInvokedCalls != 1 {
 		t.Fatal(err)
 	}
 	if _, err = pool.Exec(ctx, `DELETE FROM wordweave.openrouter_credentials`); err != nil {
@@ -335,10 +371,11 @@ func TestM002PresetCleanupKeepsPublishedPreviewActiveCallsAndUsage(t *testing.T)
 	if err = pool.QueryRow(ctx, `SELECT count(*) FROM wordweave.preset_versions WHERE id=ANY($1::uuid[])`, []uuid.UUID{original, oldActive}).Scan(&count); err != nil || count != 2 {
 		t.Fatalf("deleted preview dependency/active configuration: %d %v", count, err)
 	}
+	recordSuccessfulPipelineFacts(t, ctx, pool, active.Run, true)
 	if _, err = s.CompletePreview(ctx, active, samplePreset()); err != nil {
 		t.Fatal(err)
 	}
-	if _, err = pool.Exec(ctx, `INSERT INTO wordweave.ai_call_usage(preview_run_id,call_no,model_snapshot,usage_status,completed_at) VALUES($1,1,'test/preview','unknown',clock_timestamp())`, active.ID); err != nil {
+	if _, err = pool.Exec(ctx, `INSERT INTO wordweave.ai_call_usage(preview_run_id,call_no,model_snapshot,usage_status,completed_at,call_stage,prompt_version,provider_invoked) VALUES($1,3,'test/preview','unknown',clock_timestamp(),'legacy',NULL,NULL)`, active.ID); err != nil {
 		t.Fatal(err)
 	}
 	if _, err = pool.Exec(ctx, `UPDATE wordweave.preset_preview_runs SET completed_at=clock_timestamp()-interval '2 hours' WHERE id=$1`, active.ID); err != nil {
@@ -349,7 +386,7 @@ func TestM002PresetCleanupKeepsPublishedPreviewActiveCallsAndUsage(t *testing.T)
 	}
 	var version *uuid.UUID
 	var usage int
-	if err = pool.QueryRow(ctx, `SELECT version_id,(SELECT count(*) FROM wordweave.ai_call_usage WHERE preview_run_id=$1) FROM wordweave.preset_preview_runs WHERE id=$1`, active.ID).Scan(&version, &usage); err != nil || version != nil || usage != 1 {
+	if err = pool.QueryRow(ctx, `SELECT version_id,(SELECT count(*) FROM wordweave.ai_call_usage WHERE preview_run_id=$1) FROM wordweave.preset_preview_runs WHERE id=$1`, active.ID).Scan(&version, &usage); err != nil || version != nil || usage != 3 {
 		t.Fatalf("usage history was deleted: %v %d %v", version, usage, err)
 	}
 	live, _, err := s.PublicPresets(ctx, "en", nil, 20)

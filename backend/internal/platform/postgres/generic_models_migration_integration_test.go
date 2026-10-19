@@ -30,7 +30,7 @@ func TestGenericModelMigrationPreservesOriginalRows(t *testing.T) {
 		t.Fatal(err)
 	}
 	var modelAfter, keyAfter, mode, defaultMode string
-	if err := pool.QueryRow(ctx, `SELECT (to_jsonb(m)-'provider_id'-'max_output_tokens'-'output_mode')::text,output_mode FROM wordweave.ai_models m WHERE id=$1`, id).Scan(&modelAfter, &mode); err != nil {
+	if err := pool.QueryRow(ctx, `SELECT (to_jsonb(m)-'provider_id'-'max_output_tokens'-'output_mode'-'custom_parameters')::text,output_mode FROM wordweave.ai_models m WHERE id=$1`, id).Scan(&modelAfter, &mode); err != nil {
 		t.Fatal(err)
 	}
 	if err := pool.QueryRow(ctx, `SELECT to_jsonb(c)::text FROM wordweave.openrouter_credentials c`).Scan(&keyAfter); err != nil {

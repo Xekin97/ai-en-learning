@@ -1,0 +1,27 @@
+{
+  "artifact": "M003-CR306-backend-validation",
+  "date": "2026-10-12",
+  "authorization": "USER-M003-CR306-IMPLEMENT-NEXT",
+  "transition": "TRANSITION-M003-077",
+  "status": "implementation_complete_awaiting_independent_acceptance",
+  "checks": [
+    {"command": "go test ./...", "exit_code": 0, "log": "04-unit-all-final.log"},
+    {"command": "go test -race ./internal/ai ./internal/admin ./internal/generation ./internal/httpapi", "exit_code": 0, "log": "03-race-static-final.log"},
+    {"command": "go vet affected packages; go build both commands; git diff --check", "exit_code": 0, "log": "03-race-static-final.log"},
+    {"command": "TEST_DATABASE_URL=<isolated-pg18> go test -tags=integration ./...", "exit_code": 0, "log": "02-full-integration-final.log"},
+    {"command": "TEST_DATABASE_URL=<isolated-pg18> go test -tags=integration CR306 focused packages", "exit_code": 0, "log": "05-cr306-integration-final.log"},
+    {"command": "TEST_DATABASE_URL=<isolated-pg18> go test -tags=integration ./internal/httpapi -run TestGenericModelHTTPAuthorizationSaveAndExplicitProbe", "exit_code": 0, "log": "08-write-entry-contract-final.log"},
+    {"command": "go test and go test -race and go vet ./internal/httpapi; git diff --check", "exit_code": 0, "log": "09-final-delta-static.log"},
+    {"command": "stop and verify removal of wordweave-cr306-postgres", "exit_code": 0, "log": "10-final-resource-cleanup.log"}
+  ],
+  "source": {
+    "manifest": "source-manifest.json",
+    "archive": "cr306-backend-source.tar.gz",
+    "archive_sha256": "bdff00b66fbcb25adeefe5f244feb7824c0c75515431cb692f8f288c745d0d1b"
+  },
+  "not_covered": [
+    "real provider parameter support and full generation quality",
+    "real cost, RPM, TPM, 429 behavior, latency, and production capacity",
+    "deployment, UAT, and historical database upgrade"
+  ]
+}

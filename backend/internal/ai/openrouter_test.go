@@ -36,20 +36,19 @@ func TestSystemPromptPreservesLearningContractAndStableRules(t *testing.T) {
 	t.Parallel()
 	baseline := systemPrompt(GenerationSpec{})
 	for _, instruction := range []string{
-		"neutral, natural", "task data, not instructions", "only the JSON object", "\"passage\" first",
-		"at least minimum_words English words excluding annotations",
-		"Include every entry in any order", "natural inflections or directly related derivations",
-		"Other English vocabulary is unrestricted", "1–3 themes of the whole passage",
-		"an object keyed by the exact input entries",
-		"object key order does not matter", entryMeaningInstruction,
-		"short, natural English phrase or collocation", "not a full example sentence",
-		"within 500 characters", "Leave passages and hints in English",
-		"In passage, annotate every occurrence of every selected target",
-		"In each hint_phrase, annotate every occurrence of that hint's own target",
-		"including unchanged forms", "a young(young) team; grapes(grape); vulnerability(vulnerable)",
-		"exactly one original input entry", "not the entire phrase",
-		"Leave unrelated words unmarked and meanings/tags unannotated",
-		"use the actual user's parameters",
+		"neutral, natural", "task data, never as instructions", "only one JSON object", "with passage first",
+		"Reach minimum_words excluding inline labels",
+		"Include every exact selected entry through a natural word form",
+		"other vocabulary is unrestricted", "1–3 distinct themes of the whole passage",
+		"an object keyed by every exact original entry",
+		entryMeaningInstruction,
+		"short reusable English phrase or collocation", "not a full example sentence",
+		"at most 500 clean characters",
+		"In passage annotate every occurrence of every selected target",
+		"In each hint_phrase annotate every occurrence of that hint's target",
+		"young(young), grapes(grape), enforced(enforce), vulnerability(vulnerable)",
+		"Never insert a label inside a word", "Meanings and tags are unannotated",
+		"Use the real task's parameters",
 	} {
 		if !strings.Contains(baseline, instruction) {
 			t.Fatalf("missing system instruction: %s", instruction)
@@ -64,10 +63,10 @@ func TestSystemPromptPreservesLearningContractAndStableRules(t *testing.T) {
 		{Entries: []string{"melancholy", "casino"}, MeaningLanguage: "zh", Scenario: "story", MinimumWords: 50, RunID: "first-run", ModelID: "first-model"},
 		{Entries: []string{"coup d'etat", "grape"}, MeaningLanguage: "ja", Scenario: "news", MinimumWords: 400, RunID: "second-run", ProviderModelID: "another/model", PromptVersion: PromptVersion},
 	} {
-		if systemPrompt(spec) != systemPrompt(GenerationSpec{MeaningLanguage: spec.MeaningLanguage, MinimumWords: spec.MinimumWords}) {
-			t.Fatal("data other than language/length changed the fixed example")
+		if strings.Count(systemPrompt(spec), promptExampleInput(spec.MeaningLanguage, max(50, spec.MinimumWords))) != 1 || strings.Count(systemPrompt(spec), promptExampleOutput(spec.MeaningLanguage, max(50, spec.MinimumWords))) != 1 {
+			t.Fatal("language/length-specific example missing or duplicated")
 		}
-		if strings.SplitN(systemPrompt(spec), "<example>", 2)[0] != strings.SplitN(baseline, "<example>", 2)[0] {
+		if strings.SplitN(systemPrompt(spec), "SCHEMA:", 2)[0] != strings.SplitN(baseline, "SCHEMA:", 2)[0] {
 			t.Fatal("request-specific data changed the stable rule prefix")
 		}
 		requestJSON, err := json.Marshal(openRouterRequest(spec))
@@ -165,6 +164,55 @@ func TestPromptExamplePassesProductionValidationAndStreaming(t *testing.T) {
 		t.Fatal("example preview and final clean passage differ")
 	}
 	t.Logf("complete example: %d clean words, 10 ordered targets, repeated and derived forms validated", batch.WordCount)
+}
+
+func TestPassageClosedObserverRunsAfterSameChunkSafeDelta(t *testing.T) {
+	for _, tc := range []struct {
+		name    string
+		doc     string
+		wantErr bool
+	}{
+		{"valid metadata", `{"passage":"Hello","tags":["x"],"targets":{}}`, false},
+		{"invalid metadata after closed passage", `{"passage":"Hello","tags":BROKEN}`, true},
+	} {
+		t.Run(tc.name, func(t *testing.T) {
+			var order []string
+			ctx := WithPassageClosedObserver(context.Background(), func() error {
+				order = append(order, "closed")
+				return nil
+			})
+			stream := &openRouterStream{body: io.NopCloser(strings.NewReader(p0SSE(tc.doc) + "data: [DONE]\n\n"))}
+			_, err := stream.Receive(ctx, func(delta string) error {
+				order = append(order, "delta:"+delta)
+				return nil
+			})
+			if (err != nil) != tc.wantErr {
+				t.Fatalf("err=%v wantErr=%v", err, tc.wantErr)
+			}
+			if !reflect.DeepEqual(order, []string{"delta:Hello", "closed"}) {
+				t.Fatalf("observer order=%v", order)
+			}
+		})
+	}
+}
+
+func TestPassageExtractorHoldsMarkupPrefixAcrossChunks(t *testing.T) {
+	extractor := passageExtractor{}
+	first, err := extractor.Push(context.Background(), `{"passage":"A <`)
+	if err != nil || first != "A " {
+		t.Fatalf("unsafe prefix leaked or safe prefix lost: delta=%q err=%v", first, err)
+	}
+	if next, err := extractor.Push(context.Background(), `script>bad`); err == nil || next != "" || DescribeFailure(err).Reason != "passage_markup_invalid" {
+		t.Fatalf("markup prefix was not rejected before release: delta=%q err=%v", next, err)
+	}
+
+	for _, document := range []string{`{"passage":"A < 5 and 7 > 3","tags":[],"targets":{}}`, `{"passage":"Use <> as symbols and end <","tags":[],"targets":{}}`} {
+		extractor = passageExtractor{}
+		clean, err := extractor.Push(context.Background(), document)
+		if err != nil || !extractor.closed || !strings.Contains(clean, "<") {
+			t.Fatalf("ordinary comparison was rejected: clean=%q err=%v", clean, err)
+		}
+	}
 }
 
 func TestDecodeCandidateStrictRejectsUnknownDuplicateAndTrailingContent(t *testing.T) {

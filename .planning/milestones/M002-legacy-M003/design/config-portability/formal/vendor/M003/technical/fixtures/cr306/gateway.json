@@ -1,0 +1,116 @@
+{
+  "fixture_version": "M003-BE-07",
+  "cases": [
+    {
+      "protocol": "openai_chat",
+      "custom_parameters": {
+        "reasoning": {
+          "enabled": false
+        },
+        "temperature": 0.4
+      },
+      "merge": "root_disjoint_only",
+      "expected_extension": {
+        "reasoning": {
+          "enabled": false
+        },
+        "temperature": 0.4
+      },
+      "protected_unchanged": [
+        "model",
+        "stream",
+        "task_messages",
+        "task_schema",
+        "token_limit"
+      ],
+      "support_claim": "unknown_until_explicit_call; accepted response does not prove effect"
+    },
+    {
+      "protocol": "openai_responses",
+      "custom_parameters": {
+        "reasoning": {
+          "effort": "low"
+        }
+      },
+      "merge": "root_disjoint_only",
+      "expected_extension": {
+        "reasoning": {
+          "effort": "low"
+        }
+      },
+      "protected_unchanged": [
+        "model",
+        "stream",
+        "task_messages",
+        "task_schema",
+        "token_limit"
+      ],
+      "support_claim": "unknown_until_explicit_call; accepted response does not prove effect"
+    },
+    {
+      "protocol": "anthropic_messages",
+      "custom_parameters": {
+        "thinking": {
+          "type": "disabled"
+        }
+      },
+      "merge": "root_disjoint_only",
+      "expected_extension": {
+        "thinking": {
+          "type": "disabled"
+        }
+      },
+      "protected_unchanged": [
+        "model",
+        "stream",
+        "task_messages",
+        "task_schema",
+        "token_limit"
+      ],
+      "support_claim": "unknown_until_explicit_call; accepted response does not prove effect"
+    }
+  ],
+  "empty_object": {
+    "expected": "no_custom_keys",
+    "unchanged_protocols": [
+      "openai_chat/prompt",
+      "openai_responses",
+      "anthropic_messages"
+    ],
+    "separate_format_fix": "official OpenRouter Chat business json_schema adds provider.require_parameters=true; probe does not"
+  },
+  "snapshot_case": {
+    "accepted_custom_parameters": {
+      "reasoning": {
+        "enabled": false
+      }
+    },
+    "admin_save_during_plan": {
+      "reasoning": {
+        "enabled": true,
+        "effort": "low"
+      }
+    },
+    "all_current_run_stages": [
+      "planning",
+      "generation",
+      "fixed_edit",
+      "technical_repair",
+      "content_review",
+      "content_repair"
+    ],
+    "expected_current_run_custom_parameters": {
+      "reasoning": {
+        "enabled": false
+      }
+    },
+    "expected_next_run_custom_parameters": {
+      "reasoning": {
+        "enabled": true,
+        "effort": "low"
+      }
+    },
+    "max_executed_content_repair_rounds": 2,
+    "workflow_unchanged": true
+  }
+}

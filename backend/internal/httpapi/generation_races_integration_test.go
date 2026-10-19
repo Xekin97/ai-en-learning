@@ -160,7 +160,7 @@ func TestMixedCommitAcknowledgementHTTP(t *testing.T) {
 				t.Fatal("acknowledgement fault did not fire exactly once")
 			}
 			if mode == "valid_commit" {
-				f.assertSettled(t, "valid", true, 1)
+				f.assertSettled(t, "valid", true, 1, 1)
 				if strings.Count(string(raw), "event: generation.validated") != 1 || strings.Contains(string(raw), "event: generation.failed") {
 					t.Fatal("committed draft was projected as failure")
 				}
@@ -257,6 +257,7 @@ func TestMixedTerminalCompetition(t *testing.T) {
 				}
 				for iteration := 0; iteration < repeat; iteration++ {
 					run := cr039SeedRun(t, ctx, api, pool, actor, model, "learn")
+					recordSuccessfulGenerationFacts(t, ctx, api, run)
 					cancelled := atomic.Int32{}
 					api.generation.Registry().SetCancel(run.ID, func() { cancelled.Add(1) })
 					action := func(kind string) error {
@@ -347,7 +348,7 @@ func TestMixedCancelUnconfirmedDoesNotStopOrRefund(t *testing.T) {
 		t.Fatal(err)
 	}
 	out, err := api.generation.Cancel(ctx, actor, run.ID.String(), run.Token)
-	if err == nil || out.QuotaRefunded || out.Status != "" || cancelled.Load() != 0 {
+	if !errors.Is(err, generation.ErrSettlementUnconfirmed) || out.QuotaRefunded || out.Status != "" || cancelled.Load() != 0 {
 		t.Fatal("uncommitted cancellation reported or applied")
 	}
 	assertRefundRow(t, ctx, pool, run.ID, "active", true, false)
@@ -387,7 +388,7 @@ func TestMixedCancelReadbackIsBounded(t *testing.T) {
 	start := time.Now()
 	out, err := api.generation.Cancel(writeCtx, actor, run.ID.String(), run.Token)
 	elapsed := time.Since(start)
-	if err == nil || errors.Is(err, generation.ErrRunNotFound) || out.QuotaRefunded || out.Status != "" || cancelled.Load() != 0 || elapsed < 5*time.Second || elapsed > 7*time.Second {
+	if !errors.Is(err, generation.ErrSettlementUnconfirmed) || errors.Is(err, generation.ErrRunNotFound) || out.QuotaRefunded || out.Status != "" || cancelled.Load() != 0 || elapsed < 5*time.Second || elapsed > 7*time.Second {
 		t.Fatalf("unknown readback mishandled: elapsed=%s outcome=%+v error=%v", elapsed, out, err)
 	}
 	release()

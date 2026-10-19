@@ -1,0 +1,12 @@
+{
+  "result": "METHOD_INCOMPLETE",
+  "product_failure_observed": false,
+  "completed_before_interruption": [
+    "CR-304 browser received real 503 while configured one-slot holder was active",
+    "selected input remained present",
+    "submit was disabled for cooldown and re-enabled",
+    "POST count did not increase automatically"
+  ],
+  "method_error": "The script registered holder.on('exit') only after the cooldown. The holder had already exited, so the exit event was missed and the Promise never settled.",
+  "resolution": "Bind a bounded holder exit Promise immediately after spawn, clear stale marker files, then rerun the same bounded browser batch."
+}

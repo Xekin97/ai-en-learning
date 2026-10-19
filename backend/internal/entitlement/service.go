@@ -34,6 +34,30 @@ type EffectivePlan struct {
 	Origin      string     `json:"origin"`
 	TrialEndsAt *time.Time `json:"trial_ends_at"`
 }
+
+const (
+	ContentPolicyVersion  = int16(1)
+	PipelineVersion       = "m003-content-v5"
+	NativePolicyVersion   = "m003-native-policy-v1"
+	NativeCorrectionLimit = 2
+)
+
+type ContentService struct {
+	NativeValidation     bool `json:"native_validation"`
+	ContentReviewEnabled bool `json:"content_review_enabled"`
+	ContentRepairLimit   int  `json:"content_repair_limit"`
+}
+type NativePolicy struct {
+	Version  string `json:"version"`
+	Scope    string `json:"scope"`
+	MaxCalls int    `json:"max_calls"`
+	Editable bool   `json:"editable"`
+}
+
+func SystemNativePolicy() NativePolicy {
+	return NativePolicy{Version: NativePolicyVersion, Scope: "logical_request", MaxCalls: NativeCorrectionLimit, Editable: false}
+}
+
 type ExtraQuota struct {
 	Remaining         int        `json:"remaining"`
 	EarliestExpiresAt *time.Time `json:"earliest_expires_at"`
@@ -47,6 +71,9 @@ type Options struct {
 	Quota                                Quota
 	EffectivePlan                        EffectivePlan
 	ExtraQuota                           ExtraQuota
+	ConfigurationRevision                int64
+	ContentService                       ContentService
+	NativeCorrectionPolicy               NativePolicy
 }
 type Service struct {
 	pool *pgxpool.Pool
@@ -62,10 +89,12 @@ type Reader interface {
 	QueryRow(context.Context, string, ...any) pgx.Row
 }
 type Plan struct {
-	Code, Origin string
-	TrialEndsAt  *time.Time
-	Limit        *int
-	MaxEntries   int
+	Code, Origin         string
+	TrialEndsAt          *time.Time
+	Limit                *int
+	MaxEntries           int
+	ContentReviewEnabled bool
+	ContentRepairLimit   int
 }
 
 func Resolve(ctx context.Context, q Reader, actor identity.Actor, now time.Time) (Plan, error) {
@@ -88,7 +117,7 @@ func Resolve(ctx context.Context, q Reader, actor identity.Actor, now time.Time)
 			return p, err
 		}
 	}
-	err := q.QueryRow(ctx, `SELECT rolling_quota_limit,max_entries_per_run FROM wordweave.entitlement_groups WHERE code=$1`, p.Code).Scan(&p.Limit, &p.MaxEntries)
+	err := q.QueryRow(ctx, `SELECT rolling_quota_limit,max_entries_per_run,content_review_enabled,content_repair_limit FROM wordweave.entitlement_groups WHERE code=$1`, p.Code).Scan(&p.Limit, &p.MaxEntries, &p.ContentReviewEnabled, &p.ContentRepairLimit)
 	return p, err
 }
 
@@ -144,6 +173,9 @@ func (s *Service) Options(ctx context.Context, actor identity.Actor) (Options, e
 		return result, err
 	}
 	result.MaxEntries = plan.MaxEntries
+	result.ConfigurationRevision = c.Revision
+	result.ContentService = ContentService{NativeValidation: true, ContentReviewEnabled: plan.ContentReviewEnabled, ContentRepairLimit: plan.ContentRepairLimit}
+	result.NativeCorrectionPolicy = SystemNativePolicy()
 	result.EffectivePlan = EffectivePlan{Code: plan.Code, Origin: plan.Origin, TrialEndsAt: plan.TrialEndsAt}
 	if plan.Code != "visitor" {
 		result.EffectivePlan.Code = *identity.PlanCode(plan.Code)
@@ -160,7 +192,7 @@ func (s *Service) Options(ctx context.Context, actor identity.Actor) (Options, e
 	result.Lengths = make([]string, 0)
 	rows, err := tx.Query(ctx, `SELECT m.id,m.display_name,m.description,EXISTS(SELECT 1 FROM wordweave.group_models g WHERE g.model_id=m.id AND g.group_code=$1),
   (SELECT max(c.ends_at) FROM wordweave.model_time_contributions c WHERE c.owner_id=$2 AND c.model_id=m.id AND c.revoked_at IS NULL AND c.ends_at>$3)
-  FROM wordweave.ai_models m WHERE m.enabled AND m.retired_at IS NULL AND EXISTS(SELECT 1 FROM wordweave.ai_providers p WHERE p.id=m.provider_id AND p.credential_configured) AND (
+	  FROM wordweave.ai_models m WHERE m.enabled AND m.retired_at IS NULL AND EXISTS(SELECT 1 FROM wordweave.ai_providers p WHERE p.id=m.provider_id AND p.credential_configured AND p.retired_at IS NULL) AND (
    EXISTS(SELECT 1 FROM wordweave.group_models g WHERE g.model_id=m.id AND g.group_code=$1) OR
    ($4 AND EXISTS(SELECT 1 FROM wordweave.model_time_contributions c WHERE c.owner_id=$2 AND c.model_id=m.id AND c.revoked_at IS NULL AND c.starts_at<=$3 AND c.ends_at>$3))) ORDER BY m.created_at,m.id`, plan.Code, actor.ID, c.Now, actor.IsLearner())
 	if err != nil {

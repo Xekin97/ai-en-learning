@@ -47,7 +47,7 @@ func (server *Server) adminSaveModelProvider(w http.ResponseWriter, r *http.Requ
 		status = http.StatusOK
 	}
 	var body admin.ModelProviderInput
-	if !decodeOrProblem(w, r, &body, 2<<20) {
+	if !decodeModelOrProblem(w, r, &body, 2<<20, "/models") {
 		return
 	}
 	actor, _ := actorFromContext(r.Context())

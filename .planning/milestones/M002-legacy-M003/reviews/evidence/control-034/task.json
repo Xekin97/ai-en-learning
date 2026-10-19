@@ -1,0 +1,34 @@
+{
+  "objective": "BE05/DB03 已各由专业角色设计、冻结并直接接交，用户A及后台先行授权下，独立检查单次 TRANSITION-M003-035 从 technical-design 返回 uiux-design / uiux/base / designer-tony 更新完整 UI07。仅接收技术设计作为原型输入，不批准整个技术阶段、FE、实施或DB迁移。用户先看完整原型约束保持。",
+  "inputs": [
+    ".planning/workflow/state.yaml",
+    ".planning/agt/agents.yaml",
+    ".planning/agt/project.yaml",
+    ".planning/milestones/M003/reviews/evidence/start/locked-profile.yaml",
+    ".planning/milestones/M003/reviews/requirements-feedback.md",
+    ".planning/milestones/M003/changes/CR-302.md",
+    ".planning/milestones/M003/handoffs/product.md",
+    ".planning/milestones/M003/handoffs/backend-architecture.md",
+    ".planning/milestones/M003/handoffs/database.md",
+    ".planning/milestones/M003/handoffs/uiux.md",
+    ".planning/milestones/M003/reviews/evidence/control-032/M003-BE-05-source-manifest.json",
+    ".planning/milestones/M003/reviews/evidence/control-034/M003-DB-03-source-manifest.json"
+  ],
+  "write_scope": [
+    ".planning/milestones/M003/reviews/research-alignment-ui-034.md"
+  ],
+  "acceptance": [
+    "只检查授权/角色/完整交接/恢复证据，不代数据库或后端语义审查，不复跑测试或启动模型。",
+    "技术设计允许返回UI；BE05与DB03无新业务待决，可按用户确认A进入完整原型更新，CR302下游pending保留。给精确状态，按操作定义选择transition-stage或recover-or-rollback。",
+    "UI07直接消费BE05 v5真实wire，先临时scene/meaning/usage再正文与固定编辑增量；普通也Plan。DB终态+最终整包才保存/发布；含取消/失败/恢复和两个后台预览模式；内部计数和审稿不突出。",
+    "保持旧UI06可恢复；更新后必须给用户视觉评审，不能自动批准原型或马上做FE/业务源码。DB03目标库0017应用未知不阻塞原型、阻止未经核实迁移。",
+    "技术组件仅accepted_for_prototype_input范围，full技术批准仍reopened，FE01以及原待审实现未适配；保留所有旧开放质量项。"
+  ],
+  "risk": "normal",
+  "prior_attempts": [],
+  "report": [
+    "check_results",
+    "exact_target_state",
+    "unresolved_findings"
+  ]
+}

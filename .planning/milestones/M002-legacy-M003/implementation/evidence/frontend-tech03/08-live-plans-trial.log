@@ -1,0 +1,76 @@
+
+Running 2 tests using 1 worker
+
+(node:36809) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  1 [chromium] › tests/e2e/m003-live.spec.ts:135:1 › Pro N0 and Plus N99 persist independently without starting generation (7.4s)
+(node:37210) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  2 [chromium] › tests/e2e/m003-live.spec.ts:184:1 › published preset trial consumes the v5 stream and completes at 768px (30.1s)
+
+
+  1) [chromium] › tests/e2e/m003-live.spec.ts:135:1 › Pro N0 and Plus N99 persist independently without starting generation 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: locator('#plan-impact[open]')
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" with timeout 5000ms
+      - waiting for locator('#plan-impact[open]')
+
+
+      162 |       .click();
+      163 |     const dialog = page.locator("#plan-impact[open]");
+    > 164 |     await expect(dialog).toBeVisible();
+          |                          ^
+      165 |     await dialog
+      166 |       .getByRole("button", { name: "Save changes", exact: true })
+      167 |       .click();
+        at saveLimit (/Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/frontend/tests/e2e/m003-live.spec.ts:164:26)
+        at /Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/frontend/tests/e2e/m003-live.spec.ts:172:3
+
+    Error Context: test-results/m003-live-Pro-N0-and-Plus--972da-without-starting-generation-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/m003-live-Pro-N0-and-Plus--972da-without-starting-generation-chromium/trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace test-results/m003-live-Pro-N0-and-Plus--972da-without-starting-generation-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [chromium] › tests/e2e/m003-live.spec.ts:184:1 › published preset trial consumes the v5 stream and completes at 768px 
+
+    Test timeout of 30000ms exceeded.
+
+    Error: locator.click: Test timeout of 30000ms exceeded.
+    Call log:
+      - waiting for locator('.gallery-card').filter({ hasText: 'M003 Q02 browser sample' }).getByRole('link', { name: 'Try this story', exact: true })
+
+
+      198 |   const card = page.locator(".gallery-card", { hasText: q02Title });
+      199 |   await expect(card).toBeVisible();
+    > 200 |   await card.getByRole("link", { name: "Try this story", exact: true }).click();
+          |                                                                         ^
+      201 |   await expect(page).toHaveURL(/\/trial\//);
+      202 |   await ready(page);
+      203 |   await page
+        at /Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/frontend/tests/e2e/m003-live.spec.ts:200:73
+
+    Error Context: test-results/m003-live-published-preset-3d8fe-ream-and-completes-at-768px-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/m003-live-published-preset-3d8fe-ream-and-completes-at-768px-chromium/trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace test-results/m003-live-published-preset-3d8fe-ream-and-completes-at-768px-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2 failed
+    [chromium] › tests/e2e/m003-live.spec.ts:135:1 › Pro N0 and Plus N99 persist independently without starting generation 
+    [chromium] › tests/e2e/m003-live.spec.ts:184:1 › published preset trial consumes the v5 stream and completes at 768px 

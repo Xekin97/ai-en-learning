@@ -12,6 +12,30 @@ import (
 // this budget; this is not a transport retry or another business generation.
 const maxCorrections = 2
 
+type RepairBudget struct{ Remaining int }
+
+type repairObserverKey struct{}
+type continuationAttemptKey struct{}
+type continuationObserverKey struct{}
+
+func WithRepairObserver(ctx context.Context, observer func() error) context.Context {
+	return context.WithValue(ctx, repairObserverKey{}, observer)
+}
+
+// WithContinuationAttempt lets the delivery layer close the current public
+// emitter and return a new same-version emitter before each native
+// continuation call. Content corrections remain silent and do not switch
+// public draft identity.
+func WithContinuationAttempt(ctx context.Context, begin func() (func(string) error, error)) context.Context {
+	return context.WithValue(ctx, continuationAttemptKey{}, begin)
+}
+
+func WithContinuationObserver(ctx context.Context, observer func() error) context.Context {
+	return context.WithValue(ctx, continuationObserverKey{}, observer)
+}
+
+func NewRepairBudget(limit int) *RepairBudget { return &RepairBudget{Remaining: max(0, limit)} }
+
 type passageContinuation struct {
 	Passage         string   `json:"existing_passage"`
 	Entries         []string `json:"entries"`
@@ -60,6 +84,12 @@ Do not try to repair missing words or passage length here; the server handles co
 // Preflights are silent; the caller still validates before publishing/settling.
 // Malformed responses, transport errors and cancellation are not retried.
 func ReceiveWithCorrections(ctx context.Context, provider Provider, validator Validator, spec GenerationSpec, stream Stream, emit func(string) error) (candidate Candidate, resultErr error) {
+	return ReceiveWithRepairBudget(ctx, provider, validator, spec, stream, emit, NewRepairBudget(maxCorrections))
+}
+
+// ReceiveWithRepairBudget applies the existing native recovery rules while
+// sharing one bounded budget across every candidate in a logical request.
+func ReceiveWithRepairBudget(ctx context.Context, provider Provider, validator Validator, spec GenerationSpec, stream Stream, emit func(string) error, budget *RepairBudget) (candidate Candidate, resultErr error) {
 	candidate, resultErr = stream.Receive(ctx, emit)
 	if resultErr != nil || spec.CompatibilityProbe || spec.continuation != nil || spec.correction != nil {
 		return
@@ -76,7 +106,7 @@ func ReceiveWithCorrections(ctx context.Context, provider Provider, validator Va
 		}
 	}()
 	previousError := ""
-	for attempts < maxCorrections {
+	for budget != nil && budget.Remaining > 0 {
 		if err := ctx.Err(); err != nil {
 			return Candidate{}, err
 		}
@@ -129,6 +159,7 @@ func ReceiveWithCorrections(ctx context.Context, provider Provider, validator Va
 			trace.Begin(gt.Continuation)
 		}
 		attempts++
+		budget.Remaining--
 		d := gt.Why("")
 		d.Actual, d.Limit = attempts, maxCorrections
 		trace.Note(gt.ProviderStream, "correction_started", d)
@@ -155,7 +186,7 @@ func ReceiveWithCorrections(ctx context.Context, provider Provider, validator Va
 		trace.Note(gt.ProviderStream, "correction_finished", d)
 		if err != nil {
 			// The rejected rewrite reached neither the browser nor candidate.
-			if nextSpec.correction != nil && DescribeFailure(err).Reason == "clean_stream_mismatch" && attempts < maxCorrections {
+			if nextSpec.correction != nil && DescribeFailure(err).Reason == "clean_stream_mismatch" && budget.Remaining > 0 {
 				previousError = "Visible passage text changed. Copy it exactly; edit only annotations."
 				continue
 			}
@@ -206,11 +237,31 @@ func newContentCorrection(spec GenerationSpec, candidate Candidate, issue Failur
 }
 
 func receiveCorrection(ctx context.Context, provider Provider, spec GenerationSpec, emit func(string) error) (Candidate, error) {
+	if spec.continuation != nil {
+		if observer, ok := ctx.Value(continuationObserverKey{}).(func() error); ok && observer != nil {
+			ctx = WithInvocationObserver(ctx, observer)
+		}
+	} else if observer, ok := ctx.Value(repairObserverKey{}).(func() error); ok && observer != nil {
+		ctx = WithInvocationObserver(ctx, observer)
+	}
+	if spec.correction != nil {
+		// Field/annotation correction is private. Even when the provider repeats
+		// a passage, it cannot complete or replace the visible draft.
+		ctx = WithPassageClosedObserver(ctx, nil)
+	}
 	next, err := provider.Open(ctx, spec)
 	if err != nil {
 		return Candidate{}, err
 	}
 	defer next.Close()
+	if spec.continuation != nil {
+		if begin, ok := ctx.Value(continuationAttemptKey{}).(func() (func(string) error, error)); ok && begin != nil {
+			emit, err = begin()
+			if err != nil {
+				return Candidate{}, err
+			}
+		}
+	}
 	first := true
 	return next.Receive(ctx, func(delta string) error {
 		if err := ctx.Err(); err != nil {

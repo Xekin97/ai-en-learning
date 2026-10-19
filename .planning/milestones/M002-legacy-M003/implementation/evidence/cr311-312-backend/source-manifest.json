@@ -1,0 +1,31 @@
+{
+  "scope": "backend-ethan CR311/312 implementation source only",
+  "head_at_task_start": "45a4ab123c3308fa0a83868b6030c6b84a96f67d",
+  "baseline_limit": "No exact task-start byte snapshot exists for paths already modified/untracked. Historical recovered hashes are UAT003 bytes, not task-start bytes. Clean-at-start paths use HEAD as the exact baseline.",
+  "files": [
+    {"path":"backend/db/queries/vocabulary.sql","sha256":"5d866af41e9005bd95e5970a84abf89bd43c722efeeb3b9d7514d3face136034","baseline":"task-start clean/HEAD","delta":"Search exact blocked predicate before ORDER/LIMIT"},
+    {"path":"backend/internal/dbgen/vocabulary.sql.go","sha256":"847f7b7e767b56eb3484fbc6894dbc48a00573c58b39aef9c7a83cdd7b12bfad","baseline":"task-start clean/HEAD","delta":"sqlc output for blocked_entries"},
+    {"path":"backend/internal/vocabulary/service.go","sha256":"fe339cdb66d11f0bb0226f9c09ccc70c5806f01b319e97ab99edee96c1fd22d1","baseline":"task-start clean/HEAD","delta":"immutable 41-entry catalogue passed to Search and Random"},
+    {"path":"backend/internal/vocabulary/candidate_filter_test.go","sha256":"8a4efb05931448090223bd2139bde2068d9b89d10a84dac7e23f5cecc436155d","baseline":"new","delta":"exact catalogue and SQL ordering checks"},
+    {"path":"backend/internal/vocabulary/random_integration_test.go","sha256":"e6e4f474e754016533ed411aaf200f1d73ff53da254cbdf61ad99838fbfa48ff","baseline":"task-start clean/HEAD","delta":"CR311 production-query integration coverage"},
+    {"path":"backend/internal/ai/usage.go","sha256":"70cce1c0e6aa25c0688513ba311157895a16d12898784fab903068dbaafcbd32","baseline":"preexisting modified; historical UAT003 available","delta":"explicit safe passage-close observer"},
+    {"path":"backend/internal/ai/openrouter.go","sha256":"c67cc97ea0f5c47332b44506a2757eb42caf46bf1b83dc1b89d00758e5cadc1c","baseline":"preexisting modified; historical UAT003 available","delta":"safe delta-before-close notification and cross-chunk markup-prefix gate"},
+    {"path":"backend/internal/ai/openrouter_test.go","sha256":"8ea38ccced6ed38e091d31827acde699c6b6024ae381d98b8d602fcdad0357f6","baseline":"preexisting modified; no exact task-start bytes","delta":"passage close order, delayed/bad metadata, markup prefix tests"},
+    {"path":"backend/internal/ai/continuation.go","sha256":"3cba7c3208967d8520f7ff5469fddd7535035394143572473c2cabe4bceafcf2","baseline":"preexisting modified; historical UAT003 available","delta":"actual-send continuation observer, post-open draft begin, private correction isolation"},
+    {"path":"backend/internal/generation/pipeline.go","sha256":"dea7bb9c1e120ac54707c342f0b7ff0742faeccfb91f9aa91a5f417140153ea4","baseline":"preexisting untracked; historical UAT003 available","delta":"v6 activity/draft lifecycle, segment-indexed replacement, explicit close, restore/discard, paragraph-count continuation index"},
+    {"path":"backend/internal/generation/pipeline_test.go","sha256":"11b154f095729f30164c60e25ca2689b8edaf9bd5700c110d43551b14b5b2beb","baseline":"preexisting untracked; no exact task-start bytes","delta":"v6 editor/protocol/performance/whitespace continuation boundary coverage"},
+    {"path":"backend/internal/httpapi/generation_handlers.go","sha256":"37c59976aad9e95e2c2bd18b22879526ca09213c8ef6d22260710bfe2c10b480","baseline":"preexisting modified; historical UAT003 available","delta":"generation v6 activity/draft wire and status version"},
+    {"path":"backend/internal/httpapi/preset_preview_handlers.go","sha256":"c1ab80c38ab2f22d2aa21cec91a34813a874d1a39a4f4a69043cf7cbf4dac3b1","baseline":"preexisting modified; historical UAT003 available","delta":"preview v6 activity/draft wire and status version"},
+    {"path":"backend/internal/httpapi/m003_pipeline_integration_test.go","sha256":"dd0d9206d5755d7a1dd2fde4fe2337b3c5e94bf06de10cd39fd0c0aab22e820e","baseline":"preexisting untracked; no exact task-start bytes","delta":"v6 seq/activity/draft/body/validated order and private Review exclusion"}
+  ],
+  "sqlc_side_effect_restored": "backend/internal/dbgen/models.go was clean at task start and matched HEAD/UAT003 (3edcbb4c...). make generate rewrote it incidentally; it was restored byte-for-byte. Only vocabulary.sql.go remains as the intended generated delta.",
+  "delivery_documents": [
+    {"path":".planning/milestones/M003/implementation/backend-validation.md","sha256":"ab297cd5e653bbf9ca7e4cb1c2b1dc1c892a4aa868997d7c29d8ec7dec1815f3"},
+    {"path":".planning/milestones/M003/handoffs/backend-implementation.md","sha256":"59c25634b16dc6ea4f116c23772635a8db047ce3741e1f536dc8145d17a2311f"},
+    {"path":".planning/milestones/M003/changes/CR-311.md","sha256":"0c63eb9ca1d89e70865b55246f42f987b52d82bfa806ecef06971f75a0335037"},
+    {"path":".planning/milestones/M003/changes/CR-312.md","sha256":"36fd4303e3f53ad73c2c3d21d0ceb808560d96a4eb0f26d6342baba9e44dab12"}
+  ],
+  "source_archive": {"path":".planning/milestones/M003/implementation/evidence/cr311-312-backend/cr311-312-backend-source.tar.gz","sha256":"4ba26e4c48922361fe452a6427c1cbbe49ffc517a35b8d5a495474aceade2ad3","entries":18,"contents":"14 owned source/test paths plus current backend validation, backend handoff, CR-311 and CR-312 originals"},
+  "protected_manifest": ".planning/milestones/M003/reviews/evidence/cr311-312-implementation-entry-101/protected-before.json",
+  "historical_baseline": ".planning/milestones/M003/reviews/evidence/cr311-312-implementation-entry-101/recovered-backend-baseline.json"
+}

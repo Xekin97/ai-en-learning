@@ -1,0 +1,849 @@
+{
+  "scope": "Formal backend + new PostgreSQL 18 current-schema database + deterministic synthetic provider; no real-provider quality or production-capacity claim.",
+  "checks": {
+    "inflight_run_keeps_original_parameters": {
+      "pass": false,
+      "detail": [
+        {
+          "stage": "planning",
+          "model": "synthetic/snapshot-slow",
+          "temperature": 0.15,
+          "reasoning_enabled": true,
+          "has_business_schema": true,
+          "has_stream": true,
+          "has_messages": true,
+          "provider_require_parameters": false
+        },
+        {
+          "stage": "generation",
+          "model": "synthetic/snapshot-slow",
+          "temperature": 0.15,
+          "reasoning_enabled": true,
+          "has_business_schema": true,
+          "has_stream": true,
+          "has_messages": true,
+          "provider_require_parameters": false
+        },
+        {
+          "stage": "fixed_edit",
+          "model": "synthetic/snapshot-slow",
+          "temperature": 0.15,
+          "reasoning_enabled": true,
+          "has_business_schema": true,
+          "has_stream": true,
+          "has_messages": true,
+          "provider_require_parameters": false
+        },
+        {
+          "stage": "generation",
+          "model": "synthetic/snapshot-slow",
+          "temperature": 0.15,
+          "reasoning_enabled": true,
+          "has_business_schema": true,
+          "has_stream": true,
+          "has_messages": true,
+          "provider_require_parameters": false
+        },
+        {
+          "stage": "generation",
+          "model": "synthetic/snapshot-slow",
+          "temperature": 0.15,
+          "reasoning_enabled": true,
+          "has_business_schema": true,
+          "has_stream": true,
+          "has_messages": true,
+          "provider_require_parameters": false
+        }
+      ]
+    },
+    "enhanced_pipeline_survives_parameter_binding": {
+      "pass": false,
+      "detail": null
+    },
+    "new_run_uses_updated_parameters": {
+      "pass": false,
+      "detail": [
+        {
+          "stage": "planning",
+          "model": "synthetic/snapshot-slow",
+          "temperature": 0.85,
+          "reasoning_enabled": false,
+          "has_business_schema": true,
+          "has_stream": true,
+          "has_messages": true,
+          "provider_require_parameters": false
+        },
+        {
+          "stage": "generation",
+          "model": "synthetic/snapshot-slow",
+          "temperature": 0.85,
+          "reasoning_enabled": false,
+          "has_business_schema": true,
+          "has_stream": true,
+          "has_messages": true,
+          "provider_require_parameters": false
+        },
+        {
+          "stage": "generation",
+          "model": "synthetic/snapshot-slow",
+          "temperature": 0.85,
+          "reasoning_enabled": false,
+          "has_business_schema": true,
+          "has_stream": true,
+          "has_messages": true,
+          "provider_require_parameters": false
+        },
+        {
+          "stage": "generation",
+          "model": "synthetic/snapshot-slow",
+          "temperature": 0.85,
+          "reasoning_enabled": false,
+          "has_business_schema": true,
+          "has_stream": true,
+          "has_messages": true,
+          "provider_require_parameters": false
+        }
+      ]
+    },
+    "n0_keeps_common_plan_writer": {
+      "pass": false,
+      "detail": null
+    },
+    "n2_executes_two_conditional_repairs": {
+      "pass": false,
+      "detail": [
+        "planning",
+        "generation",
+        "fixed_edit",
+        "generation",
+        "generation"
+      ]
+    },
+    "q02_keeps_last_valid_and_save": {
+      "pass": false,
+      "detail": {
+        "terminal": {
+          "seq": 21,
+          "code": "content_validation_failed",
+          "quota_refunded": true,
+          "retryable": true,
+          "request_id": "req_YAoN7QGVfW6FdcroPoP_UQ"
+        },
+        "save_status": 409
+      }
+    },
+    "fenced_plan_never_reaches_writer_or_save": {
+      "pass": true,
+      "detail": {
+        "calls": [
+          {
+            "stage": "planning",
+            "model": "synthetic/fenced-plan",
+            "temperature": null,
+            "reasoning_enabled": null,
+            "has_business_schema": true,
+            "has_stream": true,
+            "has_messages": true,
+            "provider_require_parameters": false
+          }
+        ],
+        "terminal": {
+          "seq": 6,
+          "code": "schema_error",
+          "quota_refunded": true,
+          "retryable": true,
+          "request_id": "req_NO4m7Y9TMDzrgB2Zs1e0GQ"
+        },
+        "status": {
+          "data": {
+            "contract_version": "m003-stream-v5",
+            "run_id": "01a12f05-f4e0-7c7e-877b-5ba49fa05578",
+            "status": "failed",
+            "snapshot": {
+              "configuration_revision": "0QHjU1dwEGgnJT2inbARo8p3tFozU8qLwen2MV_cx6k",
+              "effective_plan": {
+                "code": "basic",
+                "origin": "base"
+              },
+              "content_service": {
+                "native_validation": true,
+                "content_review_enabled": false,
+                "content_repair_limit": 0
+              },
+              "native_correction_policy": {
+                "version": "m003-native-policy-v1",
+                "scope": "logical_request",
+                "max_calls": 2,
+                "editable": false
+              }
+            },
+            "final_content_version": null,
+            "result": null,
+            "can_save": false,
+            "quota_refunded": true,
+            "content_outcome": "failed",
+            "completion_notice": null
+          },
+          "meta": {
+            "request_id": "req_NspJ4Hbx_JUDvKDewgYQHg"
+          }
+        }
+      }
+    },
+    "heartbeat_only_has_no_fake_plan_and_is_cancellable": {
+      "pass": true,
+      "detail": {
+        "events": [
+          "generation.started",
+          "generation.progress",
+          "generation.cancelled"
+        ],
+        "cancel": {
+          "data": {
+            "status": "cancelled",
+            "quota_refunded": false
+          },
+          "meta": {
+            "request_id": "req_cUwKZhpcibDNgjZ9vmamwA"
+          }
+        }
+      }
+    },
+    "db_snapshots_match_old_and_new_runs": {
+      "pass": true,
+      "detail": {
+        "first": {
+          "version": "custom-parameters-v1",
+          "output_mode": "json_schema",
+          "structured_route": "unchanged",
+          "custom_parameters": {
+            "reasoning": {
+              "enabled": true
+            },
+            "temperature": 0.15
+          },
+          "max_output_tokens": null
+        },
+        "second": {
+          "version": "custom-parameters-v1",
+          "output_mode": "json_schema",
+          "structured_route": "unchanged",
+          "custom_parameters": {
+            "reasoning": {
+              "enabled": false
+            },
+            "temperature": 0.85
+          },
+          "max_output_tokens": null
+        }
+      }
+    },
+    "one_charge_record_per_accepted_run": {
+      "pass": true,
+      "detail": [
+        {
+          "run_id": "01a12f05-cc0f-79d2-bf52-69c97cfabbd1",
+          "source_kind": "plan",
+          "plan_code": "pro",
+          "origin": "base",
+          "units": 1,
+          "state": "refunded"
+        },
+        {
+          "run_id": "01a12f05-da8d-71ed-84ab-c3f343b421cf",
+          "source_kind": "plan",
+          "plan_code": "registered",
+          "origin": "base",
+          "units": 1,
+          "state": "refunded"
+        },
+        {
+          "run_id": "01a12f05-e78d-7759-85e6-9011bd515dea",
+          "source_kind": "plan",
+          "plan_code": "pro",
+          "origin": "base",
+          "units": 1,
+          "state": "refunded"
+        },
+        {
+          "run_id": "01a12f05-ee20-7971-917c-08a21586714e",
+          "source_kind": "plan",
+          "plan_code": "pro",
+          "origin": "base",
+          "units": 1,
+          "state": "refunded"
+        },
+        {
+          "run_id": "01a12f05-f4e0-7c7e-877b-5ba49fa05578",
+          "source_kind": "plan",
+          "plan_code": "registered",
+          "origin": "base",
+          "units": 1,
+          "state": "refunded"
+        },
+        {
+          "run_id": "01a12f05-f59a-7fa2-a9af-49c5e5aa6357",
+          "source_kind": "plan",
+          "plan_code": "registered",
+          "origin": "base",
+          "units": 1,
+          "state": "consumed"
+        }
+      ]
+    }
+  },
+  "flows": {
+    "snapshot_first": {
+      "status": 200,
+      "event_names": [
+        "generation.started",
+        "generation.progress",
+        "generation.plan_item",
+        "generation.plan_item",
+        "generation.plan_item",
+        "generation.progress",
+        "generation.edit",
+        "generation.edit",
+        "generation.edit",
+        "generation.edit",
+        "generation.edit",
+        "generation.edit",
+        "generation.edit",
+        "generation.edit",
+        "generation.edit",
+        "generation.edit",
+        "generation.edit",
+        "generation.edit",
+        "generation.edit",
+        "generation.edit",
+        "generation.failed"
+      ],
+      "started": {
+        "seq": 1,
+        "contract_version": "m003-stream-v5",
+        "stream_id": "5f570aef-492f-4426-bee8-f7149e72c09b",
+        "run_id": "01a12f05-cc0f-79d2-bf52-69c97cfabbd1",
+        "snapshot": {
+          "configuration_revision": "aTPYW7uBpsAfY5rjSb6vwg5GptPSRpXsInVsJMPeZe4",
+          "effective_plan": {
+            "code": "pro",
+            "origin": "base"
+          },
+          "content_service": {
+            "native_validation": true,
+            "content_review_enabled": true,
+            "content_repair_limit": 2
+          },
+          "native_correction_policy": {
+            "version": "m003-native-policy-v1",
+            "scope": "logical_request",
+            "max_calls": 2,
+            "editable": false
+          }
+        },
+        "generation_token_present": true
+      },
+      "terminal": {
+        "seq": 21,
+        "code": "content_validation_failed",
+        "quota_refunded": true,
+        "retryable": true,
+        "request_id": "req_UIHD7rgod9iGlnQNZzFvqg"
+      },
+      "first_plan_item_ms": 2019,
+      "first_body_edit_ms": 2194
+    },
+    "snapshot_second": {
+      "status": 200,
+      "event_names": [
+        "generation.started",
+        "generation.progress",
+        "generation.plan_item",
+        "generation.plan_item",
+        "generation.plan_item",
+        "generation.progress",
+        "generation.edit",
+        "generation.edit",
+        "generation.edit",
+        "generation.edit",
+        "generation.edit",
+        "generation.edit",
+        "generation.edit",
+        "generation.progress",
+        "generation.progress",
+        "generation.failed"
+      ],
+      "started": {
+        "seq": 1,
+        "contract_version": "m003-stream-v5",
+        "stream_id": "e9cd1b67-683b-413d-a44e-c537b1e35bd6",
+        "run_id": "01a12f05-da8d-71ed-84ab-c3f343b421cf",
+        "snapshot": {
+          "configuration_revision": "0QHjU1dwEGgnJT2inbARo8p3tFozU8qLwen2MV_cx6k",
+          "effective_plan": {
+            "code": "basic",
+            "origin": "base"
+          },
+          "content_service": {
+            "native_validation": true,
+            "content_review_enabled": false,
+            "content_repair_limit": 0
+          },
+          "native_correction_policy": {
+            "version": "m003-native-policy-v1",
+            "scope": "logical_request",
+            "max_calls": 2,
+            "editable": false
+          }
+        },
+        "generation_token_present": true
+      },
+      "terminal": {
+        "seq": 16,
+        "code": "content_invalid",
+        "quota_refunded": true,
+        "retryable": true,
+        "request_id": "req_lKrJzvKUbxpe0D-JE1ovkg"
+      },
+      "first_plan_item_ms": 2011,
+      "first_body_edit_ms": 2184
+    },
+    "enhanced_n2": {
+      "status": 200,
+      "event_names": [
+        "generation.started",
+        "generation.progress",
+        "generation.plan_item",
+        "generation.plan_item",
+        "generation.plan_item",
+        "generation.progress",
+        "generation.edit",
+        "generation.edit",
+        "generation.edit",
+        "generation.edit",
+        "generation.edit",
+        "generation.edit",
+        "generation.edit",
+        "generation.edit",
+        "generation.edit",
+        "generation.edit",
+        "generation.edit",
+        "generation.edit",
+        "generation.edit",
+        "generation.edit",
+        "generation.failed"
+      ],
+      "started": {
+        "seq": 1,
+        "contract_version": "m003-stream-v5",
+        "stream_id": "efdc0317-cbdb-409c-bb11-c290329b7786",
+        "run_id": "01a12f05-e78d-7759-85e6-9011bd515dea",
+        "snapshot": {
+          "configuration_revision": "0QHjU1dwEGgnJT2inbARo8p3tFozU8qLwen2MV_cx6k",
+          "effective_plan": {
+            "code": "pro",
+            "origin": "base"
+          },
+          "content_service": {
+            "native_validation": true,
+            "content_review_enabled": true,
+            "content_repair_limit": 2
+          },
+          "native_correction_policy": {
+            "version": "m003-native-policy-v1",
+            "scope": "logical_request",
+            "max_calls": 2,
+            "editable": false
+          }
+        },
+        "generation_token_present": true
+      },
+      "terminal": {
+        "seq": 21,
+        "code": "content_validation_failed",
+        "quota_refunded": true,
+        "retryable": true,
+        "request_id": "req_hFxk1XFl7XNUN1Dv7ezX1w"
+      },
+      "first_plan_item_ms": 6,
+      "first_body_edit_ms": 186
+    },
+    "q02": {
+      "status": 200,
+      "event_names": [
+        "generation.started",
+        "generation.progress",
+        "generation.plan_item",
+        "generation.plan_item",
+        "generation.plan_item",
+        "generation.progress",
+        "generation.edit",
+        "generation.edit",
+        "generation.edit",
+        "generation.edit",
+        "generation.edit",
+        "generation.edit",
+        "generation.edit",
+        "generation.edit",
+        "generation.edit",
+        "generation.edit",
+        "generation.edit",
+        "generation.edit",
+        "generation.edit",
+        "generation.edit",
+        "generation.failed"
+      ],
+      "started": {
+        "seq": 1,
+        "contract_version": "m003-stream-v5",
+        "stream_id": "cf2638da-e596-4683-aa43-c3547a10ac4e",
+        "run_id": "01a12f05-ee20-7971-917c-08a21586714e",
+        "snapshot": {
+          "configuration_revision": "0QHjU1dwEGgnJT2inbARo8p3tFozU8qLwen2MV_cx6k",
+          "effective_plan": {
+            "code": "pro",
+            "origin": "base"
+          },
+          "content_service": {
+            "native_validation": true,
+            "content_review_enabled": true,
+            "content_repair_limit": 2
+          },
+          "native_correction_policy": {
+            "version": "m003-native-policy-v1",
+            "scope": "logical_request",
+            "max_calls": 2,
+            "editable": false
+          }
+        },
+        "generation_token_present": true
+      },
+      "terminal": {
+        "seq": 21,
+        "code": "content_validation_failed",
+        "quota_refunded": true,
+        "retryable": true,
+        "request_id": "req_YAoN7QGVfW6FdcroPoP_UQ"
+      },
+      "first_plan_item_ms": 6,
+      "first_body_edit_ms": 208
+    },
+    "fenced_plan": {
+      "status": 200,
+      "event_names": [
+        "generation.started",
+        "generation.progress",
+        "generation.plan_item",
+        "generation.plan_item",
+        "generation.plan_item",
+        "generation.failed"
+      ],
+      "started": {
+        "seq": 1,
+        "contract_version": "m003-stream-v5",
+        "stream_id": "1d84bdc2-368d-430a-9b6e-7eb823ca812b",
+        "run_id": "01a12f05-f4e0-7c7e-877b-5ba49fa05578",
+        "snapshot": {
+          "configuration_revision": "0QHjU1dwEGgnJT2inbARo8p3tFozU8qLwen2MV_cx6k",
+          "effective_plan": {
+            "code": "basic",
+            "origin": "base"
+          },
+          "content_service": {
+            "native_validation": true,
+            "content_review_enabled": false,
+            "content_repair_limit": 0
+          },
+          "native_correction_policy": {
+            "version": "m003-native-policy-v1",
+            "scope": "logical_request",
+            "max_calls": 2,
+            "editable": false
+          }
+        },
+        "generation_token_present": true
+      },
+      "terminal": {
+        "seq": 6,
+        "code": "schema_error",
+        "quota_refunded": true,
+        "retryable": true,
+        "request_id": "req_NO4m7Y9TMDzrgB2Zs1e0GQ"
+      },
+      "first_plan_item_ms": 5,
+      "first_body_edit_ms": null
+    },
+    "heartbeat_cancel": {
+      "status": 200,
+      "event_names": [
+        "generation.started",
+        "generation.progress",
+        "generation.cancelled"
+      ],
+      "started": {
+        "seq": 1,
+        "contract_version": "m003-stream-v5",
+        "stream_id": "37354c25-16ca-4843-ba82-1a170054803f",
+        "run_id": "01a12f05-f59a-7fa2-a9af-49c5e5aa6357",
+        "snapshot": {
+          "configuration_revision": "0QHjU1dwEGgnJT2inbARo8p3tFozU8qLwen2MV_cx6k",
+          "effective_plan": {
+            "code": "basic",
+            "origin": "base"
+          },
+          "content_service": {
+            "native_validation": true,
+            "content_review_enabled": false,
+            "content_repair_limit": 0
+          },
+          "native_correction_policy": {
+            "version": "m003-native-policy-v1",
+            "scope": "logical_request",
+            "max_calls": 2,
+            "editable": false
+          }
+        },
+        "generation_token_present": true
+      },
+      "terminal": {
+        "seq": 3,
+        "quota_refunded": false
+      },
+      "first_plan_item_ms": null,
+      "first_body_edit_ms": null
+    }
+  },
+  "provider_calls": {
+    "snapshot_first": [
+      {
+        "stage": "planning",
+        "model": "synthetic/snapshot-slow",
+        "temperature": 0.15,
+        "reasoning_enabled": true,
+        "has_business_schema": true,
+        "has_stream": true,
+        "has_messages": true,
+        "provider_require_parameters": false
+      },
+      {
+        "stage": "generation",
+        "model": "synthetic/snapshot-slow",
+        "temperature": 0.15,
+        "reasoning_enabled": true,
+        "has_business_schema": true,
+        "has_stream": true,
+        "has_messages": true,
+        "provider_require_parameters": false
+      },
+      {
+        "stage": "fixed_edit",
+        "model": "synthetic/snapshot-slow",
+        "temperature": 0.15,
+        "reasoning_enabled": true,
+        "has_business_schema": true,
+        "has_stream": true,
+        "has_messages": true,
+        "provider_require_parameters": false
+      },
+      {
+        "stage": "generation",
+        "model": "synthetic/snapshot-slow",
+        "temperature": 0.15,
+        "reasoning_enabled": true,
+        "has_business_schema": true,
+        "has_stream": true,
+        "has_messages": true,
+        "provider_require_parameters": false
+      },
+      {
+        "stage": "generation",
+        "model": "synthetic/snapshot-slow",
+        "temperature": 0.15,
+        "reasoning_enabled": true,
+        "has_business_schema": true,
+        "has_stream": true,
+        "has_messages": true,
+        "provider_require_parameters": false
+      }
+    ],
+    "snapshot_second": [
+      {
+        "stage": "planning",
+        "model": "synthetic/snapshot-slow",
+        "temperature": 0.85,
+        "reasoning_enabled": false,
+        "has_business_schema": true,
+        "has_stream": true,
+        "has_messages": true,
+        "provider_require_parameters": false
+      },
+      {
+        "stage": "generation",
+        "model": "synthetic/snapshot-slow",
+        "temperature": 0.85,
+        "reasoning_enabled": false,
+        "has_business_schema": true,
+        "has_stream": true,
+        "has_messages": true,
+        "provider_require_parameters": false
+      },
+      {
+        "stage": "generation",
+        "model": "synthetic/snapshot-slow",
+        "temperature": 0.85,
+        "reasoning_enabled": false,
+        "has_business_schema": true,
+        "has_stream": true,
+        "has_messages": true,
+        "provider_require_parameters": false
+      },
+      {
+        "stage": "generation",
+        "model": "synthetic/snapshot-slow",
+        "temperature": 0.85,
+        "reasoning_enabled": false,
+        "has_business_schema": true,
+        "has_stream": true,
+        "has_messages": true,
+        "provider_require_parameters": false
+      }
+    ],
+    "enhanced_n2": [
+      {
+        "stage": "planning",
+        "model": "synthetic/repair-mixed",
+        "temperature": 0.4,
+        "reasoning_enabled": false,
+        "has_business_schema": true,
+        "has_stream": true,
+        "has_messages": true,
+        "provider_require_parameters": false
+      },
+      {
+        "stage": "generation",
+        "model": "synthetic/repair-mixed",
+        "temperature": 0.4,
+        "reasoning_enabled": false,
+        "has_business_schema": true,
+        "has_stream": true,
+        "has_messages": true,
+        "provider_require_parameters": false
+      },
+      {
+        "stage": "fixed_edit",
+        "model": "synthetic/repair-mixed",
+        "temperature": 0.4,
+        "reasoning_enabled": false,
+        "has_business_schema": true,
+        "has_stream": true,
+        "has_messages": true,
+        "provider_require_parameters": false
+      },
+      {
+        "stage": "generation",
+        "model": "synthetic/repair-mixed",
+        "temperature": 0.4,
+        "reasoning_enabled": false,
+        "has_business_schema": true,
+        "has_stream": true,
+        "has_messages": true,
+        "provider_require_parameters": false
+      },
+      {
+        "stage": "generation",
+        "model": "synthetic/repair-mixed",
+        "temperature": 0.4,
+        "reasoning_enabled": false,
+        "has_business_schema": true,
+        "has_stream": true,
+        "has_messages": true,
+        "provider_require_parameters": false
+      }
+    ],
+    "q02": [
+      {
+        "stage": "planning",
+        "model": "synthetic/q02",
+        "temperature": 0.2,
+        "reasoning_enabled": null,
+        "has_business_schema": true,
+        "has_stream": true,
+        "has_messages": true,
+        "provider_require_parameters": false
+      },
+      {
+        "stage": "generation",
+        "model": "synthetic/q02",
+        "temperature": 0.2,
+        "reasoning_enabled": null,
+        "has_business_schema": true,
+        "has_stream": true,
+        "has_messages": true,
+        "provider_require_parameters": false
+      },
+      {
+        "stage": "fixed_edit",
+        "model": "synthetic/q02",
+        "temperature": 0.2,
+        "reasoning_enabled": null,
+        "has_business_schema": true,
+        "has_stream": true,
+        "has_messages": true,
+        "provider_require_parameters": false
+      },
+      {
+        "stage": "generation",
+        "model": "synthetic/q02",
+        "temperature": 0.2,
+        "reasoning_enabled": null,
+        "has_business_schema": true,
+        "has_stream": true,
+        "has_messages": true,
+        "provider_require_parameters": false
+      },
+      {
+        "stage": "generation",
+        "model": "synthetic/q02",
+        "temperature": 0.2,
+        "reasoning_enabled": null,
+        "has_business_schema": true,
+        "has_stream": true,
+        "has_messages": true,
+        "provider_require_parameters": false
+      }
+    ],
+    "fenced_plan": [
+      {
+        "stage": "planning",
+        "model": "synthetic/fenced-plan",
+        "temperature": null,
+        "reasoning_enabled": null,
+        "has_business_schema": true,
+        "has_stream": true,
+        "has_messages": true,
+        "provider_require_parameters": false
+      }
+    ],
+    "heartbeat_cancel": [
+      {
+        "stage": "planning",
+        "model": "synthetic/blocked",
+        "temperature": null,
+        "reasoning_enabled": null,
+        "has_business_schema": true,
+        "has_stream": true,
+        "has_messages": true,
+        "provider_require_parameters": false
+      }
+    ]
+  },
+  "failures": [
+    "inflight_run_keeps_original_parameters",
+    "enhanced_pipeline_survives_parameter_binding",
+    "new_run_uses_updated_parameters",
+    "n0_keeps_common_plan_writer",
+    "n2_executes_two_conditional_repairs",
+    "q02_keeps_last_valid_and_save"
+  ],
+  "result": "FAIL"
+}

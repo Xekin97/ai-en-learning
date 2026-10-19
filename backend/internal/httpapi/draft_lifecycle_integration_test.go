@@ -23,6 +23,7 @@ func TestDraftLifecycleWithoutRegistry(t *testing.T) {
 	}
 	seed := func() generation.Run {
 		run := cr039SeedRun(t, ctx, api, pool, actor, model, snapshot.Targets[0].Entry)
+		recordSuccessfulGenerationFacts(t, ctx, api, run)
 		if err := api.generation.CompleteValid(ctx, run, snapshot); err != nil {
 			t.Fatal(err)
 		}
@@ -195,6 +196,7 @@ func TestDraftLifecycleWithoutRegistry(t *testing.T) {
 			if err != nil {
 				t.Fatal(err)
 			}
+			recordSuccessfulGenerationFacts(t, ctx, api, run)
 			if err := api.generation.CompleteValid(ctx, run, snapshot); err != nil {
 				t.Fatal(err)
 			}

@@ -3,6 +3,7 @@ package growth
 import (
 	"context"
 	"encoding/json"
+	"errors"
 	"time"
 
 	"github.com/google/uuid"
@@ -125,20 +126,22 @@ func readLevelAwards(ctx context.Context, tx pgx.Tx, owner uuid.UUID, locale str
 	type row struct {
 		LevelAward
 		enabled bool
+		active  bool
 		points  business.Amount
 		item    *uuid.UUID
 		count   int64
 		xp      business.Amount
 	}
-	rows, err := tx.Query(ctx, `SELECT l.id,l.level_no,l.min_experience,l.reward_enabled,l.points,l.item_definition_id,l.item_count,a.achieved_at,a.claimed_at,a.settlement_id,b.experience
- FROM wordweave.growth_levels l LEFT JOIN wordweave.level_awards a ON a.level_id=l.id AND a.owner_id=$1 JOIN wordweave.growth_balances b ON b.owner_id=$1 WHERE l.level_no>1 ORDER BY l.level_no,l.id`, owner)
+	rows, err := tx.Query(ctx, `SELECT l.id,l.level_no,l.min_experience,l.reward_enabled,l.retired_at IS NULL,l.points,l.item_definition_id,l.item_count,a.achieved_at,a.claimed_at,a.settlement_id,b.experience
+	 FROM wordweave.growth_levels l LEFT JOIN wordweave.level_awards a ON a.level_id=l.id AND a.owner_id=$1 JOIN wordweave.growth_balances b ON b.owner_id=$1
+	 WHERE l.level_no>1 AND (l.retired_at IS NULL OR a.owner_id IS NOT NULL) ORDER BY l.level_no,l.id`, owner)
 	if err != nil {
 		return nil, err
 	}
 	raw := make([]row, 0)
 	for rows.Next() {
 		var r row
-		if err = rows.Scan(&r.ID, &r.Number, &r.Minimum, &r.enabled, &r.points, &r.item, &r.count, &r.AchievedAt, &r.ClaimedAt, &r.SettlementID, &r.xp); err != nil {
+		if err = rows.Scan(&r.ID, &r.Number, &r.Minimum, &r.enabled, &r.active, &r.points, &r.item, &r.count, &r.AchievedAt, &r.ClaimedAt, &r.SettlementID, &r.xp); err != nil {
 			rows.Close()
 			return nil, err
 		}
@@ -156,7 +159,7 @@ func readLevelAwards(ctx context.Context, tx pgx.Tx, owner uuid.UUID, locale str
 		if err != nil {
 			return nil, err
 		}
-		r.State, r.Block = blockStatus(r.AchievedAt, r.ClaimedAt, r.enabled, r.xp >= r.Minimum, available)
+		r.State, r.Block = blockStatus(r.AchievedAt, r.ClaimedAt, r.enabled && r.active, r.xp >= r.Minimum, available)
 		if r.SettlementID != nil {
 			r.Reward, err = claimedReward(ctx, tx, owner, *r.SettlementID, locale)
 			if err != nil {
@@ -170,16 +173,17 @@ func readLevelAwards(ctx context.Context, tx pgx.Tx, owner uuid.UUID, locale str
 func readPersonalAchievements(ctx context.Context, tx pgx.Tx, owner uuid.UUID, locale, kind string) ([]Achievement, error) {
 	type row struct {
 		Achievement
-		enabled                  bool
+		enabled, active          bool
 		name, title, description business.Bilingual
 		points, xp               business.Amount
 		item                     *uuid.UUID
 		count                    int64
 	}
-	rows, err := tx.Query(ctx, `SELECT t.id,t.kind,t.threshold,t.enabled,t.name_zh,t.name_en,
+	rows, err := tx.Query(ctx, `SELECT t.id,t.kind,t.threshold,t.enabled,t.retired_at IS NULL,t.name_zh,t.name_en,
  CASE WHEN a.achieved_at IS NULL THEN t.title_zh ELSE a.title_zh_snapshot END,CASE WHEN a.achieved_at IS NULL THEN t.title_en ELSE a.title_en_snapshot END,t.description_zh,t.description_en,t.points,t.experience,t.item_definition_id,t.item_count,a.achieved_at,a.claimed_at,a.settlement_id,
  CASE t.kind WHEN 'checkin_streak' THEN g.highest_checkin_streak WHEN 'review_streak' THEN g.highest_review_streak WHEN 'mastered_words' THEN g.mastered_total ELSE g.saved_total END
- FROM wordweave.achievement_tiers t LEFT JOIN wordweave.achievement_awards a ON a.tier_id=t.id AND a.owner_id=$1 JOIN wordweave.user_growth g ON g.owner_id=$1 WHERE ($2='' OR t.kind=$2)
+	 FROM wordweave.achievement_tiers t LEFT JOIN wordweave.achievement_awards a ON a.tier_id=t.id AND a.owner_id=$1 JOIN wordweave.user_growth g ON g.owner_id=$1
+	 WHERE ($2='' OR t.kind=$2) AND (t.retired_at IS NULL OR a.owner_id IS NOT NULL)
  ORDER BY CASE t.kind WHEN 'checkin_streak' THEN 1 WHEN 'review_streak' THEN 2 WHEN 'mastered_words' THEN 3 ELSE 4 END,t.threshold,t.id`, owner, kind)
 	if err != nil {
 		return nil, err
@@ -187,7 +191,7 @@ func readPersonalAchievements(ctx context.Context, tx pgx.Tx, owner uuid.UUID, l
 	raw := make([]row, 0)
 	for rows.Next() {
 		var r row
-		if err = rows.Scan(&r.ID, &r.Kind, &r.Threshold, &r.enabled, &r.name.ZH, &r.name.EN, &r.title.ZH, &r.title.EN, &r.description.ZH, &r.description.EN, &r.points, &r.xp, &r.item, &r.count, &r.AchievedAt, &r.ClaimedAt, &r.SettlementID, &r.Progress); err != nil {
+		if err = rows.Scan(&r.ID, &r.Kind, &r.Threshold, &r.enabled, &r.active, &r.name.ZH, &r.name.EN, &r.title.ZH, &r.title.EN, &r.description.ZH, &r.description.EN, &r.points, &r.xp, &r.item, &r.count, &r.AchievedAt, &r.ClaimedAt, &r.SettlementID, &r.Progress); err != nil {
 			rows.Close()
 			return nil, err
 		}
@@ -208,7 +212,7 @@ func readPersonalAchievements(ctx context.Context, tx pgx.Tx, owner uuid.UUID, l
 		if err != nil {
 			return nil, err
 		}
-		r.State, r.Block = blockStatus(r.AchievedAt, r.ClaimedAt, r.enabled, true, available)
+		r.State, r.Block = blockStatus(r.AchievedAt, r.ClaimedAt, r.enabled && r.active, true, available)
 		if r.SettlementID != nil {
 			r.Reward, err = claimedReward(ctx, tx, owner, *r.SettlementID, locale)
 			if err != nil {
@@ -338,7 +342,7 @@ type ClaimResult struct {
 
 func readCompactGrowth(ctx context.Context, tx pgx.Tx, owner uuid.UUID, locale string) (CompactGrowth, error) {
 	var g CompactGrowth
-	if err := tx.QueryRow(ctx, `SELECT b.points,b.experience,coalesce((SELECT max(level_no) FROM wordweave.growth_levels WHERE min_experience<=b.experience),0) FROM wordweave.growth_balances b WHERE owner_id=$1`, owner).Scan(&g.Points, &g.Experience, &g.Level); err != nil {
+	if err := tx.QueryRow(ctx, `SELECT b.points,b.experience,coalesce((SELECT max(level_no) FROM wordweave.growth_levels WHERE retired_at IS NULL AND min_experience<=b.experience),0) FROM wordweave.growth_balances b WHERE owner_id=$1`, owner).Scan(&g.Points, &g.Experience, &g.Level); err != nil {
 		return g, err
 	}
 	levels, err := readLevelAwards(ctx, tx, owner, locale)
@@ -375,9 +379,9 @@ func (s *Service) Claim(ctx context.Context, owner, key, id uuid.UUID, achieveme
 	var input RewardInput
 	var xp business.Amount
 	if achievement {
-		all, err := readPersonalAchievements(ctx, tx, owner, locale, "")
-		if err != nil {
-			return ClaimResult{}, err
+		all, readErr := readPersonalAchievements(ctx, tx, owner, locale, "")
+		if readErr != nil {
+			return ClaimResult{}, readErr
 		}
 		for _, a := range all {
 			if a.ID == id {
@@ -386,13 +390,13 @@ func (s *Service) Claim(ctx context.Context, owner, key, id uuid.UUID, achieveme
 				break
 			}
 		}
-		if found {
-			err = tx.QueryRow(ctx, `SELECT points,experience,item_definition_id,item_count FROM wordweave.achievement_tiers WHERE id=$1`, id).Scan(&input.Points, &xp, &input.ItemID, &input.Count)
+		if found && status.SettlementID == nil {
+			err = tx.QueryRow(ctx, `SELECT points,experience,item_definition_id,item_count FROM wordweave.achievement_tiers WHERE id=$1 AND retired_at IS NULL`, id).Scan(&input.Points, &xp, &input.ItemID, &input.Count)
 		}
 	} else {
-		all, err := readLevelAwards(ctx, tx, owner, locale)
-		if err != nil {
-			return ClaimResult{}, err
+		all, readErr := readLevelAwards(ctx, tx, owner, locale)
+		if readErr != nil {
+			return ClaimResult{}, readErr
 		}
 		for _, a := range all {
 			if a.ID == id {
@@ -401,9 +405,12 @@ func (s *Service) Claim(ctx context.Context, owner, key, id uuid.UUID, achieveme
 				break
 			}
 		}
-		if found {
-			err = tx.QueryRow(ctx, `SELECT points,item_definition_id,item_count FROM wordweave.growth_levels WHERE id=$1`, id).Scan(&input.Points, &input.ItemID, &input.Count)
+		if found && status.SettlementID == nil {
+			err = tx.QueryRow(ctx, `SELECT points,item_definition_id,item_count FROM wordweave.growth_levels WHERE id=$1 AND retired_at IS NULL`, id).Scan(&input.Points, &input.ItemID, &input.Count)
 		}
+	}
+	if errors.Is(err, pgx.ErrNoRows) && found && status.SettlementID == nil {
+		return ClaimResult{}, reject("tier_disabled", 422)
 	}
 	if err != nil {
 		return ClaimResult{}, err

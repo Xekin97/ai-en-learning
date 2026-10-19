@@ -1,0 +1,105 @@
+{
+  "fixture_version": "M003-BE-03",
+  "contract_version": "m003-stream-v3",
+  "wire": [
+    {
+      "event": "generation.started",
+      "data": {
+        "seq": 1,
+        "contract_version": "m003-stream-v3",
+        "run_id": "00000000-0000-4000-8000-000000000006",
+        "generation_token": "fixture-only-not-a-valid-token",
+        "snapshot": {
+          "configuration_revision": "fixture-revision-3",
+          "effective_plan": {
+            "code": "basic",
+            "origin": "base"
+          },
+          "content_service": {
+            "native_validation": true,
+            "content_review_enabled": false,
+            "content_repair_limit": 0
+          },
+          "native_correction_policy": {
+            "version": "m003-native-policy-v1",
+            "scope": "logical_request",
+            "max_calls": 2,
+            "editable": false
+          }
+        }
+      }
+    },
+    {
+      "event": "generation.progress",
+      "data": {
+        "seq": 2,
+        "phase": "composing"
+      }
+    },
+    {
+      "event": "generation.failed",
+      "data": {
+        "seq": 3,
+        "code": "content_validation_failed",
+        "quota_refunded": true,
+        "retryable": true,
+        "request_id": "fixture-failed"
+      }
+    }
+  ],
+  "transport_end": "eof_after_terminal",
+  "status_responses": [
+    {
+      "http_status": 200,
+      "body": {
+        "data": {
+          "contract_version": "m003-stream-v3",
+          "run_id": "00000000-0000-4000-8000-000000000006",
+          "status": "failed",
+          "snapshot": {
+            "configuration_revision": "fixture-revision-3",
+            "effective_plan": {
+              "code": "basic",
+              "origin": "base"
+            },
+            "content_service": {
+              "native_validation": true,
+              "content_review_enabled": false,
+              "content_repair_limit": 0
+            },
+            "native_correction_policy": {
+              "version": "m003-native-policy-v1",
+              "scope": "logical_request",
+              "max_calls": 2,
+              "editable": false
+            }
+          },
+          "final_content_version": null,
+          "result": null,
+          "can_save": false,
+          "quota_refunded": true,
+          "content_outcome": "failed",
+          "completion_notice": null
+        },
+        "meta": {
+          "request_id": "fixture-status-request"
+        }
+      }
+    }
+  ],
+  "internal_evidence": {
+    "N": 0,
+    "first_valid_package": null,
+    "last_valid_package": null,
+    "actual_content_repairs": 0
+  },
+  "expected": {
+    "ui_state": "failed",
+    "can_save": false,
+    "completion_notice": null,
+    "final_package": null,
+    "article_before_terminal": false,
+    "visible_repair_count": false,
+    "visible_repair_limit": false
+  }
+}

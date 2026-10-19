@@ -1,0 +1,109 @@
+{
+  "version": "M002-CR313-UAT-LOCAL-20261016",
+  "origin": "http://localhost:3016",
+  "login": {
+    "method": "normal browser form",
+    "role": "admin",
+    "status": "PASS"
+  },
+  "routes": [
+    {
+      "route": "/admin/models",
+      "category": "models",
+      "importEntry": true,
+      "exportEntry": true,
+      "tab": null
+    },
+    {
+      "route": "/admin/plans",
+      "category": "plans",
+      "importEntry": true,
+      "exportEntry": true,
+      "tab": null
+    },
+    {
+      "route": "/admin/growth",
+      "category": "items",
+      "importEntry": true,
+      "exportEntry": true,
+      "tab": "Items"
+    },
+    {
+      "route": "/admin/growth",
+      "category": "growth",
+      "importEntry": true,
+      "exportEntry": true,
+      "tab": "Check-in rules"
+    }
+  ],
+  "exports": [
+    {
+      "category": "models",
+      "status": "PASS",
+      "bytes": 1152,
+      "sha256": "8591c23ae188855935f25aa4c9c7ffded5c409e0be4fe17b8f0803c62bc89db0",
+      "topLevelKeys": [
+        "category",
+        "credential_mode",
+        "data",
+        "format",
+        "source",
+        "version"
+      ],
+      "suggestedFilename": "wordweave-models-20261016T033301Z.json"
+    },
+    {
+      "category": "plans",
+      "status": "PASS",
+      "bytes": 1214,
+      "sha256": "ed279fbe6e587de72daa2776d23fb5dd4d2e128ad6ada023c52ffeddd8adb260",
+      "topLevelKeys": [
+        "category",
+        "credential_mode",
+        "data",
+        "format",
+        "references",
+        "source",
+        "version"
+      ],
+      "suggestedFilename": "wordweave-plans-20261016T033302Z.json"
+    },
+    {
+      "category": "items",
+      "status": "PASS",
+      "bytes": 1504,
+      "sha256": "3232363abf0f2fc5901c8414cd94d027bcd1b147aa40120e0eb81c2ebb6ad713",
+      "topLevelKeys": [
+        "category",
+        "credential_mode",
+        "data",
+        "format",
+        "references",
+        "source",
+        "version"
+      ],
+      "suggestedFilename": "wordweave-items-20261016T033303Z.json"
+    },
+    {
+      "category": "growth",
+      "status": "PASS",
+      "bytes": 1638,
+      "sha256": "bd7f9c3ca0833e60ab1beff17f06f124239b68382138377a8307cbf3c0455883",
+      "topLevelKeys": [
+        "category",
+        "credential_mode",
+        "data",
+        "format",
+        "references",
+        "source",
+        "version"
+      ],
+      "suggestedFilename": "wordweave-growth-20261016T033304Z.json"
+    }
+  ],
+  "previewCancel": null,
+  "screenshot": "models-ready.png",
+  "providerCalls": 0,
+  "status": "FAIL",
+  "failure": "locator.waitFor: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('heading', { name: 'Replacement preview', exact: true }) to be visible\u001b[22m\n\n    at /Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/.planning/milestones/M002/verification/config-portability/uat-local-20261016/evidence/readiness-smoke.mjs:89:81"
+}

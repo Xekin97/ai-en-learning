@@ -1,0 +1,194 @@
+{
+  "version": "M003-UI-10-R1",
+  "checked_at": "2026-10-12T04:46:08.268Z",
+  "scope": "PAGE-208 modal correction only",
+  "baseline": "live-appdialog-observation.json",
+  "scenarios": [
+    {
+      "name": "complete model-management list is the background",
+      "passed": true,
+      "details": {
+        "cards": 3,
+        "pageScroll": 0,
+        "overflow": 0,
+        "modalOpen": false
+      }
+    },
+    {
+      "name": "selected provider opens a real top-layer AppDialog shape",
+      "passed": true,
+      "details": {
+        "open": true,
+        "modal": true,
+        "title": "编辑服务商",
+        "provider": "Responses example",
+        "models": 1,
+        "pageScroll": 0,
+        "bodyOverflow": "auto",
+        "backgroundHit": true,
+        "activeInside": true
+      }
+    },
+    {
+      "name": "body scrolls while modal header, footer, and page stay fixed",
+      "passed": true,
+      "details": {
+        "before": {
+          "headerY": 17,
+          "footerY": 903.5,
+          "bodyScroll": 0,
+          "pageScroll": 0
+        },
+        "after": {
+          "headerY": 17,
+          "footerY": 903.5,
+          "bodyScroll": 220,
+          "pageScroll": 0,
+          "jsonVisible": true
+        }
+      }
+    },
+    {
+      "name": "Tab and Shift+Tab remain in top modal",
+      "passed": true,
+      "details": {
+        "steps": 26
+      }
+    },
+    {
+      "name": "explicit model test is scoped and becomes stale after configuration edit",
+      "passed": true,
+      "details": {
+        "probeOk": "短连接测试通过。它只确认当前配置能收到流式响应，不代表完整生成、参数效果或结构化结果已通过。",
+        "probeStale": "配置已修改，上一次测试结果已失效。保存前请重新测试。"
+      }
+    },
+    {
+      "name": "invalid save preserves raw input and focuses the associated field error",
+      "passed": true,
+      "details": {
+        "raw": "{\"model\":\"other-model\"}",
+        "error": "此字段由系统保护或已有专用设置。请从自定义参数中移除。你的输入已保留。",
+        "invalid": "true",
+        "focused": true
+      }
+    },
+    {
+      "name": "Escape routes dirty form to a stacked discard confirmation",
+      "passed": true,
+      "details": {
+        "parentModal": true,
+        "confirmModal": true,
+        "activeInConfirm": true
+      }
+    },
+    {
+      "name": "Keep editing retains raw JSON and parent modal",
+      "passed": true,
+      "details": {
+        "value": "{\"model\":\"other-model\"}"
+      }
+    },
+    {
+      "name": "discard closes and restores the exact provider trigger",
+      "passed": true,
+      "details": {
+        "exact": true,
+        "pageScroll": 0
+      }
+    },
+    {
+      "name": "add-provider mode, protocol choice, add-model, and per-model JSON are independent",
+      "passed": true,
+      "details": {
+        "addInitial": {
+          "title": "添加服务商",
+          "models": 1,
+          "name": "",
+          "protocol": "openai_chat"
+        },
+        "addState": {
+          "models": 2,
+          "protocol": "anthropic_messages",
+          "first": "{\"thinking\":{\"type\":\"disabled\"}}",
+          "second": "{}"
+        }
+      }
+    },
+    {
+      "name": "version refresh clears conflict while retaining the model JSON draft",
+      "passed": true,
+      "details": {
+        "raw": "{\"reasoning\":{\"enabled\":true}}",
+        "conflict": false
+      }
+    },
+    {
+      "name": "valid save closes to the complete list and shows saved state",
+      "passed": true,
+      "details": {
+        "modalOpen": false,
+        "status": "服务商配置已保存模型配置已更新。此前的连接测试结果已失效；需要时请重新测试。",
+        "cards": 3
+      }
+    },
+    {
+      "name": "mobile normal edit opens at the provider section",
+      "passed": true,
+      "details": {
+        "modal": true,
+        "bodyScroll": 0,
+        "pageScroll": 0,
+        "provider": "OpenRouter"
+      }
+    },
+    {
+      "name": "mobile error keeps specific reason directly after JSON without horizontal overflow",
+      "passed": true,
+      "details": {
+        "modal": true,
+        "dialogWidth": 354,
+        "viewport": 390,
+        "pageOverflow": 0,
+        "pageScroll": 0,
+        "errorAfterTextarea": true,
+        "errorBeforeHelp": true,
+        "raw": "{\"model\":\"other-model\"}",
+        "errorText": "此字段由系统保护或已有专用设置。请从自定义参数中移除。你的输入已保留。"
+      }
+    },
+    {
+      "name": "clicking inside the modal does not close it",
+      "passed": true,
+      "details": {
+        "parentModal": true
+      }
+    },
+    {
+      "name": "backdrop uses the same dirty-close confirmation",
+      "passed": true,
+      "details": {
+        "confirm": true,
+        "parent": true
+      }
+    },
+    {
+      "name": "no browser console errors",
+      "passed": true,
+      "details": {
+        "count": 0
+      }
+    }
+  ],
+  "console_errors": [],
+  "screenshots": [
+    "10-r1-list-1440.png",
+    "11-r1-modal-initial-1440.png",
+    "12-r1-modal-json-1440.png",
+    "13-r1-modal-initial-390.png",
+    "14-r1-modal-error-390.png",
+    "15-r1-discard-confirm-390.png"
+  ],
+  "completed": true,
+  "result": "PASS"
+}

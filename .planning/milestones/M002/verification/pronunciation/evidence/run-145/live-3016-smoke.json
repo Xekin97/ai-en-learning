@@ -1,0 +1,73 @@
+{
+  "version": "M002-QA-PRON-01-R1",
+  "origin": "http://localhost:3016",
+  "status": "PASS",
+  "normalLogin": true,
+  "savedBatchId": "01a14352-828b-743a-b0fb-09bc1d6d85ee",
+  "controlCount": 5,
+  "assertions": [
+    {
+      "id": "NORMAL-LEARNER-LOGIN",
+      "pass": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "id": "REAL-SAVED-ARTICLE",
+      "pass": true,
+      "actual": 5,
+      "expected": ">0 controls"
+    },
+    {
+      "id": "NO-AUTOPLAY",
+      "pass": true,
+      "actual": 0,
+      "expected": 0
+    },
+    {
+      "id": "REAL-NATIVE-START-END",
+      "pass": true,
+      "actual": "{\"entryMatches\":true,\"entryCodepoints\":8,\"voiceLang\":\"en-GB\",\"events\":[{\"type\":\"start\",\"error\":null,\"at\":684.7000000476837},{\"type\":\"end\",\"error\":null,\"at\":1613.2999999523163}]}",
+      "expected": "current entry + native start/end"
+    },
+    {
+      "id": "PLAYBACK-NO-BUSINESS-WRITE",
+      "pass": true,
+      "actual": 0,
+      "expected": 0
+    },
+    {
+      "id": "NO-PAGE-ERROR",
+      "pass": true,
+      "actual": "{\"pageErrors\":[],\"consoleErrors\":[]}",
+      "expected": 0
+    }
+  ],
+  "speech": {
+    "entryMatches": true,
+    "entryCodepoints": 8,
+    "voiceLang": "en-GB",
+    "events": [
+      {
+        "type": "start",
+        "error": null,
+        "at": 684.7000000476837
+      },
+      {
+        "type": "end",
+        "error": null,
+        "at": 1613.2999999523163
+      }
+    ]
+  },
+  "playbackRequests": [
+    {
+      "method": "GET",
+      "path": "/_nuxt/builds/meta/2fca3e46-1e7b-49c7-92b3-68c95517b596.json"
+    }
+  ],
+  "pageErrors": [],
+  "consoleErrors": [],
+  "humanAudibility": "PENDING_USER_UAT",
+  "realPhone": "PENDING_USER_UAT"
+}

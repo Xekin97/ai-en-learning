@@ -1,0 +1,57 @@
+门禁结论：通过。建议宿主执行单次受限回溯 `TRANSITION-M003-039`；不构成 UI07-R1 批准、完整技术批准、FE/实现授权或 UAT 接受。
+
+**检查结果**
+
+- 当前 `technical-design` 合法回到 `uiux-design`；`designer-tony` 已注册且语义名称合法。
+- BE05-R1 已冻结、状态为 `submitted_for_prototype`，且明确仅变更展示生命周期，v5 wire、DB、调用、计费与预算未变。
+- `USER-M003-PLAN-RETAIN` 已直接授权本次原型定向修改，无新增业务待决，无需返回产品或 DBA。
+- 旧 v5 “首片隐藏规划”的 expected/checker 断言作为冻结历史保留，已被 R1 的 display-only 政策覆盖；UI07-R1 必须按真实 wire，而非 `expected/internal_evidence` 渲染。
+- UI07 仍为 `revision_requested`，完成 UI07-R1 后仍需用户视觉评审。`CR-302` 及全局开放项保持不变。
+
+**依据**
+
+- [直接用户反馈 / USER-M003-PLAN-RETAIN](/Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/.planning/milestones/M002-legacy-M003/reviews/requirements-feedback.md:161)
+- [BE05-R1 冻结清单](/Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/.planning/milestones/M002-legacy-M003/reviews/evidence/control-038/M003-BE-05-R1-source-manifest.json)
+- [BE05-R1 显示政策](/Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/.planning/milestones/M002-legacy-M003/technical/evidence/be05-r1-display-policy.json)
+- [后端交接中的 UI07-R1 接收合同](/Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/.planning/milestones/M002-legacy-M003/handoffs/backend-architecture.md:16)
+
+**宿主应机械写入的目标状态**
+
+```yaml
+decision_id: TRANSITION-M003-039
+operation: recover-or-rollback
+from_stage: technical-design
+stage: uiux-design
+active_role: uiux/base
+active_agent: designer-tony
+status: active
+authorized_by: USER-M003-PLAN-RETAIN
+current_handoff: .planning/milestones/M002-legacy-M003/handoffs/uiux.md
+required_artifacts:
+  - .planning/milestones/M002-legacy-M003/design/theme.css
+  - .planning/milestones/M002-legacy-M003/design/prototype/index.html
+  - .planning/milestones/M002-legacy-M003/design/interactions.md
+  - .planning/milestones/M002-legacy-M003/design/responsive-accessibility.md
+  - .planning/milestones/M002-legacy-M003/handoffs/uiux.md
+allowed_transitions:
+  - technical-design
+  - product-planning
+open_change_requests:
+  - CR-302
+design_work:
+  version: M003-UI-07-R1
+  source_backend: M003-BE-05-R1
+  scope: >
+    UI-only targeted playback/rendering update: retain provisional
+    scene/meaning/usage alongside incremental draft/edit text until an
+    authoritative valid complete Result, including Q02; retain for pending/EOF;
+    clear on failed/cancelled/new request.
+```
+
+**未解决项与下一步**
+
+- `CR-302` 仍为下游待办；不阻塞本次 UI07-R1 原型修订。
+- UI07-R1 仅可定向观察普通、增强及两种后台 preview 的同一保留规则；不得新增模型刷新构思。
+- 原型完成后，停在用户视觉评审；不可直接进入 FE、业务实现、DB 迁移或真实模型调用。
+
+建议只读报告路径：[planning-retention-ui-038.md](/Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/.planning/milestones/M002-legacy-M003/reviews/planning-retention-ui-038.md)。本次未修改任何文件。

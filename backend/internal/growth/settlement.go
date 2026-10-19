@@ -105,12 +105,12 @@ func Recompute(ctx context.Context, tx pgx.Tx, owner uuid.UUID, c business.Confi
 	}
 	if _, err := tx.Exec(ctx, `INSERT INTO wordweave.level_awards(owner_id,level_id,achieved_at)
   SELECT $1,l.id,$2 FROM wordweave.growth_levels l JOIN wordweave.growth_balances b ON b.owner_id=$1
-  WHERE l.level_no>1 AND b.experience>=l.min_experience ON CONFLICT DO NOTHING`, owner, c.Now); err != nil {
+  WHERE l.retired_at IS NULL AND l.level_no>1 AND b.experience>=l.min_experience ON CONFLICT DO NOTHING`, owner, c.Now); err != nil {
 		return err
 	}
 	if _, err := tx.Exec(ctx, `INSERT INTO wordweave.achievement_awards(owner_id,tier_id,achieved_at,title_zh_snapshot,title_en_snapshot)
   SELECT $1,t.id,$2,t.title_zh,t.title_en FROM wordweave.achievement_tiers t JOIN wordweave.user_growth g ON g.owner_id=$1
-  WHERE CASE t.kind WHEN 'checkin_streak' THEN g.highest_checkin_streak WHEN 'review_streak' THEN g.highest_review_streak WHEN 'mastered_words' THEN g.mastered_total WHEN 'saved_passages' THEN g.saved_total END>=t.threshold ON CONFLICT DO NOTHING`, owner, c.Now); err != nil {
+  WHERE t.retired_at IS NULL AND CASE t.kind WHEN 'checkin_streak' THEN g.highest_checkin_streak WHEN 'review_streak' THEN g.highest_review_streak WHEN 'mastered_words' THEN g.mastered_total WHEN 'saved_passages' THEN g.saved_total END>=t.threshold ON CONFLICT DO NOTHING`, owner, c.Now); err != nil {
 		return err
 	}
 	_, err := tx.Exec(ctx, `UPDATE wordweave.user_growth SET config_revision_seen=$2 WHERE owner_id=$1`, owner, c.Revision)

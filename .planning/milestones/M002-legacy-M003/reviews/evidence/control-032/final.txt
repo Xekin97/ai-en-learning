@@ -1,0 +1,44 @@
+门禁结论：**通过同阶段角色激活**。建议执行 `TRANSITION-M003-033`：保持 `technical-design`，将活动角色切换为 `dba/base / dba-diana`，仅接收 BE05 的 DB03 设计依赖。
+
+检查结果：
+
+- 当前：M003 / `technical-design` / `gatekeeper-owen` / active。
+- `dba/base` 属于技术设计阶段允许角色；`dba-diana` 已注册、唯一且名称校验通过。
+- BE05 冻结包与 manifest 存在，范围明确为设计 fixture 证据，非应用批准。
+- `USER-M003-Q3-02-A` 已关闭产品选择；后台先行授权足以接续 DB03，无需重问 A。
+- `CR-302` 仍为 `product_resolved_downstream_pending`：产品闭环，下游设计待办保留，不可假报 CR 已完成。
+- 已定位 DB02 不兼容项：`call_stage` 需新增 `planning`、`fixed_edit`；最终版本上界需从 `N+1` 重审为 v5 的 `N+2`；需覆盖 `fixed_edit_native_invalid`。这些是 DBA 设计输入，不代表数据库已经适配。
+- 未审查 DB 语义、未运行迁移/测试，也未触碰代码、真实 DB、模型、费用或 UAT。
+
+原始依据：[BE05 冻结清单](</Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/.planning/milestones/M003/reviews/evidence/control-032/M003-BE-05-source-manifest.json>)、[CR-302 DBA 依赖](</Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/.planning/milestones/M003/changes/CR-302.md:58>)、[Q3-02 A 接续范围](</Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/.planning/milestones/M003/reviews/requirements-feedback.md:153>)。
+
+宿主应机械写入：
+
+```yaml
+decision_id: TRANSITION-M003-033
+operation: activate-role
+from: technical-design
+to: technical-design
+active_role: dba/base
+active_agent: dba-diana
+status: active
+current_handoff: .planning/milestones/M003/handoffs/backend-architecture.md
+required_artifacts:
+  - .planning/milestones/M003/technical/database.md
+  - .planning/milestones/M003/technical/backend.md
+  - .planning/milestones/M003/technical/api/index.md
+  - .planning/milestones/M003/technical/frontend.md
+  - .planning/milestones/M003/technical/ai-integration.md
+  - .planning/milestones/M003/handoffs/database.md
+  - .planning/milestones/M003/handoffs/backend-architecture.md
+  - .planning/milestones/M003/handoffs/frontend-architecture.md
+allowed_transitions: [implementation, product-planning, uiux-design]
+open_change_requests: [CR-302]
+authorized_by: USER-M003-Q3-02-A
+```
+
+激活时仅更新 DBA 注册记录的活动状态、时间及实际 runtime 记录；若复用实例或创建新实例，仍对用户显示 `dba-diana`，不得以旧 runtime ID 冒充活动身份。
+
+未解决但不阻塞激活：DB03 的迁移路径、约束、数据回填与回滚仍由 DBA 设计；UI07、FE、实现及 UAT 仍须后续独立接收。DB02、BE04、UI06 和现有待审代码保持可恢复且未获批准。
+
+已改路径：无（只读）。宿主可写入 [research-alignment-database-032.md](</Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/.planning/milestones/M003/reviews/research-alignment-database-032.md)。

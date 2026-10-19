@@ -13,6 +13,19 @@ import {
 } from "./common";
 import { amountSchema } from "./growth";
 import { batchDetailSchema, batchSummarySchema } from "./learning";
+import { nativePolicySchema } from "./generation";
+import { parseCustomParameters } from "@application/admin/custom-parameters";
+import type { JsonObject } from "@application/shared/models";
+
+export const customParametersSchema = z.custom<JsonObject>((value) => {
+  if (typeof value !== "object" || value === null || Array.isArray(value))
+    return false;
+  try {
+    return parseCustomParameters(JSON.stringify(value)).ok;
+  } catch {
+    return false;
+  }
+});
 
 export const modelConnectionSchema = z.strictObject({
   id: nonEmptyStringSchema,
@@ -38,6 +51,7 @@ export const adminModelSchema = z.strictObject({
   connection: modelConnectionSchema,
   max_output_tokens: z.number().int().positive().nullable(),
   output_mode: z.enum(["prompt", "json_schema"]),
+  custom_parameters: customParametersSchema,
   enabled: z.boolean(),
   retired_at: rfc3339Schema.nullable(),
   assigned_group_codes: z.array(groupCodeSchema),
@@ -93,15 +107,22 @@ export const adminGroupSchema = z.strictObject({
       enabled: z.boolean(),
     }),
   ),
+  content_review_enabled: z.boolean(),
+  content_repair_limit: z.number().int().min(0).max(99),
 });
 export const adminGroupsEnvelopeSchema = successEnvelopeSchema(
   z.strictObject({
     items: z.array(adminGroupSchema).length(4),
     revision: nonEmptyStringSchema,
+    native_correction_policy: nativePolicySchema,
   }),
 );
 export const adminGroupEnvelopeSchema = successEnvelopeSchema(
-  z.strictObject({ group: adminGroupSchema, revision: nonEmptyStringSchema }),
+  z.strictObject({
+    group: adminGroupSchema,
+    revision: nonEmptyStringSchema,
+    native_correction_policy: nativePolicySchema,
+  }),
 );
 
 export const adminUserSummarySchema = z.union([
@@ -227,6 +248,30 @@ export const groupImpactEnvelopeSchema = successEnvelopeSchema(
     priority_changed: z.boolean(),
     may_change_effective_plan: z.boolean(),
     loses_all_models: z.boolean(),
+    content_service_change: z.strictObject({
+      before: z.strictObject({
+        content_review_enabled: z.boolean(),
+        content_repair_limit: z.number().int().min(0).max(99),
+      }),
+      after: z.strictObject({
+        content_review_enabled: z.boolean(),
+        content_repair_limit: z.number().int().min(0).max(99),
+      }),
+    }),
+    applies_to: z.literal("new_requests"),
+    in_flight_policy: z.literal("accepted_snapshot"),
+    usage_reset: z.literal(false),
+    trial_dates_changed: z.literal(false),
+    native_correction_policy: nativePolicySchema,
+    warnings: z.array(
+      z.enum([
+        "content_service_removed",
+        "no_models",
+        "no_lengths",
+        "zero_plan_quota",
+        "effective_plan_may_change",
+      ]),
+    ),
     revision: nonEmptyStringSchema,
   }),
 );
@@ -235,5 +280,20 @@ export const priorityImpactEnvelopeSchema = successEnvelopeSchema(
     affected_base_users: z.number().int().nonnegative(),
     affected_trial_users: z.number().int().nonnegative(),
     revision: nonEmptyStringSchema,
+    content_service_by_plan: z
+      .array(
+        z.strictObject({
+          code: groupCodeSchema,
+          content_review_enabled: z.boolean(),
+          content_repair_limit: z.number().int().min(0).max(99),
+        }),
+      )
+      .length(4),
+    may_change_content_service: z.boolean(),
+    applies_to: z.literal("new_requests"),
+    in_flight_policy: z.literal("accepted_snapshot"),
+    usage_reset: z.literal(false),
+    trial_dates_changed: z.literal(false),
+    native_correction_policy: nativePolicySchema,
   }),
 );

@@ -7,6 +7,7 @@ import (
 	"time"
 
 	"wordweave/internal/entitlement"
+	"wordweave/internal/platform/business"
 	"wordweave/internal/vocabulary"
 )
 
@@ -100,7 +101,10 @@ func (server *Server) generationOptions(writer http.ResponseWriter, request *htt
 			CanGenerate bool    `json:"can_generate"`
 			Reason      *string `json:"reason"`
 		} `json:"availability"`
-		Quota quotaDTO `json:"quota"`
+		Quota                  quotaDTO                   `json:"quota"`
+		ConfigurationRevision  string                     `json:"configuration_revision"`
+		ContentService         entitlement.ContentService `json:"content_service"`
+		NativeCorrectionPolicy entitlement.NativePolicy   `json:"native_correction_policy"`
 	}{
 		Models: models, MeaningLanguages: options.MeaningLanguages, Scenarios: options.Scenarios,
 		Lengths: options.Lengths, MaxEntries: options.MaxEntries,
@@ -109,7 +113,10 @@ func (server *Server) generationOptions(writer http.ResponseWriter, request *htt
 			CanGenerate bool    `json:"can_generate"`
 			Reason      *string `json:"reason"`
 		}{CanGenerate: options.CanGenerate, Reason: options.Reason},
-		Quota: quotaDTO{Kind: options.Quota.Kind, Limit: options.Quota.Limit, Remaining: options.Quota.Remaining, WindowHours: 24, RefreshesAt: refreshesAt},
+		Quota:                  quotaDTO{Kind: options.Quota.Kind, Limit: options.Quota.Limit, Remaining: options.Quota.Remaining, WindowHours: 24, RefreshesAt: refreshesAt},
+		ConfigurationRevision:  business.Revision(server.cfg.CapabilityKey, "configuration", options.ConfigurationRevision),
+		ContentService:         options.ContentService,
+		NativeCorrectionPolicy: options.NativeCorrectionPolicy,
 	})
 }
 

@@ -1,0 +1,101 @@
+import playwright from '../../../../../../frontend/node_modules/@playwright/test/index.js';
+import fs from 'node:fs/promises';
+import path from 'node:path';
+const { chromium }=playwright;
+const base='http://127.0.0.1:4174/M003/design/prototype/';
+const evidenceDir=path.dirname(new URL(import.meta.url).pathname);
+const report={version:'M003-UI-13-R2',checked_at:new Date().toISOString(),scope:'Bounded continuity/motion check for the changed generation surface only; prior UI13 10/10 protocol evidence is reused.',provider_calls:0,checks:[],screenshots:[],console_errors:[]};
+const record=(name,passed,details={})=>report.checks.push({name,passed,details});
+const browser=await chromium.launch({headless:true});
+const page=await browser.newPage({viewport:{width:1440,height:1050}});
+page.on('pageerror',error=>report.console_errors.push(String(error)));
+page.on('console',message=>{if(message.type()==='error')report.console_errors.push(message.text())});
+const eventNumber=()=>Number(new URL(page.url()).searchParams.get('event')??0);
+const waitEvent=n=>page.waitForFunction(value=>Number(new URL(location.href).searchParams.get('event')??0)>=value,n,{timeout:25000,polling:10});
+const url=(scenario='cr312-shorter',extra='')=>`${base}?page=create&lang=zh&scenario=${scenario}&event=11&demo=open&rev=ui13-r2${extra}`;
+const goto=async target=>{await page.goto(target,{waitUntil:'domcontentloaded'});await page.waitForSelector('.m003-result-body')};
+const snap=async name=>{
+  const cleanup=await page.addStyleTag({content:'.skip-link:not(:focus){display:none!important}'});
+  await page.screenshot({path:path.join(evidenceDir,name),fullPage:true});
+  await cleanup.evaluate(node=>node.remove()); report.screenshots.push(name);
+};
+const text=async selector=>(await page.locator(selector).innerText()).replace(/\n+/g,'\n').trim();
+try {
+  await goto(url());
+  await page.locator('[data-action=harness-replay]').click();
+  await waitEvent(3);
+  await page.evaluate(()=>document.querySelector('#planning-preview').__r2Plan='retained');
+  await waitEvent(5);
+  const plan={same:await page.evaluate(()=>document.querySelector('#planning-preview').__r2Plan==='retained'),rows:await page.locator('.m003-plan-use').count(),scene:await page.locator('[data-plan-kind=scene]').count()};
+  await waitEvent(11);
+  await page.evaluate(()=>{document.querySelector('.live-draft-text').__r2Story='retained';document.querySelector('[data-stream-status]').__r2Status='retained'});
+  const initial=await text('.live-draft-text');
+  await waitEvent(14);
+  const before={text:await text('.live-draft-text'),replacing:await page.locator('.is-replacing').count()};
+  await snap('01-paragraph-before-desktop-zh.png');
+  await page.locator('[data-action=cancel-generation]').focus({preventScroll:true});
+  await page.evaluate(()=>scrollTo(0,Math.min(520,document.documentElement.scrollHeight-innerHeight)));
+  const positionBefore=await page.evaluate(()=>({y:scrollY,active:document.activeElement?.getAttribute('data-action')}));
+  await waitEvent(15);
+  const during={text:await text('.live-draft-text'),replacing:await page.locator('.is-replacing').count(),previous:await page.locator('[data-paragraph-index="0"]').getAttribute('data-previous'),same:await page.evaluate(()=>document.querySelector('.live-draft-text').__r2Story==='retained'),duration:await page.locator('[data-paragraph-index="0"]').evaluate(node=>getComputedStyle(node).transitionDuration)};
+  const positionDuring=await page.evaluate(()=>({y:scrollY,active:document.activeElement?.getAttribute('data-action')}));
+  await page.evaluate(()=>document.activeElement?.blur());
+  await snap('02-paragraph-during-desktop-zh.png');
+  await page.waitForTimeout(270);
+  const after={text:await text('.live-draft-text'),replacing:await page.locator('.is-replacing').count(),previous:await page.locator('[data-paragraph-index="0"]').getAttribute('data-previous')};
+  await snap('03-paragraph-after-desktop-zh.png');
+  record('R2-01-keyed-plan-and-paragraph',plan.same&&plan.rows===2&&plan.scene===1&&initial==='We see art.\nWe go home.\nThe art stays.'&&before.text===initial&&before.replacing===0&&during.text==='We enjoy art.\nWe go home.\nThe art stays.'&&during.replacing===1&&during.previous==='We see art.'&&during.same&&during.duration==='0.22s'&&after.text===during.text&&after.replacing===0&&after.previous===null,{plan,initial,before,during,after});
+  record('R2-02-reader-position-and-focus',positionBefore.active==='cancel-generation'&&positionDuring.active===positionBefore.active&&positionBefore.y>0&&Math.abs(positionDuring.y-positionBefore.y)<4,{positionBefore,positionDuring});
+  await waitEvent(17);
+  const bodyComplete={text:await text('.live-draft-text'),plan:await page.locator('#planning-preview').count(),save:await page.locator('[data-action=save-story]').count()};
+  await waitEvent(18);
+  const finalizing={label:(await page.locator('[data-stream-status]').innerText()).trim(),sameStatus:await page.evaluate(()=>document.querySelector('[data-stream-status]').__r2Status==='retained')};
+  await waitEvent(19);
+  const immediateFinal={state:await page.locator('#generation-status').getAttribute('data-state'),sameStory:await page.evaluate(()=>document.querySelector('.m003-retained-passage').__r2Story==='retained'),save:await page.locator('[data-action=save-story]').count(),slot:await page.locator('.m003-final-exit-slot').count(),story:await text('#final-result .story-text')};
+  await page.waitForTimeout(90); await snap('04-final-handoff-desktop-zh.png');
+  await page.waitForTimeout(190);
+  const settledFinal={slot:await page.locator('.m003-final-exit-slot').count(),settling:await page.locator('.is-settling').count(),story:await text('#final-result .story-text')};
+  record('R2-03-body-to-valid-handoff',bodyComplete.text==='We enjoy art.\nWe go together.'&&bodyComplete.plan===1&&bodyComplete.save===0&&finalizing.label==='整理短文与释义'&&finalizing.sameStatus&&immediateFinal.state==='valid'&&immediateFinal.sameStory&&immediateFinal.save===1&&immediateFinal.slot===1&&immediateFinal.story===bodyComplete.text&&settledFinal.slot===0&&settledFinal.settling===0&&settledFinal.story===bodyComplete.text,{bodyComplete,finalizing,immediateFinal,settledFinal});
+
+  await goto(url()); await page.locator('[data-action=harness-replay]').click(); await waitEvent(15);
+  await page.locator('[data-action=cancel-generation]').click(); await page.waitForTimeout(320);
+  const interrupted={state:await page.locator('#generation-status').getAttribute('data-state'),result:await page.locator('#final-result').count(),motionArtifacts:await page.locator('.is-replacing,.m003-final-exit-slot,.m003-paragraph-exit-ghost,.is-settling').count(),event:eventNumber()};
+  record('R2-04-interruption-cleans-motion',interrupted.state==='cancelled'&&interrupted.result===0&&interrupted.motionArtifacts===0,{interrupted});
+
+  await goto(url('cr312-large-paragraph'));
+  await page.locator('[data-action=harness-replay]').click(); await waitEvent(11);
+  await page.evaluate(()=>document.querySelector('.live-draft-text').__r2Long='retained');
+  await waitEvent(24); const longBefore=await text('.live-draft-text');
+  await waitEvent(25); const longDuring={same:await page.evaluate(()=>document.querySelector('.live-draft-text').__r2Long==='retained'),replacing:await page.locator('.is-replacing').count(),length:(await text('.live-draft-text')).length};
+  record('R2-05-long-paragraph-boundary',longBefore==='We see art.\nWe go home.\nThe art stays.'&&longDuring.same&&longDuring.replacing===1&&longDuring.length>16000,{beforeLength:longBefore.length,longDuring});
+
+  await page.setViewportSize({width:390,height:844});
+  await goto(`${base}?page=create&lang=en&scenario=cr312-shorter&event=11&demo=open&rev=ui13-r2`); await page.locator('[data-action=harness-replay]').click(); await waitEvent(11);
+  await page.evaluate(()=>document.querySelector('.live-draft-text').__r2Narrow='retained'); await waitEvent(15);
+  const narrow={same:await page.evaluate(()=>document.querySelector('.live-draft-text').__r2Narrow==='retained'),replacing:await page.locator('.is-replacing').count(),overflow:await page.evaluate(()=>Math.max(0,document.documentElement.scrollWidth-document.documentElement.clientWidth)),label:(await page.locator('[data-stream-status]').innerText()).trim()};
+  await page.evaluate(()=>document.activeElement?.blur()); await snap('05-paragraph-during-mobile-en.png');
+  record('R2-06-narrow-motion-fit',narrow.same&&narrow.replacing===1&&narrow.overflow===0&&narrow.label==='Making the wording more natural',{narrow});
+
+  await page.setViewportSize({width:1440,height:1050}); await page.emulateMedia({reducedMotion:'reduce'});
+  await goto(url()); await page.locator('[data-action=harness-replay]').click(); await waitEvent(11);
+  await page.evaluate(()=>document.querySelector('.live-draft-text').__r2Reduced='retained'); await waitEvent(15);
+  const reducedParagraph={same:await page.evaluate(()=>document.querySelector('.live-draft-text').__r2Reduced==='retained'),replacing:await page.locator('.is-replacing').count(),animation:await page.locator('[data-paragraph-index="0"]').evaluate(node=>getComputedStyle(node).animationName),background:await page.locator('[data-paragraph-index="0"]').evaluate(node=>getComputedStyle(node).backgroundColor)};
+  await waitEvent(19);
+  const reducedFinal={same:await page.evaluate(()=>document.querySelector('.m003-retained-passage').__r2Reduced==='retained'),slot:await page.locator('.m003-final-exit-slot').count(),save:await page.locator('[data-action=save-story]').count()};
+  record('R2-07-reduced-motion-immediate-continuity',reducedParagraph.same&&reducedParagraph.replacing===0&&reducedParagraph.animation==='none'&&reducedParagraph.background!=='rgba(0, 0, 0, 0)'&&reducedFinal.same&&reducedFinal.slot===0&&reducedFinal.save===1,{reducedParagraph,reducedFinal});
+  await page.emulateMedia({reducedMotion:'no-preference'});
+
+  await goto(`${base}?page=presets&lang=zh&mode=enhanced&event=11&rev=ui13-r2`);
+  await page.locator('[data-action=generate-preview]').click(); await waitEvent(11);
+  await page.evaluate(()=>document.querySelector('#preview-result .live-draft-text').__r2Preview='retained'); await waitEvent(15);
+  const previewBody={same:await page.evaluate(()=>document.querySelector('#preview-result .live-draft-text').__r2Preview==='retained'),replacing:await page.locator('#preview-result .is-replacing').count(),save:await page.locator('#preview-result [data-action=save-story]').count(),text:await text('#preview-result .live-draft-text')};
+  await waitEvent(17);
+  const previewFinal={same:await page.evaluate(()=>document.querySelector('#preview-result .m003-retained-passage').__r2Preview==='retained'),save:await page.locator('#preview-result [data-action=save-story]').count(),result:await page.locator('#preview-result #final-result').count()};
+  record('R2-08-page212-shared-continuity',previewBody.same&&previewBody.replacing===1&&previewBody.save===0&&previewBody.text==='We enjoy art and go home.'&&previewFinal.same&&previewFinal.save===0&&previewFinal.result===1,{previewBody,previewFinal});
+} finally {
+  record('browser-console',report.console_errors.length===0,{errors:report.console_errors});
+  report.summary={total:report.checks.length,passed:report.checks.filter(item=>item.passed).length,failed:report.checks.filter(item=>!item.passed).length};
+  await fs.writeFile(path.join(evidenceDir,'M003-UI-13-R2-motion.json'),`${JSON.stringify(report,null,2)}\n`);
+  await browser.close();
+}
+if(report.summary.failed)process.exitCode=1;

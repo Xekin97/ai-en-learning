@@ -1,0 +1,165 @@
+{
+  "version": "M003-UI-09",
+  "status": "PASS",
+  "checked_at": "2026-10-10T14:24:00+08:00",
+  "scope": "M002 visual inheritance plus changed M003 display/admin interactions; unchanged v5 reducer matrix not repeated",
+  "results": [
+    {
+      "case": "M002-to-UI09-create",
+      "result": "PASS",
+      "evidence": [
+        "m002-baseline/create-1440.png",
+        "create-idle-1440.png",
+        "create-plan-stream-1440.png",
+        "m002-baseline/create-390.png",
+        "create-plan-stream-390.png"
+      ],
+      "observed": "authentic mark/header, M002 310px settings, custom selects, word picker and paper retained; Plan and live text added inside paper"
+    },
+    {
+      "case": "normal-real-click",
+      "result": "PASS",
+      "evidence": [
+        "create-plan-1440.png",
+        "create-plan-stream-1440.png",
+        "create-final-1440.png",
+        "../../../reviews/evidence/ui09-root/actual-click.json"
+      ],
+      "observed": "15 root checks, 61 text changes, 2 shrinks, Plan until valid, final exact, DOM stable, 0 errors"
+    },
+    {
+      "case": "M002-to-UI09-plans",
+      "result": "PASS",
+      "evidence": [
+        "m002-baseline/plans-1440.png",
+        "plans-1440.png",
+        "m002-baseline/plans-390.png",
+        "plans-390.png",
+        "admin-interactions.json"
+      ],
+      "observed": "models, lengths, numeric priority, word limit, rolling-24h quota and unlimited retained; derived on/off + N appended; N0/N99/invalid and preview-confirm-conflict-recheck checked"
+    },
+    {
+      "case": "M002-to-UI09-presets",
+      "result": "PASS",
+      "evidence": [
+        "m002-baseline/presets-1440.png",
+        "presets-1440.png",
+        "m002-baseline/presets-390.png",
+        "presets-390.png",
+        "admin-interactions.json"
+      ],
+      "observed": "master-detail, title, unrestricted admin picker, four config fields and original actions retained; modes added; dirty draft retained across mode and old publish disabled"
+    },
+    {
+      "case": "preview-basic-enhanced",
+      "result": "PASS",
+      "evidence": [
+        "preset-basic-final-1440.png",
+        "preset-enhanced-final-1440.png",
+        "targeted-report.json"
+      ],
+      "observed": "both actual preview wires autoplay to valid and publish qualification; final clears Plan"
+    },
+    {
+      "case": "mobile-console-overflow",
+      "result": "PASS",
+      "evidence": [
+        "targeted-report.json"
+      ],
+      "observed": "390 create/plans/presets page overflow 0; browser page/console errors 0"
+    }
+  ],
+  "notes": [
+    "Root first actual-click script timed out only because it used the retired .article-result selector; rerun with stable #final-result passed with no product change.",
+    "UI08 screenshots are not accepted as UI09 visual evidence.",
+    "No production Vue, live API/DB/model, network timing, or user visual approval was tested."
+  ],
+  "screenshots": [
+    {
+      "path": "m002-baseline/create-1440.png",
+      "sha256": "4ab9d97b79d229cd42f4265cc58114e93d842beeaa594a9c29028312e630d75f",
+      "bytes": 89968
+    },
+    {
+      "path": "m002-baseline/create-390.png",
+      "sha256": "f0bfe467c4beea0b245c45ca9722d3d58995d1d954222e621f45eb5e338da936",
+      "bytes": 66767
+    },
+    {
+      "path": "m002-baseline/plans-1440.png",
+      "sha256": "b3844bbb3aa79662c98bbda2c56a9ac004a0e90216fd423d8f42832f885b8956",
+      "bytes": 86360
+    },
+    {
+      "path": "m002-baseline/plans-390.png",
+      "sha256": "2deb3a9d76d67209e266022cf53d6eeb560494af7f8e3440d1019da0a2c48d4f",
+      "bytes": 68953
+    },
+    {
+      "path": "m002-baseline/presets-1440.png",
+      "sha256": "e5c0c7a3e20da48089008dcdbbb769977ddf1de0ac2a6517930be5882687af7a",
+      "bytes": 282030
+    },
+    {
+      "path": "m002-baseline/presets-390.png",
+      "sha256": "522298b8976e1d3d3c48258e8bf932a90a2033c03d4cd6232ae43201c347aafc",
+      "bytes": 266825
+    },
+    {
+      "path": "create-idle-1440.png",
+      "sha256": "20b7f7f13686fce7312af308e94a6b368f371adcfb6cee1aa8054b1b6510665b",
+      "bytes": 92962
+    },
+    {
+      "path": "create-plan-1440.png",
+      "sha256": "fe886f45be0b032d2d00c59348bbbcf9fb086139d81f68e9624bb1e41ba00c12",
+      "bytes": 116316
+    },
+    {
+      "path": "create-plan-stream-1440.png",
+      "sha256": "1e28a3f1801a10dc96374023df684a93795814517e3584b541fc4e5d567dc060",
+      "bytes": 192360
+    },
+    {
+      "path": "create-plan-stream-390.png",
+      "sha256": "e056b82b068198bcf5a7acfea9568009c99adc1a1511df60118bd9c406a2b087",
+      "bytes": 154718
+    },
+    {
+      "path": "create-final-1440.png",
+      "sha256": "0e61ec4b4c24035378a08fea40112d19c0f5044f20a1ce2f27d736e3b96c3025",
+      "bytes": 229283
+    },
+    {
+      "path": "plans-1440.png",
+      "sha256": "7a88b66b9b872600d97f373e76eb61a04649fbbeafdc68022ba8d02e1393d56a",
+      "bytes": 157366
+    },
+    {
+      "path": "plans-390.png",
+      "sha256": "151c5145fa334e5a82918cf94dc3d3bf8496079bab54f586e359eb36d5189e15",
+      "bytes": 135491
+    },
+    {
+      "path": "presets-1440.png",
+      "sha256": "9e7ed8210ded0d911ed597163557efe28e609da8400fa05c7d258f6d71c3c634",
+      "bytes": 166014
+    },
+    {
+      "path": "presets-390.png",
+      "sha256": "45ee172bc64d3e5d2ede4c8f5a4a7e6ca8d2868fcb295156a9d6033d489c2202",
+      "bytes": 143538
+    },
+    {
+      "path": "preset-basic-final-1440.png",
+      "sha256": "63b4ef5dd0532df47624e635d7120308d7c33e2b34b4ece59bc607e61a208c4b",
+      "bytes": 300189
+    },
+    {
+      "path": "preset-enhanced-final-1440.png",
+      "sha256": "0f0d1308f3b03d03378d24fdd1b4d32842ca2584bec9d2c9a30153460468f917",
+      "bytes": 312444
+    }
+  ]
+}

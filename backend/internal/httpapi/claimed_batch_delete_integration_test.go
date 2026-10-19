@@ -68,6 +68,7 @@ func (h claimDeleteHarness) seed(t *testing.T, consume bool) claimDeleteFixture 
 	if err != nil {
 		t.Fatal(err)
 	}
+	recordSuccessfulGenerationFacts(t, h.ctx, h.api, run)
 	if err := h.api.generation.CompleteValid(h.ctx, run, h.snapshot); err != nil {
 		t.Fatal(err)
 	}

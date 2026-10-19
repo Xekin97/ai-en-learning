@@ -4,15 +4,22 @@ import (
 	"bufio"
 	"bytes"
 	"context"
+	"crypto/sha256"
 	"encoding/json"
+	"fmt"
 	"io"
 	"mime"
 	"net"
 	"net/http"
+	"net/http/httptrace"
 	"net/url"
+	"strconv"
 	"strings"
 	"time"
 
+	"github.com/google/uuid"
+
+	"wordweave/internal/capacity"
 	"wordweave/internal/generationtrace"
 )
 
@@ -22,7 +29,14 @@ type Gateway struct {
 	legacyClient *http.Client
 	legacyURL    string
 	publicOrigin string
+	capacity     *capacity.Gate
 }
+
+type ModelRequestRejected struct{ UpstreamStatus int }
+
+func (e *ModelRequestRejected) Error() string { return "model request rejected" }
+
+func (g *Gateway) SetCapacityGate(gate *capacity.Gate) { g.capacity = gate }
 
 func NewGateway(credentials *CredentialStore, publicOrigin, legacyURL string) *Gateway {
 	return &Gateway{credentials: credentials, publicOrigin: publicOrigin, legacyURL: legacyURL,
@@ -72,9 +86,12 @@ func publicIP(ip net.IP) bool {
 }
 
 func protocolRequest(spec GenerationSpec, snap connectionSnapshot, probe bool) (string, map[string]any) {
+	path, body, _ := protocolRequestChecked(spec, snap, probe)
+	return path, body
+}
+
+func protocolRequestChecked(spec GenerationSpec, snap connectionSnapshot, probe bool) (string, map[string]any, error) {
 	system, user := systemPrompt(spec), userPrompt(spec)
-	schema, _ := json.Marshal(outputSchema(spec))
-	system += "\nReturn only JSON matching this schema:\n" + string(schema)
 	if probe {
 		system = "Reply briefly to the user's message."
 		user = "Reply with OK."
@@ -94,9 +111,9 @@ func protocolRequest(spec GenerationSpec, snap connectionSnapshot, probe bool) (
 			body["max_output_tokens"] = *tokens
 		}
 		if !probe && snap.outputMode == "json_schema" {
-			body["text"] = map[string]any{"format": map[string]any{"type": "json_schema", "name": "wordweave_learning_batch", "strict": true, "schema": outputSchema(spec)}}
+			body["text"] = map[string]any{"format": map[string]any{"type": "json_schema", "name": taskSchemaName(spec), "strict": true, "schema": taskOutputSchema(spec)}}
 		}
-		return "/responses", body
+		return mergeCustomParametersChecked("/responses", body, snap)
 	case ProtocolAnthropic:
 		body["system"] = system
 		body["messages"] = []map[string]string{{"role": "user", "content": user}}
@@ -105,32 +122,64 @@ func protocolRequest(spec GenerationSpec, snap connectionSnapshot, probe bool) (
 			n = *tokens
 		}
 		body["max_tokens"] = n
-		return "/messages", body
+		return mergeCustomParametersChecked("/messages", body, snap)
 	default:
 		body["messages"] = []map[string]string{{"role": "system", "content": system}, {"role": "user", "content": user}}
 		if tokens != nil {
 			body["max_tokens"] = *tokens
 		}
 		if !probe && snap.outputMode == "json_schema" {
-			body["response_format"] = map[string]any{"type": "json_schema", "json_schema": map[string]any{"name": "wordweave_learning_batch", "strict": true, "schema": outputSchema(spec)}}
+			body["response_format"] = map[string]any{"type": "json_schema", "json_schema": map[string]any{"name": taskSchemaName(spec), "strict": true, "schema": taskOutputSchema(spec)}}
 		}
-		return "/chat/completions", body
+		if !probe && snap.outputMode == "json_schema" && officialOpenRouter(snap.connection) {
+			body["provider"] = map[string]any{"require_parameters": true}
+		}
+		return mergeCustomParametersChecked("/chat/completions", body, snap)
 	}
 }
-func (g *Gateway) request(ctx context.Context, spec GenerationSpec, snap connectionSnapshot, probe bool) (*http.Response, *protocolDecoder, error) {
+
+func mergeCustomParametersChecked(path string, body map[string]any, snap connectionSnapshot) (string, map[string]any, error) {
+	custom, err := decodeCanonicalCustomParameters(snap.customParameters)
+	if err != nil {
+		return "", nil, err
+	}
+	for key, value := range custom {
+		if _, controlled := body[key]; controlled {
+			return "", nil, &CustomParameterError{ProblemCode: "custom_parameter_conflict", FieldCode: "controlled_field_conflict", Pointer: "/" + escapeJSONPointer(key)}
+		}
+		body[key] = value
+	}
+	return path, body, nil
+}
+func (g *Gateway) request(ctx context.Context, spec GenerationSpec, snap connectionSnapshot, probe bool, usage *callUsage) (*http.Response, *protocolDecoder, error) {
 	if !ValidBaseURL(snap.connection.BaseURL) {
+		known := false
+		if err := markUsageInvoked(ctx, usage, &known); err != nil {
+			return nil, nil, err
+		}
 		return nil, nil, ErrConnectionInvalid
 	}
 	trace := generationtrace.From(ctx)
 	trace.Check(generationtrace.ProviderOpen, "request_encode", -1)
-	path, body := protocolRequest(spec, snap, probe)
+	path, body, err := protocolRequestChecked(spec, snap, probe)
+	if err != nil {
+		return nil, nil, err
+	}
 	raw, err := json.Marshal(body)
 	if err != nil {
+		known := false
+		if markErr := markUsageInvoked(ctx, usage, &known); markErr != nil {
+			return nil, nil, markErr
+		}
 		return nil, nil, protocolFailure()
 	}
 	trace.Check(generationtrace.ProviderOpen, "request_create", -1)
 	req, err := http.NewRequestWithContext(ctx, http.MethodPost, strings.TrimRight(snap.connection.BaseURL, "/")+path, bytes.NewReader(raw))
 	if err != nil {
+		known := false
+		if markErr := markUsageInvoked(ctx, usage, &known); markErr != nil {
+			return nil, nil, markErr
+		}
 		return nil, nil, ErrConnectionInvalid
 	}
 	if snap.connection.Protocol == ProtocolAnthropic {
@@ -155,13 +204,45 @@ func (g *Gateway) request(ctx context.Context, spec GenerationSpec, snap connect
 		client = g.legacyClient
 	}
 	trace.Check(generationtrace.ProviderOpen, "request_send", -1)
+	wroteRequest := false
+	writeUnknown := false
+	req = req.WithContext(httptrace.WithClientTrace(req.Context(), &httptrace.ClientTrace{WroteRequest: func(info httptrace.WroteRequestInfo) {
+		wroteRequest = info.Err == nil
+		writeUnknown = info.Err != nil
+	}}))
 	resp, err := client.Do(req)
+	var invoked *bool
+	if resp != nil || wroteRequest {
+		v := true
+		invoked = &v
+	} else if !writeUnknown {
+		v := false
+		invoked = &v
+	}
+	if markErr := markUsageInvoked(ctx, usage, invoked); markErr != nil {
+		if resp != nil {
+			resp.Body.Close()
+		}
+		return nil, nil, markErr
+	}
+	if observerErr := notifyInvoked(ctx, invoked); observerErr != nil {
+		if resp != nil {
+			resp.Body.Close()
+		}
+		return nil, nil, observerErr
+	}
 	if err != nil {
 		return nil, nil, &ProviderError{Category: FailureUnavailable, Retryable: true, Err: diagnosed("provider_open", "transport_failed", "", -1, nil)}
 	}
 	trace.Check(generationtrace.ProviderOpen, "response_headers", -1)
 	if resp.StatusCode < 200 || resp.StatusCode >= 300 {
+		if resp.StatusCode == http.StatusTooManyRequests && g.capacity != nil {
+			g.capacity.Cooldown(connectionCapacityKey(spec, snap), retryAfterDuration(resp.Header.Get("Retry-After")))
+		}
 		resp.Body.Close()
+		if probe && (resp.StatusCode == http.StatusBadRequest || resp.StatusCode == http.StatusUnprocessableEntity) {
+			return nil, nil, &ModelRequestRejected{UpstreamStatus: resp.StatusCode}
+		}
 		return nil, nil, mapOpenRouterStatus(resp.StatusCode)
 	}
 	mediaType, _, typeErr := mime.ParseMediaType(resp.Header.Get("Content-Type"))
@@ -170,6 +251,37 @@ func (g *Gateway) request(ctx context.Context, spec GenerationSpec, snap connect
 		return nil, nil, &ProviderError{Category: FailureProtocol, Retryable: true, Err: diagnosed("provider_open", "response_not_sse", "", -1, nil)}
 	}
 	return resp, &protocolDecoder{protocol: snap.connection.Protocol, costReportedInCredits: knownCredits}, nil
+}
+
+func markUsageInvoked(ctx context.Context, usage *callUsage, invoked *bool) error {
+	if usage == nil {
+		return nil
+	}
+	return usage.markInvoked(ctx, invoked)
+}
+
+func connectionCapacityKey(spec GenerationSpec, snap connectionSnapshot) string {
+	if key := spec.ConnectionCapacityKey(); key != "" {
+		return key
+	}
+	if snap.connection.ID != uuid.Nil {
+		return snap.connection.ID.String()
+	}
+	digest := sha256.Sum256([]byte(snap.connection.Protocol + "\x00" + snap.connection.BaseURL))
+	return "unsaved-connection-" + fmt.Sprintf("%x", digest[:8])
+}
+
+func retryAfterDuration(raw string) time.Duration {
+	raw = strings.TrimSpace(raw)
+	if seconds, err := strconv.Atoi(raw); err == nil && seconds > 0 {
+		return min(time.Duration(seconds)*time.Second, 600*time.Second)
+	}
+	if at, err := http.ParseTime(raw); err == nil {
+		if duration := time.Until(at); duration > 0 {
+			return min(duration, 600*time.Second)
+		}
+	}
+	return 30 * time.Second
 }
 func (g *Gateway) Open(ctx context.Context, spec GenerationSpec) (_ Stream, resultErr error) {
 	trace := generationtrace.From(ctx)
@@ -183,9 +295,11 @@ func (g *Gateway) Open(ctx context.Context, spec GenerationSpec) (_ Stream, resu
 	if err != nil {
 		return nil, err
 	}
-	resp, decoder, err := g.request(ctx, spec, *spec.connection, false)
+	resp, decoder, err := g.request(ctx, spec, *spec.connection, false, usage)
 	if err != nil {
-		usage.done()
+		if finishErr := usage.done(); finishErr != nil {
+			return nil, finishErr
+		}
 		return nil, err
 	}
 	trace.Provider(generationtrace.ProviderOpen, generationtrace.ProviderFact{HTTPStatus: resp.StatusCode, RequestID: privateSafeID(resp.Header.Get("X-Request-Id"), spec.connection.apiKey)})
@@ -201,13 +315,31 @@ func (g *Gateway) CheckCompatibility(ctx context.Context, modelID string) error 
 	}
 	return g.probe(ctx, spec, *spec.connection)
 }
-func (g *Gateway) Probe(ctx context.Context, c Connection, key, model string, maxTokens *int, outputMode string) error {
-	return g.probe(ctx, GenerationSpec{ProviderModelID: model}, connectionSnapshot{connection: c, apiKey: key, maxOutputTokens: maxTokens, outputMode: outputMode})
+func (g *Gateway) Probe(ctx context.Context, c Connection, key, model string, maxTokens *int, outputMode string, parameters ...json.RawMessage) error {
+	customParameters := json.RawMessage(`{}`)
+	if len(parameters) > 0 {
+		customParameters = parameters[0]
+	}
+	canonical, err := CanonicalCustomParameters(customParameters)
+	if err != nil {
+		return err
+	}
+	return g.probe(ctx, GenerationSpec{ProviderModelID: model}, connectionSnapshot{connection: c, apiKey: key, maxOutputTokens: maxTokens, outputMode: outputMode, customParameters: canonical})
 }
 func (g *Gateway) probe(ctx context.Context, spec GenerationSpec, snap connectionSnapshot) error {
+	var lease *capacity.Lease
+	if g.capacity != nil {
+		key := connectionCapacityKey(spec, snap)
+		var err error
+		lease, err = g.capacity.TryAcquire(capacity.Probe, key)
+		if err != nil {
+			return err
+		}
+		defer lease.Release()
+	}
 	ctx, cancel := context.WithTimeout(ctx, 30*time.Second)
 	defer cancel()
-	resp, decoder, err := g.request(ctx, spec, snap, true)
+	resp, decoder, err := g.request(ctx, spec, snap, true, nil)
 	if err != nil {
 		return err
 	}

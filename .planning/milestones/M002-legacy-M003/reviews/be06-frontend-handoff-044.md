@@ -1,0 +1,80 @@
+---
+milestone: M003
+stage: technical-design
+review_status: PASS
+decision_id: TRANSITION-M003-045
+suggested_path: .planning/milestones/M002-legacy-M003/reviews/be06-frontend-handoff-044.md
+---
+
+# BE06 → FE02 同阶段接交门禁
+
+## 检查结果
+
+- 当前：`M003 / technical-design / gatekeeper / gatekeeper-owen / active`。
+- 操作：单次 `activate-role` 至 `frontend-architect/base / frontend-bob`；不迁移阶段。
+- `frontend-bob` 已注册且名称校验通过。
+- BE06 冻结包、11 项源清单、静态检查记录及控制回执均存在；记录声明 8 份当前后端原件可恢复。
+- 用户 `USER-M003-STARTUP-CAPACITY` 授权的是可审阅的容量初值、过载和升级设计，非实测容量或逐项用户指定。
+- BE06 声明 v5、DB、权益及 UI09-R2 未变；busy 为受理前 `503`，不自动重 POST、不扣次。此处仅核对交接声明，不复验语义或测试。
+- FE02 尚未编制；后端容量输入已具备，不再以等待后端容量作为前端架构修订状态。
+- `CR-302` 和全局未验证项保持开放，均不阻断 FE02 设计。
+
+## 原始依据
+
+- [BE06 后端交接](/Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/.planning/milestones/M002-legacy-M003/handoffs/backend-architecture.md)
+- [容量与部署设计](/Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/.planning/milestones/M002-legacy-M003/technical/capacity-and-deployment.md)
+- [生成 API 契约](/Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/.planning/milestones/M002-legacy-M003/technical/api/generation.md)
+- [BE06 冻结清单](/Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/.planning/milestones/M002-legacy-M003/technical/evidence/be06-source-manifest.json)
+- [BE06 静态检查记录](/Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/.planning/milestones/M002-legacy-M003/technical/evidence/be06-check.json)
+- [提交回执](/Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/.planning/milestones/M002-legacy-M003/reviews/evidence/control-044/submission-receipt.json)
+
+## 精确目标状态
+
+```yaml
+decision_id: TRANSITION-M003-045
+operation: activate-role
+stage: technical-design # unchanged
+active_role: frontend-architect/base
+active_agent: frontend-bob
+status: active
+authorized_by:
+  - USER-M003-STARTUP-CAPACITY
+  - USER-M003-CONTENT-20261009
+current_handoff: .planning/milestones/M002-legacy-M003/handoffs/frontend-architecture.md # unchanged
+required_artifacts: # unchanged
+  - .planning/milestones/M002-legacy-M003/technical/database.md
+  - .planning/milestones/M002-legacy-M003/technical/backend.md
+  - .planning/milestones/M002-legacy-M003/technical/api/index.md
+  - .planning/milestones/M002-legacy-M003/technical/frontend.md
+  - .planning/milestones/M002-legacy-M003/technical/ai-integration.md
+  - .planning/milestones/M002-legacy-M003/handoffs/database.md
+  - .planning/milestones/M002-legacy-M003/handoffs/backend-architecture.md
+  - .planning/milestones/M002-legacy-M003/handoffs/frontend-architecture.md
+allowed_transitions: # unchanged
+  - implementation
+  - product-planning
+  - uiux-design
+backend_submission:
+  version: M003-BE-06
+  status: accepted_for_frontend_input
+  scope: capacity/deployment/pre-acceptance busy contract design only
+frontend_work:
+  version: M003-FE-02
+  status: pending_frontend_architecture_revision
+  inputs:
+    - M003-PRODUCT-07
+    - M003-BE-06
+    - M003-DB-03
+    - M003-UI-09-R2
+open_change_requests:
+  - CR-302
+```
+
+## 未决项与边界
+
+- 容量、备份/恢复、真实提供方速度/质量/费用及 FE/浏览器整合仍属后续实施与验证，不是 FE02 编制阻塞。
+- `backend_submission: accepted_for_frontend_input` 不等于 BE06、DB03 或技术总审批通过；技术总审批继续 `reopened`。
+- 不授权部署、服务器购买、迁移、真实付费调用或任何实现。
+- 保留 `CR039-L1`、`CR042-L1`、`AI-QUALITY-90`、`W01`、`QA26-MINIMAX`。
+
+下一动作：宿主机械激活 `frontend-bob`，由其仅编制 FE02；本次未修改任何文件。

@@ -13,6 +13,7 @@ import (
 	"wordweave/internal/admin"
 	"wordweave/internal/ai"
 	"wordweave/internal/analytics"
+	"wordweave/internal/capacity"
 	"wordweave/internal/diagnostics"
 	"wordweave/internal/entitlement"
 	"wordweave/internal/generation"
@@ -23,34 +24,38 @@ import (
 	"wordweave/internal/maintenance"
 	"wordweave/internal/notices"
 	"wordweave/internal/observability"
+	"wordweave/internal/platform/business"
 	"wordweave/internal/platform/config"
 	"wordweave/internal/platform/security"
+	"wordweave/internal/portability"
 	"wordweave/internal/review"
 	"wordweave/internal/vocabulary"
 )
 
 type Server struct {
-	cfg         config.Config
-	pool        *pgxpool.Pool
-	identity    *identity.Service
-	vocabulary  *vocabulary.Service
-	entitlement *entitlement.Service
-	credentials *ai.CredentialStore
-	gateway     *ai.Gateway
-	generation  *generation.Service
-	evidence    *generationevidence.Manager
-	learning    *learning.Service
-	review      *review.Service
-	admin       *admin.Service
-	analytics   *analytics.Service
-	notices     *notices.Service
-	growth      *growth.Service
-	maintenance *maintenance.Runner
-	metrics     *observability.Metrics
-	authLimiter *authRateLimiter
-	readyState  atomic.Bool
-	csrf        security.CSRFSigner
-	cursor      security.CursorSigner
+	cfg            config.Config
+	pool           *pgxpool.Pool
+	identity       *identity.Service
+	vocabulary     *vocabulary.Service
+	entitlement    *entitlement.Service
+	credentials    *ai.CredentialStore
+	gateway        *ai.Gateway
+	generation     *generation.Service
+	evidence       *generationevidence.Manager
+	learning       *learning.Service
+	review         *review.Service
+	admin          *admin.Service
+	analytics      *analytics.Service
+	notices        *notices.Service
+	growth         *growth.Service
+	portability    *portability.Service
+	maintenance    *maintenance.Runner
+	metrics        *observability.Metrics
+	authLimiter    *authRateLimiter
+	readyState     atomic.Bool
+	csrf           security.CSRFSigner
+	cursor         security.CursorSigner
+	portabilityKDF *portabilityKDFGate
 }
 
 func New(cfg config.Config, pool, aiPool *pgxpool.Pool) (*Server, error) {
@@ -66,32 +71,62 @@ func New(cfg config.Config, pool, aiPool *pgxpool.Pool) (*Server, error) {
 	credentials := ai.NewCredentialStore(aiPool, envelope)
 	initCtx, initCancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer initCancel()
-	if _, err = pool.Exec(initCtx, `UPDATE wordweave.ai_providers SET base_url=$1,legacy_url_pending=false WHERE id=$2 AND legacy_url_pending`, cfg.OpenRouterBaseURL, ai.LegacyProviderID); err != nil {
+	initTx, err := pool.Begin(initCtx)
+	if err != nil {
+		return nil, err
+	}
+	defer initTx.Rollback(initCtx)
+	if _, err = business.LockConfiguration(initCtx, initTx, true); err != nil {
+		return nil, err
+	}
+	tag, err := initTx.Exec(initCtx, `UPDATE wordweave.ai_providers SET base_url=$1,legacy_url_pending=false WHERE id=$2 AND legacy_url_pending AND retired_at IS NULL`, cfg.OpenRouterBaseURL, ai.LegacyProviderID)
+	if err != nil {
+		return nil, err
+	}
+	if tag.RowsAffected() > 0 {
+		if _, err = business.AdvanceConfiguration(initCtx, initTx); err != nil {
+			return nil, err
+		}
+	}
+	if err = initTx.Commit(initCtx); err != nil {
 		return nil, err
 	}
 	gateway := ai.NewGateway(credentials, cfg.PublicOrigin, cfg.OpenRouterBaseURL)
+	capacityGate, err := capacity.New(capacity.Config{
+		Global: cfg.GenerationMaxInFlight, Preview: cfg.PreviewMaxInFlight, Probe: cfg.ProbeMaxInFlight,
+		Preflight: cfg.PreflightMax, Connection: cfg.ConnectionMaxInFlight, RetryAfter: cfg.GenerationRetryAfter,
+		ConnectionGroups: cfg.ConnectionGroups, DefaultConnectionGroup: cfg.DefaultConnectionGroup,
+	})
+	if err != nil {
+		return nil, err
+	}
+	gateway.SetCapacityGate(capacityGate)
 	generationService := generation.NewService(pool, credentials, gateway, cfg.CapabilityKey, cfg.DraftTTL, validator)
+	generationService.SetCapacityGate(capacityGate)
 	learningService := learning.NewService(pool, generationService.Registry(), cfg.CapabilityKey, cfg.DraftTTL, cfg.ClaimTTL)
 	reviewService := review.NewService(pool, cfg.CapabilityKey, cfg.AttemptTTL)
 	metrics := observability.NewMetrics()
+	metrics.BindCapacityGate(capacityGate)
 	server := &Server{
 		cfg: cfg, pool: pool,
-		identity:    identity.NewService(pool, cfg.SessionPepper),
-		vocabulary:  vocabulary.NewService(pool),
-		entitlement: entitlement.NewService(pool, aiPool),
-		credentials: credentials,
-		gateway:     gateway,
-		generation:  generationService,
-		learning:    learningService,
-		review:      reviewService,
-		analytics:   analytics.NewService(pool, cfg.PublicOrigin, cfg.ClarityURL()),
-		admin:       admin.NewService(pool, credentials, gateway, learningService, cfg.CapabilityKey),
-		notices:     notices.NewService(pool, cfg.CapabilityKey),
-		growth:      growth.NewService(pool, cfg.CapabilityKey),
-		metrics:     metrics,
-		authLimiter: newAuthRateLimiter(cfg.CSRFKey),
-		csrf:        security.NewCSRFSigner(cfg.CSRFKey, 2*time.Hour),
-		cursor:      security.NewCursorSigner(cfg.CursorKey),
+		identity:       identity.NewService(pool, cfg.SessionPepper),
+		vocabulary:     vocabulary.NewService(pool),
+		entitlement:    entitlement.NewService(pool, aiPool),
+		credentials:    credentials,
+		gateway:        gateway,
+		generation:     generationService,
+		learning:       learningService,
+		review:         reviewService,
+		analytics:      analytics.NewService(pool, cfg.PublicOrigin, cfg.ClarityURL()),
+		admin:          admin.NewService(pool, credentials, gateway, learningService, cfg.CapabilityKey),
+		notices:        notices.NewService(pool, cfg.CapabilityKey),
+		growth:         growth.NewService(pool, cfg.CapabilityKey),
+		portability:    portability.New(pool, credentials, cfg.CursorKey),
+		metrics:        metrics,
+		authLimiter:    newAuthRateLimiter(cfg.CSRFKey),
+		csrf:           security.NewCSRFSigner(cfg.CSRFKey, 2*time.Hour),
+		cursor:         security.NewCursorSigner(cfg.CursorKey),
+		portabilityKDF: newPortabilityKDFGate(),
 	}
 	server.maintenance = maintenance.New(pool, generationService, reviewService)
 	server.evidence, err = diagnostics.Open(cfg.PublicOrigin)
@@ -105,6 +140,12 @@ func New(cfg config.Config, pool, aiPool *pgxpool.Pool) (*Server, error) {
 func (server *Server) SetReady(ready bool) { server.readyState.Store(ready) }
 
 func (server *Server) RunMaintenance(ctx context.Context) { server.maintenance.Run(ctx) }
+
+func (server *Server) BeginDrain() { server.generation.BeginDrain() }
+
+func (server *Server) WaitGenerationDrain(ctx context.Context) error {
+	return server.generation.WaitDrain(ctx)
+}
 
 func (server *Server) Stop(ctx context.Context) error {
 	return errors.Join(server.CloseDiagnostics(ctx), server.maintenance.Stop(ctx))
@@ -201,6 +242,7 @@ func (server *Server) Handler() http.Handler {
 		api.With(requireLearner).Get("/me/review-sessions/active-range", server.activeRangeSession)
 		api.With(requireLearner).Get("/me/review-sessions/{session_id}", server.getReviewSession)
 		api.With(requireLearner).Get("/me/review-attempts/{attempt_id}", server.getReviewAttempt)
+		api.Get("/generations/{run_id}/status", server.generationStatus)
 
 		api.Route("/admin", func(admin chi.Router) {
 			admin.Use(requireAdmin)
@@ -232,6 +274,8 @@ func (server *Server) Handler() http.Handler {
 			admin.Get("/users/{user_id}/points-ledger", server.adminPointsLedger)
 			admin.Get("/users/{user_id}/batches", server.adminListUserBatches)
 			admin.Get("/users/{user_id}/batches/{batch_id}", server.adminGetUserBatch)
+			admin.Get("/preset-previews/{preview_id}/status", server.adminPreviewStatus)
+			admin.Get("/config-portability/{category}/current", server.adminConfigPortabilityCurrent)
 
 			admin.Group(func(writes chi.Router) {
 				writes.Use(server.requireSafeWrite)
@@ -268,6 +312,10 @@ func (server *Server) Handler() http.Handler {
 				writes.Put("/users/{user_id}/group", server.adminChangeUserGroup)
 				writes.Put("/users/{user_id}/password", server.adminResetUserPassword)
 				writes.Post("/users/{user_id}/point-grants", server.adminGrantPoints)
+				writes.Post("/config-portability/{category}/exports", server.adminConfigPortabilityExport)
+				writes.Post("/config-portability/{category}/previews", server.adminConfigPortabilityPreview)
+				writes.Post("/config-portability/{category}/imports", server.adminConfigPortabilityImport)
+				writes.Post("/config-portability/{category}/operations/{operation_id}/resolve", server.adminConfigPortabilityResolve)
 			})
 		})
 	})

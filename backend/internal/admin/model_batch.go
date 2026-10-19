@@ -2,6 +2,8 @@ package admin
 
 import (
 	"context"
+	"encoding/json"
+	"fmt"
 	"github.com/google/uuid"
 	"strings"
 	"wordweave/internal/ai"
@@ -9,12 +11,13 @@ import (
 )
 
 type NewModelInput struct {
-	DisplayName     string  `json:"display_name"`
-	Description     *string `json:"description"`
-	ProviderModelID string  `json:"provider_model_id"`
-	MaxOutputTokens *int    `json:"max_output_tokens"`
-	OutputMode      string  `json:"output_mode"`
-	Enabled         bool    `json:"enabled"`
+	DisplayName      string          `json:"display_name"`
+	Description      *string         `json:"description"`
+	ProviderModelID  string          `json:"provider_model_id"`
+	MaxOutputTokens  *int            `json:"max_output_tokens"`
+	OutputMode       string          `json:"output_mode"`
+	Enabled          bool            `json:"enabled"`
+	CustomParameters json.RawMessage `json:"custom_parameters"`
 }
 type ModelBatchInput struct {
 	ConnectionID *uuid.UUID          `json:"connection_id"`
@@ -43,6 +46,11 @@ func (s *Service) CreateModels(ctx context.Context, actor uuid.UUID, in ModelBat
 		if !validGenericModel(ModelInput{DisplayName: item.DisplayName, Description: item.Description, ProviderModelID: item.ProviderModelID, MaxOutputTokens: item.MaxOutputTokens, OutputMode: item.OutputMode}) {
 			return nil, "", ErrValidation
 		}
+		canonical, validationErr := ai.CanonicalCustomParameters(item.CustomParameters)
+		if validationErr != nil {
+			return nil, "", ai.PrefixCustomParameterError(validationErr, fmt.Sprintf("/models/%d/custom_parameters", i))
+		}
+		item.CustomParameters = canonical
 		if seen[item.ProviderModelID] {
 			return nil, "", ErrConflict
 		}
@@ -63,10 +71,15 @@ func (s *Service) CreateModels(ctx context.Context, actor uuid.UUID, in ModelBat
 	}
 	var connectionID uuid.UUID
 	if in.Connection != nil {
+		if in.ConnectionID != nil {
+			if _, activeErr := scanConnection(tx.QueryRow(ctx, connectionSelect+` WHERE id=$1 AND retired_at IS NULL`, in.ConnectionID)); activeErr != nil {
+				return nil, "", mapWriteError(activeErr)
+			}
+		}
 		connectionID, err = s.credentials.WriteConnection(ctx, tx, actor, *in.Connection, in.ConnectionID)
 	} else if in.ConnectionID != nil {
 		connectionID = *in.ConnectionID
-		_, err = scanConnection(tx.QueryRow(ctx, connectionSelect+` WHERE id=$1`, connectionID))
+		_, err = scanConnection(tx.QueryRow(ctx, connectionSelect+` WHERE id=$1 AND retired_at IS NULL`, connectionID))
 	} else {
 		return nil, "", ErrValidation
 	}
@@ -75,7 +88,7 @@ func (s *Service) CreateModels(ctx context.Context, actor uuid.UUID, in ModelBat
 	}
 	if requireKey {
 		var configured bool
-		if err = tx.QueryRow(ctx, `SELECT credential_configured FROM wordweave.ai_providers WHERE id=$1`, connectionID).Scan(&configured); err != nil {
+		if err = tx.QueryRow(ctx, `SELECT credential_configured FROM wordweave.ai_providers WHERE id=$1 AND retired_at IS NULL`, connectionID).Scan(&configured); err != nil {
 			return nil, "", err
 		}
 		if !configured {
@@ -85,7 +98,7 @@ func (s *Service) CreateModels(ctx context.Context, actor uuid.UUID, in ModelBat
 	ids := make([]uuid.UUID, 0, len(in.Models))
 	for _, item := range in.Models {
 		var id uuid.UUID
-		err = tx.QueryRow(ctx, `INSERT INTO wordweave.ai_models(display_name,description,provider_model_id,provider_id,max_output_tokens,output_mode,enabled,created_at,updated_at) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$8) RETURNING id`, item.DisplayName, trimmedOptional(item.Description), item.ProviderModelID, connectionID, item.MaxOutputTokens, item.OutputMode, item.Enabled, config.Now).Scan(&id)
+		err = tx.QueryRow(ctx, `INSERT INTO wordweave.ai_models(display_name,description,provider_model_id,provider_id,max_output_tokens,output_mode,custom_parameters,enabled,created_at,updated_at) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$9) RETURNING id`, item.DisplayName, trimmedOptional(item.Description), item.ProviderModelID, connectionID, item.MaxOutputTokens, item.OutputMode, item.CustomParameters, item.Enabled, config.Now).Scan(&id)
 		if err != nil {
 			return nil, "", mapWriteError(err)
 		}

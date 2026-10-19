@@ -1,3 +1,5 @@
+> **当前归属：M002（纠正124）**。全部原M003需求均归入本里程碑；[完整续做索引](../continuation.md)。当前[配置导入导出增量](config-portability.md)的产品已接受、设计继承返工中；单词发音设计仍单独待审。以下为保留的前期M002基线，旧完成/待审措辞不覆盖续做索引与控制面。
+
 ---
 milestone: M002
 stage: product-planning

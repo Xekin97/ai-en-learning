@@ -13,6 +13,7 @@ import type { GrowthPort } from "@application/growth/models";
 import type { ReviewPort } from "@application/review/models";
 import type { PresetsPort } from "@application/presets/models";
 import type { NoticesPort } from "@application/notices/models";
+import type { ConfigPortabilityPort } from "@application/admin/config-portability";
 import type {
   AccountModel,
   AdminModelModel,
@@ -29,6 +30,7 @@ import type {
   GenerationEventModel,
   GenerationRequestModel,
   GenerationOptionsModel,
+  GenerationStatusModel,
   GroupCode,
   GroupPolicyModel,
   LearningSummaryModel,
@@ -54,7 +56,8 @@ export interface ApiPort
     PresetsPort,
     ReviewPort,
     GrowthPort,
-    BenefitsPort {
+    BenefitsPort,
+    ConfigPortabilityPort {
   bootstrap(): Promise<SessionSnapshot>;
   updateLocale(locale: UiLocale): Promise<UiLocale>;
   register(input: {
@@ -99,6 +102,10 @@ export interface ApiPort
     signal: AbortSignal,
   ): Promise<void>;
   cancelGeneration(runId: string): Promise<"cancelled" | "valid" | "failed">;
+  getGenerationStatus(
+    runId: string,
+    signal?: AbortSignal,
+  ): Promise<GenerationStatusModel>;
   saveGeneration(runId: string): Promise<SavedBatchResult>;
   discardGeneration(runId: string): Promise<void>;
   createVisitorClaim(runId: string): Promise<VisitorClaimLease>;

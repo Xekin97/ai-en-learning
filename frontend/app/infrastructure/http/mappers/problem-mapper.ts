@@ -8,11 +8,16 @@ const failureKinds: Record<string, FailureKind> = {
   forbidden: "forbidden",
   csrf_failed: "csrf_failed",
   validation_failed: "validation",
+  invalid_json: "validation",
+  custom_parameter_conflict: "validation",
+  request_too_large: "validation",
+  model_request_rejected: "validation",
   malformed_request: "validation",
   quota_exhausted: "quota_exhausted",
   rate_limited: "quota_exhausted",
   generation_in_progress: "generation_in_progress",
   generation_unavailable: "generation_unavailable",
+  generation_busy: "service_unavailable",
   model_incompatible: "generation_unavailable",
   provider_unavailable: "generation_unavailable",
   not_found: "not_found",
@@ -27,6 +32,9 @@ const failureKinds: Record<string, FailureKind> = {
 };
 
 export function mapProblemDto(dto: ProblemDto): AppFailure {
+  const busy = dto.code === "generation_busy" ? dto.context : undefined;
+  const unaccepted =
+    dto.code === "generation_unavailable" && dto.context?.accepted === false;
   return {
     kind: failureKinds[dto.code] ?? "unknown",
     code: dto.code,
@@ -36,6 +44,14 @@ export function mapProblemDto(dto: ProblemDto): AppFailure {
       (dto.field_errors ?? []).map((field) => [field.field, field.code]),
     ),
     retryable: dto.status >= 500 || dto.status === 429,
+    ...(busy || unaccepted
+      ? {
+          accepted: false as const,
+          ...(busy
+            ? { retryAfterSeconds: busy.retry_after_seconds as number }
+            : {}),
+        }
+      : {}),
   };
 }
 

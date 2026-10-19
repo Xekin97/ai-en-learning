@@ -18,11 +18,31 @@ const input = {
 const event = (name: string, data: unknown) =>
   `event: ${name}\ndata: ${JSON.stringify(data)}\n\n`;
 const started = event("generation.started", {
+  seq: 1,
+  contract_version: "m003-stream-v6",
+  stream_id: "stream",
   run_id: "run",
   generation_token: "synthetic-capability",
+  snapshot: {
+    configuration_revision: "rev",
+    effective_plan: { code: "basic", origin: "base" },
+    content_service: {
+      native_validation: true,
+      content_review_enabled: false,
+      content_repair_limit: 0,
+    },
+    native_correction_policy: {
+      version: "m003-native-policy-v1",
+      scope: "logical_request",
+      max_calls: 2,
+      editable: false,
+    },
+  },
 });
 const result = {
+  seq: 8,
   run_id: "run",
+  final_content_version: 1,
   result: {
     passage: "We learn. 🙂",
     tags: ["Study"],
@@ -36,15 +56,64 @@ const result = {
       },
     ],
   },
+  content_outcome: "basic",
+  completion_notice: null,
 };
 const valid = event("generation.validated", result);
+const planning = event("generation.progress", { seq: 2, phase: "planning" });
+const composing = event("generation.progress", { seq: 3, phase: "composing" });
+const draftBegin = event("generation.draft", {
+  seq: 4,
+  action: "begin",
+  draft_id: "draft",
+  content_version: 1,
+  mode: "initial",
+  base_rev: 0,
+});
+const editWire = event("generation.edit", {
+  seq: 5,
+  draft_id: "draft",
+  content_version: 1,
+  base_rev: 0,
+  rev: 1,
+  at: 0,
+  delete_count: 0,
+  insert: "We learn. 🙂",
+  source: "provider",
+});
+const bodyComplete = event("generation.draft", {
+  seq: 6,
+  action: "body_complete",
+  draft_id: "draft",
+  content_version: 1,
+  base_rev: 1,
+  body_length: 11,
+  paragraph_count: 1,
+});
+const finalizing = event("generation.progress", {
+  seq: 7,
+  phase: "finalizing",
+});
+const successful =
+  started +
+  planning +
+  composing +
+  draftBegin +
+  editWire +
+  bodyComplete +
+  finalizing +
+  valid;
 const failed = event("generation.failed", {
+  seq: 2,
   code: "content_validation_failed",
-  quota_refunded: false,
+  quota_refunded: true,
   retryable: true,
   request_id: "request-stream",
 });
-const cancelled = event("generation.cancelled", { quota_refunded: false });
+const cancelled = event("generation.cancelled", {
+  seq: 2,
+  quota_refunded: false,
+});
 function harness(
   chunks: (string | Uint8Array)[],
   close = true,
@@ -107,7 +176,12 @@ describe("G14 real SSE decoder and mapping", () => {
       const bytes = new TextEncoder().encode(
         started +
           ": heartbeat\r\n\r\n" +
-          event("passage.delta", { text: "We learn. 🙂" }) +
+          planning +
+          composing +
+          draftBegin +
+          editWire +
+          bodyComplete +
+          finalizing +
           valid,
       );
       const chunks = [];
@@ -138,16 +212,19 @@ describe("G14 real SSE decoder and mapping", () => {
     expect(() => h.vault.generation("run")).toThrow();
   });
   it.each([
-    ["delta before started", event("passage.delta", { text: "bad" })],
+    ["edit before started", editWire],
     ["valid before started", valid],
-    ["duplicate started", started + started],
+    [
+      "changed duplicate started",
+      started + started.replace("synthetic-capability", "different-capability"),
+    ],
     [
       "different run",
       started + event("generation.validated", { ...result, run_id: "other" }),
     ],
     ["unknown event", started + event("unknown", {})],
-    ["malformed json", started + "event: passage.delta\ndata: {broken\n\n"],
-    ["bad payload", started + event("passage.delta", { text: 5 })],
+    ["malformed json", started + "event: generation.edit\ndata: {broken\n\n"],
+    ["bad payload", started + event("generation.edit", { text: 5 })],
     [
       "invalid span",
       started +
@@ -166,7 +243,7 @@ describe("G14 real SSE decoder and mapping", () => {
     ],
     [
       "oversize event",
-      started + "event: passage.delta\ndata: " + "x".repeat(1_048_577),
+      started + "event: generation.edit\ndata: " + "x".repeat(33_554_433),
     ],
     ["invalid UTF8", new Uint8Array([0xff])],
   ] as const)(
@@ -183,33 +260,51 @@ describe("G14 real SSE decoder and mapping", () => {
       expect(JSON.stringify(error)).not.toMatch(
         /synthetic-capability|broken|hint_blanks/,
       );
-      expect(() => h.vault.generation("run")).toThrow();
     },
   );
+  it("accepts one adjacent byte-equivalent started retry without replacing the capability", async () => {
+    const h = harness([
+      started +
+        started +
+        planning +
+        composing +
+        draftBegin +
+        editWire +
+        bodyComplete +
+        finalizing +
+        valid,
+    ]);
+    await h.consume();
+    expect(h.events.filter((item) => item.kind === "started")).toHaveLength(1);
+    expect(h.vault.generation("run")).toBe("synthetic-capability");
+    expect(h.state().phase).toBe("valid");
+  });
   it.each([
     "",
     started,
-    started + event("passage.delta", { text: "partial" }),
+    started + planning + composing + editWire,
     started + valid.trimEnd(),
   ])("rejects incomplete EOF (%#)", async (wire) => {
     const h = harness([wire]);
     await expect(h.consume()).rejects.toMatchObject({ kind: "network" });
     expect(h.state().result).toBeNull();
-    expect(() => h.vault.generation("run")).toThrow();
   });
   it.each([valid, failed, cancelled])(
     "settles immediately on the first terminal even if socket stays open (%#)",
     async (terminal) => {
-      const h = harness([started, terminal], false);
+      const h = harness(
+        [terminal === valid ? successful : started + terminal],
+        false,
+      );
       await h.consume();
       expect(h.cancel).toHaveBeenCalledTimes(1);
     },
   );
   it("ignores trailing bytes after validated instead of downgrading it", async () => {
-    const h = harness([started + valid + "event: unknown\ndata: {bad\n\n"]);
+    const h = harness([successful + "event: unknown\ndata: {bad\n\n"]);
     await h.consume();
     expect(h.state().phase).toBe("valid");
-    expect(h.events).toHaveLength(2);
+    expect(h.events).toHaveLength(8);
   });
   it("aborts a silent body and releases its capability", async () => {
     const h = harness([started], false);
@@ -218,10 +313,10 @@ describe("G14 real SSE decoder and mapping", () => {
     h.controller.abort();
     await expect(pending).rejects.toMatchObject({ name: "AbortError" });
     expect(h.cancel).toHaveBeenCalledTimes(1);
-    expect(() => h.vault.generation("run")).toThrow();
+    expect(h.vault.generation("run")).toBe("synthetic-capability");
   });
   it("does not issue a request with an already aborted signal", async () => {
-    const h = harness([started, valid]);
+    const h = harness([successful]);
     h.controller.abort();
     await expect(h.consume()).rejects.toMatchObject({ name: "AbortError" });
     expect(h.send).not.toHaveBeenCalled();

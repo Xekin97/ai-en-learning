@@ -1,0 +1,45 @@
+你是已注册独立控制角色 gatekeeper-owen。请续接当前M003任务。严格只读：先完整读 ../agt-coding-v2/.agents/skills/agt-stage-gate/SKILL.md、其要求的core/role-contract.md、core/workflow-control.md、roles/gatekeeper/ROLE.md和templates/stage-review.md，再读 task.json列出的当前原件。不可重跑开发测试、不可语义审代码、不可修改专业或控制文件。仅返回可原样封存的门检报告，建议原件路径 .planning/milestones/M003/reviews/implementation-verification-058.md。当前控制角色已经由TRANSITION-M003-058激活，唯一目标是判断是否允许TRANSITION-M003-059 implementation→verification，quality/base/qa-quinn。不得开始QA。
+
+{
+  "objective": "执行TECH03完整实施接收独立门禁；唯一建议目标TRANSITION-M003-059，implementation→verification，quality/base / qa-quinn。只门检并给出精确目标，不执行QA工作，不接受M003整体完成。",
+  "inputs": [
+    ".planning/workflow/state.yaml",
+    ".planning/agt/project.yaml",
+    ".planning/agt/agents.yaml",
+    ".planning/milestones/M003/reviews/evidence/start/locked-profile.yaml",
+    ".planning/milestones/M003/reviews/start.md",
+    ".planning/milestones/M003/reviews/requirements-feedback.md",
+    ".planning/milestones/M003/changes/CR-302.md",
+    ".planning/milestones/M003/changes/CR-303.md",
+    ".planning/milestones/M003/handoffs/backend-implementation.md",
+    ".planning/milestones/M003/implementation/backend-validation.md",
+    ".planning/milestones/M003/handoffs/frontend-implementation.md",
+    ".planning/milestones/M003/implementation/frontend-validation.md",
+    ".planning/milestones/M003/implementation/frontend-worktree-plan.md",
+    ".planning/milestones/M003/reviews/evidence/control-058/submission-receipt.json",
+    ".planning/milestones/M003/implementation/evidence/frontend-tech03/evidence-manifest.json",
+    ".planning/milestones/M003/reviews/evidence/frontend-start-057/source-integrity-receipt.json",
+    ".planning/milestones/M003/reviews/evidence/frontend-start-057/protected-evidence-restoration.json",
+    ".planning/milestones/M003/reviews/evidence/frontend-start-057/live-plan-observation.json",
+    ".planning/milestones/M003/reviews/evidence/frontend-start-057/local-stack-cleanup.json",
+    ".planning/milestones/M003/reviews/backend-frontend-handoff-056.md",
+    ".planning/milestones/M003/reviews/technical-design-054.md"
+  ],
+  "write_scope": [],
+  "acceptance": [
+    "遵循agt-stage-gate、role-contract、workflow-control、gatekeeper ROLE和stage-review模板；只读必要原件。不得写产品/设计/架构/实施专业文档，不做代码语义审查，不重跑单测/lint/build。",
+    "核对all-roles实施完成声明和后端/前端4份必需原件、设计批准、开发验证、失败边界与归档哈希回执；本门禁不是独立QA。",
+    "用户明确要求AGT完整本地产品研发流程且本轮下一步授权前端实施与必要验证/交接，不重复询问已授权的例行接续；只执行一个implementation→verification门槛，绝不跨到milestone-complete。若确有未被已有授权覆盖的内容，请明确引用来源。",
+    "保留CR302整体QA pending，CR303为设计纠正，不自行关闭CR039-L1、CR042-L1、AI-QUALITY-90、W01、QA26-MINIMAX。",
+    "项目未部署，不做旧库迁移/回填；本轮只有可丢弃空库初始化。无付费模型/部署/用户UAT/生产容量证明。",
+    "诚实记录两旧文件全仓格式失败、M002共享mock并行竞态与单worker通过、本轮V11专业辅助功能范围未测；这些不得升级为全量QA通过。判断是否阻塞进入QA，而非用进入QA替代QA。",
+    "14957保护文件最终全部匹配：M002回归误写3截图已保留本次新图，并仅从与前态哈希一致的HEAD原件恢复，事故回执可追溯。前端45项压缩包/当前源码/清单一致。",
+    "名称gatekeeper-owen和qa-quinn已校验；输出PASS/FAIL、单一精确目标状态和保留项。不要写控制文件；根代理会原样封存报告并机械应用获准状态。"
+  ],
+  "risk": "normal",
+  "report": [
+    "check_results",
+    "exact_target_state",
+    "retained_open_items"
+  ]
+}

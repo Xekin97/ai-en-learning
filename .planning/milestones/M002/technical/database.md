@@ -1,3 +1,7 @@
+> **当前CR-313数据设计（M002-DB-CR313-01，待审）**：[完整方案](config-portability/database.md)；[交接](../handoffs/config-portability-database.md)。126批准输入与DB313-Q01身份答复见新方案；以下旧基线正文原样保留。
+
+> **M002续做索引124**：本里程碑包含原M003全部需求。[较新同类原件](../../M002-legacy-M003/technical/database.md)及其已记录的逐项接收/验证均归M002；旧编号只是历史标识。当前工作与未完成项见[续做索引](../continuation.md)，下方前期记录保留，不能据旧完成态关闭当前M002。
+
 ## CR029-F05 服务商原位编辑（当前）
 
 DATA007/008 的 ai_providers ID 为稳定服务商身份；新增0016将显示名称唯一约束从全平台改为服务商内，并添加 update_provider_credential SECURITY DEFINER函数，密钥密文原位upsert，app仅EXECUTE、ai只SELECT、PUBLIC无权限。既有0015不改，迁移不更新业务行。URL/协议修改无新Key拒绝，保留Key时不触碰密文。连接名/协议/地址更新与旗下模型新增修改在同一配置锁/CAS事务中，服务商和模型UUID不变，引用无需重建。

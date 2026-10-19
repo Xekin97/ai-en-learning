@@ -111,6 +111,7 @@ func TestOBS042DPreflightAndDraftSQLExits(t *testing.T) {
 			var run generation.Run
 			if tc.draft {
 				run = cr039SeedRun(t, ctx, api, pool, actor, model, "learn")
+				recordSuccessfulGenerationFacts(t, ctx, api, run)
 			}
 			var unobserved error
 			for _, on := range []bool{false, true} {

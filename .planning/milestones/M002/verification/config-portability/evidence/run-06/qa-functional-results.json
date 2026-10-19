@@ -1,0 +1,52 @@
+{
+  "version": "M002-QA-CR313-01",
+  "started_at": "2026-10-16T03:16:39.069Z",
+  "environment": {
+    "frontend_origin": "http://127.0.0.1:43230",
+    "browser": "chromium",
+    "database": "isolated disposable synthetic fixture",
+    "secrets_persisted": false
+  },
+  "cases": [
+    {
+      "id": "QA313-01-auth",
+      "status": "PASS",
+      "duration_ms": 950,
+      "facts": {
+        "anonymous_status": 401,
+        "learner_status": 403,
+        "missing_csrf_status": 403
+      }
+    },
+    {
+      "id": "QA313-01-export-scope",
+      "status": "PASS",
+      "duration_ms": 18,
+      "facts": {
+        "categories": [
+          "models",
+          "plans",
+          "items",
+          "growth"
+        ],
+        "models_connections": 2,
+        "plans": 4,
+        "items": 4,
+        "growth_levels": 2,
+        "package_hashes": {
+          "models": "8240bc8d56d89b2ac161591c0edd99431dd273e180456e254f4c3336f8f77fa4",
+          "plans": "b6e47596d0144b3ce58e717b2de5892e37da679c2024175c1f8b2d2d166ca562",
+          "items": "496699ee0191e8db5922bd2e4acdffcdb3bf5e34390278e25ac7bf38608c626a",
+          "growth": "47ad4eeab641626aad14c82bb19a36c0c08e017c96fe0c4361e936a1a972d4ff"
+        }
+      }
+    }
+  ],
+  "screenshots": [],
+  "provider_requests": "reported separately by fixture owner",
+  "failure": {
+    "code": "encrypted-preview-status"
+  },
+  "finished_at": "2026-10-16T03:16:41.092Z",
+  "status": "FAIL"
+}

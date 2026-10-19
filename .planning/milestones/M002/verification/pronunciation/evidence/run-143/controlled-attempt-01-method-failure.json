@@ -1,0 +1,9 @@
+{
+  "attempt": 1,
+  "result": "FAIL_METHOD",
+  "candidate_build_aggregate": "48054f4be82d69bf71cb76d3b1a5b493e3f26703347bac300dbf665cfbc63235",
+  "failed_assertion": "FOCUS-TRANSFER",
+  "actual": "undefined at the first render where #final-result became visible",
+  "assessment": "The early snapshot is appropriate for the 240ms inert plan region, but the approved focus restoration explicitly awaits Vue nextTick. Focus needs its own bounded wait rather than a synchronous assertion in the early snapshot.",
+  "next": "Keep the early plan-leave snapshot and independently wait up to 500ms for focus on the same-entry result action."
+}

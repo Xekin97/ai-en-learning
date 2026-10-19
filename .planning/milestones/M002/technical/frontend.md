@@ -1,3 +1,7 @@
+> 当前 CR313 前端技术设计：**M002-FE-CR313-01 / awaiting_user_review**。原始方案见 [config-portability/frontend.md](config-portability/frontend.md)，交接见 [配置导入导出前端交接](../handoffs/config-portability-frontend.md)。仅此增量适用本轮；本轮已接收补充见 FE501-08，旧正文完整保留，不代表实现批准。
+
+> **M002续做索引124**：本里程碑包含原M003全部需求。[较新同类原件](../../M002-legacy-M003/technical/frontend.md)及其已记录的逐项接收/验证均归M002；旧编号只是历史标识。当前工作与未完成项见[续做索引](../continuation.md)，下方前期记录保留，不能据旧完成态关闭当前M002。
+
 ## CR029-F05 / UI31 当前前端方案
 
 PAGE208 .generic-provider-list 读取 AdminProviderModel(connection,models) 聚合数组；单组 .generic-provider-card 展示一份连接元数据及全部模型。DTO严格schema→mapper→repository→store；加载服务商时同步扁平models供原引用功能，但不修改其他页面分页接口。

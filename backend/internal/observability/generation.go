@@ -8,6 +8,7 @@ import (
 	"strconv"
 	"sync"
 
+	"wordweave/internal/capacity"
 	"wordweave/internal/generationevidence"
 	"wordweave/internal/generationtrace"
 )
@@ -18,6 +19,13 @@ type generationMetrics struct {
 	inflight int64
 	values   map[generationKey]float64
 	capture  *generationevidence.Manager
+	capacity *capacity.Gate
+}
+
+func (m *Metrics) BindCapacityGate(gate *capacity.Gate) {
+	m.generation.mu.Lock()
+	m.generation.capacity = gate
+	m.generation.mu.Unlock()
 }
 
 func (m *Metrics) BindGenerationCapture(capture *generationevidence.Manager) {
@@ -49,8 +57,12 @@ func (g *generationMetrics) Event(e generationtrace.Event) {
 		if e.Fact.State == generationtrace.Failed || e.Fact.State == generationtrace.Cancelled {
 			add("failure_total", e.Fact.Stage, e.Fact.Detail.Reason, 1)
 		}
+		if e.Fact.Stage == "preflight" && e.Fact.Detail.Reason == "generation_busy" {
+			add("busy_total", "", "generation_busy", 1)
+		}
 	case "outcome_confirmed":
 		add("confirmed_outcomes_total", "", e.Outcome, 1)
+		add("confirmed_outcome_seconds_sum", "", e.Outcome, float64(e.ElapsedMS)/1000)
 		if e.Refunded {
 			add("confirmed_refunds_total", "", "", 1)
 		}
@@ -61,7 +73,7 @@ func (g *generationMetrics) Event(e generationtrace.Event) {
 		}
 	case "settlement_recovered":
 		add("settlements_recovered_total", "", e.Outcome, 1)
-	case "first_provider_content", "first_browser_content":
+	case "first_provider_content", "first_browser_plan", "first_browser_content":
 		add(e.Kind+"_seconds_sum", "", "", float64(e.ElapsedMS)/1000)
 		add(e.Kind+"_total", "", "", 1)
 	case "fact":
@@ -94,6 +106,7 @@ func (m *Metrics) writeGeneration(w http.ResponseWriter) {
 	}
 	active := g.inflight
 	capture := g.capture
+	capacityGate := g.capacity
 	g.mu.Unlock()
 	sort.Slice(keys, func(i, j int) bool {
 		a, b := keys[i], keys[j]
@@ -107,6 +120,40 @@ func (m *Metrics) writeGeneration(w http.ResponseWriter) {
 	})
 	fmt.Fprintln(w, "# TYPE wordweave_generation_in_flight gauge")
 	fmt.Fprintf(w, "wordweave_generation_in_flight %d\n", active)
+	if capacityGate != nil {
+		snapshot := capacityGate.Snapshot()
+		fmt.Fprintln(w, "# TYPE wordweave_generation_capacity_active gauge")
+		fmt.Fprintf(w, "wordweave_generation_capacity_active{kind=\"global\"} %d\n", snapshot.Global)
+		fmt.Fprintf(w, "wordweave_generation_capacity_active{kind=\"preview\"} %d\n", snapshot.Preview)
+		fmt.Fprintf(w, "wordweave_generation_capacity_active{kind=\"probe\"} %d\n", snapshot.Probe)
+		fmt.Fprintf(w, "wordweave_generation_capacity_active{kind=\"preflight\"} %d\n", snapshot.Preflight)
+		fmt.Fprintf(w, "wordweave_generation_capacity_active{kind=\"connection\"} %d\n", snapshot.Connection)
+		fmt.Fprintln(w, "# TYPE wordweave_generation_capacity_connection_groups_active gauge")
+		fmt.Fprintf(w, "wordweave_generation_capacity_connection_groups_active %d\n", snapshot.ConnectionGroups)
+		fmt.Fprintln(w, "# TYPE wordweave_generation_capacity_busy_total counter")
+		for _, reject := range []struct {
+			reason string
+			value  uint64
+		}{
+			{"draining", snapshot.Rejected.Draining}, {"settlement_unhealthy", snapshot.Rejected.Settlement},
+			{"preflight_limit", snapshot.Rejected.Preflight}, {"provider_cooldown", snapshot.Rejected.Cooldown},
+			{"connection_key_missing", snapshot.Rejected.ConnectionKey}, {"global_limit", snapshot.Rejected.Global},
+			{"connection_limit", snapshot.Rejected.Connection}, {"preview_limit", snapshot.Rejected.Preview},
+			{"probe_limit", snapshot.Rejected.Probe},
+		} {
+			fmt.Fprintf(w, "wordweave_generation_capacity_busy_total{reason=%s} %d\n", strconv.Quote(reject.reason), reject.value)
+		}
+		fmt.Fprintln(w, "# TYPE wordweave_generation_preflight_guard_completed_total counter")
+		fmt.Fprintf(w, "wordweave_generation_preflight_guard_completed_total %d\n", snapshot.PreflightCompleted)
+		fmt.Fprintln(w, "# TYPE wordweave_generation_preflight_guard_duration_seconds_sum counter")
+		fmt.Fprintf(w, "wordweave_generation_preflight_guard_duration_seconds_sum %g\n", snapshot.PreflightDuration.Seconds())
+		fmt.Fprintln(w, "# TYPE wordweave_generation_capacity_pending_unknown gauge")
+		fmt.Fprintf(w, "wordweave_generation_capacity_pending_unknown %d\n", snapshot.PendingUnknown)
+		fmt.Fprintln(w, "# TYPE wordweave_generation_capacity_settlement_healthy gauge")
+		fmt.Fprintf(w, "wordweave_generation_capacity_settlement_healthy %d\n", boolGauge(snapshot.SettlementHealthy))
+		fmt.Fprintln(w, "# TYPE wordweave_generation_capacity_draining gauge")
+		fmt.Fprintf(w, "wordweave_generation_capacity_draining %d\n", boolGauge(snapshot.Draining))
+	}
 	last := ""
 	for _, k := range keys {
 		if k.name != last {
@@ -125,4 +172,11 @@ func (m *Metrics) writeGeneration(w http.ResponseWriter) {
 	} {
 		fmt.Fprintf(w, "# TYPE wordweave_generation_capture_%s_total counter\nwordweave_generation_capture_%s_total %d\n", v.name, v.name, v.value)
 	}
+}
+
+func boolGauge(value bool) int {
+	if value {
+		return 1
+	}
+	return 0
 }

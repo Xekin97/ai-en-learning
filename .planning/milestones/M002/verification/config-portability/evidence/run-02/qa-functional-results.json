@@ -1,0 +1,136 @@
+{
+  "version": "M002-QA-CR313-01",
+  "started_at": "2026-10-16T03:14:05.558Z",
+  "environment": {
+    "frontend_origin": "http://127.0.0.1:43230",
+    "browser": "chromium",
+    "database": "isolated disposable synthetic fixture",
+    "secrets_persisted": false
+  },
+  "cases": [
+    {
+      "id": "QA313-01-auth",
+      "status": "PASS",
+      "duration_ms": 971,
+      "facts": {
+        "anonymous_status": 401,
+        "learner_status": 403,
+        "missing_csrf_status": 403
+      }
+    },
+    {
+      "id": "QA313-01-export-scope",
+      "status": "PASS",
+      "duration_ms": 30,
+      "facts": {
+        "categories": [
+          "models",
+          "plans",
+          "items",
+          "growth"
+        ],
+        "models_connections": 2,
+        "plans": 4,
+        "items": 4,
+        "growth_levels": 2,
+        "package_hashes": {
+          "models": "2b682f55e8c0324ec504ed34fdb4cd1977887acb0f560258c5416c0243098e2e",
+          "plans": "96fde793c2e812b3779e0cd03568d3045e23acebab97826e268bdfc6f42f66d9",
+          "items": "ba650842e6e420dfd94db9046cef5aeabd43564d19ddc5accfd70cf09959190e",
+          "growth": "0304abd55327cb3a478598eb795c4a753abbb552665aa02b79b471293af3eae8"
+        }
+      }
+    },
+    {
+      "id": "QA313-02-credentials",
+      "status": "PASS",
+      "duration_ms": 219,
+      "facts": {
+        "encrypted_hash": "84f39be79fb2fc9deb5058331b8c8f3d74a4c7869b4b149f3309ac974f963292",
+        "connection_count": 2,
+        "wrong_password": {
+          "status": 422,
+          "code": "decryption_failed"
+        },
+        "tamper": {
+          "status": 422,
+          "code": "decryption_failed"
+        },
+        "ordinary_package": {
+          "status": 422,
+          "code": "credentials_required"
+        }
+      }
+    },
+    {
+      "id": "QA313-03-plans",
+      "status": "PASS",
+      "duration_ms": 55,
+      "facts": {
+        "preview_revision_unchanged": true,
+        "applied_revision_changed": true,
+        "repeated_operation_same_result_revision": true,
+        "stale_reason": "revision_changed",
+        "invalid_recovery_token": {
+          "status": 403,
+          "code": "recovery_token_invalid"
+        },
+        "representative_values": {
+          "explicit_zero": true,
+          "explicit_false": true,
+          "explicit_empty_arrays": true,
+          "explicit_unlimited_null_present": true
+        },
+        "missing_plan": {
+          "status": 422,
+          "code": "validation_failed"
+        },
+        "missing_required": {
+          "status": 422,
+          "code": "validation_failed"
+        }
+      }
+    },
+    {
+      "id": "QA313-04-history-blockers",
+      "status": "PASS",
+      "duration_ms": 24,
+      "facts": {
+        "item_blocker": {
+          "can_commit": false,
+          "blocker_codes": [
+            "active_reference",
+            "ever_issued"
+          ],
+          "target_identity_matches_fixture": true
+        },
+        "growth": {
+          "history_preserved": true,
+          "usage_reset": false,
+          "trial_dates_changed": false,
+          "status": "applied",
+          "effective_day": "2026-10-17"
+        }
+      }
+    },
+    {
+      "id": "QA313-07-priority-modal",
+      "status": "PASS",
+      "duration_ms": 708,
+      "facts": {
+        "top_layer": true,
+        "draft_preserved_after_preview": true,
+        "backdrop_did_not_close": true,
+        "tab_samples_contained": 12,
+        "escape_focus_restored": true
+      }
+    }
+  ],
+  "screenshots": [],
+  "provider_requests": "reported separately by fixture owner",
+  "failure": {
+    "code": "locator.waitFor: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('#cr313-dialog').getByText('只替换了所选类别；运行历史与其他类别未更改。', { exact: true }) to be visible\u001b[22m\n"
+  },
+  "finished_at": "2026-10-16T03:14:40.296Z",
+  "status": "FAIL"
+}

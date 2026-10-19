@@ -1,0 +1,129 @@
+schema_version: 1
+profile: consumer-ai-web@1.0.0
+agt_revision: b5badf88cd7194400c3d4d0e9395e7c98490dc26
+agents:
+- role: product/to-c
+  kind: specialist
+  display_name: product-maya
+  runtime_name: product_maya_cr306
+  runtime_id: /root/product_maya_cr306
+  status: registered
+  registered_at: '2026-08-28T11:00:33Z'
+  activated_at: '2026-10-12T03:43:52.125606+00:00'
+  requested_model: gpt-6-astra
+  requested_effort: high
+  model_source: .planning/agt/model-routing-v1.lock.json
+  actual_model: unknown
+  runtime_note: Activated for bounded CR-306 product definition under USER-M003-CR306-REPAIR; no code
+    or design implementation.
+- role: uiux/base
+  kind: specialist
+  display_name: designer-tony
+  runtime_name: designer_tony_cr306
+  runtime_id: /root/designer_tony_cr306
+  status: active
+  registered_at: '2026-08-28T11:00:33Z'
+  activated_at: '2026-10-12T04:01:54.622065+00:00'
+  requested_model: gpt-5.6-sol
+  requested_effort: high
+  model_source: .planning/agt/model-routing-v1.lock.json
+  actual_model: unknown
+  runtime_note: UI10 rejected by user for loss of modal behavior; same-role corrective design active,
+    preserve frontend AppDialog contract.
+- role: dba/base
+  kind: specialist
+  display_name: dba-diana
+  runtime_name: dba_diana_cr306
+  runtime_id: /root/dba_diana_cr306
+  status: registered
+  registered_at: '2026-08-28T11:00:33Z'
+  activated_at: '2026-10-12T03:55:47.805726+00:00'
+  requested_model: gpt-6-astra
+  requested_effort: high
+  model_source: .planning/agt/model-routing-v1.lock.json
+  actual_model: unknown
+  runtime_note: CR306-DB bounded design reception; no historical migration or UAT DB changes.
+- role: backend-architect/base
+  kind: specialist
+  display_name: backend-alex
+  runtime_name: backend_alex_cr306
+  runtime_id: /root/backend_alex_cr306
+  status: registered
+  registered_at: '2026-08-28T11:00:33Z'
+  activated_at: '2026-10-12T03:47:12.317449+00:00'
+  requested_model: gpt-6-astra
+  requested_effort: high
+  model_source: .planning/agt/model-routing-v1.lock.json
+  actual_model: unknown
+  runtime_note: Active CR306-BE technical recovery, requested locked gpt-6-astra/high; actual serving
+    unknown.
+- role: frontend-architect/base
+  kind: specialist
+  display_name: frontend-bob
+  runtime_name: frontend_bob_fe02
+  runtime_id: /root/frontend_bob_fe02
+  status: registered
+  registered_at: '2026-08-28T11:00:33Z'
+  activated_at: '2026-10-10T07:37:37.334620+00:00'
+  requested_model: gpt-6-astra
+  requested_effort: high
+  model_source: .planning/agt/model-routing-v1.lock.json
+  actual_model: unknown
+  runtime_note: Resuming frontend_bob_fe02 after bounded UI09-R3 correction, requested gpt-6-astra/high,
+    actual serving metadata unknown.
+- role: backend-implementer/base
+  kind: specialist
+  display_name: backend-ethan
+  runtime_name: backend_ethan_tech03
+  runtime_id: /root/backend_ethan_tech03
+  status: registered
+  registered_at: '2026-08-28T11:00:33Z'
+  activated_at: '2026-10-12T02:08:51.783863+00:00'
+  requested_model: gpt-5.6-sol
+  requested_effort: high
+  model_source: .planning/agt/model-routing-v1.lock.json
+  actual_model: unknown
+  runtime_note: Executing approved TECH03 backend implementation under USER-M003-BACKEND-IMPLEMENT-NEXT;
+    requested locked strong gpt-5.6-sol/high, actual serving metadata unknown.
+- role: frontend-implementer/base
+  kind: specialist
+  display_name: frontend-claire
+  runtime_name: frontend_claire_tech03
+  runtime_id: /root/frontend_claire_tech03
+  status: registered
+  registered_at: '2026-08-28T11:00:33Z'
+  activated_at: '2026-10-12T02:12:52.925455+00:00'
+  requested_model: gpt-5.6-sol
+  requested_effort: high
+  model_source: .planning/agt/model-routing-v1.lock.json
+  actual_model: unknown
+  runtime_note: Executing approved FE02/UI09-R3 frontend implementation under USER-M003-FRONTEND-IMPLEMENT-NEXT;
+    high-risk state/SSR/entitlement work routed locked strong gpt-5.6-sol/high, actual metadata unknown.
+- role: quality/base
+  kind: specialist
+  display_name: qa-quinn
+  runtime_name: qa_quinn_m003
+  runtime_id: /root/qa_quinn_m003
+  status: registered
+  registered_at: '2026-08-28T11:00:33Z'
+  activated_at: '2026-10-12T02:18:03.667713+00:00'
+  runtime_note: M003-QA-02 complete, 26 targeted retest checks PASS; user UAT pending. Requested locked
+    strong/high, actual serving model unknown.
+  requested_model: gpt-5.6-sol
+  requested_effort: high
+  actual_model: unknown
+  model_source: .planning/agt/model-routing-v1.lock.json
+- role: gatekeeper
+  kind: control
+  display_name: gatekeeper-owen
+  runtime_name: gatekeeper_owen_cli
+  runtime_id: 01a12e25-a4f5-7ef3-a37d-b3c1b9aebe58
+  status: registered
+  registered_at: '2026-08-28T11:00:33Z'
+  activated_at: '2026-10-12T02:16:51.272296+00:00'
+  requested_model: gpt-5.6-terra
+  requested_effort: medium
+  model_source: .planning/agt/model-routing-v1.lock.json
+  actual_model: unknown
+  runtime_note: Independent CR306 gates066-071 and submission072 completed in locked CLI; latest PASS
+    only ready for user visual review.

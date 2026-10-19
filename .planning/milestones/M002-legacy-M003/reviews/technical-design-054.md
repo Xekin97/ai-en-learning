@@ -1,0 +1,74 @@
+---
+milestone: M003
+review_status: PASS
+decision_id: TRANSITION-M003-055
+suggested_path: .planning/milestones/M002-legacy-M003/reviews/technical-design-054.md
+---
+
+# M003 技术总门禁（control-054）
+
+## 检查结果
+
+- PASS：当前为 `technical-design / gatekeeper-owen`；`backend-ethan` 已注册为 `backend-implementer/base`。
+- PASS：锁定 `consumer-ai-web@1.0.0` 与模型路由 v1 未变。
+- PASS：技术阶段八项必需原件均存在；TECH03 冻结包含 12 个版本锁定源文件，可恢复。
+- PASS：设计输入闭环：`PRODUCT07`、`DB03`、`BE06-R1`（API/AI 基线 BE06）、`UI09-R3`（保留用户接受的 UI09-R2 基线）及 `FE02` 均已提交/接收。
+- PASS：CR303 为 `resolved`，仅代表设计冲突已由 FE02 接收；不代表生产实现通过。
+- PASS：CR302 保持 `product_resolved_downstream_pending`，设计依赖已接收，实施与质量验证仍待完成。
+- PASS：`USER-M003-CONTENT-20261009` 及当前用户 NEXT 授权覆盖本次常规实现接续；不需要重复确认。
+- PASS：旧 `backend_implementation_submission` 保持 `awaiting_review`，本门禁不接受其代码或验证结论。
+
+原始证据：[`TECH03 manifest`](/Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/.planning/milestones/M002-legacy-M003/reviews/evidence/control-054/M003-TECH-03-source-manifest.json)、[`FE02 receipt`](/Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/.planning/milestones/M002-legacy-M003/reviews/evidence/control-054/submission-receipt.json)、[`CR-302`](/Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/.planning/milestones/M002-legacy-M003/changes/CR-302.md)、[`CR-303`](/Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/.planning/milestones/M002-legacy-M003/changes/CR-303.md)。
+
+## 建议目标状态
+
+```yaml
+operation: transition-stage
+decision_id: TRANSITION-M003-055
+from: technical-design
+to: implementation
+active_role: backend-implementer/base
+active_agent: backend-ethan
+status: active
+current_handoff: .planning/milestones/M002-legacy-M003/handoffs/backend-implementation.md
+
+required_artifacts:
+  - .planning/milestones/M002-legacy-M003/implementation/backend-validation.md
+  - .planning/milestones/M002-legacy-M003/implementation/frontend-validation.md
+  - .planning/milestones/M002-legacy-M003/handoffs/backend-implementation.md
+  - .planning/milestones/M002-legacy-M003/handoffs/frontend-implementation.md
+
+allowed_transitions:
+  - verification
+  - product-planning
+  - uiux-design
+  - technical-design
+
+technical_approval:
+  version: M003-TECH-03
+  status: accepted_for_implementation
+  source: .planning/milestones/M002-legacy-M003/reviews/evidence/control-054/M003-TECH-03-source-manifest.json
+  archive: .planning/milestones/M002-legacy-M003/reviews/evidence/control-054/M003-TECH-03-source.tar.gz
+  components:
+    product: M003-PRODUCT-07
+    design: M003-UI-09-R3
+    design_baseline: M003-UI-09-R2
+    database: M003-DB-03
+    backend: M003-BE-06-R1
+    api_ai: M003-BE-06
+    frontend: M003-FE-02
+  scope: design acceptance only; not implementation, runtime, or production acceptance
+
+preserve:
+  technical_approval_history: M003-TECH-02
+  backend_implementation_submission: awaiting_review
+  open_change_requests: [CR-302]
+  resolved_design_record: CR-303
+  retained_open_items: [CR039-L1, CR042-L1, AI-QUALITY-90, W01, QA26-MINIMAX]
+```
+
+## 未决与边界
+
+- 真实模型质量、延迟、容量档位、外部额度、0017 实际应用状态、备份/恢复均未验证，留在实施与 QA 接点。
+- 不部署、不购买、不发起付费模型调用、不迁移数据库、不进入 verification，亦不代用户 UAT。
+- 下一单次动作：由 `backend-ethan` 在 implementation 阶段接收 TECH03 并开展后端实施；后续前端实施与验证仍需独立接交。

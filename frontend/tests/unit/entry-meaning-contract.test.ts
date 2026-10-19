@@ -22,12 +22,16 @@ const target = {
   occurrences: [{ surface: "Vulnerability", start: 0, end: 13 }],
 };
 const generation = {
+  seq: 6,
   run_id: "run-current",
+  final_content_version: 1,
   result: {
     passage: "Vulnerability matters.",
     tags: ["社区"],
     targets: [target],
   },
+  content_outcome: "basic",
+  completion_notice: null,
 };
 const batch = {
   id: "batch-current",

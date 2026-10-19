@@ -1,0 +1,122 @@
+{
+  "version": "M003-UI-08",
+  "checked_at": "2026-10-10T06:02:47.992Z",
+  "scope": "formal design delivery gaps only: copy source, 320 long content/touch/reduced motion, keyboard focus, 768 plan and preset layouts",
+  "reused_evidence": [
+    "design/evidence/ui07-r1/M003-UI-07-R1-browser.json",
+    "reviews/evidence/ui07-r1-root/actual-click.json"
+  ],
+  "checks": [
+    {
+      "name": "formal-preview-and-skip-link",
+      "passed": true,
+      "details": {
+        "demoHidden": true,
+        "skipFocused": true,
+        "mainFocused": true
+      }
+    },
+    {
+      "name": "mobile-touch-targets",
+      "passed": true,
+      "details": {
+        "violations": []
+      }
+    },
+    {
+      "name": "320-long-plan-and-live-draft",
+      "passed": true,
+      "details": {
+        "planCount": 4,
+        "draftLength": 30,
+        "overflow": 0,
+        "longItems": [
+          {
+            "scroll": 256,
+            "client": 256
+          },
+          {
+            "scroll": 256,
+            "client": 256
+          },
+          {
+            "scroll": 256,
+            "client": 256
+          },
+          {
+            "scroll": 256,
+            "client": 256
+          }
+        ],
+        "planVisible": true,
+        "draftVisible": true,
+        "animation": "1e-05s"
+      }
+    },
+    {
+      "name": "reduced-motion",
+      "passed": false,
+      "details": {
+        "animationDuration": "1e-05s"
+      }
+    },
+    {
+      "name": "320-final-long-reading",
+      "passed": true,
+      "details": {
+        "final": true,
+        "plan": false,
+        "save": true,
+        "bodyLength": 556,
+        "overflow": 0
+      }
+    },
+    {
+      "name": "768-plan-regions",
+      "passed": true,
+      "details": {
+        "regions": [
+          "plan-tabs",
+          "plan-existing-settings",
+          "service-settings",
+          "content-service",
+          "change-preview",
+          "plan-actions"
+        ],
+        "overflow": 0,
+        "prototypeText": false
+      }
+    },
+    {
+      "name": "768-preset-regions",
+      "passed": true,
+      "details": {
+        "regions": [
+          "preset-list",
+          "preset-editor",
+          "preset-settings",
+          "preview-mode",
+          "preview-result",
+          "preset-actions"
+        ],
+        "overflow": 0,
+        "prototypeMark": false
+      }
+    },
+    {
+      "name": "copy-literal-key-coverage",
+      "passed": true,
+      "details": {
+        "static": 406,
+        "templates": 20,
+        "missing": []
+      }
+    }
+  ],
+  "console_errors": [],
+  "summary": {
+    "passed": 7,
+    "failed": 1,
+    "pageErrors": 0
+  }
+}

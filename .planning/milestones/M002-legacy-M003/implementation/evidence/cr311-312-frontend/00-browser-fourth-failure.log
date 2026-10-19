@@ -1,0 +1,64 @@
+[WebServer] (node:77434) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:77621) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] 
+[WebServer]  ERROR  (node:77632) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use node --trace-warnings ... to show where the warning was created)
+[WebServer] 
+[WebServer] (node:77828) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:77827) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 4 tests using 1 worker
+
+(node:77942) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  1 [desktop] › tests/e2e/m003-cr311-312.spec.ts:46:1 › 1440 Chinese create preserves nodes through typing, repair, and valid (10.2s)
+(node:78524) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  -  2 [desktop] › tests/e2e/m003-cr311-312.spec.ts:165:1 › 390 English PAGE212 shares live content and preserves preview readiness
+(node:78529) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  -  3 [mobile] › tests/e2e/m003-cr311-312.spec.ts:46:1 › 1440 Chinese create preserves nodes through typing, repair, and valid
+  ✓  4 [mobile] › tests/e2e/m003-cr311-312.spec.ts:165:1 › 390 English PAGE212 shares live content and preserves preview readiness (1.4s)
+
+
+  1) [desktop] › tests/e2e/m003-cr311-312.spec.ts:46:1 › 1440 Chinese create preserves nodes through typing, repair, and valid 
+
+    Error: expect(locator).toBeAttached() failed
+
+    Locator: locator('.m003-plan-leave-active')
+    Expected: attached
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeAttached" with timeout 5000ms
+      - waiting for locator('.m003-plan-leave-active')
+
+
+      125 |   await expect(page.locator(".m003-status-copy")).toHaveText("整理短文与释义");
+      126 |   const planLeaving = page.locator(".m003-plan-leave-active");
+    > 127 |   await expect(planLeaving).toBeAttached();
+          |                             ^
+      128 |   expect(
+      129 |     await planLeaving.evaluate(
+      130 |       (node) => getComputedStyle(node).transitionDuration,
+        at /Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/frontend/tests/e2e/m003-cr311-312.spec.ts:127:29
+
+    Error Context: test-results/m003-cr311-312-1440-Chines-24c4b-ugh-typing-repair-and-valid-desktop/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/m003-cr311-312-1440-Chines-24c4b-ugh-typing-repair-and-valid-desktop/trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace test-results/m003-cr311-312-1440-Chines-24c4b-ugh-typing-repair-and-valid-desktop/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [desktop] › tests/e2e/m003-cr311-312.spec.ts:46:1 › 1440 Chinese create preserves nodes through typing, repair, and valid 
+  2 skipped
+  1 passed (25.1s)

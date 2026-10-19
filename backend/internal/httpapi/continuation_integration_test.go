@@ -120,7 +120,7 @@ func TestContinuationHTTPFinalResultAndSingleSettlement(t *testing.T) {
 				return
 			}
 			assertContinuationSettlement(t, f, "valid", true, 1, 2)
-			var preview strings.Builder
+			var preview string
 			var result generationResultDTO
 			event := ""
 			for _, line := range strings.Split(string(raw), "\n") {
@@ -131,14 +131,8 @@ func TestContinuationHTTPFinalResultAndSingleSettlement(t *testing.T) {
 					continue
 				}
 				data := []byte(strings.TrimPrefix(line, "data: "))
-				if event == "passage.delta" {
-					var delta struct {
-						Text string `json:"text"`
-					}
-					if json.Unmarshal(data, &delta) != nil {
-						t.Fatal("delta JSON")
-					}
-					preview.WriteString(delta.Text)
+				if event == "generation.edit" {
+					preview = applyGenerationEdit(t, preview, data)
 				}
 				if event == "generation.validated" {
 					var final struct {
@@ -150,7 +144,7 @@ func TestContinuationHTTPFinalResultAndSingleSettlement(t *testing.T) {
 					result = final.Result
 				}
 			}
-			if strings.Count(string(raw), "event: generation.validated") != 1 || preview.String() != result.Passage || !strings.Contains(result.Passage, "\n\n") || strings.Contains(result.Passage, "(grape)") || len(result.Targets) != 2 || result.Targets[0].EntryMeaning != original.Targets[0].EntryMeaning || len(result.Targets[0].HintBlanks) != 2 || len(result.Targets[1].Occurrences) != 2 || result.Tags[0] != "harvest" {
+			if strings.Count(string(raw), "event: generation.validated") != 1 || preview != result.Passage || !strings.Contains(result.Passage, "\n\n") || strings.Contains(result.Passage, "(grape)") || len(result.Targets) != 2 || result.Targets[0].EntryMeaning != original.Targets[0].EntryMeaning || len(result.Targets[0].HintBlanks) != 2 || len(result.Targets[1].Occurrences) != 2 || result.Tags[0] != "harvest" {
 				t.Fatal("public stream/resources/positions changed")
 			}
 		})
@@ -236,7 +230,7 @@ func TestCorrectionsHTTPMixedModesPreservePreviewAndSingleSettlement(t *testing.
 			if err != nil || response.StatusCode != 200 {
 				t.Fatalf("stream: %v", err)
 			}
-			var preview strings.Builder
+			var preview string
 			var result generationResultDTO
 			event := ""
 			for _, line := range strings.Split(string(raw), "\n") {
@@ -247,12 +241,8 @@ func TestCorrectionsHTTPMixedModesPreservePreviewAndSingleSettlement(t *testing.
 					continue
 				}
 				data := []byte(strings.TrimPrefix(line, "data: "))
-				if event == "passage.delta" {
-					var delta struct{ Text string }
-					if json.Unmarshal(data, &delta) != nil {
-						t.Fatal("invalid delta")
-					}
-					preview.WriteString(delta.Text)
+				if event == "generation.edit" {
+					preview = applyGenerationEdit(t, preview, data)
 				}
 				if event == "generation.validated" {
 					var final struct{ Result generationResultDTO }
@@ -262,7 +252,7 @@ func TestCorrectionsHTTPMixedModesPreservePreviewAndSingleSettlement(t *testing.
 					result = final.Result
 				}
 			}
-			if strings.Count(string(raw), "event: generation.started") != 1 || strings.Contains(preview.String(), "Unrequested rewrite") || strings.Contains(preview.String(), "(grape") {
+			if strings.Count(string(raw), "event: generation.started") != 1 || strings.Contains(preview, "Unrequested rewrite") || strings.Contains(preview, "(grape") {
 				t.Fatal("rewritten text, annotations or duplicate start leaked")
 			}
 			if mode == "rewrite_refunded" {
@@ -277,7 +267,7 @@ func TestCorrectionsHTTPMixedModesPreservePreviewAndSingleSettlement(t *testing.
 				calls = 2
 			}
 			assertContinuationSettlement(t, f, "valid", true, 1, calls)
-			if strings.Count(string(raw), "event: generation.validated") != 1 || strings.Contains(string(raw), "generation.failed") || result.Passage != preview.String() || len(result.Targets) != 2 {
+			if strings.Count(string(raw), "event: generation.validated") != 1 || strings.Contains(string(raw), "generation.failed") || result.Passage != preview || len(result.Targets) != 2 {
 				t.Fatal("public preview/final/terminal contract changed")
 			}
 			for i, target := range result.Targets {
@@ -296,6 +286,27 @@ func TestCorrectionsHTTPMixedModesPreservePreviewAndSingleSettlement(t *testing.
 			}
 		})
 	}
+}
+
+func applyGenerationEdit(t *testing.T, current string, data []byte) string {
+	t.Helper()
+	var edit struct {
+		At          int    `json:"at"`
+		DeleteCount int    `json:"delete_count"`
+		Insert      string `json:"insert"`
+	}
+	if err := json.Unmarshal(data, &edit); err != nil {
+		t.Fatal("invalid generation.edit", err)
+	}
+	runes := []rune(current)
+	if edit.At < 0 || edit.DeleteCount < 0 || edit.At+edit.DeleteCount > len(runes) {
+		t.Fatalf("invalid generation.edit splice: %+v over %d code points", edit, len(runes))
+	}
+	next := make([]rune, 0, len(runes)-edit.DeleteCount+len([]rune(edit.Insert)))
+	next = append(next, runes[:edit.At]...)
+	next = append(next, []rune(edit.Insert)...)
+	next = append(next, runes[edit.At+edit.DeleteCount:]...)
+	return string(next)
 }
 
 func TestContinuationHTTPCancelAndDisconnectDuringCorrections(t *testing.T) {

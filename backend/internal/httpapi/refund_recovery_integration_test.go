@@ -94,6 +94,7 @@ func TestRefundRecoveryRespectsWinningTerminal(t *testing.T) {
 					t.Fatal(err)
 				}
 			case "valid":
+				recordSuccessfulGenerationFacts(t, ctx, api, run)
 				if err := api.generation.CompleteValid(ctx, run, cr039Snapshot(t)); err != nil {
 					t.Fatal(err)
 				}

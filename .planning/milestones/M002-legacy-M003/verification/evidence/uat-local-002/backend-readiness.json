@@ -1,0 +1,171 @@
+{
+  "result": "PASS",
+  "prepared_at": "2026-10-12T10:13:13.925437+00:00",
+  "authorization": "USER-M003-UAT-PREPARE-20261012",
+  "scope": "Local UAT preparation only; no production code change, no old database migration, no real provider call.",
+  "runtime": {
+    "api_origin": "http://127.0.0.1:54873",
+    "frontend_origin": "http://127.0.0.1:3014",
+    "postgres": "127.0.0.1:54872",
+    "metrics": "127.0.0.1:54874",
+    "synthetic_provider": "127.0.0.1:54875",
+    "database_initialization": "new empty PostgreSQL 18 database initialized with current schema; no old database migration or backfill",
+    "status": {
+      "result": "ready",
+      "processes": {
+        "backend": {
+          "pid": 89188,
+          "alive": true,
+          "port_open": true
+        },
+        "provider": {
+          "pid": 89187,
+          "alive": true,
+          "port_open": true
+        }
+      },
+      "postgres_port_open": true,
+      "metrics_port_open": true,
+      "api_origin": "http://127.0.0.1:54873",
+      "frontend_origin": "http://127.0.0.1:3014",
+      "database_origin": "127.0.0.1:54872",
+      "provider_origin": "127.0.0.1:54875"
+    }
+  },
+  "credentials": {
+    "path": "/tmp/wordweave-m003-uat-local-002/private-env.json",
+    "mode": "0600",
+    "fields": [
+      "ADMIN_USERNAME",
+      "ADMIN_PASSWORD",
+      "BASIC_USERNAME",
+      "BASIC_PASSWORD",
+      "PRO_USERNAME",
+      "PRO_PASSWORD"
+    ],
+    "login_method": "normal browser username/password; no mail, magic code, or injected cookie"
+  },
+  "roles": {
+    "visitor": {
+      "login": "anonymous",
+      "effective_plan": "visitor",
+      "content_repair_limit": 0,
+      "real_model_visible": true,
+      "synthetic_model_count": 6
+    },
+    "basic": {
+      "login": "password",
+      "effective_plan": "basic",
+      "content_repair_limit": 0,
+      "real_model_visible": true,
+      "synthetic_model_count": 6
+    },
+    "pro": {
+      "login": "password",
+      "effective_plan": "pro",
+      "content_repair_limit": 1,
+      "real_model_visible": true,
+      "synthetic_model_count": 6
+    }
+  },
+  "models": [
+    {
+      "key": "pass",
+      "id": "01a12f98-eac2-7448-8fa2-71224c837ffc",
+      "display_name": "UAT 合成｜成功",
+      "real_provider": false
+    },
+    {
+      "key": "q02",
+      "id": "01a12f98-eac6-7be9-9163-d27d75be31e4",
+      "display_name": "UAT 合成｜审校故障 Q02",
+      "real_provider": false
+    },
+    {
+      "key": "repair-mixed",
+      "id": "01a12f98-eaca-786e-8527-2fc72b51c34c",
+      "display_name": "UAT 合成｜两轮返修",
+      "real_provider": false
+    },
+    {
+      "key": "blocked",
+      "id": "01a12f98-eacd-7c2d-afb7-dd0f84cd4157",
+      "display_name": "UAT 合成｜可取消等待",
+      "real_provider": false
+    },
+    {
+      "key": "fenced-plan",
+      "id": "01a12f98-ead0-7a6d-bd54-78df8fecaa24",
+      "display_name": "UAT 合成｜规划格式失败",
+      "real_provider": false
+    },
+    {
+      "key": "snapshot",
+      "id": "01a12f98-ead3-764a-822a-0c003a982a63",
+      "display_name": "UAT 合成｜参数快照可编辑",
+      "real_provider": false
+    },
+    {
+      "key": "real-0731",
+      "id": "01a12f99-792d-7104-95b0-26d2b7bfb195",
+      "display_name": "UAT 真实｜DeepSeek V4 Flash 0731",
+      "provider_model_id": "deepseek/deepseek-v4-flash-0731",
+      "output_mode": "json_schema",
+      "custom_parameters": {
+        "reasoning": {
+          "enabled": false
+        }
+      },
+      "real_provider": true
+    }
+  ],
+  "snapshot_editable_model_id": "01a12f98-ead3-764a-822a-0c003a982a63",
+  "initial_plan_configuration": {
+    "visitor": {
+      "content_review_enabled": false,
+      "content_repair_limit": 0
+    },
+    "basic": {
+      "content_review_enabled": false,
+      "content_repair_limit": 0
+    },
+    "pro": {
+      "content_review_enabled": true,
+      "content_repair_limit": 1
+    },
+    "plus": {
+      "content_review_enabled": true,
+      "content_repair_limit": 1
+    }
+  },
+  "sample": {
+    "entries": [
+      "machine",
+      "preclude",
+      "interim",
+      "juvenile",
+      "retroactive"
+    ],
+    "meaning_language": "zh",
+    "scenario": "story",
+    "length": "short"
+  },
+  "zero_call_proof": {
+    "generation_runs": 0,
+    "ai_call_usage_rows": 0,
+    "synthetic_provider_log_lines": 0,
+    "real_probe_calls": 0
+  },
+  "schema": {
+    "ai_models.custom_parameters": "true",
+    "generation_runs.model_request_parameters_snapshot": "true"
+  },
+  "binary_sha256": "9c0d33500a128a04cb2824591b8a7374cadf4babdc9213b4098e83d26fba233f",
+  "control": {
+    "start": "/tmp/wordweave-m003-uat-local-002/start",
+    "stop": "/tmp/wordweave-m003-uat-local-002/stop",
+    "status": "/tmp/wordweave-m003-uat-local-002/status",
+    "ownership": "Only 54872-54875; frontend 3014 belongs to QA; old UAT is never managed."
+  },
+  "persistence": "Keep running for user UAT; do not auto-clean."
+}

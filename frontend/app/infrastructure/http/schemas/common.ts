@@ -67,7 +67,7 @@ export const problemSchema = z.strictObject({
   field_errors: z
     .array(
       z.strictObject({
-        field: nonEmptyStringSchema,
+        field: z.string(),
         code: nonEmptyStringSchema,
       }),
     )

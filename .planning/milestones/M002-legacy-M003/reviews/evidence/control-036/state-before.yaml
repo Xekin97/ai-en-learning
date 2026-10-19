@@ -1,0 +1,303 @@
+schema_version: 1
+profile: consumer-ai-web@1.0.0
+agt_revision: b5badf88cd7194400c3d4d0e9395e7c98490dc26
+retained_open_items:
+- id: CR039-L1
+  status: open
+  source: .planning/milestones/M001/changes/CR-039.md#retained-limitations
+- id: CR042-L1
+  status: open
+  source: .planning/milestones/M001/verification/CR-042-generation-evidence.md#retained-limitations
+- id: AI-QUALITY-90
+  status: unverified
+  source: .planning/milestones/M001/verification/ai-evaluation.md
+- id: W01
+  status: unverified
+  source: .planning/milestones/M002/verification/report.md#保留事项
+- id: QA26-MINIMAX
+  status: open
+  source: .planning/milestones/M002/verification/report.md#保留事项
+compatibility_policy:
+  decision_id: USER-COMPAT-001
+  record: .planning/milestones/M001/reviews/first-release-compatibility-policy.md
+  scope: Project-wide standing rule; M001 is the first release under development
+claim_deletion_policy:
+  decision_id: USER-CLAIM-DELETE-001
+  record: .planning/milestones/M001/reviews/claimed-batch-delete-retention-exception.md
+  scope: Explicit owner deletion of a saved batch removes its associated consumed claim in the same transaction
+generation_quality_target:
+  decision_id: USER-GENERATION-QUALITY-129
+  confirmed_success_rate_minimum: 0.9
+  status: unverified
+  current_evidence: .planning/milestones/M001/verification/ai-evaluation.md
+  live_model_batch_authorized: false
+model_routing:
+  status: enabled
+  lock: .planning/agt/model-routing-v1.lock.json
+  adoption: .planning/agt/model-routing-adoption-001.md
+  policy: codex-balanced@1.0.0
+milestone: M003
+stage: uiux-design
+active_role: uiux/base
+active_agent: designer-tony
+status: active
+required_artifacts:
+- .planning/milestones/M003/design/theme.css
+- .planning/milestones/M003/design/prototype/index.html
+- .planning/milestones/M003/design/interactions.md
+- .planning/milestones/M003/design/responsive-accessibility.md
+- .planning/milestones/M003/handoffs/uiux.md
+pending_user_decisions: []
+open_change_requests:
+- CR-302
+current_handoff: .planning/milestones/M003/handoffs/uiux.md
+previous_milestone:
+  id: M002
+  status: complete
+  completion_decision: TRANSITION-M002-123
+  handoff: .planning/milestones/M002/handoffs/verification.md
+  state_snapshot: .planning/milestones/M003/reviews/evidence/start/m002-state.yaml
+authorization_refs:
+- id: USER-M003-Q3-02-A
+  scope: 共同规划作为生成输入，增强一次固定编辑且不占内容返修N；按后台设计先行接续
+  source: .planning/milestones/M003/reviews/requirements-feedback.md
+- id: USER-M003-RESEARCH-ALIGN
+  scope: 依据短文质量独立调研复核 M003 产品技术偏离，形成受影响范围与建议
+  source: .planning/milestones/M003/reviews/requirements-feedback.md
+- id: USER-M003-LIVE-TEXT
+  scope: 后台先修订正文/修订稿真实增量流，再更新完整原型；不突出审稿或轮次
+  source: .planning/milestones/M003/reviews/requirements-feedback.md
+- id: USER-M003-STREAM-FIRST
+  scope: 后台架构先设计生成流/流式结构，再据此更新原型；用户侧不突出审稿返修、不展示次数
+  source: .planning/milestones/M003/reviews/requirements-feedback.md
+- id: USER-M003-AGT-FLOW-20261010
+  scope: 按AGT文档启用独立控制检查及需求/设计接续，保留用户A的完整页面原型先评审要求
+  source: .planning/milestones/M003/reviews/evidence/control-014/task.json
+- id: USER-M003-UI-REVIEW-A
+  scope: 补齐现有完整页面可交互设计，先展示给用户评审再实施前端
+  source: .planning/milestones/M003/reviews/requirements-feedback.md
+- id: USER-M003-Q03-RANGE99
+  scope: 付费计划内容返修上限0～99；返修流程执行测试到2次即可，配置边界独立核对
+  source: .planning/milestones/M003/reviews/requirements-feedback.md
+- id: USER-M003-Q02-A
+  scope: 内容审校技术故障且已有基础校验有效稿时，保留最近有效稿、提示审校未完成，仍计一次生成
+  source: .planning/milestones/M003/reviews/requirements-feedback.md
+- id: USER-M003-Q01-B
+  scope: 各付费计划可分别配置内容返修上限，初始均为一次；具体有界范围待产品和后端设计反馈
+  source: .planning/milestones/M003/reviews/requirements-feedback.md
+- id: USER-M003-CONTENT-20261009
+  scope: Confirmed content-quality and plan-benefit scope; local product-to-development workflow; excludes
+    user UAT, deployment and new live-provider spending
+  source: .planning/milestones/M003/reviews/start.md
+- id: USER-M003-TWO-REPAIR-TYPES
+  scope: 明确区分基础漏词/格式纠错与内容审稿返修的配置说明；不据此扩大基础预算为后台可编辑
+  source: .planning/milestones/M003/reviews/requirements-feedback.md
+allowed_transitions:
+- technical-design
+- product-planning
+last_transition:
+  milestone: M003
+  timestamp: '2026-10-10T04:48:24.029865+00:00'
+  operation: recover-or-rollback
+  from: technical-design
+  to: uiux-design
+  previous_role: gatekeeper
+  previous_agent: gatekeeper-owen
+  active_role: uiux/base
+  active_agent: designer-tony
+  authorized_by: USER-M003-Q3-02-A
+  checked_by: gatekeeper-owen
+  recorded_by: root
+  decision_id: TRANSITION-M003-035
+  evidence: .planning/milestones/M003/reviews/research-alignment-ui-034.md
+  scope: BE05 and DB03 accepted only as UI07 prototype input; user visual review before FE or business
+    implementation
+context_entries:
+  current_handoff: .planning/milestones/M003/handoffs/uiux.md
+  task_index: .planning/milestones/M003/design/interactions.md
+  constraints_index: .planning/milestones/M003/product/overview.md
+  locked_profile: .planning/milestones/M003/reviews/evidence/start/locked-profile.yaml
+  stage_review: .planning/milestones/M003/reviews/research-alignment-ui-034.md
+  latest_backend_submission: .planning/milestones/M003/handoffs/backend-architecture.md
+  requirement_feedback: .planning/milestones/M003/reviews/requirements-feedback.md
+  design_feedback: .planning/milestones/M003/reviews/requirements-feedback.md
+  backend_implementation_submission: .planning/milestones/M003/handoffs/backend-implementation.md
+  research_alignment: .planning/milestones/M003/changes/CR-302.md
+  latest_database_submission: .planning/milestones/M003/handoffs/database.md
+  latest_design_submission: .planning/milestones/M003/handoffs/uiux.md
+product_approval:
+  version: M003-PRODUCT-07
+  status: accepted_confirmed_A_scope_for_design
+  source: .planning/milestones/M003/reviews/research-alignment-backend-030.md
+  archive: .planning/milestones/M003/reviews/evidence/control-030/M003-PRODUCT-07-source.tar.gz
+  previous_frozen_approval:
+    version: M003-PRODUCT-05
+    status: reopened_for_research_baseline_alignment
+    source: .planning/milestones/M003/reviews/live-text-ui-026.md
+    archive: .planning/milestones/M003/reviews/evidence/control-026/M003-PRODUCT-05-source.tar.gz
+    previous_frozen_approval:
+      version: M003-PRODUCT-04
+      status: reopened_for_live_text_owner_sync
+      source: .planning/milestones/M003/reviews/stream-ui-handoff-020.md
+      archive: .planning/milestones/M003/reviews/evidence/control-020/M003-PRODUCT-04-source.tar.gz
+      previous_frozen_approval:
+        version: M003-PRODUCT-03
+        status: reopened_for_stream_first_owner_sync
+        source: .planning/milestones/M003/reviews/product-revision-006.md
+        archive: .planning/milestones/M003/reviews/evidence/product-006/artifacts.tar.gz
+    reopened_by: USER-M003-RESEARCH-ALIGN
+design_approval:
+  version: M003-UI-03
+  status: reopened_for_full_page_design
+  source: .planning/milestones/M003/reviews/ui-recheck-011.md
+  archive: .planning/milestones/M003/reviews/evidence/design-011/artifacts.tar.gz
+  user_visual_review: pending
+  pending_version: M003-UI-07
+database_approval:
+  version: M003-DB-02
+  status: reopened_for_BE05_research_alignment
+  source: .planning/milestones/M003/reviews/database-revision-008.md
+  archive: .planning/milestones/M003/reviews/evidence/database-008/artifacts.tar.gz
+product_submission:
+  version: M003-PRODUCT-07
+  status: accepted_confirmed_A_scope_for_design
+  source: .planning/milestones/M003/handoffs/product.md
+  archive: .planning/milestones/M003/reviews/evidence/control-030/M003-PRODUCT-07-source.tar.gz
+  manifest: .planning/milestones/M003/reviews/evidence/control-030/M003-PRODUCT-07-source-manifest.json
+  open_decisions: []
+  change_request: CR-302
+backend_approval:
+  version: M003-BE-02
+  status: reopened_for_stream_first_redesign
+  source: .planning/milestones/M003/reviews/backend-revision-009.md
+  archive: .planning/milestones/M003/reviews/evidence/backend-009/artifacts.tar.gz
+technical_approval:
+  version: M003-TECH-02
+  status: reopened_for_backend_stream_first_redesign
+  source: .planning/milestones/M003/reviews/technical-design-012.md
+  archive: .planning/milestones/M003/reviews/evidence/technical-012/artifacts.tar.gz
+  components:
+    database: M003-DB-02
+    backend: M003-BE-02
+    frontend: M003-FE-01
+  frontend_design_dependency: FE01 and pending implementation require BE05, DB03 and user reviewed UI07
+    alignment
+  research_alignment: Generation order, prompt contracts, usage budgets and pre-draft projection require
+    reassessment before implementation
+backend_implementation_submission:
+  status: awaiting_review
+  source: .planning/milestones/M003/handoffs/backend-implementation.md
+  validation: .planning/milestones/M003/implementation/backend-validation.md
+  review_scope: Developer evidence submitted; partial items and independent QA outstanding
+  design_dependency: Existing submission is preserved; alignment to revised stream contract required before
+    acceptance
+  research_alignment: Preserved pending code; no acceptance or further implementation until generation
+    baseline is resolved
+design_submission:
+  version: M003-UI-07
+  status: awaiting_user_review
+  source: .planning/milestones/M003/handoffs/uiux.md
+  archive: .planning/milestones/M003/design/evidence/ui07/M003-UI-07-source.tar.gz
+  manifest: .planning/milestones/M003/design/evidence/ui07/M003-UI-07-source-manifest.json
+  validation: .planning/milestones/M003/design/evidence/ui07/M003-UI-07-browser.json
+  root_receipt: .planning/milestones/M003/reviews/evidence/ui07-root/submission-receipt.json
+  submitted_at: '2026-10-10T04:59:19.542926+00:00'
+  scope: Shared real planning projection then continuous draft/fixed edit/conditional rewrite, complete
+    create/plans/presets. User visual review pending; no stage transition or FE/business implementation
+    approval.
+  addressed_feedback:
+  - USER-M003-Q3-02-A
+  - USER-M003-RESEARCH-ALIGN
+  - USER-M003-LIVE-TEXT
+backend_submission:
+  version: M003-BE-05
+  status: accepted_for_prototype_input
+  source: .planning/milestones/M003/handoffs/backend-architecture.md
+  archive: .planning/milestones/M003/reviews/evidence/control-032/M003-BE-05-source.tar.gz
+  manifest: .planning/milestones/M003/reviews/evidence/control-032/M003-BE-05-source-manifest.json
+  validation: .planning/milestones/M003/technical/evidence/stream-v5-check.json
+  scope: Shared Plan to writer and enhanced fixed edit, v5 streaming; design only, full technical approval
+    pending
+design_work:
+  version: M003-UI-07
+  status: submitted_awaiting_user_review
+  source_backend: M003-BE-05
+  source_product: M003-PRODUCT-07
+  scope: Show actual planning products then live drafts/edits after BE contract; user visual review before
+    FE implementation
+  source_database: M003-DB-03
+previous_design_submission:
+  version: M003-UI-06
+  status: dependent_on_research_alignment
+  source: .planning/milestones/M003/handoffs/uiux.md
+  archive: .planning/milestones/M003/design/evidence/ui06/M003-UI-06-source.tar.gz
+  manifest: .planning/milestones/M003/design/evidence/ui06/M003-UI-06-source-manifest.json
+  validation: .planning/milestones/M003/design/evidence/ui06/M003-UI-06-browser.json
+  root_receipt: .planning/milestones/M003/reviews/evidence/ui06-root/submission-receipt.json
+  submitted_at: '2026-10-10T03:43:14.597261+00:00'
+  scope: Continuous draft and rewrite edits with recovery, full pages, and bounded prototype playback;
+    awaiting user visual review. No stage transition, technical approval or business implementation acceptance.
+  addressed_feedback:
+  - USER-M003-LIVE-TEXT
+  - USER-M003-EDIT-OPS
+  feedback: USER-M003-RESEARCH-ALIGN
+  previous_frozen_submission:
+    version: M003-UI-05-R1
+    status: revision_requested
+    source: .planning/milestones/M003/handoffs/uiux.md
+    archive: .planning/milestones/M003/design/evidence/ui05-r1/M003-UI-05-R1-source.tar.gz
+    manifest: .planning/milestones/M003/design/evidence/ui05-r1/M003-UI-05-R1-source-manifest.json
+    validation: .planning/milestones/M003/design/evidence/ui05-r1/M003-UI-05-R1-browser.json
+    submitted_at: '2026-10-10T03:08:05.561781+00:00'
+    scope: Normal Generate click automatically replays BE03 wire with cancellation isolation; design review
+      pending, no stage transition or implementation approval.
+    addressed_feedback: USER-M003-AUTOPLAY
+    feedback: USER-M003-LIVE-TEXT
+    previous_frozen_submission:
+      version: M003-UI-05
+      status: revision_requested
+      archive: .planning/milestones/M003/design/evidence/ui05/M003-UI-05-source.tar.gz
+      manifest: .planning/milestones/M003/design/evidence/ui05/M003-UI-05-source-manifest.json
+      feedback: USER-M003-AUTOPLAY
+backend_work:
+  version: M003-BE-05
+  status: submitted
+  scope: Shared planning, real writer input, enhanced fixed edit and independent content repair; precise
+    streams and DBA handoff
+  source_product: M003-PRODUCT-07
+previous_product_submission:
+  version: M003-PRODUCT-06
+  status: decision_received_owner_sync_pending
+  source: .planning/milestones/M003/handoffs/product.md
+  archive: .planning/milestones/M003/reviews/evidence/control-028/M003-PRODUCT-06-source.tar.gz
+  manifest: .planning/milestones/M003/reviews/evidence/control-028/M003-PRODUCT-06-source-manifest.json
+  open_decisions:
+  - Q3-02
+  change_request: CR-302
+  submitted_at: '2026-10-10T03:57:46.298847+00:00'
+  scope: Research baseline drift audit and concrete A/B/C proposals only; no selected pipeline, technical
+    or implementation approval
+  decision_received: USER-M003-Q3-02-A
+previous_backend_submission:
+  version: M003-BE-04
+  status: revision_requested_for_research_alignment
+  source: .planning/milestones/M003/handoffs/backend-architecture.md
+  validation: .planning/milestones/M003/technical/evidence/stream-v4-check.json
+  archive: .planning/milestones/M003/reviews/evidence/control-024/M003-BE-04-source.tar.gz
+  scope: Versioned edit stream design input for product/UI; no runtime/performance/full technical approval
+  research_alignment: BE04 generation mechanism requires product-baseline reassessment; edit transport
+    work remains recoverable
+database_work:
+  version: M003-DB-03
+  status: submitted
+  source_backend: M003-BE-05
+  scope: Six call stages, v5 final version N+2 and fixed edit failure constraints; safe migration plan
+    only
+database_submission:
+  version: M003-DB-03
+  status: accepted_for_prototype_input
+  source: .planning/milestones/M003/handoffs/database.md
+  archive: .planning/milestones/M003/reviews/evidence/control-034/M003-DB-03-source.tar.gz
+  manifest: .planning/milestones/M003/reviews/evidence/control-034/M003-DB-03-source-manifest.json
+  validation: .planning/milestones/M003/technical/evidence/db03-check.json
+  scope: BE05 database dependency design; no SQL/migration/runtime acceptance

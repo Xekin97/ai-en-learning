@@ -1,3 +1,7 @@
+> **M002-QA-CR313-01 当前登记**：配置可移植性独立QA八组通过，状态为 `awaiting_user_review`；[本轮矩阵](config-portability/coverage-matrix.md)、[报告](config-portability/report.md)、[AI范围](config-portability/ai-evaluation.md)、[UAT清单](config-portability/uat.md)、[交接](../handoffs/config-portability-verification.md)。本前缀不改变下方既有记录，不能据此关闭CR313或M002。
+
+> **M002续做索引124**：本里程碑包含原M003全部需求。[较新同类原件](../../M002-legacy-M003/verification/coverage-matrix.md)及其已记录的逐项接收/验证均归M002；旧编号只是历史标识。当前工作与未完成项见[续做索引](../continuation.md)，下方前期记录保留，不能据旧完成态关闭当前M002。
+
 ---
 milestone: M002
 role: quality/base

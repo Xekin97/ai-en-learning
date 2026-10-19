@@ -1,0 +1,74 @@
+{
+  "scope": "Static Vue template structure and existing approved CSS only; independent QA owns runtime motion/focus/terminal retest.",
+  "result": "PASS",
+  "files": {
+    "frontend/app/presentation/components/GenerationWorkspace.vue": {
+      "checks": {
+        "indicator_count": 2,
+        "zones": [
+          "live-draft",
+          "planning-preview"
+        ],
+        "all_aria_hidden": true,
+        "all_have_three_dots": true,
+        "none_in_final_result": true
+      },
+      "indicators": [
+        {
+          "aria_hidden": "true",
+          "ancestor_ids": [
+            "generation-status",
+            "planning-preview"
+          ],
+          "direct_i": 3
+        },
+        {
+          "aria_hidden": "true",
+          "ancestor_ids": [
+            "generation-status",
+            "live-draft"
+          ],
+          "direct_i": 3
+        }
+      ]
+    },
+    "frontend/app/pages/admin/presets.vue": {
+      "checks": {
+        "indicator_count": 2,
+        "zones": [
+          "live-draft",
+          "planning-preview"
+        ],
+        "all_aria_hidden": true,
+        "all_have_three_dots": true,
+        "none_in_final_result": true
+      },
+      "indicators": [
+        {
+          "aria_hidden": "true",
+          "ancestor_ids": [
+            "preview-result",
+            "planning-preview"
+          ],
+          "direct_i": 3
+        },
+        {
+          "aria_hidden": "true",
+          "ancestor_ids": [
+            "preview-result",
+            "live-draft"
+          ],
+          "direct_i": 3
+        }
+      ]
+    }
+  },
+  "existing_css": {
+    "path": "frontend/app/assets/css/theme.css",
+    "sha256": "557cc7a6ea9715f493ed5951700ea2c96b156267d5090373eb4f0cbba3c5edd0",
+    "checks": {
+      "writing_animation_rule_present": true,
+      "reduced_motion_rule_present": true
+    }
+  }
+}

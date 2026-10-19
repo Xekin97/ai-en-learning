@@ -1,0 +1,110 @@
+{
+  "version": "M002-BE-CR313-01",
+  "checked_at": "2026-10-15T10:26:20.250289+00:00",
+  "result": "PASS",
+  "scope": "static documents, links, identifiers and preserved body hashes only",
+  "checks": [
+    {
+      "check": "scoped_metadata",
+      "passed": true,
+      "detail": "All three scoped documents remain awaiting_user_review"
+    },
+    {
+      "check": "acceptance_ids",
+      "passed": true,
+      "detail": "AC-501 through AC-514 present; semantic coverage requires review"
+    },
+    {
+      "check": "receiving_ids",
+      "passed": true,
+      "detail": "All upstream handoff IDs represented"
+    },
+    {
+      "check": "api_ids",
+      "passed": true,
+      "detail": "Five endpoints defined"
+    },
+    {
+      "check": "local_links",
+      "passed": true,
+      "detail": {
+        "checked": 32,
+        "errors": []
+      }
+    },
+    {
+      "check": "canonical_old_body_byte_identity",
+      "passed": true,
+      "detail": [
+        {
+          "path": ".planning/milestones/M002/technical/backend.md",
+          "old_sha256": "af3a490ee02204b521a0107cb5b5f432061d29e4c878192ce21e8ce571e358c3",
+          "preserved_body_sha256": "af3a490ee02204b521a0107cb5b5f432061d29e4c878192ce21e8ce571e358c3",
+          "byte_identical": true
+        },
+        {
+          "path": ".planning/milestones/M002/technical/api/index.md",
+          "old_sha256": "55cd7e4fb09d221dab7c45b33cce002b014218bdf4adcc81b499f7a58215b4eb",
+          "preserved_body_sha256": "55cd7e4fb09d221dab7c45b33cce002b014218bdf4adcc81b499f7a58215b4eb",
+          "byte_identical": true
+        },
+        {
+          "path": ".planning/milestones/M002/handoffs/backend-architecture.md",
+          "old_sha256": "35cef37d9dfafcf2beb7b389fda31264ff5c1664fceda84919e7f7acb5ed0f1c",
+          "preserved_body_sha256": "35cef37d9dfafcf2beb7b389fda31264ff5c1664fceda84919e7f7acb5ed0f1c",
+          "byte_identical": true
+        }
+      ]
+    },
+    {
+      "check": "selected_inputs_unchanged",
+      "passed": true,
+      "detail": {
+        "changed": [],
+        "scope": "selected 51 source/input files; not full repository audit"
+      }
+    }
+  ],
+  "delivery_file_count": 6,
+  "delivery_files": [
+    {
+      "path": ".planning/milestones/M002/technical/config-portability/backend.md",
+      "bytes": 23061,
+      "sha256": "6be5183ee9725458850e4a1e307d1066dc39207720a7f2ac0886ef4b5413e4e5"
+    },
+    {
+      "path": ".planning/milestones/M002/technical/config-portability/api.md",
+      "bytes": 24695,
+      "sha256": "8b0aa1d028b3f267a9fb784dbb5a6ebb42582da889b8e6ff17c6744d4e69d095"
+    },
+    {
+      "path": ".planning/milestones/M002/handoffs/config-portability-backend.md",
+      "bytes": 5831,
+      "sha256": "4c0a857f0c6f9c995e9feec165f5eb02849ed4366a7b28fb5e9cba7b73f4eb56"
+    },
+    {
+      "path": ".planning/milestones/M002/technical/backend.md",
+      "bytes": 42373,
+      "sha256": "7d04a38a52740d920399445b2fb267d5f10f1fc450217749a604f50448a6519e"
+    },
+    {
+      "path": ".planning/milestones/M002/technical/api/index.md",
+      "bytes": 11130,
+      "sha256": "8fd113215ea8a2eeddf3c9b8fea82385d42e6c07fe25e1e5189c5018509ddc75"
+    },
+    {
+      "path": ".planning/milestones/M002/handoffs/backend-architecture.md",
+      "bytes": 998,
+      "sha256": "5bc6c6e2ee653f139126d9b30932b9c53654be3ba4216a455fbbbe504f27c189"
+    }
+  ],
+  "not_executed": [
+    "application tests/build",
+    "DB/schema/migrations/privilege tests",
+    "provider calls",
+    "crypto interop/performance experiment",
+    "concurrency/fault injection",
+    "new-session handoff test"
+  ],
+  "runtime_acceptance": "unverified; no AC pass claimed"
+}

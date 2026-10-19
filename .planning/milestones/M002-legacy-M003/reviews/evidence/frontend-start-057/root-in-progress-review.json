@@ -1,0 +1,68 @@
+{
+  "recorded_at": "2026-10-10T09:22:06.491298+00:00",
+  "status": "closed_in_developer_submission_pending_independent_qa",
+  "owner": "frontend-claire",
+  "findings": [
+    {
+      "id": "ROOT-FE-01",
+      "path": "frontend/app/infrastructure/http/schemas/generation.ts",
+      "finding": "API-302 strict status requires snapshot; retain started/status snapshot and request entry/language for service/version/outcome/Plan consistency. Current status schema rejects real snapshot as unknown.",
+      "status": "addressed_by_owner_with_final_developer_evidence"
+    },
+    {
+      "id": "ROOT-FE-02",
+      "path": "frontend/app/application/generation/reducer.ts",
+      "finding": "FE3-03 requires maintaining code-point length and append fast path; current applyEdit Array.from(streamedText) scans complete document for every token frame.",
+      "status": "addressed_by_owner_with_final_developer_evidence"
+    },
+    {
+      "id": "ROOT-FE-03",
+      "path": "frontend/app/runtime/stores/generation.ts",
+      "finding": "Enforce total 10-second status deadline including in-flight GET/sleeps; settlement_pending normal transport completion must start reconciliation.",
+      "status": "addressed_by_owner_with_final_developer_evidence"
+    },
+    {
+      "id": "ROOT-FE-04",
+      "path": "frontend/app/runtime/stores/generation.ts",
+      "finding": "Preserve authoritative outcome/notice/version with result=null and a result unavailable state; validate status targets against original request; resolve cancel valid/failed ACK through status.",
+      "status": "addressed_by_owner_with_final_developer_evidence"
+    },
+    {
+      "id": "ROOT-FE-05",
+      "path": "frontend/app/infrastructure/http/repositories/repository-support.ts",
+      "finding": "Busy needs actual HTTP503 plus exact body/header; enforce Retry-After without autoPOST; generic503 and missing-start EOF remain acceptance-unknown.",
+      "status": "addressed_by_owner_with_final_developer_evidence"
+    },
+    {
+      "id": "ROOT-FE-06",
+      "path": "frontend/app/infrastructure/http/repositories/api-repository.ts",
+      "finding": "Permit adjacent identical started wire frame without overwriting vault; compare full normalized wire identity/token before mapper dropping fields.",
+      "status": "addressed_by_owner_with_final_developer_evidence"
+    },
+    {
+      "id": "ROOT-FE-07",
+      "path": "frontend/app/infrastructure/http/schemas/generation.ts",
+      "finding": "Use FailureCode enum and failed refund=true; per-snapshot edit V cap; provider insert 2048 codepoints; Plan/retained limits in codepoints rather than UTF16 units.",
+      "status": "addressed_by_owner_with_final_developer_evidence"
+    },
+    {
+      "id": "ROOT-FE-08",
+      "path": "frontend/app/pages/admin/plans.vue",
+      "finding": "Derive enabled/badge from legal raw N including N0; restore last valid positive N on re-enable; invalidate impact on tab/edit and reject late mismatched impact; include content service in remote conflict summary. FE02 section 6 and UI09-R3 interactions.",
+      "status": "addressed_by_owner_with_final_developer_evidence"
+    },
+    {
+      "id": "ROOT-FE-09",
+      "path": "frontend/app/runtime/stores/admin-presets.ts",
+      "finding": "Network reject after preview started must initiate bounded status reconciliation rather than only setting pending; honor available scoped token.",
+      "status": "addressed_by_owner_with_final_developer_evidence"
+    },
+    {
+      "id": "ROOT-FE-10",
+      "path": "frontend/app/pages/admin/presets.vue",
+      "finding": "Initial admin-q02-published.png renders preview mode radio title/description in a cramped shared inline row. Apply approved UI09-R2 two-line descriptions and spacing, then replace final representative evidence while preserving this initial capture.",
+      "status": "addressed_by_owner_with_final_developer_evidence"
+    }
+  ],
+  "final_receipt": ".planning/milestones/M003/reviews/evidence/control-058/submission-receipt.json"
+}

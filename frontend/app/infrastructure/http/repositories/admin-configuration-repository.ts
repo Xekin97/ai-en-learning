@@ -20,6 +20,8 @@ export const groupDraftBody = (input: GroupDraft) => ({
   max_entries: input.maxEntries,
   allowed_lengths: [...input.allowedLengths],
   model_ids: [...input.modelIds],
+  content_review_enabled: input.contentReviewEnabled,
+  content_repair_limit: input.contentRepairLimit,
 });
 export function createAdminConfigurationRepository(
   transport: RawHttpTransport,
@@ -84,6 +86,25 @@ export function createAdminConfigurationRepository(
         mayChangeEffectivePlan: data.may_change_effective_plan,
         losesAllModels: data.loses_all_models,
         revision: data.revision,
+        contentServiceChange: {
+          before: {
+            contentReviewEnabled:
+              data.content_service_change.before.content_review_enabled,
+            contentRepairLimit:
+              data.content_service_change.before.content_repair_limit,
+          },
+          after: {
+            contentReviewEnabled:
+              data.content_service_change.after.content_review_enabled,
+            contentRepairLimit:
+              data.content_service_change.after.content_repair_limit,
+          },
+        },
+        appliesTo: data.applies_to,
+        inFlightPolicy: data.in_flight_policy,
+        usageReset: data.usage_reset,
+        trialDatesChanged: data.trial_dates_changed,
+        warnings: [...data.warnings],
       };
     },
     async previewPriorities(priorities, expectedRevision) {
@@ -103,6 +124,22 @@ export function createAdminConfigurationRepository(
         affectedBaseUsers: data.affected_base_users,
         affectedTrialUsers: data.affected_trial_users,
         revision: data.revision,
+        contentServiceByPlan: data.content_service_by_plan.map((item) => ({
+          code: item.code,
+          contentReviewEnabled: item.content_review_enabled,
+          contentRepairLimit: item.content_repair_limit,
+        })),
+        mayChangeContentService: data.may_change_content_service,
+        appliesTo: data.applies_to,
+        inFlightPolicy: data.in_flight_policy,
+        usageReset: data.usage_reset,
+        trialDatesChanged: data.trial_dates_changed,
+        nativeCorrectionPolicy: {
+          version: data.native_correction_policy.version,
+          scope: data.native_correction_policy.scope,
+          maxCalls: data.native_correction_policy.max_calls,
+          editable: data.native_correction_policy.editable,
+        },
       };
     },
     async savePriorities(priorities, expectedRevision) {
@@ -118,7 +155,9 @@ export function createAdminConfigurationRepository(
           })),
         }),
       );
-      return data.items.map((g) => mapGroupDto(g, data.revision));
+      return data.items.map((g) =>
+        mapGroupDto(g, data.revision, data.native_correction_policy),
+      );
     },
   };
 }

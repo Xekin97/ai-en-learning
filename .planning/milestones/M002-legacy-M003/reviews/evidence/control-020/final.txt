@@ -1,0 +1,42 @@
+门禁结论：**通过**。建议执行单次 `TRANSITION-M003-021`：`product-planning → uiux-design`，激活 `designer-tony` 产出基于 BE03 wire fixture 的 UI05 完整原型。
+
+检查结果：
+
+- 当前控制例外合法：M003 / `product-planning` / `gatekeeper-owen` / active。
+- `product-planning → uiux-design` 为 Profile 1.0 允许迁移；`uiux/base` 是目标阶段合法角色。
+- `designer-tony` 已注册、唯一，名称校验通过。
+- PRODUCT04 六份原件均存在且均标记 `M003-PRODUCT-04`。
+- `BE3-DEP01` 已闭环：撤销用户侧审稿/返修、k/N 强制展示；保留管理端 0–99、两预算、Q02、计次和故障事实。
+- `USER-M003-STREAM-FIRST` 已明确“后台先行、再结合方案更新原型”，无需重复询问同一方向。
+- BE03 的静态检查与 fixture 仅作为 UI 消费输入；**不构成 BE03 技术批准、UI05 批准或实施授权**。
+
+原始依据：[PRODUCT04 交接与 DEP01 闭环](</Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/.planning/milestones/M003/handoffs/product.md:13>)、[BE03 的设计接收合同及 DEP02](</Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/.planning/milestones/M003/handoffs/backend-architecture.md:32>)、[用户 STREAM-FIRST 授权](</Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/.planning/milestones/M003/reviews/requirements-feedback.md:95>)。
+
+宿主应机械写入的目标状态：
+
+```yaml
+decision_id: TRANSITION-M003-021
+operation: transition-stage
+from: product-planning
+to: uiux-design
+active_role: uiux/base
+active_agent: designer-tony
+status: active
+current_handoff: .planning/milestones/M003/handoffs/uiux.md
+required_artifacts:
+  - .planning/milestones/M003/design/theme.css
+  - .planning/milestones/M003/design/prototype/index.html
+  - .planning/milestones/M003/design/interactions.md
+  - .planning/milestones/M003/design/responsive-accessibility.md
+  - .planning/milestones/M003/handoffs/uiux.md
+allowed_transitions: [technical-design, product-planning]
+authorized_by: USER-M003-STREAM-FIRST
+```
+
+UI05 的单次范围：真实加载 `stream-v3` fixture 的 `wire[]` 并按事件归约；不得再用 `repair2`、k/N、审稿轨道、计时器或内部证据伪造进度。保留管理 0–99、两预算和 Q02 可保存且持续提示的语义。
+
+保留不变：BE03 仍为 `submitted_for_prototype_integration`，UI04 仍为 `revision_requested`，FE01 与待审后端实现不接收为通过；冻结产物和 `CR039-L1`、`CR042-L1`、`AI-QUALITY-90`、`W01`、`QA26-MINIMAX` 全部保留。
+
+下一动作：`designer-tony` 只完成 UI05 原型与其专业验证；完成后必须交用户视觉评审，不能直接进入前端或后端实现。
+
+已改路径：无（只读）。宿主可写入：[stream-ui-handoff-020.md](</Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/.planning/milestones/M003/reviews/stream-ui-handoff-020.md>)。

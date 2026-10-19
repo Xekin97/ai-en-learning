@@ -34,7 +34,58 @@ export async function problemFromResponse(response: Response) {
   )
     return contractFailure();
   const parsed = problemSchema.safeParse(await response.json());
-  return parsed.success ? mapProblemDto(parsed.data) : contractFailure();
+  if (!parsed.success) return contractFailure();
+  if (parsed.data.code === "generation_busy") {
+    const context = parsed.data.context;
+    const retry = context?.retry_after_seconds;
+    const keys = context ? Object.keys(context).sort().join(",") : "";
+    if (
+      response.status !== 503 ||
+      parsed.data.status !== 503 ||
+      keys !== "accepted,retry_after_seconds" ||
+      context?.accepted !== false ||
+      !Number.isInteger(retry) ||
+      (retry as number) < 1 ||
+      (retry as number) > 600 ||
+      response.headers.get("retry-after") !== String(retry)
+    )
+      return contractFailure();
+  }
+  if (parsed.data.code === "generation_unavailable" && parsed.data.context) {
+    const context = parsed.data.context;
+    if (
+      response.status !== 503 ||
+      parsed.data.status !== 503 ||
+      Object.keys(context).join(",") !== "accepted" ||
+      context.accepted !== false
+    )
+      return contractFailure();
+  }
+  if (parsed.data.code === "revision_conflict") {
+    const context = parsed.data.context;
+    if (
+      parsed.data.status !== 409 ||
+      Object.keys(context ?? {}).join(",") !== "current_revision" ||
+      typeof context?.current_revision !== "string" ||
+      !context.current_revision
+    )
+      return contractFailure();
+  }
+  if (parsed.data.code === "model_request_rejected") {
+    const context = parsed.data.context;
+    if (
+      parsed.data.status !== 422 ||
+      Object.keys(context ?? {}).join(",") !== "upstream_status" ||
+      (context?.upstream_status !== 400 && context?.upstream_status !== 422)
+    )
+      return contractFailure();
+  }
+  if (
+    parsed.data.code === "request_too_large" &&
+    (response.status !== 413 || parsed.data.status !== 413)
+  )
+    return contractFailure();
+  return mapProblemDto(parsed.data);
 }
 
 export function contractFailure() {

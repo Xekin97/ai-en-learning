@@ -1,0 +1,124 @@
+schema_version: 1
+profile: consumer-ai-web@1.0.0
+agt_revision: b5badf88cd7194400c3d4d0e9395e7c98490dc26
+agents:
+- role: product/to-c
+  kind: specialist
+  display_name: product-maya
+  runtime_name: product_maya_cr306
+  runtime_id: /root/product_maya_cr306
+  status: registered
+  registered_at: '2026-08-28T11:00:33Z'
+  activated_at: '2026-10-12T03:43:52.125606+00:00'
+  requested_model: gpt-6-astra
+  requested_effort: high
+  model_source: .planning/agt/model-routing-v1.lock.json
+  actual_model: unknown
+  runtime_note: Activated for bounded CR-306 product definition under USER-M003-CR306-REPAIR; no code or design
+    implementation.
+- role: uiux/base
+  kind: specialist
+  display_name: designer-tony
+  runtime_name: designer_tony_cr306
+  runtime_id: /root/designer_tony_cr306
+  status: registered
+  registered_at: '2026-08-28T11:00:33Z'
+  activated_at: '2026-10-12T04:01:54.622065+00:00'
+  requested_model: gpt-5.6-sol
+  requested_effort: high
+  model_source: .planning/agt/model-routing-v1.lock.json
+  actual_model: unknown
+  runtime_note: Accepted UI10-R1 visual retained; bounded R1.1 API306 copy/error clarification received by frontend-bob
+    and REVIEW-M003-076; original R1 archive unchanged.
+- role: dba/base
+  kind: specialist
+  display_name: dba-diana
+  runtime_name: dba_diana_cr306
+  runtime_id: /root/dba_diana_cr306
+  status: registered
+  registered_at: '2026-08-28T11:00:33Z'
+  activated_at: '2026-10-12T03:55:47.805726+00:00'
+  requested_model: gpt-6-astra
+  requested_effort: high
+  model_source: .planning/agt/model-routing-v1.lock.json
+  actual_model: unknown
+  runtime_note: CR306-DB bounded design reception; no historical migration or UAT DB changes.
+- role: backend-architect/base
+  kind: specialist
+  display_name: backend-alex
+  runtime_name: backend_alex_cr306
+  runtime_id: /root/backend_alex_cr306
+  status: registered
+  registered_at: '2026-08-28T11:00:33Z'
+  activated_at: '2026-10-12T03:47:12.317449+00:00'
+  requested_model: gpt-6-astra
+  requested_effort: high
+  model_source: .planning/agt/model-routing-v1.lock.json
+  actual_model: unknown
+  runtime_note: Active CR306-BE technical recovery, requested locked gpt-6-astra/high; actual serving unknown.
+- role: frontend-architect/base
+  kind: specialist
+  display_name: frontend-bob
+  runtime_name: frontend_bob_cr306
+  runtime_id: /root/frontend_bob_cr306
+  status: registered
+  registered_at: '2026-08-28T11:00:33Z'
+  activated_at: '2026-10-12T05:43:55.749866+00:00'
+  requested_model: gpt-6-astra
+  requested_effort: high
+  model_source: .planning/agt/model-routing-v1.lock.json
+  actual_model: unknown
+  runtime_note: FE03 accepted with TECH04 at TRANSITION-M003-077; no frontend code implementation yet.
+- role: backend-implementer/base
+  kind: specialist
+  display_name: backend-ethan
+  runtime_name: backend_ethan_cr306
+  runtime_id: /root/backend_ethan_cr306
+  status: registered
+  registered_at: '2026-08-28T11:00:33Z'
+  activated_at: '2026-10-12T06:09:09.727992+00:00'
+  requested_model: gpt-5.6-sol
+  requested_effort: high
+  model_source: .planning/agt/model-routing-v1.lock.json
+  actual_model: unknown
+  runtime_note: CR306 backend received by TRANSITION-M003-078 as frontend implementation input; QA/UAT and real-provider
+    effect unverified.
+- role: frontend-implementer/base
+  kind: specialist
+  display_name: frontend-claire
+  runtime_name: frontend_claire_cr306
+  runtime_id: /root/frontend_claire_cr306
+  status: active
+  registered_at: '2026-08-28T11:00:33Z'
+  activated_at: '2026-10-12T07:41:11.362303+00:00'
+  requested_model: gpt-5.6-sol
+  requested_effort: high
+  model_source: .planning/agt/model-routing-v1.lock.json
+  actual_model: unknown
+  runtime_note: 'TRANSITION-M003-081: bounded CR307 focus lifecycle repair only; no layout/API/backend changes.'
+- role: quality/base
+  kind: specialist
+  display_name: qa-quinn
+  runtime_name: qa_quinn_cr306
+  runtime_id: /root/qa_quinn_cr306
+  status: registered
+  registered_at: '2026-08-28T11:00:33Z'
+  activated_at: '2026-10-12T07:19:19.419095+00:00'
+  runtime_note: CR306 independent QA awaiting CR307 owner repair; originals preserved; real requests remain zero.
+  requested_model: gpt-5.6-sol
+  requested_effort: high
+  actual_model: unknown
+  model_source: .planning/agt/model-routing-v1.lock.json
+- role: gatekeeper
+  kind: control
+  display_name: gatekeeper-owen
+  runtime_name: gatekeeper_owen_cli
+  runtime_id: 01a12e25-a4f5-7ef3-a37d-b3c1b9aebe58
+  status: registered
+  registered_at: '2026-08-28T11:00:33Z'
+  activated_at: '2026-10-12T02:16:51.272296+00:00'
+  requested_model: gpt-5.6-terra
+  requested_effort: medium
+  model_source: .planning/agt/model-routing-v1.lock.json
+  actual_model: unknown
+  runtime_note: TRANSITION-M003-081 PASS; bounded CR307 frontend repair active, QA return gate required.

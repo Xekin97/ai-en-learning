@@ -1,0 +1,147 @@
+{
+  "version": "M003-UI-14",
+  "mode": "requirements acceptance for design prototype/formal design",
+  "provider_calls": 0,
+  "checks": [
+    {
+      "name": "prototype-is-independent-interaction-lab",
+      "passed": true,
+      "details": {
+        "title": "单词发音的状态与中断",
+        "rows": 3,
+        "formalLink": 1,
+        "fullProductNav": 0
+      }
+    },
+    {
+      "name": "single-playback-and-late-result-cancel",
+      "passed": true,
+      "details": {
+        "firstState": "idle",
+        "firstStatus": "已停止上一条发音。",
+        "secondState": "preparing",
+        "secondAfter": "playing",
+        "secondStatus": "词典录音不可用，已改用浏览器朗读。"
+      }
+    },
+    {
+      "name": "keyboard-and-no-silent-accent-substitution",
+      "passed": true,
+      "details": {
+        "expanded": "false",
+        "focused": true,
+        "explicitAlternative": 1
+      }
+    },
+    {
+      "name": "gesture-failure-has-explicit-second-click",
+      "passed": true,
+      "details": {
+        "explicitAgain": 1,
+        "state": "idle",
+        "after": "playing"
+      }
+    },
+    {
+      "name": "unavailable-reaches-clear-retryable-terminal-state",
+      "passed": true,
+      "details": {
+        "error": "error",
+        "retry": 1,
+        "text": "Pronunciation for wander is temporarily unavailable.\nRetry pronunciation"
+      }
+    },
+    {
+      "name": "PAGE401-separate-play-add-and-collapsed-demo",
+      "passed": true,
+      "details": {
+        "region": 1,
+        "selectedControls": 6,
+        "candidates": 4,
+        "candidatePlay": 4,
+        "candidateAdd": 4,
+        "settingsSelects": 4,
+        "languageSelect": 1,
+        "idleWorkspace": 1,
+        "overflow": 0,
+        "demoOpen": 0
+      }
+    },
+    {
+      "name": "PAGE402-plan-full-page-and-current-word-play",
+      "passed": true,
+      "details": {
+        "region": 1,
+        "entries": 6,
+        "playing": "playing",
+        "pickerVisible": 1,
+        "overflow": 0
+      }
+    },
+    {
+      "name": "PAGE402-result-mobile-fallback-and-touch",
+      "passed": true,
+      "details": {
+        "region": 1,
+        "entries": 6,
+        "source": "Dictionary audio was unavailable. Using a browser voice.",
+        "minTarget": 44,
+        "menuWordClipped": false,
+        "plainWordClipped": false,
+        "overflow": 0
+      }
+    },
+    {
+      "name": "PAGE403-card-title-controls-without-body-popup",
+      "passed": true,
+      "details": {
+        "region": 1,
+        "cards": 6,
+        "controls": 6,
+        "bodyMarks": 6,
+        "menu": 1,
+        "overflow": 0
+      }
+    },
+    {
+      "name": "reduced-motion-preserves-state-without-pulse",
+      "passed": true,
+      "details": {
+        "state": "playing",
+        "animation": "none",
+        "overflow": 0
+      }
+    },
+    {
+      "name": "stable-locators-have-unique-ids",
+      "passed": true,
+      "details": {
+        "total": 18,
+        "unique": 18,
+        "duplicates": []
+      }
+    },
+    {
+      "name": "browser-console",
+      "passed": true,
+      "details": {
+        "console_errors": [],
+        "page_errors": []
+      }
+    }
+  ],
+  "screenshots": [
+    "01-prototype-switch-fallback-desktop-zh.png",
+    "02-formal-picker-desktop-zh.png",
+    "03-formal-plan-playing-desktop-zh.png",
+    "04-formal-result-fallback-mobile-en.png",
+    "05-formal-library-accent-menu-desktop-zh.png"
+  ],
+  "console_errors": [],
+  "page_errors": [],
+  "summary": {
+    "total": 12,
+    "passed": 12,
+    "failed": 0
+  }
+}

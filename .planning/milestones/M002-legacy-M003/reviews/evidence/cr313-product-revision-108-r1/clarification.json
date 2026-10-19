@@ -1,0 +1,10 @@
+{
+  "id": "USER-M003-CR313-FIELD-REQUIREMENTS-20261015",
+  "received_at": "2026-10-15T07:46:48.031763+00:00",
+  "user_text": "1. 不包含则导入失败，需要明确哪些必填，哪些非必填\n2. A",
+  "question_1": "导入文件不包含 API Key 时，已有密钥怎么处理？ A：同一连接且服务地址、协议未变时保留；其他情况重新填写。 B：清空所选模型类别的全部密钥，导入后重新填写。",
+  "question_1_decision": "Neither former choice: import fails if API Key is absent; define required versus optional fields explicitly. No retention/clearing of target credentials as a substitute for supplied import fields.",
+  "question_2": "整类替换要移除的配置，仍被其他类别引用时怎么办？ A：阻止整次导入，列出依赖；处理引用后再重试。 B：预览确认后按现有模型删除规则联动处理引用。",
+  "question_2_decision": "A: block whole import when removal would break cross-category references; no cascade to unselected categories.",
+  "scope": "Product clarification only, no stage approval or source implementation."
+}

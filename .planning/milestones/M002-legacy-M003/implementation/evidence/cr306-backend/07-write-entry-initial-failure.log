@@ -1,0 +1,28 @@
+2026/10/12 14:32:52 INFO http_request request_id=req_LuX77jqHLmn-UAg8SiMxCA method=GET route=/api/v1/bootstrap status=200 duration_ms=3
+2026/10/12 14:32:52 INFO http_request request_id=req_B8I8V0sIPB3tpxhk5M49rQ method=GET route=/api/v1/admin/* status=401 duration_ms=2
+2026/10/12 14:32:52 INFO http_request request_id=req_BEWtXAGUSki9AJ8RjmExow method=POST route=/api/v1/auth/login status=200 duration_ms=92
+2026/10/12 14:32:52 INFO http_request request_id=req_7vDLcFX4w0SNSmpz6N52Gw method=GET route=/api/v1/admin/groups status=200 duration_ms=10
+2026/10/12 14:32:52 INFO http_request request_id=req_bipEFQjCJHg5P1N-96qI-g method=POST route=/api/v1/admin/models status=422 duration_ms=1
+2026/10/12 14:32:52 INFO http_request request_id=req_yj7pAwRa8YEItNIM83kUMA method=POST route=/api/v1/admin/models status=201 duration_ms=10
+2026/10/12 14:32:52 INFO http_request request_id=req_om5ZE8twbfN4ZldSz3wVSg method=GET route=/api/v1/admin/groups status=200 duration_ms=6
+2026/10/12 14:32:52 INFO http_request request_id=req_sw6kf5zxk4bg2oVpweEZCA method=POST route=/api/v1/admin/models/batch status=422 duration_ms=0
+2026/10/12 14:32:52 INFO http_request request_id=req_T1zLT-dRUyaBa1XvkXXaVQ method=POST route=/api/v1/admin/models/batch status=201 duration_ms=6
+2026/10/12 14:32:52 INFO http_request request_id=req_VtRe0D2xM9DgfxeKFqFYUw method=GET route=/api/v1/admin/groups status=200 duration_ms=7
+2026/10/12 14:32:52 INFO http_request request_id=req_J7bMiKYGiiQvIzkJ0YhSdQ method=POST route=/api/v1/admin/models/batch status=409 duration_ms=3
+2026/10/12 14:32:52 INFO http_request request_id=req_NaZB4NgbZaHTp7DeboT1pQ method=GET route=/api/v1/admin/model-connections status=200 duration_ms=1
+2026/10/12 14:32:52 INFO http_request request_id=req_kUwZN1Be_AGCm_7QKmJReA method=GET route=/api/v1/admin/* status=404 duration_ms=0
+2026/10/12 14:32:52 INFO http_request request_id=req_CFdGGV6pbuPgw4E_oNBHhw method=GET route=/api/v1/admin/groups status=200 duration_ms=7
+2026/10/12 14:32:52 INFO http_request request_id=req_IljNYVaydPkDATsxbSRd0g method=POST route=/api/v1/admin/model-providers status=403 duration_ms=0
+2026/10/12 14:32:52 INFO http_request request_id=req_spwF5kZm3GaaoY2Daz9n6w method=POST route=/api/v1/admin/model-providers status=422 duration_ms=1
+2026/10/12 14:32:52 INFO http_request request_id=req_u0h7VEjtYeZEgueBBxYBoQ method=POST route=/api/v1/admin/model-providers status=201 duration_ms=9
+2026/10/12 14:32:52 INFO http_request request_id=req_UsHTEnFMprfQbB32TEKNGg method=PATCH route=/api/v1/admin/model-providers/{provider_id} status=200 duration_ms=10
+2026/10/12 14:32:52 INFO http_request request_id=req_eNYrSQn5Yz1YNk7FNH2ZiA method=GET route=/api/v1/admin/model-providers status=200 duration_ms=2
+2026/10/12 14:32:52 INFO http_request request_id=req_8tU0h-sqZSOqqqwLs6kyKQ method=PATCH route=/api/v1/admin/model-providers/{provider_id} status=409 duration_ms=2
+2026/10/12 14:32:52 INFO http_request request_id=req_qf0mpt7_ldUNAPFbBet3kg method=GET route=/api/v1/admin/groups status=200 duration_ms=6
+2026/10/12 14:32:52 INFO http_request request_id=req_bjPF_tOXiwAVuQxNYVqL8Q method=POST route=/api/v1/admin/models/{model_id}/disable status=200 duration_ms=7
+2026/10/12 14:32:52 INFO http_request request_id=req_7OvaGAeR2T2BteGpuXxF5w method=POST route=/api/v1/admin/models/{model_id}/enable status=422 duration_ms=2
+--- FAIL: TestGenericModelHTTPAuthorizationSaveAndExplicitProbe (1.23s)
+    model_connections_integration_test.go:211: custom parameter error=map[string]interface {}{"code":"protected_field", "field":"/custom_parameters/model"} body={"type":"https://wordweave.example/problems/custom-parameter-conflict","title":"Custom parameters could not be accepted","status":422,"code":"custom_parameter_conflict","detail":"Fix the indicated custom parameter value.","request_id":"req_7OvaGAeR2T2BteGpuXxF5w","field_errors":[{"field":"/custom_parameters/model","code":"protected_field"}]}
+FAIL
+FAIL	wordweave/internal/httpapi	1.568s
+FAIL

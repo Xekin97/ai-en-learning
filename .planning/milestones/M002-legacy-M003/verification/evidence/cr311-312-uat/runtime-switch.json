@@ -1,0 +1,54 @@
+{
+  "action": "switch_to_cr311_312",
+  "after": {
+    "listening": {
+      "backend": true,
+      "frontend": true,
+      "metrics": true,
+      "nginx": true,
+      "postgres": true
+    },
+    "mock_services": 0,
+    "origin": "http://127.0.0.1:3015",
+    "processes": {
+      "backend": 9382,
+      "frontend": 9480,
+      "nginx": 66351
+    },
+    "provider_mode": "real_only",
+    "status": "ready"
+  },
+  "backup": "/tmp/wordweave-m003-uat-real-003/rollback/cr311-312-20261014T115658+0800",
+  "before": {
+    "listening": {
+      "backend": true,
+      "frontend": true,
+      "metrics": true,
+      "nginx": true,
+      "postgres": true
+    },
+    "mock_services": 0,
+    "origin": "http://127.0.0.1:3015",
+    "processes": {
+      "backend": 66252,
+      "frontend": 66258,
+      "nginx": 66351
+    },
+    "provider_mode": "real_only",
+    "status": "ready"
+  },
+  "database_migrated_or_seeded": false,
+  "nginx_pid_after": 66351,
+  "nginx_pid_before": 66351,
+  "postgres_pid_after": 63918,
+  "postgres_pid_before": 63918,
+  "provider_request_triggered": false,
+  "recorded_at": "2026-10-14T11:58:34.519065+08:00",
+  "release_artifact_files": 457,
+  "result": "PASS",
+  "stage": "/tmp/wordweave-m003-uat-real-003/releases/cr311-312-20261014T115658+0800",
+  "stopped_app_pids": {
+    "backend": 66252,
+    "frontend": 66258
+  }
+}

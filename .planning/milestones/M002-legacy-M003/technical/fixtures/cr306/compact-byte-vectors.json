@@ -1,0 +1,151 @@
+{
+  "fixture_version": "M003-BE-07",
+  "purpose": "API306 compact UTF-8 byte contract only, no application or model acceptance",
+  "accepted": [
+    {
+      "id": "html_and_slash",
+      "raw": "{\"x\":\"<>&/\"}",
+      "normalized_json": "{\"x\":\"<>&/\"}",
+      "bytes": 12
+    },
+    {
+      "id": "escaped_html_same_value",
+      "raw": "{\"x\":\"\\u003c\\u003e\\u0026\\/\"}",
+      "normalized_json": "{\"x\":\"<>&/\"}",
+      "bytes": 12
+    },
+    {
+      "id": "line_separators",
+      "raw": "{\"x\":\"\\u2028\\u2029\"}",
+      "normalized_json": "{\"x\":\"  \"}",
+      "bytes": 14
+    },
+    {
+      "id": "literal_backslash_u2028",
+      "raw": "{\"x\":\"\\\\u2028\"}",
+      "normalized_json": "{\"x\":\"\\\\u2028\"}",
+      "bytes": 15
+    },
+    {
+      "id": "emoji_pair",
+      "raw": "{\"x\":\"\\ud83d\\ude00\"}",
+      "normalized_json": "{\"x\":\"😀\"}",
+      "bytes": 12
+    },
+    {
+      "id": "controls",
+      "raw": "{\"x\":\"\\b\\t\\n\\f\\r\\u0001\"}",
+      "normalized_json": "{\"x\":\"\\b\\t\\n\\f\\r\\u0001\"}",
+      "bytes": 24
+    },
+    {
+      "id": "spaces_only_outside_removed",
+      "raw": " { \"x\" : \" a \" } \n",
+      "normalized_json": "{\"x\":\" a \"}",
+      "bytes": 11
+    },
+    {
+      "id": "negative_zero",
+      "raw": "{\"x\":-0.0e0}",
+      "normalized_json": "{\"x\":0}",
+      "bytes": 7
+    },
+    {
+      "id": "integer_exponent",
+      "raw": "{\"x\":1.000e0}",
+      "normalized_json": "{\"x\":1}",
+      "bytes": 7
+    },
+    {
+      "id": "fraction_decimal",
+      "raw": "{\"x\":1e-6}",
+      "normalized_json": "{\"x\":0.000001}",
+      "bytes": 14
+    },
+    {
+      "id": "fraction_exponent",
+      "raw": "{\"x\":1e-7}",
+      "normalized_json": "{\"x\":1e-7}",
+      "bytes": 10
+    },
+    {
+      "id": "safe_integer_dot_zero",
+      "raw": "{\"x\":9007199254740991.0}",
+      "normalized_json": "{\"x\":9007199254740991}",
+      "bytes": 22
+    },
+    {
+      "id": "safe_integer_exponent",
+      "raw": "{\"x\":9.007199254740991e15}",
+      "normalized_json": "{\"x\":9007199254740991}",
+      "bytes": 22
+    }
+  ],
+  "rejected_numbers": [
+    {
+      "id": "unsafe_integer_dot_zero",
+      "token": "9007199254740992.0",
+      "code": "number_out_of_range",
+      "status": 422
+    },
+    {
+      "id": "unsafe_integer_exponent",
+      "token": "9.007199254740992e15",
+      "code": "number_out_of_range",
+      "status": 422
+    },
+    {
+      "id": "fraction_rounds_to_unsafe_integer",
+      "token": "9007199254740991.5",
+      "code": "number_out_of_range",
+      "status": 422
+    }
+  ],
+  "size_recipes": [
+    {
+      "id": "less_than_at_limit",
+      "key": "x",
+      "repeat": "<",
+      "count": 16376,
+      "suffix": "",
+      "bytes": 16384,
+      "accepted": true
+    },
+    {
+      "id": "less_than_above_limit",
+      "key": "x",
+      "repeat": "<",
+      "count": 16377,
+      "suffix": "",
+      "bytes": 16385,
+      "accepted": false
+    },
+    {
+      "id": "line_separator_at_limit",
+      "key": "x",
+      "repeat": " ",
+      "count": 5458,
+      "suffix": "aa",
+      "bytes": 16384,
+      "accepted": true
+    },
+    {
+      "id": "line_separator_above_limit",
+      "key": "x",
+      "repeat": " ",
+      "count": 5459,
+      "suffix": "",
+      "bytes": 16385,
+      "accepted": false
+    },
+    {
+      "id": "emoji_at_limit",
+      "key": "x",
+      "repeat": "😀",
+      "count": 4094,
+      "suffix": "",
+      "bytes": 16384,
+      "accepted": true
+    }
+  ]
+}

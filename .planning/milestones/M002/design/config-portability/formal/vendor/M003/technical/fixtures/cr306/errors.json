@@ -1,0 +1,420 @@
+{
+  "fixture_version": "M003-BE-07",
+  "cases": [
+    {
+      "id": "syntax",
+      "raw_custom_json": "{\"reasoning\":",
+      "http_status": 400,
+      "problem": {
+        "type": "https://wordweave.example/problems/invalid-json",
+        "title": "Request could not be accepted",
+        "status": 400,
+        "code": "invalid_json",
+        "detail": "Check the highlighted configuration or the request result.",
+        "request_id": "fixture-error",
+        "field_errors": [
+          {
+            "field": "/models/0/custom_parameters",
+            "code": "invalid_json"
+          }
+        ]
+      },
+      "expected": {
+        "provider_calls": 0,
+        "saved_models": 0,
+        "revision_unchanged": true,
+        "preserve_editor": true
+      }
+    },
+    {
+      "id": "duplicate",
+      "raw_custom_json": "{\"reasoning\":{\"enabled\":false,\"enabled\":true}}",
+      "http_status": 400,
+      "problem": {
+        "type": "https://wordweave.example/problems/invalid-json",
+        "title": "Request could not be accepted",
+        "status": 400,
+        "code": "invalid_json",
+        "detail": "Check the highlighted configuration or the request result.",
+        "request_id": "fixture-error",
+        "field_errors": [
+          {
+            "field": "/models/0/custom_parameters/reasoning/enabled",
+            "code": "duplicate_key"
+          }
+        ]
+      },
+      "expected": {
+        "provider_calls": 0,
+        "saved_models": 0,
+        "revision_unchanged": true,
+        "preserve_editor": true
+      }
+    },
+    {
+      "id": "escaped_duplicate",
+      "raw_custom_json": "{\"reasoning\":{\"enabled\":false,\"\\u0065nabled\":true}}",
+      "http_status": 400,
+      "problem": {
+        "type": "https://wordweave.example/problems/invalid-json",
+        "title": "Request could not be accepted",
+        "status": 400,
+        "code": "invalid_json",
+        "detail": "Check the highlighted configuration or the request result.",
+        "request_id": "fixture-error",
+        "field_errors": [
+          {
+            "field": "/models/0/custom_parameters/reasoning/enabled",
+            "code": "duplicate_key"
+          }
+        ]
+      },
+      "expected": {
+        "provider_calls": 0,
+        "saved_models": 0,
+        "revision_unchanged": true,
+        "preserve_editor": true
+      }
+    },
+    {
+      "id": "array",
+      "raw_custom_json": "[]",
+      "http_status": 422,
+      "problem": {
+        "type": "https://wordweave.example/problems/validation-failed",
+        "title": "Request could not be accepted",
+        "status": 422,
+        "code": "validation_failed",
+        "detail": "Check the highlighted configuration or the request result.",
+        "request_id": "fixture-error",
+        "field_errors": [
+          {
+            "field": "/models/0/custom_parameters",
+            "code": "object_required"
+          }
+        ]
+      },
+      "expected": {
+        "provider_calls": 0,
+        "saved_models": 0,
+        "revision_unchanged": true,
+        "preserve_editor": true
+      }
+    },
+    {
+      "id": "null",
+      "raw_custom_json": "null",
+      "http_status": 422,
+      "problem": {
+        "type": "https://wordweave.example/problems/validation-failed",
+        "title": "Request could not be accepted",
+        "status": 422,
+        "code": "validation_failed",
+        "detail": "Check the highlighted configuration or the request result.",
+        "request_id": "fixture-error",
+        "field_errors": [
+          {
+            "field": "/models/0/custom_parameters",
+            "code": "object_required"
+          }
+        ]
+      },
+      "expected": {
+        "provider_calls": 0,
+        "saved_models": 0,
+        "revision_unchanged": true,
+        "preserve_editor": true
+      }
+    },
+    {
+      "id": "protected_model",
+      "raw_custom_json": "{\"model\":\"other-model\"}",
+      "http_status": 422,
+      "problem": {
+        "type": "https://wordweave.example/problems/custom-parameter-conflict",
+        "title": "Request could not be accepted",
+        "status": 422,
+        "code": "custom_parameter_conflict",
+        "detail": "Check the highlighted configuration or the request result.",
+        "request_id": "fixture-error",
+        "field_errors": [
+          {
+            "field": "/models/0/custom_parameters/model",
+            "code": "protected_field"
+          }
+        ]
+      },
+      "expected": {
+        "provider_calls": 0,
+        "saved_models": 0,
+        "revision_unchanged": true,
+        "preserve_editor": true
+      }
+    },
+    {
+      "id": "token_conflict",
+      "raw_custom_json": "{\"max_tokens\":1024}",
+      "http_status": 422,
+      "problem": {
+        "type": "https://wordweave.example/problems/custom-parameter-conflict",
+        "title": "Request could not be accepted",
+        "status": 422,
+        "code": "custom_parameter_conflict",
+        "detail": "Check the highlighted configuration or the request result.",
+        "request_id": "fixture-error",
+        "field_errors": [
+          {
+            "field": "/models/0/custom_parameters/max_tokens",
+            "code": "protected_field"
+          }
+        ]
+      },
+      "expected": {
+        "provider_calls": 0,
+        "saved_models": 0,
+        "revision_unchanged": true,
+        "preserve_editor": true
+      }
+    },
+    {
+      "id": "case_alias",
+      "raw_custom_json": "{\"maxOutputTokens\":1024}",
+      "http_status": 422,
+      "problem": {
+        "type": "https://wordweave.example/problems/custom-parameter-conflict",
+        "title": "Request could not be accepted",
+        "status": 422,
+        "code": "custom_parameter_conflict",
+        "detail": "Check the highlighted configuration or the request result.",
+        "request_id": "fixture-error",
+        "field_errors": [
+          {
+            "field": "/models/0/custom_parameters/maxOutputTokens",
+            "code": "protected_field"
+          }
+        ]
+      },
+      "expected": {
+        "provider_calls": 0,
+        "saved_models": 0,
+        "revision_unchanged": true,
+        "preserve_editor": true
+      }
+    },
+    {
+      "id": "nested_header",
+      "raw_custom_json": "{\"extension\":{\"headers\":{}}}",
+      "http_status": 422,
+      "problem": {
+        "type": "https://wordweave.example/problems/custom-parameter-conflict",
+        "title": "Request could not be accepted",
+        "status": 422,
+        "code": "custom_parameter_conflict",
+        "detail": "Check the highlighted configuration or the request result.",
+        "request_id": "fixture-error",
+        "field_errors": [
+          {
+            "field": "/models/0/custom_parameters/extension/headers",
+            "code": "protected_field"
+          }
+        ]
+      },
+      "expected": {
+        "provider_calls": 0,
+        "saved_models": 0,
+        "revision_unchanged": true,
+        "preserve_editor": true
+      }
+    },
+    {
+      "id": "schema_conflict",
+      "raw_custom_json": "{\"text\":{\"format\":{\"type\":\"text\"}}}",
+      "http_status": 422,
+      "problem": {
+        "type": "https://wordweave.example/problems/custom-parameter-conflict",
+        "title": "Request could not be accepted",
+        "status": 422,
+        "code": "custom_parameter_conflict",
+        "detail": "Check the highlighted configuration or the request result.",
+        "request_id": "fixture-error",
+        "field_errors": [
+          {
+            "field": "/models/0/custom_parameters/text",
+            "code": "protected_field"
+          }
+        ]
+      },
+      "expected": {
+        "provider_calls": 0,
+        "saved_models": 0,
+        "revision_unchanged": true,
+        "preserve_editor": true
+      }
+    },
+    {
+      "id": "too_deep",
+      "raw_custom_json": "{\"a\":{\"b\":{\"c\":{\"d\":{\"e\":{\"f\":{\"g\":{\"h\":{}}}}}}}}}",
+      "http_status": 422,
+      "problem": {
+        "type": "https://wordweave.example/problems/validation-failed",
+        "title": "Request could not be accepted",
+        "status": 422,
+        "code": "validation_failed",
+        "detail": "Check the highlighted configuration or the request result.",
+        "request_id": "fixture-error",
+        "field_errors": [
+          {
+            "field": "/models/0/custom_parameters",
+            "code": "too_deep"
+          }
+        ]
+      },
+      "expected": {
+        "provider_calls": 0,
+        "saved_models": 0,
+        "revision_unchanged": true,
+        "preserve_editor": true
+      }
+    },
+    {
+      "id": "unsafe_integer",
+      "raw_custom_json": "{\"seed\":9007199254740993}",
+      "http_status": 422,
+      "problem": {
+        "type": "https://wordweave.example/problems/validation-failed",
+        "title": "Request could not be accepted",
+        "status": 422,
+        "code": "validation_failed",
+        "detail": "Check the highlighted configuration or the request result.",
+        "request_id": "fixture-error",
+        "field_errors": [
+          {
+            "field": "/models/0/custom_parameters/seed",
+            "code": "number_out_of_range"
+          }
+        ]
+      },
+      "expected": {
+        "provider_calls": 0,
+        "saved_models": 0,
+        "revision_unchanged": true,
+        "preserve_editor": true
+      }
+    },
+    {
+      "id": "save_conflict",
+      "http_status": 409,
+      "problem": {
+        "type": "https://wordweave.example/problems/revision-conflict",
+        "title": "Request could not be accepted",
+        "status": 409,
+        "code": "revision_conflict",
+        "detail": "Check the highlighted configuration or the request result.",
+        "request_id": "fixture-error",
+        "field_errors": [],
+        "context": {
+          "current_revision": "fixture-cfg-102"
+        }
+      },
+      "expected": {
+        "preserve_editor": true,
+        "auto_retry": false,
+        "saved_models": 0
+      }
+    },
+    {
+      "id": "upstream_rejected_probe",
+      "http_status": 422,
+      "problem": {
+        "type": "https://wordweave.example/problems/model-request-rejected",
+        "title": "Request could not be accepted",
+        "status": 422,
+        "code": "model_request_rejected",
+        "detail": "Check the highlighted configuration or the request result.",
+        "request_id": "fixture-error",
+        "field_errors": [],
+        "context": {
+          "upstream_status": 400
+        }
+      },
+      "expected": {
+        "provider_calls": 1,
+        "saved_models": 0,
+        "parameter_effect": "unknown",
+        "raw_provider_text_returned": false,
+        "auto_retry": false
+      }
+    },
+    {
+      "id": "before_admission_invalid_stored_object",
+      "http_status": 503,
+      "problem": {
+        "type": "https://wordweave.example/problems/generation-unavailable",
+        "title": "Request could not be accepted",
+        "status": 503,
+        "code": "generation_unavailable",
+        "detail": "Check the highlighted configuration or the request result.",
+        "request_id": "fixture-error",
+        "field_errors": [],
+        "context": {
+          "accepted": false
+        }
+      },
+      "expected": {
+        "provider_calls": 0,
+        "run_created": false,
+        "charge_created": false,
+        "refund_claim": false
+      }
+    },
+    {
+      "id": "jsonb_u0000",
+      "raw_custom_json": "{\"extension\":{\"label\":\"a\\u0000b\"}}",
+      "http_status": 422,
+      "problem": {
+        "type": "https://wordweave.example/problems/validation-failed",
+        "title": "Request could not be accepted",
+        "status": 422,
+        "code": "validation_failed",
+        "detail": "A character in custom parameters cannot be stored. Remove it and try again.",
+        "request_id": "fixture-u0000",
+        "field_errors": [
+          {
+            "field": "/models/0/custom_parameters/extension/label",
+            "code": "unsupported_character"
+          }
+        ]
+      },
+      "expected": {
+        "provider_calls": 0,
+        "saved_models": 0,
+        "revision_unchanged": true,
+        "preserve_editor": true,
+        "replacement_or_truncation": false
+      }
+    }
+  ],
+  "boundaries": [
+    {
+      "id": "compact_utf8_16384",
+      "object_recipe": "{\"x\":\"a*N\"}",
+      "N": 16376,
+      "expected": "accepted_local_only"
+    },
+    {
+      "id": "compact_utf8_16385",
+      "N": 16377,
+      "expected": "422 too_large"
+    },
+    {
+      "id": "root_plus_seven_nested_objects",
+      "depth": 8,
+      "expected": "accepted_local_only"
+    },
+    {
+      "id": "root_plus_eight_nested_objects",
+      "depth": 9,
+      "expected": "422 too_deep"
+    }
+  ]
+}

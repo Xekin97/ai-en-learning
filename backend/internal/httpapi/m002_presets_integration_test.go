@@ -42,14 +42,14 @@ func TestM002AdminPresetHTTPPreviewAndVisitorFlow(t *testing.T) {
 	options := getJSON(t, admin, application.URL+"/api/v1/admin/generation-options")
 	requireStatus(t, options, 200)
 	data := options.body["data"].(map[string]any)
-	if len(data) != 7 || data["quota"] != nil || data["max_entries"] != nil || strings.Contains(options.raw, "provider_model_id") || len(data["lengths"].([]any)) != 4 {
+	if len(data) != 11 || data["quota"] != nil || data["max_entries"] != nil || strings.Contains(options.raw, "provider_model_id") || len(data["lengths"].([]any)) != 4 {
 		t.Fatalf("admin DTO leaked ordinary rights: %s", options.raw)
 	}
-	create := postJSON(t, admin, application.URL+"/api/v1/admin/presets", csrf, map[string]any{"title": "Learning together", "configuration": map[string]any{"model_id": model.String(), "entries": []string{"learn"}, "meaning_language": "en", "scenario": "story", "length": "short"}})
+	create := postJSON(t, admin, application.URL+"/api/v1/admin/presets", csrf, map[string]any{"title": "Learning together", "preview_content_mode": "basic", "configuration": map[string]any{"model_id": model.String(), "entries": []string{"learn"}, "meaning_language": "en", "scenario": "story", "length": "short"}})
 	requireStatus(t, create, 201)
 	id := nestedString(t, create.body, "data", "preset", "id")
 	version := nestedString(t, create.body, "data", "preset", "draft_version")
-	stream := rawJSONRequest(t, admin, http.MethodPost, application.URL+"/api/v1/admin/presets/"+id+"/previews/stream", csrf, map[string]any{"draft_version": version}, nil)
+	stream := rawJSONRequest(t, admin, http.MethodPost, application.URL+"/api/v1/admin/presets/"+id+"/previews/stream", csrf, map[string]any{"draft_version": version, "preview_content_mode": "basic"}, nil)
 	if stream.StatusCode != 200 {
 		raw, _ := io.ReadAll(stream.Body)
 		stream.Body.Close()
@@ -74,7 +74,7 @@ func TestM002AdminPresetHTTPPreviewAndVisitorFlow(t *testing.T) {
 			if event == "preview.validated" {
 				valid = true
 				usage := value["usage"].(map[string]any)
-				if usage["provider_calls"].(float64) != 1 || usage["cost"] != nil || usage["input_tokens"] != nil || usage["unknown_calls"].(float64) != 1 {
+				if usage["provider_calls"].(float64) != 2 || usage["cost"] != nil || usage["input_tokens"] != nil || usage["unknown_calls"].(float64) != 2 {
 					t.Fatalf("fabricated unknown provider usage: %+v", usage)
 				}
 			}
@@ -93,7 +93,7 @@ func TestM002AdminPresetHTTPPreviewAndVisitorFlow(t *testing.T) {
 	}
 	current := getJSON(t, admin, application.URL+"/api/v1/admin/presets/"+id)
 	requireStatus(t, current, 200)
-	published := postJSON(t, admin, application.URL+"/api/v1/admin/presets/"+id+"/publish", csrf, map[string]any{"draft_version": version, "expected_revision": dataString(t, current.body, "revision"), "confirmed": true})
+	published := postJSON(t, admin, application.URL+"/api/v1/admin/presets/"+id+"/publish", csrf, map[string]any{"draft_version": version, "expected_revision": dataString(t, current.body, "revision")})
 	requireStatus(t, published, 200)
 	detail := getJSON(t, visitor, application.URL+"/api/v1/presets/"+id)
 	requireStatus(t, detail, 200)

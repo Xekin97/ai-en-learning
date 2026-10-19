@@ -2,9 +2,11 @@ package ai
 
 import (
 	"context"
+	"encoding/json"
 	"errors"
 	"net/url"
 	"strings"
+	"time"
 	"unicode/utf8"
 
 	"github.com/google/uuid"
@@ -38,10 +40,11 @@ type ConnectionDraft struct {
 
 // Secrets and connection snapshots cannot be serialized into run/trace data.
 type connectionSnapshot struct {
-	connection      Connection
-	apiKey          string
-	maxOutputTokens *int
-	outputMode      string
+	connection       Connection
+	apiKey           string
+	maxOutputTokens  *int
+	outputMode       string
+	customParameters json.RawMessage
 }
 
 func ValidConnection(d ConnectionDraft) bool {
@@ -79,14 +82,19 @@ func (s *CredentialStore) BindSpec(ctx context.Context, spec *GenerationSpec) er
 	var snap connectionSnapshot
 	var cipher, nonce []byte
 	var version int
-	err := s.pool.QueryRow(ctx, `SELECT p.id,p.name,p.protocol,p.base_url,p.credential_configured,p.masked_hint,c.ciphertext,c.nonce,c.encryption_key_version,m.max_output_tokens,m.output_mode,m.provider_model_id
+	var customParameters []byte
+	err := s.pool.QueryRow(ctx, `SELECT p.id,p.name,p.protocol,p.base_url,p.credential_configured,p.masked_hint,c.ciphertext,c.nonce,c.encryption_key_version,m.max_output_tokens,m.output_mode,m.provider_model_id,m.custom_parameters
  FROM wordweave.ai_models m JOIN wordweave.ai_providers p ON p.id=m.provider_id
- JOIN wordweave.ai_provider_credentials c ON c.provider_id=p.id WHERE m.id=$1`, spec.ModelID).Scan(
+ JOIN wordweave.ai_provider_credentials c ON c.provider_id=p.id WHERE m.id=$1 AND m.retired_at IS NULL AND p.retired_at IS NULL`, spec.ModelID).Scan(
 		&snap.connection.ID, &snap.connection.Name, &snap.connection.Protocol, &snap.connection.BaseURL, &snap.connection.CredentialConfigured, &snap.connection.MaskedHint,
-		&cipher, &nonce, &version, &snap.maxOutputTokens, &snap.outputMode, &spec.ProviderModelID)
+		&cipher, &nonce, &version, &snap.maxOutputTokens, &snap.outputMode, &spec.ProviderModelID, &customParameters)
 	if errors.Is(err, pgx.ErrNoRows) {
 		return ErrCredentialMissing
 	}
+	if err != nil {
+		return err
+	}
+	snap.customParameters, err = CanonicalCustomParameters(customParameters)
 	if err != nil {
 		return err
 	}
@@ -99,10 +107,31 @@ func (s *CredentialStore) BindSpec(ctx context.Context, spec *GenerationSpec) er
 	return nil
 }
 
+func RequestParametersSnapshot(spec GenerationSpec) (json.RawMessage, error) {
+	if spec.connection == nil {
+		return nil, ErrCredentialMissing
+	}
+	custom, err := CanonicalCustomParameters(spec.connection.customParameters)
+	if err != nil {
+		return nil, err
+	}
+	route := "unchanged"
+	if spec.connection.outputMode == "json_schema" && officialOpenRouter(spec.connection.connection) {
+		route = "openrouter_require_parameters"
+	}
+	return json.Marshal(map[string]any{
+		"version":           "custom-parameters-v1",
+		"custom_parameters": json.RawMessage(custom),
+		"output_mode":       spec.connection.outputMode,
+		"max_output_tokens": spec.connection.maxOutputTokens,
+		"structured_route":  route,
+	})
+}
+
 func (s *CredentialStore) ConnectionKey(ctx context.Context, id uuid.UUID) (string, error) {
 	var cipher, nonce []byte
 	var version int
-	err := s.pool.QueryRow(ctx, `SELECT ciphertext,nonce,encryption_key_version FROM wordweave.ai_provider_credentials WHERE provider_id=$1`, id).Scan(&cipher, &nonce, &version)
+	err := s.pool.QueryRow(ctx, `SELECT c.ciphertext,c.nonce,c.encryption_key_version FROM wordweave.ai_provider_credentials c JOIN wordweave.ai_providers p ON p.id=c.provider_id WHERE c.provider_id=$1 AND p.retired_at IS NULL`, id).Scan(&cipher, &nonce, &version)
 	if errors.Is(err, pgx.ErrNoRows) {
 		return "", ErrCredentialMissing
 	}
@@ -137,7 +166,7 @@ func (s *CredentialStore) WriteConnection(ctx context.Context, tx pgx.Tx, actor 
 			return id, ErrCredentialMissing
 		}
 		var allowed bool
-		err = tx.QueryRow(ctx, `SELECT protocol=$2 AND base_url=$3 AND credential_configured FROM wordweave.ai_providers WHERE id=$1`, source, d.Protocol, d.BaseURL).Scan(&allowed)
+		err = tx.QueryRow(ctx, `SELECT protocol=$2 AND base_url=$3 AND credential_configured FROM wordweave.ai_providers WHERE id=$1 AND retired_at IS NULL`, source, d.Protocol, d.BaseURL).Scan(&allowed)
 		if err != nil {
 			return id, err
 		}
@@ -164,7 +193,7 @@ func (s *CredentialStore) UpdateConnection(ctx context.Context, tx pgx.Tx, actor
 	}
 	var protocol, baseURL string
 	var configured bool
-	if err := tx.QueryRow(ctx, `SELECT protocol,base_url,credential_configured FROM wordweave.ai_providers WHERE id=$1`, id).Scan(&protocol, &baseURL, &configured); err != nil {
+	if err := tx.QueryRow(ctx, `SELECT protocol,base_url,credential_configured FROM wordweave.ai_providers WHERE id=$1 AND retired_at IS NULL`, id).Scan(&protocol, &baseURL, &configured); err != nil {
 		return err
 	}
 	if d.APIKey == "" && (!configured || protocol != d.Protocol || baseURL != d.BaseURL) {
@@ -186,5 +215,44 @@ func (s *CredentialStore) UpdateConnection(ctx context.Context, tx pgx.Tx, actor
 		return err
 	}
 	_, err = tx.Exec(ctx, `SELECT wordweave.update_provider_credential($1,$2,$3,$4,$5,$6)`, id, cipher, nonce, version, security.Fingerprint(d.APIKey), actor)
+	return err
+}
+
+// ImportConnection writes an explicitly identified portable connection and its
+// new package credential inside the caller's configuration transaction. It
+// never copies or retains a target credential.
+func (s *CredentialStore) ImportConnection(ctx context.Context, tx pgx.Tx, actor, id uuid.UUID, d ConnectionDraft) error {
+	if id == uuid.Nil || !ValidConnection(d) || d.APIKey == "" {
+		return ErrConnectionInvalid
+	}
+	name := strings.TrimSpace(d.Name)
+	if name == "" {
+		u, _ := url.Parse(d.BaseURL)
+		name = u.Hostname()
+	}
+	var retiredAt *time.Time
+	err := tx.QueryRow(ctx, `SELECT retired_at FROM wordweave.ai_providers WHERE id=$1`, id).Scan(&retiredAt)
+	switch {
+	case errors.Is(err, pgx.ErrNoRows):
+		if _, err = tx.Exec(ctx, `INSERT INTO wordweave.ai_providers(id,name,protocol,base_url,credential_configured,legacy_url_pending) VALUES($1,$2,$3,$4,false,false)`, id, name, d.Protocol, d.BaseURL); err != nil {
+			return err
+		}
+	case err != nil:
+		return err
+	case retiredAt != nil:
+		return ErrConnectionInvalid
+	default:
+		if _, err = tx.Exec(ctx, `UPDATE wordweave.ai_providers SET name=$2,protocol=$3,base_url=$4,legacy_url_pending=false WHERE id=$1`, id, name, d.Protocol, d.BaseURL); err != nil {
+			return err
+		}
+	}
+	ciphertext, nonce, version, err := s.envelope.Encrypt([]byte(d.APIKey))
+	if err != nil {
+		return err
+	}
+	_, err = tx.Exec(ctx, `SELECT wordweave.update_provider_credential($1,$2,$3,$4,$5,$6)`, id, ciphertext, nonce, version, security.Fingerprint(d.APIKey), actor)
+	if errors.Is(err, pgx.ErrNoRows) {
+		_, err = tx.Exec(ctx, `SELECT wordweave.write_provider_credential($1,$2,$3,$4,$5,$6,NULL)`, id, ciphertext, nonce, version, security.Fingerprint(d.APIKey), actor)
+	}
 	return err
 }

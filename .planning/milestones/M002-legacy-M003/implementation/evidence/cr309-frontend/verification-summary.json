@@ -1,0 +1,65 @@
+{
+  "status": "PASS_DEVELOPER_AWAITING_INDEPENDENT_QA",
+  "transition": "TRANSITION-M003-088",
+  "source_contract": "M003-TECH-04 / M003-FE-CR309 / M003-UI-11 / CR-309",
+  "checks": [
+    {
+      "name": "node24-typecheck",
+      "result": "PASS exit 0",
+      "log": "01b-typecheck-node24.log",
+      "runtime": "v24.21.0"
+    },
+    {
+      "name": "default-shell-typecheck",
+      "result": "PASS exit 0 with engine warning retained",
+      "log": "01-typecheck.log",
+      "runtime": "v22.23.2"
+    },
+    {
+      "name": "changed-file-eslint",
+      "result": "PASS",
+      "log": "02-eslint.log"
+    },
+    {
+      "name": "cr309-browser",
+      "result": "PASS 4/4 desktop/mobile",
+      "log": "03-browser.log",
+      "viewports": [
+        "1440x1000",
+        "390x844"
+      ]
+    },
+    {
+      "name": "affected-admin-preset-regression",
+      "result": "PASS 1/1 desktop",
+      "log": "04-affected-regression.log"
+    },
+    {
+      "name": "scoped-diff-check",
+      "result": "PASS",
+      "log": "05-diff-check.log"
+    }
+  ],
+  "archive": {
+    "path": "cr309-frontend-source.tar.gz",
+    "sha256": "c2da199954df0c835fda2e63ec42e1e4defddcb4edfc102009788047cd4c487a"
+  },
+  "manifest_sha256": "dc93f6718c2397e2c062bd147ff59a7d98c86bb928f4a8cbee0c8180003707e6",
+  "production_diff_sha256": "b688045534e14c2437db61db3d4c92ebdda962896463d71f566dc454628d6268",
+  "screenshots": {
+    "during-desktop.png": "82beb557e9aa8263eb6c41391f9f8543995c7435607c665824673faf408dee40",
+    "during-mobile.png": "2c19a01f5d0395e61128ee7d3e04ea61ffb0c488cc6a83d9e2de4e8aa9c43d51",
+    "final-desktop.png": "658480eba3dbdfd63a3c2ebc5953d7d1c551a438ba5d30971054bc505dc8da5a",
+    "final-mobile.png": "b6dbf123df9af7700a405f182c68cdce4838f5ab311795bc49e3da4569afab71",
+    "pre-desktop.png": "259a9075331035be1b52aea6c1ec707df23a9f6c6d6a4f2ca26a2f24d66adb19",
+    "pre-mobile.png": "a874aced0f7497e562d770c78f59a4f8a7358851d0abac322a9139c1a1018ca7",
+    "workspace-during-desktop.png": "625064506b4ced40e57ccaa4873d95b1007db4912bb62faea70eee14d748c022",
+    "workspace-during-mobile.png": "fea55680c67236c922b83a64e05d850ed02183bdf9d77c33eaa29e58c03ae3f9",
+    "workspace-final-desktop.png": "c506866f1a531bf9b463dc35e1093f28e4b5978890e5e2c061cf07b5909f786e",
+    "workspace-final-mobile.png": "6bfeb1751bc08911e818e539341526e882037a748c6e52d1f30cc83a32cfe6dc"
+  },
+  "boundaries": [
+    "independent QA pending",
+    "no real provider/backend/database/deployment/UAT"
+  ]
+}

@@ -28,7 +28,11 @@ func TestInlineMappingHTTPStreamAndSavedContent(t *testing.T) {
 	candidate := ai.Candidate{Passage: rawPassage, Tags: []string{"fruit"}, Targets: []ai.CandidateTarget{{SourceEntry: "grape", EntryMeaning: "a small fruit growing in clusters", HintPhrase: "fresh grapes(grape) beside another grape"}}}
 	var calls atomic.Int32
 	provider := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		calls.Add(1)
+		call := calls.Add(1)
+		if call%2 == 1 {
+			writeChatObject(w, testScenePlan("grape"))
+			return
+		}
 		raw, _ := json.Marshal(map[string]any{"passage": candidate.Passage, "tags": candidate.Tags, "targets": map[string]any{"grape": map[string]any{"entry_meaning": candidate.Targets[0].EntryMeaning, "hint_phrase": candidate.Targets[0].HintPhrase}}})
 		w.Header().Set("Content-Type", "text/event-stream")
 		// Deliberately split source annotations and the passage's closing quote.
@@ -69,7 +73,7 @@ func TestInlineMappingHTTPStreamAndSavedContent(t *testing.T) {
 			t.Fatal(err)
 		}
 		run, token, valid := readGenerationSSE(t, strings.NewReader(string(raw)))
-		if !valid || strings.Contains(string(raw), "(grape)") || calls.Load() != int32(attempt+1) {
+		if !valid || strings.Contains(string(raw), "(grape)") || calls.Load() != int32(2*(attempt+1)) {
 			t.Fatal("stream failed, leaked a source annotation, or repeated a provider call")
 		}
 		scanner := bufio.NewScanner(strings.NewReader(string(raw)))
@@ -80,14 +84,10 @@ func TestInlineMappingHTTPStreamAndSavedContent(t *testing.T) {
 			if strings.HasPrefix(line, "event: ") {
 				event = strings.TrimPrefix(line, "event: ")
 			}
-			if event == "passage.delta" && strings.HasPrefix(line, "data: ") {
-				var payload struct {
-					Text string `json:"text"`
-				}
-				if err := json.Unmarshal([]byte(strings.TrimPrefix(line, "data: ")), &payload); err != nil {
-					t.Fatal(err)
-				}
-				preview.WriteString(payload.Text)
+			if event == "generation.edit" && strings.HasPrefix(line, "data: ") {
+				updated := applyGenerationEdit(t, preview.String(), []byte(strings.TrimPrefix(line, "data: ")))
+				preview.Reset()
+				preview.WriteString(updated)
 				if !strings.HasPrefix(cleanPassage, preview.String()) {
 					t.Fatal("stream exposed temporary metadata or rewrote ordinary text")
 				}

@@ -1,0 +1,172 @@
+{
+  "version": "M003-UI-13",
+  "checked_at": "2026-10-13T08:42:12.156Z",
+  "scope": "CR-311 candidate presentation and CR-312 published paragraph revision in PAGE-204/216/212 design prototype",
+  "fixtures": [
+    "../../technical/fixtures/cr311-312/*.json"
+  ],
+  "provider_calls": 0,
+  "checks": [
+    {
+      "name": "UIA-M003-427-filtered-picker",
+      "passed": true,
+      "details": {
+        "searchOptions": [
+          "theater",
+          "another"
+        ],
+        "selectedBeforeRandom": [
+          "the",
+          "art"
+        ],
+        "selectedAfterRandom": [
+          "the",
+          "art",
+          "go"
+        ]
+      }
+    },
+    {
+      "name": "UIA-M003-428-430-live-sequence",
+      "passed": true,
+      "details": {
+        "initial": {
+          "text": "We see art.\nWe go home.\nThe art stays.",
+          "plan": true,
+          "save": 0
+        },
+        "waiting": {
+          "activity": "正在完善内容",
+          "title": "当前正文",
+          "detail": 0,
+          "text": "We see art.\nWe go home.\nThe art stays."
+        },
+        "halfBegin": "We see art.\nWe go home.\nThe art stays.",
+        "halfEdit": "We see art.\nWe go home.\nThe art stays.",
+        "committed": {
+          "text": "We enjoy art.\nWe go home.\nThe art stays.",
+          "changed": 1
+        },
+        "bodyComplete": {
+          "text": "We enjoy art.\nWe go together.",
+          "save": 0,
+          "plan": 1
+        },
+        "valid": {
+          "result": 1,
+          "save": 1,
+          "meanings": 2
+        },
+        "eventsReached": 19
+      }
+    },
+    {
+      "name": "UIA-M003-429-reader-position",
+      "passed": true,
+      "details": {
+        "beforeCommitPosition": {
+          "y": 520,
+          "active": "cancel-generation"
+        },
+        "afterCommitPosition": {
+          "y": 520,
+          "active": "cancel-generation"
+        }
+      }
+    },
+    {
+      "name": "UIA-M003-429-long-paragraph-buffer",
+      "passed": true,
+      "details": {
+        "longBuffered": {
+          "text": "We see art.\nWe go home.\nThe art stays.",
+          "changed": 0
+        },
+        "longCommitted": {
+          "length": 20958,
+          "changed": 1
+        }
+      }
+    },
+    {
+      "name": "UIA-M003-431-q02-restore",
+      "passed": true,
+      "details": {
+        "q02Staged": "We enjoy art.\nWe go home.\nThe art stays.",
+        "q02Restored": "We see art.\nWe go home.\nThe art stays.",
+        "q02Valid": {
+          "result": 1,
+          "notice": "内容审校未完成。当前完整有效稿仍可保存。"
+        }
+      }
+    },
+    {
+      "name": "UIA-M003-431-terminal-states",
+      "passed": true,
+      "details": {
+        "pending": {
+          "state": "pending",
+          "save": 0,
+          "result": 0
+        },
+        "failed": {
+          "state": "failed",
+          "save": 0,
+          "result": 0
+        },
+        "cancelled": {
+          "state": "cancelled",
+          "save": 0,
+          "result": 0
+        }
+      }
+    },
+    {
+      "name": "UIA-M003-433-narrow-en",
+      "passed": true,
+      "details": {
+        "activity": "Refining the story",
+        "overflow": 0,
+        "columns": "324px"
+      }
+    },
+    {
+      "name": "UIA-M003-433-reduced-motion",
+      "passed": true,
+      "details": {
+        "cueAnimation": "none",
+        "dotAnimation": "none",
+        "cueBackground": "rgba(228, 239, 207, 0.45)"
+      }
+    },
+    {
+      "name": "UIA-M003-432-shared-preview",
+      "passed": true,
+      "details": {
+        "resultRegion": 1,
+        "text": "We enjoy art and go home.",
+        "changed": 0,
+        "activity": "正在完善内容",
+        "save": 0
+      }
+    },
+    {
+      "name": "browser-console",
+      "passed": true,
+      "details": {
+        "errors": []
+      }
+    }
+  ],
+  "screenshots": [
+    "01-paragraph-commit-desktop-zh.png",
+    "02-paragraph-commit-mobile-en.png",
+    "03-admin-preview-paragraph-commit.png"
+  ],
+  "console_errors": [],
+  "summary": {
+    "total": 10,
+    "passed": 10,
+    "failed": 0
+  }
+}

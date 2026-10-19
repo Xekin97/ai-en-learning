@@ -1,0 +1,39 @@
+{
+  "scope": "Independent targeted retest of CR-304 and CR-305 only; unaffected qa-m003-001 evidence reused.",
+  "result": "PASS",
+  "checks": {
+    "cr304_api": {
+      "passed": 5,
+      "failed": 0,
+      "source": "cr304-api-results.json"
+    },
+    "cr304_cr305_browser_main": {
+      "passed": 16,
+      "failed": 0,
+      "source": "targeted-browser-attempt3.json",
+      "note": "All recorded checks passed; batch then ended on a strict locator ambiguity before the remaining admin reduced-motion continuation."
+    },
+    "cr305_admin_preview_reduced": {
+      "passed": 5,
+      "failed": 0,
+      "source": "preview-reduced-results.json"
+    }
+  },
+  "total_recorded_checks": 26,
+  "confirmed_change_requests": [
+    "CR-304",
+    "CR-305"
+  ],
+  "method_history": [
+    "targeted-browser-attempt1-method.json: incomplete holder exit listener timing",
+    "targeted-browser-attempt2.json: selector and admin focus locator methods corrected",
+    "targeted-browser-attempt3.json: 16 checks passed; final ambiguous preset text locator corrected in continuation",
+    "preview-reduced-attempt1.json: inaccessible exact button name corrected to stable .admin-record title filter"
+  ],
+  "screenshots_added": 0,
+  "limitations": [
+    "synthetic provider",
+    "configured capacity=1 only for deterministic busy",
+    "no real AI quality, fee, production capacity, deployment, migration, human screen reader or physical-device claim"
+  ]
+}

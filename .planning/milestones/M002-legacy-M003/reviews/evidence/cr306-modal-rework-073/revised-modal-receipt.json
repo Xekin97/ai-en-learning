@@ -1,0 +1,48 @@
+{
+  "checked_at": "2026-10-12T04:43:39.190Z",
+  "scope": "Independent receipt of rejected non-modal regression; design preview only",
+  "scenarios": [
+    {
+      "name": "Normal list click enters real top layer with isolated background and scrollable dialog body",
+      "passed": true,
+      "details": {
+        "open": true,
+        "modal": true,
+        "width": 720,
+        "activeInside": true,
+        "backgroundIsolated": true,
+        "bodyOverflow": "auto"
+      }
+    },
+    {
+      "name": "Clean Escape closes and returns to exact provider button",
+      "passed": true,
+      "details": {
+        "action": "edit-provider",
+        "provider": "10000000-0000-4000-8000-000000000001"
+      }
+    },
+    {
+      "name": "Mobile retains same modal interaction without page horizontal overflow",
+      "passed": true,
+      "details": {
+        "modal": true,
+        "width": 354,
+        "viewport": 390,
+        "overflow": 0
+      }
+    },
+    {
+      "name": "Click outside modal closes clean draft",
+      "passed": true
+    }
+  ],
+  "visuals_viewed": [
+    "11-r1-modal-initial-1440.png",
+    "13-r1-modal-initial-390.png",
+    "14-r1-modal-error-390.png",
+    "15-r1-discard-confirm-390.png"
+  ],
+  "completed": true,
+  "result": "PASS"
+}

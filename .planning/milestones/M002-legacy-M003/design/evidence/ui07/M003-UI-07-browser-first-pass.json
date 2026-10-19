@@ -1,0 +1,155 @@
+{
+  "version": "M003-UI-07",
+  "fixtureVersion": "M003-BE-05",
+  "contractVersion": "m003-stream-v5",
+  "browser": "Chromium",
+  "scenarios": [
+    {
+      "name": "enhanced-plan-folds-on-first-edit-and-fixed-edit-is-visible",
+      "pass": false,
+      "errors": [
+        "TypeError: Cannot read properties of undefined (reading 'passage')\n    at file:///Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/.planning/milestones/M003/design/evidence/ui07/browser.mjs:73:66\n    at async record (file:///Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/.planning/milestones/M003/design/evidence/ui07/browser.mjs:44:27)\n    at async file:///Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/.planning/milestones/M003/design/evidence/ui07/browser.mjs:52:1"
+      ]
+    },
+    {
+      "name": "basic-still-plans-without-a-rewrite",
+      "pass": true,
+      "errors": [],
+      "planningItems": 4
+    },
+    {
+      "name": "recovery-q02-restores-authoritative-draft",
+      "pass": false,
+      "errors": [
+        "TypeError: Cannot read properties of undefined (reading 'passage')\n    at file:///Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/.planning/milestones/M003/design/evidence/ui07/browser.mjs:126:49\n    at async record (file:///Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/.planning/milestones/M003/design/evidence/ui07/browser.mjs:44:27)\n    at async file:///Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/.planning/milestones/M003/design/evidence/ui07/browser.mjs:114:1"
+      ]
+    },
+    {
+      "name": "planning-and-invalid-edit-failures-clear-temporary-content",
+      "pass": true,
+      "errors": [],
+      "runs": [
+        {
+          "name": "planning-fails",
+          "planItems": 0,
+          "drafts": 0,
+          "saves": 0,
+          "errors": []
+        },
+        {
+          "name": "invalid-first-edit-fails",
+          "planItems": 0,
+          "drafts": 0,
+          "saves": 0,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "name": "invalid-first-edit-rescues-on-mobile-english",
+      "pass": true,
+      "errors": [],
+      "meaningLanguage": "ja"
+    },
+    {
+      "name": "both-preview-modes-use-their-own-wire-and-qualify",
+      "pass": true,
+      "errors": [],
+      "results": [
+        {
+          "mode": "basic",
+          "planItems": 3,
+          "words": [
+            "garden",
+            "learn"
+          ],
+          "meaning": "日语",
+          "qualified": true,
+          "errors": []
+        },
+        {
+          "mode": "enhanced",
+          "planItems": 4,
+          "words": [
+            "garden",
+            "learn",
+            "share"
+          ],
+          "meaning": "English",
+          "qualified": true,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "name": "pending-eof-and-static-review-remain-read-only",
+      "pass": true,
+      "errors": [],
+      "results": [
+        {
+          "name": "pending-status",
+          "state": "valid",
+          "save": 1,
+          "errors": []
+        },
+        {
+          "name": "eof-unknown",
+          "state": "pending",
+          "save": 0,
+          "errors": []
+        }
+      ],
+      "staticReviewStayedAtEvent": 6
+    },
+    {
+      "name": "cancel-restart-isolates-the-old-playback",
+      "pass": true,
+      "errors": [],
+      "cancelledStayedStableMs": 6800,
+      "restarted": true
+    },
+    {
+      "name": "plans-complete-fields-and-boundaries-remain",
+      "pass": true,
+      "errors": [],
+      "results": [
+        {
+          "limit": "0",
+          "valid": true,
+          "errors": []
+        },
+        {
+          "limit": "99",
+          "valid": true,
+          "errors": []
+        },
+        {
+          "limit": "-1",
+          "valid": false,
+          "errors": []
+        },
+        {
+          "limit": "100",
+          "valid": false,
+          "errors": []
+        },
+        {
+          "limit": "1.5",
+          "valid": false,
+          "errors": []
+        }
+      ]
+    }
+  ],
+  "summary": {
+    "passed": 7,
+    "failed": 2,
+    "total": 9,
+    "screenshots": 5,
+    "actualButtonPlayback": true,
+    "syntheticPlaybackTimingOnly": true,
+    "productionLatencyMeasured": false,
+    "modelOrProviderCalled": false,
+    "apiFixtureCheckerRerun": false
+  }
+}

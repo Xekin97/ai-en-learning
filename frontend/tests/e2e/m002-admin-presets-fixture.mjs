@@ -19,6 +19,8 @@ const usage = {
   output_tokens: null,
   cost: null,
   unknown_calls: 1,
+  invocation_unknown_calls: 0,
+  not_invoked_calls: 0,
 };
 let revision = 1,
   items = [],
@@ -44,6 +46,7 @@ function reset() {
       published_version: "published-1",
       listed: true,
       title: "Live story",
+      preview_content_mode: "basic",
       configuration: structuredClone(config),
       draft_state: "preview_ready",
       has_unpublished_changes: false,
@@ -52,12 +55,19 @@ function reset() {
         completed_at: time,
         result,
         usage,
+        preview_content_mode: "basic",
+        final_content_version: 1,
+        content_outcome: "basic",
+        completion_notice: null,
       },
       published: {
         title: "Live story",
         configuration: structuredClone(config),
         sample: result,
         version_created_at: time,
+        final_content_version: 1,
+        content_outcome: "basic",
+        completion_notice: null,
       },
     },
   ];
@@ -121,6 +131,15 @@ export async function adminPresetsFixture(request, response, url) {
         can_preview: !missing,
         reason: missing ? "credential_missing" : null,
       },
+      preview_content_modes: ["basic", "enhanced"],
+      default_preview_content_mode: "basic",
+      preview_content_repair_limit: 1,
+      native_correction_policy: {
+        version: "m003-native-policy-v1",
+        scope: "logical_request",
+        max_calls: 2,
+        editable: false,
+      },
     });
   }
   if (url.pathname === "/api/v1/admin/preset-previews/preview-new/cancel") {
@@ -150,10 +169,64 @@ export async function adminPresetsFixture(request, response, url) {
     const event = (name, data) =>
       response.write(`event: ${name}\ndata: ${JSON.stringify(data)}\n\n`);
     event("preview.started", {
+      seq: 1,
+      contract_version: "m003-stream-v6",
+      stream_id: "preview-stream-new",
       preview_run_id: "preview-new",
       preview_token: "preview-private-token",
+      draft_version: item.draft_version,
+      preview_content_mode: "basic",
+      content_service: {
+        native_validation: true,
+        content_review_enabled: false,
+        content_repair_limit: 0,
+      },
+      native_correction_policy: {
+        version: "m003-native-policy-v1",
+        scope: "logical_request",
+        max_calls: 2,
+        editable: false,
+      },
     });
-    event("passage.delta", { text: result.passage });
+    event("preview.progress", { seq: 2, phase: "planning" });
+    event("preview.plan_item", {
+      seq: 3,
+      plan_id: "preview-plan-new",
+      meaning_language: item.configuration.meaning_language,
+      item: { kind: "scene", text: "A team responds to change." },
+    });
+    event("preview.plan_item", {
+      seq: 4,
+      plan_id: "preview-plan-new",
+      meaning_language: item.configuration.meaning_language,
+      item: {
+        kind: "word_use",
+        entry: "adapt",
+        form: "adapt",
+        sense: "change to fit",
+        phrase: "adapt quickly",
+      },
+    });
+    event("preview.progress", { seq: 5, phase: "composing" });
+    event("preview.draft", {
+      seq: 6,
+      action: "begin",
+      draft_id: "preview-draft-new",
+      content_version: 1,
+      mode: "initial",
+      base_rev: 0,
+    });
+    event("preview.edit", {
+      seq: 7,
+      draft_id: "preview-draft-new",
+      content_version: 1,
+      base_rev: 0,
+      rev: 1,
+      at: 0,
+      delete_count: 0,
+      insert: result.passage,
+      source: "provider",
+    });
     if (delayed) {
       response.on("close", () => {});
       return true;
@@ -163,13 +236,34 @@ export async function adminPresetsFixture(request, response, url) {
       completed_at: time,
       result,
       usage,
+      preview_content_mode: "basic",
+      final_content_version: 1,
+      content_outcome: "basic",
+      completion_notice: null,
     };
     item.draft_state = "preview_ready";
+    event("preview.draft", {
+      seq: 8,
+      action: "body_complete",
+      draft_id: "preview-draft-new",
+      content_version: 1,
+      base_rev: 1,
+      body_length: Array.from(result.passage).length,
+      paragraph_count: result.passage.trim()
+        ? result.passage.split(/\r?\n[ \t]*\r?\n/).length
+        : 0,
+    });
+    event("preview.progress", { seq: 9, phase: "finalizing" });
     event("preview.validated", {
+      seq: 10,
       preview_run_id: "preview-new",
       draft_version: item.draft_version,
+      preview_content_mode: "basic",
+      final_content_version: 1,
       result,
       usage,
+      content_outcome: "basic",
+      completion_notice: null,
     });
     response.end();
     return true;
@@ -184,6 +278,9 @@ export async function adminPresetsFixture(request, response, url) {
       configuration: structuredClone(item.configuration),
       sample: item.preview.result,
       version_created_at: time,
+      final_content_version: item.preview.final_content_version,
+      content_outcome: item.preview.content_outcome,
+      completion_notice: item.preview.completion_notice,
     };
     item.published_version = "published-" + revision;
     item.listed = true;
@@ -215,6 +312,7 @@ export async function adminPresetsFixture(request, response, url) {
       published_version: item?.published_version ?? null,
       listed: item?.listed ?? false,
       title: input.title,
+      preview_content_mode: input.preview_content_mode,
       configuration,
       draft_state: same && item.preview ? "preview_ready" : "needs_preview",
       has_unpublished_changes: true,

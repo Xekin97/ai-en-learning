@@ -1,0 +1,24 @@
+{
+  "version": "M003-BE-06",
+  "recorded_by": "root",
+  "recorded_at": "2026-10-10T07:17:11.189428+00:00",
+  "scope": "Capacity/deployment/API design; no runtime capacity or technical overall acceptance",
+  "source_files_verified": 11,
+  "protected_files_verified": 851,
+  "archive_sha256": "dc9d56f5a93874b38210fab9af1877b1c1b4d03857882528f2b6c3bd4d79594a",
+  "static_checks": 15,
+  "root_review": [
+    "Resource sums and startup estimate/targets separated",
+    "Admission before run/charge/provider, atomic combined limits, release after cleanup",
+    "Unknown commit/settlement gate closes before releasing permit",
+    "Probe shares global capacity",
+    "offered/admitted and missing milestone denominator distinct",
+    "Upgrade constrained by DEC027 single process recovery/cancellation"
+  ],
+  "unverified": [
+    "actual resource capacity",
+    "real provider latency/quality/cost",
+    "deployment/backups/restore",
+    "FE/browser integration"
+  ]
+}

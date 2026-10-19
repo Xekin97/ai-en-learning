@@ -63,6 +63,7 @@ async function saveTitle() {
     titleInput.value?.focus();
 }
 async function remove() {
+  useNuxtApp().$pronunciation?.cancelSurface(`library:${id}`);
   busy.value = true;
   try {
     await library.remove(id);
@@ -160,7 +161,13 @@ async function start() {
           <h2>{{ copy("l.resources") }}</h2>
           <div class="resource-grid">
             <article v-for="target in batch.targets" :key="target.entry">
-              <h3>{{ target.entry }}</h3>
+              <div class="pron-word-heading">
+                <h3>{{ target.entry }}</h3>
+                <WordPronunciation
+                  :entry="target.entry"
+                  :surface-id="`library:${id}`"
+                />
+              </div>
               <p>{{ target.entryMeaning }}</p>
               <p class="muted">{{ target.hintPhrase }}</p>
             </article>

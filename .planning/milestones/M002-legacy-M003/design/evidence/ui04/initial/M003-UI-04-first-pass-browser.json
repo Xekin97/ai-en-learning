@@ -1,0 +1,279 @@
+{
+  "version": "M003-UI-04",
+  "browser": "Chromium",
+  "scenarios": [
+    {
+      "name": "create-desktop-continuous-repair2",
+      "query": "page=create&plan=pro&limit=2&stage=idle&lang=zh",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "screenshot": "01-create-repair2-1440.png",
+      "pass": true,
+      "errors": [],
+      "metrics": {
+        "documentWidth": 1440,
+        "viewportWidth": 1440,
+        "missingCopy": false,
+        "title": "词涟 · 用单词写一篇短文"
+      },
+      "observed": {
+        "fullSettings": {
+          "pass": true,
+          "selector": ".creation-panel #create-model"
+        },
+        "wordPicker": {
+          "pass": true,
+          "selector": "#word-search"
+        },
+        "benefit": {
+          "pass": true,
+          "selector": "#benefit-summary",
+          "text": "最多返修2次"
+        },
+        "interaction": {
+          "pass": true,
+          "sequence": [
+            "generating",
+            "draft",
+            "review1",
+            "repair1",
+            "review2",
+            "repair2"
+          ]
+        }
+      }
+    },
+    {
+      "name": "create-mobile-incomplete-save",
+      "query": "page=create&plan=pro&limit=2&stage=incomplete&lang=zh",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "screenshot": "02-create-incomplete-390.png",
+      "pass": true,
+      "errors": [],
+      "metrics": {
+        "documentWidth": 390,
+        "viewportWidth": 390,
+        "missingCopy": false,
+        "title": "词涟 · 用单词写一篇短文"
+      },
+      "observed": {
+        "notice": {
+          "pass": true,
+          "selector": "#generation-status",
+          "text": "内容审校未完成"
+        },
+        "saveEnabled": {
+          "pass": true
+        }
+      }
+    },
+    {
+      "name": "plans-desktop-full-and-zero-preview",
+      "query": "page=plans&plan=pro&limit=0&adminState=preview&lang=zh",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "screenshot": "03-plans-zero-preview-1440.png",
+      "pass": true,
+      "errors": [],
+      "metrics": {
+        "documentWidth": 1440,
+        "viewportWidth": 1440,
+        "missingCopy": false,
+        "title": "词涟 · 计划管理"
+      },
+      "observed": {
+        "originalFields": {
+          "pass": true,
+          "selector": ".existing-settings .plan-existing-grid"
+        },
+        "twoBudgets": {
+          "pass": true
+        },
+        "zeroOff": {
+          "pass": true,
+          "selector": "#change-preview",
+          "text": "关闭 · 0次"
+        },
+        "impact": {
+          "pass": true,
+          "selector": "#change-preview",
+          "text": "仅影响保存后受理的新请求"
+        }
+      }
+    },
+    {
+      "name": "plans-mobile-conflict-local99-remote2",
+      "query": "page=plans&plan=pro&limit=99&adminState=conflict&remote=2&lang=zh",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "screenshot": "04-plans-conflict-390.png",
+      "pass": true,
+      "errors": [],
+      "metrics": {
+        "documentWidth": 390,
+        "viewportWidth": 390,
+        "missingCopy": false,
+        "title": "词涟 · 计划管理"
+      },
+      "observed": {
+        "local": {
+          "pass": true,
+          "selector": "#version-conflict",
+          "text": "最多99次"
+        },
+        "remote": {
+          "pass": true,
+          "selector": "#version-conflict",
+          "text": "最多2次"
+        },
+        "preserve": {
+          "pass": true,
+          "selector": "#version-conflict",
+          "text": "未发生部分保存"
+        }
+      }
+    },
+    {
+      "name": "plan-boundaries-and-invalid",
+      "query": "page=plans&plan=pro&limit=100&adminState=edit&lang=en",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "screenshot": null,
+      "pass": true,
+      "errors": [],
+      "metrics": {
+        "documentWidth": 768,
+        "viewportWidth": 768,
+        "missingCopy": false,
+        "title": "WordWeave · Plan management"
+      },
+      "observed": {
+        "invalid100": {
+          "pass": true
+        },
+        "previewDisabled": {
+          "pass": true
+        },
+        "english": {
+          "pass": true,
+          "selector": "h1",
+          "text": "Plan management"
+        }
+      }
+    },
+    {
+      "name": "presets-desktop-incomplete-publish",
+      "query": "page=presets&mode=enhanced&previewState=incomplete&confirmed=1&lang=zh",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "screenshot": "05-presets-incomplete-1440.png",
+      "pass": true,
+      "errors": [],
+      "metrics": {
+        "documentWidth": 1440,
+        "viewportWidth": 1440,
+        "missingCopy": false,
+        "title": "词涟 · 首页预设"
+      },
+      "observed": {
+        "fullEditor": {
+          "pass": true,
+          "selector": ".preset-config-grid"
+        },
+        "modeFixedOne": {
+          "pass": true,
+          "selector": "#preview-mode",
+          "text": "最多1次"
+        },
+        "notice": {
+          "pass": true,
+          "selector": "#preview-result",
+          "text": "内容审校未完成"
+        },
+        "publishEnabled": {
+          "pass": true
+        }
+      }
+    },
+    {
+      "name": "presets-mobile-pending",
+      "query": "page=presets&mode=enhanced&previewState=pending&lang=zh",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "screenshot": "06-presets-pending-390.png",
+      "pass": true,
+      "errors": [],
+      "metrics": {
+        "documentWidth": 390,
+        "viewportWidth": 390,
+        "missingCopy": false,
+        "title": "词涟 · 首页预设"
+      },
+      "observed": {
+        "recheck": {
+          "pass": true,
+          "selector": "#preset-recheck"
+        },
+        "publishDisabled": {
+          "pass": true
+        },
+        "pending": {
+          "pass": true,
+          "selector": "#preview-result",
+          "text": "暂不开放保存"
+        }
+      }
+    },
+    {
+      "name": "limit-0",
+      "pass": true,
+      "value": "0"
+    },
+    {
+      "name": "limit-99",
+      "pass": true,
+      "value": "99"
+    },
+    {
+      "name": "limit--1",
+      "pass": true,
+      "value": "-1"
+    },
+    {
+      "name": "limit-100",
+      "pass": true,
+      "value": "100"
+    },
+    {
+      "name": "limit-1.5",
+      "pass": true,
+      "value": "1.5"
+    },
+    {
+      "name": "limit-empty",
+      "pass": true,
+      "value": ""
+    }
+  ],
+  "summary": {
+    "passed": 13,
+    "failed": 0,
+    "screenshotsSaved": 6,
+    "modelViewed": 0
+  }
+}

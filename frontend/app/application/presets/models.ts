@@ -5,6 +5,9 @@ import type {
   PassageLength,
   QuotaModel,
   PageModel,
+  GroupCode,
+  ContentServiceModel,
+  NativePolicyModel,
 } from "@application/shared/models";
 export interface PresetModel {
   id: string;
@@ -34,6 +37,14 @@ export interface PresetDetailModel {
   extraQuota: { remaining: number; earliestExpiresAt: string | null };
   canStart: boolean;
   blockReason: string | null;
+  effectivePlan: {
+    code: GroupCode;
+    origin: "base" | "trial" | "visitor";
+    trialEndsAt: string | null;
+  };
+  configurationRevision: string;
+  contentService: ContentServiceModel;
+  nativeCorrectionPolicy: NativePolicyModel;
 }
 export interface PresetsPort {
   listPresets(

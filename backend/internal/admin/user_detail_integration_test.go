@@ -451,10 +451,11 @@ func TestAdminQuotaQueryPlan(t *testing.T) {
 	quotaExec(t, ctx, pool, "UPDATE wordweave.entitlement_groups SET rolling_quota_limit=500 WHERE code='registered'")
 	quotaExec(t, ctx, pool, `INSERT INTO wordweave.generation_runs(account_id,credited_account_id,group_code_snapshot,model_id,model_display_name_snapshot,
 		provider_model_id_snapshot,meaning_language,scenario,length_code,minimum_words_snapshot,max_entries_snapshot,call_status,disposition,
-		quota_charged,counts_toward_cumulative,started_at,completed_at)
+		quota_charged,counts_toward_cumulative,started_at,completed_at,content_policy_version,model_request_parameters_snapshot)
 		SELECT CASE WHEN n<=10000 THEN $1::uuid ELSE $2::uuid END,CASE WHEN n<=10000 THEN $1::uuid ELSE $2::uuid END,
 		'registered',$3,'Quota fixture','test/quota','en','story','short',30,5,'valid','abandoned',true,true,
-		CASE WHEN n<=100 THEN statement_timestamp()-interval '1 hour' ELSE statement_timestamp()-interval '25 hours' END,statement_timestamp()
+		CASE WHEN n<=100 THEN statement_timestamp()-interval '1 hour' ELSE statement_timestamp()-interval '25 hours' END,statement_timestamp(),NULL,
+		'{"version":"custom-parameters-v1","custom_parameters":{},"output_mode":"prompt","max_output_tokens":null,"structured_route":"unchanged"}'::jsonb
 		FROM generate_series(1,30000) n`, id, other, model)
 	quotaExec(t, ctx, pool, `INSERT INTO wordweave.plan_quota_states(owner_id,plan_code,origin,reset_at) SELECT id,group_code,'base',quota_reset_at FROM wordweave.accounts WHERE role='learner' ON CONFLICT DO NOTHING`)
 	quotaExec(t, ctx, pool, `INSERT INTO wordweave.generation_charges(run_id,account_id,source_kind,plan_code,origin,quota_epoch,state,charged_at,settled_at) SELECT id,account_id,'plan',group_code_snapshot,'base',0,'consumed',started_at,completed_at FROM wordweave.generation_runs WHERE account_id IS NOT NULL`)
@@ -599,8 +600,8 @@ func quotaRun(t *testing.T, ctx context.Context, pool *pgxpool.Pool, account, vi
 	err := pool.QueryRow(ctx, `INSERT INTO wordweave.generation_runs(
 		account_id,visitor_id,credited_account_id,group_code_snapshot,model_id,model_display_name_snapshot,provider_model_id_snapshot,
 		meaning_language,scenario,length_code,minimum_words_snapshot,quota_limit_snapshot,max_entries_snapshot,
-		call_status,disposition,quota_charged,counts_toward_cumulative,started_at,completed_at)
-		VALUES ($1,$2,$3,$4,$5,'Quota fixture','test/quota','en','story','short',30,999,5,$6,$7,$8,$9,$10,$11) RETURNING id`,
+		call_status,disposition,quota_charged,counts_toward_cumulative,started_at,completed_at,content_policy_version,model_request_parameters_snapshot)
+		VALUES ($1,$2,$3,$4,$5,'Quota fixture','test/quota','en','story','short',30,999,5,$6,$7,$8,$9,$10,$11,NULL,'{"version":"custom-parameters-v1","custom_parameters":{},"output_mode":"prompt","max_output_tokens":null,"structured_route":"unchanged"}') RETURNING id`,
 		accountValue, visitorValue, creditValue, group, model, status, disposition, charged, cumulative, at, completed).Scan(&id)
 	if err != nil {
 		t.Fatal(err)

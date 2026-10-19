@@ -115,7 +115,7 @@ func (q *Queries) HasActiveVisitorGeneration(ctx context.Context, visitorID uuid
 }
 
 const hasModelCredential = `-- name: HasModelCredential :one
-SELECT EXISTS(SELECT 1 FROM wordweave.ai_providers WHERE credential_configured)
+SELECT EXISTS(SELECT 1 FROM wordweave.ai_providers WHERE credential_configured AND retired_at IS NULL)
 `
 
 func (q *Queries) HasModelCredential(ctx context.Context) (bool, error) {
@@ -156,7 +156,8 @@ const listGroupModels = `-- name: ListGroupModels :many
 SELECT m.id, m.display_name, m.description, m.enabled
 FROM wordweave.group_models gm
 JOIN wordweave.ai_models m ON m.id = gm.model_id
-WHERE gm.group_code = $1 AND m.enabled
+JOIN wordweave.ai_providers p ON p.id = m.provider_id
+WHERE gm.group_code = $1 AND m.enabled AND m.retired_at IS NULL AND p.retired_at IS NULL
 ORDER BY lower(m.display_name), m.id
 `
 

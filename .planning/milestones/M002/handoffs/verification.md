@@ -1,3 +1,7 @@
+> **M002-QA-CR313-01 当前登记**：配置可移植性独立QA通过但仍为 `awaiting_user_review`；[本轮交接](config-portability-verification.md)、[报告](../verification/config-portability/report.md)、[矩阵](../verification/config-portability/coverage-matrix.md)、[UAT清单](../verification/config-portability/uat.md)。本前缀不改变下方既有交接正文，不授权关闭CR313/M002或进入下一门禁。
+
+> **M002续做索引124**：本里程碑包含原M003全部需求。[较新同类原件](../../M002-legacy-M003/handoffs/verification.md)及其已记录的逐项接收/验证均归M002；旧编号只是历史标识。当前工作与未完成项见[续做索引](../continuation.md)，下方前期记录保留，不能据旧完成态关闭当前M002。
+
 ---
 milestone: M002
 stage: milestone-complete

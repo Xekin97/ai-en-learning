@@ -56,7 +56,7 @@ func validAchievementKind(kind string) bool {
 }
 
 func readAchievements(ctx context.Context, tx pgx.Tx, kind string) ([]AchievementConfig, error) {
-	rows, err := tx.Query(ctx, `SELECT id,kind,threshold,enabled,name_zh,name_en,title_zh,title_en,description_zh,description_en,points,experience,item_definition_id,item_count FROM wordweave.achievement_tiers WHERE kind=$1 ORDER BY threshold,id`, kind)
+	rows, err := tx.Query(ctx, `SELECT id,kind,threshold,enabled,name_zh,name_en,title_zh,title_en,description_zh,description_en,points,experience,item_definition_id,item_count FROM wordweave.achievement_tiers WHERE kind=$1 AND retired_at IS NULL ORDER BY threshold,id`, kind)
 	if err != nil {
 		return nil, err
 	}
@@ -227,7 +227,7 @@ func (s *Service) SaveAchievements(ctx context.Context, in AchievementChanges) (
 	for _, row := range merged {
 		byID[row.ID] = row
 	}
-	if _, err = tx.Exec(ctx, `SET CONSTRAINTS wordweave.achievement_tiers_kind_threshold_unique DEFERRED`); err != nil {
+	if _, err = tx.Exec(ctx, `SET CONSTRAINTS wordweave.achievement_tiers_active_threshold_unique DEFERRED`); err != nil {
 		return AchievementSaved{}, err
 	}
 	for i, change := range in.Changes {
@@ -241,7 +241,7 @@ func (s *Service) SaveAchievements(ctx context.Context, in AchievementChanges) (
 			return AchievementSaved{}, err
 		}
 	}
-	if _, err = tx.Exec(ctx, `SET CONSTRAINTS wordweave.achievement_tiers_kind_threshold_unique IMMEDIATE`); err != nil {
+	if _, err = tx.Exec(ctx, `SET CONSTRAINTS wordweave.achievement_tiers_active_threshold_unique IMMEDIATE`); err != nil {
 		return AchievementSaved{}, err
 	}
 	c.Revision, err = business.AdvanceConfiguration(ctx, tx)

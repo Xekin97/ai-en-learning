@@ -32,7 +32,7 @@ func (s *Server) writePresetProblem(w http.ResponseWriter, r *http.Request, err 
 			code = "preset_unavailable"
 		}
 		writeProblem(w, r, status, code, "Preset unavailable", "Refresh the preset and check its configuration.")
-	case errors.Is(err, generation.ErrInvalidInput), errors.Is(err, generation.ErrForbidden), errors.Is(err, generation.ErrQuotaExhausted), errors.Is(err, generation.ErrGenerationInProgress), errors.Is(err, generation.ErrGenerationUnavailable):
+	case errors.Is(err, generation.ErrInvalidInput), errors.Is(err, generation.ErrForbidden), errors.Is(err, generation.ErrQuotaExhausted), errors.Is(err, generation.ErrGenerationInProgress), errors.Is(err, generation.ErrGenerationUnavailable), errors.Is(err, generation.ErrGenerationConfigurationInvalid), errors.Is(err, generation.ErrGenerationBusy):
 		s.writeGenerationProblem(w, r, err)
 	case errors.Is(err, generation.ErrRunNotFound):
 		writeProblem(w, r, 404, "not_found", "Not found", "The preview could not be found.")
@@ -77,6 +77,10 @@ func (s *Server) adminSavePreset(w http.ResponseWriter, r *http.Request) {
 		if !decodeConfiguration(w, r, &input) {
 			return
 		}
+	}
+	if input.PreviewContentMode != "basic" && input.PreviewContentMode != "enhanced" {
+		s.writePresetProblem(w, r, generation.ErrInvalidInput)
+		return
 	}
 	actor, _ := actorFromContext(r.Context())
 	p, revision, err := s.generation.SavePreset(r.Context(), actor, id, input, expected)
@@ -125,16 +129,15 @@ func (s *Server) publishPreset(w http.ResponseWriter, r *http.Request, publish b
 	var confirmed bool
 	if publish {
 		var body struct {
-			Version   uuid.UUID `json:"draft_version"`
-			Expected  string    `json:"expected_revision"`
-			Confirmed bool      `json:"confirmed"`
+			Version  uuid.UUID `json:"draft_version"`
+			Expected string    `json:"expected_revision"`
 		}
 		if !decodeConfiguration(w, r, &body) {
 			return
 		}
 		version = body.Version
 		expected = body.Expected
-		confirmed = body.Confirmed
+		confirmed = true
 	} else {
 		var body struct {
 			Expected  string `json:"expected_revision"`
@@ -252,12 +255,16 @@ func (s *Server) publicPreset(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	writeJSON(w, r, 200, struct {
-		Preset      generation.PublicPreset `json:"preset"`
-		Quota       entitlement.Quota       `json:"quota"`
-		Extra       entitlement.ExtraQuota  `json:"extra_quota"`
-		CanStart    bool                    `json:"can_start"`
-		BlockReason *string                 `json:"block_reason"`
-	}{p.Preset, p.Quota, p.Extra, p.CanStart, p.BlockReason})
+		Preset                 generation.PublicPreset    `json:"preset"`
+		Quota                  entitlement.Quota          `json:"quota"`
+		Extra                  entitlement.ExtraQuota     `json:"extra_quota"`
+		CanStart               bool                       `json:"can_start"`
+		BlockReason            *string                    `json:"block_reason"`
+		EffectivePlan          entitlement.EffectivePlan  `json:"effective_plan"`
+		ConfigurationRevision  string                     `json:"configuration_revision"`
+		ContentService         entitlement.ContentService `json:"content_service"`
+		NativeCorrectionPolicy entitlement.NativePolicy   `json:"native_correction_policy"`
+	}{p.Preset, p.Quota, p.Extra, p.CanStart, p.BlockReason, p.EffectivePlan, p.ConfigurationRevision, p.ContentService, p.NativeCorrectionPolicy})
 }
 func (s *Server) presetGenerationStream(w http.ResponseWriter, r *http.Request) {
 	started := time.Now()

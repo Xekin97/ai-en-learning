@@ -79,20 +79,22 @@ SELECT entry
 FROM wordweave.vocabulary_entries
 WHERE snapshot_id = (SELECT id FROM wordweave.vocabulary_snapshots WHERE version = 'm001')
   AND lower(entry) LIKE '%' || lower($1) || '%'
+  AND lower(entry) <> ALL($2::text[])
 ORDER BY
   CASE WHEN lower(entry) LIKE lower($1) || '%' THEN 0 ELSE 1 END,
   length(entry),
   entry
-LIMIT $2
+LIMIT $3
 `
 
 type SearchVocabularyParams struct {
-	Query       string `json:"query"`
-	ResultLimit int32  `json:"result_limit"`
+	Query          string   `json:"query"`
+	BlockedEntries []string `json:"blocked_entries"`
+	ResultLimit    int32    `json:"result_limit"`
 }
 
 func (q *Queries) SearchVocabulary(ctx context.Context, arg SearchVocabularyParams) ([]string, error) {
-	rows, err := q.db.Query(ctx, searchVocabulary, arg.Query, arg.ResultLimit)
+	rows, err := q.db.Query(ctx, searchVocabulary, arg.Query, arg.BlockedEntries, arg.ResultLimit)
 	if err != nil {
 		return nil, err
 	}

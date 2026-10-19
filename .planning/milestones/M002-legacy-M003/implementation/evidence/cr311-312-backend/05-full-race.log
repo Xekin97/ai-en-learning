@@ -1,0 +1,39 @@
+COMMAND
+GOTOOLCHAIN=go1.26.7 go test -race -timeout 180s ./...
+
+STDOUT
+?   	wordweave/assets/lexicon	[no test files]
+?   	wordweave/assets/vocabulary	[no test files]
+?   	wordweave/cmd/build-lexicon	[no test files]
+ok  	wordweave/cmd/build-provenance	1.335s
+?   	wordweave/cmd/wordweave	[no test files]
+ok  	wordweave/cmd/wordweave-admin	1.351s
+?   	wordweave/db/migrations	[no test files]
+ok  	wordweave/internal/admin	1.538s
+ok  	wordweave/internal/ai	18.569s
+?   	wordweave/internal/analytics	[no test files]
+ok  	wordweave/internal/buildinfo	2.482s
+ok  	wordweave/internal/capacity	2.258s
+?   	wordweave/internal/dbgen	[no test files]
+ok  	wordweave/internal/diagnostics	4.912s
+?   	wordweave/internal/entitlement	[no test files]
+ok  	wordweave/internal/generation	5.259s
+ok  	wordweave/internal/generationevidence	4.378s
+ok  	wordweave/internal/generationtrace	2.025s
+?   	wordweave/internal/generationtrace/tracetest	[no test files]
+ok  	wordweave/internal/growth	2.869s
+ok  	wordweave/internal/httpapi	2.911s
+ok  	wordweave/internal/identity	2.821s
+ok  	wordweave/internal/learning	1.678s
+?   	wordweave/internal/maintenance	[no test files]
+ok  	wordweave/internal/notices	1.708s
+ok  	wordweave/internal/observability	1.708s
+ok  	wordweave/internal/platform/business	1.488s
+ok  	wordweave/internal/platform/config	1.377s
+?   	wordweave/internal/platform/postgres	[no test files]
+ok  	wordweave/internal/platform/security	3.801s
+ok  	wordweave/internal/review	1.474s
+ok  	wordweave/internal/vocabulary	1.438s
+ok  	wordweave/internal/wordnet	1.465s
+
+EXIT 0

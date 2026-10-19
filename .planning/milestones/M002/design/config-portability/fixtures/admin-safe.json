@@ -1,0 +1,482 @@
+{
+  "provenance": {
+    "kind": "design-synthetic",
+    "basis": [
+      "formal/vendor/M003/technical/fixtures/cr306/management.json",
+      "formal/vendor/M003/design/prototype/fixtures.json#plans",
+      "formal/vendor/M002/design/prototype/fixtures.json#items",
+      "formal/vendor/M002/design/prototype/fixtures.json#admin.sign/levels/achievements"
+    ],
+    "credential_policy": "No credential values. Preview differences are computed against frozen inherited fixtures without modifying them."
+  },
+  "models": {
+    "providers": [
+      {
+        "name": "OpenRouter",
+        "protocol": "OpenAI Chat Completions",
+        "baseUrl": "https://openrouter.ai/api/v1",
+        "credentialConfigured": true,
+        "models": [
+          {
+            "name": "DeepSeek candidate",
+            "providerModelId": "deepseek/deepseek-v4-flash-0731",
+            "description": "Synthetic configuration; platform support not verified.",
+            "enabled": true,
+            "outputMode": "json_schema"
+          },
+          {
+            "name": "Unmodified model",
+            "providerModelId": "example/model",
+            "description": "Synthetic configuration; platform support not verified.",
+            "enabled": true,
+            "outputMode": "prompt"
+          }
+        ]
+      },
+      {
+        "name": "Responses example",
+        "protocol": "OpenAI Responses",
+        "baseUrl": "https://responses.example.invalid/v1",
+        "credentialConfigured": true,
+        "models": [
+          {
+            "name": "Responses model",
+            "providerModelId": "example-responses",
+            "description": "Synthetic configuration; platform support not verified.",
+            "enabled": true,
+            "outputMode": "json_schema"
+          }
+        ]
+      },
+      {
+        "name": "Messages example",
+        "protocol": "Anthropic Messages",
+        "baseUrl": "https://messages.example.invalid/v1",
+        "credentialConfigured": true,
+        "models": [
+          {
+            "name": "Messages model",
+            "providerModelId": "example-messages",
+            "description": "Synthetic configuration; platform support not verified.",
+            "enabled": true,
+            "outputMode": "prompt"
+          }
+        ]
+      }
+    ],
+    "preview": {
+      "add": 1,
+      "update": 2,
+      "remove": 1,
+      "unchanged": 1,
+      "items": 4
+    },
+    "references": [
+      {
+        "source": "Visitor / Basic 计划",
+        "target": "Unmodified model"
+      },
+      {
+        "source": "模型探索卡",
+        "target": "Unmodified model"
+      }
+    ],
+    "changes": {
+      "add": [
+        {
+          "name": {
+            "zh": "Responses example › example-responses-alt",
+            "en": "Responses example › example-responses-alt"
+          },
+          "identity": "model:example-responses-alt",
+          "detail": {
+            "zh": "在现有 Responses example 连接新增模型；协议与连接地址保持不变。",
+            "en": "Adds a model to the existing Responses example connection; protocol and service URL stay unchanged."
+          },
+          "applied": {
+            "zh": "模型名称省略，按模型标识显示 example-responses-alt；说明为空；最大输出 token 未由本产品设置。",
+            "en": "The omitted display name uses the model ID example-responses-alt; description is empty; maximum output tokens is not set by this product."
+          }
+        }
+      ],
+      "update": [
+        {
+          "name": {
+            "zh": "OpenRouter › DeepSeek candidate",
+            "en": "OpenRouter › DeepSeek candidate"
+          },
+          "identity": "model:deepseek/deepseek-v4-flash-0731",
+          "detail": {
+            "zh": "说明更新；输出模式保持 json_schema，启用状态保持不变。",
+            "en": "Description changes; output mode remains json_schema and enabled state is unchanged."
+          }
+        },
+        {
+          "name": {
+            "zh": "Responses example › Responses model",
+            "en": "Responses example › Responses model"
+          },
+          "identity": "model:example-responses",
+          "detail": {
+            "zh": "输出模式从 json_schema → prompt；连接与模型标识保持不变。",
+            "en": "Output mode changes from json_schema to prompt; connection and model ID stay unchanged."
+          }
+        }
+      ],
+      "remove": [
+        {
+          "name": {
+            "zh": "OpenRouter › Unmodified model",
+            "en": "OpenRouter › Unmodified model"
+          },
+          "identity": "model:example/model",
+          "detail": {
+            "zh": "从活动模型配置移出；历史短文与运行记录保留。",
+            "en": "Removed from active model configuration; existing stories and run history remain."
+          }
+        }
+      ]
+    }
+  },
+  "plans": {
+    "items": [
+      {
+        "code": "visitor",
+        "name": "访客",
+        "priority": 0,
+        "limit": 0,
+        "maxEntries": 2,
+        "lengths": [
+          "short"
+        ],
+        "models": [
+          "DeepSeek candidate"
+        ],
+        "review": 0
+      },
+      {
+        "code": "basic",
+        "name": "普通",
+        "priority": 10,
+        "limit": 10,
+        "maxEntries": 8,
+        "lengths": [
+          "short",
+          "medium",
+          "long",
+          "xlong"
+        ],
+        "models": [
+          "DeepSeek candidate",
+          "Unmodified model"
+        ],
+        "review": 0
+      },
+      {
+        "code": "pro",
+        "name": "Pro",
+        "priority": 20,
+        "limit": 10,
+        "maxEntries": 8,
+        "lengths": [
+          "short",
+          "medium",
+          "long",
+          "xlong"
+        ],
+        "models": [
+          "DeepSeek candidate",
+          "Unmodified model"
+        ],
+        "review": 1
+      },
+      {
+        "code": "plus",
+        "name": "Plus",
+        "priority": 20,
+        "limit": null,
+        "maxEntries": 8,
+        "lengths": [
+          "short",
+          "medium",
+          "long",
+          "xlong"
+        ],
+        "models": [
+          "DeepSeek candidate",
+          "Unmodified model"
+        ],
+        "review": 1
+      }
+    ],
+    "preview": {
+      "add": 0,
+      "update": 3,
+      "remove": 0,
+      "unchanged": 1,
+      "items": 4
+    },
+    "changes": {
+      "add": [],
+      "update": [
+        {
+          "name": {
+            "zh": "访客计划",
+            "en": "Visitor plan"
+          },
+          "identity": "plan:visitor",
+          "detail": {
+            "zh": "滚动 24 小时额度 0 → 3；单次最大词数 2 → 3。",
+            "en": "Rolling 24-hour allowance changes from 0 to 3; maximum vocabulary changes from 2 to 3."
+          }
+        },
+        {
+          "name": {
+            "zh": "Pro 计划",
+            "en": "Pro plan"
+          },
+          "identity": "plan:pro",
+          "detail": {
+            "zh": "滚动 24 小时额度 10 → 20；返修上限 1 → 2。",
+            "en": "Rolling 24-hour allowance changes from 10 to 20; repair limit changes from 1 to 2."
+          }
+        },
+        {
+          "name": {
+            "zh": "Plus 计划",
+            "en": "Plus plan"
+          },
+          "identity": "plan:plus",
+          "detail": {
+            "zh": "单次最大词数 8 → 20；返修上限 1 → 4；滚动额度继续为无上限。",
+            "en": "Maximum vocabulary changes from 8 to 20; repair limit changes from 1 to 4; rolling allowance remains unlimited."
+          },
+          "applied": {
+            "zh": "源文件对滚动 24 小时额度显式提供 null，应用为“无上限”；必填字段若省略则拒绝。",
+            "en": "The file explicitly provides null for the rolling 24-hour allowance, applied as “Unlimited”; an omitted required field is rejected."
+          }
+        }
+      ],
+      "remove": []
+    }
+  },
+  "items": {
+    "items": [
+      {
+        "name": "补签卡",
+        "kind": "makeup",
+        "price": 30,
+        "status": "listed"
+      },
+      {
+        "name": "额外生成次数卡",
+        "kind": "extra",
+        "price": 50,
+        "status": "listed"
+      },
+      {
+        "name": "模型探索卡",
+        "kind": "model",
+        "price": 80,
+        "status": "listed"
+      },
+      {
+        "name": "高级计划体验卡",
+        "kind": "plan",
+        "price": 120,
+        "status": "listed"
+      }
+    ],
+    "preview": {
+      "add": 0,
+      "update": 2,
+      "remove": 1,
+      "unchanged": 1,
+      "items": 3
+    },
+    "references": [
+      {
+        "source": "七日涟漪奖励",
+        "target": "模型探索卡"
+      }
+    ],
+    "changes": {
+      "add": [],
+      "update": [
+        {
+          "name": {
+            "zh": "额外生成次数卡",
+            "en": "Extra-use card"
+          },
+          "identity": "item:count",
+          "detail": {
+            "zh": "兑换积分 50 → 40；仍保持上架。",
+            "en": "Point price changes from 50 to 40; remains listed."
+          }
+        },
+        {
+          "name": {
+            "zh": "高级计划体验卡",
+            "en": "Premium trial card"
+          },
+          "identity": "item:plan",
+          "detail": {
+            "zh": "兑换积分 120 → 200；道具类型与 Pro 计划关联保持不变。",
+            "en": "Point price changes from 120 to 200; item type and Pro-plan link stay unchanged."
+          }
+        }
+      ],
+      "remove": [
+        {
+          "name": {
+            "zh": "模型探索卡",
+            "en": "Model discovery card"
+          },
+          "identity": "item:model",
+          "detail": {
+            "zh": "从活动道具定义移出；库存、发放与使用流水保留。",
+            "en": "Removed from active item definitions; inventory, issuance, and usage history remain."
+          }
+        }
+      ]
+    }
+  },
+  "growth": {
+    "checkin": {
+      "base": 5,
+      "step": 1,
+      "cap": 10,
+      "xp": 10,
+      "masteryXp": 5
+    },
+    "levels": [
+      {
+        "level": 1,
+        "threshold": 0,
+        "points": 0,
+        "reward": "—"
+      },
+      {
+        "level": 2,
+        "threshold": 100,
+        "points": 10,
+        "reward": "—"
+      },
+      {
+        "level": 3,
+        "threshold": 200,
+        "points": 20,
+        "reward": "补签卡 × 1"
+      },
+      {
+        "level": 4,
+        "threshold": 300,
+        "points": 30,
+        "reward": "—"
+      }
+    ],
+    "achievements": {
+      "signin": 4,
+      "mastery": 4,
+      "review": 4,
+      "stories": 4
+    },
+    "preview": {
+      "add": 2,
+      "update": 4,
+      "remove": 1,
+      "unchanged": 19,
+      "items": 25
+    },
+    "effectiveDate": "2026-10-16 04:00",
+    "changes": {
+      "add": [
+        {
+          "name": {
+            "zh": "等级 5",
+            "en": "Level 5"
+          },
+          "identity": "level:5",
+          "detail": {
+            "zh": "新增门槛 480 XP，奖励 40 成长点。",
+            "en": "Adds threshold 480 XP with 40 growth points."
+          },
+          "applied": {
+            "zh": "源文件未选择奖励道具，应用为“无道具”。",
+            "en": "No reward item is selected in the file; applied as “No item”."
+          }
+        },
+        {
+          "name": {
+            "zh": "词语收藏家 V",
+            "en": "Word collector V"
+          },
+          "identity": "achievement:mastery:1000",
+          "detail": {
+            "zh": "新增 1000 词成就档位。",
+            "en": "Adds the 1,000-word achievement tier."
+          }
+        }
+      ],
+      "update": [
+        {
+          "name": {
+            "zh": "签到规则 › 基础积分",
+            "en": "Check-in rules › Base points"
+          },
+          "identity": "checkin:points",
+          "detail": {
+            "zh": "5 → 6。",
+            "en": "Changes from 5 to 6."
+          }
+        },
+        {
+          "name": {
+            "zh": "签到规则 › 连续递增",
+            "en": "Check-in rules › Streak increment"
+          },
+          "identity": "checkin:increment",
+          "detail": {
+            "zh": "1 → 2。",
+            "en": "Changes from 1 to 2."
+          }
+        },
+        {
+          "name": {
+            "zh": "等级 2",
+            "en": "Level 2"
+          },
+          "identity": "level:2",
+          "detail": {
+            "zh": "门槛 100 → 120 XP。",
+            "en": "Threshold changes from 100 to 120 XP."
+          }
+        },
+        {
+          "name": {
+            "zh": "等级 3",
+            "en": "Level 3"
+          },
+          "identity": "level:3",
+          "detail": {
+            "zh": "门槛 200 → 240 XP。",
+            "en": "Threshold changes from 200 to 240 XP."
+          }
+        }
+      ],
+      "remove": [
+        {
+          "name": {
+            "zh": "故事织造者 IV",
+            "en": "Story weaver IV"
+          },
+          "identity": "achievement:stories:100",
+          "detail": {
+            "zh": "从活动成就规则移出；已达成与领取历史保留。",
+            "en": "Removed from active achievement rules; attainment and claim history remain."
+          }
+        }
+      ]
+    }
+  }
+}

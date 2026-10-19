@@ -1,0 +1,70 @@
+---
+milestone: M003
+stage: technical-design
+review_status: PASS
+decision_id: TRANSITION-M003-051
+suggested_path: .planning/milestones/M002-legacy-M003/reviews/cr303-design-return-050.md
+---
+
+# CR303 → UI09-R3 定向回退门禁
+
+## 检查结果
+
+- 当前：`M003 / technical-design / gatekeeper / gatekeeper-owen / active`。
+- CR303 已记录两项确定冲突，责任阶段为 `uiux-design`；FE02 已安全停止相应写入。
+- `designer-tony` 已注册且名称校验通过；`technical-design → uiux-design` 为允许迁移。
+- 用户既有研发授权及 `USER-M003-FE02-NEXT` 已覆盖已确认行为的纠偏；无新增业务决策，毋须重复确认。
+- UI09-R2 用户接受的视觉基线、后端、DB、BE06-R1、容量设计及 CR302 均保留。
+- 回退仅限 CR303-01（基础/体验人数分别呈现、不可相加）与 CR303-02（N0 关闭态不得误称增强）；不重做全页视觉或扩大 API/数据范围。
+- UI 原始必需产物存在；UI09-R3 完成后仍须独立门禁交回 FE02。
+
+## 原始产物
+
+- [CR303 冲突单](/Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/.planning/milestones/M002-legacy-M003/changes/CR-303.md)
+- [UI09-R2 交接及恢复入口](/Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/.planning/milestones/M002-legacy-M003/handoffs/uiux.md)
+- [已确认业务语义](/Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/.planning/milestones/M002-legacy-M003/reviews/requirements-feedback.md:153)
+
+## 精确目标状态
+
+```yaml
+decision_id: TRANSITION-M003-051
+operation: transition-stage
+from_stage: technical-design
+stage: uiux-design
+active_role: uiux/base
+active_agent: designer-tony
+status: active
+authorized_by:
+  - USER-M003-CONTENT-20261009
+  - USER-M003-FE02-NEXT
+current_handoff: .planning/milestones/M002-legacy-M003/handoffs/uiux.md
+required_artifacts:
+  - .planning/milestones/M002-legacy-M003/design/theme.css
+  - .planning/milestones/M002-legacy-M003/design/prototype/index.html
+  - .planning/milestones/M002-legacy-M003/design/interactions.md
+  - .planning/milestones/M002-legacy-M003/design/responsive-accessibility.md
+  - .planning/milestones/M002-legacy-M003/handoffs/uiux.md
+allowed_transitions:
+  - technical-design
+  - product-planning
+open_change_requests:
+  - CR-302
+  - CR-303
+design_approval:
+  version: M003-UI-09-R2
+  status: user_design_accepted_baseline
+  targeted_revision: CR303_pending_UI09-R3
+design_work:
+  version: M003-UI-09-R3
+  status: in_progress
+  scope:
+    - PAGE-208 separate base_users and active_trial_users presentation
+    - PAGE-208 N0 badge must not claim enhanced service
+frontend_work:
+  version: M003-FE-02
+  status: blocked_on_CR303_UI09-R3
+technical_approval:
+  status: reopened_for_backend_stream_first_redesign
+```
+
+边界：UI09-R3 仅处理 CR303 两项、必要文档同步及有限浏览器证据；不批准 FE 实现、部署、迁移、模型调用或技术总验收。CR302 与全部全局遗留项继续保留。

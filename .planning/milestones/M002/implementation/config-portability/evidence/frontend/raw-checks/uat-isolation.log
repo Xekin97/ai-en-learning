@@ -1,0 +1,10 @@
+$ lsof -nP -iTCP:3015 -sTCP:LISTEN
+COMMAND   PID      USER   FD   TYPE             DEVICE SIZE/OFF NODE NAME
+nginx   66351 xekinzhuo    5u  IPv4 0x5412f65e2dffc221      0t0  TCP 127.0.0.1:3015 (LISTEN)
+nginx   66352 xekinzhuo    5u  IPv4 0x5412f65e2dffc221      0t0  TCP 127.0.0.1:3015 (LISTEN)
+$ ps -axo pid=,command= | rg output/server/index.mjs
+ 9480 /Users/xekinzhuo/.npm/_npx/387698761821791d/node_modules/node/bin/node /private/tmp/wordweave-m003-uat-real-003/frontend/.output/server/index.mjs
+55047 /Users/xekinzhuo/.npm/_npx/387698761821791d/node_modules/node/bin/node /var/folders/z9/99ckxr957v901zwwc8jdk8640000gn/T/wordweave-m002-integrated-5b9rnutq/frontend-gallery-meanings-20261002-r2/.output/server/index.mjs
+58350 node /var/folders/z9/99ckxr957v901zwwc8jdk8640000gn/T/wordweave-cr022-build-AP5n7I/.output/server/index.mjs
+$ test ! -e .output-cr313-final
+cleanup_exit=0

@@ -31,6 +31,8 @@ const usage = {
   output_tokens: null,
   cost: null,
   unknown_calls: 1,
+  invocation_unknown_calls: 0,
+  not_invoked_calls: 0,
 };
 const reset = () => {
   noticeVersion = 1;

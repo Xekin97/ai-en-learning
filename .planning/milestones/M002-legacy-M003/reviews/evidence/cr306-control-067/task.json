@@ -1,0 +1,26 @@
+{
+  "objective": "独立检查 PRODUCT08 CR-306 定向修订；按用户既有后台先行指令，单步恢复 technical-design / backend-alex 定义配置与能力合同。",
+  "inputs": [
+    ".planning/workflow/state.yaml",
+    ".planning/agt/project.yaml",
+    ".planning/agt/agents.yaml",
+    ".planning/milestones/M003/handoffs/product.md",
+    ".planning/milestones/M003/changes/CR-306.md",
+    ".planning/milestones/M003/product/evidence/cr306/check.json",
+    ".planning/milestones/M003/reviews/cr306-repair-gate-066.md",
+    ".planning/milestones/M003/reviews/requirements-feedback.md",
+    ".planning/milestones/M003/reviews/evidence/start/locked-profile.yaml"
+  ],
+  "output": ".planning/milestones/M003/reviews/cr306-product-gate-067.md",
+  "constraints": [
+    "只读控制检查，不修改专业产物/控制面/代码，不跑业务测试或真实调用。",
+    "锁定Profile1.0.0/product默认下一步UI，但用户已经明确后台设计先行；066已确认此次顺序。检查并记录这一个受授权CR定向恢复，不改Profile、不批准UI/FE/实现或整个technical阶段。",
+    "用户已要求编排此修复，例行字段/适配/未知能力设计不用重复批准；新视觉结果仍需用户评审。",
+    "核对PRODUCT08原件/需求确认/追踪/静态证据，无业务阻塞才能建议PASS；CR302及CR306保持open，原故障保留。",
+    "返回完整 Markdown 原件；子CLI只读，不尝试文件写入。host通过-o保存原文。"
+  ],
+  "decision_id": "TRANSITION-M003-067",
+  "requested_model": "gpt-5.6-terra",
+  "requested_effort": "medium",
+  "actual_model": "unknown"
+}

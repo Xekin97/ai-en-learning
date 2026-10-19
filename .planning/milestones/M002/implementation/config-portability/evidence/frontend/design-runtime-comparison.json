@@ -1,0 +1,148 @@
+{
+  "version": "M002-FI-CR313-01",
+  "checked_at": "2026-10-16T02:57:23.856Z",
+  "design_origin": "http://127.0.0.1:43132/formal/",
+  "application_origin": "http://127.0.0.1:43130",
+  "provider_calls": 0,
+  "configuration_writes": 0,
+  "observations": {
+    "formal_models": {
+      "actions": [
+        "导入配置",
+        "导出配置"
+      ],
+      "modal": true,
+      "title": "导入并替换模型配置",
+      "focus_inside": true,
+      "overflow": 0
+    },
+    "formal_plans": {
+      "modal": true,
+      "focus_inside": true,
+      "focus_returned": true
+    },
+    "formal_operations": {
+      "items_title": "导入并替换道具定义",
+      "growth_title": "Import and replace growth rules"
+    },
+    "application_models": {
+      "actions": [
+        "Import configuration",
+        "Export configuration"
+      ],
+      "modal": true,
+      "title": "Import and replace model configuration",
+      "focus_inside": true,
+      "overflow": 0
+    },
+    "application_plans": {
+      "modal": true,
+      "focus_inside": true,
+      "backdrop_kept_open": true,
+      "url_unchanged": true,
+      "focus_returned": true
+    },
+    "application_operations": {
+      "items_title": "Import and replace item definitions",
+      "growth_title": "Import and replace growth rules"
+    }
+  },
+  "checks": [
+    {
+      "name": "formal-models-import-is-modal-and-usable",
+      "pass": true,
+      "details": {
+        "actions": [
+          "导入配置",
+          "导出配置"
+        ],
+        "modal": true,
+        "title": "导入并替换模型配置",
+        "focus_inside": true,
+        "overflow": 0
+      }
+    },
+    {
+      "name": "formal-plan-priority-is-top-layer-and-returns-focus",
+      "pass": true,
+      "details": {
+        "modal": true,
+        "focus_inside": true,
+        "focus_returned": true
+      }
+    },
+    {
+      "name": "formal-operations-tabs-map-to-independent-categories",
+      "pass": true,
+      "details": {
+        "items_title": "导入并替换道具定义",
+        "growth_title": "Import and replace growth rules"
+      }
+    },
+    {
+      "name": "implementation-models-preserves-modal-action-pattern",
+      "pass": true,
+      "details": {
+        "actions": [
+          "Import configuration",
+          "Export configuration"
+        ],
+        "modal": true,
+        "title": "Import and replace model configuration",
+        "focus_inside": true,
+        "overflow": 0
+      }
+    },
+    {
+      "name": "implementation-plan-priority-matches-formal-interaction",
+      "pass": true,
+      "details": {
+        "modal": true,
+        "focus_inside": true,
+        "backdrop_kept_open": true,
+        "url_unchanged": true,
+        "focus_returned": true
+      }
+    },
+    {
+      "name": "implementation-operations-preserves-independent-category-entry",
+      "pass": true,
+      "details": {
+        "items_title": "Import and replace item definitions",
+        "growth_title": "Import and replace growth rules"
+      }
+    },
+    {
+      "name": "formal-and-implementation-share-modal-category-and-focus-contract",
+      "pass": true,
+      "details": {
+        "formal_categories": [
+          "models",
+          "plans",
+          "items",
+          "growth"
+        ],
+        "implementation_routes": [
+          "/admin/models",
+          "/admin/plans",
+          "/admin/growth"
+        ]
+      }
+    },
+    {
+      "name": "browser-console-and-page-errors",
+      "pass": true,
+      "details": {
+        "console_errors": [],
+        "page_errors": []
+      }
+    }
+  ],
+  "console_errors": [],
+  "page_errors": [],
+  "summary": {
+    "total": 8,
+    "passed": 8,
+    "failed": 0
+  }
+}

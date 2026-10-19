@@ -4,6 +4,7 @@ import (
 	"context"
 	"errors"
 	"log/slog"
+	"strings"
 
 	"github.com/google/uuid"
 	"github.com/jackc/pgx/v5"
@@ -23,6 +24,9 @@ func (service *Service) ReconcileFailure(ctx context.Context, runID uuid.UUID, s
 	trace.Begin(generationtrace.Settlement)
 	trace.Check(generationtrace.Settlement, "cas", -1)
 	defer func() {
+		if resultErr == nil && result.Status != "pending" {
+			service.resolveSettlementUnknown(runID, false)
+		}
 		trace.Settled(result.Status, result.QuotaRefunded)
 		finishTrace(ctx, generationtrace.Settlement, resultErr)
 	}()
@@ -66,8 +70,51 @@ func (service *Service) ReconcileFailure(ctx context.Context, runID uuid.UUID, s
 	return outcome, nil
 }
 
+// ReconcileCapacityPending confirms every in-memory unknown acceptance or
+// terminal fact before reopening admission. It never repeats an AI call.
+func (service *Service) ReconcileCapacityPending(ctx context.Context) {
+	if service.capacity == nil {
+		return
+	}
+	for _, key := range service.capacity.PendingKeys() {
+		if ctx.Err() != nil {
+			return
+		}
+		kind, rawID, ok := strings.Cut(key, ":")
+		id, parseErr := uuid.Parse(rawID)
+		if !ok || parseErr != nil {
+			continue
+		}
+		switch kind {
+		case "generation":
+			var status string
+			err := service.app.QueryRow(ctx, `SELECT call_status FROM wordweave.generation_runs WHERE id=$1`, id).Scan(&status)
+			if errors.Is(err, pgx.ErrNoRows) || (err == nil && status != "active") {
+				service.resolveSettlementUnknown(id, false)
+				continue
+			}
+			if err == nil {
+				_, _ = service.ReconcileFailure(ctx, id, "server_failed", "settlement_recovery")
+			}
+		case "preview":
+			var status string
+			err := service.app.QueryRow(ctx, `SELECT status FROM wordweave.preset_preview_runs WHERE id=$1`, id).Scan(&status)
+			if errors.Is(err, pgx.ErrNoRows) || (err == nil && status != "active") {
+				service.resolveSettlementUnknown(id, true)
+				continue
+			}
+			if err == nil {
+				if settled, settleErr := service.SettlePreview(ctx, id, "failed", "settlement_recovery"); settleErr == nil && settled != "pending" {
+					service.resolveSettlementUnknown(id, true)
+				}
+			}
+		}
+	}
+}
+
 // Runs under the maintenance caller's whole-batch timeout, never retries AI.
 func (service *Service) RetryPendingFailures(ctx context.Context, limit int) {
+	service.ReconcileCapacityPending(ctx)
 	for _, failure := range service.registry.PendingFailures(limit) {
 		if ctx.Err() != nil {
 			return

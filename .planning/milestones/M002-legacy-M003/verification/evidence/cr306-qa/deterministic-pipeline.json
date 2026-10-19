@@ -1,0 +1,1046 @@
+{
+  "scope": "Formal backend + new PostgreSQL 18 current-schema database + deterministic synthetic provider; no real-provider quality or production-capacity claim.",
+  "checks": {
+    "inflight_run_keeps_original_parameters": {
+      "pass": true,
+      "detail": [
+        {
+          "stage": "planning",
+          "model": "synthetic/snapshot-slow",
+          "temperature": 0.15,
+          "reasoning_enabled": true,
+          "has_business_schema": true,
+          "has_stream": true,
+          "has_messages": true,
+          "provider_require_parameters": false
+        },
+        {
+          "stage": "generation",
+          "model": "synthetic/snapshot-slow",
+          "temperature": 0.15,
+          "reasoning_enabled": true,
+          "has_business_schema": true,
+          "has_stream": true,
+          "has_messages": true,
+          "provider_require_parameters": false
+        },
+        {
+          "stage": "fixed_edit",
+          "model": "synthetic/snapshot-slow",
+          "temperature": 0.15,
+          "reasoning_enabled": true,
+          "has_business_schema": true,
+          "has_stream": true,
+          "has_messages": true,
+          "provider_require_parameters": false
+        },
+        {
+          "stage": "content_review",
+          "model": "synthetic/snapshot-slow",
+          "temperature": 0.15,
+          "reasoning_enabled": true,
+          "has_business_schema": true,
+          "has_stream": true,
+          "has_messages": true,
+          "provider_require_parameters": false
+        }
+      ]
+    },
+    "enhanced_pipeline_survives_parameter_binding": {
+      "pass": true,
+      "detail": null
+    },
+    "new_run_uses_updated_parameters": {
+      "pass": true,
+      "detail": [
+        {
+          "stage": "planning",
+          "model": "synthetic/snapshot-slow",
+          "temperature": 0.85,
+          "reasoning_enabled": false,
+          "has_business_schema": true,
+          "has_stream": true,
+          "has_messages": true,
+          "provider_require_parameters": false
+        },
+        {
+          "stage": "generation",
+          "model": "synthetic/snapshot-slow",
+          "temperature": 0.85,
+          "reasoning_enabled": false,
+          "has_business_schema": true,
+          "has_stream": true,
+          "has_messages": true,
+          "provider_require_parameters": false
+        }
+      ]
+    },
+    "n0_keeps_common_plan_writer": {
+      "pass": true,
+      "detail": null
+    },
+    "n2_executes_two_conditional_repairs": {
+      "pass": true,
+      "detail": [
+        "planning",
+        "generation",
+        "fixed_edit",
+        "content_review",
+        "content_repair",
+        "content_review",
+        "content_repair",
+        "content_review"
+      ]
+    },
+    "q02_keeps_last_valid_and_save": {
+      "pass": true,
+      "detail": {
+        "terminal": {
+          "seq": 22,
+          "run_id": "01a12f0b-a5df-7399-869e-fe2b8f593193",
+          "final_content_version": 2,
+          "result": {
+            "passage": "Mara arranged the table beside the garden. Young people share grapes at a community table. Neighbors offer practical ideas and helpful support during the calm afternoon. Neighbors offer practical ideas and helpful support during the calm afternoon. Neighbors offer practical ideas and helpful support during the calm afternoon. Neighbors offer practical ideas and helpful support during the calm afternoon. Neighbors offer practical ideas and helpful support during the calm afternoon. Neighbors offer practical ideas and helpful support during the calm afternoon. Neighbors offer practical ideas and helpful support during the calm afternoon. Neighbors offer practical ideas and helpful support during the calm afternoon. Neighbors offer practical ideas and helpful support during the calm afternoon. Neighbors offer practical ideas and helpful support during the calm afternoon.",
+            "tags": [
+              "社区",
+              "分享"
+            ],
+            "targets": [
+              {
+                "entry": "grape",
+                "entry_meaning": "葡萄；葡萄藤的果实。",
+                "hint_phrase": "the grapes",
+                "hint_blanks": [
+                  {
+                    "start": 4,
+                    "end": 10
+                  }
+                ],
+                "occurrences": [
+                  {
+                    "surface": "grapes",
+                    "start": 62,
+                    "end": 68
+                  }
+                ]
+              },
+              {
+                "entry": "young",
+                "entry_meaning": "年轻的；年幼的。",
+                "hint_phrase": "the young",
+                "hint_blanks": [
+                  {
+                    "start": 4,
+                    "end": 9
+                  }
+                ],
+                "occurrences": [
+                  {
+                    "surface": "Young",
+                    "start": 43,
+                    "end": 48
+                  }
+                ]
+              }
+            ]
+          },
+          "content_outcome": "service_incomplete",
+          "completion_notice": "content_review_incomplete"
+        },
+        "save_status": 201
+      }
+    },
+    "fenced_plan_never_reaches_writer_or_save": {
+      "pass": true,
+      "detail": {
+        "calls": [
+          {
+            "stage": "planning",
+            "model": "synthetic/fenced-plan",
+            "temperature": null,
+            "reasoning_enabled": null,
+            "has_business_schema": true,
+            "has_stream": true,
+            "has_messages": true,
+            "provider_require_parameters": false
+          }
+        ],
+        "terminal": {
+          "seq": 6,
+          "code": "schema_error",
+          "quota_refunded": true,
+          "retryable": true,
+          "request_id": "req_5lVmStNgX4e1Uv3HWDdNNg"
+        },
+        "status": {
+          "data": {
+            "contract_version": "m003-stream-v5",
+            "run_id": "01a12f0b-a980-7ba9-b20f-77ef7129df1a",
+            "status": "failed",
+            "snapshot": {
+              "configuration_revision": "6Pg455IFOYR14eIAoCf5R7vGSf303ACucyTLAPCqyw8",
+              "effective_plan": {
+                "code": "basic",
+                "origin": "base"
+              },
+              "content_service": {
+                "native_validation": true,
+                "content_review_enabled": false,
+                "content_repair_limit": 0
+              },
+              "native_correction_policy": {
+                "version": "m003-native-policy-v1",
+                "scope": "logical_request",
+                "max_calls": 2,
+                "editable": false
+              }
+            },
+            "final_content_version": null,
+            "result": null,
+            "can_save": false,
+            "quota_refunded": true,
+            "content_outcome": "failed",
+            "completion_notice": null
+          },
+          "meta": {
+            "request_id": "req_taC6CNeP33DTr0Us8c7ohQ"
+          }
+        }
+      }
+    },
+    "heartbeat_only_has_no_fake_plan_and_is_cancellable": {
+      "pass": true,
+      "detail": {
+        "events": [
+          "generation.started",
+          "generation.progress",
+          "generation.cancelled"
+        ],
+        "cancel": {
+          "data": {
+            "status": "cancelled",
+            "quota_refunded": false
+          },
+          "meta": {
+            "request_id": "req_SM5jiuhkmv8YKH_UAd_ACg"
+          }
+        }
+      }
+    },
+    "db_snapshots_match_old_and_new_runs": {
+      "pass": true,
+      "detail": {
+        "first": {
+          "version": "custom-parameters-v1",
+          "output_mode": "json_schema",
+          "structured_route": "unchanged",
+          "custom_parameters": {
+            "reasoning": {
+              "enabled": true
+            },
+            "temperature": 0.15
+          },
+          "max_output_tokens": null
+        },
+        "second": {
+          "version": "custom-parameters-v1",
+          "output_mode": "json_schema",
+          "structured_route": "unchanged",
+          "custom_parameters": {
+            "reasoning": {
+              "enabled": false
+            },
+            "temperature": 0.85
+          },
+          "max_output_tokens": null
+        }
+      }
+    },
+    "one_charge_record_per_accepted_run": {
+      "pass": true,
+      "detail": [
+        {
+          "run_id": "01a12f0b-88a6-70d5-93e9-f4cd1fe0f682",
+          "source_kind": "plan",
+          "plan_code": "pro",
+          "origin": "base",
+          "units": 1,
+          "state": "consumed"
+        },
+        {
+          "run_id": "01a12f0b-940a-704d-be09-6fcfc36290b5",
+          "source_kind": "plan",
+          "plan_code": "registered",
+          "origin": "base",
+          "units": 1,
+          "state": "consumed"
+        },
+        {
+          "run_id": "01a12f0b-9df0-705d-aaa4-3d75e2f5dba4",
+          "source_kind": "plan",
+          "plan_code": "pro",
+          "origin": "base",
+          "units": 1,
+          "state": "consumed"
+        },
+        {
+          "run_id": "01a12f0b-a5df-7399-869e-fe2b8f593193",
+          "source_kind": "plan",
+          "plan_code": "pro",
+          "origin": "base",
+          "units": 1,
+          "state": "consumed"
+        },
+        {
+          "run_id": "01a12f0b-a980-7ba9-b20f-77ef7129df1a",
+          "source_kind": "plan",
+          "plan_code": "registered",
+          "origin": "base",
+          "units": 1,
+          "state": "refunded"
+        },
+        {
+          "run_id": "01a12f0b-aa3b-7726-8eed-76c1b4fdc6cf",
+          "source_kind": "plan",
+          "plan_code": "registered",
+          "origin": "base",
+          "units": 1,
+          "state": "consumed"
+        }
+      ]
+    }
+  },
+  "flows": {
+    "snapshot_first": {
+      "status": 200,
+      "event_names": [
+        "generation.started",
+        "generation.progress",
+        "generation.plan_item",
+        "generation.plan_item",
+        "generation.plan_item",
+        "generation.progress",
+        "generation.edit",
+        "generation.edit",
+        "generation.edit",
+        "generation.edit",
+        "generation.edit",
+        "generation.edit",
+        "generation.edit",
+        "generation.edit",
+        "generation.edit",
+        "generation.edit",
+        "generation.edit",
+        "generation.edit",
+        "generation.edit",
+        "generation.edit",
+        "generation.progress",
+        "generation.validated"
+      ],
+      "started": {
+        "seq": 1,
+        "contract_version": "m003-stream-v5",
+        "stream_id": "36d64218-e3bd-4c30-b222-92c08166e63e",
+        "run_id": "01a12f0b-88a6-70d5-93e9-f4cd1fe0f682",
+        "snapshot": {
+          "configuration_revision": "I_ktv3tiR61llNTB6OsMxulSHC0rwjIacBwjGUZbEPQ",
+          "effective_plan": {
+            "code": "pro",
+            "origin": "base"
+          },
+          "content_service": {
+            "native_validation": true,
+            "content_review_enabled": true,
+            "content_repair_limit": 2
+          },
+          "native_correction_policy": {
+            "version": "m003-native-policy-v1",
+            "scope": "logical_request",
+            "max_calls": 2,
+            "editable": false
+          }
+        },
+        "generation_token_present": true
+      },
+      "terminal": {
+        "seq": 22,
+        "run_id": "01a12f0b-88a6-70d5-93e9-f4cd1fe0f682",
+        "final_content_version": 2,
+        "result": {
+          "passage": "Mara arranged the table beside the garden. Young people share grapes at a community table. Neighbors offer practical ideas and helpful support during the calm afternoon. Neighbors offer practical ideas and helpful support during the calm afternoon. Neighbors offer practical ideas and helpful support during the calm afternoon. Neighbors offer practical ideas and helpful support during the calm afternoon. Neighbors offer practical ideas and helpful support during the calm afternoon. Neighbors offer practical ideas and helpful support during the calm afternoon. Neighbors offer practical ideas and helpful support during the calm afternoon. Neighbors offer practical ideas and helpful support during the calm afternoon. Neighbors offer practical ideas and helpful support during the calm afternoon. Neighbors offer practical ideas and helpful support during the calm afternoon.",
+          "tags": [
+            "社区",
+            "分享"
+          ],
+          "targets": [
+            {
+              "entry": "grape",
+              "entry_meaning": "葡萄；葡萄藤的果实。",
+              "hint_phrase": "the grapes",
+              "hint_blanks": [
+                {
+                  "start": 4,
+                  "end": 10
+                }
+              ],
+              "occurrences": [
+                {
+                  "surface": "grapes",
+                  "start": 62,
+                  "end": 68
+                }
+              ]
+            },
+            {
+              "entry": "young",
+              "entry_meaning": "年轻的；年幼的。",
+              "hint_phrase": "the young",
+              "hint_blanks": [
+                {
+                  "start": 4,
+                  "end": 9
+                }
+              ],
+              "occurrences": [
+                {
+                  "surface": "Young",
+                  "start": 43,
+                  "end": 48
+                }
+              ]
+            }
+          ]
+        },
+        "content_outcome": "review_passed",
+        "completion_notice": null
+      },
+      "first_plan_item_ms": 2013,
+      "first_body_edit_ms": 2190
+    },
+    "snapshot_second": {
+      "status": 200,
+      "event_names": [
+        "generation.started",
+        "generation.progress",
+        "generation.plan_item",
+        "generation.plan_item",
+        "generation.plan_item",
+        "generation.progress",
+        "generation.edit",
+        "generation.edit",
+        "generation.edit",
+        "generation.edit",
+        "generation.edit",
+        "generation.edit",
+        "generation.edit",
+        "generation.progress",
+        "generation.validated"
+      ],
+      "started": {
+        "seq": 1,
+        "contract_version": "m003-stream-v5",
+        "stream_id": "4e9c0517-0800-4e84-bdc0-9c60b8d261a6",
+        "run_id": "01a12f0b-940a-704d-be09-6fcfc36290b5",
+        "snapshot": {
+          "configuration_revision": "6Pg455IFOYR14eIAoCf5R7vGSf303ACucyTLAPCqyw8",
+          "effective_plan": {
+            "code": "basic",
+            "origin": "base"
+          },
+          "content_service": {
+            "native_validation": true,
+            "content_review_enabled": false,
+            "content_repair_limit": 0
+          },
+          "native_correction_policy": {
+            "version": "m003-native-policy-v1",
+            "scope": "logical_request",
+            "max_calls": 2,
+            "editable": false
+          }
+        },
+        "generation_token_present": true
+      },
+      "terminal": {
+        "seq": 15,
+        "run_id": "01a12f0b-940a-704d-be09-6fcfc36290b5",
+        "final_content_version": 1,
+        "result": {
+          "passage": "Mara moved a chair beside the garden. Young people share grapes at a community table. Neighbors offer practical ideas and helpful support during the calm afternoon. Neighbors offer practical ideas and helpful support during the calm afternoon. Neighbors offer practical ideas and helpful support during the calm afternoon. Neighbors offer practical ideas and helpful support during the calm afternoon. Neighbors offer practical ideas and helpful support during the calm afternoon. Neighbors offer practical ideas and helpful support during the calm afternoon. Neighbors offer practical ideas and helpful support during the calm afternoon. Neighbors offer practical ideas and helpful support during the calm afternoon. Neighbors offer practical ideas and helpful support during the calm afternoon. Neighbors offer practical ideas and helpful support during the calm afternoon.",
+          "tags": [
+            "社区",
+            "分享"
+          ],
+          "targets": [
+            {
+              "entry": "grape",
+              "entry_meaning": "葡萄；葡萄藤的果实。",
+              "hint_phrase": "the grapes",
+              "hint_blanks": [
+                {
+                  "start": 4,
+                  "end": 10
+                }
+              ],
+              "occurrences": [
+                {
+                  "surface": "grapes",
+                  "start": 57,
+                  "end": 63
+                }
+              ]
+            },
+            {
+              "entry": "young",
+              "entry_meaning": "年轻的；年幼的。",
+              "hint_phrase": "the young",
+              "hint_blanks": [
+                {
+                  "start": 4,
+                  "end": 9
+                }
+              ],
+              "occurrences": [
+                {
+                  "surface": "Young",
+                  "start": 38,
+                  "end": 43
+                }
+              ]
+            }
+          ]
+        },
+        "content_outcome": "basic",
+        "completion_notice": null
+      },
+      "first_plan_item_ms": 2011,
+      "first_body_edit_ms": 2185
+    },
+    "enhanced_n2": {
+      "status": 200,
+      "event_names": [
+        "generation.started",
+        "generation.progress",
+        "generation.plan_item",
+        "generation.plan_item",
+        "generation.plan_item",
+        "generation.progress",
+        "generation.edit",
+        "generation.edit",
+        "generation.edit",
+        "generation.edit",
+        "generation.edit",
+        "generation.edit",
+        "generation.edit",
+        "generation.edit",
+        "generation.edit",
+        "generation.edit",
+        "generation.edit",
+        "generation.edit",
+        "generation.edit",
+        "generation.edit",
+        "generation.edit",
+        "generation.edit",
+        "generation.edit",
+        "generation.edit",
+        "generation.edit",
+        "generation.edit",
+        "generation.edit",
+        "generation.edit",
+        "generation.edit",
+        "generation.edit",
+        "generation.edit",
+        "generation.edit",
+        "generation.edit",
+        "generation.edit",
+        "generation.progress",
+        "generation.validated"
+      ],
+      "started": {
+        "seq": 1,
+        "contract_version": "m003-stream-v5",
+        "stream_id": "c8ee63e3-2f9a-44a8-b7dc-2d3b715a460e",
+        "run_id": "01a12f0b-9df0-705d-aaa4-3d75e2f5dba4",
+        "snapshot": {
+          "configuration_revision": "6Pg455IFOYR14eIAoCf5R7vGSf303ACucyTLAPCqyw8",
+          "effective_plan": {
+            "code": "pro",
+            "origin": "base"
+          },
+          "content_service": {
+            "native_validation": true,
+            "content_review_enabled": true,
+            "content_repair_limit": 2
+          },
+          "native_correction_policy": {
+            "version": "m003-native-policy-v1",
+            "scope": "logical_request",
+            "max_calls": 2,
+            "editable": false
+          }
+        },
+        "generation_token_present": true
+      },
+      "terminal": {
+        "seq": 36,
+        "run_id": "01a12f0b-9df0-705d-aaa4-3d75e2f5dba4",
+        "final_content_version": 4,
+        "result": {
+          "passage": "Mara moved a chair beside the garden. Young people share grapes at a community table. Neighbors offer practical ideas and helpful support during the calm afternoon. Neighbors offer practical ideas and helpful support during the calm afternoon. Neighbors offer practical ideas and helpful support during the calm afternoon. Neighbors offer practical ideas and helpful support during the calm afternoon. Neighbors offer practical ideas and helpful support during the calm afternoon. Neighbors offer practical ideas and helpful support during the calm afternoon. Neighbors offer practical ideas and helpful support during the calm afternoon. Neighbors offer practical ideas and helpful support during the calm afternoon. Neighbors offer practical ideas and helpful support during the calm afternoon. Neighbors offer practical ideas and helpful support during the calm afternoon.",
+          "tags": [
+            "社区",
+            "分享"
+          ],
+          "targets": [
+            {
+              "entry": "grape",
+              "entry_meaning": "葡萄；葡萄藤的果实。",
+              "hint_phrase": "the grapes",
+              "hint_blanks": [
+                {
+                  "start": 4,
+                  "end": 10
+                }
+              ],
+              "occurrences": [
+                {
+                  "surface": "grapes",
+                  "start": 57,
+                  "end": 63
+                }
+              ]
+            },
+            {
+              "entry": "young",
+              "entry_meaning": "年轻的；年幼的。",
+              "hint_phrase": "the young",
+              "hint_blanks": [
+                {
+                  "start": 4,
+                  "end": 9
+                }
+              ],
+              "occurrences": [
+                {
+                  "surface": "Young",
+                  "start": 38,
+                  "end": 43
+                }
+              ]
+            }
+          ]
+        },
+        "content_outcome": "limit_finalized",
+        "completion_notice": null
+      },
+      "first_plan_item_ms": 5,
+      "first_body_edit_ms": 181
+    },
+    "q02": {
+      "status": 200,
+      "event_names": [
+        "generation.started",
+        "generation.progress",
+        "generation.plan_item",
+        "generation.plan_item",
+        "generation.plan_item",
+        "generation.progress",
+        "generation.edit",
+        "generation.edit",
+        "generation.edit",
+        "generation.edit",
+        "generation.edit",
+        "generation.edit",
+        "generation.edit",
+        "generation.edit",
+        "generation.edit",
+        "generation.edit",
+        "generation.edit",
+        "generation.edit",
+        "generation.edit",
+        "generation.edit",
+        "generation.progress",
+        "generation.validated"
+      ],
+      "started": {
+        "seq": 1,
+        "contract_version": "m003-stream-v5",
+        "stream_id": "c1cef6d9-bfea-4425-a160-ce610cef5e9a",
+        "run_id": "01a12f0b-a5df-7399-869e-fe2b8f593193",
+        "snapshot": {
+          "configuration_revision": "6Pg455IFOYR14eIAoCf5R7vGSf303ACucyTLAPCqyw8",
+          "effective_plan": {
+            "code": "pro",
+            "origin": "base"
+          },
+          "content_service": {
+            "native_validation": true,
+            "content_review_enabled": true,
+            "content_repair_limit": 2
+          },
+          "native_correction_policy": {
+            "version": "m003-native-policy-v1",
+            "scope": "logical_request",
+            "max_calls": 2,
+            "editable": false
+          }
+        },
+        "generation_token_present": true
+      },
+      "terminal": {
+        "seq": 22,
+        "run_id": "01a12f0b-a5df-7399-869e-fe2b8f593193",
+        "final_content_version": 2,
+        "result": {
+          "passage": "Mara arranged the table beside the garden. Young people share grapes at a community table. Neighbors offer practical ideas and helpful support during the calm afternoon. Neighbors offer practical ideas and helpful support during the calm afternoon. Neighbors offer practical ideas and helpful support during the calm afternoon. Neighbors offer practical ideas and helpful support during the calm afternoon. Neighbors offer practical ideas and helpful support during the calm afternoon. Neighbors offer practical ideas and helpful support during the calm afternoon. Neighbors offer practical ideas and helpful support during the calm afternoon. Neighbors offer practical ideas and helpful support during the calm afternoon. Neighbors offer practical ideas and helpful support during the calm afternoon. Neighbors offer practical ideas and helpful support during the calm afternoon.",
+          "tags": [
+            "社区",
+            "分享"
+          ],
+          "targets": [
+            {
+              "entry": "grape",
+              "entry_meaning": "葡萄；葡萄藤的果实。",
+              "hint_phrase": "the grapes",
+              "hint_blanks": [
+                {
+                  "start": 4,
+                  "end": 10
+                }
+              ],
+              "occurrences": [
+                {
+                  "surface": "grapes",
+                  "start": 62,
+                  "end": 68
+                }
+              ]
+            },
+            {
+              "entry": "young",
+              "entry_meaning": "年轻的；年幼的。",
+              "hint_phrase": "the young",
+              "hint_blanks": [
+                {
+                  "start": 4,
+                  "end": 9
+                }
+              ],
+              "occurrences": [
+                {
+                  "surface": "Young",
+                  "start": 43,
+                  "end": 48
+                }
+              ]
+            }
+          ]
+        },
+        "content_outcome": "service_incomplete",
+        "completion_notice": "content_review_incomplete"
+      },
+      "first_plan_item_ms": 5,
+      "first_body_edit_ms": 179
+    },
+    "fenced_plan": {
+      "status": 200,
+      "event_names": [
+        "generation.started",
+        "generation.progress",
+        "generation.plan_item",
+        "generation.plan_item",
+        "generation.plan_item",
+        "generation.failed"
+      ],
+      "started": {
+        "seq": 1,
+        "contract_version": "m003-stream-v5",
+        "stream_id": "af464a09-4fc8-4cfc-852b-d32b14e90884",
+        "run_id": "01a12f0b-a980-7ba9-b20f-77ef7129df1a",
+        "snapshot": {
+          "configuration_revision": "6Pg455IFOYR14eIAoCf5R7vGSf303ACucyTLAPCqyw8",
+          "effective_plan": {
+            "code": "basic",
+            "origin": "base"
+          },
+          "content_service": {
+            "native_validation": true,
+            "content_review_enabled": false,
+            "content_repair_limit": 0
+          },
+          "native_correction_policy": {
+            "version": "m003-native-policy-v1",
+            "scope": "logical_request",
+            "max_calls": 2,
+            "editable": false
+          }
+        },
+        "generation_token_present": true
+      },
+      "terminal": {
+        "seq": 6,
+        "code": "schema_error",
+        "quota_refunded": true,
+        "retryable": true,
+        "request_id": "req_5lVmStNgX4e1Uv3HWDdNNg"
+      },
+      "first_plan_item_ms": 5,
+      "first_body_edit_ms": null
+    },
+    "heartbeat_cancel": {
+      "status": 200,
+      "event_names": [
+        "generation.started",
+        "generation.progress",
+        "generation.cancelled"
+      ],
+      "started": {
+        "seq": 1,
+        "contract_version": "m003-stream-v5",
+        "stream_id": "97a7ce72-90fb-46a6-a16a-06632b713506",
+        "run_id": "01a12f0b-aa3b-7726-8eed-76c1b4fdc6cf",
+        "snapshot": {
+          "configuration_revision": "6Pg455IFOYR14eIAoCf5R7vGSf303ACucyTLAPCqyw8",
+          "effective_plan": {
+            "code": "basic",
+            "origin": "base"
+          },
+          "content_service": {
+            "native_validation": true,
+            "content_review_enabled": false,
+            "content_repair_limit": 0
+          },
+          "native_correction_policy": {
+            "version": "m003-native-policy-v1",
+            "scope": "logical_request",
+            "max_calls": 2,
+            "editable": false
+          }
+        },
+        "generation_token_present": true
+      },
+      "terminal": {
+        "seq": 3,
+        "quota_refunded": false
+      },
+      "first_plan_item_ms": null,
+      "first_body_edit_ms": null
+    }
+  },
+  "provider_calls": {
+    "snapshot_first": [
+      {
+        "stage": "planning",
+        "model": "synthetic/snapshot-slow",
+        "temperature": 0.15,
+        "reasoning_enabled": true,
+        "has_business_schema": true,
+        "has_stream": true,
+        "has_messages": true,
+        "provider_require_parameters": false
+      },
+      {
+        "stage": "generation",
+        "model": "synthetic/snapshot-slow",
+        "temperature": 0.15,
+        "reasoning_enabled": true,
+        "has_business_schema": true,
+        "has_stream": true,
+        "has_messages": true,
+        "provider_require_parameters": false
+      },
+      {
+        "stage": "fixed_edit",
+        "model": "synthetic/snapshot-slow",
+        "temperature": 0.15,
+        "reasoning_enabled": true,
+        "has_business_schema": true,
+        "has_stream": true,
+        "has_messages": true,
+        "provider_require_parameters": false
+      },
+      {
+        "stage": "content_review",
+        "model": "synthetic/snapshot-slow",
+        "temperature": 0.15,
+        "reasoning_enabled": true,
+        "has_business_schema": true,
+        "has_stream": true,
+        "has_messages": true,
+        "provider_require_parameters": false
+      }
+    ],
+    "snapshot_second": [
+      {
+        "stage": "planning",
+        "model": "synthetic/snapshot-slow",
+        "temperature": 0.85,
+        "reasoning_enabled": false,
+        "has_business_schema": true,
+        "has_stream": true,
+        "has_messages": true,
+        "provider_require_parameters": false
+      },
+      {
+        "stage": "generation",
+        "model": "synthetic/snapshot-slow",
+        "temperature": 0.85,
+        "reasoning_enabled": false,
+        "has_business_schema": true,
+        "has_stream": true,
+        "has_messages": true,
+        "provider_require_parameters": false
+      }
+    ],
+    "enhanced_n2": [
+      {
+        "stage": "planning",
+        "model": "synthetic/repair-mixed",
+        "temperature": 0.4,
+        "reasoning_enabled": false,
+        "has_business_schema": true,
+        "has_stream": true,
+        "has_messages": true,
+        "provider_require_parameters": false
+      },
+      {
+        "stage": "generation",
+        "model": "synthetic/repair-mixed",
+        "temperature": 0.4,
+        "reasoning_enabled": false,
+        "has_business_schema": true,
+        "has_stream": true,
+        "has_messages": true,
+        "provider_require_parameters": false
+      },
+      {
+        "stage": "fixed_edit",
+        "model": "synthetic/repair-mixed",
+        "temperature": 0.4,
+        "reasoning_enabled": false,
+        "has_business_schema": true,
+        "has_stream": true,
+        "has_messages": true,
+        "provider_require_parameters": false
+      },
+      {
+        "stage": "content_review",
+        "model": "synthetic/repair-mixed",
+        "temperature": 0.4,
+        "reasoning_enabled": false,
+        "has_business_schema": true,
+        "has_stream": true,
+        "has_messages": true,
+        "provider_require_parameters": false
+      },
+      {
+        "stage": "content_repair",
+        "model": "synthetic/repair-mixed",
+        "temperature": 0.4,
+        "reasoning_enabled": false,
+        "has_business_schema": true,
+        "has_stream": true,
+        "has_messages": true,
+        "provider_require_parameters": false
+      },
+      {
+        "stage": "content_review",
+        "model": "synthetic/repair-mixed",
+        "temperature": 0.4,
+        "reasoning_enabled": false,
+        "has_business_schema": true,
+        "has_stream": true,
+        "has_messages": true,
+        "provider_require_parameters": false
+      },
+      {
+        "stage": "content_repair",
+        "model": "synthetic/repair-mixed",
+        "temperature": 0.4,
+        "reasoning_enabled": false,
+        "has_business_schema": true,
+        "has_stream": true,
+        "has_messages": true,
+        "provider_require_parameters": false
+      },
+      {
+        "stage": "content_review",
+        "model": "synthetic/repair-mixed",
+        "temperature": 0.4,
+        "reasoning_enabled": false,
+        "has_business_schema": true,
+        "has_stream": true,
+        "has_messages": true,
+        "provider_require_parameters": false
+      }
+    ],
+    "q02": [
+      {
+        "stage": "planning",
+        "model": "synthetic/q02",
+        "temperature": 0.2,
+        "reasoning_enabled": null,
+        "has_business_schema": true,
+        "has_stream": true,
+        "has_messages": true,
+        "provider_require_parameters": false
+      },
+      {
+        "stage": "generation",
+        "model": "synthetic/q02",
+        "temperature": 0.2,
+        "reasoning_enabled": null,
+        "has_business_schema": true,
+        "has_stream": true,
+        "has_messages": true,
+        "provider_require_parameters": false
+      },
+      {
+        "stage": "fixed_edit",
+        "model": "synthetic/q02",
+        "temperature": 0.2,
+        "reasoning_enabled": null,
+        "has_business_schema": true,
+        "has_stream": true,
+        "has_messages": true,
+        "provider_require_parameters": false
+      },
+      {
+        "stage": "content_review",
+        "model": "synthetic/q02",
+        "temperature": 0.2,
+        "reasoning_enabled": null,
+        "has_business_schema": true,
+        "has_stream": true,
+        "has_messages": true,
+        "provider_require_parameters": false
+      }
+    ],
+    "fenced_plan": [
+      {
+        "stage": "planning",
+        "model": "synthetic/fenced-plan",
+        "temperature": null,
+        "reasoning_enabled": null,
+        "has_business_schema": true,
+        "has_stream": true,
+        "has_messages": true,
+        "provider_require_parameters": false
+      }
+    ],
+    "heartbeat_cancel": [
+      {
+        "stage": "planning",
+        "model": "synthetic/blocked",
+        "temperature": null,
+        "reasoning_enabled": null,
+        "has_business_schema": true,
+        "has_stream": true,
+        "has_messages": true,
+        "provider_require_parameters": false
+      }
+    ]
+  },
+  "failures": [],
+  "result": "PASS"
+}

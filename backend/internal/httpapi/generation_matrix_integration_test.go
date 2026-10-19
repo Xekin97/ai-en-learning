@@ -138,6 +138,11 @@ func p0RunHTTPCase(t *testing.T, mode, reason, phase, fault string) {
 	var calls atomic.Int32
 	provider := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		attempt := calls.Add(1)
+		if attempt == 1 {
+			writeChatObject(w, testScenePlan("grape", "young"))
+			return
+		}
+		attempt--
 		if strings.HasPrefix(mode, "open_") {
 			status, _ := strconv.Atoi(strings.TrimPrefix(mode, "open_"))
 			w.WriteHeader(status)
@@ -234,9 +239,9 @@ func p0RunHTTPCase(t *testing.T, mode, reason, phase, fault string) {
 		t.Fatal(err)
 	}
 	isValid := mode == "valid" && fault == ""
-	expectedCalls := int32(1)
+	expectedCalls := int32(2)
 	if p0ExpectsCorrections(mode) {
-		expectedCalls = 3
+		expectedCalls = 4
 	}
 	if calls.Load() != expectedCalls || batches != 0 {
 		t.Fatalf("provider calls=%d want=%d, saved batches=%d", calls.Load(), expectedCalls, batches)
@@ -250,11 +255,12 @@ func p0RunHTTPCase(t *testing.T, mode, reason, phase, fault string) {
 			t.Error("refund persistence error invisible")
 		}
 		if status != "active" || !charged || cumulative || drafts != 0 ||
-			strings.Count(string(raw), "event: generation.failed") != 1 ||
-			!strings.Contains(string(raw), "\"quota_refunded\":false") ||
-			!strings.Contains(string(raw), "\"code\":\"content_validation_failed\"") ||
+			strings.Count(string(raw), "event: generation.settlement_pending") != 1 ||
+			strings.Contains(string(raw), "event: generation.failed") ||
+			strings.Contains(string(raw), "\"quota_refunded\":true") ||
+			!strings.Contains(string(raw), "\"code\":\"settlement_unconfirmed\"") ||
 			len(api.generation.Registry().PendingFailures(10)) != 1 {
-			t.Error("unconfirmed settlement must remain queued and preserve the existing failure event")
+			t.Error("unconfirmed settlement must remain queued and emit only settlement_pending")
 		}
 		return
 	}
@@ -266,14 +272,8 @@ func p0RunHTTPCase(t *testing.T, mode, reason, phase, fault string) {
 		if status == "active" || status == "valid" || charged || cumulative || drafts != 0 {
 			t.Fatalf("failure persistence incorrect: %s/%v/%v/%d", status, charged, cumulative, drafts)
 		}
-		if strings.HasPrefix(mode, "open_") || mode == "not_sse" {
-			if response.StatusCode != 503 || strings.Contains(string(raw), "event:") {
-				t.Fatal("pre-stream failure is not Problem JSON")
-			}
-		} else {
-			if response.StatusCode != 200 || strings.Count(string(raw), "event: generation.failed") != 1 || strings.Contains(string(raw), "event: generation.validated") || !strings.Contains(string(raw), "\"quota_refunded\":true") {
-				t.Fatal("failure terminal contract changed")
-			}
+		if response.StatusCode != 200 || strings.Count(string(raw), "event: generation.started") != 1 || strings.Count(string(raw), "event: generation.failed") != 1 || strings.Contains(string(raw), "event: generation.validated") || !strings.Contains(string(raw), "\"quota_refunded\":true") {
+			t.Fatal("failure terminal contract changed")
 		}
 		if reason != "" && (!strings.Contains(logs.String(), "\"reason\":\""+reason+"\"") || !strings.Contains(logs.String(), "\"phase\":\""+phase+"\"")) {
 			t.Fatalf("missing failure diagnostic %s/%s; logs=%s", phase, reason, logs.String())

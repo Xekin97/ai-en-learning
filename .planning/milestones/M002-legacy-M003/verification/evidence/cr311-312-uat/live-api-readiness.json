@@ -1,0 +1,110 @@
+{
+  "result": "PASS",
+  "checked_at": "2026-10-14T11:59:27.048185+08:00",
+  "origin": "http://127.0.0.1:3015",
+  "checks": [
+    {
+      "case": "visitor_bootstrap_and_generation_options",
+      "result": "PASS",
+      "model_count": 1
+    },
+    {
+      "case": "search_exact_41_entry_exclusion_case_insensitive",
+      "result": "PASS",
+      "queries": 42
+    },
+    {
+      "case": "legitimate_short_and_substring_candidates",
+      "result": "PASS",
+      "entries": {
+        "art": true,
+        "go": true,
+        "theater": true,
+        "another": true
+      }
+    },
+    {
+      "case": "random_candidate_exclusion_sample",
+      "result": "PASS",
+      "samples": 30,
+      "blocked_seen": 0
+    },
+    {
+      "case": "real_password_api_login_basic_pro",
+      "result": "PASS",
+      "roles": {
+        "basic": {
+          "password_login": true,
+          "effective_plan": "basic",
+          "visible_model_count": 2,
+          "content_service": {
+            "native_validation": true,
+            "content_review_enabled": false,
+            "content_repair_limit": 0
+          }
+        },
+        "pro": {
+          "password_login": true,
+          "effective_plan": "pro",
+          "visible_model_count": 3,
+          "content_service": {
+            "native_validation": true,
+            "content_review_enabled": true,
+            "content_repair_limit": 1
+          }
+        }
+      }
+    },
+    {
+      "case": "admin_real_password_login_and_models_read_only_preserved",
+      "result": "PASS",
+      "model_count": 3
+    }
+  ],
+  "safe_models": [
+    {
+      "display_name": "DeepSeek V4 Flash",
+      "provider_model_id": "deepseek/deepseek-v4.1-flash",
+      "enabled": true,
+      "output_mode": "json_schema",
+      "max_output_tokens": null,
+      "custom_parameters": {
+        "reasoning": {
+          "enabled": false
+        }
+      },
+      "provider_name": "OpenRouter｜真实 UAT",
+      "protocol": "openai_chat",
+      "base_url": "https://openrouter.ai/api/v1",
+      "credential_configured": true
+    },
+    {
+      "display_name": "mimo-v2.6-pro",
+      "provider_model_id": "mimo-v2.6-pro",
+      "enabled": true,
+      "output_mode": "prompt",
+      "max_output_tokens": null,
+      "custom_parameters": {},
+      "provider_name": "MiMo Token Plan",
+      "protocol": "openai_chat",
+      "base_url": "https://token-plan-cn.xiaomimimo.com/v1",
+      "credential_configured": true
+    },
+    {
+      "display_name": "mimo-v2.6-flash",
+      "provider_model_id": "mimo-v2.6-flash",
+      "enabled": true,
+      "output_mode": "prompt",
+      "max_output_tokens": null,
+      "custom_parameters": {},
+      "provider_name": "MiMo Token Plan",
+      "protocol": "openai_chat",
+      "base_url": "https://token-plan-cn.xiaomimimo.com/v1",
+      "credential_configured": true
+    }
+  ],
+  "mock_services": 0,
+  "api_interception": false,
+  "real_generation_executed": false,
+  "provider_probe_executed": false
+}

@@ -1,0 +1,382 @@
+schema_version: 1
+profile: consumer-ai-web@1.0.0
+agt_revision: b5badf88cd7194400c3d4d0e9395e7c98490dc26
+retained_open_items:
+- id: CR039-L1
+  status: open
+  source: .planning/milestones/M001/changes/CR-039.md#retained-limitations
+- id: CR042-L1
+  status: open
+  source: .planning/milestones/M001/verification/CR-042-generation-evidence.md#retained-limitations
+- id: AI-QUALITY-90
+  status: unverified
+  source: .planning/milestones/M001/verification/ai-evaluation.md
+  qa_blocking: false
+  scope: Independent model/content research; excluded from QA under USER-QA-MODEL-QUALITY-BOUNDARY-20261012
+- id: W01
+  status: unverified
+  source: .planning/milestones/M002/verification/report.md#保留事项
+- id: QA26-MINIMAX
+  status: open
+  source: .planning/milestones/M002/verification/report.md#保留事项
+compatibility_policy:
+  decision_id: USER-COMPAT-001
+  record: .planning/milestones/M001/reviews/first-release-compatibility-policy.md
+  scope: Project-wide standing rule; M001 is the first release under development
+claim_deletion_policy:
+  decision_id: USER-CLAIM-DELETE-001
+  record: .planning/milestones/M001/reviews/claimed-batch-delete-retention-exception.md
+  scope: Explicit owner deletion of a saved batch removes its associated consumed claim in the same transaction
+generation_quality_target:
+  decision_id: USER-GENERATION-QUALITY-129
+  confirmed_success_rate_minimum: 0.9
+  status: unverified
+  current_evidence: .planning/milestones/M001/verification/ai-evaluation.md
+  live_model_batch_authorized: false
+  qa_blocking: false
+  evaluation_scope: independent_model_research_outside_qa
+  qa_scope_decision: USER-QA-MODEL-QUALITY-BOUNDARY-20261012
+model_routing:
+  status: enabled
+  lock: .planning/agt/model-routing-v1.lock.json
+  adoption: .planning/agt/model-routing-adoption-001.md
+  policy: codex-balanced@1.0.0
+qa_scope_policy:
+  decision_id: USER-QA-MODEL-QUALITY-BOUNDARY-20261012
+  status: confirmed
+  source: .planning/agt/qa-scope-policy.md
+  scope: Project-wide QA excludes article-quality judgement and model semantic review accuracy; verifies functionality
+    and implementation
+milestone: M002
+stage: uiux-design
+active_role: uiux/base
+active_agent: designer-tony
+status: awaiting_user_review
+required_artifacts:
+- .planning/milestones/M002/design/theme.css
+- .planning/milestones/M002/design/prototype/index.html
+- .planning/milestones/M002/design/interactions.md
+- .planning/milestones/M002/design/responsive-accessibility.md
+- .planning/milestones/M002/handoffs/uiux.md
+- .planning/milestones/M002/design/config-portability/theme.css
+- .planning/milestones/M002/design/config-portability/prototype/index.html
+- .planning/milestones/M002/design/config-portability/formal/index.html
+- .planning/milestones/M002/design/config-portability/copy.json
+- .planning/milestones/M002/design/config-portability/design-spec.md
+- .planning/milestones/M002/design/config-portability/interactions.md
+- .planning/milestones/M002/design/config-portability/responsive-accessibility.md
+- .planning/milestones/M002/handoffs/config-portability-uiux.md
+pending_user_decisions:
+- id: M002-UI-32-DESIGN-REVIEW
+  scope: Pronunciation design rehomed from UI14, unchanged and unapproved
+  status: awaiting_user_review
+  handoff: .planning/milestones/M002/handoffs/pronunciation-uiux.md
+  legacy_decision_id: M003-UI-14-DESIGN-REVIEW
+  does_not_imply: M002 overall closeout
+- id: M002-UI-33-R1-DESIGN-REVIEW
+  scope: CR-313 formal design inherited from prior admin sources
+  status: awaiting_user_review
+  handoff: .planning/milestones/M002/handoffs/config-portability-uiux.md
+  does_not_imply: Pronunciation design acceptance or M002 overall closeout
+open_change_requests:
+- id: CR-313
+  status: open
+  owner_stage: uiux-design
+  source: .planning/milestones/M002/changes/CR-313.md
+  scope: 'Per-category admin configuration import/export: models, plans, items, growth rules'
+  next_action: Review M002-UI-33-R1 inherited formal design; technical design follows only after scoped acceptance
+  pronunciation_design_status: M002-UI-32 awaiting_user_review; legacy UI14 unchanged
+current_handoff: .planning/milestones/M002/handoffs/config-portability-uiux.md
+previous_milestone:
+  id: M001
+  status: complete
+  completion_decision: TRANSITION-M001-138
+  handoff: .planning/milestones/M001/handoffs/verification.md
+  state_snapshot: .planning/milestones/M002/reviews/evidence/start-001/m001-state.yaml
+authorization_refs:
+- id: USER-M002-OWNERSHIP-CORRECTION-20261015
+  scope: All work previously assigned to M003 belongs to M002, including content quality/paid review and repair/streaming/admin
+    model parameters/UAT changes/pronunciation/config portability. Reopen M002 for ongoing scoped work; withdraw
+    autonomous M003 initialization and any M004 initialization. Preserve existing scoped approvals, implementation,
+    UAT acceptance and histories.
+  source: .planning/milestones/M002/reviews/evidence/m003-ownership-correction-124/authorization.json
+- id: USER-M003-CR313-DESIGN-INHERITANCE-20261015
+  scope: Revise CR313 UI15 in current uiux-design stage, directly derive from M003 models/plans formal sources and
+    M002 growth/item sources, add only import/export UI, preserve product12R1 and pending pronunciationUI14.
+  source: .planning/milestones/M003/reviews/evidence/cr313-design-revision-109-r1/authorization.json
+- id: USER-M003-CR313-DESIGN-NEXT-20261015
+  scope: Accept completed M003-PRODUCT-12-R1 and enter UI/UX prototype and formal design for CR-313 only
+  source: .planning/milestones/M003/reviews/evidence/cr313-design-entry-109/authorization.json
+- id: USER-M003-CR313-FIELD-REQUIREMENTS-20261015
+  scope: Reject imports missing API keys; specify field requiredness; reject cross-category dependency conflicts.
+    Does not approve product stage.
+  source: .planning/milestones/M003/reviews/evidence/cr313-product-revision-108-r1/clarification.json
+- id: USER-M003-CR313-PRODUCT-NEXT-20261015
+  scope: CR-313 product planning only; preserve pending pronunciation UI14 and unapproved overall M003 closeout
+  source: .planning/milestones/M003/reviews/evidence/cr313-product-entry-108/authorization.json
+- id: USER-M003-PRONUNCIATION-DESIGN-NEXT-20261015
+  scope: Accept unchanged pronunciation PRODUCT11 and enter scoped prototype/formal design inside M003; no overall
+    closeout
+  source: .planning/milestones/M003/reviews/evidence/pronunciation-design-entry-107/user-next.json
+- id: USER-M003-MILESTONE-CORRECTION-20261015
+  scope: No overall M003 closeout approval; retain pronunciation in M003
+  source: .planning/milestones/M003/reviews/evidence/milestone-correction-106/user-correction.json
+- id: USER-M004-PRONUNCIATION-20261015
+  scope: Accepted dictionary audio first/browser speech fallback direction and AGT requirement lifecycle
+  source: .planning/milestones/M004/reviews/evidence/start/authorization.json
+- id: USER-M004-SCOPE-ENTITLEMENT-20261015
+  scope: Word picker, word meanings and saved article word details; all users free, no generation quota charge
+  source: .planning/milestones/M004/reviews/evidence/start/scope-confirmations.json
+- id: USER-M003-CR313-20261015
+  scope: Add admin configuration import/export to M003; confirmed categories, whole-category replacement, optional
+    encrypted credential export; no approval of pronunciation design or milestone closeout
+  source: .planning/milestones/M003/changes/CR-313.md
+allowed_transitions:
+- technical-design
+- product-planning
+last_transition:
+  id: TRANSITION-M002-124
+  decision_id: TRANSITION-M002-124
+  operation: recover-or-rollback
+  milestone: M002
+  from_milestone: M003
+  from: uiux-design
+  to: uiux-design
+  previous_role: uiux/base
+  previous_agent: designer-tony
+  active_role: uiux/base
+  active_agent: designer-tony
+  timestamp: '2026-10-15T08:49:25.224902+00:00'
+  authorized_by: USER-M002-OWNERSHIP-CORRECTION-20261015
+  checked_by: gatekeeper-owen
+  recorded_by: root
+  evidence: .planning/milestones/M002/reviews/milestone-ownership-correction-124.md
+  scope: All work previously assigned to M003 belongs to M002, including content quality/paid review and repair/streaming/admin
+    model parameters/UAT changes/pronunciation/config portability. Reopen M002 for ongoing scoped work; withdraw
+    autonomous M003 initialization and any M004 initialization. Preserve existing scoped approvals, implementation,
+    UAT acceptance and histories.
+context_entries:
+  start_record: .planning/milestones/M002/reviews/milestone-ownership-correction-124.md
+  current_handoff: .planning/milestones/M002/handoffs/config-portability-uiux.md
+  task_index: .planning/milestones/M002/design/config-portability/design-spec.md
+  constraints_index: .planning/agt/qa-scope-policy.md
+  previous_scope_snapshot: .planning/milestones/M004/reviews/evidence/start/before-state.yaml
+  stage_entry: .planning/milestones/M002/reviews/milestone-ownership-correction-124.md
+  upstream_handoff: .planning/milestones/M002/handoffs/product.md
+  pending_scope_change: .planning/milestones/M002/changes/CR-313.md
+  design_revision: .planning/milestones/M003/reviews/evidence/cr313-design-revision-109-r1/authorization.json
+  scope_index: .planning/milestones/M002/continuation.md
+superseded_product_submission:
+  version: M004-PRODUCT-01
+  owner: product-maya
+  submitted_at: '2026-10-15T06:09:43.129151+00:00'
+  handoff: .planning/milestones/M004/handoffs/product.md
+  receipt: .planning/milestones/M004/reviews/evidence/product-submission-001.json
+  status: awaiting_user_review
+  approved: false
+product_work:
+  scope: CR-313 operational configuration import/export
+  owner: product-maya
+  status: accepted
+  version_target: M002-PRODUCT-09-R1
+  started_at: '2026-10-15T07:02:09.769325+00:00'
+  source: .planning/milestones/M002/changes/CR-313.md
+  before_snapshot: .planning/milestones/M003/reviews/evidence/cr313-product-entry-108/before-product-entry.tar.gz
+  submitted_at: '2026-10-15T07:55:08.469354+00:00'
+  current_source: .planning/milestones/M002/product/config-portability.md
+  clarification: .planning/milestones/M003/reviews/evidence/cr313-product-revision-108-r1/clarification.json
+milestone_closeout:
+  status: not_approved
+  source: .planning/milestones/M002/reviews/milestone-ownership-correction-124.md
+  explicit_user_approval_required: true
+  prior_scoped_acceptance: TRANSITION-M002-123 remains historical; current continuation explicitly reopened
+accepted_delivery_scopes:
+- scope: CR311/312 tested functional delivery
+  qa: pass
+  user_uat: accepted
+  source: .planning/milestones/M003/verification/uat.md
+  does_not_imply: overall milestone closeout
+superseded_control_decisions:
+- id: TRANSITION-M003-105
+  scope: overall milestone closure only
+- id: TRANSITION-M003-096
+  scope: overall milestone closure inference only
+- id: TRANSITION-M004-001
+  scope: new milestone initialization and pronunciation ownership
+- id: TRANSITION-M003-001
+  scope: autonomous new milestone initialization; all requirements actually M002
+- id: TRANSITION-M003-106
+  scope: M003 active milestone inference only; preserve scoped work/approvals
+- id: TRANSITION-M002-123
+  scope: terminal state superseded by explicit reopening; historical scoped acceptance remains valid
+design_work:
+  scope: CR-313 configuration import/export
+  owner: designer-tony
+  status: submitted
+  version_target: M002-UI-33-R1
+  inputs:
+  - M002-PRODUCT-09-R1; mechanical alias of accepted PRODUCT12-R1
+  - Prior formal M002 sources plus inherited accepted model/plan increments; original source hashes preserved
+  new_source_root: .planning/milestones/M002/design/config-portability
+  target_handoff: .planning/milestones/M002/handoffs/config-portability-uiux.md
+  upstream_handoff: .planning/milestones/M002/handoffs/product.md
+  started_at: '2026-10-15T08:14:16.327555+00:00'
+  must_deliver:
+  - separate interaction prototype
+  - formal design based on existing admin UI
+  - reusable copy/styles/state/accessibility and browser evidence
+  preserve: M002-UI-32 pronunciation and all historical design sources remain unchanged; its pending review remains
+    separate
+  not_authorized:
+  - source implementation
+  - technical/API/crypto implementation
+  - real provider calls or credential reads
+  - UAT3015 or preview4174/4175 refresh
+  - UI14 approval
+  - overall milestone closeout
+  submitted_at: '2026-10-15T08:59:05.170370+00:00'
+  revision_started_at: '2026-10-15T08:36:38.859778+00:00'
+  revision_source: .planning/milestones/M003/reviews/evidence/cr313-design-revision-109-r1/authorization.json
+  before_revision: .planning/milestones/M003/reviews/evidence/cr313-design-revision-109-r1/before-revision.tar.gz
+  ownership_correction: TRANSITION-M002-124
+retained_product_approvals:
+- version: M002-PRODUCT-08
+  decision_id: TRANSITION-M003-107
+  user_authorization: USER-M003-PRONUNCIATION-DESIGN-NEXT-20261015
+  evidence: .planning/milestones/M003/reviews/pronunciation-design-entry-107.md
+  manifest: .planning/milestones/M003/reviews/evidence/pronunciation-design-entry-107/product-manifest.json
+  scope: pronunciation increment only; previous functional baselines retained
+  legacy_version: M003-PRODUCT-11
+  ownership_correction: TRANSITION-M002-124
+  adopted_manifest: .planning/milestones/M002/reviews/evidence/m003-ownership-correction-124/product08-adoption-manifest.json
+- version: M002-PRODUCT-09-R1
+  decision_id: TRANSITION-M003-109
+  user_authorization: USER-M003-CR313-DESIGN-NEXT-20261015
+  evidence: .planning/milestones/M003/reviews/cr313-design-entry-109.md
+  manifest: .planning/milestones/M003/reviews/evidence/cr313-design-entry-109/product-manifest.json
+  scope: CR-313 operational configuration import/export
+  legacy_version: M003-PRODUCT-12-R1
+  ownership_correction: TRANSITION-M002-124
+  adopted_manifest: .planning/milestones/M002/reviews/evidence/m003-ownership-correction-124/product09r1-adoption-manifest.json
+retained_product_submission:
+  version: M002-PRODUCT-08
+  owner: product-maya
+  handoff: .planning/milestones/M002/product/pronunciation/overview.md
+  receipt: .planning/milestones/M003/reviews/evidence/milestone-correction-106/rehome-receipt.json
+  status: accepted
+  approved: true
+  legacy_version: M003-PRODUCT-11
+  source_manifest: .planning/milestones/M002/reviews/evidence/m003-ownership-correction-124/product08-adoption-manifest.json
+product_submission:
+  version: M002-PRODUCT-09-R1
+  owner: product-maya
+  scope: CR-313
+  status: accepted
+  approved: true
+  submitted_at: '2026-10-15T07:55:08.469354+00:00'
+  handoff: .planning/milestones/M002/handoffs/product.md
+  source_manifest: .planning/milestones/M002/reviews/evidence/m003-ownership-correction-124/product09r1-adoption-manifest.json
+  receipt: .planning/milestones/M003/reviews/evidence/cr313-product-revision-108-r1/product-submission-receipt.json
+  pending_questions: []
+  approval: TRANSITION-M003-109
+  approved_at: '2026-10-15T08:14:16.327555+00:00'
+  legacy_version: M003-PRODUCT-12-R1
+  ownership_correction: TRANSITION-M002-124
+  adoption_receipt: .planning/milestones/M002/reviews/evidence/m003-ownership-correction-124/transition-receipt.json
+resolved_user_decisions:
+- id: Q313-01
+  status: confirmed
+  source: .planning/milestones/M002/changes/CR-313.md
+  answer_source: .planning/milestones/M003/reviews/evidence/cr313-product-revision-108-r1/clarification.json
+- id: Q313-02
+  status: confirmed
+  source: .planning/milestones/M002/changes/CR-313.md
+  answer_source: .planning/milestones/M003/reviews/evidence/cr313-product-revision-108-r1/clarification.json
+retained_design_submissions:
+- version: M002-UI-32
+  owner: designer-tony
+  scope: pronunciation
+  status: awaiting_user_review
+  approved: false
+  submitted_at: '2026-10-15T06:45:26.072025+00:00'
+  handoff: .planning/milestones/M002/handoffs/pronunciation-uiux.md
+  source_manifest: .planning/milestones/M003/design/pronunciation/evidence/M003-UI-14-source-manifest.json
+  receipt: .planning/milestones/M003/reviews/evidence/pronunciation-design-submission-107/submission-receipt.json
+  work:
+    scope: pronunciation
+    owner: designer-tony
+    status: submitted
+    version_target: M003-UI-14
+    inputs:
+    - M003-PRODUCT-11
+    - M003-UI-13-R4
+    - M002 accepted design
+    new_source_root: .planning/milestones/M003/design/pronunciation
+    upstream_handoff: .planning/milestones/M003/handoffs/product.md
+    started_at: '2026-10-15T06:28:10.801986+00:00'
+    must_deliver:
+    - separate interaction prototype
+    - formal design based on existing M002/M003 UI
+    - accurate copy/styles/state/accessibility and browser evidence
+    not_authorized:
+    - source implementation
+    - real provider calls
+    - UAT3015 or design4174 runtime refresh
+    - overall milestone closeout
+    submitted_at: '2026-10-15T06:45:26.072025+00:00'
+  legacy_version: M003-UI-14
+  ownership_correction: TRANSITION-M002-124
+design_submission:
+  version: M002-UI-33-R1
+  owner: designer-tony
+  scope: CR-313
+  status: awaiting_user_review
+  approved: false
+  submitted_at: '2026-10-15T08:59:05.170370+00:00'
+  handoff: .planning/milestones/M002/handoffs/config-portability-uiux.md
+  source_manifest: .planning/milestones/M002/design/config-portability/evidence/M002-UI-33-R1-source-manifest.json
+  receipt: .planning/milestones/M002/reviews/evidence/cr313-design-submission-124-r1/submission-receipt.json
+  ownership_correction: TRANSITION-M002-124
+  supersedes: M002-UI-33 (legacy M003-UI-15), changes requested for independently recreated admin UI
+milestone_authorization_policy:
+  new_milestone_requires_explicit_user_request_or_confirmation: true
+  next_step_does_not_authorize_new_milestone: true
+  source: .planning/milestones/M002/reviews/evidence/m003-ownership-correction-124/authorization.json
+milestone_ownership_correction:
+  record: .planning/milestones/M002/reviews/milestone-ownership-correction-124.md
+  source_index: .planning/milestones/M002/continuation.md
+  legacy_source_mapping: .planning/milestones/M002/reviews/evidence/m003-ownership-correction-124/rehome-map.json
+  withdrawn_milestones:
+  - M003
+  - M004
+  retained_history: all old professional approvals and functional scoped UAT records keep their scope; no overall
+    closeout
+retained_legacy_product_submission:
+  version: M003-PRODUCT-12-R1
+  owner: product-maya
+  scope: CR-313
+  status: accepted
+  approved: true
+  submitted_at: '2026-10-15T07:55:08.469354+00:00'
+  handoff: .planning/milestones/M003/handoffs/product.md
+  source_manifest: .planning/milestones/M003/product/evidence/cr313-r1/manifest.json
+  receipt: .planning/milestones/M003/reviews/evidence/cr313-product-revision-108-r1/product-submission-receipt.json
+  pending_questions: []
+  approval: TRANSITION-M003-109
+  approved_at: '2026-10-15T08:14:16.327555+00:00'
+superseded_design_submissions:
+- version: M002-UI-33
+  revision: baseline-consistency-final
+  owner: designer-tony
+  scope: CR-313
+  status: changes_requested
+  approved: false
+  submitted_at: '2026-10-15T08:31:48.186459+00:00'
+  handoff: .planning/milestones/M002/handoffs/config-portability-uiux.md
+  source_manifest: .planning/milestones/M003/design/config-portability/evidence/M003-UI-15-source-manifest.json
+  receipt: .planning/milestones/M003/reviews/evidence/cr313-design-submission-109/submission-receipt.json
+  revision_reason: UI15 rebuilt global CSS and admin pages; changed prior horizontal plan tabs to vertical list
+    and removed existing controls/interactions. Previous pass reports do not establish design inheritance.
+  revision_source: .planning/milestones/M003/reviews/evidence/cr313-design-revision-109-r1/authorization.json
+  legacy_version: M003-UI-15
+  ownership_correction: TRANSITION-M002-124

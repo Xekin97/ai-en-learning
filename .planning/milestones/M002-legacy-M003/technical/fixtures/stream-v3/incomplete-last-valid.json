@@ -1,0 +1,260 @@
+{
+  "fixture_version": "M003-BE-03",
+  "contract_version": "m003-stream-v3",
+  "wire": [
+    {
+      "event": "generation.started",
+      "data": {
+        "seq": 1,
+        "contract_version": "m003-stream-v3",
+        "run_id": "00000000-0000-4000-8000-000000000003",
+        "generation_token": "fixture-only-not-a-valid-token",
+        "snapshot": {
+          "configuration_revision": "fixture-revision-3",
+          "effective_plan": {
+            "code": "pro",
+            "origin": "base"
+          },
+          "content_service": {
+            "native_validation": true,
+            "content_review_enabled": true,
+            "content_repair_limit": 2
+          },
+          "native_correction_policy": {
+            "version": "m003-native-policy-v1",
+            "scope": "logical_request",
+            "max_calls": 2,
+            "editable": false
+          }
+        }
+      }
+    },
+    {
+      "event": "generation.progress",
+      "data": {
+        "seq": 2,
+        "phase": "composing"
+      }
+    },
+    {
+      "event": "generation.learning_ready",
+      "data": {
+        "seq": 3,
+        "content_version": 1,
+        "entries": [
+          {
+            "entry": "garden",
+            "entry_meaning": "花园；园圃"
+          },
+          {
+            "entry": "learn",
+            "entry_meaning": "学习；学会"
+          },
+          {
+            "entry": "share",
+            "entry_meaning": "分享；共同使用"
+          }
+        ]
+      }
+    },
+    {
+      "event": "generation.progress",
+      "data": {
+        "seq": 4,
+        "phase": "finalizing"
+      }
+    },
+    {
+      "event": "generation.validated",
+      "data": {
+        "seq": 5,
+        "run_id": "00000000-0000-4000-8000-000000000003",
+        "final_content_version": 2,
+        "result": {
+          "passage": "On Saturday, Mei met Sam at the community garden. A volunteer had set aside a wooden box for their beans and asked them to learn the planting method before they began. Sam brought seeds while Mei filled a small can at the tap. Following the demonstration, they placed each seed at the same depth and covered the row gently. They decided to share the watering work: Mei would come on weekdays, and Sam would visit at the weekend. Mei wrote this arrangement on a card beside the box. As they left, a light rain began to fall over the fresh soil.",
+          "tags": [
+            "社区",
+            "园艺"
+          ],
+          "targets": [
+            {
+              "entry": "garden",
+              "entry_meaning": "花园；园圃",
+              "hint_phrase": "a quiet garden",
+              "hint_blanks": [
+                {
+                  "start": 8,
+                  "end": 14
+                }
+              ],
+              "occurrences": [
+                {
+                  "surface": "garden",
+                  "start": 42,
+                  "end": 48
+                }
+              ]
+            },
+            {
+              "entry": "learn",
+              "entry_meaning": "学习；学会",
+              "hint_phrase": "learn a new skill",
+              "hint_blanks": [
+                {
+                  "start": 0,
+                  "end": 5
+                }
+              ],
+              "occurrences": [
+                {
+                  "surface": "learn",
+                  "start": 123,
+                  "end": 128
+                }
+              ]
+            },
+            {
+              "entry": "share",
+              "entry_meaning": "分享；共同使用",
+              "hint_phrase": "share a task",
+              "hint_blanks": [
+                {
+                  "start": 0,
+                  "end": 5
+                }
+              ],
+              "occurrences": [
+                {
+                  "surface": "share",
+                  "start": 340,
+                  "end": 345
+                }
+              ]
+            }
+          ]
+        },
+        "content_outcome": "service_incomplete",
+        "completion_notice": "content_review_incomplete"
+      }
+    }
+  ],
+  "transport_end": "eof_after_terminal",
+  "status_responses": [
+    {
+      "http_status": 200,
+      "body": {
+        "data": {
+          "contract_version": "m003-stream-v3",
+          "run_id": "00000000-0000-4000-8000-000000000003",
+          "status": "valid",
+          "snapshot": {
+            "configuration_revision": "fixture-revision-3",
+            "effective_plan": {
+              "code": "pro",
+              "origin": "base"
+            },
+            "content_service": {
+              "native_validation": true,
+              "content_review_enabled": true,
+              "content_repair_limit": 2
+            },
+            "native_correction_policy": {
+              "version": "m003-native-policy-v1",
+              "scope": "logical_request",
+              "max_calls": 2,
+              "editable": false
+            }
+          },
+          "final_content_version": 2,
+          "result": {
+            "passage": "On Saturday, Mei met Sam at the community garden. A volunteer had set aside a wooden box for their beans and asked them to learn the planting method before they began. Sam brought seeds while Mei filled a small can at the tap. Following the demonstration, they placed each seed at the same depth and covered the row gently. They decided to share the watering work: Mei would come on weekdays, and Sam would visit at the weekend. Mei wrote this arrangement on a card beside the box. As they left, a light rain began to fall over the fresh soil.",
+            "tags": [
+              "社区",
+              "园艺"
+            ],
+            "targets": [
+              {
+                "entry": "garden",
+                "entry_meaning": "花园；园圃",
+                "hint_phrase": "a quiet garden",
+                "hint_blanks": [
+                  {
+                    "start": 8,
+                    "end": 14
+                  }
+                ],
+                "occurrences": [
+                  {
+                    "surface": "garden",
+                    "start": 42,
+                    "end": 48
+                  }
+                ]
+              },
+              {
+                "entry": "learn",
+                "entry_meaning": "学习；学会",
+                "hint_phrase": "learn a new skill",
+                "hint_blanks": [
+                  {
+                    "start": 0,
+                    "end": 5
+                  }
+                ],
+                "occurrences": [
+                  {
+                    "surface": "learn",
+                    "start": 123,
+                    "end": 128
+                  }
+                ]
+              },
+              {
+                "entry": "share",
+                "entry_meaning": "分享；共同使用",
+                "hint_phrase": "share a task",
+                "hint_blanks": [
+                  {
+                    "start": 0,
+                    "end": 5
+                  }
+                ],
+                "occurrences": [
+                  {
+                    "surface": "share",
+                    "start": 340,
+                    "end": 345
+                  }
+                ]
+              }
+            ]
+          },
+          "can_save": true,
+          "quota_refunded": false,
+          "content_outcome": "service_incomplete",
+          "completion_notice": "content_review_incomplete"
+        },
+        "meta": {
+          "request_id": "fixture-status-request"
+        }
+      }
+    }
+  ],
+  "internal_evidence": {
+    "N": 2,
+    "first_valid_package": "v1",
+    "last_valid_package": "v2",
+    "actual_content_repairs": 2,
+    "rejected_attempt_version": 3,
+    "stop_reason": "repair_native_invalid"
+  },
+  "expected": {
+    "ui_state": "complete",
+    "can_save": true,
+    "completion_notice": "content_review_incomplete",
+    "final_package": "v2",
+    "article_before_terminal": false,
+    "visible_repair_count": false,
+    "visible_repair_limit": false
+  }
+}

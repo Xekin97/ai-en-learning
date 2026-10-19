@@ -1,0 +1,56 @@
+{
+  "protected_sha256": {
+    ".planning/milestones/M003/technical/fixtures/stream-v5/basic.json": "391539e468a872f495a34c3dd3cd504f910571c2a5782193c582a823e81cee10",
+    ".planning/milestones/M003/technical/fixtures/stream-v5/cancelled.json": "7ee7a6ae694f621800d830b6d49fe68fc918d1c85be7a7dec9a8e85808377bc9",
+    ".planning/milestones/M003/technical/fixtures/stream-v5/edit-fault-retains-first.json": "3fe0523a04fd7d1e31eeb358c2b619f2aebdd88c1b403a8d5d5463087643811a",
+    ".planning/milestones/M003/technical/fixtures/stream-v5/enhanced-edited-pass.json": "184339e710a06ce052c0275d96006debbefc59e9ae9553e9063f9daa8b49e203",
+    ".planning/milestones/M003/technical/fixtures/stream-v5/eof-unknown.json": "59c91eeb9e986de013e5777e1758ce0289078ce38979ab1c2606f7e745b42c18",
+    ".planning/milestones/M003/technical/fixtures/stream-v5/index.json": "1f1368a2480350b762395c47603ea8d93928a47224ee314a3301f866ea6087f9",
+    ".planning/milestones/M003/technical/fixtures/stream-v5/invalid-first-edit-fails.json": "b0753b51d66d75307e29cc1f01eb8ccac87072daa2abcc060f050f49eca9d655",
+    ".planning/milestones/M003/technical/fixtures/stream-v5/invalid-first-edit-rescues.json": "198f5d7f0a11a58c3bc061fe6c011bdfd3addabcc7f8ba758c98ec5f8c2154c5",
+    ".planning/milestones/M003/technical/fixtures/stream-v5/native-continuation.json": "8cca08e9c3e1112159570ec1588a1814fa39ccd6952d33ce25fdce359c0661b1",
+    ".planning/milestones/M003/technical/fixtures/stream-v5/packages.json": "cb2d1abdc3bfa3f4f4574be6064cbb371d6cdf044476ce6a85c18e7aae838275",
+    ".planning/milestones/M003/technical/fixtures/stream-v5/pending-status.json": "f036ac988a57b2f8099f5edcfb1bdcb7f482874f4e75b8bc7a7a03f0699e5853",
+    ".planning/milestones/M003/technical/fixtures/stream-v5/planning-fails.json": "f4699588893c5c7e5367405dcf50e1a039c532529ce48a547096f4b11851cc40",
+    ".planning/milestones/M003/technical/fixtures/stream-v5/preview-basic.json": "987c99401d8ecde335b56c815c56a967e3cf1b2e5d3eaa4f6f82bcc4c3cd9701",
+    ".planning/milestones/M003/technical/fixtures/stream-v5/preview-enhanced.json": "105c8f18672d330c73aac06a67ff3fe9f5ceef4e7f26153c0757fe4861b68439",
+    ".planning/milestones/M003/technical/fixtures/stream-v5/rewrite-once.json": "42ca1e9359a7cfc2db3be2b7449eb5a77e737d606a89ef1321ad7fa92b255700",
+    ".planning/milestones/M003/technical/fixtures/stream-v5/rewrite-recovery.json": "6bb26b3dc8ca1277508d1430f90d2624465b3bd550dcc139b126c245ae826017",
+    ".planning/milestones/M003/technical/fixtures/stream-v5/rewrite-twice.json": "5b83c80e270431b8ea7a88aaf98b830a902a9ff5741c92042e092d8368489903",
+    ".planning/milestones/M003/technical/evidence/build_stream_v5_fixtures.py": "af47c793454fbdd55f4ad8a30054cb87c1ff9f6ae8c4ba7cdb1c7f0cb2c1c60d",
+    ".planning/milestones/M003/technical/evidence/check_stream_v5.py": "3d62596f4ce0e065954ef502e001d63f9373c62ef8146a947b19e40b8cabe2fd",
+    ".planning/milestones/M003/technical/evidence/stream-v5-check.json": "a6c5dd7187e351c27e9dc1fb16385ea09d26f086513f77816d5dfe2bccd5397b",
+    ".planning/milestones/M003/technical/evidence/stream-v5-preservation.json": "92f612f279bd8b8a64d50ce870bcee0fc16eaafda953782bdb2e5262b1357f7d"
+  },
+  "event_schema_rows": {
+    ".planning/milestones/M003/technical/api/generation.md": [
+      "| generation.started | `{seq:int,contract_version:\"m003-stream-v5\",stream_id:string,run_id:string,generation_token:string,snapshot:RunSnapshot}` |",
+      "| generation.progress | `{seq:int,phase:planning|composing|finalizing}` |",
+      "| generation.plan_item | `{seq:int,plan_id:string,meaning_language:zh|en|ja,item:PlanPreviewItem}` |",
+      "| generation.edit | `{seq:int,draft_id:string,content_version:V,base_rev:int,rev:int,at:int,delete_count:int,insert:string,source:provider|retained}` |",
+      "| generation.validated | `{seq:int,run_id:string,final_content_version:V,result:Result,content_outcome:ValidContentOutcome,completion_notice:CompletionNotice}` |",
+      "| generation.failed | `{seq:int,code:FailureCode,quota_refunded:true,retryable:bool,request_id:string}` |",
+      "| generation.cancelled | `{seq:int,quota_refunded:false}` |",
+      "| generation.settlement_pending | `{seq:int,code:\"settlement_unconfirmed\",request_id:string}` |"
+    ],
+    ".planning/milestones/M003/technical/api/presets.md": [
+      "| preview.started | `{seq:int,contract_version:\"m003-stream-v5\",stream_id:string,preview_run_id:string,preview_token:string,draft_version:string,preview_content_mode:basic|enhanced,content_service:ContentService,native_correction_policy:NativePolicy}` |",
+      "| preview.progress | `{seq:int,phase:planning|composing|finalizing}` |",
+      "| preview.plan_item | `{seq:int,plan_id:string,meaning_language:zh|en|ja,item:PlanPreviewItem}` |",
+      "| preview.edit | `{seq:int,draft_id:string,content_version:V,base_rev:int,rev:int,at:int,delete_count:int,insert:string,source:provider|retained}` |",
+      "| preview.validated | `{seq:int,preview_run_id:string,draft_version:string,preview_content_mode:basic|enhanced,final_content_version:int[1,3],result:Result,content_outcome:ValidContentOutcome,completion_notice:CompletionNotice,usage:UsageSummary}` |",
+      "| preview.failed | `{seq:int,code:FailureCode,retryable:bool,request_id:string}` |",
+      "| preview.cancelled | `{seq:int}` |",
+      "| preview.settlement_pending | `{seq:int,code:\"settlement_unconfirmed\",request_id:string}` |"
+    ]
+  },
+  "document_before_sha256": {
+    ".planning/milestones/M003/technical/backend.md": "92d214976c524c69179174a324e4f28615a649156117b92db4ec46a6ba667fd7",
+    ".planning/milestones/M003/technical/ai-integration.md": "0f6149ec35b8815190097f644cb8e86af9ead0bb6d50e2f71ee24d6527a0870d",
+    ".planning/milestones/M003/technical/api/index.md": "f3f98b210c34ea3806b1376e23563638d631eb9bfc460a786fe55ff54bd37cee",
+    ".planning/milestones/M003/technical/api/generation.md": "1f9d0fea87bc93e64f5ecdfd9b227684f367c6deb1d816bbf9a73623fc6771fc",
+    ".planning/milestones/M003/technical/api/administration.md": "97ad7939073c497babdcbfe770694d7ad33e3573fc9746bb5d0e94360d301efb",
+    ".planning/milestones/M003/technical/api/presets.md": "fbe2158d17d3a47be7a51a1be056a04e55f2bb47e576becdd93df670484dd920",
+    ".planning/milestones/M003/handoffs/backend-architecture.md": "76fd0427e4d45c58053c239c8d6cd2da70e7c19826b330ac48939653080f272f"
+  }
+}

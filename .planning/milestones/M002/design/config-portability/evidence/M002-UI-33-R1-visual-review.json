@@ -1,0 +1,56 @@
+{
+  "version": "M002-UI-33-R1",
+  "reviewer": "designer-tony",
+  "date": "2026-10-15",
+  "method": "Manual visual inspection of same-browser captures after automated interaction checks",
+  "captures_reviewed": [
+    "R1-01-baseline-models-desktop-zh.png",
+    "R1-02-models-with-local-actions-desktop-zh.png",
+    "R1-03-inherited-model-editor-desktop-zh.png",
+    "R1-04-plans-preview-over-inherited-page-desktop-en.png",
+    "R1-05-inherited-item-editor-desktop-zh.png",
+    "R1-06-growth-preview-over-inherited-page-desktop-en.png",
+    "R1-07-model-item-level-preview-desktop-zh.png",
+    "R1-08-model-confirm-mobile-en.png",
+    "R1-09-prototype-encrypted-export-desktop-zh.png"
+  ],
+  "findings": [
+    {
+      "area": "Models before/after",
+      "result": "PASS",
+      "evidence": "Logo, 192px navigation, title geometry, three provider cards, four model rows, typography, spacing and original actions match; only two secondary page-head actions and the collapsed design-demo disclosure are added."
+    },
+    {
+      "area": "Inherited model editor",
+      "result": "PASS",
+      "evidence": "Original two-step provider/model dialog, API protocol, URL, Key, advanced output settings and custom parameter area remain full size and usable."
+    },
+    {
+      "area": "Plans",
+      "result": "PASS",
+      "evidence": "Original horizontal tabs, two-column options/form, full content review and repair section, and footer actions remain visible behind the scoped import preview."
+    },
+    {
+      "area": "Items and growth",
+      "result": "PASS",
+      "evidence": "Original item editor and growth tabs/forms remain the host UI. CR-313 modal uses the same surface, border, type and action hierarchy without replacing the host."
+    },
+    {
+      "area": "Item-level preview",
+      "result": "PASS",
+      "evidence": "Model additions, updates and removal are individually locatable; count cards agree with the listed rows and the removed item exists in the inherited baseline."
+    },
+    {
+      "area": "390px confirmation",
+      "result": "PASS",
+      "evidence": "No horizontal overflow. Header, independently scrolling content and fixed footer fit the viewport. Focus ring shown on Close is the intentional initial keyboard focus state, not a persistent skip link."
+    },
+    {
+      "area": "Prototype distinction",
+      "result": "PASS",
+      "evidence": "The interaction lab has no admin navigation and is visually separate from the formal inherited-page design."
+    }
+  ],
+  "result": "PASS",
+  "scope_limit": "Visual evidence proves deterministic local design behavior only; it does not prove real file, encryption, API, database, production app, or provider behavior."
+}

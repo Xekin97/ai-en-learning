@@ -3,6 +3,7 @@ SELECT entry
 FROM wordweave.vocabulary_entries
 WHERE snapshot_id = (SELECT id FROM wordweave.vocabulary_snapshots WHERE version = 'm001')
   AND lower(entry) LIKE '%' || lower(sqlc.arg(query)) || '%'
+  AND lower(entry) <> ALL(sqlc.arg(blocked_entries)::text[])
 ORDER BY
   CASE WHEN lower(entry) LIKE lower(sqlc.arg(query)) || '%' THEN 0 ELSE 1 END,
   length(entry),

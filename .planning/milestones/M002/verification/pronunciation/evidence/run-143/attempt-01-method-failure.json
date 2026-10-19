@@ -1,0 +1,15 @@
+{
+  "attempt": 1,
+  "result": "FAIL_METHOD",
+  "candidate_build_aggregate": "48054f4be82d69bf71cb76d3b1a5b493e3f26703347bac300dbf665cfbc63235",
+  "failed_assertion": "NATIVE-START-END",
+  "expected_by_initial_harness": "first four native calls all contain start and end",
+  "actual_event_shapes": [
+    ["start", "end"],
+    ["start", "error"],
+    ["start", "end"],
+    ["start", "end"]
+  ],
+  "assessment": "The second call is A in the A-to-B replacement case. Its native error terminal follows intentional cancellation and must not be required to end normally. Product expectation remains that B starts and ends and A cannot steal state.",
+  "next": "Retain this failed invocation, correct only the harness assertion, and rerun the same bounded candidate flow."
+}

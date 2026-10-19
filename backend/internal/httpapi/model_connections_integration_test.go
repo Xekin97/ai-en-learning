@@ -27,6 +27,9 @@ func TestGenericModelHTTPAuthorizationSaveAndExplicitProbe(t *testing.T) {
 		if input["model"] != "Vendor/Exact-ID" {
 			t.Error("model ID altered")
 		}
+		if input["temperature"] != float64(0.2) {
+			t.Errorf("custom parameters missing from probe: %#v", input)
+		}
 		w.Header().Set("Content-Type", "text/event-stream")
 		switch r.URL.Path {
 		case "/chat/completions":
@@ -69,21 +72,57 @@ func TestGenericModelHTTPAuthorizationSaveAndExplicitProbe(t *testing.T) {
 	login := postJSON(t, client, app.URL+"/api/v1/auth/login", csrf, map[string]any{"username": "generic_admin", "password": "synthetic-admin-password-123", "browser_ui_locale": "en-US"})
 	requireStatus(t, login, 200)
 	csrf = dataString(t, login.body, "csrf_token")
+	configurationSnapshot := func() string {
+		var snapshot string
+		if err := pool.QueryRow(ctx, `SELECT jsonb_build_array(
+			(SELECT jsonb_agg(to_jsonb(p) ORDER BY id) FROM wordweave.ai_providers p),
+			(SELECT jsonb_agg(to_jsonb(m) ORDER BY id) FROM wordweave.ai_models m),
+			(SELECT jsonb_agg(to_jsonb(c) ORDER BY provider_id) FROM wordweave.ai_provider_credentials c),
+			(SELECT revision FROM wordweave.growth_settings)
+		)::text`).Scan(&snapshot); err != nil {
+			t.Fatal(err)
+		}
+		return snapshot
+	}
+	requireCustomField := func(result testResponse, field, code string) {
+		t.Helper()
+		requireStatus(t, result, http.StatusUnprocessableEntity)
+		fields, ok := result.body["field_errors"].([]any)
+		if !ok || len(fields) != 1 {
+			t.Fatalf("field_errors=%#v body=%s", result.body["field_errors"], result.raw)
+		}
+		item, ok := fields[0].(map[string]any)
+		if !ok || item["field"] != field || item["code"] != code {
+			t.Fatalf("custom parameter error=%#v body=%s", fields[0], result.raw)
+		}
+	}
 	input := map[string]any{"display_name": "Generic configured model", "provider_model_id": "Vendor/Exact-ID", "output_mode": "prompt", "enabled": true, "expected_revision": configurationRevisionHTTP(t, client, app.URL), "connection": map[string]any{"name": "Remote provider", "protocol": "openai_responses", "base_url": "https://models.example/custom/v1/", "api_key": "synthetic-http-key"}}
+	before := configurationSnapshot()
+	requireCustomField(postJSON(t, client, app.URL+"/api/v1/admin/models", csrf, input), "/custom_parameters", "required")
+	if configurationSnapshot() != before || calls.Load() != 0 {
+		t.Fatal("missing single-model custom parameters changed configuration or called upstream")
+	}
+	input["custom_parameters"] = map[string]any{}
 	created := postJSON(t, client, app.URL+"/api/v1/admin/models", csrf, input)
 	requireStatus(t, created, 201)
 	if calls.Load() != 0 || strings.Contains(created.raw, "synthetic-http-key") || !nestedBool(t, created.body, "data", "model", "connection", "credential_configured") {
 		t.Fatal("save called upstream or leaked/missed credential")
 	}
 
-	batch := map[string]any{"connection_id": nestedString(t, created.body, "data", "model", "connection", "id"), "expected_revision": configurationRevisionHTTP(t, client, app.URL), "models": []map[string]any{{"provider_model_id": "Batch/A", "output_mode": "prompt", "enabled": false}, {"provider_model_id": "Batch/B", "display_name": "Second", "output_mode": "prompt", "enabled": false}}}
+	batch := map[string]any{"connection_id": nestedString(t, created.body, "data", "model", "connection", "id"), "expected_revision": configurationRevisionHTTP(t, client, app.URL), "models": []map[string]any{{"provider_model_id": "Batch/A", "output_mode": "prompt", "custom_parameters": map[string]any{}, "enabled": false}, {"provider_model_id": "Batch/B", "display_name": "Second", "output_mode": "prompt", "custom_parameters": map[string]any{}, "enabled": false}}}
+	missingBatch := map[string]any{"connection_id": batch["connection_id"], "expected_revision": batch["expected_revision"], "models": []map[string]any{{"provider_model_id": "Batch/missing-A", "output_mode": "prompt", "custom_parameters": map[string]any{}}, {"provider_model_id": "Batch/missing-B", "output_mode": "prompt"}}}
+	before = configurationSnapshot()
+	requireCustomField(postJSON(t, client, app.URL+"/api/v1/admin/models/batch", csrf, missingBatch), "/models/1/custom_parameters", "required")
+	if configurationSnapshot() != before || calls.Load() != 0 {
+		t.Fatal("missing batch custom parameters partially saved or called upstream")
+	}
 	savedBatch := postJSON(t, client, app.URL+"/api/v1/admin/models/batch", csrf, batch)
 	requireStatus(t, savedBatch, 201)
 	if calls.Load() != 0 || strings.Contains(savedBatch.raw, "synthetic-http-key") {
 		t.Fatal("batch save called upstream or leaked key")
 	}
 	batch["expected_revision"] = configurationRevisionHTTP(t, client, app.URL)
-	batch["models"] = []map[string]any{{"provider_model_id": "Batch/rolled-back", "output_mode": "prompt"}, {"provider_model_id": "Batch/A", "output_mode": "prompt"}}
+	batch["models"] = []map[string]any{{"provider_model_id": "Batch/rolled-back", "output_mode": "prompt", "custom_parameters": map[string]any{}}, {"provider_model_id": "Batch/A", "output_mode": "prompt", "custom_parameters": map[string]any{}}}
 	requireStatus(t, postJSON(t, client, app.URL+"/api/v1/admin/models/batch", csrf, batch), 409)
 	var partial int
 	if err = pool.QueryRow(ctx, `SELECT count(*) FROM wordweave.ai_models WHERE provider_model_id='Batch/rolled-back'`).Scan(&partial); err != nil || partial != 0 {
@@ -96,8 +135,14 @@ func TestGenericModelHTTPAuthorizationSaveAndExplicitProbe(t *testing.T) {
 	}
 	requireStatus(t, getJSON(t, client, app.URL+"/api/v1/admin/openrouter-credential"), 404)
 	// Provider-centric creation and editing use one connection and preserve model identities.
-	workspace := map[string]any{"connection": map[string]any{"name": "Workspace", "protocol": "openai_chat", "base_url": "https://workspace.example/v1", "api_key": "synthetic-workspace-key"}, "expected_revision": configurationRevisionHTTP(t, client, app.URL), "models": []map[string]any{{"id": nil, "provider_model_id": "Workspace/A", "output_mode": "prompt", "enabled": false}, {"id": nil, "provider_model_id": "Workspace/B", "output_mode": "prompt", "enabled": false}}}
+	workspace := map[string]any{"connection": map[string]any{"name": "Workspace", "protocol": "openai_chat", "base_url": "https://workspace.example/v1", "api_key": "synthetic-workspace-key"}, "expected_revision": configurationRevisionHTTP(t, client, app.URL), "models": []map[string]any{{"id": nil, "provider_model_id": "Workspace/A", "output_mode": "prompt", "custom_parameters": map[string]any{}, "enabled": false}, {"id": nil, "provider_model_id": "Workspace/B", "output_mode": "prompt", "custom_parameters": map[string]any{}, "enabled": false}}}
 	requireStatus(t, postJSON(t, client, app.URL+"/api/v1/admin/model-providers", "", workspace), 403)
+	missingWorkspace := map[string]any{"connection": workspace["connection"], "expected_revision": workspace["expected_revision"], "models": []map[string]any{{"id": nil, "provider_model_id": "Workspace/missing-A", "output_mode": "prompt", "custom_parameters": map[string]any{}}, {"id": nil, "provider_model_id": "Workspace/missing-B", "output_mode": "prompt"}}}
+	before = configurationSnapshot()
+	requireCustomField(postJSON(t, client, app.URL+"/api/v1/admin/model-providers", csrf, missingWorkspace), "/models/1/custom_parameters", "required")
+	if configurationSnapshot() != before || calls.Load() != 0 {
+		t.Fatal("missing provider aggregate custom parameters partially saved or called upstream")
+	}
 	providerCreated := postJSON(t, client, app.URL+"/api/v1/admin/model-providers", csrf, workspace)
 	requireStatus(t, providerCreated, 201)
 	providerID := nestedString(t, providerCreated.body, "data", "provider", "connection", "id")
@@ -107,11 +152,11 @@ func TestGenericModelHTTPAuthorizationSaveAndExplicitProbe(t *testing.T) {
 	entries := []map[string]any{}
 	for _, raw := range existing {
 		m := raw.(map[string]any)
-		entries = append(entries, map[string]any{"id": m["id"], "display_name": m["display_name"], "provider_model_id": m["provider_model_id"], "output_mode": "prompt", "enabled": true})
+		entries = append(entries, map[string]any{"id": m["id"], "display_name": m["display_name"], "provider_model_id": m["provider_model_id"], "output_mode": "prompt", "custom_parameters": m["custom_parameters"], "enabled": true})
 	}
 	firstID := entries[0]["id"]
 	entries[0]["display_name"] = "Edited together"
-	entries = append(entries, map[string]any{"id": nil, "provider_model_id": "Workspace/C", "output_mode": "prompt", "enabled": false})
+	entries = append(entries, map[string]any{"id": nil, "provider_model_id": "Workspace/C", "output_mode": "prompt", "custom_parameters": map[string]any{}, "enabled": false})
 	workspace["models"] = entries
 	workspace["expected_revision"] = data["revision"]
 	workspace["connection"] = map[string]any{"name": "Renamed workspace", "protocol": "openai_chat", "base_url": "https://workspace.example/v1", "api_key": ""}
@@ -150,6 +195,35 @@ func TestGenericModelHTTPAuthorizationSaveAndExplicitProbe(t *testing.T) {
 		t.Fatal("provider missing or save called upstream")
 	}
 	requireStatus(t, decodeResponse(t, rawJSONRequest(t, client, http.MethodPatch, app.URL+"/api/v1/admin/model-providers/"+providerID, csrf, workspace, nil)), 409)
+
+	// Disable remains available for bad stored configuration. Re-enabling validates
+	// the stored object atomically and never performs a provider compatibility call.
+	modelID := nestedString(t, created.body, "data", "model", "id")
+	if _, err = pool.Exec(ctx, `UPDATE wordweave.ai_models SET custom_parameters='{"model":"forbidden"}'::jsonb WHERE id=$1`, modelID); err != nil {
+		t.Fatal(err)
+	}
+	disabled := postJSON(t, client, app.URL+"/api/v1/admin/models/"+modelID+"/disable", csrf, map[string]any{"expected_revision": configurationRevisionHTTP(t, client, app.URL)})
+	requireStatus(t, disabled, http.StatusOK)
+	if calls.Load() != 0 {
+		t.Fatal("disable called upstream")
+	}
+	before = configurationSnapshot()
+	requireCustomField(postJSON(t, client, app.URL+"/api/v1/admin/models/"+modelID+"/enable", csrf, map[string]any{"expected_revision": dataString(t, disabled.body, "revision")}), "/custom_parameters/model", "protected_field")
+	if configurationSnapshot() != before || calls.Load() != 0 {
+		t.Fatal("rejected enable changed configuration or called upstream")
+	}
+	var enabled bool
+	if err = pool.QueryRow(ctx, `SELECT enabled FROM wordweave.ai_models WHERE id=$1`, modelID).Scan(&enabled); err != nil || enabled {
+		t.Fatal("rejected enable changed model state", err)
+	}
+
+	delete(input, "custom_parameters")
+	before = configurationSnapshot()
+	requireCustomField(postJSON(t, client, app.URL+"/api/v1/admin/model-connection-test", csrf, input), "/custom_parameters", "required")
+	if configurationSnapshot() != before || calls.Load() != 0 {
+		t.Fatal("missing probe custom parameters changed configuration or called upstream")
+	}
+	input["custom_parameters"] = map[string]any{"temperature": 0.2}
 
 	for _, protocol := range []string{ai.ProtocolChat, ai.ProtocolResponses, ai.ProtocolAnthropic} {
 		input["connection_id"] = ai.LegacyProviderID

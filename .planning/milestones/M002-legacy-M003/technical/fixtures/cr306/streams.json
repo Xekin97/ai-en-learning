@@ -1,0 +1,519 @@
+{
+  "fixture_version": "M003-BE-07",
+  "contract_version": "m003-stream-v5",
+  "cases": [
+    {
+      "id": "timeout",
+      "request": {
+        "model_id": "20000000-0000-4000-8000-000000000001",
+        "entries": [
+          "machine",
+          "preclude",
+          "interim",
+          "juvenile",
+          "retroactive"
+        ],
+        "meaning_language": "zh",
+        "scenario": "story",
+        "length": "short"
+      },
+      "wire": [
+        {
+          "event": "generation.started",
+          "data": {
+            "seq": 1,
+            "contract_version": "m003-stream-v5",
+            "stream_id": "stream-timeout",
+            "run_id": "fixture-timeout",
+            "generation_token": "fixture-not-a-real-token",
+            "snapshot": {
+              "configuration_revision": "fixture-revision-5",
+              "effective_plan": {
+                "code": "visitor",
+                "origin": "visitor"
+              },
+              "content_service": {
+                "native_validation": true,
+                "content_review_enabled": false,
+                "content_repair_limit": 0
+              },
+              "native_correction_policy": {
+                "version": "m003-native-policy-v1",
+                "scope": "logical_request",
+                "max_calls": 2,
+                "editable": false
+              }
+            }
+          }
+        },
+        {
+          "event": "generation.progress",
+          "data": {
+            "seq": 2,
+            "phase": "planning"
+          }
+        },
+        {
+          "event": "generation.failed",
+          "data": {
+            "seq": 3,
+            "code": "generation_timeout",
+            "quota_refunded": true,
+            "retryable": true,
+            "request_id": "fixture-timeout"
+          }
+        }
+      ],
+      "status_response": {
+        "http_status": 200,
+        "body": {
+          "data": {
+            "contract_version": "m003-stream-v5",
+            "run_id": "fixture-timeout",
+            "status": "failed",
+            "snapshot": {
+              "configuration_revision": "fixture-revision-5",
+              "effective_plan": {
+                "code": "visitor",
+                "origin": "visitor"
+              },
+              "content_service": {
+                "native_validation": true,
+                "content_review_enabled": false,
+                "content_repair_limit": 0
+              },
+              "native_correction_policy": {
+                "version": "m003-native-policy-v1",
+                "scope": "logical_request",
+                "max_calls": 2,
+                "editable": false
+              }
+            },
+            "final_content_version": null,
+            "result": null,
+            "can_save": false,
+            "quota_refunded": true,
+            "content_outcome": "failed",
+            "completion_notice": null
+          },
+          "meta": {
+            "request_id": "fixture-request"
+          }
+        }
+      },
+      "expected": {
+        "first_business_content_ms": null,
+        "plan_visible": false,
+        "can_save": false,
+        "writer_calls": 0,
+        "quota_refunded": true,
+        "terminal_confirmed": true
+      },
+      "internal_evidence": {
+        "scope": "Synthetic contract timeline, not observed performance.",
+        "only_reasoning_before_terminal": true,
+        "call_timeout_ms": 180000,
+        "request_timeout_ms": 600000,
+        "raw_reasoning_saved": false
+      }
+    },
+    {
+      "id": "fenced_plan",
+      "request": {
+        "model_id": "20000000-0000-4000-8000-000000000001",
+        "entries": [
+          "machine",
+          "preclude",
+          "interim",
+          "juvenile",
+          "retroactive"
+        ],
+        "meaning_language": "zh",
+        "scenario": "story",
+        "length": "short"
+      },
+      "wire": [
+        {
+          "event": "generation.started",
+          "data": {
+            "seq": 1,
+            "contract_version": "m003-stream-v5",
+            "stream_id": "stream-fenced_plan",
+            "run_id": "fixture-fenced_plan",
+            "generation_token": "fixture-not-a-real-token",
+            "snapshot": {
+              "configuration_revision": "fixture-revision-5",
+              "effective_plan": {
+                "code": "visitor",
+                "origin": "visitor"
+              },
+              "content_service": {
+                "native_validation": true,
+                "content_review_enabled": false,
+                "content_repair_limit": 0
+              },
+              "native_correction_policy": {
+                "version": "m003-native-policy-v1",
+                "scope": "logical_request",
+                "max_calls": 2,
+                "editable": false
+              }
+            }
+          }
+        },
+        {
+          "event": "generation.progress",
+          "data": {
+            "seq": 2,
+            "phase": "planning"
+          }
+        },
+        {
+          "event": "generation.failed",
+          "data": {
+            "seq": 3,
+            "code": "schema_error",
+            "quota_refunded": true,
+            "retryable": true,
+            "request_id": "fixture-fenced_plan"
+          }
+        }
+      ],
+      "status_response": {
+        "http_status": 200,
+        "body": {
+          "data": {
+            "contract_version": "m003-stream-v5",
+            "run_id": "fixture-fenced_plan",
+            "status": "failed",
+            "snapshot": {
+              "configuration_revision": "fixture-revision-5",
+              "effective_plan": {
+                "code": "visitor",
+                "origin": "visitor"
+              },
+              "content_service": {
+                "native_validation": true,
+                "content_review_enabled": false,
+                "content_repair_limit": 0
+              },
+              "native_correction_policy": {
+                "version": "m003-native-policy-v1",
+                "scope": "logical_request",
+                "max_calls": 2,
+                "editable": false
+              }
+            },
+            "final_content_version": null,
+            "result": null,
+            "can_save": false,
+            "quota_refunded": true,
+            "content_outcome": "failed",
+            "completion_notice": null
+          },
+          "meta": {
+            "request_id": "fixture-request"
+          }
+        }
+      },
+      "expected": {
+        "first_business_content_ms": null,
+        "plan_visible": false,
+        "can_save": false,
+        "writer_calls": 0,
+        "quota_refunded": true,
+        "terminal_confirmed": true
+      },
+      "internal_evidence": {
+        "scope": "Synthetic contract timeline, not observed performance.",
+        "only_reasoning_before_terminal": false,
+        "call_timeout_ms": 180000,
+        "request_timeout_ms": 600000,
+        "raw_reasoning_saved": false
+      }
+    },
+    {
+      "id": "cancelled",
+      "request": {
+        "model_id": "20000000-0000-4000-8000-000000000001",
+        "entries": [
+          "machine",
+          "preclude",
+          "interim",
+          "juvenile",
+          "retroactive"
+        ],
+        "meaning_language": "zh",
+        "scenario": "story",
+        "length": "short"
+      },
+      "wire": [
+        {
+          "event": "generation.started",
+          "data": {
+            "seq": 1,
+            "contract_version": "m003-stream-v5",
+            "stream_id": "stream-cancelled",
+            "run_id": "fixture-cancelled",
+            "generation_token": "fixture-not-a-real-token",
+            "snapshot": {
+              "configuration_revision": "fixture-revision-5",
+              "effective_plan": {
+                "code": "visitor",
+                "origin": "visitor"
+              },
+              "content_service": {
+                "native_validation": true,
+                "content_review_enabled": false,
+                "content_repair_limit": 0
+              },
+              "native_correction_policy": {
+                "version": "m003-native-policy-v1",
+                "scope": "logical_request",
+                "max_calls": 2,
+                "editable": false
+              }
+            }
+          }
+        },
+        {
+          "event": "generation.progress",
+          "data": {
+            "seq": 2,
+            "phase": "planning"
+          }
+        },
+        {
+          "event": "generation.cancelled",
+          "data": {
+            "seq": 3,
+            "quota_refunded": false
+          }
+        }
+      ],
+      "status_response": {
+        "http_status": 200,
+        "body": {
+          "data": {
+            "contract_version": "m003-stream-v5",
+            "run_id": "fixture-cancelled",
+            "status": "cancelled",
+            "snapshot": {
+              "configuration_revision": "fixture-revision-5",
+              "effective_plan": {
+                "code": "visitor",
+                "origin": "visitor"
+              },
+              "content_service": {
+                "native_validation": true,
+                "content_review_enabled": false,
+                "content_repair_limit": 0
+              },
+              "native_correction_policy": {
+                "version": "m003-native-policy-v1",
+                "scope": "logical_request",
+                "max_calls": 2,
+                "editable": false
+              }
+            },
+            "final_content_version": null,
+            "result": null,
+            "can_save": false,
+            "quota_refunded": false,
+            "content_outcome": "cancelled",
+            "completion_notice": null
+          },
+          "meta": {
+            "request_id": "fixture-request"
+          }
+        }
+      },
+      "expected": {
+        "first_business_content_ms": null,
+        "plan_visible": false,
+        "can_save": false,
+        "writer_calls": 0,
+        "quota_refunded": false,
+        "terminal_confirmed": true
+      },
+      "internal_evidence": {
+        "scope": "Synthetic contract timeline, not observed performance.",
+        "only_reasoning_before_terminal": false,
+        "call_timeout_ms": 180000,
+        "request_timeout_ms": 600000,
+        "raw_reasoning_saved": false
+      }
+    },
+    {
+      "id": "settlement_pending",
+      "request": {
+        "model_id": "20000000-0000-4000-8000-000000000001",
+        "entries": [
+          "machine",
+          "preclude",
+          "interim",
+          "juvenile",
+          "retroactive"
+        ],
+        "meaning_language": "zh",
+        "scenario": "story",
+        "length": "short"
+      },
+      "wire": [
+        {
+          "event": "generation.started",
+          "data": {
+            "seq": 1,
+            "contract_version": "m003-stream-v5",
+            "stream_id": "stream-settlement_pending",
+            "run_id": "fixture-settlement_pending",
+            "generation_token": "fixture-not-a-real-token",
+            "snapshot": {
+              "configuration_revision": "fixture-revision-5",
+              "effective_plan": {
+                "code": "visitor",
+                "origin": "visitor"
+              },
+              "content_service": {
+                "native_validation": true,
+                "content_review_enabled": false,
+                "content_repair_limit": 0
+              },
+              "native_correction_policy": {
+                "version": "m003-native-policy-v1",
+                "scope": "logical_request",
+                "max_calls": 2,
+                "editable": false
+              }
+            }
+          }
+        },
+        {
+          "event": "generation.progress",
+          "data": {
+            "seq": 2,
+            "phase": "planning"
+          }
+        },
+        {
+          "event": "generation.settlement_pending",
+          "data": {
+            "seq": 3,
+            "code": "settlement_unconfirmed",
+            "request_id": "fixture-settlement_pending"
+          }
+        }
+      ],
+      "status_response": {
+        "http_status": 200,
+        "body": {
+          "data": {
+            "contract_version": "m003-stream-v5",
+            "run_id": "fixture-settlement_pending",
+            "status": "active",
+            "snapshot": {
+              "configuration_revision": "fixture-revision-5",
+              "effective_plan": {
+                "code": "visitor",
+                "origin": "visitor"
+              },
+              "content_service": {
+                "native_validation": true,
+                "content_review_enabled": false,
+                "content_repair_limit": 0
+              },
+              "native_correction_policy": {
+                "version": "m003-native-policy-v1",
+                "scope": "logical_request",
+                "max_calls": 2,
+                "editable": false
+              }
+            },
+            "final_content_version": null,
+            "result": null,
+            "can_save": false,
+            "quota_refunded": false,
+            "content_outcome": null,
+            "completion_notice": null
+          },
+          "meta": {
+            "request_id": "fixture-request"
+          }
+        }
+      },
+      "expected": {
+        "first_business_content_ms": null,
+        "plan_visible": false,
+        "can_save": false,
+        "writer_calls": 0,
+        "quota_refunded": false,
+        "terminal_confirmed": false
+      },
+      "internal_evidence": {
+        "scope": "Synthetic contract timeline, not observed performance.",
+        "only_reasoning_before_terminal": false,
+        "call_timeout_ms": 180000,
+        "request_timeout_ms": 600000,
+        "raw_reasoning_saved": false
+      }
+    },
+    {
+      "id": "preview_timeout",
+      "wire": [
+        {
+          "event": "preview.started",
+          "data": {
+            "seq": 1,
+            "contract_version": "m003-stream-v5",
+            "stream_id": "stream-preview-basic",
+            "preview_run_id": "fixture-preview-basic",
+            "preview_token": "fixture-not-a-real-token",
+            "draft_version": "fixture-current-draft",
+            "preview_content_mode": "basic",
+            "content_service": {
+              "native_validation": true,
+              "content_review_enabled": false,
+              "content_repair_limit": 0
+            },
+            "native_correction_policy": {
+              "version": "m003-native-policy-v1",
+              "scope": "logical_request",
+              "max_calls": 2,
+              "editable": false
+            }
+          }
+        },
+        {
+          "event": "preview.progress",
+          "data": {
+            "seq": 2,
+            "phase": "planning"
+          }
+        },
+        {
+          "event": "preview.failed",
+          "data": {
+            "seq": 3,
+            "code": "generation_timeout",
+            "retryable": true,
+            "request_id": "fixture-preview-timeout"
+          }
+        }
+      ],
+      "expected": {
+        "first_business_content_ms": null,
+        "can_publish": false,
+        "user_charge": false,
+        "writer_calls": 0
+      },
+      "internal_evidence": {
+        "scope": "Synthetic preview failure, no model call."
+      }
+    }
+  ],
+  "reuse_unmodified_business_flows": [
+    "../stream-v5/edit-fault-retains-first.json",
+    "../stream-v5/preview-enhanced.json"
+  ],
+  "display_policy": "Apply BE05-R1: keep initial planning through edits/pending/EOF; clear only valid full Result, failure/cancel or new request. Never use old plan_hidden_on_first_edit assertions."
+}

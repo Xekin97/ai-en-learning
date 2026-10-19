@@ -7,6 +7,7 @@ import type {
 import { normalizeFailure } from "@application/shared/failure";
 
 import { resetPrivateStates } from "@runtime/session/private-state";
+import { clearAllPortabilityRecovery } from "@runtime/session/config-portability-recovery";
 
 interface SessionState {
   snapshot: SessionSnapshot | null;
@@ -122,6 +123,7 @@ export function useSessionStore() {
   }
 
   function invalidate() {
+    if (import.meta.client) clearAllPortabilityRecovery();
     revision.value++;
     setSnapshot(
       {

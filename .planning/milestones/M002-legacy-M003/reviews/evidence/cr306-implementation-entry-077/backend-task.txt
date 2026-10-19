@@ -1,0 +1,18 @@
+你是 backend-ethan，按 agt-backend-implement 实施 M003 CR-306 后端/DB已批准方案。先核state implementation/backend-implementer/base/backend-ethan/active和TRANSITION-M003-077；未激活不得实施。产品根 /Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning；框架根 ../agt-coding-v2。先完整读Skill/共同契约/工作流/roles/backend-implementer/base和所需模板、model-routing。锁定consumer-ai-web@1.0.0、routing v1，本任务涉及配置密钥/原子性/快照/计费相关风险，strong gpt-5.6-sol/high已请求，actual serving/usage unknown。不得迁移Profile/路由。当前用户在FE03与既定实施次序交付后回复“下一步”，USER-M003-CR306-IMPLEMENT-NEXT授权当前实施及本地必要开发验证。
+
+当前输入：PRODUCT09、BE07/handoffs/backend-architecture.md、DB04/handoffs/database.md、technical/backend.md BE7各段、database.md DB4各段、API306 administration/generation/presets/index、AI7、CR306 fixtures和已接收FE03。UI10-R1视觉已接受、R1.1合同澄清已接收；不用重做设计。TECH04组合已冻结 reviews/evidence/cr306-implementation-entry-077/M003-TECH-04-source-manifest.json。旧BE/DB handoff里待设计等语句是提交时点，076/077现决策覆盖。原TECH03全部实现、CR304/305独立QA已完成，是现有基线而不是从头开发。
+
+所有权：backend/** 中本次BE7/DB4/API306/AI7真正受影响源码、未发布 backend/db/migrations/0017_m003_content_review.sql、相关测试及必要构建fixture；implementation/backend-worktree-plan.md、backend-validation.md、handoffs/backend-implementation.md、implementation/evidence/cr306-backend/新证据；changes/CR-306.md仅后端实施处理段。旧三实施原件已由root冻结在077/backend-implementation-before-cr306.tar.gz。不得改frontend/**、产品/架构/UI专业原件、控制面/registry、既有证据、UAT或真实配置、无关部署文件。你不是独自在代码库中工作，请保留并适配当前大量未提交M003改动，绝不reset/revert他人工作，不自行commit/push。当前dirty依赖若不适合worktree则记录理由就地限定实施；无独立收益不强行分支。
+
+落实具体合同：
+1. 严格JSON原文解析和统一校验，根对象必填、所有层级解码后重复键/数值/代理/U+0000/深度8/紧凑UTF8 16KiB/保留敏感及原型键名单按API306，不静默补{}、截断/修复/删除参数；顶层受控body不相交浅合入。确认API全字段/HTTP整包大小/安全错误pointer，不能仅信map反序列化。
+2. 全模型管理读写：单项、batch、provider聚合、probe、enable边界，读取返回custom_parameters；保存严格0供应商调用，原CAS和全组原子性保留。错误status/code/field/context完全匹配API，409/413/required不编造。
+3. 当前未发布0017新增ai_models.custom_parameters默认{}与两run安全非空版本化快照、CHECK/不变性/Verify；精确DB4设计，受理共享锁和同事务snapshot/run/entries/charge，preview无charge。只改未发布schema并在可丢弃空库初始化验证，禁止0018历史升级/旧库回填/触动现UAT。新snapshot不含密钥、提示词或私有推理。
+4. BindSpec/deep immutable snapshot贯穿同一run的Plan/Writer/FixedEdit/native repair/Review/Rewrite；并发修改配置只影响新run，旧run不回读。三协议(OpenAI Chat/Responses/Anthropic)正确透传；OR业务json_schema require_parameters是服务端格式安全合同，probe/prompt模式/其他服务商不误注入。不改模型、去围栏或删参数自动重试。
+5. 显式Probe固定30s/256，取该次完整模型配置但不回写max输出；短测不是保存前置，不等于完整生成验证。非法库配置严格确定未受理503 generation_unavailable/accepted:false；真实上游400/422无公开正文、超时、取消、pending/Q02/退款沿现合同，180/600期限不重新计算，不新增超时策略。
+
+按BE7-V/DB4-04、API fixtures、FE V14-19有关后端完成条件补必要单测/httptest与隔离DB/HTTP/Gateway集成，三协议、strict边界、全写入口零调用和原子性、run快照稳定、现流程失败/取消/结算都要有对应证据。测试只跑所需检查；全量integration因schema广影响若必要可跑一次，失败修后定向复验；通过后勿为增加数字重复。不能删断言、只编译不测、以老report代新行为。保留新失败原始日志和修复记录。性能/真实模型效果仍未验证，不在本次调用真实收费模型或读输出真实API key。
+
+环境：Go项目；Node24路径 /Users/xekinzhuo/.npm/_npx/387698761821791d/node_modules/node/bin/node（只有必要才用）；PostgreSQL18工具 /opt/homebrew/opt/postgresql@18/bin。可以创建自己独占的临时PostgreSQL实例或隔离测试容器，必须记录归属/安全停止清理只限自己创建资源。先检查各测试连接变量并显式指向你的可丢弃实例，不能读默认env误接现UAT。当前用户UAT3013，现PG54672/backend54673/metrics54674/mock54675，禁止停/改/重启它们；设计预览4174也保留。勿读取/转储 UAT私有env.json，测试不需要真实密钥。
+
+专业冲突交root/原owner，例行实现选择依已有授权直接推进，不重复请求已给许可。独立内部子任务如确有清晰所有权收益，先报告root模块边界并遵守同一锁定路由，不把全任务再次分包/重构；你负责集成与总验证。工作期间每个主要里程碑发短进度（已完成/发现/接下来）。最后收敛上述当前实施原件，链接精确命令/退出码/覆盖/未覆盖、源码diff与可恢复source manifest，CR306仍open，不自批QA或切阶段。完成后直接给root当前结果与前端可消费合同、真正失败项；root安排独立接收。

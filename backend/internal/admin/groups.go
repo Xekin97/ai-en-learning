@@ -6,6 +6,7 @@ import (
 	"github.com/google/uuid"
 	"github.com/jackc/pgx/v5"
 	"math"
+	"wordweave/internal/entitlement"
 	"wordweave/internal/platform/business"
 )
 
@@ -17,29 +18,47 @@ type GroupModel struct {
 	Enabled     bool
 }
 type Group struct {
-	Code            string
-	Priority        int
-	Rolling24hLimit *int
-	MaxEntries      int
-	AllowedLengths  []string
-	Models          []GroupModel
-	Revision        string
+	Code                 string
+	Priority             int
+	Rolling24hLimit      *int
+	MaxEntries           int
+	AllowedLengths       []string
+	Models               []GroupModel
+	Revision             string
+	ContentReviewEnabled bool
+	ContentRepairLimit   int
 }
 type GroupInput struct {
-	Expected string      `json:"expected_revision"`
-	Priority int         `json:"priority"`
-	Limit    *int        `json:"rolling_24h_limit" nullable:"true"`
-	Maximum  int         `json:"max_entries"`
-	Lengths  []string    `json:"allowed_lengths"`
-	Models   []uuid.UUID `json:"model_ids"`
+	Expected             string      `json:"expected_revision"`
+	Priority             int         `json:"priority"`
+	Limit                *int        `json:"rolling_24h_limit" nullable:"true"`
+	Maximum              int         `json:"max_entries"`
+	Lengths              []string    `json:"allowed_lengths"`
+	Models               []uuid.UUID `json:"model_ids"`
+	ContentReviewEnabled bool        `json:"content_review_enabled"`
+	ContentRepairLimit   int         `json:"content_repair_limit"`
+}
+type ContentServicePair struct {
+	ContentReviewEnabled bool `json:"content_review_enabled"`
+	ContentRepairLimit   int  `json:"content_repair_limit"`
 }
 type GroupImpact struct {
-	Base               int    `json:"base_users"`
-	Trials             int    `json:"active_trial_users"`
-	PriorityChanged    bool   `json:"priority_changed"`
-	MayChangeEffective bool   `json:"may_change_effective_plan"`
-	LosesModels        bool   `json:"loses_all_models"`
-	Revision           string `json:"revision"`
+	Base                 int    `json:"base_users"`
+	Trials               int    `json:"active_trial_users"`
+	PriorityChanged      bool   `json:"priority_changed"`
+	MayChangeEffective   bool   `json:"may_change_effective_plan"`
+	LosesModels          bool   `json:"loses_all_models"`
+	Revision             string `json:"revision"`
+	ContentServiceChange struct {
+		Before ContentServicePair `json:"before"`
+		After  ContentServicePair `json:"after"`
+	} `json:"content_service_change"`
+	AppliesTo              string                   `json:"applies_to"`
+	InFlightPolicy         string                   `json:"in_flight_policy"`
+	UsageReset             bool                     `json:"usage_reset"`
+	TrialDatesChanged      bool                     `json:"trial_dates_changed"`
+	NativeCorrectionPolicy entitlement.NativePolicy `json:"native_correction_policy"`
+	Warnings               []string                 `json:"warnings"`
 }
 type Priority struct {
 	Code  string `json:"code"`
@@ -50,9 +69,20 @@ type PrioritiesInput struct {
 	Priorities []Priority `json:"priorities"`
 }
 type PriorityImpact struct {
-	Base     int    `json:"affected_base_users"`
-	Trials   int    `json:"affected_trial_users"`
-	Revision string `json:"revision"`
+	Base                 int    `json:"affected_base_users"`
+	Trials               int    `json:"affected_trial_users"`
+	Revision             string `json:"revision"`
+	ContentServiceByPlan []struct {
+		Code                 string `json:"code"`
+		ContentReviewEnabled bool   `json:"content_review_enabled"`
+		ContentRepairLimit   int    `json:"content_repair_limit"`
+	} `json:"content_service_by_plan"`
+	MayChangeContentService bool                     `json:"may_change_content_service"`
+	AppliesTo               string                   `json:"applies_to"`
+	InFlightPolicy          string                   `json:"in_flight_policy"`
+	UsageReset              bool                     `json:"usage_reset"`
+	TrialDatesChanged       bool                     `json:"trial_dates_changed"`
+	NativeCorrectionPolicy  entitlement.NativePolicy `json:"native_correction_policy"`
 }
 
 func readGroup(ctx context.Context, tx pgx.Tx, code string) (Group, error) {
@@ -61,7 +91,7 @@ func readGroup(ctx context.Context, tx pgx.Tx, code string) (Group, error) {
 		return Group{}, ErrNotFound
 	}
 	g := Group{Code: code, AllowedLengths: make([]string, 0), Models: make([]GroupModel, 0)}
-	err := tx.QueryRow(ctx, `SELECT priority,rolling_quota_limit,max_entries_per_run FROM wordweave.entitlement_groups WHERE code=$1`, dbCode).Scan(&g.Priority, &g.Rolling24hLimit, &g.MaxEntries)
+	err := tx.QueryRow(ctx, `SELECT priority,rolling_quota_limit,max_entries_per_run,content_review_enabled,content_repair_limit FROM wordweave.entitlement_groups WHERE code=$1`, dbCode).Scan(&g.Priority, &g.Rolling24hLimit, &g.MaxEntries, &g.ContentReviewEnabled, &g.ContentRepairLimit)
 	if errors.Is(err, pgx.ErrNoRows) {
 		return g, ErrNotFound
 	}
@@ -168,6 +198,13 @@ func validateGroup(ctx context.Context, tx pgx.Tx, code string, in GroupInput) (
 	if !ok {
 		return in, ErrNotFound
 	}
+	contentValid := !in.ContentReviewEnabled && in.ContentRepairLimit == 0
+	if (code == "pro" || code == "plus") && in.ContentReviewEnabled && in.ContentRepairLimit >= 1 && in.ContentRepairLimit <= 99 {
+		contentValid = true
+	}
+	if !contentValid {
+		return in, ErrValidation
+	}
 	var duplicate bool
 	if err := tx.QueryRow(ctx, `SELECT EXISTS(SELECT 1 FROM wordweave.entitlement_groups WHERE code<>$1 AND priority=$2)`, dbCode, in.Priority).Scan(&duplicate); err != nil {
 		return in, err
@@ -199,12 +236,29 @@ func (s *Service) GroupImpact(ctx context.Context, code string, in GroupInput) (
 		return GroupImpact{}, err
 	}
 	dbCode, _ := databaseGroupCode(code)
-	out := GroupImpact{PriorityChanged: old.Priority != in.Priority, Revision: s.revision(c)}
+	out := GroupImpact{PriorityChanged: old.Priority != in.Priority, Revision: s.revision(c), AppliesTo: "new_requests", InFlightPolicy: "accepted_snapshot", NativeCorrectionPolicy: entitlement.SystemNativePolicy(), Warnings: []string{}}
+	out.ContentServiceChange.Before = ContentServicePair{ContentReviewEnabled: old.ContentReviewEnabled, ContentRepairLimit: old.ContentRepairLimit}
+	out.ContentServiceChange.After = ContentServicePair{ContentReviewEnabled: in.ContentReviewEnabled, ContentRepairLimit: in.ContentRepairLimit}
 	if err = tx.QueryRow(ctx, `SELECT (SELECT count(*) FROM wordweave.accounts WHERE group_code=$1),(SELECT count(*) FROM wordweave.plan_trials WHERE target_plan_code=$1 AND closed_at IS NULL AND ends_at>$2),NOT EXISTS(SELECT 1 FROM wordweave.ai_models WHERE id=ANY($3::uuid[]) AND enabled AND retired_at IS NULL)`, dbCode, c.Now, in.Models).Scan(&out.Base, &out.Trials, &out.LosesModels); err != nil {
 		return out, err
 	}
 	if out.PriorityChanged {
 		err = tx.QueryRow(ctx, `SELECT EXISTS(SELECT 1 FROM wordweave.accounts a JOIN wordweave.entitlement_groups b ON b.code=a.group_code JOIN wordweave.plan_trials t ON t.owner_id=a.id AND t.closed_at IS NULL AND t.ends_at>$3 JOIN wordweave.entitlement_groups p ON p.code=t.target_plan_code WHERE (p.priority>b.priority) <> ((CASE WHEN p.code=$1 THEN $2 ELSE p.priority END)>(CASE WHEN b.code=$1 THEN $2 ELSE b.priority END)))`, dbCode, in.Priority, c.Now).Scan(&out.MayChangeEffective)
+	}
+	if old.ContentReviewEnabled && !in.ContentReviewEnabled {
+		out.Warnings = append(out.Warnings, "content_service_removed")
+	}
+	if out.LosesModels {
+		out.Warnings = append(out.Warnings, "no_models")
+	}
+	if len(in.Lengths) == 0 {
+		out.Warnings = append(out.Warnings, "no_lengths")
+	}
+	if in.Limit != nil && *in.Limit == 0 {
+		out.Warnings = append(out.Warnings, "zero_plan_quota")
+	}
+	if out.MayChangeEffective {
+		out.Warnings = append(out.Warnings, "effective_plan_may_change")
 	}
 	return out, err
 }
@@ -226,7 +280,7 @@ func (s *Service) PutGroup(ctx context.Context, code string, in GroupInput) (Gro
 		return Group{}, err
 	}
 	dbCode, _ := databaseGroupCode(code)
-	tag, err := tx.Exec(ctx, `UPDATE wordweave.entitlement_groups SET priority=$2,rolling_quota_limit=$3,max_entries_per_run=$4 WHERE code=$1`, dbCode, in.Priority, in.Limit, in.Maximum)
+	tag, err := tx.Exec(ctx, `UPDATE wordweave.entitlement_groups SET priority=$2,rolling_quota_limit=$3,max_entries_per_run=$4,content_review_enabled=$5,content_repair_limit=$6 WHERE code=$1`, dbCode, in.Priority, in.Limit, in.Maximum, in.ContentReviewEnabled, in.ContentRepairLimit)
 	if err != nil {
 		return Group{}, err
 	}
@@ -309,8 +363,52 @@ func (s *Service) PriorityImpact(ctx context.Context, in PrioritiesInput) (Prior
 			changed = append(changed, code)
 		}
 	}
-	out := PriorityImpact{Revision: s.revision(c)}
+	out := PriorityImpact{Revision: s.revision(c), AppliesTo: "new_requests", InFlightPolicy: "accepted_snapshot", NativeCorrectionPolicy: entitlement.SystemNativePolicy()}
+	groups, e := readGroups(ctx, tx)
+	if e != nil {
+		return out, e
+	}
+	for _, g := range groups {
+		out.ContentServiceByPlan = append(out.ContentServiceByPlan, struct {
+			Code                 string `json:"code"`
+			ContentReviewEnabled bool   `json:"content_review_enabled"`
+			ContentRepairLimit   int    `json:"content_repair_limit"`
+		}{g.Code, g.ContentReviewEnabled, g.ContentRepairLimit})
+	}
 	err = tx.QueryRow(ctx, `SELECT (SELECT count(*) FROM wordweave.accounts WHERE group_code=ANY($1::text[])),(SELECT count(*) FROM wordweave.plan_trials WHERE target_plan_code=ANY($1::text[]) AND closed_at IS NULL AND ends_at>$2)`, changed, c.Now).Scan(&out.Base, &out.Trials)
+	if err == nil {
+		priorities := make(map[string]int, 4)
+		for _, row := range in.Priorities {
+			db, _ := databaseGroupCode(row.Code)
+			priorities[db] = row.Value
+		}
+		rows, queryErr := tx.Query(ctx, `SELECT b.code,b.priority,b.content_review_enabled,b.content_repair_limit,
+			p.code,p.priority,p.content_review_enabled,p.content_repair_limit
+			FROM wordweave.accounts a JOIN wordweave.entitlement_groups b ON b.code=a.group_code
+			JOIN wordweave.plan_trials t ON t.owner_id=a.id AND t.closed_at IS NULL AND t.ends_at>$1
+			JOIN wordweave.entitlement_groups p ON p.code=t.target_plan_code`, c.Now)
+		if queryErr != nil {
+			return out, queryErr
+		}
+		defer rows.Close()
+		for rows.Next() {
+			var baseCode, trialCode string
+			var baseOld, trialOld, baseLimit, trialLimit int
+			var baseEnabled, trialEnabled bool
+			if scanErr := rows.Scan(&baseCode, &baseOld, &baseEnabled, &baseLimit, &trialCode, &trialOld, &trialEnabled, &trialLimit); scanErr != nil {
+				return out, scanErr
+			}
+			oldTrialWins := trialOld > baseOld
+			newTrialWins := priorities[trialCode] > priorities[baseCode]
+			if oldTrialWins != newTrialWins && (baseEnabled != trialEnabled || baseLimit != trialLimit) {
+				out.MayChangeContentService = true
+				break
+			}
+		}
+		if err = rows.Err(); err != nil {
+			return out, err
+		}
+	}
 	return out, err
 }
 func (s *Service) SavePriorities(ctx context.Context, in PrioritiesInput) ([]Group, string, error) {

@@ -41,8 +41,9 @@ type PresetConfigurationInput struct {
 	Length          string    `json:"length"`
 }
 type PresetInput struct {
-	Title         string                   `json:"title"`
-	Configuration PresetConfigurationInput `json:"configuration"`
+	Title              string                   `json:"title"`
+	Configuration      PresetConfigurationInput `json:"configuration"`
+	PreviewContentMode string                   `json:"preview_content_mode"`
 }
 type PresetModel struct {
 	ID   uuid.UUID `json:"id"`
@@ -96,16 +97,23 @@ type PublicPreset struct {
 	Availability     PresetAvailability  `json:"availability"`
 }
 type PublishedPreset struct {
-	Title            string              `json:"title"`
-	Configuration    PresetConfiguration `json:"configuration"`
-	Sample           PublicResult        `json:"sample"`
-	VersionCreatedAt time.Time           `json:"version_created_at"`
+	Title               string              `json:"title"`
+	Configuration       PresetConfiguration `json:"configuration"`
+	Sample              PublicResult        `json:"sample"`
+	VersionCreatedAt    time.Time           `json:"version_created_at"`
+	FinalContentVersion *int                `json:"final_content_version"`
+	ContentOutcome      *string             `json:"content_outcome"`
+	CompletionNotice    *string             `json:"completion_notice"`
 }
 type PresetPreview struct {
-	RunID       uuid.UUID    `json:"preview_run_id"`
-	CompletedAt time.Time    `json:"completed_at"`
-	Result      PublicResult `json:"result"`
-	Usage       UsageSummary `json:"usage"`
+	RunID               uuid.UUID    `json:"preview_run_id"`
+	CompletedAt         time.Time    `json:"completed_at"`
+	Result              PublicResult `json:"result"`
+	Usage               UsageSummary `json:"usage"`
+	PreviewContentMode  string       `json:"preview_content_mode"`
+	FinalContentVersion *int         `json:"final_content_version"`
+	ContentOutcome      *string      `json:"content_outcome"`
+	CompletionNotice    *string      `json:"completion_notice"`
 }
 type AdminPreset struct {
 	ID                    uuid.UUID           `json:"id"`
@@ -119,26 +127,30 @@ type AdminPreset struct {
 	Preview               *PresetPreview      `json:"preview"`
 	Published             *PublishedPreset    `json:"published"`
 	UpdatedAt             time.Time           `json:"-"`
+	PreviewContentMode    string              `json:"preview_content_mode"`
 }
 type presetVersion struct {
-	ID, PresetID     uuid.UUID
-	Number           int
-	Title            string
-	Input            PresetConfigurationInput
-	Configuration    PresetConfiguration
-	Hash             []byte
-	CreatedAt        time.Time
-	PreviewID        *uuid.UUID
-	Payload          *ai.ValidatedBatch
-	PreviewRun       *uuid.UUID
-	PreviewCompleted *time.Time
-	Enabled          bool
+	ID, PresetID        uuid.UUID
+	Number              int
+	Title               string
+	Input               PresetConfigurationInput
+	Configuration       PresetConfiguration
+	Hash                []byte
+	CreatedAt           time.Time
+	PreviewID           *uuid.UUID
+	Payload             *ai.ValidatedBatch
+	PreviewRun          *uuid.UUID
+	PreviewCompleted    *time.Time
+	Enabled             bool
+	PreviewContentMode  string
+	FinalContentVersion *int
+	ContentOutcome      *string
 }
 
 func readPresetVersion(ctx context.Context, tx pgx.Tx, id uuid.UUID) (presetVersion, error) {
 	var v presetVersion
 	var config, payload []byte
-	err := tx.QueryRow(ctx, presetVersionSQL, id).Scan(&v.ID, &v.PresetID, &v.Number, &v.Title, &config, &v.Hash, &v.CreatedAt, &v.PreviewID, &v.Configuration.Model.Name, &v.Enabled, &payload, &v.PreviewRun, &v.PreviewCompleted)
+	err := tx.QueryRow(ctx, presetVersionSQL, id).Scan(&v.ID, &v.PresetID, &v.Number, &v.Title, &config, &v.Hash, &v.CreatedAt, &v.PreviewID, &v.PreviewContentMode, &v.Configuration.Model.Name, &v.Enabled, &payload, &v.PreviewRun, &v.PreviewCompleted, &v.FinalContentVersion, &v.ContentOutcome)
 	if errors.Is(err, pgx.ErrNoRows) {
 		return v, ErrPresetUnavailable
 	}
@@ -175,6 +187,7 @@ func (s *Service) adminPreset(ctx context.Context, tx pgx.Tx, id uuid.UUID) (Adm
 		return p, err
 	}
 	p.Title = d.Title
+	p.PreviewContentMode = d.PreviewContentMode
 	p.Configuration = d.Configuration
 	p.DraftState = "needs_preview"
 	p.HasUnpublishedChanges = p.PublishedVersion == nil || *p.PublishedVersion != p.DraftVersion
@@ -183,7 +196,7 @@ func (s *Service) adminPreset(ctx context.Context, tx pgx.Tx, id uuid.UUID) (Adm
 		if err != nil {
 			return p, err
 		}
-		p.Preview = &PresetPreview{*d.PreviewRun, *d.PreviewCompleted, UserResult(*d.Payload), u}
+		p.Preview = &PresetPreview{RunID: *d.PreviewRun, CompletedAt: *d.PreviewCompleted, Result: UserResult(*d.Payload), Usage: u, PreviewContentMode: d.PreviewContentMode, FinalContentVersion: d.FinalContentVersion, ContentOutcome: d.ContentOutcome, CompletionNotice: noticeForOutcome(d.ContentOutcome)}
 		p.DraftState = "preview_ready"
 	}
 	if p.PublishedVersion != nil {
@@ -194,7 +207,7 @@ func (s *Service) adminPreset(ctx context.Context, tx pgx.Tx, id uuid.UUID) (Adm
 		if v.Payload == nil {
 			return p, errors.New("published preset without validated sample")
 		}
-		p.Published = &PublishedPreset{v.Title, v.Configuration, UserResult(*v.Payload), v.CreatedAt}
+		p.Published = &PublishedPreset{Title: v.Title, Configuration: v.Configuration, Sample: UserResult(*v.Payload), VersionCreatedAt: v.CreatedAt, FinalContentVersion: v.FinalContentVersion, ContentOutcome: v.ContentOutcome, CompletionNotice: noticeForOutcome(v.ContentOutcome)}
 	}
 	return p, nil
 }
@@ -213,14 +226,19 @@ func (s *Service) AdminPreset(ctx context.Context, id uuid.UUID) (AdminPreset, s
 }
 func (s *Service) validatePreset(ctx context.Context, tx pgx.Tx, in *PresetInput) ([]dbgen.ResolveVocabularyEntriesRow, []byte, error) {
 	in.Title = strings.TrimSpace(in.Title)
-	if !utf8.ValidString(in.Title) || in.Title == "" || utf8.RuneCountInString(in.Title) > 200 || len(in.Configuration.Entries) == 0 || hasDuplicate(in.Configuration.Entries) || !validMeaningLanguage(in.Configuration.MeaningLanguage) || !validScenario(in.Configuration.Scenario) {
+	// Direct internal callers created before M003 retain the historical basic
+	// preview behavior. HTTP configuration decoding still requires the field.
+	if in.PreviewContentMode == "" {
+		in.PreviewContentMode = "basic"
+	}
+	if !utf8.ValidString(in.Title) || in.Title == "" || utf8.RuneCountInString(in.Title) > 200 || len(in.Configuration.Entries) == 0 || hasDuplicate(in.Configuration.Entries) || !validMeaningLanguage(in.Configuration.MeaningLanguage) || !validScenario(in.Configuration.Scenario) || (in.PreviewContentMode != "basic" && in.PreviewContentMode != "enhanced") {
 		return nil, nil, ErrInvalidInput
 	}
 	if _, ok := minimumWords(in.Configuration.Length); !ok {
 		return nil, nil, ErrInvalidInput
 	}
 	var exists bool
-	if err := tx.QueryRow(ctx, `SELECT EXISTS(SELECT 1 FROM wordweave.ai_models WHERE id=$1 AND retired_at IS NULL)`, in.Configuration.ModelID).Scan(&exists); err != nil {
+	if err := tx.QueryRow(ctx, `SELECT EXISTS(SELECT 1 FROM wordweave.ai_models m JOIN wordweave.ai_providers p ON p.id=m.provider_id WHERE m.id=$1 AND m.retired_at IS NULL AND p.retired_at IS NULL)`, in.Configuration.ModelID).Scan(&exists); err != nil {
 		return nil, nil, err
 	}
 	if !exists {
@@ -288,7 +306,7 @@ func (s *Service) SavePreset(ctx context.Context, actor identity.Actor, id uuid.
 			return AdminPreset{}, "", e
 		}
 		number = old.Number + 1
-		if bytes.Equal(old.Hash, hash) {
+		if bytes.Equal(old.Hash, hash) && old.PreviewContentMode == in.PreviewContentMode {
 			preview = old.PreviewID
 		}
 	}
@@ -299,7 +317,7 @@ func (s *Service) SavePreset(ctx context.Context, actor identity.Actor, id uuid.
 	if err != nil {
 		return AdminPreset{}, "", err
 	}
-	_, err = tx.Exec(ctx, `INSERT INTO wordweave.preset_versions(id,preset_id,version_no,title,model_id,meaning_language,scenario,length_code,configuration,config_hash,preview_id,created_at) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12)`, version, id, number, in.Title, in.Configuration.ModelID, in.Configuration.MeaningLanguage, in.Configuration.Scenario, in.Configuration.Length, raw, hash, preview, c.Now)
+	_, err = tx.Exec(ctx, `INSERT INTO wordweave.preset_versions(id,preset_id,version_no,title,model_id,meaning_language,scenario,length_code,configuration,config_hash,preview_id,created_at,preview_content_mode) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13)`, version, id, number, in.Title, in.Configuration.ModelID, in.Configuration.MeaningLanguage, in.Configuration.Scenario, in.Configuration.Length, raw, hash, preview, c.Now, in.PreviewContentMode)
 	if err != nil {
 		return AdminPreset{}, "", err
 	}
@@ -362,7 +380,7 @@ func (s *Service) PublishPreset(ctx context.Context, actor identity.Actor, id, v
 		if !v.Enabled {
 			return AdminPreset{}, "", ErrPresetInvalidReference
 		}
-		check := PresetInput{v.Title, v.Input}
+		check := PresetInput{Title: v.Title, Configuration: v.Input, PreviewContentMode: v.PreviewContentMode}
 		if _, _, e := s.validatePreset(ctx, tx, &check); e != nil {
 			return AdminPreset{}, "", e
 		}
@@ -381,4 +399,12 @@ func (s *Service) PublishPreset(ctx context.Context, actor identity.Actor, id, v
 	return s.finishPreset(ctx, tx, id)
 }
 
-const presetVersionSQL = `SELECT v.id,v.preset_id,v.version_no,v.title,v.configuration,v.config_hash,v.created_at,v.preview_id,m.display_name,m.enabled AND m.retired_at IS NULL,p.validated_payload,p.run_id,p.validated_at FROM wordweave.preset_versions v JOIN wordweave.ai_models m ON m.id=v.model_id LEFT JOIN wordweave.preset_previews p ON p.id=v.preview_id AND p.config_hash=v.config_hash AND EXISTS(SELECT 1 FROM wordweave.preset_preview_runs pr JOIN wordweave.preset_versions original ON original.id=pr.version_id WHERE pr.id=p.run_id AND pr.status='valid' AND original.configuration=v.configuration) WHERE v.id=$1`
+func noticeForOutcome(outcome *string) *string {
+	if outcome != nil && *outcome == OutcomeServiceIncomplete {
+		v := "content_review_incomplete"
+		return &v
+	}
+	return nil
+}
+
+const presetVersionSQL = `SELECT v.id,v.preset_id,v.version_no,v.title,v.configuration,v.config_hash,v.created_at,v.preview_id,v.preview_content_mode,m.display_name,m.enabled AND m.retired_at IS NULL AND provider.retired_at IS NULL,p.validated_payload,p.run_id,p.validated_at,pr.final_content_version,pr.content_outcome FROM wordweave.preset_versions v JOIN wordweave.ai_models m ON m.id=v.model_id JOIN wordweave.ai_providers provider ON provider.id=m.provider_id LEFT JOIN wordweave.preset_previews p ON p.id=v.preview_id AND p.config_hash=v.config_hash LEFT JOIN wordweave.preset_preview_runs pr ON pr.id=p.run_id AND pr.status='valid' AND pr.version_id=v.id AND ((v.preview_content_mode='basic' AND NOT pr.content_review_enabled_snapshot) OR (v.preview_content_mode='enhanced' AND pr.content_review_enabled_snapshot)) WHERE v.id=$1`

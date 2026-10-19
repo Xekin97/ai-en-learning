@@ -1,0 +1,77 @@
+{
+  "status": "running",
+  "prepared_at": "2026-10-13T06:58:20.197669+00:00",
+  "authorization": "做一下最后的 UAT 测试环境吧，不使用任何 mock，在本地运行",
+  "scope": "post-completion local runtime preparation; milestone acceptance unchanged",
+  "origin": "http://127.0.0.1:3015",
+  "create_url": "http://127.0.0.1:3015/create",
+  "login_url": "http://127.0.0.1:3015/login",
+  "admin_models_url": "http://127.0.0.1:3015/admin/models",
+  "runtime_directory": "/tmp/wordweave-m003-uat-real-003",
+  "accounts_file": "/tmp/wordweave-m003-uat-real-003/uat-accounts.json",
+  "credentials_permissions": "runtime directory 0700, account and secret files 0600",
+  "runtime": {
+    "frontend": "Nuxt production build / Node 24",
+    "proxy": "native Nginx / repository streaming proxy template, SSE buffering off",
+    "backend": "current Go source / Go 1.26.7 / no diagnostics build tags",
+    "database": "new PostgreSQL 18 / SCRAM authentication / current schema",
+    "provider": "https://openrouter.ai/api/v1",
+    "provider_model_id": "deepseek/deepseek-v4-flash-0731",
+    "mock_processes": 0,
+    "mocked_http_responses": 0,
+    "authentication_bypass": false
+  },
+  "configuration": {
+    "output_mode": "json_schema",
+    "custom_parameters": {
+      "reasoning": {
+        "enabled": false
+      }
+    },
+    "visitor_and_basic": "native word/format validation only",
+    "pro_and_plus": "content review enabled; content repair limit 1",
+    "max_entries": 5,
+    "concurrency": "4 local generation slots; not a measured production capacity"
+  },
+  "verification": {
+    "production_builds": "PASS",
+    "live_api_readiness": "PASS",
+    "live_browser_readiness": "PASS_5_OF_5",
+    "source_snapshot_matches": 657,
+    "start_idempotent": true,
+    "real_provider_calls_during_preparation": 0,
+    "generation_end_to_end_executed": false,
+    "quality_evaluated": false
+  },
+  "commands": {
+    "status": "python3 /tmp/wordweave-m003-uat-real-003/control.py status",
+    "start": "python3 /tmp/wordweave-m003-uat-real-003/control.py start",
+    "stop": "python3 /tmp/wordweave-m003-uat-real-003/control.py stop"
+  },
+  "stop_policy": "only this environment is stopped; database, accounts and model configuration preserved",
+  "data_policy": "new database; only selected real model/credential imported through admin API from a read-only source; no old database migration or copied generated results",
+  "notes": [
+    "Only one usable real model exists. The schema also creates an unconfigured default OpenRouter connection; it is not a mock and has no model.",
+    "Source was snapshotted at preparation time. Subsequent repository edits require an explicit rebuild.",
+    "Real generation is performed when the user clicks Generate. No model/provider response has been simulated.",
+    "Prior UAT environments 3013 and 3014 are outside the lifecycle of this environment."
+  ],
+  "readiness_status": {
+    "status": "ready",
+    "origin": "http://127.0.0.1:3015",
+    "listening": {
+      "nginx": true,
+      "postgres": true,
+      "backend": true,
+      "metrics": true,
+      "frontend": true
+    },
+    "processes": {
+      "backend": 66252,
+      "frontend": 66258,
+      "nginx": 66351
+    },
+    "mock_services": 0,
+    "provider_mode": "real_only"
+  }
+}

@@ -1,0 +1,58 @@
+{
+  "scope": "Targeted method retest after synthetic review evidence was changed to exact substrings of the reviewed clean passage; production source unchanged.",
+  "run_id": "01a12dd6-96af-75ef-86d6-074bfd7e4a93",
+  "terminal": {
+    "content_outcome": "limit_finalized",
+    "final_content_version": 4,
+    "completion_notice": null
+  },
+  "stages": [
+    "planning",
+    "generation",
+    "fixed_edit",
+    "content_review",
+    "content_repair",
+    "content_review",
+    "content_repair",
+    "content_review"
+  ],
+  "repair_facts": [
+    {
+      "call_no": 5,
+      "call_stage": "content_repair",
+      "provider_invoked": true,
+      "review_result": "not_applicable",
+      "reason_codes": [
+        "forced_wording",
+        "contradiction"
+      ],
+      "repair_requested": false
+    },
+    {
+      "call_no": 7,
+      "call_stage": "content_repair",
+      "provider_invoked": true,
+      "review_result": "not_applicable",
+      "reason_codes": [
+        "forced_wording",
+        "contradiction"
+      ],
+      "repair_requested": false
+    }
+  ],
+  "frequency_observation": {
+    "denominator_runs": 1,
+    "forced_wording_runs": 1,
+    "contradiction_runs": 1,
+    "intersection_runs": 1,
+    "union_runs": 1,
+    "repair_calls": 2
+  },
+  "checks": {
+    "n2_limit_finalized_v4": true,
+    "two_repairs_and_three_reviews": true,
+    "recorded_reason_categories": true,
+    "public_stream_hides_internal_rounds": true
+  },
+  "result": "PASS"
+}

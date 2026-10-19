@@ -2,6 +2,7 @@ package admin
 
 import (
 	"context"
+	"encoding/json"
 	"errors"
 	"strings"
 
@@ -12,15 +13,16 @@ import (
 )
 
 type ModelInput struct {
-	DisplayName     string              `json:"display_name"`
-	Description     *string             `json:"description"`
-	ProviderModelID string              `json:"provider_model_id"`
-	ConnectionID    *uuid.UUID          `json:"connection_id"`
-	Connection      *ai.ConnectionDraft `json:"connection"`
-	MaxOutputTokens *int                `json:"max_output_tokens"`
-	OutputMode      string              `json:"output_mode"`
-	Enabled         bool                `json:"enabled"`
-	Expected        string              `json:"expected_revision"`
+	DisplayName      string              `json:"display_name"`
+	Description      *string             `json:"description"`
+	ProviderModelID  string              `json:"provider_model_id"`
+	ConnectionID     *uuid.UUID          `json:"connection_id"`
+	Connection       *ai.ConnectionDraft `json:"connection"`
+	MaxOutputTokens  *int                `json:"max_output_tokens"`
+	OutputMode       string              `json:"output_mode"`
+	Enabled          bool                `json:"enabled"`
+	Expected         string              `json:"expected_revision"`
+	CustomParameters json.RawMessage     `json:"custom_parameters"`
 }
 
 const connectionSelect = `SELECT id,name,protocol,base_url,credential_configured,masked_hint FROM wordweave.ai_providers`
@@ -34,7 +36,7 @@ func scanConnection(row interface{ Scan(...any) error }) (ai.Connection, error) 
 	return c, err
 }
 func (s *Service) Connections(ctx context.Context) ([]ai.Connection, error) {
-	rows, err := s.pool.Query(ctx, connectionSelect+` ORDER BY created_at,id`)
+	rows, err := s.pool.Query(ctx, connectionSelect+` WHERE retired_at IS NULL ORDER BY created_at,id`)
 	if err != nil {
 		return nil, err
 	}
@@ -57,6 +59,10 @@ func (s *Service) SaveModel(ctx context.Context, actor, id uuid.UUID, in ModelIn
 	if !validGenericModel(in) || (in.Connection != nil && !ai.ValidConnection(*in.Connection)) {
 		return Model{}, ErrValidation
 	}
+	customParameters, err := ai.CanonicalCustomParameters(in.CustomParameters)
+	if err != nil {
+		return Model{}, ai.PrefixCustomParameterError(err, "/custom_parameters")
+	}
 	tx, err := s.pool.Begin(ctx)
 	if err != nil {
 		return Model{}, err
@@ -70,7 +76,7 @@ func (s *Service) SaveModel(ctx context.Context, actor, id uuid.UUID, in ModelIn
 		return Model{}, err
 	}
 	if id != uuid.Nil {
-		current, e := readModel(ctx, tx, id)
+		current, e := readActiveModel(ctx, tx, id)
 		if e != nil {
 			return Model{}, e
 		}
@@ -83,10 +89,15 @@ func (s *Service) SaveModel(ctx context.Context, actor, id uuid.UUID, in ModelIn
 	}
 	var connectionID uuid.UUID
 	if in.Connection != nil {
+		if in.ConnectionID != nil {
+			if _, activeErr := scanConnection(tx.QueryRow(ctx, connectionSelect+` WHERE id=$1 AND retired_at IS NULL`, in.ConnectionID)); activeErr != nil {
+				return Model{}, mapWriteError(activeErr)
+			}
+		}
 		connectionID, err = s.credentials.WriteConnection(ctx, tx, actor, *in.Connection, in.ConnectionID)
 	} else if in.ConnectionID != nil {
 		connectionID = *in.ConnectionID
-		_, err = scanConnection(tx.QueryRow(ctx, connectionSelect+` WHERE id=$1`, connectionID))
+		_, err = scanConnection(tx.QueryRow(ctx, connectionSelect+` WHERE id=$1 AND retired_at IS NULL`, connectionID))
 	} else {
 		return Model{}, ErrValidation
 	}
@@ -95,7 +106,7 @@ func (s *Service) SaveModel(ctx context.Context, actor, id uuid.UUID, in ModelIn
 	}
 	if in.Enabled {
 		var configured bool
-		if err = tx.QueryRow(ctx, `SELECT credential_configured FROM wordweave.ai_providers WHERE id=$1`, connectionID).Scan(&configured); err != nil {
+		if err = tx.QueryRow(ctx, `SELECT credential_configured FROM wordweave.ai_providers WHERE id=$1 AND retired_at IS NULL`, connectionID).Scan(&configured); err != nil {
 			return Model{}, err
 		}
 		if !configured {
@@ -103,10 +114,10 @@ func (s *Service) SaveModel(ctx context.Context, actor, id uuid.UUID, in ModelIn
 		}
 	}
 	if id == uuid.Nil {
-		err = tx.QueryRow(ctx, `INSERT INTO wordweave.ai_models(display_name,description,provider_model_id,provider_id,max_output_tokens,output_mode,enabled,created_at,updated_at)
-   VALUES($1,$2,$3,$4,$5,$6,$7,$8,$8) RETURNING id`, strings.TrimSpace(in.DisplayName), trimmedOptional(in.Description), in.ProviderModelID, connectionID, in.MaxOutputTokens, in.OutputMode, in.Enabled, c.Now).Scan(&id)
+		err = tx.QueryRow(ctx, `INSERT INTO wordweave.ai_models(display_name,description,provider_model_id,provider_id,max_output_tokens,output_mode,custom_parameters,enabled,created_at,updated_at)
+			VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$9) RETURNING id`, strings.TrimSpace(in.DisplayName), trimmedOptional(in.Description), in.ProviderModelID, connectionID, in.MaxOutputTokens, in.OutputMode, customParameters, in.Enabled, c.Now).Scan(&id)
 	} else {
-		_, err = tx.Exec(ctx, `UPDATE wordweave.ai_models SET display_name=$2,description=$3,provider_model_id=$4,provider_id=$5,max_output_tokens=$6,output_mode=$7,enabled=$8,updated_at=$9 WHERE id=$1`, id, strings.TrimSpace(in.DisplayName), trimmedOptional(in.Description), in.ProviderModelID, connectionID, in.MaxOutputTokens, in.OutputMode, in.Enabled, c.Now)
+		_, err = tx.Exec(ctx, `UPDATE wordweave.ai_models SET display_name=$2,description=$3,provider_model_id=$4,provider_id=$5,max_output_tokens=$6,output_mode=$7,custom_parameters=$8,enabled=$9,updated_at=$10 WHERE id=$1`, id, strings.TrimSpace(in.DisplayName), trimmedOptional(in.Description), in.ProviderModelID, connectionID, in.MaxOutputTokens, in.OutputMode, customParameters, in.Enabled, c.Now)
 	}
 	if err != nil {
 		return Model{}, mapWriteError(err)
@@ -121,10 +132,14 @@ func (s *Service) TestConnection(ctx context.Context, in ModelInput) error {
 	if !validGenericModel(check) {
 		return ErrValidation
 	}
+	customParameters, err := ai.CanonicalCustomParameters(in.CustomParameters)
+	if err != nil {
+		return ai.PrefixCustomParameterError(err, "/custom_parameters")
+	}
 	var connection ai.Connection
 	key := ""
 	if in.ConnectionID != nil {
-		c, err := scanConnection(s.pool.QueryRow(ctx, connectionSelect+` WHERE id=$1`, in.ConnectionID))
+		c, err := scanConnection(s.pool.QueryRow(ctx, connectionSelect+` WHERE id=$1 AND retired_at IS NULL`, in.ConnectionID))
 		if err != nil {
 			return err
 		}
@@ -157,5 +172,5 @@ func (s *Service) TestConnection(ctx context.Context, in ModelInput) error {
 	if !ok {
 		return ErrModelIncompatible
 	}
-	return gateway.Probe(ctx, connection, key, in.ProviderModelID, in.MaxOutputTokens, in.OutputMode)
+	return gateway.Probe(ctx, connection, key, in.ProviderModelID, in.MaxOutputTokens, in.OutputMode, customParameters)
 }

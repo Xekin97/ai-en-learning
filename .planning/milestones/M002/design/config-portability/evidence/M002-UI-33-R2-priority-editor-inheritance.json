@@ -1,0 +1,10 @@
+{
+  "version": "M002-UI-33-R2",
+  "question": "Did the navigation fix change the inherited plan priority editor layout or behavior?",
+  "baseline": {"open": true, "width": 600, "height": 538.125, "position": "absolute", "display": "block"},
+  "r2": {"open": true, "width": 600, "height": 538.125, "position": "absolute", "display": "block"},
+  "finding": "The inherited source itself renders priority-editor with an open attribute rather than showModal, so it appears in document flow without a backdrop in both baseline and R2. R2 did not introduce that behavior and does not alter it.",
+  "interaction_check": {"opened": true, "edited_first_priority": true, "preview_notice": true, "save_action_available": true, "closed": true},
+  "evidence_decision": "R2-01 is captured after closing the inherited editor so the navigation screenshot does not imply that the editor is part of the normal page state.",
+  "result": "PASS — exact inherited behavior; no navigation regression"
+}

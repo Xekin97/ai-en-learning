@@ -1,0 +1,45 @@
+CR306 frontend final quality results (Node 24.21.0)
+date=2026-10-12
+
+pnpm typecheck
+exit=0
+
+pnpm lint
+exit=0
+
+pnpm lint:boundaries
+✔ no dependency violations found (261 modules, 287 dependencies cruised)
+exit=0
+
+pnpm test
+Test Files  42 passed (42)
+Tests       422 passed (422)
+exit=0
+
+pnpm build
+source=/tmp/wordweave-cr306-final.54HcQX (temporary copied source; removed after checks)
+Nuxt 4.5.2 / Nitro 2.13.4 / Vite 8.2.2 / Vue 3.5.42
+client modules=591; server modules=406
+✔ Nuxt Nitro server built
+✨ Build complete
+exit=0
+
+focused Vitest: custom-parameters.test.ts + model-connections.test.ts
+Test Files 2 passed (2)
+Tests 45 passed (45)
+exit=0
+
+contract browser final
+source=temporary copied source; separate .nuxt
+ports=3316/38106
+desktop+mobile=2 passed (20.6s)
+result=browser-results-isolated.json
+
+formal backend cross-layer final
+frontend=temporary copied source Nuxt 127.0.0.1:5176
+backend=formal isolated binary 127.0.0.1:54783
+typed list/create/readback/edit/reload/readback=1 passed (3.9s)
+probe_requests=0
+provider_call_count=0
+result=cross-layer-results.json
+backend_receipt=../cr306-backend/11-crosslayer-frontend-receipt.md

@@ -1,0 +1,30 @@
+ENVIRONMENT
+PostgreSQL 18.6 (Homebrew), disposable empty cluster, 127.0.0.1:55491.
+No real provider credentials; OPENROUTER_TEST_API_KEY and OPENROUTER_TEST_MODEL empty.
+
+COMMAND
+TEST_DATABASE_URL='postgres://postgres@127.0.0.1:55491/postgres?sslmode=disable' OPENROUTER_TEST_API_KEY='' OPENROUTER_TEST_MODEL='' GOTOOLCHAIN=go1.26.7 go test -race -tags=integration -run 'Test(CR311|M002Random)' -v ./internal/vocabulary
+
+FINAL STDOUT
+=== RUN   TestM002RandomExcludesCurrentLibraryAndSelectedEntries
+    random_integration_test.go:50: Limit  (cost=1993.89..1993.89 rows=1 width=40) (actual time=5.183..5.184 rows=1.00 loops=1)
+    random_integration_test.go:50:   ->  Sort  (cost=1993.89..1993.92 rows=11 width=40) (actual time=5.183..5.183 rows=1.00 loops=1)
+    random_integration_test.go:50:         Sort Key: (random())
+    random_integration_test.go:50:         ->  Nested Loop  (cost=4.91..1993.83 rows=11 width=40) (actual time=0.728..4.292 rows=13822.00 loops=1)
+    random_integration_test.go:50:                     Filter: ((entry <> ALL ('{weave}'::text[])) AND (lower(entry) <> ALL ('{i,me,you,he,him,she,her,it,we,us,they,them,my,mine,your,yours,his,hers,its,our,ours,their,theirs,a,an,the,be,am,is,are,was,were,been,being,and,or,but,so,yes,no,yeah}'::text[])) AND (NOT (ANY (lexeme_id = (hashed SubPlan 2).col1))))
+    random_integration_test.go:50: Planning Time: 0.204 ms
+    random_integration_test.go:50: Execution Time: 5.201 ms
+--- PASS: TestM002RandomExcludesCurrentLibraryAndSelectedEntries (0.95s)
+=== RUN   TestCR311SearchAndRandomFilterExactCatalogueBeforeLimit
+--- PASS: TestCR311SearchAndRandomFilterExactCatalogueBeforeLimit (1.13s)
+PASS
+ok  	wordweave/internal/vocabulary	3.427s
+
+EXIT 0
+
+ASSERTED
+- Every one of the 41 exact entries and its uppercase query returns no blocked Search candidate.
+- Search filtering precedes LIMIT and does not starve `q=the,limit=2`.
+- Production `randomCandidateSQL`, with only its final random order/limit removed for enumeration, equals the full m001 catalogue minus the exact Go catalogue.
+- Search results are within that production random eligibility set; art/go/theater/another remain eligible.
+- old selected `the`, Resolve, and the m001 source hash remain valid/unchanged.

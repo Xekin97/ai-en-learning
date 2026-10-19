@@ -1,0 +1,47 @@
+{
+  "milestone": "M003",
+  "change_requests": [
+    "CR-311",
+    "CR-312"
+  ],
+  "agent": "qa-quinn",
+  "date": "2026-10-14",
+  "result": "PASS",
+  "product_defects": [],
+  "independent": {
+    "go_api_db": {
+      "result": "PASS",
+      "checks": 100,
+      "failures": []
+    },
+    "browser_aggregate": {
+      "result": "PASS",
+      "checks": 13,
+      "failures": []
+    },
+    "focus_probe": {
+      "result": "PASS",
+      "iterations": 5
+    },
+    "captured_wire_replay": {
+      "result": "PASS",
+      "checks": 3
+    }
+  },
+  "reused": [
+    "backend full 41 matrix and SQL unit/race evidence",
+    "backend shorter/longer/continuation/preview/protocol boundary evidence",
+    "frontend scheduler virtual-time and complete plan/status timing evidence",
+    "frontend PAGE216 and unaffected UI12 evidence"
+  ],
+  "limits_file": "evidence-limits.md",
+  "cleanup": {
+    "real_stack_all_closed": true,
+    "browser_stack_all_closed": true
+  },
+  "uat": {
+    "current_version": "NOT_RUN",
+    "protected_3015": "untouched",
+    "historical_acceptance_scope": "pre-CR311/312 only"
+  }
+}

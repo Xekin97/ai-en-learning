@@ -1,0 +1,21 @@
+{
+  "purpose": "Identify the later authorized frontend-only UAT refresh procedure.",
+  "executed": false,
+  "current_frontend_origin": "http://127.0.0.1:3014",
+  "snapshot_source": "/tmp/wordweave-m003-uat002-frontend/source",
+  "frontend_control": "/tmp/wordweave-m003-uat002-frontend/control.py",
+  "preserve": [
+    "/tmp/wordweave-m003-uat-local-002",
+    "PostgreSQL 54872 and all current UAT data",
+    "backend 54873, metrics 54874, synthetic provider 54875",
+    "old UAT 3013/54672-54675"
+  ],
+  "later_authorized_steps": [
+    "python3 /tmp/wordweave-m003-uat002-frontend/control.py status",
+    "python3 /tmp/wordweave-m003-uat002-frontend/control.py stop",
+    "rsync -a --delete --exclude node_modules --exclude .nuxt --exclude .output --exclude test-results --exclude playwright-report frontend/ /tmp/wordweave-m003-uat002-frontend/source/",
+    "python3 /tmp/wordweave-m003-uat002-frontend/control.py start",
+    "python3 /tmp/wordweave-m003-uat002-frontend/control.py status"
+  ],
+  "warning": "Do not run the unified uat-control stop command for a frontend refresh because it also stops the preserved backend and database. No step above was executed during baseline capture."
+}

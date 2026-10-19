@@ -1,0 +1,159 @@
+{
+  "purpose": "Functional UAT readiness only; no article-quality judgment and no real-provider call.",
+  "authorization": "USER-M003-UAT-PREPARE-20261012",
+  "origin": "http://127.0.0.1:3014",
+  "checks": {
+    "visitor_chinese_create_and_real_model_visible": {
+      "pass": true,
+      "detail": {
+        "real_model_visible": true
+      }
+    },
+    "basic_and_pro_password_login_and_plan_configuration": {
+      "pass": true,
+      "detail": {
+        "basic": {
+          "login": "pass",
+          "plan": {
+            "code": "basic",
+            "origin": "base",
+            "trial_ends_at": null
+          },
+          "content_service": {
+            "native_validation": true,
+            "content_review_enabled": false,
+            "content_repair_limit": 0
+          },
+          "quota_kind": "limited",
+          "quota_remaining": 100
+        },
+        "pro": {
+          "login": "pass",
+          "plan": {
+            "code": "pro",
+            "origin": "base",
+            "trial_ends_at": null
+          },
+          "content_service": {
+            "native_validation": true,
+            "content_review_enabled": true,
+            "content_repair_limit": 1
+          },
+          "quota_kind": "limited",
+          "quota_remaining": 100
+        }
+      }
+    },
+    "admin_custom_parameters_save_readback_restore_without_provider_call": {
+      "pass": true,
+      "detail": {
+        "readback_match": true,
+        "restored": true,
+        "provider_call_delta": 0
+      }
+    },
+    "synthetic_five_word_chinese_story_brief_complete": {
+      "pass": true,
+      "detail": {
+        "entries": [
+          "machine",
+          "preclude",
+          "interim",
+          "juvenile",
+          "retroactive"
+        ],
+        "plan_seen": true,
+        "live_draft_seen": true,
+        "final_seen": true,
+        "call_count": 2,
+        "stages": [
+          "planning",
+          "generation"
+        ],
+        "models": [
+          "synthetic/pass"
+        ],
+        "quota_before": 100,
+        "quota_after": 99
+      }
+    },
+    "no_browser_page_errors": {
+      "pass": true,
+      "detail": []
+    }
+  },
+  "roles": {
+    "visitor": {
+      "plan": {
+        "code": "visitor",
+        "origin": "visitor",
+        "trial_ends_at": null
+      },
+      "content_service": {
+        "native_validation": true,
+        "content_review_enabled": false,
+        "content_repair_limit": 0
+      },
+      "model_count": 7
+    },
+    "basic": {
+      "login": "pass",
+      "plan": {
+        "code": "basic",
+        "origin": "base",
+        "trial_ends_at": null
+      },
+      "content_service": {
+        "native_validation": true,
+        "content_review_enabled": false,
+        "content_repair_limit": 0
+      },
+      "quota_kind": "limited",
+      "quota_remaining": 100
+    },
+    "pro": {
+      "login": "pass",
+      "plan": {
+        "code": "pro",
+        "origin": "base",
+        "trial_ends_at": null
+      },
+      "content_service": {
+        "native_validation": true,
+        "content_review_enabled": true,
+        "content_repair_limit": 1
+      },
+      "quota_kind": "limited",
+      "quota_remaining": 100
+    },
+    "admin": {
+      "login": "pass",
+      "page": "/admin/models"
+    }
+  },
+  "page_errors": [],
+  "failures": [],
+  "result": "PASS",
+  "synthetic_flow": {
+    "entries": [
+      "machine",
+      "preclude",
+      "interim",
+      "juvenile",
+      "retroactive"
+    ],
+    "plan_seen": true,
+    "live_draft_seen": true,
+    "final_seen": true,
+    "call_count": 2,
+    "stages": [
+      "planning",
+      "generation"
+    ],
+    "models": [
+      "synthetic/pass"
+    ],
+    "quota_before": 100,
+    "quota_after": 99
+  }
+}

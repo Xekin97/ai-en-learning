@@ -1,0 +1,15 @@
+ok  	wordweave/internal/platform/postgres	10.299s
+ok  	wordweave/internal/generation	5.995s
+--- FAIL: TestAdminQuotaDatabase (0.79s)
+    --- FAIL: TestAdminQuotaDatabase/charged_facts (0.02s)
+        user_detail_integration_test.go:64: ERROR: new row for relation "generation_runs" violates check constraint "generation_runs_m003_content_facts_valid" (SQLSTATE 23514)
+FAIL
+FAIL	wordweave/internal/admin	9.705s
+--- FAIL: TestBaseAndTrialSamePlanRetainIndependentQuota (0.74s)
+    quota_integration_test.go:72: ERROR: new row for relation "generation_runs" violates check constraint "generation_runs_m003_content_facts_valid" (SQLSTATE 23514)
+--- FAIL: TestExtraRefundRestoresExpiredOriginalSourceOnce (0.98s)
+    quota_integration_test.go:136: ERROR: new row for relation "generation_runs" violates check constraint "generation_runs_m003_content_facts_valid" (SQLSTATE 23514)
+FAIL
+FAIL	wordweave/internal/entitlement	2.878s
+FAIL
+EXIT_CODE=1

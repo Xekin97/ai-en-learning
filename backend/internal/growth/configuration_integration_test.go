@@ -38,6 +38,10 @@ func TestLevelBulkThresholdShiftAndUnknownCommit(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
+	var initialGlobalRevision int64
+	if err = pool.QueryRow(ctx, `SELECT revision FROM wordweave.growth_settings`).Scan(&initialGlobalRevision); err != nil {
+		t.Fatal(err)
+	}
 	changes := LevelChanges{Expected: initial.Revision, Changes: []LevelChange{levelChange(1, 0), levelChange(2, 100), levelChange(3, 200)}}
 	first := saveLevelsFixture(t, ctx, s, changes)
 	for i, row := range first.Rows {
@@ -77,7 +81,7 @@ func TestLevelBulkThresholdShiftAndUnknownCommit(t *testing.T) {
 		t.Fatalf("lost-response replay wrote twice: %v", err)
 	}
 	var revision int64
-	if err = pool.QueryRow(ctx, `SELECT revision FROM wordweave.growth_settings`).Scan(&revision); err != nil || revision != 3 {
+	if err = pool.QueryRow(ctx, `SELECT revision FROM wordweave.growth_settings`).Scan(&revision); err != nil || revision != initialGlobalRevision+2 {
 		t.Fatalf("global revision advanced wrong number: %d %v", revision, err)
 	}
 	invalid := LevelChanges{Expected: saved.Configuration.Revision, Changes: []LevelChange{{ClientKey: uuid.New(), ID: &saved.Configuration.Items[2].ID, Value: LevelInput{Number: 3, Minimum: 200, Enabled: true}}}}

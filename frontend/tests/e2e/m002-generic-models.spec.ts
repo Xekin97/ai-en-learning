@@ -177,6 +177,7 @@ for (const lang of ["en", "zh"]) {
         display_name: m.display_name,
         provider_model_id: m.provider_model_id,
         output_mode: m.output_mode,
+        custom_parameters: m.custom_parameters,
         enabled: m.enabled,
       }));
       for (let i = 1; i < 25; i++)
@@ -185,6 +186,7 @@ for (const lang of ["en", "zh"]) {
           display_name: "Model " + i,
           provider_model_id: "Provider/Model-" + i,
           output_mode: "prompt",
+          custom_parameters: {},
           enabled: false,
         });
       expect(
@@ -340,6 +342,7 @@ for (const lang of ["en", "zh"]) {
                 display_name: m.display_name,
                 provider_model_id: m.provider_model_id,
                 output_mode: m.output_mode,
+                custom_parameters: m.custom_parameters,
                 enabled: m.enabled,
               }))
               .concat([
@@ -347,6 +350,7 @@ for (const lang of ["en", "zh"]) {
                   id: null,
                   provider_model_id: "Remote/New",
                   output_mode: "prompt",
+                  custom_parameters: {},
                   enabled: false,
                 },
               ]),

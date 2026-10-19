@@ -1,0 +1,50 @@
+{
+  "mode": "dry-run",
+  "active_agent": "qa-quinn",
+  "route": {
+    "mode": "model",
+    "stage": "verification",
+    "role": "quality/base",
+    "task": "stage-work",
+    "risk": "high",
+    "failures": 0,
+    "tier": "strong",
+    "model": "gpt-5.6-sol",
+    "effort": "high",
+    "skill": "agt-verify-milestone",
+    "selection": "requested-not-runtime-attested"
+  },
+  "updates": {
+    "codex_version_changed": true,
+    "policy_changed": true,
+    "added_models": [
+      "gpt-6.1-sol",
+      "gpt-6-sol",
+      "gpt-6-luna"
+    ],
+    "removed_models": [
+      "gpt-5.5",
+      "gpt-5.4-mini",
+      "gpt-5.3-codex-spark"
+    ],
+    "capability_changes": [],
+    "issues": [],
+    "upgrades": [],
+    "automatic_rebinding": false,
+    "action": "keep_lock_review_new_candidates"
+  },
+  "command": [
+    "codex",
+    "exec",
+    "--model",
+    "gpt-5.6-sol",
+    "-c",
+    "model_reasoning_effort=\"high\"",
+    "-C",
+    "/Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning",
+    "-"
+  ],
+  "prompt_hash": "28f8840a899eca92953da299b12a231a8978f1ca9f4e9920228dfd0c34a13cf5",
+  "actual_model": "not_observed",
+  "note": "This is a new session, not a model switch for an existing App chat. Permission settings are inherited, not broadened."
+}

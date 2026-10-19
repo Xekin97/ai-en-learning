@@ -1,0 +1,69 @@
+[WebServer] (node:60196) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:60425) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] 
+[WebServer]  ERROR  (node:60437) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use node --trace-warnings ... to show where the warning was created)
+[WebServer] 
+[WebServer] (node:60684) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:60685) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 10 tests using 1 worker
+
+(node:61072) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘   1 [desktop] › tests/e2e/m003-cr311-312.spec.ts:243:1 › 1440 Chinese create preserves nodes through typing, repair, and valid (9.0s)
+(node:61769) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   2 [desktop] › tests/e2e/m003-cr311-312.spec.ts:562:1 › reduced motion publishes directly and leaves no visual ghosts (5.6s)
+  ✓   3 [desktop] › tests/e2e/m003-cr311-312.spec.ts:608:1 › cancel clears the draft and returns focus through the original action (3.0s)
+  ✓   4 [desktop] › tests/e2e/m003-cr311-312.spec.ts:682:1 › a hidden page catches up after the fixed typing deadline (3.8s)
+  -   5 [desktop] › tests/e2e/m003-cr311-312.spec.ts:731:1 › 390 English PAGE212 shares live content and preserves preview readiness
+(node:62458) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  -   6 [mobile] › tests/e2e/m003-cr311-312.spec.ts:243:1 › 1440 Chinese create preserves nodes through typing, repair, and valid
+  -   7 [mobile] › tests/e2e/m003-cr311-312.spec.ts:562:1 › reduced motion publishes directly and leaves no visual ghosts
+  -   8 [mobile] › tests/e2e/m003-cr311-312.spec.ts:608:1 › cancel clears the draft and returns focus through the original action
+  -   9 [mobile] › tests/e2e/m003-cr311-312.spec.ts:682:1 › a hidden page catches up after the fixed typing deadline
+  ✓  10 [mobile] › tests/e2e/m003-cr311-312.spec.ts:731:1 › 390 English PAGE212 shares live content and preserves preview readiness (1.5s)
+
+
+  1) [desktop] › tests/e2e/m003-cr311-312.spec.ts:243:1 › 1440 Chinese create preserves nodes through typing, repair, and valid 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 0
+
+      Array [
+        "draft-region",
+        "plan-region",
+    -   "word-row",
+      ]
+
+      298 |     ),
+      299 |   );
+    > 300 |   expect(arrivalEvidence.map((record) => record.kind).sort()).toEqual([
+          |                                                               ^
+      301 |     "draft-region",
+      302 |     "plan-region",
+      303 |     "word-row",
+        at /Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/frontend/tests/e2e/m003-cr311-312.spec.ts:300:63
+
+    Error Context: test-results/m003-cr311-312-1440-Chines-24c4b-ugh-typing-repair-and-valid-desktop/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/m003-cr311-312-1440-Chines-24c4b-ugh-typing-repair-and-valid-desktop/trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace test-results/m003-cr311-312-1440-Chines-24c4b-ugh-typing-repair-and-valid-desktop/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [desktop] › tests/e2e/m003-cr311-312.spec.ts:243:1 › 1440 Chinese create preserves nodes through typing, repair, and valid 
+  5 skipped
+  4 passed (45.3s)

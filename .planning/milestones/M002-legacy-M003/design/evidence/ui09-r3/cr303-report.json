@@ -1,0 +1,219 @@
+{
+  "version": "M003-UI-09-R3",
+  "scope": "CR-303 targeted PAGE-208 semantics",
+  "created_at": "2026-10-10T07:34:29.319Z",
+  "base": "http://127.0.0.1:4174/M003/design/prototype/",
+  "checks_total": 31,
+  "checks_passed": 31,
+  "checks_failed": 0,
+  "checks": [
+    {
+      "name": "pro-n0-tier",
+      "pass": true,
+      "actual": "basic",
+      "expected": "basic"
+    },
+    {
+      "name": "pro-n0-badge",
+      "pass": true,
+      "actual": "基础",
+      "expected": "基础"
+    },
+    {
+      "name": "pro-n0-checked",
+      "pass": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "name": "pro-n0-disabled",
+      "pass": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "name": "pro-n0-overflow",
+      "pass": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "name": "pro-n1-tier",
+      "pass": true,
+      "actual": "enhanced",
+      "expected": "enhanced"
+    },
+    {
+      "name": "pro-n1-badge",
+      "pass": true,
+      "actual": "增强",
+      "expected": "增强"
+    },
+    {
+      "name": "pro-n1-checked",
+      "pass": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "name": "pro-n1-disabled",
+      "pass": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "name": "pro-n1-overflow",
+      "pass": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "name": "plus-n0-tier",
+      "pass": true,
+      "actual": "basic",
+      "expected": "basic"
+    },
+    {
+      "name": "plus-n0-badge",
+      "pass": true,
+      "actual": "基础",
+      "expected": "基础"
+    },
+    {
+      "name": "plus-n0-checked",
+      "pass": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "name": "plus-n0-disabled",
+      "pass": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "name": "plus-n0-overflow",
+      "pass": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "name": "plus-n1-tier",
+      "pass": true,
+      "actual": "enhanced",
+      "expected": "enhanced"
+    },
+    {
+      "name": "plus-n1-badge",
+      "pass": true,
+      "actual": "增强",
+      "expected": "增强"
+    },
+    {
+      "name": "plus-n1-checked",
+      "pass": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "name": "plus-n1-disabled",
+      "pass": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "name": "plus-n1-overflow",
+      "pass": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "name": "pro-toggle-on",
+      "pass": true,
+      "actual": {
+        "tier": "enhanced",
+        "value": "1",
+        "checked": true
+      },
+      "expected": {
+        "tier": "enhanced",
+        "value": "1",
+        "checked": true
+      }
+    },
+    {
+      "name": "plus-toggle-off",
+      "pass": true,
+      "actual": {
+        "tier": "basic",
+        "value": "0",
+        "checked": false
+      },
+      "expected": {
+        "tier": "basic",
+        "value": "0",
+        "checked": false
+      }
+    },
+    {
+      "name": "pro-basic-attr",
+      "pass": true,
+      "actual": "214",
+      "expected": "214"
+    },
+    {
+      "name": "pro-trial-attr",
+      "pass": true,
+      "actual": "37",
+      "expected": "37"
+    },
+    {
+      "name": "pro-labeled",
+      "pass": true,
+      "actual": "基础用户 214 人 · 有效体验用户 37 人",
+      "expected": "基础用户 214 人 · 有效体验用户 37 人"
+    },
+    {
+      "name": "pro-not-summed",
+      "pass": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "name": "plus-basic-attr",
+      "pass": true,
+      "actual": "62",
+      "expected": "62"
+    },
+    {
+      "name": "plus-trial-attr",
+      "pass": true,
+      "actual": "11",
+      "expected": "11"
+    },
+    {
+      "name": "plus-labeled",
+      "pass": true,
+      "actual": "基础用户 62 人 · 有效体验用户 11 人",
+      "expected": "基础用户 62 人 · 有效体验用户 11 人"
+    },
+    {
+      "name": "plus-not-summed",
+      "pass": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "name": "browser-errors",
+      "pass": true,
+      "actual": 0,
+      "expected": 0
+    }
+  ],
+  "errors": [],
+  "notes": [
+    "basicUsers and trialUsers are checked as separately labeled, potentially overlapping values; no sum is rendered.",
+    "Service badge derives from the N-backed content review switch: N=0 basic, N=1 enhanced.",
+    "No create/preset/stream matrix was replayed because app reducer and those pages are outside CR-303."
+  ]
+}

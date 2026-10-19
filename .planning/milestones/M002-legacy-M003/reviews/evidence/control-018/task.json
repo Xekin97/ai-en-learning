@@ -1,0 +1,30 @@
+{
+  "objective": "延续独立 gatekeeper-owen 只读控制检查。BE03已交付且无新增业务待决。根据用户已授权的AGT需求/设计流程与USER-M003-STREAM-FIRST，检查一次定向recover-or-rollback到product-planning/product-maya，仅同步BE3-DEP01里已被用户明确修改的展示条款，之后再把原型交designer-tony。该产品维护是既定修订的必要owner同步，不重开N/Q02等已确认业务，不批准BE03/未来UI或实现。请给单次目标状态及门检结果，由宿主写回。",
+  "inputs": [
+    ".planning/workflow/state.yaml",
+    ".planning/agt/project.yaml",
+    ".planning/agt/agents.yaml",
+    ".planning/milestones/M003/reviews/requirements-feedback.md",
+    ".planning/milestones/M003/handoffs/backend-architecture.md",
+    ".planning/milestones/M003/technical/evidence/stream-v3-check.json",
+    ".planning/milestones/M003/handoffs/product.md",
+    ".planning/milestones/M003/reviews/evidence/start/locked-profile.yaml"
+  ],
+  "write_scope": [
+    ".planning/milestones/M003/reviews/stream-handoff-018.md"
+  ],
+  "acceptance": [
+    "沿已读agt-stage-gate及契约，定向读取变化入口/BE3-DEP01及必要来源，控制身份例外stage=technical-design已激活。检查状态角色合法性和产品六份原件存在，当前无新业务选择。不得复写产品、语义审代码或重跑测试。",
+    "原用户“你要看一下agt文档，按文档流程去启动需求和设计落地”授权专业owner流程；最新要求后台先设计然后据此原型。后台BE03现已先行完成。产品此次只撤销旧展示要求/同步已明示用户方向和后端可见时序，无新范围/费用/计次取舍；必须避免把维护记录当作用户批准所有BE03技术字段。",
+    "如条件成立返回建议TRANSITION-M003-019、product-planning/product-to-c角色规范product/to-c及product-maya、required_artifacts/allowed_transitions等精确列表；保留DB/代码/全局开放项与冻结产物。若有真实阻塞指出具体项，不把重新询问已明确方向当门槛。",
+    "本次仅单次产品同步接交，不跨后续UI门禁。产品改完后仍由控制面依据用户已授权后台→原型的范围接续UI，最终原型需用户视觉评审、实际实施另行接收。CLI只读不尝试写或扩大权限。"
+  ],
+  "risk": "normal",
+  "prior_attempts": [],
+  "report": [
+    "check_results",
+    "original_sources",
+    "exact_target_state",
+    "unresolved_findings"
+  ]
+}

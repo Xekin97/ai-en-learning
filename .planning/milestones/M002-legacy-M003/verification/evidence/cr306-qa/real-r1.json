@@ -1,0 +1,527 @@
+{
+  "scope": "One authorized complete business request through the formal application pipeline; no retry and no quality-rate extrapolation.",
+  "request_kind": "visitor-basic",
+  "model": {
+    "id": "01a12f21-460b-75d9-b829-025d13ce445d",
+    "display_name": "DeepSeek V4 Flash 0731",
+    "provider_model_id": "deepseek/deepseek-v4-flash-0731",
+    "output_mode": "json_schema",
+    "custom_parameters": {
+      "reasoning": {
+        "enabled": false
+      }
+    }
+  },
+  "input": {
+    "entries": [
+      "machine",
+      "preclude",
+      "interim",
+      "juvenile",
+      "retroactive"
+    ],
+    "meaning_language": "zh",
+    "scenario": "story",
+    "length": "short"
+  },
+  "http_status": 200,
+  "event_names": [
+    "generation.started",
+    "generation.progress",
+    "generation.plan_item",
+    "generation.plan_item",
+    "generation.plan_item",
+    "generation.plan_item",
+    "generation.plan_item",
+    "generation.plan_item",
+    "generation.progress",
+    "generation.edit",
+    "generation.edit",
+    "generation.edit",
+    "generation.edit",
+    "generation.edit",
+    "generation.edit",
+    "generation.edit",
+    "generation.edit",
+    "generation.edit",
+    "generation.edit",
+    "generation.edit",
+    "generation.edit",
+    "generation.edit",
+    "generation.edit",
+    "generation.edit",
+    "generation.edit",
+    "generation.progress",
+    "generation.validated"
+  ],
+  "event_count": 27,
+  "started": {
+    "seq": 1,
+    "contract_version": "m003-stream-v5",
+    "stream_id": "c4472912-b2ef-439c-8a27-5a559a052981",
+    "run_id": "01a12f22-5018-7c1a-a693-88afe511a535",
+    "snapshot": {
+      "configuration_revision": "S5k5NLFwiTAvsbwAnoXzZaJRXKhm7l67iLgeECaAIvI",
+      "effective_plan": {
+        "code": "visitor",
+        "origin": "visitor"
+      },
+      "content_service": {
+        "native_validation": true,
+        "content_review_enabled": false,
+        "content_repair_limit": 0
+      },
+      "native_correction_policy": {
+        "version": "m003-native-policy-v1",
+        "scope": "logical_request",
+        "max_calls": 2,
+        "editable": false
+      }
+    },
+    "generation_token_present": true
+  },
+  "first_complete_plan_item": {
+    "elapsed_ms": 7722,
+    "item": {
+      "item": {
+        "kind": "scene",
+        "text": "At a beverage factory, Li, a line technician, is repairing a packaging machine that has a worn seal, to get it running for an afternoon order. Their supervisor has approved using a temporary seal for now."
+      },
+      "meaning_language": "zh",
+      "plan_id": "ebb3df93-c36d-40bd-94ad-ecd47e094d45",
+      "seq": 3
+    }
+  },
+  "first_visible_body": {
+    "elapsed_ms": 14159,
+    "visible_text": "Li replaced the worn ",
+    "edit": {
+      "at": 0,
+      "base_rev": 0,
+      "content_version": 1,
+      "delete_count": 0,
+      "draft_id": "bdbf61ca-9140-45de-a95f-4d7bff540cac",
+      "insert": "Li replaced the worn ",
+      "rev": 1,
+      "seq": 10,
+      "source": "provider"
+    }
+  },
+  "terminal": {
+    "event": "generation.validated",
+    "data": {
+      "seq": 27,
+      "run_id": "01a12f22-5018-7c1a-a693-88afe511a535",
+      "final_content_version": 1,
+      "result": {
+        "passage": "Li replaced the worn seal on the packaging machine while the technician recorded its serial number. The pending test at noon precludes shipping the expedited order before then, Li explained. During the break, she noticed juvenile birds nesting in the warehouse roof. The supervisor's retroactive approval covered the earlier use of the interim seal, so the line resumed for the afternoon batch.",
+        "tags": [
+          "工业",
+          "维修"
+        ],
+        "targets": [
+          {
+            "entry": "machine",
+            "entry_meaning": "机器；机械装置；用机器加工。",
+            "hint_phrase": "the packaging machine",
+            "hint_blanks": [
+              {
+                "start": 14,
+                "end": 21
+              }
+            ],
+            "occurrences": [
+              {
+                "surface": "machine",
+                "start": 43,
+                "end": 50
+              }
+            ]
+          },
+          {
+            "entry": "preclude",
+            "entry_meaning": "阻止；排除；使不可能。",
+            "hint_phrase": "precludes any delay",
+            "hint_blanks": [
+              {
+                "start": 0,
+                "end": 9
+              }
+            ],
+            "occurrences": [
+              {
+                "surface": "precludes",
+                "start": 125,
+                "end": 134
+              }
+            ]
+          },
+          {
+            "entry": "interim",
+            "entry_meaning": "临时的；过渡期的；临时协议或安排。",
+            "hint_phrase": "an interim arrangement",
+            "hint_blanks": [
+              {
+                "start": 3,
+                "end": 10
+              }
+            ],
+            "occurrences": [
+              {
+                "surface": "interim",
+                "start": 336,
+                "end": 343
+              }
+            ]
+          },
+          {
+            "entry": "juvenile",
+            "entry_meaning": "幼年的；未成年的；青少年。",
+            "hint_phrase": "juvenile birds in a nest",
+            "hint_blanks": [
+              {
+                "start": 0,
+                "end": 8
+              }
+            ],
+            "occurrences": [
+              {
+                "surface": "juvenile",
+                "start": 221,
+                "end": 229
+              }
+            ]
+          },
+          {
+            "entry": "retroactive",
+            "entry_meaning": "追溯的；有追溯效力的。",
+            "hint_phrase": "retroactive approval",
+            "hint_blanks": [
+              {
+                "start": 0,
+                "end": 11
+              }
+            ],
+            "occurrences": [
+              {
+                "surface": "retroactive",
+                "start": 284,
+                "end": 295
+              }
+            ]
+          }
+        ]
+      },
+      "content_outcome": "basic",
+      "completion_notice": null
+    },
+    "elapsed_ms": 21362
+  },
+  "stream_total_ms": 21362,
+  "status": {
+    "contract_version": "m003-stream-v5",
+    "run_id": "01a12f22-5018-7c1a-a693-88afe511a535",
+    "status": "valid",
+    "snapshot": {
+      "configuration_revision": "S5k5NLFwiTAvsbwAnoXzZaJRXKhm7l67iLgeECaAIvI",
+      "effective_plan": {
+        "code": "visitor",
+        "origin": "visitor"
+      },
+      "content_service": {
+        "native_validation": true,
+        "content_review_enabled": false,
+        "content_repair_limit": 0
+      },
+      "native_correction_policy": {
+        "version": "m003-native-policy-v1",
+        "scope": "logical_request",
+        "max_calls": 2,
+        "editable": false
+      }
+    },
+    "final_content_version": 1,
+    "result": {
+      "passage": "Li replaced the worn seal on the packaging machine while the technician recorded its serial number. The pending test at noon precludes shipping the expedited order before then, Li explained. During the break, she noticed juvenile birds nesting in the warehouse roof. The supervisor's retroactive approval covered the earlier use of the interim seal, so the line resumed for the afternoon batch.",
+      "tags": [
+        "工业",
+        "维修"
+      ],
+      "targets": [
+        {
+          "entry": "machine",
+          "entry_meaning": "机器；机械装置；用机器加工。",
+          "hint_phrase": "the packaging machine",
+          "hint_blanks": [
+            {
+              "start": 14,
+              "end": 21
+            }
+          ],
+          "occurrences": [
+            {
+              "surface": "machine",
+              "start": 43,
+              "end": 50
+            }
+          ]
+        },
+        {
+          "entry": "preclude",
+          "entry_meaning": "阻止；排除；使不可能。",
+          "hint_phrase": "precludes any delay",
+          "hint_blanks": [
+            {
+              "start": 0,
+              "end": 9
+            }
+          ],
+          "occurrences": [
+            {
+              "surface": "precludes",
+              "start": 125,
+              "end": 134
+            }
+          ]
+        },
+        {
+          "entry": "interim",
+          "entry_meaning": "临时的；过渡期的；临时协议或安排。",
+          "hint_phrase": "an interim arrangement",
+          "hint_blanks": [
+            {
+              "start": 3,
+              "end": 10
+            }
+          ],
+          "occurrences": [
+            {
+              "surface": "interim",
+              "start": 336,
+              "end": 343
+            }
+          ]
+        },
+        {
+          "entry": "juvenile",
+          "entry_meaning": "幼年的；未成年的；青少年。",
+          "hint_phrase": "juvenile birds in a nest",
+          "hint_blanks": [
+            {
+              "start": 0,
+              "end": 8
+            }
+          ],
+          "occurrences": [
+            {
+              "surface": "juvenile",
+              "start": 221,
+              "end": 229
+            }
+          ]
+        },
+        {
+          "entry": "retroactive",
+          "entry_meaning": "追溯的；有追溯效力的。",
+          "hint_phrase": "retroactive approval",
+          "hint_blanks": [
+            {
+              "start": 0,
+              "end": 11
+            }
+          ],
+          "occurrences": [
+            {
+              "surface": "retroactive",
+              "start": 284,
+              "end": 295
+            }
+          ]
+        }
+      ]
+    },
+    "can_save": true,
+    "quota_refunded": false,
+    "content_outcome": "basic",
+    "completion_notice": null
+  },
+  "quota_before": {
+    "status": 200,
+    "selected_model_available": true,
+    "selected_model": {
+      "id": "01a12f21-460b-75d9-b829-025d13ce445d",
+      "name": "DeepSeek V4 Flash 0731",
+      "description": "Structured English-learning passages via OpenRouter",
+      "access": {
+        "from_plan": true,
+        "card_ends_at": null
+      }
+    },
+    "effective_plan": {
+      "code": "visitor",
+      "origin": "visitor",
+      "trial_ends_at": null
+    },
+    "quota": {
+      "kind": "limited",
+      "limit": 100,
+      "remaining": 100,
+      "window_hours": 24,
+      "refreshes_at": null
+    },
+    "extra_quota": {
+      "remaining": 0,
+      "earliest_expires_at": null
+    },
+    "content_service": {
+      "native_validation": true,
+      "content_review_enabled": false,
+      "content_repair_limit": 0
+    },
+    "configuration_revision": "S5k5NLFwiTAvsbwAnoXzZaJRXKhm7l67iLgeECaAIvI"
+  },
+  "quota_after": {
+    "status": 200,
+    "selected_model_available": true,
+    "selected_model": {
+      "id": "01a12f21-460b-75d9-b829-025d13ce445d",
+      "name": "DeepSeek V4 Flash 0731",
+      "description": "Structured English-learning passages via OpenRouter",
+      "access": {
+        "from_plan": true,
+        "card_ends_at": null
+      }
+    },
+    "effective_plan": {
+      "code": "visitor",
+      "origin": "visitor",
+      "trial_ends_at": null
+    },
+    "quota": {
+      "kind": "limited",
+      "limit": 100,
+      "remaining": 99,
+      "window_hours": 24,
+      "refreshes_at": "2026-10-13T16:02:20+08:00"
+    },
+    "extra_quota": {
+      "remaining": 0,
+      "earliest_expires_at": null
+    },
+    "content_service": {
+      "native_validation": true,
+      "content_review_enabled": false,
+      "content_repair_limit": 0
+    },
+    "configuration_revision": "S5k5NLFwiTAvsbwAnoXzZaJRXKhm7l67iLgeECaAIvI"
+  },
+  "database": {
+    "run": {
+      "id": "01a12f22-5018-7c1a-a693-88afe511a535",
+      "group_code_snapshot": "visitor",
+      "model_display_name_snapshot": "DeepSeek V4 Flash 0731",
+      "provider_model_id_snapshot": "deepseek/deepseek-v4-flash-0731",
+      "meaning_language": "zh",
+      "scenario": "story",
+      "length_code": "short",
+      "minimum_words_snapshot": 50,
+      "quota_limit_snapshot": 100,
+      "max_entries_snapshot": 5,
+      "call_status": "valid",
+      "disposition": "pending",
+      "quota_charged": true,
+      "failure_code": null,
+      "started_at": "2026-10-12T16:02:20.30956+08:00",
+      "completed_at": "2026-10-12T16:02:41.663932+08:00",
+      "model_request_parameters_snapshot": {
+        "version": "custom-parameters-v1",
+        "output_mode": "json_schema",
+        "structured_route": "openrouter_require_parameters",
+        "custom_parameters": {
+          "reasoning": {
+            "enabled": false
+          }
+        },
+        "max_output_tokens": null
+      },
+      "content_review_enabled_snapshot": false,
+      "content_repair_limit_snapshot": 0,
+      "pipeline_version_snapshot": "m003-content-v5",
+      "plan_origin_snapshot": "visitor",
+      "content_outcome": "basic",
+      "final_content_version": 1,
+      "content_stop_reason": null
+    },
+    "calls": [
+      {
+        "call_no": 1,
+        "provider_request_id": "gen-1791792141-2C3l831e0zOyeZStN5v4",
+        "model_snapshot": "deepseek/deepseek-v4-flash-0731",
+        "input_tokens": 997,
+        "output_tokens": 459,
+        "cost_amount": 0.0002681,
+        "currency": "openrouter_credits",
+        "usage_status": "known",
+        "completed_at": "2026-10-12T16:02:31.51096+08:00",
+        "call_stage": "planning",
+        "prompt_version": "m003-plan-v1",
+        "provider_invoked": true,
+        "review_result": "not_applicable",
+        "reason_codes": [],
+        "repair_requested": false
+      },
+      {
+        "call_no": 2,
+        "provider_request_id": "gen-1791792152-E3Bgx8zH2a6AA9t0uYcz",
+        "model_snapshot": "deepseek/deepseek-v4-flash-0731",
+        "input_tokens": 2534,
+        "output_tokens": 329,
+        "cost_amount": 0.00041496,
+        "currency": "openrouter_credits",
+        "usage_status": "known",
+        "completed_at": "2026-10-12T16:02:41.661093+08:00",
+        "call_stage": "generation",
+        "prompt_version": "m003-draft-v3",
+        "provider_invoked": true,
+        "review_result": "not_applicable",
+        "reason_codes": [],
+        "repair_requested": false
+      }
+    ],
+    "charge": {
+      "source_kind": "visitor",
+      "plan_code": null,
+      "origin": null,
+      "units": 1,
+      "state": "consumed",
+      "charged_at": "2026-10-12T16:02:20.30956+08:00",
+      "settled_at": "2026-10-12T16:02:41.663932+08:00"
+    }
+  },
+  "stage_counts": {
+    "planning": 1,
+    "generation": 1,
+    "fixed_edit": 0,
+    "technical_repair": 0,
+    "content_review": 0,
+    "content_repair": 0
+  },
+  "usage": {
+    "status": "known",
+    "input_tokens": 3531,
+    "output_tokens": 788
+  },
+  "cost": {
+    "status": "known",
+    "amounts": [
+      {
+        "amount": 0.0002681,
+        "currency": "openrouter_credits"
+      },
+      {
+        "amount": 0.00041496,
+        "currency": "openrouter_credits"
+      }
+    ]
+  }
+}

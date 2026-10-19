@@ -1,0 +1,22 @@
+ENVIRONMENT
+Same disposable PostgreSQL 18 cluster and local provider stubs.
+
+COMMAND A
+TEST_DATABASE_URL='postgres://postgres@127.0.0.1:55491/postgres?sslmode=disable' OPENROUTER_TEST_API_KEY='' OPENROUTER_TEST_MODEL='' GOTOOLCHAIN=go1.26.7 go test -race -tags=integration -run 'Test(ContinuationHTTPFinalResultAndSingleSettlement|CorrectionsHTTPMixedModesPreservePreviewAndSingleSettlement|ContinuationHTTPCancelAndDisconnectDuringCorrections)$' ./internal/httpapi
+
+STDOUT A
+ok  	wordweave/internal/httpapi	33.775s
+
+EXIT A 0
+
+COMMAND B
+TEST_DATABASE_URL='postgres://postgres@127.0.0.1:55491/postgres?sslmode=disable' OPENROUTER_TEST_API_KEY='' OPENROUTER_TEST_MODEL='' GOTOOLCHAIN=go1.26.7 go test -race -tags=integration -run 'TestBoundary(OpenErrorSilentBodyHTTP|SilentStreamLifecycleHTTP|SlowStreamHTTP)$' ./internal/httpapi
+
+STDOUT B
+ok  	wordweave/internal/httpapi	12.544s
+
+EXIT B 0
+
+ASSERTED
+- Native continuation, mixed private corrections, cancellation, browser disconnect, silent/open-error and slow-stream boundaries retain single-settlement behavior.
+- A successful adapter return cannot fabricate a public body close; the safe passage-close hook is required.

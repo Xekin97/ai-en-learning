@@ -1,3 +1,5 @@
+> **M002续做索引124**：本里程碑包含原M003全部需求。[较新同类原件](../../M002-legacy-M003/implementation/frontend-worktree-plan.md)及其已记录的逐项接收/验证均归M002；旧编号只是历史标识。当前工作与未完成项见[续做索引](../continuation.md)，下方前期记录保留，不能据旧完成态关闭当前M002。
+
 ## CR026 / frontend-claire
 
 单工作区顺序实现，不委派。负责notice模型/映射/schema、后台开关、storage适配器、store队列和dialog shown事件；sync-design消费UI28 copy，原样式保持。只修改对应fixtures与测试，保留其他变动。检查账号隔离/再登录/多条提前关闭/手动与预览不计/语言切换/存储失败/隐藏，后台保存刷新、手机英文说明不溢出；最多4张局部图。开发基础检查与1组浏览器生命周期后QA再补跨边界，旧Markdown/欢迎样式未变部分复用。

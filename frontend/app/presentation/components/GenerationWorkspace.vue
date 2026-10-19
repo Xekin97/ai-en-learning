@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type {
+  GenerationRequestModel,
   MeaningLanguage,
   PassageLength,
   Scenario,
@@ -17,8 +18,11 @@ const locked = computed(() => Boolean(props.presetId)),
   preset = computed(() => detail.value?.preset);
 const state = computed(() => workspace.state.value),
   generation = computed(() => state.value.generation);
-const busy = computed(() =>
-  ["streaming", "valid"].includes(generation.value.phase),
+const generationBusy = computed(() =>
+  ["streaming", "pending"].includes(generation.value.phase),
+);
+const hasUnsavedResult = computed(
+  () => generation.value.phase === "valid" && generation.value.result !== null,
 );
 const words = computed(() =>
   locked.value
@@ -34,7 +38,19 @@ const extra = computed(() =>
     : options.value?.extraQuota.remaining,
 );
 const settings = ref<HTMLDetailsElement>();
-const saving = ref(false);
+const generateButton = ref<HTMLButtonElement | null>(null);
+let restoreGenerateFocus = false;
+const regenerateCancelButton = ref<HTMLButtonElement | null>(null);
+const actionOwner = ref<"save" | "regenerate" | "leave" | null>(null);
+const interactionLocked = computed(
+  () => generationBusy.value || actionOwner.value !== null,
+);
+const protectLeave = computed(
+  () => generationBusy.value || hasUnsavedResult.value,
+);
+const regenerateFailure = ref(false);
+let actionSequence = 0;
+let componentActive = true;
 let allowLeave = false;
 workspace.startNewTask();
 await usePageLoader(`generation:${props.presetId ?? "ordinary"}`, () =>
@@ -43,24 +59,130 @@ await usePageLoader(`generation:${props.presetId ?? "ordinary"}`, () =>
 onMounted(() => {
   if (settings.value) settings.value.open = locked.value || innerWidth > 1100;
 });
-async function generate() {
+watch(
+  () => generation.value.phase,
+  async (phase, previous) => {
+    if (
+      phase === "pending" &&
+      previous === "streaming" &&
+      document.activeElement === generateButton.value
+    )
+      restoreGenerateFocus = true;
+    if (
+      restoreGenerateFocus &&
+      ["valid", "failed", "cancelled"].includes(phase)
+    ) {
+      await nextTick();
+      if (generateButton.value?.disabled) return;
+      if (
+        restoreGenerateFocus &&
+        generateButton.value?.isConnected &&
+        (document.activeElement === document.body ||
+          document.activeElement === null)
+      ) {
+        generateButton.value.focus({ preventScroll: true });
+        restoreGenerateFocus = false;
+      }
+    }
+  },
+  { flush: "sync" },
+);
+watch(
+  () => workspace.canSubmit.value,
+  async (canSubmit) => {
+    if (
+      !canSubmit ||
+      !restoreGenerateFocus ||
+      !["valid", "failed", "cancelled"].includes(generation.value.phase)
+    )
+      return;
+    await nextTick();
+    if (
+      restoreGenerateFocus &&
+      generateButton.value?.isConnected &&
+      !generateButton.value.disabled &&
+      (document.activeElement === document.body ||
+        document.activeElement === null)
+    ) {
+      generateButton.value.focus({ preventScroll: true });
+      restoreGenerateFocus = false;
+    }
+  },
+  { flush: "post" },
+);
+function rememberGenerateFocus() {
+  restoreGenerateFocus = true;
+}
+function releaseGenerateFocus(event: FocusEvent) {
+  if (
+    event.relatedTarget !== null ||
+    !["pending", "valid", "failed", "cancelled"].includes(
+      generation.value.phase,
+    )
+  )
+    restoreGenerateFocus = false;
+}
+function requestSnapshot(): GenerationRequestModel | null {
   const selected = preset.value;
-  const ok = await workspace.generate(
-    locked.value && selected
+  if (locked.value)
+    return selected
       ? {
           kind: "preset",
           presetId: selected.id,
           publishedVersion: selected.publishedVersion,
         }
-      : undefined,
-  );
+      : null;
+  const value = state.value;
+  if (
+    !value.modelId ||
+    !value.meaningLanguage ||
+    !value.scenario ||
+    !value.length ||
+    value.selectedEntries.length === 0 ||
+    !workspace.canSubmit.value
+  )
+    return null;
+  return {
+    modelId: value.modelId,
+    meaningLanguage: value.meaningLanguage,
+    scenario: value.scenario,
+    length: value.length,
+    entries: [...value.selectedEntries],
+  };
+}
+async function startGeneration(snapshot: GenerationRequestModel) {
+  const ok = await workspace.generate(snapshot);
   if (locked.value && props.presetId && !ok)
     await presets.detail(props.presetId);
   else if (!locked.value) await workspace.loadOptions(true);
 }
+type RegenerateBinding = {
+  generation: typeof generation.value;
+  runId: string;
+  sessionEpoch: number;
+};
+let regenerateBinding: RegenerateBinding | null = null;
+async function generate() {
+  if (actionOwner.value || generationBusy.value) return;
+  regenerateFailure.value = false;
+  if (hasUnsavedResult.value) {
+    const current = generation.value;
+    if (!current.runId) return;
+    regenerateBinding = {
+      generation: current,
+      runId: current.runId,
+      sessionEpoch: session.epoch.value,
+    };
+    confirmation.value = "regenerate";
+    return;
+  }
+  const snapshot = requestSnapshot();
+  if (snapshot) await startGeneration(snapshot);
+}
 async function save() {
-  if (saving.value) return;
-  saving.value = true;
+  if (actionOwner.value || generationBusy.value) return;
+  const owner = ++actionSequence;
+  actionOwner.value = "save";
   try {
     const result = await workspace.save();
     allowLeave = true;
@@ -72,46 +194,167 @@ async function save() {
   } catch {
     feedback.show("failed");
   } finally {
-    saving.value = false;
+    if (owner === actionSequence && actionOwner.value === "save")
+      actionOwner.value = null;
   }
 }
 const { t } = useI18n();
 const blockReasonCopy = (key: string) =>
   key.startsWith("error.") ? t(key) : copy(key);
-const confirmation = ref<"leave" | "cancel" | "discard" | null>(null);
+const confirmation = ref<"leave" | "cancel" | "regenerate" | null>(null);
 let leaveResolve: ((value: boolean) => void) | null = null;
 function closeConfirmation() {
+  if (actionOwner.value === "regenerate") return;
   confirmation.value = null;
+  regenerateBinding = null;
   leaveResolve?.(false);
   leaveResolve = null;
 }
+async function focusConfirmation() {
+  if (confirmation.value !== "regenerate") return;
+  await nextTick();
+  regenerateCancelButton.value?.focus({ preventScroll: true });
+}
+function ownsRegenerateAction(
+  owner: number,
+  binding: RegenerateBinding,
+): boolean {
+  return (
+    componentActive &&
+    actionOwner.value === "regenerate" &&
+    actionSequence === owner &&
+    session.epoch.value === binding.sessionEpoch
+  );
+}
+async function confirmRegenerate() {
+  const binding = regenerateBinding;
+  const snapshot = requestSnapshot();
+  if (
+    actionOwner.value ||
+    confirmation.value !== "regenerate" ||
+    !binding ||
+    !snapshot ||
+    generation.value !== binding.generation ||
+    generation.value.runId !== binding.runId ||
+    !hasUnsavedResult.value ||
+    session.epoch.value !== binding.sessionEpoch
+  ) {
+    closeConfirmation();
+    return;
+  }
+  const owner = ++actionSequence;
+  actionOwner.value = "regenerate";
+  try {
+    const receipt = await workspace.discard();
+    if (
+      !ownsRegenerateAction(owner, binding) ||
+      !receipt ||
+      receipt.runId !== binding.runId ||
+      workspace.state.value.generation !== receipt.clearedGeneration
+    ) {
+      confirmation.value = null;
+      regenerateBinding = null;
+      return;
+    }
+  } catch {
+    if (ownsRegenerateAction(owner, binding)) {
+      regenerateFailure.value = true;
+      confirmation.value = null;
+      regenerateBinding = null;
+    }
+    return;
+  } finally {
+    if (
+      owner === actionSequence &&
+      actionOwner.value === "regenerate" &&
+      (regenerateFailure.value || confirmation.value === null)
+    )
+      actionOwner.value = null;
+  }
+  if (!ownsRegenerateAction(owner, binding)) return;
+  confirmation.value = null;
+  regenerateBinding = null;
+  const generationTask = startGeneration(snapshot);
+  if (owner === actionSequence && actionOwner.value === "regenerate")
+    actionOwner.value = null;
+  try {
+    await generationTask;
+  } finally {
+    if (owner === actionSequence && actionOwner.value === "regenerate")
+      actionOwner.value = null;
+  }
+}
 async function confirm() {
   const action = confirmation.value;
+  if (action === "regenerate") {
+    await confirmRegenerate();
+    return;
+  }
   confirmation.value = null;
   if (action === "cancel") await workspace.cancel();
-  if (action === "discard") await workspace.discard();
   if (action === "leave") {
-    if (generation.value.phase === "streaming") workspace.abortPassive();
-    else await workspace.discard();
-    leaveResolve?.(true);
-    leaveResolve = null;
+    const resolver = leaveResolve;
+    if (actionOwner.value) {
+      resolver?.(false);
+      if (leaveResolve === resolver) leaveResolve = null;
+      return;
+    }
+    const owner = ++actionSequence;
+    const boundGeneration = generation.value;
+    const boundRunId = boundGeneration.runId;
+    const boundEpoch = session.epoch.value;
+    const ownsLeaveAction = () =>
+      componentActive &&
+      actionOwner.value === "leave" &&
+      actionSequence === owner &&
+      session.epoch.value === boundEpoch;
+    actionOwner.value = "leave";
+    try {
+      if (generation.value.phase === "streaming") workspace.abortPassive();
+      else if (generation.value.phase === "valid") {
+        const receipt = await workspace.discard();
+        if (
+          !ownsLeaveAction() ||
+          generation.value === boundGeneration ||
+          !receipt ||
+          receipt.runId !== boundRunId ||
+          generation.value !== receipt.clearedGeneration
+        ) {
+          resolver?.(false);
+          return;
+        }
+      } else await workspace.discard();
+      resolver?.(ownsLeaveAction());
+    } catch {
+      if (ownsLeaveAction()) {
+        feedback.show("failed");
+      }
+      resolver?.(false);
+    } finally {
+      if (leaveResolve === resolver) leaveResolve = null;
+      if (owner === actionSequence && actionOwner.value === "leave")
+        actionOwner.value = null;
+    }
   }
 }
 onBeforeRouteLeave(() => {
-  if (allowLeave || !busy.value) return;
+  if (allowLeave || !protectLeave.value) return;
+  if (actionOwner.value || leaveResolve) return false;
   confirmation.value = "leave";
   return new Promise<boolean>((resolve) => {
     leaveResolve = resolve;
   });
 });
 function beforeUnload(event: BeforeUnloadEvent) {
-  if (busy.value) {
+  if (protectLeave.value || actionOwner.value) {
     event.preventDefault();
     event.returnValue = "";
   }
 }
 onMounted(() => window.addEventListener("beforeunload", beforeUnload));
 onBeforeUnmount(() => {
+  componentActive = false;
+  actionSequence++;
   workspace.setVocabularyQuery("");
   workspace.abortPassive();
   window.removeEventListener("beforeunload", beforeUnload);
@@ -160,7 +403,7 @@ onBeforeUnmount(() => {
           "
         />
       </summary>
-      <fieldset class="generation-fields" :disabled="busy">
+      <fieldset class="generation-fields" :disabled="interactionLocked">
         <div class="config-fields">
           <GenerationSettings
             v-if="locked && preset"
@@ -273,7 +516,7 @@ onBeforeUnmount(() => {
           :candidates="state.candidates"
           :query="state.query"
           :search-status="state.searchStatus"
-          :disabled="busy"
+          :disabled="interactionLocked"
           :max-entries="options?.maxEntries ?? 0"
           :random-pending="state.randomPending"
           show-random
@@ -298,7 +541,9 @@ onBeforeUnmount(() => {
           {{ copy("preset.invaliddesc") }}
         </p>
         <p
-          v-else-if="options && !options.availability.canGenerate && !busy"
+          v-else-if="
+            options && !options.availability.canGenerate && !interactionLocked
+          "
           class="note warn"
         >
           {{
@@ -315,122 +560,168 @@ onBeforeUnmount(() => {
             )
           }}
         </p>
-        <div class="actions">
+        <p
+          v-if="regenerateFailure"
+          class="notice error m003-regenerate-error"
+          role="alert"
+        >
+          {{ copy("m003.regenerate.failure") }}
+        </p>
+        <div id="generation-actions" class="actions">
           <button
+            ref="generateButton"
             class="btn primary"
             :disabled="
-              busy || !(locked ? detail?.canStart : workspace.canSubmit.value)
+              actionOwner !== null ||
+              generation.phase === 'pending' ||
+              (generation.phase !== 'streaming' &&
+                !(locked ? detail?.canStart : workspace.canSubmit.value))
             "
-            @click="generate"
+            @click="
+              generation.phase === 'streaming'
+                ? (confirmation = 'cancel')
+                : generate()
+            "
+            @focus="rememberGenerateFocus"
+            @blur="releaseGenerateFocus"
           >
-            <AppIcon name="sparkles" />{{ copy("start") }}
+            <AppIcon
+              v-if="generation.phase !== 'streaming'"
+              name="sparkles"
+            />{{
+              copy(generation.phase === "streaming" ? "cancelgen" : "start")
+            }}
           </button>
         </div>
       </section>
-      <section class="panel generation-result" data-region="generation-result">
-        <div v-if="generation.phase === 'streaming'" class="article">
-          <p class="eyebrow">{{ copy("create.generating") }}</p>
-          <p class="story-text" aria-live="polite">
-            {{ generation.streamedText }}
-          </p>
-          <button class="btn" @click="confirmation = 'cancel'">
-            {{ copy("cancelgen") }}
-          </button>
-        </div>
-        <div
-          v-else-if="
-            generation.result && ['valid', 'saved'].includes(generation.phase)
-          "
-          class="article"
-        >
-          <p class="eyebrow">{{ copy("create.done") }}</p>
-          <h2>{{ words.join(" · ") }}</h2>
-          <p class="story-text">
-            <template
-              v-for="(segment, index) in generation.result.passageSegments"
-              :key="index"
-              ><mark v-if="segment.kind === 'target'">{{ segment.text }}</mark
-              ><template v-else>{{ segment.text }}</template></template
+      <section
+        id="generation-status"
+        tabindex="-1"
+        class="panel generation-result m003-generation-paper"
+        data-region="generation-result"
+      >
+        <div class="m003-result-body">
+          <div
+            v-if="
+              ['streaming', 'pending'].includes(generation.phase) ||
+              generation.resultUnavailable ||
+              (generation.result &&
+                ['valid', 'saved'].includes(generation.phase))
+            "
+          >
+            <GenerationContent
+              :draft="generation.draft"
+              :plan-items="generation.planItems"
+              :result="generation.result"
+              :phase="generation.phase"
+              :request-phase="generation.requestPhase"
+              :activity="generation.activity"
+              :completion-notice="generation.completionNotice"
+              :pronunciation-enabled="!locked"
+            />
+            <p
+              v-if="
+                generation.phase === 'pending' || generation.resultUnavailable
+              "
+              class="notice warn"
             >
-          </p>
-          <div class="chips">
-            <span
-              v-for="tag in generation.result.tags"
-              :key="tag"
-              class="chip"
-              >{{ tag }}</span
+              {{ copy("m003.pending.body") }}
+            </p>
+            <button
+              v-if="
+                generation.phase === 'pending' || generation.resultUnavailable
+              "
+              class="btn"
+              @click="workspace.recheck"
             >
-          </div>
-          <section class="study-resources">
-            <h2>{{ copy("l.resources") }}</h2>
-            <div class="resource-grid">
-              <article
-                v-for="target in generation.result.targets"
-                :key="target.entry"
-                class="resource-card"
+              {{ copy("m003.recheck") }}
+            </button>
+            <div class="actions">
+              <button
+                v-if="generation.result && generation.phase === 'valid'"
+                class="btn primary"
+                :disabled="interactionLocked"
+                @click="save"
               >
-                <h3>{{ target.entry }}</h3>
-                <p>{{ target.entryMeaning }}</p>
-                <p class="muted">{{ target.hintPhrase }}</p>
-              </article>
+                {{ copy(session.isLearner.value ? "collect" : "guestcollect") }}
+              </button>
             </div>
-          </section>
-          <div class="actions">
-            <button class="btn primary" :disabled="saving" @click="save">
+          </div>
+          <div v-else class="empty">
+            <h2>
               {{
-                copy(session.isLearner.value ? "collect" : "guestcollect")
-              }}</button
-            ><button
-              class="btn quiet"
-              :disabled="saving"
-              @click="confirmation = 'discard'"
+                copy(
+                  generation.phase === "cancelled"
+                    ? "create.cancelled"
+                    : generation.phase === "failed"
+                      ? "error"
+                      : "create.empty",
+                )
+              }}
+            </h2>
+            <p v-if="generation.phase === 'idle'">
+              {{ copy("create.emptydesc") }}
+            </p>
+            <button
+              v-if="generation.phase === 'failed'"
+              class="btn primary"
+              @click="generate"
             >
-              {{ copy("l.discard") }}
+              {{ copy("retry") }}
             </button>
           </div>
-        </div>
-        <div v-else class="empty">
-          <h2>
-            {{
-              copy(
-                generation.phase === "cancelled"
-                  ? "create.cancelled"
-                  : generation.phase === "failed"
-                    ? "error"
-                    : "create.empty",
-              )
-            }}
-          </h2>
-          <p v-if="generation.phase === 'idle'">
-            {{ copy("create.emptydesc") }}
-          </p>
-          <button
-            v-if="generation.phase === 'failed'"
-            class="btn primary"
-            @click="generate"
-          >
-            {{ copy("retry") }}
-          </button>
         </div>
       </section>
     </div>
   </div>
   <NuxtLink v-else class="btn" to="/explore">{{ copy("explore") }}</NuxtLink>
   <AppDialog
-    id="generation-confirm"
+    :id="
+      confirmation === 'regenerate'
+        ? 'regenerate-confirm'
+        : 'generation-confirm'
+    "
     :open="confirmation !== null"
+    :return-focus="() => generateButton"
     :title="
-      copy(confirmation === 'discard' ? 'l.discard.title' : 'l.leave.title')
+      copy(
+        confirmation === 'regenerate'
+          ? 'm003.regenerate.title'
+          : 'l.leave.title',
+      )
     "
     @close="closeConfirmation"
+    @shown="focusConfirmation"
     ><p>
-      {{ copy(confirmation === "discard" ? "l.discard.desc" : "l.leave.desc") }}
+      {{
+        copy(
+          confirmation === "regenerate"
+            ? "m003.regenerate.body"
+            : "l.leave.desc",
+        )
+      }}
     </p>
     <template #footer
-      ><button class="btn" @click="closeConfirmation">
+      ><button
+        ref="regenerateCancelButton"
+        class="btn"
+        :disabled="actionOwner === 'regenerate'"
+        @click="closeConfirmation"
+      >
         {{ copy("cancel") }}</button
-      ><button class="btn primary" @click="confirm">
-        {{ copy("confirm") }}
+      ><button
+        class="btn"
+        :class="confirmation === 'regenerate' ? 'danger' : 'primary'"
+        :disabled="actionOwner === 'regenerate'"
+        @click="confirm"
+      >
+        {{
+          copy(
+            confirmation === "regenerate"
+              ? "m003.regenerate.confirm"
+              : "confirm",
+          )
+        }}
       </button></template
     ></AppDialog
   >

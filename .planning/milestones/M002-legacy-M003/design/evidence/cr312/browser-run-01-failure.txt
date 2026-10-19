@@ -1,0 +1,6 @@
+Command: node .planning/milestones/M003/design/evidence/cr312/browser.mjs
+Exit: 1
+Failure: Node fetch() cannot read file: URLs while loading terminal fixture lengths.
+Location: browser.mjs line 90
+Product/prototype result: earlier checks ran; report incomplete and cannot be used as acceptance evidence.
+Correction: read the local JSON with fs.readFile(new URL(...)) and rerun once.

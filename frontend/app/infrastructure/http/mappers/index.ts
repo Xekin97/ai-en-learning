@@ -9,6 +9,8 @@ import type {
   ModelConnectionModel,
   GenerationOptionsModel,
   GenerationResultModel,
+  GenerationStatusModel,
+  ContentOutcomeModel,
   GroupPolicyModel,
   LearningSummaryModel,
   PageModel,
@@ -25,6 +27,7 @@ import type {
 import type {
   GenerationOptionsDto,
   GenerationValidatedEventDto,
+  GenerationStatusDto,
   VocabularyDto,
 } from "../schemas/generation";
 import type {
@@ -146,6 +149,18 @@ export function mapGenerationOptionsDto(
             windowHours: 24,
             refreshesAt: dto.quota.refreshes_at,
           },
+    configurationRevision: dto.configuration_revision,
+    contentService: {
+      nativeValidation: true,
+      contentReviewEnabled: dto.content_service.content_review_enabled,
+      contentRepairLimit: dto.content_service.content_repair_limit,
+    } as GenerationOptionsModel["contentService"],
+    nativeCorrectionPolicy: {
+      version: dto.native_correction_policy.version,
+      scope: dto.native_correction_policy.scope,
+      maxCalls: dto.native_correction_policy.max_calls,
+      editable: dto.native_correction_policy.editable,
+    },
   };
 }
 
@@ -176,6 +191,46 @@ export function mapGenerationValidatedDto(
   dto: GenerationValidatedEventDto,
 ): GenerationResultModel {
   return mapGenerationResultDto(dto.result);
+}
+
+export function mapGenerationStatusDto(
+  dto: GenerationStatusDto,
+): GenerationStatusModel {
+  const common = {
+    runId: dto.run_id,
+    snapshot: {
+      configurationRevision: dto.snapshot.configuration_revision,
+      effectivePlan: {
+        code: dto.snapshot.effective_plan.code,
+        origin: dto.snapshot.effective_plan.origin,
+      },
+      contentService: {
+        nativeValidation: true as const,
+        contentReviewEnabled:
+          dto.snapshot.content_service.content_review_enabled,
+        contentRepairLimit: dto.snapshot.content_service.content_repair_limit,
+      } as GenerationStatusModel["snapshot"]["contentService"],
+      nativeCorrectionPolicy: {
+        version: dto.snapshot.native_correction_policy.version,
+        scope: dto.snapshot.native_correction_policy.scope,
+        maxCalls: dto.snapshot.native_correction_policy.max_calls,
+        editable: dto.snapshot.native_correction_policy.editable,
+      },
+    },
+  };
+  if (dto.status === "active") return { ...common, status: "active" };
+  if (dto.status === "failed" || dto.status === "cancelled")
+    return { ...common, status: dto.status, quotaRefunded: dto.quota_refunded };
+  return {
+    ...common,
+    status: "valid",
+    finalContentVersion: dto.final_content_version!,
+    result: dto.result ? mapGenerationResultDto(dto.result) : null,
+    contentOutcome: dto.content_outcome as ContentOutcomeModel,
+    completionNotice: dto.completion_notice,
+    canSave: dto.can_save,
+    quotaRefunded: false,
+  };
 }
 
 export function mapLearningSummaryDto(
@@ -290,6 +345,7 @@ export function mapAdminModelDto(
     connection: mapModelConnectionDto(dto.connection),
     maxOutputTokens: dto.max_output_tokens,
     outputMode: dto.output_mode,
+    customParameters: structuredClone(dto.custom_parameters),
     enabled: dto.enabled,
     assignedGroupCodes: [...dto.assigned_group_codes],
     createdAt: dto.created_at,
@@ -300,6 +356,12 @@ export function mapAdminModelDto(
 export function mapGroupDto(
   dto: AdminGroupDto,
   revision: string,
+  nativePolicy: {
+    version: "m003-native-policy-v1";
+    scope: "logical_request";
+    max_calls: 2;
+    editable: false;
+  },
 ): GroupPolicyModel {
   return {
     code: dto.code,
@@ -313,6 +375,14 @@ export function mapGroupDto(
       displayName: model.display_name,
       enabled: model.enabled,
     })),
+    contentReviewEnabled: dto.content_review_enabled,
+    contentRepairLimit: dto.content_repair_limit,
+    nativeCorrectionPolicy: {
+      version: nativePolicy.version,
+      scope: nativePolicy.scope,
+      maxCalls: nativePolicy.max_calls,
+      editable: nativePolicy.editable,
+    },
   };
 }
 

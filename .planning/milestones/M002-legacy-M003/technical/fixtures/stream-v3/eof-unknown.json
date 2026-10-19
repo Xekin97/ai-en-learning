@@ -1,0 +1,116 @@
+{
+  "fixture_version": "M003-BE-03",
+  "contract_version": "m003-stream-v3",
+  "wire": [
+    {
+      "event": "generation.started",
+      "data": {
+        "seq": 1,
+        "contract_version": "m003-stream-v3",
+        "run_id": "00000000-0000-4000-8000-000000000005",
+        "generation_token": "fixture-only-not-a-valid-token",
+        "snapshot": {
+          "configuration_revision": "fixture-revision-3",
+          "effective_plan": {
+            "code": "pro",
+            "origin": "base"
+          },
+          "content_service": {
+            "native_validation": true,
+            "content_review_enabled": true,
+            "content_repair_limit": 1
+          },
+          "native_correction_policy": {
+            "version": "m003-native-policy-v1",
+            "scope": "logical_request",
+            "max_calls": 2,
+            "editable": false
+          }
+        }
+      }
+    },
+    {
+      "event": "generation.progress",
+      "data": {
+        "seq": 2,
+        "phase": "composing"
+      }
+    },
+    {
+      "event": "generation.learning_ready",
+      "data": {
+        "seq": 3,
+        "content_version": 1,
+        "entries": [
+          {
+            "entry": "garden",
+            "entry_meaning": "花园；园圃"
+          },
+          {
+            "entry": "learn",
+            "entry_meaning": "学习；学会"
+          },
+          {
+            "entry": "share",
+            "entry_meaning": "分享；共同使用"
+          }
+        ]
+      }
+    }
+  ],
+  "transport_end": "unexpected_eof",
+  "status_responses": [
+    {
+      "http_status": 200,
+      "body": {
+        "data": {
+          "contract_version": "m003-stream-v3",
+          "run_id": "00000000-0000-4000-8000-000000000005",
+          "status": "active",
+          "snapshot": {
+            "configuration_revision": "fixture-revision-3",
+            "effective_plan": {
+              "code": "pro",
+              "origin": "base"
+            },
+            "content_service": {
+              "native_validation": true,
+              "content_review_enabled": true,
+              "content_repair_limit": 1
+            },
+            "native_correction_policy": {
+              "version": "m003-native-policy-v1",
+              "scope": "logical_request",
+              "max_calls": 2,
+              "editable": false
+            }
+          },
+          "final_content_version": null,
+          "result": null,
+          "can_save": false,
+          "quota_refunded": false,
+          "content_outcome": null,
+          "completion_notice": null
+        },
+        "meta": {
+          "request_id": "fixture-status-request"
+        }
+      }
+    }
+  ],
+  "internal_evidence": {
+    "N": 1,
+    "first_valid_package": "v1",
+    "last_valid_package": "v1",
+    "actual_content_repairs": 0
+  },
+  "expected": {
+    "ui_state": "pending",
+    "can_save": false,
+    "completion_notice": null,
+    "final_package": null,
+    "article_before_terminal": false,
+    "visible_repair_count": false,
+    "visible_repair_limit": false
+  }
+}

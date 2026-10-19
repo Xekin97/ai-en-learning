@@ -1,0 +1,32 @@
+{
+  "objective": "BE05 已提交并冻结。独立检查单次 TRANSITION-M003-033 在 technical-design 内 activate-role 至 dba/base / dba-diana，接收 BE05 的确定数据库依赖。不是跨阶段、不是整版技术批准。完成 DB03 后才由另次合法门禁交 UI07。",
+  "inputs": [
+    ".planning/workflow/state.yaml",
+    ".planning/agt/agents.yaml",
+    ".planning/agt/project.yaml",
+    ".planning/milestones/M003/reviews/evidence/start/locked-profile.yaml",
+    ".planning/milestones/M003/reviews/requirements-feedback.md",
+    ".planning/milestones/M003/changes/CR-302.md",
+    ".planning/milestones/M003/handoffs/product.md",
+    ".planning/milestones/M003/handoffs/backend-architecture.md",
+    ".planning/milestones/M003/handoffs/database.md",
+    ".planning/milestones/M003/reviews/evidence/control-032/M003-BE-05-source-manifest.json"
+  ],
+  "write_scope": [
+    ".planning/milestones/M003/reviews/research-alignment-database-032.md"
+  ],
+  "acceptance": [
+    "只核文件完整性、专业交接、授权和可恢复性，不做数据库语义复验/执行测试。",
+    "用户 A 与后台先行授权支持 DB03 同步；CR302 产品已闭环、下游待办保持。无新增用户业务问题，不重问 A。",
+    "明确 call_stage 新增 planning/fixed_edit，v5 N+2 与 fixed_edit_native_invalid，DB02/待审0017当前不兼容。DBA独立设计迁移路径，不能默许其已适配。",
+    "本次只允许同阶段激活 DBA；不改 stage/required_artifacts/既有 UI 审批约束。给精确目标字段。",
+    "旧 DB02/BE04/UI06 原件可恢复，现业务源码/数据库/真实模型/费用/用户UAT不在授权内；运行时 dba-diana 将复用存活实例或恢复新实例并记录身份，不冒充旧 runtime。"
+  ],
+  "risk": "normal",
+  "prior_attempts": [],
+  "report": [
+    "check_results",
+    "exact_target_state",
+    "unresolved_findings"
+  ]
+}

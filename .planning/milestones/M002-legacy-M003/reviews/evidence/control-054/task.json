@@ -1,0 +1,34 @@
+{
+  "objective": "完成M003技术总门禁：检查当前PRODUCT07/UI09-R3（用户接受R2基线）/DB03/BE06-R1（API/AI BE06）/FE02及CR302设计接收闭环。单次technical-design→implementation，启用backend-ethan，建议TRANSITION-M003-055；本轮控制步骤不执行实现。",
+  "inputs": [
+    ".planning/workflow/state.yaml",
+    ".planning/agt/project.yaml",
+    ".planning/agt/agents.yaml",
+    ".planning/milestones/M003/reviews/start.md",
+    ".planning/milestones/M003/reviews/requirements-feedback.md",
+    ".planning/milestones/M003/changes/CR-302.md",
+    ".planning/milestones/M003/changes/CR-303.md",
+    ".planning/milestones/M003/handoffs/backend-architecture.md",
+    ".planning/milestones/M003/handoffs/database.md",
+    ".planning/milestones/M003/handoffs/frontend-architecture.md",
+    ".planning/milestones/M003/handoffs/uiux.md",
+    ".planning/milestones/M003/reviews/evidence/control-054/submission-receipt.json",
+    ".planning/milestones/M003/reviews/evidence/control-054/M003-TECH-03-source-manifest.json",
+    ".planning/milestones/M003/reviews/evidence/start/locked-profile.yaml"
+  ],
+  "write_scope": [],
+  "acceptance": [
+    "只读门检必需原件、闭环、追踪、证据边界与冻结，不重审源码/重跑测试，不代写任何专业内容。返回简短PASS/FAIL及精确目标。",
+    "用户NEXT与既有M003本地研发/交接授权允许在全部条件通过后进入实现，无需重复已授权常规步骤；不把常规架构选择误当用户逐字段确认。",
+    "所有专业角色设计已提交，FE02接收了最新输入；CR303设计冲突resolved，CR302设计依赖已分别接收而实施/质量仍pending，不将整个CR关闭。",
+    "只有设计总审批可标M003-TECH-03 accepted_for_implementation；旧后端待审代码不因此通过。真实模型/质量/延迟/容量/外部额度/0017应用状态/备份恢复均未知，保留在实施/QA接点。",
+    "可进入implementation/backend-implementer/base/backend-ethan；实施阶段required_artifacts与allowed_transitions取锁定Profile。恢复包保留旧TECH02、BE02/DB02审批历史；UI接受基线保留。",
+    "无部署/购买/在线修改/新增付费模型调用/代用户UAT；不得越到verification。若存在真实设计阻塞明确指出owner和来源。"
+  ],
+  "risk": "normal",
+  "prior_attempts": [],
+  "report": [
+    "check_results",
+    "exact_target_state"
+  ]
+}

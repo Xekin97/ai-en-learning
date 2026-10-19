@@ -1,0 +1,42 @@
+{
+  "source_vectors": [
+    {
+      "chunks": [
+        "{\"passage\":\"🎨 art(ar",
+        "t) and go(go).\\n\\nNext ",
+        "art(art) is here.\",\"tags\":",
+        "[\"日常\"],\"targets\":{} }"
+      ],
+      "clean_body": "🎨 art and go.\n\nNext art is here.",
+      "body_closed_chunk": 1,
+      "whole_candidate_valid": false
+    },
+    {
+      "chunks": [
+        "{\"passage\":\"\\uD83C",
+        "\\uDFA8 art(art) and go(go).\"",
+        " ,\"tags\":BROKEN}"
+      ],
+      "clean_body": "🎨 art and go.",
+      "body_closed_chunk": 1,
+      "whole_candidate_valid": false
+    }
+  ],
+  "must_reject_or_reconcile": [
+    "duplicate seq with different data",
+    "seq gap",
+    "old draft id",
+    "wrong base_rev",
+    "edit after body_complete",
+    "paragraph_index skip",
+    "provider version decrease",
+    "old stream/epoch callback",
+    "activity after finalizing",
+    "body_length mismatch",
+    "uncommitted fragments at EOF",
+    "surrogate incomplete at EOF",
+    "unterminated annotation at EOF"
+  ],
+  "exact_duplicate_last_frame": "ignore idempotently",
+  "heartbeat": "no seq/no activity/no paragraph update"
+}

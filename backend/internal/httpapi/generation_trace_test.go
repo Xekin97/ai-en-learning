@@ -38,7 +38,7 @@ func (w *traceFaultWriter) FlushError() error {
 }
 
 func TestOBS042AllSSEWritesAndFlushes(t *testing.T) {
-	for _, event := range []string{"generation.started", "passage.delta", "generation.validated", "generation.failed", "generation.cancelled", "heartbeat"} {
+	for _, event := range []string{"generation.started", "generation.plan_item", "generation.edit", "generation.validated", "generation.failed", "generation.cancelled", "heartbeat"} {
 		for _, mode := range []string{"ok", "write", "flush"} {
 			t.Run(event+"/"+mode, func(t *testing.T) {
 				r := &tracetest.Recorder{}
@@ -75,8 +75,10 @@ func TestOBS042AllSSEWritesAndFlushes(t *testing.T) {
 				}
 				if mode != "ok" {
 					check := strings.TrimPrefix(event, "generation.")
-					if event == "passage.delta" {
+					if event == "generation.edit" {
 						check = "delta"
+					} else if event == "generation.plan_item" {
+						check = "plan_item"
 					}
 					if s.FirstFailure == nil || s.FirstFailure.Check != check {
 						t.Fatal("failed delivery event category lost")

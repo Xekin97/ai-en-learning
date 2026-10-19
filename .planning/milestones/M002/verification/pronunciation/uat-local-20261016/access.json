@@ -1,0 +1,34 @@
+{
+  "version": "M002-QA-PRON-01-R1",
+  "run_label": "uat-local-20261016",
+  "status": "ready_for_user_uat",
+  "local_only": true,
+  "leave_running": true,
+  "user_uat_accepted": false,
+  "public_origin": "http://localhost:3016",
+  "login_url": "http://localhost:3016/login",
+  "routes": {
+    "saved_article": "http://localhost:3016/library/01a14352-828b-743a-b0fb-09bc1d6d85ee",
+    "create": "http://localhost:3016/create"
+  },
+  "authentication": {
+    "role": "learner",
+    "method": "username_password",
+    "credentials_file": "/private/tmp/wordweave-m002-cr313-uat-20261016/uat-private.json",
+    "credentials_file_mode": "0600",
+    "password_value_archived": false
+  },
+  "runtime": "/private/tmp/wordweave-m002-cr313-uat-20261016",
+  "lifecycle": {
+    "start": "/private/tmp/wordweave-m002-cr313-uat-20261016/uat-start.sh",
+    "status": "/private/tmp/wordweave-m002-cr313-uat-20261016/uat-status.sh",
+    "restart": "/private/tmp/wordweave-m002-cr313-uat-20261016/uat-restart.sh",
+    "stop_preserve": "/private/tmp/wordweave-m002-cr313-uat-20261016/uat-stop.sh"
+  },
+  "verification": {
+    "report": "../report.md",
+    "uat": "../uat.md",
+    "readiness": "readiness.json",
+    "source_manifest": "source-manifest.json"
+  }
+}

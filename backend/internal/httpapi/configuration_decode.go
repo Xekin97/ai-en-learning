@@ -7,12 +7,27 @@ import (
 	"fmt"
 	"net/http"
 	"reflect"
+	"strconv"
 	"strings"
 
 	"github.com/google/uuid"
 	"wordweave/internal/growth"
 	"wordweave/internal/platform/business"
 )
+
+// configurationInteger marks command fields whose JSON type is an integer and
+// whose non-integer numeric values are editable validation errors (422), not a
+// malformed request (400). It intentionally rejects quoted numbers.
+type configurationInteger int
+
+func (value *configurationInteger) UnmarshalJSON(raw []byte) error {
+	parsed, err := strconv.ParseInt(string(bytes.TrimSpace(raw)), 10, 0)
+	if err != nil {
+		return err
+	}
+	*value = configurationInteger(parsed)
+	return nil
+}
 
 // Configuration commands distinguish structural transport errors (400) from
 // editable missing/range fields (422), retaining original JSON Pointer indexes.
@@ -67,6 +82,16 @@ func inspectConfiguration(raw json.RawMessage, t reflect.Type, path string, null
 	}
 	if t.Kind() == reflect.Pointer {
 		return inspectConfiguration(raw, t.Elem(), path, false, v)
+	}
+	if t == reflect.TypeFor[configurationInteger]() {
+		trimmed := bytes.TrimSpace(raw)
+		if len(trimmed) == 0 || (trimmed[0] != '-' && (trimmed[0] < '0' || trimmed[0] > '9')) {
+			return errors.New("integer JSON number required")
+		}
+		if _, err := strconv.ParseInt(string(trimmed), 10, 0); err != nil {
+			v.Add(path, "out_of_range")
+		}
+		return nil
 	}
 	if t == reflect.TypeFor[growth.EffectInput]() {
 		var shape struct {

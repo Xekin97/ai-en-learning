@@ -1,0 +1,55 @@
+import playwright from '../../../../../../frontend/node_modules/@playwright/test/index.js';
+import fs from 'node:fs/promises';
+import path from 'node:path';
+const {chromium}=playwright;
+const evidenceDir=path.dirname(new URL(import.meta.url).pathname);
+const repo=path.resolve(evidenceDir,'../../../../../..');
+const readJson=async p=>JSON.parse(await fs.readFile(path.join(repo,p),'utf8'));
+const copy=await readJson('.planning/milestones/M003/design/copy.json');
+const errors=await readJson('.planning/milestones/M003/technical/fixtures/cr306/errors.json');
+const api=await fs.readFile(path.join(repo,'.planning/milestones/M003/technical/api/administration.md'),'utf8');
+const report={version:'M003-UI-10-R1.1',checked_at:new Date().toISOString(),scope:'API-306 copy and error mapping clarification only',completed:false,result:'FAIL',scenarios:[],run_error:null};
+const record=(name,passed,details={})=>report.scenarios.push({name,passed,details});
+let browser;
+try {
+  const keys=['zh.cr306.custom.empty','en.cr306.custom.empty','zh.cr306.error.request_too_large','en.cr306.error.request_too_large','zh.gm.test.note','en.gm.test.note','zh.cr306.probe.rejected','en.cr306.probe.rejected','zh.cr306.probe.stale','en.cr306.probe.stale'];
+  const templateKeys=['zh.cr306.error.too_large','en.cr306.error.too_large','zh.cr306.custom.size','en.cr306.custom.size'];
+  record('bilingual static and template keys exist',keys.every(k=>copy.static[k])&&templateKeys.every(k=>copy.templates[k]),{keys,templateKeys});
+  const boundaries=Object.fromEntries(errors.boundaries.map(x=>[x.id,x]));
+  record('fixture supplies exact compact UTF-8 boundaries',boundaries.compact_utf8_16384?.N===16376&&boundaries.compact_utf8_16385?.N===16377,{accepted:boundaries.compact_utf8_16384,rejected:boundaries.compact_utf8_16385});
+  record('API source names too_large, request_too_large, and 256 probe limit',api.includes('too_large')&&api.includes('request_too_large')&&api.includes('256'),{});
+  browser=await chromium.launch({headless:true});
+  const page=await browser.newPage({viewport:{width:1100,height:850},reducedMotion:'reduce'});
+  page.setDefaultTimeout(5000);
+  const base='http://127.0.0.1:4174/M003/design/prototype/?page=models&lang=zh&view=formal&state=edit&provider=10000000-0000-4000-8000-000000000001&rev=ui10-r1.1';
+  const load=async()=>{await page.goto(base,{waitUntil:'networkidle'});await page.waitForSelector('#admin-model:modal');};
+  await load();
+  let area=page.locator('#custom-parameters-0');
+  await area.fill('');
+  const blankCounter=await page.locator('#custom-json-count-0').textContent();
+  await page.locator('#admin-model [data-action="save-provider"]').click();
+  const blank=await page.evaluate(()=>({modal:document.querySelector('#admin-model').matches(':modal'),raw:document.querySelector('#custom-parameters-0').value,invalid:document.querySelector('#custom-parameters-0').getAttribute('aria-invalid'),error:document.querySelector('#custom-parameters-error-0')?.textContent.trim()}));
+  record('blank is invalid JSON and compact count is unavailable',blank.modal&&blank.raw===''&&blank.invalid==='true'&&blank.error?.length>0&&blankCounter.includes('—'),{counter:blankCounter,...blank});
+  await load(); area=page.locator('#custom-parameters-0');
+  const padded=`{${' '.repeat(17000)}"reasoning":{"enabled":false}${' '.repeat(200)}}`;
+  await area.fill(padded);
+  const paddedCounter=await page.locator('#custom-json-count-0').textContent();
+  await page.locator('#admin-model [data-action="save-provider"]').click();
+  const paddedSaved=await page.evaluate(()=>!document.querySelector('#admin-model')?.open);
+  record('raw whitespace does not trigger compact-size rejection',padded.length>16384&&paddedSaved&&!paddedCounter.includes('16,384 /'),{raw_length:padded.length,counter:paddedCounter,modal_closed:paddedSaved});
+  await load(); area=page.locator('#custom-parameters-0');
+  const tooLarge=JSON.stringify({x:'a'.repeat(boundaries.compact_utf8_16385.N)});
+  await area.fill(tooLarge);
+  const largeCounter=await page.locator('#custom-json-count-0').textContent();
+  await page.locator('#admin-model [data-action="save-provider"]').click();
+  const large=await page.evaluate(()=>({modal:document.querySelector('#admin-model').matches(':modal'),rawLength:document.querySelector('#custom-parameters-0').value.length,error:document.querySelector('#custom-parameters-error-0')?.textContent.trim()}));
+  record('compact 16385 maps to field too_large and preserves input',large.modal&&large.rawLength===tooLarge.length&&large.error?.includes('16 KiB')&&large.error?.includes('16,384'),{counter:largeCounter,...large});
+  report.completed=true;
+} catch (error) {
+  report.run_error=String(error?.stack||error);
+} finally {
+  await browser?.close();
+  report.result=report.completed&&report.scenarios.length===6&&report.scenarios.every(x=>x.passed)?'PASS':'FAIL';
+  await fs.writeFile(path.join(evidenceDir,'copy-contract-check.json'),JSON.stringify(report,null,2)+'\n');
+}
+if(report.result!=='PASS') process.exitCode=1;

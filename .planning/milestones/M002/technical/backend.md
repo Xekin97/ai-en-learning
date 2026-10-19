@@ -1,3 +1,9 @@
+<!-- M002-BE-CR313-01 current entry -->
+> 当前 CR313：M002-BE-CR313-01，backend-alex，awaiting_user_review。[CR313 后端方案](config-portability/backend.md) · [文件/API合同](config-portability/api.md)。本轮仅技术设计；旧批准正文逐字保留如下，不代表本稿获批。
+<!-- M002-BE-CR313-01 preserved body below -->
+
+> **M002续做索引124**：本里程碑包含原M003全部需求。[较新同类原件](../../M002-legacy-M003/technical/backend.md)及其已记录的逐项接收/验证均归M002；旧编号只是历史标识。当前工作与未完成项见[续做索引](../continuation.md)，下方前期记录保留，不能据旧完成态关闭当前M002。
+
 ## CR029-F05 当前技术增量
 
 admin.ProviderWorkspace聚合，API以technical/api/model-connections.md为准。共享配置锁读取连接及全部模型两组查询，无旧20条分页截断；保存独占锁+CAS，完整modelID所有权校验，原位连接+凭据更新和模型新增修改原子提交。0016只增加窄权限函数；请求中的ID不改变引用，保存不触发测试。集成测试须证明回滚与角色权限。

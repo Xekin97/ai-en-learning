@@ -1,0 +1,29 @@
+{
+  "captured_for": "backend-ethan CR-311/312 implementation",
+  "task_started_at_local_date": "2026-10-14",
+  "git_head_at_start": "45a4ab123c3308fa0a83868b6030c6b84a96f67d",
+  "worktree_at_start": "dirty; 143 tracked paths changed and M003/backend additions already present",
+  "start_command": "git status --short && git rev-parse HEAD && git diff --stat && git diff -- backend",
+  "protected_before_manifest": ".planning/milestones/M003/reviews/evidence/cr311-312-implementation-entry-101/protected-before.json",
+  "entry_snapshot": ".planning/milestones/M003/reviews/evidence/cr311-312-implementation-entry-101/before.tar.gz",
+  "recovered_historical_backend_baseline": ".planning/milestones/M003/reviews/evidence/cr311-312-implementation-entry-101/recovered-backend-baseline.json",
+  "relevant_start_state": {
+    "clean_against_head": [
+      "backend/internal/vocabulary/service.go",
+      "backend/db/queries/vocabulary.sql",
+      "backend/internal/dbgen/vocabulary.sql.go"
+    ],
+    "preexisting_modified": [
+      "backend/internal/ai/usage.go",
+      "backend/internal/ai/openrouter.go",
+      "backend/internal/ai/continuation.go",
+      "backend/internal/httpapi/generation_handlers.go",
+      "backend/internal/httpapi/preset_preview_handlers.go"
+    ],
+    "preexisting_untracked": [
+      "backend/internal/generation/pipeline.go",
+      "backend/internal/generation/pipeline_test.go"
+    ]
+  },
+  "note": "This record transcribes task-start status and HEAD, but is not an exact task-start byte snapshot for already modified or untracked source. The later recovered UAT003 archive is a verified historical baseline, not a task-start snapshot. Preexisting dirty source was preserved; the final manifest labels baseline quality per path and claims only the listed CR-311/312 semantic deltas."
+}

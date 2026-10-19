@@ -22,17 +22,26 @@ type AdminPreviewAvailability struct {
 	Reason     *string `json:"reason"`
 }
 type AdminGenerationOptions struct {
-	Models            []AdminGenerationModel   `json:"models"`
-	MeaningLanguages  []string                 `json:"meaning_languages"`
-	Scenarios         []string                 `json:"scenarios"`
-	Lengths           []string                 `json:"lengths"`
-	VocabularyVersion string                   `json:"vocabulary_version"`
-	Revision          string                   `json:"revision"`
-	Availability      AdminPreviewAvailability `json:"availability"`
+	Models                    []AdminGenerationModel   `json:"models"`
+	MeaningLanguages          []string                 `json:"meaning_languages"`
+	Scenarios                 []string                 `json:"scenarios"`
+	Lengths                   []string                 `json:"lengths"`
+	VocabularyVersion         string                   `json:"vocabulary_version"`
+	Revision                  string                   `json:"revision"`
+	Availability              AdminPreviewAvailability `json:"availability"`
+	PreviewContentModes       []string                 `json:"preview_content_modes"`
+	DefaultPreviewContentMode string                   `json:"default_preview_content_mode"`
+	PreviewContentRepairLimit int                      `json:"preview_content_repair_limit"`
+	NativeCorrectionPolicy    entitlement.NativePolicy `json:"native_correction_policy"`
 }
 
 func (s *Service) AdminGenerationOptions(ctx context.Context) (AdminGenerationOptions, error) {
-	result := AdminGenerationOptions{Models: []AdminGenerationModel{}, MeaningLanguages: []string{"zh", "en", "ja"}, Scenarios: []string{"discussion", "story", "business", "news"}, Lengths: []string{"short", "medium", "long", "xlong"}}
+	result := AdminGenerationOptions{
+		Models: []AdminGenerationModel{}, MeaningLanguages: []string{"zh", "en", "ja"},
+		Scenarios: []string{"discussion", "story", "business", "news"}, Lengths: []string{"short", "medium", "long", "xlong"},
+		PreviewContentModes: []string{"basic", "enhanced"}, DefaultPreviewContentMode: "basic",
+		PreviewContentRepairLimit: 1, NativeCorrectionPolicy: entitlement.SystemNativePolicy(),
+	}
 	tx, err := s.app.Begin(ctx)
 	if err != nil {
 		return result, err
@@ -43,11 +52,11 @@ func (s *Service) AdminGenerationOptions(ctx context.Context) (AdminGenerationOp
 		return result, err
 	}
 	var configured, available bool
-	err = tx.QueryRow(ctx, `SELECT EXISTS(SELECT 1 FROM wordweave.ai_providers WHERE credential_configured),EXISTS(SELECT 1 FROM wordweave.ai_models m JOIN wordweave.ai_providers p ON p.id=m.provider_id WHERE m.enabled AND m.retired_at IS NULL AND p.credential_configured)`).Scan(&configured, &available)
+	err = tx.QueryRow(ctx, `SELECT EXISTS(SELECT 1 FROM wordweave.ai_providers WHERE credential_configured AND retired_at IS NULL),EXISTS(SELECT 1 FROM wordweave.ai_models m JOIN wordweave.ai_providers p ON p.id=m.provider_id WHERE m.enabled AND m.retired_at IS NULL AND p.retired_at IS NULL AND p.credential_configured)`).Scan(&configured, &available)
 	if err != nil {
 		return result, err
 	}
-	rows, err := tx.Query(ctx, `SELECT id,display_name,description FROM wordweave.ai_models WHERE enabled AND retired_at IS NULL ORDER BY created_at,id`)
+	rows, err := tx.Query(ctx, `SELECT m.id,m.display_name,m.description FROM wordweave.ai_models m JOIN wordweave.ai_providers p ON p.id=m.provider_id WHERE m.enabled AND m.retired_at IS NULL AND p.retired_at IS NULL ORDER BY m.created_at,m.id`)
 	if err != nil {
 		return result, err
 	}
@@ -162,7 +171,13 @@ func (s *Service) publicPreset(ctx context.Context, tx pgx.Tx, id uuid.UUID) (Pu
 	}
 	result := PublicPreset{ID: id, Title: v.Title, PublishedVersion: vid, VersionCreatedAt: v.CreatedAt, Configuration: v.Configuration, Sample: UserResult(*v.Payload)}
 	var credential bool
-	if err = tx.QueryRow(ctx, `SELECT p.credential_configured FROM wordweave.ai_models m JOIN wordweave.ai_providers p ON p.id=m.provider_id WHERE m.id=$1`, v.Input.ModelID).Scan(&credential); err != nil {
+	if err = tx.QueryRow(ctx, `SELECT p.credential_configured FROM wordweave.ai_models m JOIN wordweave.ai_providers p ON p.id=m.provider_id WHERE m.id=$1 AND m.retired_at IS NULL AND p.retired_at IS NULL`, v.Input.ModelID).Scan(&credential); err != nil {
+		if errors.Is(err, pgx.ErrNoRows) {
+			result.Availability.CanGenerate = false
+			reason := "model_unavailable"
+			result.Availability.Reason = &reason
+			return result, nil
+		}
 		return PublicPreset{}, err
 	}
 	reason := ""
@@ -171,7 +186,7 @@ func (s *Service) publicPreset(ctx context.Context, tx pgx.Tx, id uuid.UUID) (Pu
 	} else if !credential {
 		reason = "credential_missing"
 	} else {
-		in := PresetInput{v.Title, v.Input}
+		in := PresetInput{Title: v.Title, Configuration: v.Input, PreviewContentMode: v.PreviewContentMode}
 		_, _, err = s.validatePreset(ctx, tx, &in)
 		if errors.Is(err, ErrInvalidInput) || errors.Is(err, ErrPresetModelUnavailable) {
 			reason = "configuration_invalid"
@@ -236,11 +251,15 @@ func (s *Service) PublicPresets(ctx context.Context, language string, cursor *Pr
 }
 
 type PresetDetail struct {
-	Preset      PublicPreset
-	Quota       entitlement.Quota
-	Extra       entitlement.ExtraQuota
-	CanStart    bool
-	BlockReason *string
+	Preset                 PublicPreset
+	Quota                  entitlement.Quota
+	Extra                  entitlement.ExtraQuota
+	CanStart               bool
+	BlockReason            *string
+	EffectivePlan          entitlement.EffectivePlan
+	ConfigurationRevision  string
+	ContentService         entitlement.ContentService
+	NativeCorrectionPolicy entitlement.NativePolicy
 }
 
 func (s *Service) PresetDetail(ctx context.Context, actor identity.Actor, id uuid.UUID) (PresetDetail, error) {
@@ -268,6 +287,13 @@ func (s *Service) PresetDetail(ctx context.Context, actor identity.Actor, id uui
 	if err != nil {
 		return result, err
 	}
+	result.EffectivePlan = entitlement.EffectivePlan{Code: p.Code, Origin: p.Origin, TrialEndsAt: p.TrialEndsAt}
+	if result.EffectivePlan.Code == "registered" {
+		result.EffectivePlan.Code = "basic"
+	}
+	result.ConfigurationRevision = business.Revision(s.capabilityKey, "configuration", c.Revision)
+	result.ContentService = entitlement.ContentService{NativeValidation: true, ContentReviewEnabled: p.ContentReviewEnabled, ContentRepairLimit: p.ContentRepairLimit}
+	result.NativeCorrectionPolicy = entitlement.SystemNativePolicy()
 	result.Quota, err = entitlement.Usage(ctx, tx, actor, p, c.Now)
 	if err != nil {
 		return result, err

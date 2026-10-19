@@ -1,0 +1,40 @@
+{
+  "objective": "你是独立的控制角色 gatekeeper-owen。用户明确要求“你要看一下 agt 的文档，按文档流程去启动需求和设计落地”，此前指出未启用独立交接 agent。请按 agt-stage-gate 独立检查 M003 的当前需求确认、原始产物、TRANSITION-M003-013 和 USER-M003-UI-REVIEW-A；在条件成立时完成同阶段 designer-tony 的角色激活并停止，交设计负责人生成完整页面可交互原型后直接供用户评审。不能自行批准新设计、跨到技术或实现，不能代写专业内容。若发现真实阻塞，请按具体条目报告，保留状态。",
+  "inputs": [
+    ".planning/agt/project.yaml",
+    ".planning/agt/agents.yaml",
+    ".planning/workflow/state.yaml",
+    ".planning/milestones/M003/reviews/evidence/start/locked-profile.yaml",
+    ".planning/milestones/M003/reviews/requirements-feedback.md",
+    ".planning/milestones/M003/reviews/full-page-design-013.md",
+    ".planning/milestones/M003/handoffs/product.md",
+    ".planning/milestones/M003/handoffs/uiux.md",
+    ".planning/milestones/M003/handoffs/frontend-architecture.md",
+    ".planning/milestones/M003/handoffs/backend-implementation.md"
+  ],
+  "write_scope": [
+    ".planning/agt/agents.yaml",
+    ".planning/agt/project.yaml",
+    ".planning/workflow/state.yaml",
+    ".planning/workflow/history.yaml",
+    ".planning/milestones/M003/reviews/gatekeeper-014.md"
+  ],
+  "acceptance": [
+    "先完整读取 Skill、共同契约、workflow-control、gatekeeper ROLE、model-routing；基座路径为 ../agt-coding-v2。项目仍锁定 Profile1.0/model-routing-v1，不升级锁、不修改基座。当前 active gatekeeper 是用户本次明确指令下的控制激活，业务 stage 仍为 uiux-design；profiles/README.md 明确允许控制角色例外。",
+    "仅按当前入口和有关 ID 检查。业务确认 Q01-B/Q02-A/Q03-RANGE99、两预算与上限定稿保持；用户A明确授权现有完整页面原型及展示评审，不是对未生成UI04的批准，也不是自动实施授权。不要让用户重复既定选择。新重大歧义必须准确报告。",
+    "在 reviews/gatekeeper-014.md 用阶段检查模板记录真实检查结果及原始专业产物链接，标明这是本轮首次独立 gatekeeper 检查；旧历史 recorded_by 不表示旧时运行过独立 agent，禁止改写冻结审批或失败证据。",
+    "如同阶段接交可行，校验 designer-tony 名称，更新 registry/state/project 的 active_role/active_agent 和必要当前入口，append-only 追加一次 activate-role 历史（建议 TRANSITION-M003-015），保持 uiux-design，不重置业务批准或替代用户视觉评审；将 designer 的 runtime_id 设 null、runtime_name 设 designer_tony_fullpages，等待宿主真正启动后填写。原状态内容其余完整保留。",
+    "后端存在独立提交与部分未验证项，本次不语义审查代码、不重跑开发单测、不声明通过；前端源码未开工。既有工作、冻结快照、其他人的修改全部保留；不部署/不改UAT3302/不真实提供方调用/不提交Git。你不是唯一工作者。",
+    "仅输出当前状态、原件、检查和精确下一角色动作。所有问答须纯文字，不使用会崩溃的选项工具。用户已明确授权本次控制检查与A方向，符合相同范围时不要重复索取确认。实际模型若无运行证据则 unknown。"
+  ],
+  "risk": "normal",
+  "prior_attempts": [],
+  "report": [
+    "changed_paths",
+    "check_results",
+    "evidence_paths",
+    "unresolved_findings",
+    "next_active_agent",
+    "actual_model_and_usage_if_observed"
+  ]
+}

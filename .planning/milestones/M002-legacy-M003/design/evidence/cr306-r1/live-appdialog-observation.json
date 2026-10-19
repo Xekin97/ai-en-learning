@@ -1,0 +1,89 @@
+{
+  "version": "M003-UI-10-R1",
+  "checked_at": "2026-10-12T04:46:38.900Z",
+  "scope": "Read-only observation of running UAT model list and AppDialog; no save, test, delete, or provider call",
+  "checks": [
+    {
+      "name": "live-list-layout",
+      "passed": true,
+      "details": {
+        "url": "/admin/models",
+        "providers": 5,
+        "modelRows": 5,
+        "overflow": 0,
+        "scrollY": 0
+      }
+    },
+    {
+      "name": "live-appdialog-top-layer",
+      "passed": true,
+      "details": {
+        "open": true,
+        "modal": true,
+        "activeTag": "SUMMARY",
+        "activeClass": "",
+        "dialogRect": {
+          "x": 360,
+          "y": 20,
+          "width": 720,
+          "height": 960
+        },
+        "bodyRect": {
+          "y": 94.1875,
+          "height": 805.3125,
+          "scrollHeight": 1609,
+          "clientHeight": 805,
+          "overflowY": "auto"
+        },
+        "footerRect": {
+          "y": 899.5,
+          "height": 79.5
+        },
+        "bodyScroll": 10,
+        "pageScroll": 670,
+        "footerButtons": 2,
+        "protocolSelect": true
+      }
+    },
+    {
+      "name": "live-escape-focus-restore",
+      "passed": true,
+      "details": {
+        "triggerText": "编辑服务商",
+        "openerScroll": 670,
+        "activeText": "编辑服务商",
+        "pageScroll": 670
+      }
+    },
+    {
+      "name": "live-mobile-modal",
+      "passed": true,
+      "details": {
+        "mobileOpenerScroll": 1698,
+        "modal": true,
+        "overflow": 0,
+        "dialogWidth": 354,
+        "viewport": 390,
+        "pageScroll": 1698
+      }
+    },
+    {
+      "name": "console-errors",
+      "passed": true,
+      "details": {
+        "count": 0
+      }
+    }
+  ],
+  "console_errors": [],
+  "screenshots": [
+    "00-live-model-list-1440.png",
+    "01-live-editor-modal-1440.png",
+    "02-live-editor-modal-390.png"
+  ],
+  "summary": {
+    "total": 5,
+    "passed": 5,
+    "failed": 0
+  }
+}

@@ -62,12 +62,27 @@ export function mergeProviderEntries(
     }
     const updated = remote.find((r) => r.modelId === row.modelId),
       original = baseline.find((r) => r.modelId === row.modelId);
-    if (updated)
+    if (updated) {
+      const localCustomChanged =
+          original?.customParametersText !== row.customParametersText,
+        remoteCustomChanged =
+          original?.customParametersText !== updated.customParametersText;
       next.push(
         original
-          ? mergeEdited(original, row, { ...updated, key: row.key })
+          ? {
+              ...mergeEdited(original, row, { ...updated, key: row.key }),
+              customConflict: Boolean(
+                localCustomChanged &&
+                remoteCustomChanged &&
+                row.customParametersText !== updated.customParametersText,
+              ),
+              remoteDeleted: false,
+            }
           : { ...updated, key: row.key },
       );
+    } else {
+      next.push({ ...row, remoteDeleted: true, customConflict: false });
+    }
   }
   for (const row of remote) {
     if (!next.some((r) => r.modelId === row.modelId)) next.push(row);

@@ -1,0 +1,35 @@
+{
+  "route": {
+    "mode": "model",
+    "stage": "control",
+    "role": "gatekeeper",
+    "task": "stage-work",
+    "risk": "normal",
+    "failures": 0,
+    "tier": "balanced",
+    "model": "gpt-5.6-terra",
+    "effort": "medium",
+    "skill": "agt-stage-gate",
+    "selection": "requested-not-runtime-attested"
+  },
+  "catalog_check": {
+    "codex_version_changed": true,
+    "policy_changed": true,
+    "added_models": [
+      "gpt-6.1-sol",
+      "gpt-6-sol",
+      "gpt-6-luna"
+    ],
+    "removed_models": [
+      "gpt-5.5",
+      "gpt-5.4-mini",
+      "gpt-5.3-codex-spark"
+    ],
+    "capability_changes": [],
+    "issues": [],
+    "upgrades": [],
+    "automatic_rebinding": false,
+    "action": "keep_lock_review_new_candidates"
+  },
+  "scope": "Read-only preflight for upcoming implementation handoff; no role activation or model lock change."
+}

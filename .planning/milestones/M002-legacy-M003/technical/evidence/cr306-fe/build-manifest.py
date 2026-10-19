@@ -1,0 +1,22 @@
+from pathlib import Path
+import hashlib,json,tarfile,datetime,subprocess
+root=Path(__file__).resolve().parents[6];m=root/'.planning/milestones/M003';out=Path(__file__).parent
+def entry(p):
+ b=p.read_bytes();d={'path':str(p.relative_to(root)),'sha256':hashlib.sha256(b).hexdigest(),'bytes':len(b)}
+ if p.suffix in ['.md','.py','.json','.ts','.vue','.css','.js','.mjs','.yaml']:
+  d['unicode_characters']=len(b.decode())
+ return d
+files=[m/'technical/frontend.md',m/'handoffs/frontend-architecture.md',m/'changes/CR-306.md',out/'check.py',out/'check.json',out/'build-manifest.py']
+inputs=[root/'.planning/agt/project.yaml',root/'.planning/agt/agents.yaml',root/'.planning/agt/model-routing-v1.lock.json',root/'.planning/workflow/state.yaml',m/'reviews/evidence/start/locked-profile.yaml',m/'handoffs/product.md',m/'handoffs/backend-architecture.md',m/'handoffs/database.md',m/'handoffs/uiux.md',m/'technical/backend.md',m/'technical/database.md',m/'technical/ai-integration.md',m/'technical/api/index.md',m/'technical/api/administration.md',m/'technical/api/generation.md',m/'technical/api/presets.md',m/'design/design-spec.md',m/'design/copy.json',m/'design/theme.css',m/'design/prototype/index.html',m/'design/prototype/app.js',m/'design/interactions.md',m/'design/responsive-accessibility.md',m/'design/evidence/cr306-r1/M003-UI-10-R1-source-manifest.json',m/'design/evidence/cr306-r1/M003-UI-10-R1-source.tar.gz',m/'design/evidence/cr306-r1/modal-rework-browser.json',m/'reviews/cr306-frontend-entry-gate-075.md',m/'reviews/cr306-modal-rework-review-074.md',m/'reviews/requirements-feedback.md',m/'reviews/evidence/cr306-frontend-entry-075/M003-FE-02-before-cr306.tar.gz',m/'reviews/evidence/cr306-frontend-entry-075/frontend-before-manifest.json',m/'implementation/frontend-validation.md',m/'handoffs/frontend-implementation.md',m/'verification/report.md']+list((m/'technical/fixtures/cr306').glob('*.json'))
+for p in ['frontend/app/pages/admin/models.vue','frontend/app/presentation/components/AppDialog.vue','frontend/app/application/admin/model-draft.ts','frontend/app/application/admin/provider-draft.ts','frontend/app/application/shared/models.ts','frontend/app/application/shared/ports.ts','frontend/app/infrastructure/http/schemas/admin.ts','frontend/app/infrastructure/http/schemas/common.ts','frontend/app/infrastructure/http/mappers/index.ts','frontend/app/infrastructure/http/mappers/admin-provider-mapper.ts','frontend/app/infrastructure/http/mappers/problem-mapper.ts','frontend/app/infrastructure/http/repositories/api-repository.ts','frontend/app/runtime/stores/admin.ts','frontend/app/assets/css/theme.css','frontend/scripts/sync-design.mjs']:
+ inputs.append(root/p)
+inputs += [m/'design/evidence/cr306-r1-clarification/M003-UI-10-R1.1-contract-clarification.tar.gz',m/'design/evidence/cr306-r1-clarification/copy-contract-check.json']
+# Owner's current small clarification is recorded by exact paths from UI handoff, not inferred as another design approval.
+for p in (m/'design/evidence').glob('*r1*/*manifest*.json'):
+ if p not in inputs:inputs.append(p)
+archive=out/'source.tar.gz'
+with tarfile.open(archive,'w:gz') as t:
+ for p in files:t.add(p,arcname=str(p.relative_to(root)))
+data={'version':'M003-FE-03','created_at':datetime.datetime.now(datetime.timezone.utc).isoformat(),'status':'awaiting_independent_gate','requested_model':'gpt-6-astra','requested_effort':'high','actual_model':'unknown','usage':'unknown','scope':'Bounded frontend architecture, no implementation/runtime acceptance','files':[entry(p) for p in files],'archive':entry(archive),'inputs':[entry(p) for p in inputs],'protection_baseline':entry(out/'protected-before.json'),'before_workspace_status':entry(out/'workspace-before.txt'),'application_HEAD':subprocess.check_output(['git','rev-parse','HEAD'],cwd=root,text=True).strip(),'restore_scope':'FE originals and FE section of CR only; full CR captured for version evidence, other owners must not be reverted. Inputs are references, not new authoritative copies.','limitations':['No production edits, model calls, DB or UAT changes','No product tests/build/browser run','Static PASS is not independent gate or AC317-322 acceptance','Old UI10 modal result invalid; old R1 frozen evidence retained','Concurrent UI owner clarification recorded separately in check.json']}
+(out/'source-manifest.json').write_text(json.dumps(data,ensure_ascii=False,indent=2)+'\n')
+print(json.dumps({'version':data['version'],'files':len(files),'inputs':len(inputs),'archive_sha256':data['archive']['sha256']},ensure_ascii=False))

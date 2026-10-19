@@ -1,0 +1,241 @@
+{
+  "config": {
+    "argv": [
+      "/Users/xekinzhuo/.npm/_npx/387698761821791d/node_modules/node/bin/node",
+      "/Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/frontend/node_modules/@playwright/test/cli.js",
+      "test",
+      "--config",
+      "playwright.cr307.config.ts"
+    ],
+    "configFile": "/Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/frontend/playwright.cr307.config.ts",
+    "rootDir": "/Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/frontend/tests/e2e",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/frontend/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "desktop",
+        "name": "desktop",
+        "testDir": "/Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/frontend/tests/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "/m003-cr307-focus\\.spec\\.ts$/"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "/Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/frontend/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "mobile",
+        "name": "mobile",
+        "testDir": "/Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/frontend/tests/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "/m003-cr307-focus\\.spec\\.ts$/"
+        ],
+        "timeout": 30000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "../.planning/milestones/M003/implementation/evidence/cr307-frontend-fix/browser-focus-results.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.62.1",
+    "workers": 1,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "m003-cr307-focus.spec.ts",
+      "file": "m003-cr307-focus.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "CR307 traps the top dialog and restores the stable provider opener",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop",
+              "projectName": "desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 8405,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeFocused\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator:  locator('[data-provider-edit]').first()\nExpected: focused\nReceived: inactive\nTimeout:  5000ms\n\nCall log:\n\u001b[2m  - Expect \"toBeFocused\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('[data-provider-edit]').first()\u001b[22m\n\u001b[2m    14 × locator resolved to <button class=\"btn small\" data-provider-edit=\"\">编辑服务商</button>\u001b[22m\n\u001b[2m       - unexpected value \"inactive\"\u001b[22m\n",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeFocused\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator:  locator('[data-provider-edit]').first()\nExpected: focused\nReceived: inactive\nTimeout:  5000ms\n\nCall log:\n\u001b[2m  - Expect \"toBeFocused\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('[data-provider-edit]').first()\u001b[22m\n\u001b[2m    14 × locator resolved to <button class=\"btn small\" data-provider-edit=\"\">编辑服务商</button>\u001b[22m\n\u001b[2m       - unexpected value \"inactive\"\u001b[22m\n\n    at /Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/frontend/tests/e2e/m003-cr307-focus.spec.ts:102:24",
+                    "location": {
+                      "file": "/Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/frontend/tests/e2e/m003-cr307-focus.spec.ts",
+                      "column": 24,
+                      "line": 102
+                    },
+                    "snippet": "  100 |   await discard.click();\n  101 |   await expect(dialog).not.toBeVisible();\n> 102 |   await expect(opener).toBeFocused();\n      |                        ^\n  103 |   await opener.click();\n  104 |   await expect(dialog).toBeVisible();\n  105 |   await dialog.locator('[name=\"connectionName\"]').fill(\"CR307 provider\");"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/frontend/tests/e2e/m003-cr307-focus.spec.ts",
+                        "column": 24,
+                        "line": 102
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeFocused\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator:  locator('[data-provider-edit]').first()\nExpected: focused\nReceived: inactive\nTimeout:  5000ms\n\nCall log:\n\u001b[2m  - Expect \"toBeFocused\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('[data-provider-edit]').first()\u001b[22m\n\u001b[2m    14 × locator resolved to <button class=\"btn small\" data-provider-edit=\"\">编辑服务商</button>\u001b[22m\n\u001b[2m       - unexpected value \"inactive\"\u001b[22m\n\n\n  100 |   await discard.click();\n  101 |   await expect(dialog).not.toBeVisible();\n> 102 |   await expect(opener).toBeFocused();\n      |                        ^\n  103 |   await opener.click();\n  104 |   await expect(dialog).toBeVisible();\n  105 |   await dialog.locator('[name=\"connectionName\"]').fill(\"CR307 provider\");\n    at /Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/frontend/tests/e2e/m003-cr307-focus.spec.ts:102:24"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-12T07:49:18.093Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/frontend/test-results/m003-cr307-focus-CR307-tra-e2d93--the-stable-provider-opener-desktop/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/frontend/test-results/m003-cr307-focus-CR307-tra-e2d93--the-stable-provider-opener-desktop/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/frontend/tests/e2e/m003-cr307-focus.spec.ts",
+                    "column": 24,
+                    "line": 102
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "58426b1bc410853a6397-796cd7641bee313acad7",
+          "file": "m003-cr307-focus.spec.ts",
+          "line": 31,
+          "column": 1
+        },
+        {
+          "title": "CR307 traps the top dialog and restores the stable provider opener",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile",
+              "projectName": "mobile",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 6835,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeFocused\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator:  locator('[data-provider-edit]').first()\nExpected: focused\nReceived: inactive\nTimeout:  5000ms\n\nCall log:\n\u001b[2m  - Expect \"toBeFocused\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('[data-provider-edit]').first()\u001b[22m\n\u001b[2m    14 × locator resolved to <button class=\"btn small\" data-provider-edit=\"\">Edit provider</button>\u001b[22m\n\u001b[2m       - unexpected value \"inactive\"\u001b[22m\n",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeFocused\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator:  locator('[data-provider-edit]').first()\nExpected: focused\nReceived: inactive\nTimeout:  5000ms\n\nCall log:\n\u001b[2m  - Expect \"toBeFocused\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('[data-provider-edit]').first()\u001b[22m\n\u001b[2m    14 × locator resolved to <button class=\"btn small\" data-provider-edit=\"\">Edit provider</button>\u001b[22m\n\u001b[2m       - unexpected value \"inactive\"\u001b[22m\n\n    at /Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/frontend/tests/e2e/m003-cr307-focus.spec.ts:102:24",
+                    "location": {
+                      "file": "/Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/frontend/tests/e2e/m003-cr307-focus.spec.ts",
+                      "column": 24,
+                      "line": 102
+                    },
+                    "snippet": "  100 |   await discard.click();\n  101 |   await expect(dialog).not.toBeVisible();\n> 102 |   await expect(opener).toBeFocused();\n      |                        ^\n  103 |   await opener.click();\n  104 |   await expect(dialog).toBeVisible();\n  105 |   await dialog.locator('[name=\"connectionName\"]').fill(\"CR307 provider\");"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/frontend/tests/e2e/m003-cr307-focus.spec.ts",
+                        "column": 24,
+                        "line": 102
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeFocused\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator:  locator('[data-provider-edit]').first()\nExpected: focused\nReceived: inactive\nTimeout:  5000ms\n\nCall log:\n\u001b[2m  - Expect \"toBeFocused\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('[data-provider-edit]').first()\u001b[22m\n\u001b[2m    14 × locator resolved to <button class=\"btn small\" data-provider-edit=\"\">Edit provider</button>\u001b[22m\n\u001b[2m       - unexpected value \"inactive\"\u001b[22m\n\n\n  100 |   await discard.click();\n  101 |   await expect(dialog).not.toBeVisible();\n> 102 |   await expect(opener).toBeFocused();\n      |                        ^\n  103 |   await opener.click();\n  104 |   await expect(dialog).toBeVisible();\n  105 |   await dialog.locator('[name=\"connectionName\"]').fill(\"CR307 provider\");\n    at /Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/frontend/tests/e2e/m003-cr307-focus.spec.ts:102:24"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-12T07:49:27.134Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/frontend/test-results/m003-cr307-focus-CR307-tra-e2d93--the-stable-provider-opener-mobile/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/frontend/test-results/m003-cr307-focus-CR307-tra-e2d93--the-stable-provider-opener-mobile/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/frontend/tests/e2e/m003-cr307-focus.spec.ts",
+                    "column": 24,
+                    "line": 102
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "58426b1bc410853a6397-0dd077d53ee7d719fefc",
+          "file": "m003-cr307-focus.spec.ts",
+          "line": 31,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-12T07:49:05.799Z",
+    "duration": 28547.427,
+    "expected": 0,
+    "skipped": 0,
+    "unexpected": 2,
+    "flaky": 0
+  }
+}
