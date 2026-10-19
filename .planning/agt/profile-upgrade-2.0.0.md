@@ -27,6 +27,14 @@ git -C ../agt-coding-v2 show 91d98055ec49c877cc03473e479bcc6a9f371af6:.agents/sk
 
 2026-10-19 用户随后明确要求补上下文收尾及 AGT 机制，已叠加采用[上下文维护修订](context-maintenance-adoption.json)。按该清单校验 patch SHA 和逐文件摘要，将同目录 `context-maintenance-v1.patch` 应用到上述锁定版本后读取契约。该补丁仅修改六份整理相关契约/模板，Profile 仍为 2.0.0，不使用基座 HEAD 的2.1可选工作流。应用示例：在解包的基座目录运行 `git apply /绝对产品路径/.planning/agt/context-maintenance-v1.patch`；先用 `git apply --check` 核对。
 
+用户随后要求提供类似 `gsd-quick` 的更细开发粒度，已增量采用 [AGT Quick](quick-tasks-adoption.json)，入口配置为 [quick-tasks.json](quick-tasks.json)。恢复顺序是锁定 revision → `context-maintenance-v1.patch` → `quick-tasks-v1.patch`；每一步先校验清单中的 SHA，再在解包目录执行 `git apply --check` 和 `git apply`，核对逐文件补丁后摘要。第二份补丁以第一份已应用为前提，新增 Quick Skill、协议、模板及工具，并补充有界任务的角色/工作流例外；不读取 sibling HEAD 来替代这条版本链。
+
+随后从该解包基座读取 `.agents/skills/agt-quick/SKILL.md`，并运行 `node <解包基座>/adapters/quick/agt-quick.mjs list --project <产品绝对路径>`。明确的小任务可直接使用 Quick，M002 继续保持完成；任务记录位于 `.planning/quick/`，首次任务才创建目录。新里程碑、重要新决定、人工接受及提交发布各自遵循已有授权。Quick 默认使用当前会话，不改模型锁或自动调用阶段模型启动器。
+
+用户进一步指出 Quick 必须把产品、设计、技术方案变化回落到文档群，当前采用范围已包含影响评估、任务内责任角色、正式正文回写与收尾检查。每项受影响正文有责任任务及上游依赖；由已授权 agent 或明确记录的串行责任执行处理，保留原版本与决定来源。仅写 Quick 摘要不能替代正式文档，缺失或过期回执会阻止验收/收尾；串行处理不算独立 QA。此扩展仍不改变 M002 的原审批与完成状态。
+
+用户随后要求补齐 Quick 的上下文语义整理与归档。当前 Quick 补丁同时包含：责任正文收敛 → `compact` 整理回执 → `finish` 必需检查；默认 `show/resume` 返回精简视图，显式 `--history` 展开历史。原件按版本/摘要追溯，重复整理相同输入不改写；内容、证据或责任回执变化使整理失效。独立接续试验未执行时单列 NOT_RUN，不以静态通过冒充实际效果。补丁顺序和 Profile 锁保持上述版本链。
+
 升级前产品提交为 `ce42e8726f7cf765a37afb574fe46f15b5d47f62`，本次涉及的五份已有文件在写入前均与该提交逐字节一致。原 `INIT-PROFILE-001` 选择、控制面及 README 可通过 `git show <产品提交>:<路径>` 恢复；旧 Profile 可从旧基座 revision 恢复。原关闭证据中的 1.0.0 快照保留作历史依据。回退时仅恢复本次锁定字段和入口，并追加配置回退记录，保留后续工作及历史事件。
 
 ## 差异与采用范围

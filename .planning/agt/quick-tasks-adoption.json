@@ -1,0 +1,130 @@
+{
+  "id": "AGT-QUICK-TASKS-20261019",
+  "status": "adopted",
+  "user_instruction": "我希望能让 AGT 的开发粒度更细，不是只有里程碑粒度，就像 gsd-quick 那种一样，能不能增强一下",
+  "followup_instruction": "没有角色协作的话，产生设计变更、产品变更、技术方案变更怎么回落给文档群",
+  "context_closeout_instruction": "quick 的内容会归档压缩上下文吗？ → 嗯，补充吧",
+  "base_revision": "91d98055ec49c877cc03473e479bcc6a9f371af6",
+  "profile": "consumer-ai-web@2.0.0",
+  "prerequisites": [
+    {
+      "patch": ".planning/agt/context-maintenance-v1.patch",
+      "sha256": "f027746fc84e2b20f83f05acd0ca5482851bbf1fa214be92c3eca63d0a0103c4"
+    }
+  ],
+  "patch": ".planning/agt/quick-tasks-v1.patch",
+  "patch_sha256": "9023ab21dc53ece7b70da4948b013ce006fc48afca587a1de6d6bff514c4f46c",
+  "files": [
+    {
+      "path": "core/workflow-control.md",
+      "base_after_prerequisites_sha256": "115a0558ccabea3d8e2d68a418abe73d47c78b1571256be9e9d4ffc38c5aa442",
+      "patched_sha256": "5b6380b5303ef4651fd02f67efe5ce7ed5292e5bfc9a11fc14679f39788baed5",
+      "framework_worktree_sha256": "b95226042997c1f52cbf92df0bfb5de1f77baac1d7fcfc20587218121b96827e"
+    },
+    {
+      "path": "core/role-contract.md",
+      "base_after_prerequisites_sha256": "89b408918e71193c49d1233dfc31a473c074c2fc12cc984548456946a17b7e98",
+      "patched_sha256": "b997f7fd6e2bcb4bf29694251a4ac944c8bdb058c739062ca2537ddae119347c",
+      "framework_worktree_sha256": "33c514052c855aaed1332d1470021dda3f7fb9486160d698ff1c570541392332"
+    },
+    {
+      "path": ".agents/skills/agt-stage-gate/SKILL.md",
+      "base_after_prerequisites_sha256": "465746c35058b566e61dfb2304121574211c7ef0e5447f0f35f200781a01793e",
+      "patched_sha256": "a72488ffdb055b3d44492704524488e7ca6cd2f4577497356d7d6b894fa33f75",
+      "framework_worktree_sha256": "69d157daa533131bc05177e522e1ce5c1f01b8ddf297a9114802b02c69f52e35"
+    },
+    {
+      "path": "core/quick-tasks.md",
+      "base_after_prerequisites_sha256": null,
+      "patched_sha256": "f8b97fefd70454fd4969356c960585b895f2871fe3a1b88bd81137e58b1e4d46",
+      "framework_worktree_sha256": "f8b97fefd70454fd4969356c960585b895f2871fe3a1b88bd81137e58b1e4d46"
+    },
+    {
+      "path": "templates/quick-task.json",
+      "base_after_prerequisites_sha256": null,
+      "patched_sha256": "2a70af3ae372977ba0d255babddac4b33d0fd544dcaed56c83b9106fc905396b",
+      "framework_worktree_sha256": "2a70af3ae372977ba0d255babddac4b33d0fd544dcaed56c83b9106fc905396b"
+    },
+    {
+      "path": ".agents/skills/agt-quick/SKILL.md",
+      "base_after_prerequisites_sha256": null,
+      "patched_sha256": "3121547ca25279c091b3e36a07f76cde23392770189179c3cc2bf643f3c7894f",
+      "framework_worktree_sha256": "3121547ca25279c091b3e36a07f76cde23392770189179c3cc2bf643f3c7894f"
+    },
+    {
+      "path": "adapters/quick/quick-tasks.mjs",
+      "base_after_prerequisites_sha256": null,
+      "patched_sha256": "4a8ffbef35131228da82ae50eee4245f93d2fafe66e9bf7d50e041c5fa19692a",
+      "framework_worktree_sha256": "4a8ffbef35131228da82ae50eee4245f93d2fafe66e9bf7d50e041c5fa19692a"
+    },
+    {
+      "path": "adapters/quick/agt-quick.mjs",
+      "base_after_prerequisites_sha256": null,
+      "patched_sha256": "231b7625f426df8b4c0dd7eacf7b9cc0175938f23d241c2824ef9ab2d560dadb",
+      "framework_worktree_sha256": "231b7625f426df8b4c0dd7eacf7b9cc0175938f23d241c2824ef9ab2d560dadb"
+    },
+    {
+      "path": "tests/quick-tasks.test.mjs",
+      "base_after_prerequisites_sha256": null,
+      "patched_sha256": "a0178e718df37fed47aef5b4a0ea6efd19270478d246033e7eaf3343c9bc7eca",
+      "framework_worktree_sha256": "a0178e718df37fed47aef5b4a0ea6efd19270478d246033e7eaf3343c9bc7eca"
+    }
+  ],
+  "configuration": ".planning/agt/quick-tasks.json",
+  "scope": "Bounded tasks with responsibility routing, canonical document reconciliation, semantic context closeout, concise recovery and versioned evidence; no Profile/workstream/model-lock upgrade or M002 transition",
+  "defaults": {
+    "executor": "current-session",
+    "role_orchestration": "document-impact",
+    "document_writeback_required": true,
+    "context_compaction_required": true,
+    "default_context": "concise",
+    "automatic_commit": false,
+    "automatic_push": false,
+    "automatic_model_launch": false
+  },
+  "verification": {
+    "status": "PASS_WITH_DECLARED_SCOPE",
+    "framework_regression": {
+      "passed": 79,
+      "command": "env PATH=/opt/homebrew/opt/ruby/bin:$PATH LANG=en_US.UTF-8 LC_ALL=en_US.UTF-8 node --test --test-reporter=spec tests/*.test.mjs",
+      "note": "Full suite passed. Final role-packet consolidation instruction and protocol wording then passed all 24 Quick tests in a clean pinned-patch reconstruction; other 55 cases unchanged."
+    },
+    "quick_behavior_tests": {
+      "passed": 24,
+      "command": "node --test tests/quick-tasks.test.mjs",
+      "scope": "temporary products; lifecycle, document responsibility/dependencies, current evidence, mandatory semantic closeout, concise CLI recovery, historical originals and retained IDs"
+    },
+    "context_closeout_cases": [
+      "Passing acceptance and owner writebacks cannot bypass mandatory semantic closeout",
+      "Each affected canonical document needs a consolidation or already-concise assessment",
+      "Default show/resume and mutation output omit old plans, check history and owner receipt history; explicit --history preserves access",
+      "Current conclusions, decisions, retained IDs, limitations and regression evidence remain discoverable",
+      "Original failed observations and test logs remain recoverable after newer evidence; corrupted originals block closure",
+      "Repeating identical compaction leaves task bytes and snapshot file set unchanged",
+      "Code, plan, evidence, checkpoint, decision source and owner changes invalidate the relevant closeout",
+      "Previously retained IDs require evidenced disposition before removal",
+      "Static pass does not imply independent recovery; real failed trial cannot become NOT_RUN to bypass closure"
+    ],
+    "static_recovery_measurement": {
+      "default_view_bytes": 2696,
+      "history_view_bytes": 26392,
+      "scope": "Synthetic fixture containing a long superseded plan; JSON serialization only. Includes default view fields and pointers; excludes external canonical document bodies and runtime token use. Not an ai-en savings benchmark."
+    },
+    "skill_validation": "PASS: agt-quick and agt-stage-gate",
+    "pinned_patch_replay": "PASS: context-maintenance then Quick on clean 91d9805; nine file hashes, exact Profile 2.0 identity and validator, all 24 Quick tests on extracted code",
+    "product_smoke": "PASS: reconstructed CLI list on ai-en returned []; no product task created",
+    "control_state": "PASS: only adoption override/entry added; milestone files, terminal state, model lock, roles, history and application code unchanged",
+    "local_links": {
+      "checked": 79,
+      "missing": 0,
+      "scope": "local references plus new Quick and maintenance anchors"
+    },
+    "application_tests": "NOT_RUN; framework/configuration only",
+    "independent_agent_trial": "NOT_RUN; CLI recovery and delegated/recovery metadata were tested with fixtures, not an actual independent agent runtime",
+    "limitations": [
+      "Semantic document consolidation is performed by responsible roles; the tool validates declared coverage, versions and recoverable evidence, not semantic correctness",
+      "Role packets do not launch agents; recorded authoring or recovery metadata is not runtime identity attestation",
+      "Quick writes support single-workflow products; no live-product context reduction or runtime token/cost benchmark"
+    ]
+  }
+}
