@@ -127,7 +127,7 @@ func (provider *OpenRouter) Open(ctx context.Context, spec GenerationSpec) (_ St
 		return nil, &ProviderError{Category: FailureProtocol, Retryable: true, Err: diagnosed("provider_open", "response_not_sse", "", -1, nil)}
 	}
 	handedOff = true
-	return &openRouterStream{body: &privateProviderBody{ReadCloser: response.Body, apiKey: apiKey}, usage: usage}, nil
+	return &openRouterStream{body: &privateProviderBody{ReadCloser: response.Body, apiKey: apiKey}, usage: usage, correction: spec.correction}, nil
 }
 
 func (provider *OpenRouter) CheckCompatibility(ctx context.Context, providerModelID string) error {
@@ -240,9 +240,10 @@ func (provider *OpenRouter) ValidateAPIKey(ctx context.Context, apiKey string) e
 }
 
 type openRouterStream struct {
-	body    io.ReadCloser
-	usage   *callUsage
-	decoder *protocolDecoder
+	body       io.ReadCloser
+	usage      *callUsage
+	decoder    *protocolDecoder
+	correction *contentCorrection
 }
 
 func (stream *openRouterStream) Close() error {
@@ -254,6 +255,9 @@ func (stream *openRouterStream) Close() error {
 }
 
 func (stream *openRouterStream) Receive(ctx context.Context, onPassageDelta func(string) error) (result Candidate, resultErr error) {
+	if stream.correction != nil {
+		return stream.receiveFieldCorrection(ctx)
+	}
 	defer func() {
 		if err := stream.usage.done(); err != nil {
 			resultErr = err
@@ -1057,7 +1061,7 @@ func systemPrompt(spec GenerationSpec) string {
 		return batchPrompt(spec) + "\n\n" + scenePlanWriterSystemPrompt
 	}
 	if spec.correction != nil {
-		return correctionSystemPrompt
+		return correctionSystemPrompt(spec.correction)
 	}
 	if spec.continuation != nil {
 		return continuationSystemPrompt
@@ -1120,6 +1124,9 @@ func taskOutputSchema(spec GenerationSpec) map[string]any {
 }
 
 func taskSchemaName(spec GenerationSpec) string {
+	if spec.correction != nil {
+		return "wordweave_field_corrections"
+	}
 	if spec.plan != nil {
 		return "wordweave_scene_plan"
 	}
@@ -1248,11 +1255,7 @@ func outputSchema(spec GenerationSpec) map[string]any {
 		return outputSchema(normal)
 	}
 	if spec.correction != nil {
-		normal := spec
-		normal.correction = nil
-		schema := outputSchema(normal)
-		schema["properties"].(map[string]any)["passage"].(map[string]any)["description"] = "Copy the existing passage exactly, changing only inline source-entry annotations when requested. Do not extend or rewrite visible text."
-		return schema
+		return correctionSchema(spec.correction)
 	}
 	if spec.continuation != nil {
 		return continuationSchema(spec)

@@ -4,6 +4,12 @@
 
 当前测试结论先读[QA报告](verification/report.md)与[覆盖矩阵](verification/coverage-matrix.md)，修改状态先读[变更索引](changes/index.md)。开发回归从[后端](implementation/backend-validation.md)、[前端](implementation/frontend-validation.md)定位；下表专业原件只在对应任务需要时展开，旧提交状态不恢复为待办。
 
+## 交付后的 Q001 本地增量
+
+2026-10-19 用户授权用 agt-quick 实现代码诊断驱动纠正。代码与功能回归已完成，当前读取[产品规则](product/correction-routing.md)、[技术契约](technical/correction-routing.md)、[验证结果](verification/correction-routing.md)和[实现交接](handoffs/backend-implementation.md#q001-本地增量代码诊断与字段纠正)。仅原生纠正的诊断、提示组合、局部返回与合并被替代；不重新打开M002或继承历史产品验收。
+
+[Q001任务与恢复证据](../../quick/Q001-code-driven-corrections/task.json)保存本次角色回执、命令、决定及上下文收尾。当前修改仅本地保存，未提交/推送/部署，没有进行付费模型调用。下列历史保留项继续有效。
+
 ## 按任务读取原件
 
 | 交付范围 | 需求与技术原件 | 验证及用户接受 |

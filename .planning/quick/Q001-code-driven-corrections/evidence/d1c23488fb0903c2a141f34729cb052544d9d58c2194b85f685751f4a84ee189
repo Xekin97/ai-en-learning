@@ -1,0 +1,137 @@
+schema_version: 1
+profile: consumer-ai-web@2.0.0
+agt_revision: 91d98055ec49c877cc03473e479bcc6a9f371af6
+milestone: M002
+stage: milestone-complete
+active_role: null
+active_agent: null
+status: complete
+required_artifacts: []
+pending_user_decisions: []
+open_change_requests: []
+allowed_transitions: []
+current_handoff: .planning/milestones/M002/continuation.md
+last_transition:
+  id: TRANSITION-M002-146
+  decision_id: TRANSITION-M002-146
+  operation: transition-stage
+  milestone: M002
+  from: verification
+  to: milestone-complete
+  previous_role: quality/base
+  previous_agent: qa-quinn
+  active_role: null
+  active_agent: null
+  timestamp: '2026-10-16T11:45:07.295018+00:00'
+  authorized_by: USER-M002-CLOSEOUT-MERGE-COMPACT-20261016
+  confirmed_by: user
+  checked_by: gatekeeper-owen
+  recorded_by: root
+  evidence: .planning/milestones/M002/reviews/milestone-closeout.md
+  scope: Formal M002 closeout with retained limits; consolidate withdrawn M003/M004 ownership and compact current
+    control entries.
+retained_open_items:
+- id: CR039-L1
+  status: open
+  source: .planning/milestones/M001/changes/CR-039.md#retained-limitations
+- id: CR042-L1
+  status: open
+  source: .planning/milestones/M001/verification/CR-042-generation-evidence.md#retained-limitations
+- id: AI-QUALITY-90
+  status: unverified
+  source: .planning/milestones/M001/verification/ai-evaluation.md
+  qa_blocking: false
+  scope: Independent model/content research; excluded from QA under USER-QA-MODEL-QUALITY-BOUNDARY-20261012
+- id: W01
+  status: unverified
+  source: .planning/milestones/M002/verification/report.md#保留事项
+- id: QA26-MINIMAX
+  status: open
+  source: .planning/milestones/M002/verification/report.md#保留事项
+- id: PRON-MOBILE
+  status: unverified
+  source: .planning/milestones/M002/verification/pronunciation/report.md
+  qa_blocking: false
+  scope: Future real mobile browser verification requires reachable environment; outside current accepted local
+    desktop UAT
+compatibility_policy:
+  decision_id: USER-COMPAT-001
+  record: .planning/milestones/M001/reviews/first-release-compatibility-policy.md
+  scope: Project-wide standing rule; M001 is the first release under development
+claim_deletion_policy:
+  decision_id: USER-CLAIM-DELETE-001
+  record: .planning/milestones/M001/reviews/claimed-batch-delete-retention-exception.md
+  scope: Explicit owner deletion of a saved batch removes its associated consumed claim in the same transaction
+generation_quality_target:
+  decision_id: USER-GENERATION-QUALITY-129
+  confirmed_success_rate_minimum: 0.9
+  status: unverified
+  current_evidence: .planning/milestones/M001/verification/ai-evaluation.md
+  live_model_batch_authorized: false
+  qa_blocking: false
+  evaluation_scope: independent_model_research_outside_qa
+  qa_scope_decision: USER-QA-MODEL-QUALITY-BOUNDARY-20261012
+model_routing:
+  status: enabled
+  lock: .planning/agt/model-routing-v1.lock.json
+  adoption: .planning/agt/model-routing-adoption-001.md
+  policy: codex-balanced@1.0.0
+qa_scope_policy:
+  decision_id: USER-QA-MODEL-QUALITY-BOUNDARY-20261012
+  status: confirmed
+  source: .planning/agt/qa-scope-policy.md
+  scope: Project-wide QA excludes article-quality judgement and model semantic review accuracy; verifies functionality
+    and implementation
+milestone_authorization_policy:
+  new_milestone_requires_explicit_user_request_or_confirmation: true
+  next_step_does_not_authorize_new_milestone: true
+  source: .planning/milestones/M002/reviews/evidence/m003-ownership-correction-124/authorization.json
+milestone_ownership_correction:
+  record: .planning/milestones/M002/reviews/milestone-ownership-correction-124.md
+  source_index: .planning/milestones/M002/continuation.md
+  legacy_source_mapping: .planning/milestones/M002/reviews/evidence/m003-ownership-correction-124/rehome-map.json
+  withdrawn_milestones:
+  - M003
+  - M004
+  retained_history: Historical instances renamed under M002 ownership; frozen recorded paths resolve through directory
+    mapping.
+  completion_record: .planning/milestones/M002/reviews/milestone-closeout.md
+  legacy_instance_scope: Only the mistakenly created instances on 2026-10-15; future explicitly authorized M003/M004
+    are distinct.
+  directory_mapping:
+    .planning/milestones/M003: .planning/milestones/M002-legacy-M003
+    .planning/milestones/M004: .planning/milestones/M002-legacy-M004
+  path_resolution_record: .planning/milestones/M002/reviews/evidence/milestone-closeout-146/legacy-directory-rename.json
+previous_milestone:
+  id: M001
+  status: complete
+  completion_decision: TRANSITION-M001-138
+  handoff: .planning/milestones/M001/handoffs/verification.md
+  state_snapshot: .planning/milestones/M002/reviews/evidence/start-001/m001-state.yaml
+authorization_refs:
+- id: USER-M002-CLOSEOUT-MERGE-COMPACT-20261016
+  scope: M002 formal closeout, consolidate withdrawn M003/M004, compact documentation
+  source: .planning/milestones/M002/reviews/evidence/milestone-closeout-146/authorization.json
+milestone_closeout:
+  status: complete
+  decision_id: TRANSITION-M002-146
+  confirmed_at: '2026-10-16T11:45:07.295018+00:00'
+  record: .planning/milestones/M002/reviews/milestone-closeout.md
+  retained_limits_accepted: true
+context_entries:
+  current_handoff: .planning/milestones/M002/continuation.md
+  milestone_closeout: .planning/milestones/M002/reviews/milestone-closeout.md
+  locked_profile: .planning/agt/profiles/consumer-ai-web/PROFILE.yaml
+  profile_upgrade: .planning/agt/profile-upgrade-2.0.0.md
+  quick_tasks: .planning/agt/quick-tasks.json
+  context_maintenance: .planning/milestones/M002/continuation.md#上下文整理
+  verification_index: .planning/milestones/M002/verification/report.md
+  changes_index: .planning/milestones/M002/changes/index.md
+  qa_scope_policy: .planning/agt/qa-scope-policy.md
+  uat_guide: .planning/milestones/M002/verification/pronunciation/uat-local-20261016/guide.md
+  accepted_source: .planning/milestones/M002/reviews/evidence/milestone-closeout-146/accepted-source-after-rename.json
+archived_context:
+  index: .planning/milestones/M002/reviews/evidence/milestone-closeout-146/archive-index.json
+  archive: .planning/milestones/M002/reviews/evidence/milestone-closeout-146/before-controls.tar.gz
+  member: .planning/workflow/state.yaml
+  rule: Historical fields are recoverable by original key; not current workflow or new authorization.

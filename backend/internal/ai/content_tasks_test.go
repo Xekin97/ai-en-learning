@@ -217,7 +217,7 @@ func TestV5TaskSchemasAndUsageStages(t *testing.T) {
 		{"planning", "planning", PlanPromptVersion, func() GenerationSpec { s := base; s.plan = &planTask{}; return s }()},
 		{"generation", "generation", PromptVersion, func() GenerationSpec { s := base; s.planned = &plannedDraftTask{}; return s }()},
 		{"fixed edit", "fixed_edit", FixedEditPromptVersion, func() GenerationSpec { s := base; s.fixedEdit = &fixedEditTask{}; return s }()},
-		{"technical repair", "technical_repair", NativePromptVersion, func() GenerationSpec { s := base; s.correction = &contentCorrection{}; return s }()},
+		{"technical repair", "technical_repair", CorrectionPromptVersion, func() GenerationSpec { s := base; s.correction = &contentCorrection{}; return s }()},
 		{"review", "content_review", ReviewPromptVersion, func() GenerationSpec { s := base; s.review = &reviewTask{}; return s }()},
 		{"content repair", "content_repair", RewritePromptVersion, func() GenerationSpec { s := base; s.rewrite = &rewriteTask{}; return s }()},
 	}

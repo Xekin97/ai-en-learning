@@ -303,7 +303,7 @@ func (g *Gateway) Open(ctx context.Context, spec GenerationSpec) (_ Stream, resu
 		return nil, err
 	}
 	trace.Provider(generationtrace.ProviderOpen, generationtrace.ProviderFact{HTTPStatus: resp.StatusCode, RequestID: privateSafeID(resp.Header.Get("X-Request-Id"), spec.connection.apiKey)})
-	return &openRouterStream{body: &privateProviderBody{ReadCloser: resp.Body, apiKey: spec.connection.apiKey}, usage: usage, decoder: decoder}, nil
+	return &openRouterStream{body: &privateProviderBody{ReadCloser: resp.Body, apiKey: spec.connection.apiKey}, usage: usage, decoder: decoder, correction: spec.correction}, nil
 }
 
 // CheckCompatibility's identifier is the internal model UUID, never a global

@@ -1,0 +1,27 @@
+{
+  "before": "109790887ff93a4649ca8154ab1ec49def6ed46a88d6916d21c6a55944509ba3",
+  "after": "109790887ff93a4649ca8154ab1ec49def6ed46a88d6916d21c6a55944509ba3",
+  "results": [
+    {
+      "criteria": [
+        "AC1",
+        "AC2",
+        "AC3",
+        "AC4"
+      ],
+      "argv": [
+        "go",
+        "-C",
+        "backend",
+        "test",
+        "./internal/ai",
+        "./internal/generation"
+      ],
+      "exit_code": 1,
+      "signal": null,
+      "error": null,
+      "stdout": "FAIL\twordweave/internal/ai [build failed]\nFAIL\twordweave/internal/generation [build failed]\nFAIL\n",
+      "stderr": "# wordweave/internal/ai\ninternal/ai/fingerprint.go:31:46: unknown field Passage in struct literal of type contentCorrection\ninternal/ai/fingerprint.go:31:66: unknown field Entries in struct literal of type contentCorrection\n"
+    }
+  ]
+}

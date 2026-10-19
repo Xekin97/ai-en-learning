@@ -207,7 +207,7 @@ func TestCorrectionRejectsVisibleRewritesAndRetainsOtherFields(t *testing.T) {
 					response.Tags = []string{"unrequested"}
 					response.Targets = []CandidateTarget{{"grape", "unrequested", "unrequested"}, {"young", "unrequested", "unrequested"}}
 				}
-				if mode == "recover_rewrite" && provider.calls == 2 && next.correction.PreviousError == "" {
+				if mode == "recover_rewrite" && provider.calls == 2 && next.correction.Tasks[0].Previous == nil {
 					t.Fatal("rejected rewrite feedback missing")
 				}
 				return continuationStream(response)
@@ -314,17 +314,23 @@ func TestCorrectionsCancelBetweenPreflightAndNextOpen(t *testing.T) {
 
 func TestCorrectionPromptUsesCurrentSchemaAndOriginalEntries(t *testing.T) {
 	spec, original := continuationFixture()
-	spec.correction = newContentCorrection(spec, original, FailureDetail{Field: "hint_phrase", Reason: "annotation_target_mismatch", Target: 1}, "")
-	var input contentCorrection
-	if err := json.Unmarshal([]byte(userPrompt(spec)), &input); err != nil || input.Entry != "grape" || input.Targets["grape"].Hint != original.Targets[1].HintPhrase {
+	original.Targets[1].HintPhrase = "fresh grapes(grapes)"
+	plan, err := testValidator(t).correctionPlan(context.Background(), spec, original, nil, "")
+	if err != nil || len(plan.Tasks) != 1 {
+		t.Fatalf("plan=%+v err=%v", plan, err)
+	}
+	spec.correction = plan
+	var input struct {
+		Tasks []repairTask `json:"tasks"`
+	}
+	if err := json.Unmarshal([]byte(userPrompt(spec)), &input); err != nil || input.Tasks[0].Entry != "grape" || input.Tasks[0].Value != original.Targets[1].HintPhrase {
 		t.Fatal("correction input identity/schema incorrect")
 	}
-	schema := outputSchema(spec)["properties"].(map[string]any)
-	targets := schema["targets"].(map[string]any)
-	if len(targets["properties"].(map[string]any)) != 2 || targets["additionalProperties"] != false || !reflect.DeepEqual(targets["required"], spec.Entries) {
-		t.Fatal("correction loosened the current schema")
+	schema := outputSchema(spec)
+	if len(schema["properties"].(map[string]any)) != 1 || schema["additionalProperties"] != false || !reflect.DeepEqual(schema["required"], []string{plan.Tasks[0].Key}) {
+		t.Fatal("correction schema includes unrelated fields")
 	}
-	if strings.Contains(systemPrompt(spec), "<example>") || !strings.Contains(systemPrompt(spec), "vulnerability(vulnerable)") || !strings.Contains(systemPrompt(spec), entryMeaningInstruction) || strings.Contains(schema["passage"].(map[string]any)["description"].(string), "minimum") {
-		t.Fatal("correction prompt/schema conflicts with immutable prose")
+	if strings.Contains(userPrompt(spec), original.Passage) || strings.Contains(userPrompt(spec), original.Targets[0].EntryMeaning) || strings.Contains(systemPrompt(spec), "<example>") || !strings.Contains(systemPrompt(spec), "vulnerability(vulnerable)") {
+		t.Fatal("correction includes unrelated context or omits original label rule")
 	}
 }

@@ -28,7 +28,12 @@ func ContractFingerprints() (template, schema, lexical string, err error) {
 				case "continuation":
 					current.continuation = &passageContinuation{Passage: "PASSAGE", Entries: spec.Entries, Missing: spec.Entries, MinimumWords: 1, AdditionalWords: 1}
 				case "correction":
-					current.correction = &contentCorrection{Passage: "PASSAGE", Entries: spec.Entries, Field: "passage", Reason: "annotation_source_unknown"}
+					current.correction = &contentCorrection{Tasks: []repairTask{
+						{Key: "r1", Field: "passage", Value: "PASSAGE", Mode: "annotation_edit", Modules: []string{"PASSAGE_BASE", "ANNOTATION_EDIT"}},
+						{Key: "r2", Field: "tags", Value: []string{"TAG"}, Mode: "tags", Modules: []string{"TAGS_BASE"}},
+						{Key: "r3", Field: "entry_meaning", Entry: "ENTRY", Value: "MEANING", Mode: "define", Modules: []string{"MEANING_BASE"}},
+						{Key: "r4", Field: "hint_phrase", Entry: "ENTRY", Value: "HINT", Mode: "rebuild", Modules: []string{"HINT_BASE", "HINT_REBUILD"}},
+					}}
 				}
 				path, body := protocolRequest(current, snap, phase == "probe")
 				requests = append(requests, []any{protocol, mode, phase, path, body})
@@ -38,7 +43,8 @@ func ContractFingerprints() (template, schema, lexical string, err error) {
 			}
 		}
 	}
-	requests = append(requests, maxCorrections)
+	// Include every conditional module, not only the placeholder task's route.
+	requests = append(requests, maxCorrections, CorrectionPromptVersion, correctionTemplates)
 	raw, e := json.Marshal(requests)
 	if e != nil {
 		return "", "", "", e

@@ -7,13 +7,14 @@ import (
 )
 
 const (
-	PromptVersion          = "m003-draft-v3"
-	PlanPromptVersion      = "m003-plan-v1"
-	FixedEditPromptVersion = "m003-fixed-edit-v1"
-	NativePromptVersion    = "m003-native-v1"
-	ReviewPromptVersion    = "m003-review-v2"
-	RewritePromptVersion   = "m003-rewrite-v3"
-	ValidatorVersion       = "m001-v5-wn31-r2"
+	PromptVersion           = "m003-draft-v3"
+	PlanPromptVersion       = "m003-plan-v1"
+	FixedEditPromptVersion  = "m003-fixed-edit-v1"
+	NativePromptVersion     = "m003-native-v1"
+	CorrectionPromptVersion = "q001-correction-v1"
+	ReviewPromptVersion     = "m003-review-v2"
+	RewritePromptVersion    = "m003-rewrite-v3"
+	ValidatorVersion        = "m001-v5-wn31-r2"
 )
 
 type GenerationSpec struct {
@@ -56,7 +57,9 @@ func (spec GenerationSpec) UsageMetadata() (stage, promptVersion string) {
 		return "content_review", ReviewPromptVersion
 	case spec.rewrite != nil:
 		return "content_repair", RewritePromptVersion
-	case spec.correction != nil, spec.continuation != nil:
+	case spec.correction != nil:
+		return "technical_repair", CorrectionPromptVersion
+	case spec.continuation != nil:
 		return "technical_repair", NativePromptVersion
 	default:
 		return "generation", PromptVersion

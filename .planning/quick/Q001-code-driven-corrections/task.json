@@ -1,0 +1,1384 @@
+{
+  "title": "代码诊断驱动的多字段 AI 纠正",
+  "request": "用户：用 agt-quick 落地到项目里吧。承接方案：代码识别 => 选择单个或多个纠正词 => AI 纠正；不调用 AI 识别纠正原因。多字段受限返回、独立字段验收、只重试剩余错误，共享原生两次预算；本次不做付费模型实测。",
+  "executor": "root",
+  "milestone": "M002",
+  "sources": [
+    ".planning/workflow/state.yaml",
+    ".planning/milestones/M002/continuation.md",
+    ".planning/agt/qa-scope-policy.md",
+    ".planning/milestones/M002-legacy-M003/product/ai-behavior.md",
+    ".planning/milestones/M002-legacy-M003/technical/ai-integration.md",
+    "docs/research/cost-planning/correction-routing-proposal-2026-10-19/prompt-templates.json",
+    "backend/internal/ai/validator.go"
+  ],
+  "write_scope": [
+    "backend/internal/ai/correction_routing.go",
+    "backend/internal/ai/correction_prompts.go",
+    "backend/internal/ai/correction_response.go",
+    "backend/internal/ai/correction_routing_test.go",
+    "backend/internal/ai/correction_response_test.go",
+    "backend/internal/ai/continuation.go",
+    "backend/internal/ai/openrouter.go",
+    "backend/internal/ai/gateway.go",
+    "backend/internal/ai/contract.go",
+    "backend/internal/ai/corrections_test.go",
+    "backend/internal/ai/content_tasks_test.go",
+    ".planning/milestones/M002/product/correction-routing.md",
+    ".planning/milestones/M002/product/ai-behavior.md",
+    ".planning/milestones/M002/technical/correction-routing.md",
+    ".planning/milestones/M002/technical/ai-integration.md",
+    ".planning/milestones/M002/verification/correction-routing.md",
+    ".planning/milestones/M002/verification/report.md",
+    ".planning/milestones/M002/handoffs/backend-implementation.md",
+    ".planning/milestones/M002/continuation.md",
+    "backend/internal/ai/fingerprint.go"
+  ],
+  "plan": [
+    "串行履行产品与后端架构责任，回落当前增量契约",
+    "实现代码诊断、受限模板及响应合并，保留全量最终校验",
+    "确定性功能与生成管线回归；QA、交接、compact 与 finish"
+  ],
+  "acceptance": [
+    {
+      "id": "AC1",
+      "description": "代码识别多字段错误并组合兼容模板；区分词形缺失、标注缺失、未知关系及启发式语言检查",
+      "verification": "command"
+    },
+    {
+      "id": "AC2",
+      "description": "动态键由服务端映射，严格拒绝重复/缺失/多余/空或类型错误响应；不依赖键顺序且纠正不公开流式内容",
+      "verification": "command"
+    },
+    {
+      "id": "AC3",
+      "description": "有效字段仅合并到私有候选，剩余错误反馈重试；正文可见文本不变，hint模式约束正确",
+      "verification": "command"
+    },
+    {
+      "id": "AC4",
+      "description": "纠正及续写共享最多两次预算；取消/传输故障不重试，既有生成管线和终态校验回归通过",
+      "verification": "command"
+    },
+    {
+      "id": "AC5",
+      "description": "修改在声明范围内，未改里程碑控制面、用户研究文件、公开接口和现有质量保留项",
+      "verification": "inspection"
+    }
+  ],
+  "document_impacts": {
+    "product": {
+      "status": "affected",
+      "reason": "明确代码分类、多字段局部纠正、共享预算和终态规则"
+    },
+    "technical": {
+      "status": "affected",
+      "reason": "定义诊断、模板冲突消解、动态响应与局部合并契约"
+    },
+    "verification": {
+      "status": "affected",
+      "reason": "记录确定性用例、原有回归及未进行的真实模型评估"
+    },
+    "handoff": {
+      "status": "affected",
+      "reason": "更新当前入口、落地范围和保留项"
+    },
+    "design": {
+      "status": "none",
+      "reason": "不新增页面、交互、公开请求字段或输出事件；纠正仍在现有私有恢复阶段完成"
+    }
+  },
+  "document_tasks": [
+    {
+      "id": "DOC_PRODUCT",
+      "domain": "product",
+      "role": "product/to-c",
+      "paths": [
+        ".planning/milestones/M002/product/correction-routing.md",
+        ".planning/milestones/M002/product/ai-behavior.md"
+      ],
+      "change": "明确代码分类、多字段局部纠正、共享预算和终态规则",
+      "depends_on": [],
+      "approval_required": true,
+      "approval_source": "task.request"
+    },
+    {
+      "id": "DOC_TECH",
+      "domain": "technical",
+      "role": "backend-architect/base",
+      "paths": [
+        ".planning/milestones/M002/technical/correction-routing.md",
+        ".planning/milestones/M002/technical/ai-integration.md"
+      ],
+      "change": "定义诊断、模板冲突消解、动态响应与局部合并契约",
+      "depends_on": [
+        "DOC_PRODUCT"
+      ],
+      "approval_required": true,
+      "approval_source": "task.request"
+    },
+    {
+      "id": "DOC_QA",
+      "domain": "verification",
+      "role": "quality/base",
+      "paths": [
+        ".planning/milestones/M002/verification/correction-routing.md",
+        ".planning/milestones/M002/verification/report.md"
+      ],
+      "change": "记录确定性用例、原有回归及未进行的真实模型评估",
+      "depends_on": [
+        "DOC_TECH"
+      ],
+      "approval_required": false,
+      "approval_source": "task.request"
+    },
+    {
+      "id": "DOC_HANDOFF",
+      "domain": "handoff",
+      "role": "backend-implementer/base",
+      "paths": [
+        ".planning/milestones/M002/handoffs/backend-implementation.md",
+        ".planning/milestones/M002/continuation.md"
+      ],
+      "change": "更新当前入口、落地范围和保留项",
+      "depends_on": [
+        "DOC_QA"
+      ],
+      "approval_required": false,
+      "approval_source": "task.request"
+    }
+  ],
+  "schema_version": 1,
+  "id": "Q001-code-driven-corrections",
+  "status": "complete",
+  "revision": 18,
+  "plan_revision": 2,
+  "branch": "main",
+  "base_commit": "c05d41ba4165cc0bd699de973201bbd642c4d860",
+  "initial_scope_status": "",
+  "created_at": "2026-10-19T08:08:54.841Z",
+  "updated_at": "2026-10-19T08:21:08.072Z",
+  "checks": [
+    {
+      "at": "2026-10-19T08:14:45.249Z",
+      "criteria": [
+        "AC1"
+      ],
+      "method": "command",
+      "commands": [
+        {
+          "argv": [
+            "go",
+            "-C",
+            "backend",
+            "test",
+            "./internal/ai",
+            "./internal/generation"
+          ],
+          "exit_code": 1
+        }
+      ],
+      "status": "fail",
+      "summary": "Process result; semantic coverage reviewed by executor",
+      "fingerprint": "109790887ff93a4649ca8154ab1ec49def6ed46a88d6916d21c6a55944509ba3",
+      "evidence": [
+        {
+          "path": ".planning/quick/Q001-code-driven-corrections/check-1.json",
+          "digest": "731d76138f454d7edda9ef1e1dbf5523aa6db8f57900efcd072b4c1398de4bf6",
+          "original": {
+            "snapshot": ".planning/quick/Q001-code-driven-corrections/check-1.json",
+            "sha256": "1fe6d2ab1ba1e72558d800c0515758faec057bf1fba251d91fa4e43218fa6617"
+          }
+        }
+      ]
+    },
+    {
+      "at": "2026-10-19T08:14:45.250Z",
+      "criteria": [
+        "AC2"
+      ],
+      "method": "command",
+      "commands": [
+        {
+          "argv": [
+            "go",
+            "-C",
+            "backend",
+            "test",
+            "./internal/ai",
+            "./internal/generation"
+          ],
+          "exit_code": 1
+        }
+      ],
+      "status": "fail",
+      "summary": "Process result; semantic coverage reviewed by executor",
+      "fingerprint": "109790887ff93a4649ca8154ab1ec49def6ed46a88d6916d21c6a55944509ba3",
+      "evidence": [
+        {
+          "path": ".planning/quick/Q001-code-driven-corrections/check-1.json",
+          "digest": "731d76138f454d7edda9ef1e1dbf5523aa6db8f57900efcd072b4c1398de4bf6",
+          "original": {
+            "snapshot": ".planning/quick/Q001-code-driven-corrections/check-1.json",
+            "sha256": "1fe6d2ab1ba1e72558d800c0515758faec057bf1fba251d91fa4e43218fa6617"
+          }
+        }
+      ]
+    },
+    {
+      "at": "2026-10-19T08:14:45.250Z",
+      "criteria": [
+        "AC3"
+      ],
+      "method": "command",
+      "commands": [
+        {
+          "argv": [
+            "go",
+            "-C",
+            "backend",
+            "test",
+            "./internal/ai",
+            "./internal/generation"
+          ],
+          "exit_code": 1
+        }
+      ],
+      "status": "fail",
+      "summary": "Process result; semantic coverage reviewed by executor",
+      "fingerprint": "109790887ff93a4649ca8154ab1ec49def6ed46a88d6916d21c6a55944509ba3",
+      "evidence": [
+        {
+          "path": ".planning/quick/Q001-code-driven-corrections/check-1.json",
+          "digest": "731d76138f454d7edda9ef1e1dbf5523aa6db8f57900efcd072b4c1398de4bf6",
+          "original": {
+            "snapshot": ".planning/quick/Q001-code-driven-corrections/check-1.json",
+            "sha256": "1fe6d2ab1ba1e72558d800c0515758faec057bf1fba251d91fa4e43218fa6617"
+          }
+        }
+      ]
+    },
+    {
+      "at": "2026-10-19T08:14:45.250Z",
+      "criteria": [
+        "AC4"
+      ],
+      "method": "command",
+      "commands": [
+        {
+          "argv": [
+            "go",
+            "-C",
+            "backend",
+            "test",
+            "./internal/ai",
+            "./internal/generation"
+          ],
+          "exit_code": 1
+        }
+      ],
+      "status": "fail",
+      "summary": "Process result; semantic coverage reviewed by executor",
+      "fingerprint": "109790887ff93a4649ca8154ab1ec49def6ed46a88d6916d21c6a55944509ba3",
+      "evidence": [
+        {
+          "path": ".planning/quick/Q001-code-driven-corrections/check-1.json",
+          "digest": "731d76138f454d7edda9ef1e1dbf5523aa6db8f57900efcd072b4c1398de4bf6",
+          "original": {
+            "snapshot": ".planning/quick/Q001-code-driven-corrections/check-1.json",
+            "sha256": "1fe6d2ab1ba1e72558d800c0515758faec057bf1fba251d91fa4e43218fa6617"
+          }
+        }
+      ]
+    },
+    {
+      "at": "2026-10-19T08:15:55.002Z",
+      "criteria": [
+        "AC1"
+      ],
+      "method": "command",
+      "commands": [
+        {
+          "argv": [
+            "go",
+            "-C",
+            "backend",
+            "test",
+            "./internal/ai",
+            "./internal/generation"
+          ],
+          "exit_code": 0
+        }
+      ],
+      "status": "pass",
+      "summary": "Process result; semantic coverage reviewed by executor",
+      "fingerprint": "526ddcaf41fd3ebf2357d3eda6ae5de5d63662263a0e7df268c0a71b3ff5abbd",
+      "evidence": [
+        {
+          "path": ".planning/quick/Q001-code-driven-corrections/check-2.json",
+          "digest": "7524e9930be375906a8d1eb9dd38d316c6786cb58157cff178e878ab2226d4c1",
+          "original": {
+            "snapshot": ".planning/quick/Q001-code-driven-corrections/check-2.json",
+            "sha256": "136ff547a5da623a73497b4288002d8cc7a0c62c02877a9d921c650e671c7acc"
+          }
+        }
+      ]
+    },
+    {
+      "at": "2026-10-19T08:15:55.003Z",
+      "criteria": [
+        "AC2"
+      ],
+      "method": "command",
+      "commands": [
+        {
+          "argv": [
+            "go",
+            "-C",
+            "backend",
+            "test",
+            "./internal/ai",
+            "./internal/generation"
+          ],
+          "exit_code": 0
+        }
+      ],
+      "status": "pass",
+      "summary": "Process result; semantic coverage reviewed by executor",
+      "fingerprint": "526ddcaf41fd3ebf2357d3eda6ae5de5d63662263a0e7df268c0a71b3ff5abbd",
+      "evidence": [
+        {
+          "path": ".planning/quick/Q001-code-driven-corrections/check-2.json",
+          "digest": "7524e9930be375906a8d1eb9dd38d316c6786cb58157cff178e878ab2226d4c1",
+          "original": {
+            "snapshot": ".planning/quick/Q001-code-driven-corrections/check-2.json",
+            "sha256": "136ff547a5da623a73497b4288002d8cc7a0c62c02877a9d921c650e671c7acc"
+          }
+        }
+      ]
+    },
+    {
+      "at": "2026-10-19T08:15:55.003Z",
+      "criteria": [
+        "AC3"
+      ],
+      "method": "command",
+      "commands": [
+        {
+          "argv": [
+            "go",
+            "-C",
+            "backend",
+            "test",
+            "./internal/ai",
+            "./internal/generation"
+          ],
+          "exit_code": 0
+        }
+      ],
+      "status": "pass",
+      "summary": "Process result; semantic coverage reviewed by executor",
+      "fingerprint": "526ddcaf41fd3ebf2357d3eda6ae5de5d63662263a0e7df268c0a71b3ff5abbd",
+      "evidence": [
+        {
+          "path": ".planning/quick/Q001-code-driven-corrections/check-2.json",
+          "digest": "7524e9930be375906a8d1eb9dd38d316c6786cb58157cff178e878ab2226d4c1",
+          "original": {
+            "snapshot": ".planning/quick/Q001-code-driven-corrections/check-2.json",
+            "sha256": "136ff547a5da623a73497b4288002d8cc7a0c62c02877a9d921c650e671c7acc"
+          }
+        }
+      ]
+    },
+    {
+      "at": "2026-10-19T08:15:55.003Z",
+      "criteria": [
+        "AC4"
+      ],
+      "method": "command",
+      "commands": [
+        {
+          "argv": [
+            "go",
+            "-C",
+            "backend",
+            "test",
+            "./internal/ai",
+            "./internal/generation"
+          ],
+          "exit_code": 0
+        }
+      ],
+      "status": "pass",
+      "summary": "Process result; semantic coverage reviewed by executor",
+      "fingerprint": "526ddcaf41fd3ebf2357d3eda6ae5de5d63662263a0e7df268c0a71b3ff5abbd",
+      "evidence": [
+        {
+          "path": ".planning/quick/Q001-code-driven-corrections/check-2.json",
+          "digest": "7524e9930be375906a8d1eb9dd38d316c6786cb58157cff178e878ab2226d4c1",
+          "original": {
+            "snapshot": ".planning/quick/Q001-code-driven-corrections/check-2.json",
+            "sha256": "136ff547a5da623a73497b4288002d8cc7a0c62c02877a9d921c650e671c7acc"
+          }
+        }
+      ]
+    },
+    {
+      "at": "2026-10-19T08:18:23.625Z",
+      "criteria": [
+        "AC1"
+      ],
+      "method": "command",
+      "commands": [
+        {
+          "argv": [
+            "go",
+            "-C",
+            "backend",
+            "test",
+            "-race",
+            "./..."
+          ],
+          "exit_code": 0
+        }
+      ],
+      "status": "pass",
+      "summary": "Process result; semantic coverage reviewed by executor",
+      "fingerprint": "7ac85e4ce8812595ad116f56e3f684d689645419135515433898ccb1ffdfa687",
+      "evidence": [
+        {
+          "path": ".planning/quick/Q001-code-driven-corrections/check-3.json",
+          "digest": "629f10da3fa300c277c0d8d63e5028c8bd2b0b8bd3c26688fd19ea56ca4390b1",
+          "original": {
+            "snapshot": ".planning/quick/Q001-code-driven-corrections/check-3.json",
+            "sha256": "c294a4bcbda53bdc48feaaf96c306da686d20f37802cfab4d594508bc9f774bd"
+          }
+        }
+      ]
+    },
+    {
+      "at": "2026-10-19T08:18:23.625Z",
+      "criteria": [
+        "AC2"
+      ],
+      "method": "command",
+      "commands": [
+        {
+          "argv": [
+            "go",
+            "-C",
+            "backend",
+            "test",
+            "-race",
+            "./..."
+          ],
+          "exit_code": 0
+        }
+      ],
+      "status": "pass",
+      "summary": "Process result; semantic coverage reviewed by executor",
+      "fingerprint": "7ac85e4ce8812595ad116f56e3f684d689645419135515433898ccb1ffdfa687",
+      "evidence": [
+        {
+          "path": ".planning/quick/Q001-code-driven-corrections/check-3.json",
+          "digest": "629f10da3fa300c277c0d8d63e5028c8bd2b0b8bd3c26688fd19ea56ca4390b1",
+          "original": {
+            "snapshot": ".planning/quick/Q001-code-driven-corrections/check-3.json",
+            "sha256": "c294a4bcbda53bdc48feaaf96c306da686d20f37802cfab4d594508bc9f774bd"
+          }
+        }
+      ]
+    },
+    {
+      "at": "2026-10-19T08:18:23.625Z",
+      "criteria": [
+        "AC3"
+      ],
+      "method": "command",
+      "commands": [
+        {
+          "argv": [
+            "go",
+            "-C",
+            "backend",
+            "test",
+            "-race",
+            "./..."
+          ],
+          "exit_code": 0
+        }
+      ],
+      "status": "pass",
+      "summary": "Process result; semantic coverage reviewed by executor",
+      "fingerprint": "7ac85e4ce8812595ad116f56e3f684d689645419135515433898ccb1ffdfa687",
+      "evidence": [
+        {
+          "path": ".planning/quick/Q001-code-driven-corrections/check-3.json",
+          "digest": "629f10da3fa300c277c0d8d63e5028c8bd2b0b8bd3c26688fd19ea56ca4390b1",
+          "original": {
+            "snapshot": ".planning/quick/Q001-code-driven-corrections/check-3.json",
+            "sha256": "c294a4bcbda53bdc48feaaf96c306da686d20f37802cfab4d594508bc9f774bd"
+          }
+        }
+      ]
+    },
+    {
+      "at": "2026-10-19T08:18:23.625Z",
+      "criteria": [
+        "AC4"
+      ],
+      "method": "command",
+      "commands": [
+        {
+          "argv": [
+            "go",
+            "-C",
+            "backend",
+            "test",
+            "-race",
+            "./..."
+          ],
+          "exit_code": 0
+        },
+        {
+          "argv": [
+            "go",
+            "-C",
+            "backend",
+            "vet",
+            "./..."
+          ],
+          "exit_code": 0
+        }
+      ],
+      "status": "pass",
+      "summary": "Process result; semantic coverage reviewed by executor",
+      "fingerprint": "7ac85e4ce8812595ad116f56e3f684d689645419135515433898ccb1ffdfa687",
+      "evidence": [
+        {
+          "path": ".planning/quick/Q001-code-driven-corrections/check-3.json",
+          "digest": "629f10da3fa300c277c0d8d63e5028c8bd2b0b8bd3c26688fd19ea56ca4390b1",
+          "original": {
+            "snapshot": ".planning/quick/Q001-code-driven-corrections/check-3.json",
+            "sha256": "c294a4bcbda53bdc48feaaf96c306da686d20f37802cfab4d594508bc9f774bd"
+          }
+        }
+      ]
+    },
+    {
+      "at": "2026-10-19T08:19:10.827Z",
+      "criteria": [
+        "AC1"
+      ],
+      "method": "command",
+      "commands": [
+        {
+          "argv": [
+            "go",
+            "-C",
+            "backend",
+            "test",
+            "-race",
+            "./..."
+          ],
+          "exit_code": 0
+        }
+      ],
+      "status": "pass",
+      "summary": "Process result; semantic coverage reviewed by executor",
+      "fingerprint": "fdad6311c436cc29073ff0be28f73023e9f4bb3f87f2e4e7a5965fe906af2013",
+      "evidence": [
+        {
+          "path": ".planning/quick/Q001-code-driven-corrections/check-4.json",
+          "digest": "1c0231ee8d9d0a49def811fe5869bf6dadc3244c5f9dfb243785731c6b02ae7a",
+          "original": {
+            "snapshot": ".planning/quick/Q001-code-driven-corrections/check-4.json",
+            "sha256": "f7826bb4610f598cd2fe9eede346298ba6bcb22b637a525e66e67ee88209b08b"
+          }
+        }
+      ]
+    },
+    {
+      "at": "2026-10-19T08:19:10.828Z",
+      "criteria": [
+        "AC2"
+      ],
+      "method": "command",
+      "commands": [
+        {
+          "argv": [
+            "go",
+            "-C",
+            "backend",
+            "test",
+            "-race",
+            "./..."
+          ],
+          "exit_code": 0
+        }
+      ],
+      "status": "pass",
+      "summary": "Process result; semantic coverage reviewed by executor",
+      "fingerprint": "fdad6311c436cc29073ff0be28f73023e9f4bb3f87f2e4e7a5965fe906af2013",
+      "evidence": [
+        {
+          "path": ".planning/quick/Q001-code-driven-corrections/check-4.json",
+          "digest": "1c0231ee8d9d0a49def811fe5869bf6dadc3244c5f9dfb243785731c6b02ae7a",
+          "original": {
+            "snapshot": ".planning/quick/Q001-code-driven-corrections/check-4.json",
+            "sha256": "f7826bb4610f598cd2fe9eede346298ba6bcb22b637a525e66e67ee88209b08b"
+          }
+        }
+      ]
+    },
+    {
+      "at": "2026-10-19T08:19:10.828Z",
+      "criteria": [
+        "AC3"
+      ],
+      "method": "command",
+      "commands": [
+        {
+          "argv": [
+            "go",
+            "-C",
+            "backend",
+            "test",
+            "-race",
+            "./..."
+          ],
+          "exit_code": 0
+        }
+      ],
+      "status": "pass",
+      "summary": "Process result; semantic coverage reviewed by executor",
+      "fingerprint": "fdad6311c436cc29073ff0be28f73023e9f4bb3f87f2e4e7a5965fe906af2013",
+      "evidence": [
+        {
+          "path": ".planning/quick/Q001-code-driven-corrections/check-4.json",
+          "digest": "1c0231ee8d9d0a49def811fe5869bf6dadc3244c5f9dfb243785731c6b02ae7a",
+          "original": {
+            "snapshot": ".planning/quick/Q001-code-driven-corrections/check-4.json",
+            "sha256": "f7826bb4610f598cd2fe9eede346298ba6bcb22b637a525e66e67ee88209b08b"
+          }
+        }
+      ]
+    },
+    {
+      "at": "2026-10-19T08:19:10.828Z",
+      "criteria": [
+        "AC4"
+      ],
+      "method": "command",
+      "commands": [
+        {
+          "argv": [
+            "go",
+            "-C",
+            "backend",
+            "test",
+            "-race",
+            "./..."
+          ],
+          "exit_code": 0
+        },
+        {
+          "argv": [
+            "go",
+            "-C",
+            "backend",
+            "vet",
+            "./..."
+          ],
+          "exit_code": 0
+        }
+      ],
+      "status": "pass",
+      "summary": "Process result; semantic coverage reviewed by executor",
+      "fingerprint": "fdad6311c436cc29073ff0be28f73023e9f4bb3f87f2e4e7a5965fe906af2013",
+      "evidence": [
+        {
+          "path": ".planning/quick/Q001-code-driven-corrections/check-4.json",
+          "digest": "1c0231ee8d9d0a49def811fe5869bf6dadc3244c5f9dfb243785731c6b02ae7a",
+          "original": {
+            "snapshot": ".planning/quick/Q001-code-driven-corrections/check-4.json",
+            "sha256": "f7826bb4610f598cd2fe9eede346298ba6bcb22b637a525e66e67ee88209b08b"
+          }
+        }
+      ]
+    },
+    {
+      "at": "2026-10-19T08:20:38.308Z",
+      "criteria": [
+        "AC5"
+      ],
+      "method": "inspection",
+      "status": "pass",
+      "summary": "逐项检查最终差异：20个声明文件已变更，额外仅CLI管理的Q001记录；既有未跟踪research/deployment保留。工作流、Profile、最终validator、公开接口/数据库无改动；gofmt和git diff --check通过；正文与字段模式不变量由check-4覆盖。",
+      "observer": "root",
+      "fingerprint": "fdad6311c436cc29073ff0be28f73023e9f4bb3f87f2e4e7a5965fe906af2013",
+      "evidence": [
+        {
+          "path": "backend/internal/ai/correction_routing.go",
+          "digest": "5161c0d5f01b2d5450e87ea56f52018ac890f19ebcf995ede6df1b33a5daefb4",
+          "original": {
+            "snapshot": ".planning/quick/Q001-code-driven-corrections/evidence/9964bbbb4ea1109394d05a79a709211e652f9bde9a0e8582825fca1df4742181",
+            "sha256": "9964bbbb4ea1109394d05a79a709211e652f9bde9a0e8582825fca1df4742181"
+          }
+        },
+        {
+          "path": "backend/internal/ai/correction_response.go",
+          "digest": "fdfc1f390780c37613825d03097bc70c3a33ccc12c443e2acfea0f239837b17a",
+          "original": {
+            "snapshot": ".planning/quick/Q001-code-driven-corrections/evidence/b1754ba8089452e107144eb9ae5d543cc8cc233e82733a6589163a4be5ca2386",
+            "sha256": "b1754ba8089452e107144eb9ae5d543cc8cc233e82733a6589163a4be5ca2386"
+          }
+        },
+        {
+          "path": "backend/internal/ai/continuation.go",
+          "digest": "bcee99c7ddf5f3d3d7ab2014352aa50a064d86625eda1ff2a84e09f1557a0c29",
+          "original": {
+            "snapshot": ".planning/quick/Q001-code-driven-corrections/evidence/3fbedf69a5199ccc3b7c08dd8f8bc22f4ffd3bdb65f2761da2c544188d0a2206",
+            "sha256": "3fbedf69a5199ccc3b7c08dd8f8bc22f4ffd3bdb65f2761da2c544188d0a2206"
+          }
+        },
+        {
+          "path": ".planning/milestones/M002/verification/correction-routing.md",
+          "digest": "6af97a783e7961c58a8493561cdeb3df7ea151bff55ecee7f70ada5829a9ad3e",
+          "original": {
+            "snapshot": ".planning/quick/Q001-code-driven-corrections/evidence/76ae27c2a2b89f072f4115acb2a9e4d8d47416889b86cad4957e52363776a84b",
+            "sha256": "76ae27c2a2b89f072f4115acb2a9e4d8d47416889b86cad4957e52363776a84b"
+          }
+        },
+        {
+          "path": ".planning/milestones/M002/continuation.md",
+          "digest": "6159b84b3096d04ae675894019ca489ebc011a3717f7c447186f1c1fbf62753d",
+          "original": {
+            "snapshot": ".planning/quick/Q001-code-driven-corrections/evidence/1cde8a041acc5578643a8f5f14b48bd64bc026560d6f04492db7a26beef273c0",
+            "sha256": "1cde8a041acc5578643a8f5f14b48bd64bc026560d6f04492db7a26beef273c0"
+          }
+        },
+        {
+          "path": ".planning/workflow/state.yaml",
+          "digest": "f9b7b2261e7aace5a36815b6f6ddbe8ea6d9d3fa5c46eaa170b6a2fc6c06a179",
+          "original": {
+            "snapshot": ".planning/quick/Q001-code-driven-corrections/evidence/d1c23488fb0903c2a141f34729cb052544d9d58c2194b85f685751f4a84ee189",
+            "sha256": "d1c23488fb0903c2a141f34729cb052544d9d58c2194b85f685751f4a84ee189"
+          }
+        }
+      ]
+    }
+  ],
+  "document_receipts": [
+    {
+      "at": "2026-10-19T08:09:18.204Z",
+      "document": "DOC_PRODUCT",
+      "role": "product/to-c",
+      "status": "pass",
+      "executor": "root",
+      "mode": "serial",
+      "runtime_id": null,
+      "authorization_source": null,
+      "independent_review": false,
+      "summary": "已写入代码诊断、多字段私有验收、共享预算和验证边界；用户 task.request 为实施授权，保留历史质量项。",
+      "signature": "aea9ebc171b2d766a43b1930933a4949aabb773e597b88a9ef8918fa30fa0948",
+      "evidence": [
+        {
+          "path": ".planning/milestones/M002/product/correction-routing.md",
+          "digest": "47754943545a89f87ce3c6ef5fef3b8d377e8b4ae3b132018d801d61f6c5729f",
+          "original": {
+            "snapshot": ".planning/quick/Q001-code-driven-corrections/evidence/63e695107ed5e3977062d5285c95d4567a1321f90441aa26058ba78c6cb47691",
+            "sha256": "63e695107ed5e3977062d5285c95d4567a1321f90441aa26058ba78c6cb47691"
+          }
+        },
+        {
+          "path": ".planning/milestones/M002/product/ai-behavior.md",
+          "digest": "ed40b849e870ae8899450560401ee6df3b6b950115ed6ce9597065e1c48a2c9f",
+          "original": {
+            "snapshot": ".planning/quick/Q001-code-driven-corrections/evidence/bc7859a6e5c66a5111e175e8c39ecd57203f0ca6a3d2c0f85f8447e239cd1c37",
+            "sha256": "bc7859a6e5c66a5111e175e8c39ecd57203f0ca6a3d2c0f85f8447e239cd1c37"
+          }
+        }
+      ]
+    },
+    {
+      "at": "2026-10-19T08:09:57.750Z",
+      "document": "DOC_TECH",
+      "role": "backend-architect/base",
+      "status": "pass",
+      "executor": "root",
+      "mode": "serial",
+      "runtime_id": null,
+      "authorization_source": null,
+      "independent_review": false,
+      "summary": "完成受限任务键、复用诊断、模板冲突消解、协议接收、字段私有合并和共享预算技术契约；既有最终校验不改。",
+      "signature": "94f3293f52253482115fee9201fcb845f90cef2a7bdfe4662f6c41bae243154f",
+      "evidence": [
+        {
+          "path": ".planning/milestones/M002/technical/correction-routing.md",
+          "digest": "06d77713453b0a62bca404ec4939e5124ac1c1027c64fe00229a4691a0fd63ac",
+          "original": {
+            "snapshot": ".planning/quick/Q001-code-driven-corrections/evidence/8f5489f30baa319498a1b8807c659ffb778512587e61324f55ac86236a5cedcc",
+            "sha256": "8f5489f30baa319498a1b8807c659ffb778512587e61324f55ac86236a5cedcc"
+          }
+        },
+        {
+          "path": ".planning/milestones/M002/technical/ai-integration.md",
+          "digest": "5a3dd55b50b2c435c802dc9683561ae2259bbba54bb306d7161022d417015494",
+          "original": {
+            "snapshot": ".planning/quick/Q001-code-driven-corrections/evidence/11e412885a6e237b94f33ec90645719661cf65fafd6b8c8fbf4f3081529e3bd3",
+            "sha256": "11e412885a6e237b94f33ec90645719661cf65fafd6b8c8fbf4f3081529e3bd3"
+          }
+        }
+      ]
+    },
+    {
+      "at": "2026-10-19T08:15:49.274Z",
+      "document": "DOC_PRODUCT",
+      "role": "product/to-c",
+      "status": "pass",
+      "executor": "root",
+      "mode": "serial",
+      "runtime_id": null,
+      "authorization_source": null,
+      "independent_review": false,
+      "summary": "复核修订2：新增指纹适配不改变已写入的多字段私有纠正、原生两次预算和保留项产品规则。",
+      "signature": "512893f50bc20f7d371135e6cb2ee3b7bed14d346ed4a1718c8c6d8184774cd6",
+      "evidence": [
+        {
+          "path": ".planning/milestones/M002/product/correction-routing.md",
+          "digest": "47754943545a89f87ce3c6ef5fef3b8d377e8b4ae3b132018d801d61f6c5729f",
+          "original": {
+            "snapshot": ".planning/quick/Q001-code-driven-corrections/evidence/63e695107ed5e3977062d5285c95d4567a1321f90441aa26058ba78c6cb47691",
+            "sha256": "63e695107ed5e3977062d5285c95d4567a1321f90441aa26058ba78c6cb47691"
+          }
+        },
+        {
+          "path": ".planning/milestones/M002/product/ai-behavior.md",
+          "digest": "ed40b849e870ae8899450560401ee6df3b6b950115ed6ce9597065e1c48a2c9f",
+          "original": {
+            "snapshot": ".planning/quick/Q001-code-driven-corrections/evidence/bc7859a6e5c66a5111e175e8c39ecd57203f0ca6a3d2c0f85f8447e239cd1c37",
+            "sha256": "bc7859a6e5c66a5111e175e8c39ecd57203f0ca6a3d2c0f85f8447e239cd1c37"
+          }
+        }
+      ]
+    },
+    {
+      "at": "2026-10-19T08:15:49.430Z",
+      "document": "DOC_TECH",
+      "role": "backend-architect/base",
+      "status": "pass",
+      "executor": "root",
+      "mode": "serial",
+      "runtime_id": null,
+      "authorization_source": null,
+      "independent_review": false,
+      "summary": "复核修订2：契约指纹同步全部纠正模板和动态字段schema，旧续写版本不改；实现遵守当前技术增量。",
+      "signature": "345c14017b2e132336758799c13aa1161548db0ff7f0572bcb346b3b932574d8",
+      "evidence": [
+        {
+          "path": ".planning/milestones/M002/technical/correction-routing.md",
+          "digest": "06d77713453b0a62bca404ec4939e5124ac1c1027c64fe00229a4691a0fd63ac",
+          "original": {
+            "snapshot": ".planning/quick/Q001-code-driven-corrections/evidence/8f5489f30baa319498a1b8807c659ffb778512587e61324f55ac86236a5cedcc",
+            "sha256": "8f5489f30baa319498a1b8807c659ffb778512587e61324f55ac86236a5cedcc"
+          }
+        },
+        {
+          "path": ".planning/milestones/M002/technical/ai-integration.md",
+          "digest": "5a3dd55b50b2c435c802dc9683561ae2259bbba54bb306d7161022d417015494",
+          "original": {
+            "snapshot": ".planning/quick/Q001-code-driven-corrections/evidence/11e412885a6e237b94f33ec90645719661cf65fafd6b8c8fbf4f3081529e3bd3",
+            "sha256": "11e412885a6e237b94f33ec90645719661cf65fafd6b8c8fbf4f3081529e3bd3"
+          }
+        }
+      ]
+    },
+    {
+      "at": "2026-10-19T08:17:48.370Z",
+      "document": "DOC_TECH",
+      "role": "backend-architect/base",
+      "status": "pass",
+      "executor": "root",
+      "mode": "serial",
+      "runtime_id": null,
+      "authorization_source": null,
+      "independent_review": false,
+      "summary": "完成最终技术复核：诊断采样不改变分类，拒绝值反馈有界；原稿schema边界不变，结构错误细分、全部模板指纹和实际费用记录保持。",
+      "signature": "c4acbb7fa1d7ba91af6298410c4878cc5a5455aa4986cc821de382bc94648771",
+      "evidence": [
+        {
+          "path": ".planning/milestones/M002/technical/correction-routing.md",
+          "digest": "22f793b400b61caa928ba0e5c7f1a9c19a91567748962d8bd599cd66896f3d0a",
+          "original": {
+            "snapshot": ".planning/quick/Q001-code-driven-corrections/evidence/bff83381df85e2d17bda2573ecc17a7acb828bb68862b1fca67a1563c37f5805",
+            "sha256": "bff83381df85e2d17bda2573ecc17a7acb828bb68862b1fca67a1563c37f5805"
+          }
+        },
+        {
+          "path": ".planning/milestones/M002/technical/ai-integration.md",
+          "digest": "5a3dd55b50b2c435c802dc9683561ae2259bbba54bb306d7161022d417015494",
+          "original": {
+            "snapshot": ".planning/quick/Q001-code-driven-corrections/evidence/11e412885a6e237b94f33ec90645719661cf65fafd6b8c8fbf4f3081529e3bd3",
+            "sha256": "11e412885a6e237b94f33ec90645719661cf65fafd6b8c8fbf4f3081529e3bd3"
+          }
+        }
+      ]
+    },
+    {
+      "at": "2026-10-19T08:20:09.508Z",
+      "document": "DOC_QA",
+      "role": "quality/base",
+      "status": "pass",
+      "executor": "root",
+      "mode": "serial",
+      "runtime_id": null,
+      "authorization_source": null,
+      "independent_review": false,
+      "summary": "逐项核对AC1–AC5，记录check-4全量后端竞态测试与vet结果；明确本地替身、未执行integration/模型质量和独立QA边界，保留既有ID。",
+      "signature": "ee008bd44b697c576362dee5ff934f7d7a6013241ab72f07505ff97df5ed5c02",
+      "evidence": [
+        {
+          "path": ".planning/milestones/M002/verification/correction-routing.md",
+          "digest": "6af97a783e7961c58a8493561cdeb3df7ea151bff55ecee7f70ada5829a9ad3e",
+          "original": {
+            "snapshot": ".planning/quick/Q001-code-driven-corrections/evidence/76ae27c2a2b89f072f4115acb2a9e4d8d47416889b86cad4957e52363776a84b",
+            "sha256": "76ae27c2a2b89f072f4115acb2a9e4d8d47416889b86cad4957e52363776a84b"
+          }
+        },
+        {
+          "path": ".planning/milestones/M002/verification/report.md",
+          "digest": "038ebc924e8d617281f7261b3741a1c87da424dc8f19f7e66fb5dc6c48da160a",
+          "original": {
+            "snapshot": ".planning/quick/Q001-code-driven-corrections/evidence/9f2412dea2e553c1ccedb6a966a6bbbfcb2c73939e52364412ba155074d52e22",
+            "sha256": "9f2412dea2e553c1ccedb6a966a6bbbfcb2c73939e52364412ba155074d52e22"
+          }
+        },
+        {
+          "path": ".planning/quick/Q001-code-driven-corrections/check-4.json",
+          "digest": "1c0231ee8d9d0a49def811fe5869bf6dadc3244c5f9dfb243785731c6b02ae7a",
+          "original": {
+            "snapshot": ".planning/quick/Q001-code-driven-corrections/check-4.json",
+            "sha256": "f7826bb4610f598cd2fe9eede346298ba6bcb22b637a525e66e67ee88209b08b"
+          }
+        }
+      ]
+    },
+    {
+      "at": "2026-10-19T08:20:37.984Z",
+      "document": "DOC_HANDOFF",
+      "role": "backend-implementer/base",
+      "status": "pass",
+      "executor": "root",
+      "mode": "serial",
+      "runtime_id": null,
+      "authorization_source": null,
+      "independent_review": false,
+      "summary": "同步当前Quick入口、实现与有效验证证据；明确四类职责由root串行执行、当前仅本地保存、无部署/模型调用及独立恢复试验。",
+      "signature": "b15f706e07a15a1a5114555766c3ecbafef2c3d3be0ffd47649eb5b149c4907a",
+      "evidence": [
+        {
+          "path": ".planning/milestones/M002/handoffs/backend-implementation.md",
+          "digest": "9b2351acd9bc95bc82681390d99741825492717396d8cb89aa69d433d734ea18",
+          "original": {
+            "snapshot": ".planning/quick/Q001-code-driven-corrections/evidence/b97e9cbbe7d44e6a8c6838553988ce5f6c360eed1c5b91007daea047954fd208",
+            "sha256": "b97e9cbbe7d44e6a8c6838553988ce5f6c360eed1c5b91007daea047954fd208"
+          }
+        },
+        {
+          "path": ".planning/milestones/M002/continuation.md",
+          "digest": "6159b84b3096d04ae675894019ca489ebc011a3717f7c447186f1c1fbf62753d",
+          "original": {
+            "snapshot": ".planning/quick/Q001-code-driven-corrections/evidence/1cde8a041acc5578643a8f5f14b48bd64bc026560d6f04492db7a26beef273c0",
+            "sha256": "1cde8a041acc5578643a8f5f14b48bd64bc026560d6f04492db7a26beef273c0"
+          }
+        },
+        {
+          "path": ".planning/quick/Q001-code-driven-corrections/check-4.json",
+          "digest": "1c0231ee8d9d0a49def811fe5869bf6dadc3244c5f9dfb243785731c6b02ae7a",
+          "original": {
+            "snapshot": ".planning/quick/Q001-code-driven-corrections/check-4.json",
+            "sha256": "f7826bb4610f598cd2fe9eede346298ba6bcb22b637a525e66e67ee88209b08b"
+          }
+        }
+      ]
+    }
+  ],
+  "events": [
+    {
+      "at": "2026-10-19T08:08:59.668Z",
+      "action": "start",
+      "reason": null,
+      "target": null
+    },
+    {
+      "at": "2026-10-19T08:15:06.071Z",
+      "action": "revise",
+      "reason": "编译发现契约指纹包含旧纠正占位对象；将 fingerprint.go 纳入同一协议适配范围，并对全部模板材料取指纹。",
+      "target": null,
+      "previous_plan": {
+        "plan_revision": 1,
+        "write_scope": [
+          "backend/internal/ai/correction_routing.go",
+          "backend/internal/ai/correction_prompts.go",
+          "backend/internal/ai/correction_response.go",
+          "backend/internal/ai/correction_routing_test.go",
+          "backend/internal/ai/correction_response_test.go",
+          "backend/internal/ai/continuation.go",
+          "backend/internal/ai/openrouter.go",
+          "backend/internal/ai/gateway.go",
+          "backend/internal/ai/contract.go",
+          "backend/internal/ai/corrections_test.go",
+          "backend/internal/ai/content_tasks_test.go",
+          ".planning/milestones/M002/product/correction-routing.md",
+          ".planning/milestones/M002/product/ai-behavior.md",
+          ".planning/milestones/M002/technical/correction-routing.md",
+          ".planning/milestones/M002/technical/ai-integration.md",
+          ".planning/milestones/M002/verification/correction-routing.md",
+          ".planning/milestones/M002/verification/report.md",
+          ".planning/milestones/M002/handoffs/backend-implementation.md",
+          ".planning/milestones/M002/continuation.md"
+        ],
+        "sources": [
+          ".planning/workflow/state.yaml",
+          ".planning/milestones/M002/continuation.md",
+          ".planning/agt/qa-scope-policy.md",
+          ".planning/milestones/M002-legacy-M003/product/ai-behavior.md",
+          ".planning/milestones/M002-legacy-M003/technical/ai-integration.md",
+          "docs/research/cost-planning/correction-routing-proposal-2026-10-19/prompt-templates.json",
+          "backend/internal/ai/validator.go"
+        ],
+        "plan": [
+          "串行履行产品与后端架构责任，回落当前增量契约",
+          "实现代码诊断、受限模板及响应合并，保留全量最终校验",
+          "确定性功能与生成管线回归；QA、交接、compact 与 finish"
+        ],
+        "acceptance": [
+          {
+            "id": "AC1",
+            "description": "代码识别多字段错误并组合兼容模板；区分词形缺失、标注缺失、未知关系及启发式语言检查",
+            "verification": "command"
+          },
+          {
+            "id": "AC2",
+            "description": "动态键由服务端映射，严格拒绝重复/缺失/多余/空或类型错误响应；不依赖键顺序且纠正不公开流式内容",
+            "verification": "command"
+          },
+          {
+            "id": "AC3",
+            "description": "有效字段仅合并到私有候选，剩余错误反馈重试；正文可见文本不变，hint模式约束正确",
+            "verification": "command"
+          },
+          {
+            "id": "AC4",
+            "description": "纠正及续写共享最多两次预算；取消/传输故障不重试，既有生成管线和终态校验回归通过",
+            "verification": "command"
+          },
+          {
+            "id": "AC5",
+            "description": "修改在声明范围内，未改里程碑控制面、用户研究文件、公开接口和现有质量保留项",
+            "verification": "inspection"
+          }
+        ],
+        "progress": null,
+        "document_impacts": {
+          "product": {
+            "status": "affected",
+            "reason": "明确代码分类、多字段局部纠正、共享预算和终态规则"
+          },
+          "technical": {
+            "status": "affected",
+            "reason": "定义诊断、模板冲突消解、动态响应与局部合并契约"
+          },
+          "verification": {
+            "status": "affected",
+            "reason": "记录确定性用例、原有回归及未进行的真实模型评估"
+          },
+          "handoff": {
+            "status": "affected",
+            "reason": "更新当前入口、落地范围和保留项"
+          },
+          "design": {
+            "status": "none",
+            "reason": "不新增页面、交互、公开请求字段或输出事件；纠正仍在现有私有恢复阶段完成"
+          }
+        },
+        "document_tasks": [
+          {
+            "id": "DOC_PRODUCT",
+            "domain": "product",
+            "role": "product/to-c",
+            "paths": [
+              ".planning/milestones/M002/product/correction-routing.md",
+              ".planning/milestones/M002/product/ai-behavior.md"
+            ],
+            "change": "明确代码分类、多字段局部纠正、共享预算和终态规则",
+            "depends_on": [],
+            "approval_required": true,
+            "approval_source": "task.request"
+          },
+          {
+            "id": "DOC_TECH",
+            "domain": "technical",
+            "role": "backend-architect/base",
+            "paths": [
+              ".planning/milestones/M002/technical/correction-routing.md",
+              ".planning/milestones/M002/technical/ai-integration.md"
+            ],
+            "change": "定义诊断、模板冲突消解、动态响应与局部合并契约",
+            "depends_on": [
+              "DOC_PRODUCT"
+            ],
+            "approval_required": true,
+            "approval_source": "task.request"
+          },
+          {
+            "id": "DOC_QA",
+            "domain": "verification",
+            "role": "quality/base",
+            "paths": [
+              ".planning/milestones/M002/verification/correction-routing.md",
+              ".planning/milestones/M002/verification/report.md"
+            ],
+            "change": "记录确定性用例、原有回归及未进行的真实模型评估",
+            "depends_on": [
+              "DOC_TECH"
+            ],
+            "approval_required": false,
+            "approval_source": "task.request"
+          },
+          {
+            "id": "DOC_HANDOFF",
+            "domain": "handoff",
+            "role": "backend-implementer/base",
+            "paths": [
+              ".planning/milestones/M002/handoffs/backend-implementation.md",
+              ".planning/milestones/M002/continuation.md"
+            ],
+            "change": "更新当前入口、落地范围和保留项",
+            "depends_on": [
+              "DOC_QA"
+            ],
+            "approval_required": false,
+            "approval_source": "task.request"
+          }
+        ]
+      }
+    },
+    {
+      "at": "2026-10-19T08:15:49.117Z",
+      "action": "start",
+      "reason": null,
+      "target": null
+    },
+    {
+      "at": "2026-10-19T08:21:08.071Z",
+      "action": "finish",
+      "reason": null,
+      "target": null
+    }
+  ],
+  "progress": null,
+  "summary": "Q001已完成代码诊断驱动多字段纠正：18个可组合模块、严格动态字段响应、私有独立验收及剩余错误反馈；两次共享预算与最终全量校验保持。20个声明文件已本地保存，未提交/推送/部署。",
+  "next_action": null,
+  "document_baselines": [
+    {
+      "path": ".planning/milestones/M002/product/correction-routing.md",
+      "digest": null,
+      "original": null
+    },
+    {
+      "path": ".planning/milestones/M002/product/ai-behavior.md",
+      "digest": "c9a579f59321b078e9021073a4129eaa4e8e472f662fe7021d639728240f60ce",
+      "original": {
+        "git_revision": "c05d41ba4165cc0bd699de973201bbd642c4d860",
+        "path": ".planning/milestones/M002/product/ai-behavior.md",
+        "sha256": "4da25762ba9489b9ab7f70ddaf784d83ef29a19e310f3b2f5430c0151efc1a33"
+      }
+    },
+    {
+      "path": ".planning/milestones/M002/technical/correction-routing.md",
+      "digest": null,
+      "original": null
+    },
+    {
+      "path": ".planning/milestones/M002/technical/ai-integration.md",
+      "digest": "922d00a9115ea1ea81f2583976d8f533a2782bf513ea6e451b1e9f9a8578c0ff",
+      "original": {
+        "git_revision": "c05d41ba4165cc0bd699de973201bbd642c4d860",
+        "path": ".planning/milestones/M002/technical/ai-integration.md",
+        "sha256": "c3ba05d32b5f9a54e12dbb76a6d5528f261d5d6177e0612d247cce3438983b32"
+      }
+    },
+    {
+      "path": ".planning/milestones/M002/verification/correction-routing.md",
+      "digest": null,
+      "original": null
+    },
+    {
+      "path": ".planning/milestones/M002/verification/report.md",
+      "digest": "af863fa3a43afa171a8333632fac33e0ce111cf7f2cb382fdcfedb7302e93906",
+      "original": {
+        "git_revision": "c05d41ba4165cc0bd699de973201bbd642c4d860",
+        "path": ".planning/milestones/M002/verification/report.md",
+        "sha256": "09b9f940c946412ba205b8aa0e7d16f0d0742577087f0a574c6980ed2be562cf"
+      }
+    },
+    {
+      "path": ".planning/milestones/M002/handoffs/backend-implementation.md",
+      "digest": "536f1d85c4066467e139750b8e971420793a6735d39db7fd7944c018a00045fc",
+      "original": {
+        "git_revision": "c05d41ba4165cc0bd699de973201bbd642c4d860",
+        "path": ".planning/milestones/M002/handoffs/backend-implementation.md",
+        "sha256": "1f4b682130823fc25f8000b61373897431a7474b9af7fad2215956771daa7a0e"
+      }
+    },
+    {
+      "path": ".planning/milestones/M002/continuation.md",
+      "digest": "7b2e35fe9b6532c1e10bdde7fc23e67e880dc35350937ef252767dec4d1509e6",
+      "original": {
+        "git_revision": "c05d41ba4165cc0bd699de973201bbd642c4d860",
+        "path": ".planning/milestones/M002/continuation.md",
+        "sha256": "f8c2a44ce9be5121e2171df555f699cd2c77e66be0bf2a65d33219362c2cb82b"
+      }
+    }
+  ],
+  "context_closeout": {
+    "outcome": "Q001已完成代码诊断驱动多字段纠正：18个可组合模块、严格动态字段响应、私有独立验收及剩余错误反馈；两次共享预算与最终全量校验保持。20个声明文件已本地保存，未提交/推送/部署。",
+    "rationale": "用户明确要求将已讨论方案用agt-quick落地。首错整包纠正会重复输出无关字段并放大格式风险；按代码事实选择互斥模式、只返回指定字段，将新错误和重复字段隔离在私有候选内。",
+    "verification_scope": "check-4记录 go -C backend test -race ./... 与 go -C backend vet ./... 均通过；AC5检查最终范围、控制面、gofmt与diff。确定性本地三协议替身覆盖解析、重试、合并和用量，原生成流程全量非integration-tag回归。",
+    "limitations": "root在当前会话串行承担产品/技术/实现/质量责任，并非独立QA。未调用真实模型，未评估真实成功率/语义质量/费用节省；未执行数据库integration-tag、浏览器或生产部署验证。独立新会话恢复NOT_RUN；历史保留项及无ID环境专项均按现有QA表继续保留。",
+    "decisions": [
+      {
+        "summary": "错误原因由代码识别并组合模板，不新增AI诊断调用；实际纠正仍由同一目标模型执行。",
+        "source": "task.request"
+      },
+      {
+        "summary": "多字段响应采用服务端稳定任务键；整包结构校验后独立字段验收，成功字段只进入私有候选。",
+        "source": ".planning/milestones/M002/technical/correction-routing.md"
+      },
+      {
+        "summary": "正文可见文本不可改；hint按缺词/语法/内容、空白、标注选择重建/修剪/仅标注模式，继续共享两次预算。",
+        "source": ".planning/milestones/M002/product/correction-routing.md"
+      },
+      {
+        "summary": "QA只验证机械与流程规则；真实模型质量及独立恢复保持未验证。",
+        "source": ".planning/agt/qa-scope-policy.md"
+      }
+    ],
+    "retained_items": [
+      {
+        "id": "CR039-L1",
+        "summary": "词形关系旧限制保持；本次未修改词库",
+        "next_action": "有明确词形改进或复现任务时定位原CR并验证",
+        "evidence": [
+          ".planning/milestones/M002/verification/report.md"
+        ]
+      },
+      {
+        "id": "CR042-L1",
+        "summary": "未知标注历史诊断与多回复整包离线回放边界仍在",
+        "next_action": "后续按原边界定向处理；本次不声明整包回放已支持",
+        "evidence": [
+          ".planning/milestones/M002/verification/report.md"
+        ]
+      },
+      {
+        "id": "AI-QUALITY-90",
+        "summary": "90%稳定成功率仍无统计证明",
+        "next_action": "另行授权模型评测后采样，不能据功能测试宣称达标",
+        "evidence": [
+          ".planning/milestones/M002/verification/report.md"
+        ]
+      },
+      {
+        "id": "W01",
+        "summary": "历史hydration警告未定位",
+        "next_action": "复现时保留页面堆栈再定向验证",
+        "evidence": [
+          ".planning/milestones/M002/verification/report.md"
+        ]
+      },
+      {
+        "id": "QA26-MINIMAX",
+        "summary": "历史模型启用失败未复查",
+        "next_action": "明确恢复模型任务后按原配置和失败证据检查",
+        "evidence": [
+          ".planning/milestones/M002/verification/report.md"
+        ]
+      },
+      {
+        "id": "PRON-MOBILE",
+        "summary": "真实手机朗读仍未验证",
+        "next_action": "有设备与明确专项任务后补验",
+        "evidence": [
+          ".planning/milestones/M002/verification/report.md"
+        ]
+      }
+    ],
+    "documents": [
+      {
+        "document": "DOC_PRODUCT",
+        "disposition": "already_concise",
+        "summary": "当前增量集中在一份产品规则，旧契约只加优先入口；规则、边界与保留项已无中间轮次或旧下一步。"
+      },
+      {
+        "document": "DOC_TECH",
+        "disposition": "consolidated",
+        "summary": "将最终诊断/模板/响应/预算/指纹/有界反馈汇为当前契约，明确旧初稿schema继续生效；中间实现尝试不进入正文。"
+      },
+      {
+        "document": "DOC_QA",
+        "disposition": "consolidated",
+        "summary": "当前报告只以check-4为有效验证，按AC汇集覆盖和未跑项；编译适配与旧检查保留在Quick历史。"
+      },
+      {
+        "document": "DOC_HANDOFF",
+        "disposition": "consolidated",
+        "summary": "统一当前Q001入口、实际串行角色、已保存未发布状态及回归/恢复路径；历史M002接受不扩展至新增量。"
+      }
+    ],
+    "resolved_items": [],
+    "recovery_check": {
+      "status": "not_run",
+      "reason": "未另行启动独立新会话恢复试验；静态原件检查与执行者整理不冒充独立恢复。"
+    },
+    "executor": "root",
+    "signature": "8a1d021e1fbc16de700550dcac5f92b4fde4637e7aa5cc04dd899d2d9035f985",
+    "evidence": [
+      {
+        "path": ".planning/milestones/M002/technical/correction-routing.md",
+        "digest": "22f793b400b61caa928ba0e5c7f1a9c19a91567748962d8bd599cd66896f3d0a",
+        "original": {
+          "snapshot": ".planning/quick/Q001-code-driven-corrections/evidence/bff83381df85e2d17bda2573ecc17a7acb828bb68862b1fca67a1563c37f5805",
+          "sha256": "bff83381df85e2d17bda2573ecc17a7acb828bb68862b1fca67a1563c37f5805"
+        }
+      },
+      {
+        "path": ".planning/milestones/M002/product/correction-routing.md",
+        "digest": "47754943545a89f87ce3c6ef5fef3b8d377e8b4ae3b132018d801d61f6c5729f",
+        "original": {
+          "snapshot": ".planning/quick/Q001-code-driven-corrections/evidence/63e695107ed5e3977062d5285c95d4567a1321f90441aa26058ba78c6cb47691",
+          "sha256": "63e695107ed5e3977062d5285c95d4567a1321f90441aa26058ba78c6cb47691"
+        }
+      },
+      {
+        "path": ".planning/agt/qa-scope-policy.md",
+        "digest": "30da0c897d9c84023c5288b3d6d9e06ecbc39838c3db597f1b43e2af0bfde720",
+        "original": {
+          "snapshot": ".planning/quick/Q001-code-driven-corrections/evidence/4735ae36f5ffd6a86436a2d9e320f3807ca41b8a935c67e3051bddc1b9009d07",
+          "sha256": "4735ae36f5ffd6a86436a2d9e320f3807ca41b8a935c67e3051bddc1b9009d07"
+        }
+      },
+      {
+        "path": ".planning/milestones/M002/verification/report.md",
+        "digest": "038ebc924e8d617281f7261b3741a1c87da424dc8f19f7e66fb5dc6c48da160a",
+        "original": {
+          "snapshot": ".planning/quick/Q001-code-driven-corrections/evidence/9f2412dea2e553c1ccedb6a966a6bbbfcb2c73939e52364412ba155074d52e22",
+          "sha256": "9f2412dea2e553c1ccedb6a966a6bbbfcb2c73939e52364412ba155074d52e22"
+        }
+      }
+    ]
+  },
+  "completed_fingerprint": "fdad6311c436cc29073ff0be28f73023e9f4bb3f87f2e4e7a5965fe906af2013"
+}
