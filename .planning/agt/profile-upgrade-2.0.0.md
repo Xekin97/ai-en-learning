@@ -35,6 +35,8 @@ git -C ../agt-coding-v2 show 91d98055ec49c877cc03473e479bcc6a9f371af6:.agents/sk
 
 用户随后要求补齐 Quick 的上下文语义整理与归档。当前 Quick 补丁同时包含：责任正文收敛 → `compact` 整理回执 → `finish` 必需检查；默认 `show/resume` 返回精简视图，显式 `--history` 展开历史。原件按版本/摘要追溯，重复整理相同输入不改写；内容、证据或责任回执变化使整理失效。独立接续试验未执行时单列 NOT_RUN，不以静态通过冒充实际效果。补丁顺序和 Profile 锁保持上述版本链。
 
+2026-10-21 用户要求清理 ai-en 测试截图并调整 AGT 规则，Q007 增量采用[证据留存补丁](evidence-retention-adoption.json)。**完整恢复顺序现为锁定 revision → `context-maintenance-v1.patch` → `quick-tasks-v1.patch` → `evidence-retention-v1.patch`**；最后一份补丁的 SHA、前置版本和四份文件摘要均在采用清单中，仍须逐步 `git apply --check`、应用并校验。该补丁只区分临时图片、未决证据、必要正式证据和可按版本恢复的历史图片，替代先前“全部测试图片永久留在工作树”的宽泛解释；不会修改 Quick 原始记录的完整性要求。产品 Profile 2.0、模型锁和当前 M003 阶段保持原样，清理不覆盖此前审批或未验证结论。历史图片定位见[恢复入口](../milestones/M002/verification/screenshot-archive.md)。本段及采用清单记录该增量规则，不使用 sibling HEAD 替代锁定来源链。
+
 升级前产品提交为 `ce42e8726f7cf765a37afb574fe46f15b5d47f62`，本次涉及的五份已有文件在写入前均与该提交逐字节一致。原 `INIT-PROFILE-001` 选择、控制面及 README 可通过 `git show <产品提交>:<路径>` 恢复；旧 Profile 可从旧基座 revision 恢复。原关闭证据中的 1.0.0 快照保留作历史依据。回退时仅恢复本次锁定字段和入口，并追加配置回退记录，保留后续工作及历史事件。
 
 ## 差异与采用范围

@@ -1,0 +1,48 @@
+{
+  "before": "287334de09cd6f881e1b31a2a57b7fbc9b0b1d9993af751ac6a045cf29927c56",
+  "after": "287334de09cd6f881e1b31a2a57b7fbc9b0b1d9993af751ac6a045cf29927c56",
+  "results": [
+    {
+      "criteria": [
+        "AC1"
+      ],
+      "argv": [
+        "python3",
+        "/var/folders/z9/99ckxr957v901zwwc8jdk8640000gn/T/ai-en-screenshot-cleanup-yzr4xss1/verify_restore.py"
+      ],
+      "exit_code": 0,
+      "signal": null,
+      "error": null,
+      "stdout": "{\"status\": \"PASS\", \"restored_and_sha256_checked\": 3495, \"bytes\": 351345619, \"unchanged_retained_images\": 707, \"retained_test_images\": 43, \"documented_restore_and_no_overwrite\": \"PASS\", \"current_entry_links\": 159, \"unrelated_dirty_files\": \"unchanged\", \"historical_non_image_records\": \"unchanged\"}\n",
+      "stderr": ""
+    },
+    {
+      "criteria": [
+        "AC2"
+      ],
+      "argv": [
+        "python3",
+        "/var/folders/z9/99ckxr957v901zwwc8jdk8640000gn/T/ai-en-screenshot-cleanup-yzr4xss1/verify_frontend.py"
+      ],
+      "exit_code": 1,
+      "signal": null,
+      "error": null,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/var/folders/z9/99ckxr957v901zwwc8jdk8640000gn/T/ai-en-screenshot-cleanup-yzr4xss1/verify_frontend.py\", line 21, in <module>\n    result=run(['node_modules/@playwright/test/cli.js','test','--list','--reporter=list','--config',config])\n  File \"/var/folders/z9/99ckxr957v901zwwc8jdk8640000gn/T/ai-en-screenshot-cleanup-yzr4xss1/verify_frontend.py\", line 11, in run\n    assert r.returncode==0, r.stdout+'\\n'+r.stderr\nAssertionError: \nError: CR306_FRONTEND_ROOT must name an isolated frontend source copy\n    at file:///Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/frontend/playwright.cr306.config.ts:5:9\n    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)\n    at node:internal/modules/esm/loader:647:26\n    at requireOrImport (/Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/frontend/node_modules/.pnpm/playwright@1.62.1/node_modules/playwright/lib/common/index.js:1136:12)\n    at loadUserConfig (/Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/frontend/node_modules/.pnpm/playwright@1.62.1/node_modules/playwright/lib/common/index.js:1323:46)\n    at loadConfig (/Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/frontend/node_modules/.pnpm/playwright@1.62.1/node_modules/playwright/lib/common/index.js:1330:22)\n    at Object.loadConfigFromFile (/Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/frontend/node_modules/.pnpm/playwright@1.62.1/node_modules/playwright/lib/common/index.js:1546:10)\n    at runTests (/Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/frontend/node_modules/.pnpm/playwright@1.62.1/node_modules/playwright/lib/cli/testActions.js:46:18)\n    at _Command.<anonymous> (/Users/xekinzhuo/Desktop/xekin_develop/ai-en-learning-development/ai-en-learning/frontend/node_modules/.pnpm/playwright@1.62.1/node_modules/playwright/lib/program.js:55:7)\n\n"
+    },
+    {
+      "criteria": [
+        "AC3"
+      ],
+      "argv": [
+        "python3",
+        "/var/folders/z9/99ckxr957v901zwwc8jdk8640000gn/T/ai-en-screenshot-cleanup-yzr4xss1/verify_adoption.py"
+      ],
+      "exit_code": 0,
+      "signal": null,
+      "error": null,
+      "stdout": "{\"status\": \"PASS\", \"clean_pinned_patch_replay\": 3, \"file_hashes\": \"verified after every patch\", \"profile\": \"consumer-ai-web@2.0.0 unchanged\", \"quick_cli\": \"list works on replayed source\", \"framework_changed_rule_files\": 4, \"diff_whitespace\": \"PASS\"}\n",
+      "stderr": ""
+    }
+  ]
+}

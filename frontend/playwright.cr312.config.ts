@@ -14,7 +14,7 @@ export default defineConfig({
       "json",
       {
         outputFile:
-          "../.planning/milestones/M002-legacy-M003/implementation/evidence/cr311-312-frontend/browser-results.json",
+          "../tmp/browser-evidence/M002-legacy-M003/cr311-312-frontend/browser-results.json",
       },
     ],
   ],

@@ -154,7 +154,7 @@ for (const [name, engine] of Object.entries({ chromium, firefox, webkit })) {
     ).toBe(true);
     await page.screenshot({
       path: new URL(
-        `../../../.planning/milestones/M002/implementation/evidence/frontend-matrix-${name}-zh-login.png`,
+        `../../../tmp/browser-evidence/M002/frontend-matrix-${name}-zh-login.png`,
         import.meta.url,
       ).pathname,
       fullPage: true,

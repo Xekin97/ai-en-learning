@@ -110,7 +110,7 @@ test("encrypted model import uses a modal, dynamic contract values and one termi
   ).json();
   expect(state.data.import_calls).toBe(1);
   await page.screenshot({
-    path: `../.planning/milestones/M002/implementation/config-portability/evidence/frontend/models-success-${info.project.name}.png`,
+    path: `../tmp/browser-evidence/M002/config-portability/models-success-${info.project.name}.png`,
     fullPage: true,
   });
 });
@@ -196,7 +196,7 @@ test("dependency-blocked preview exposes safe context and cannot dispatch an imp
   ).json();
   expect(state.data.import_calls).toBe(0);
   await page.screenshot({
-    path: "../.planning/milestones/M002/implementation/config-portability/evidence/frontend/models-blocked-desktop-en.png",
+    path: "../tmp/browser-evidence/M002/config-portability/models-blocked-desktop-en.png",
     fullPage: true,
   });
 });
@@ -257,7 +257,7 @@ test("four approved entries remain category-specific and priority editing stays 
   );
   if (info.project.name === "mobile")
     await page.screenshot({
-      path: "../.planning/milestones/M002/implementation/config-portability/evidence/frontend/growth-entry-mobile-en.png",
+      path: "../tmp/browser-evidence/M002/config-portability/growth-entry-mobile-en.png",
       fullPage: true,
     });
 });

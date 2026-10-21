@@ -1,10 +1,11 @@
 import { chromium, webkit, firefox, expect, request } from "@playwright/test";
-import { readFile, writeFile } from "node:fs/promises";
+import { mkdir, readFile, writeFile } from "node:fs/promises";
 const origin = process.env.UI26_ORIGIN || "http://127.0.0.1:3310";
 const evidence = new URL(
-  "../../../.planning/milestones/M002/implementation/evidence/frontend-ui26/",
+  "../../../tmp/browser-evidence/M002/frontend-ui26/",
   import.meta.url,
 );
+await mkdir(evidence, { recursive: true });
 const source = JSON.parse(
   await readFile(
     new URL(

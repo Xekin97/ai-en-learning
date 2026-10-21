@@ -4,8 +4,7 @@ export default defineConfig({
   testDir: "./tests/e2e",
   testMatch: "m002-generic-models.spec.ts",
   workers: 1,
-  outputDir:
-    "../.planning/milestones/M002/implementation/evidence/provider-workspace31/playwright",
+  outputDir: "../tmp/browser-evidence/M002/provider-workspace31/playwright",
   use: { baseURL: "http://127.0.0.1:3324", trace: "retain-on-failure" },
   projects: [
     { name: "desktop", use: { viewport: { width: 1440, height: 1000 } } },

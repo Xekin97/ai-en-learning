@@ -38,7 +38,7 @@ test("published Q02 notice remains visible and plan impact keeps N semantics", a
   await expect(page.getByTestId("preset-q02-notice")).toBeVisible();
   await expect(page.locator(".usage-note")).toContainText("Unknown");
   await page.screenshot({
-    path: "../.planning/milestones/M002-legacy-M003/implementation/evidence/frontend-tech03/admin-q02-final.png",
+    path: "../tmp/browser-evidence/M002-legacy-M003/frontend-tech03/admin-q02-final.png",
     fullPage: true,
   });
 
@@ -73,7 +73,7 @@ test("published Q02 notice remains visible and plan impact keeps N semantics", a
     ),
   ).toBe(true);
   await page.screenshot({
-    path: "../.planning/milestones/M002-legacy-M003/implementation/evidence/frontend-tech03/admin-plans-mobile.png",
+    path: "../tmp/browser-evidence/M002-legacy-M003/frontend-tech03/admin-plans-mobile.png",
     fullPage: true,
   });
 });
@@ -122,7 +122,7 @@ test("enhanced Q02 result remains savable without exposing internal review count
     ),
   ).toBe(true);
   await page.screenshot({
-    path: "../.planning/milestones/M002-legacy-M003/implementation/evidence/frontend-tech03/pro-q02-mobile.png",
+    path: "../tmp/browser-evidence/M002-legacy-M003/frontend-tech03/pro-q02-mobile.png",
     fullPage: true,
   });
   await result
@@ -213,7 +213,7 @@ test("published preset trial consumes the v5 stream and completes at 768px", asy
     ),
   ).toBe(true);
   await page.screenshot({
-    path: "../.planning/milestones/M002-legacy-M003/implementation/evidence/frontend-tech03/trial-v5-768.png",
+    path: "../tmp/browser-evidence/M002-legacy-M003/frontend-tech03/trial-v5-768.png",
     fullPage: true,
   });
 });

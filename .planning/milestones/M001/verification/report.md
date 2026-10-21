@@ -8,6 +8,8 @@ maintenance: M001-AGENT-CONTEXT-001
 
 # M001 当前完成边界与开放项
 
+Q007（2026-10-21）将可恢复的历史测试图片移出当前目录；查图先读[截图恢复入口](../../M002/verification/screenshot-archive.md)。下列验收结论、失败事实及保留项不变，旧图片引用和摘要按原 Git 版本解析。
+
 M001 已于 2026-09-16 由 TRANSITION-M001-138 关闭；USER-UAT-ACCEPTANCE-134 已接受当前本地候选。应用基线 `387c775534844ff0b8ca9857523dc39c1d8ee87a`；[原始收尾证据](../reviews/evidence/m001-closeout-138.json)、[门禁原文](../reviews/stream-failure-capture-gates.md)、[正式状态](../../../workflow/state.yaml)。生产发布未批准，M002 尚未开始。
 
 ## 已交付范围与证据

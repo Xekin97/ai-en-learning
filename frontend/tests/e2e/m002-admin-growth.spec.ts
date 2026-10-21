@@ -50,7 +50,7 @@ test("check-in settings submit five values once and preserve next-day effective 
     },
   ]);
   await page.screenshot({
-    path: `../.planning/milestones/M002/implementation/evidence/frontend-ui26/regression-admin-checkin-${info.project.name}.png`,
+    path: `../tmp/browser-evidence/M002/frontend-ui26/regression-admin-checkin-${info.project.name}.png`,
     fullPage: true,
   });
 });
@@ -93,7 +93,7 @@ test("six levels save atomically and hidden edited rows remain in the submitted 
   await page.getByLabel(t("a.tier.search"), { exact: true }).fill("");
   await expect(page.locator(".tier-table tbody tr")).toHaveCount(6);
   await page.screenshot({
-    path: `../.planning/milestones/M002/implementation/evidence/frontend-ui26/regression-admin-levels-${info.project.name}.png`,
+    path: `../tmp/browser-evidence/M002/frontend-ui26/regression-admin-levels-${info.project.name}.png`,
     fullPage: true,
   });
 });
@@ -190,7 +190,7 @@ test("issued cards cannot be deleted and model cards send only model-time effect
   expect(body).not.toHaveProperty("listed");
   expect(body?.effect).not.toHaveProperty("extra_count");
   await page.screenshot({
-    path: `../.planning/milestones/M002/implementation/evidence/frontend-ui26/regression-admin-items-${info.project.name}.png`,
+    path: `../tmp/browser-evidence/M002/frontend-ui26/regression-admin-items-${info.project.name}.png`,
     fullPage: true,
   });
 });

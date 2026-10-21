@@ -5,7 +5,7 @@ export default defineConfig({
   testMatch: /m002-config-portability\.spec\.ts$/,
   workers: 1,
   outputDir:
-    "../.planning/milestones/M002/implementation/config-portability/evidence/frontend/playwright-artifacts",
+    "../tmp/browser-evidence/M002/config-portability/playwright-artifacts",
   use: {
     baseURL: "http://127.0.0.1:43130",
     trace: "retain-on-failure",

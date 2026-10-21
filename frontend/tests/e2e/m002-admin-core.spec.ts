@@ -31,7 +31,9 @@ test("model removal previews impacts, sends the bound revision and confirmation 
   });
   await page.goto("/admin/models");
   await ready(page);
-  await expect(page.locator(".generic-model-list")).toContainText("Admin model");
+  await expect(page.locator(".generic-model-list")).toContainText(
+    "Admin model",
+  );
   await page.getByRole("button", { name: t("a.remove"), exact: true }).click();
   await expect(page.locator("dialog[open]")).toContainText(t("a.model.last"));
   expect(deletion).toBeNull();
@@ -46,7 +48,7 @@ test("model removal previews impacts, sends the bound revision and confirmation 
     confirmed: true,
   });
   await page.screenshot({
-    path: `../.planning/milestones/M002/implementation/evidence/frontend-ui26/regression-admin-models-${info.project.name}.png`,
+    path: `../tmp/browser-evidence/M002/frontend-ui26/regression-admin-models-${info.project.name}.png`,
     fullPage: true,
   });
 });
@@ -90,7 +92,7 @@ test("plan conflict keeps edits and priorities exchange as a single command", as
     page.getByRole("spinbutton", { name: t("priority"), exact: true }),
   ).toHaveValue("20");
   await page.screenshot({
-    path: `../.planning/milestones/M002/implementation/evidence/frontend-ui26/regression-admin-plans-${info.project.name}.png`,
+    path: `../tmp/browser-evidence/M002/frontend-ui26/regression-admin-plans-${info.project.name}.png`,
     fullPage: true,
   });
 });
@@ -152,7 +154,7 @@ test("blank user search, read-only titled story, positive grant and base-only re
   expect(state.data.base_plan.code).toBe("pro");
   expect(state.data.trial.quota.remaining).toBe(2);
   await page.screenshot({
-    path: `../.planning/milestones/M002/implementation/evidence/frontend-ui26/regression-admin-user-${info.project.name}.png`,
+    path: `../tmp/browser-evidence/M002/frontend-ui26/regression-admin-user-${info.project.name}.png`,
     fullPage: true,
   });
   expect(

@@ -88,7 +88,7 @@ test("draft, validated preview and explicit publish remain distinct", async ({
   expect(writes[0]?.body).not.toHaveProperty("description");
   await expect(page.locator("body")).not.toContainText("preview-private-token");
   await page.screenshot({
-    path: `../.planning/milestones/M002/implementation/evidence/frontend-ui26/regression-admin-presets-${info.project.name}.png`,
+    path: `../tmp/browser-evidence/M002/frontend-ui26/regression-admin-presets-${info.project.name}.png`,
     fullPage: true,
   });
 });

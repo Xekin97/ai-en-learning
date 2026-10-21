@@ -111,7 +111,7 @@ test("CR306 real AppDialog keeps raw JSON, stale probes, focus, and zero automat
   await expect(secondJson).toBeFocused();
   await expect(dialog.getByText(t("cr306.error.duplicate_key"))).toBeVisible();
   await page.screenshot({
-    path: `../.planning/milestones/M002-legacy-M003/implementation/evidence/cr306-frontend/${info.project.name}-invalid-json.png`,
+    path: `../tmp/browser-evidence/M002-legacy-M003/cr306-frontend/${info.project.name}-invalid-json.png`,
     fullPage: true,
   });
   expect(writes).toHaveLength(0);
@@ -134,7 +134,7 @@ test("CR306 real AppDialog keeps raw JSON, stale probes, focus, and zero automat
   await expect(discard).toBeVisible();
   if (info.project.name === "desktop")
     await page.screenshot({
-      path: "../.planning/milestones/M002-legacy-M003/implementation/evidence/cr306-frontend/desktop-discard-confirm.png",
+      path: "../tmp/browser-evidence/M002-legacy-M003/cr306-frontend/desktop-discard-confirm.png",
       fullPage: true,
     });
   await discard
@@ -194,7 +194,7 @@ test("CR306 real AppDialog keeps raw JSON, stale probes, focus, and zero automat
     ).toBe(true);
   }
   await page.screenshot({
-    path: `../.planning/milestones/M002-legacy-M003/implementation/evidence/cr306-frontend/${info.project.name}-model-dialog.png`,
+    path: `../tmp/browser-evidence/M002-legacy-M003/cr306-frontend/${info.project.name}-model-dialog.png`,
     fullPage: true,
   });
 });

@@ -15,7 +15,7 @@ const copy = (locale: "zh" | "en", key: string) =>
   (m002Copy.static[`${locale}.${key}`] ??
     m002Copy.templates[`${locale}.${key}`]) as string;
 const evidence =
-  "../.planning/milestones/M002-legacy-M003/implementation/evidence/cr311-312-frontend/screenshots";
+  "../tmp/browser-evidence/M002-legacy-M003/cr311-312-frontend/screenshots";
 
 async function ready(page: Page) {
   await page.waitForFunction(

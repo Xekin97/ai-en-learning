@@ -4,7 +4,7 @@ export default defineConfig({
   testDir: "./tests/e2e",
   testMatch: /m002-config-portability-real\.spec\.ts$/,
   outputDir:
-    "../.planning/milestones/M002/implementation/config-portability/evidence/frontend/playwright-real-artifacts",
+    "../tmp/browser-evidence/M002/config-portability/playwright-real-artifacts",
   workers: 1,
   use: {
     ...devices["Desktop Chrome"],

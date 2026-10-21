@@ -21,6 +21,12 @@ The browser uses same-origin `/api/v1`. SSR uses private `NUXT_BACKEND_INTERNAL_
 
 `tests/e2e/README.md` maps inherited M001 requirements to the current executable regression suite. Historical M001 specifications remain at their original paths; the Playwright configuration selects the M002 suite explicitly. Frozen `tests/contracts/v1.4` envelopes retain their hashes; M002 tests add required profile/growth fields in synthetic adapters rather than rewriting those fixtures.
 
+### Browser artifacts (Q007)
+
+Routine screenshots and explicit browser JSON reports go to the repository's ignored `tmp/browser-evidence/` directory, grouped by the existing test scope. Playwright's default `test-results/` and `playwright-report/` directories are also ignored. Integration scripts create their output directory before writing. Test inputs, approved design sources and assertions stay in their existing locations.
+
+Only promote necessary acceptance images or approved visual baselines into versioned evidence, with the relevant case, source version and environment. Keep unresolved failure evidence until it can be handed off or verified; remove temporary runs after diagnosis. Do not overwrite frozen evidence on a later test run. Historical test images moved out of the working tree can be recovered using the [screenshot archive index](../.planning/milestones/M002/verification/screenshot-archive.md); original reports and hashes still describe their original version.
+
 ## Design sources
 
 `node scripts/sync-design.mjs` imports the approved UI31 copy, theme, Lucide resources and two fixed public samples from the sibling planning directory, then formats generated files deterministically. This is a development-only conversion step; production does not import `.planning`. See `design/source-manifest.json` for input hashes. Operational prices, rewards, card inventory and plan quotas are never imported from prototype fixtures. Production semantics and accessibility additions live in `app/assets/css/application.css`.

@@ -2,7 +2,7 @@
 
 UI26 / FE04 supersede the affected UI22 message, select, word-picker, meanings, homepage advantages and copy assertions. `m002-ui26.spec.ts` and `tests/integration/m002-ui26.mjs` cover those changes. `select-control.ts` exercises the visible control while preserving canonical request-value checks; the model-card selector remains multiple. Existing unaffected M002 scenarios remain valid.
 
-For the isolated production test proxy use `UI26_ORIGIN=http://127.0.0.1:3311`; the API contract fixture stays on 38080. This is separate from the real-model UAT on 3302. UI26 evidence lives under `implementation/evidence/frontend-ui26`, preserving earlier screenshots and failures. No real-model calls are made by these suites.
+For the isolated production test proxy use `UI26_ORIGIN=http://127.0.0.1:3311`; the API contract fixture stays on 38080. This is separate from the real-model UAT on 3302. New UI26 outputs go to `tmp/browser-evidence/M002/frontend-ui26` at the repository root; historical reports and failures remain versioned, with images recoverable through the archive index. No real-model calls are made by these suites.
 
 # Browser regression ownership
 
@@ -21,3 +21,5 @@ The inherited behavior remains covered:
 | application-smoke accessibility, CR031 reader focus                     | three-engine matrix, m002-admin-core read-only reader and native AppDialog behavior                 |
 
 Current all-browser integration scripts live in `tests/integration`. True device keyboards, screen readers, production CSP/proxy and real model quality remain independent QA/operations checks; desktop browser emulation is not evidence for those.
+
+Q007 changes only artifact destinations: new screenshots and explicit reports use the repository's ignored `tmp/browser-evidence/` tree (or Playwright's ignored default output). Select necessary final evidence deliberately; running a suite must not modify historical `.planning` evidence. See [artifact handling](../../README.md#browser-artifacts-q007) and the [historical image recovery index](../../../.planning/milestones/M002/verification/screenshot-archive.md). Existing assertions and design/contract inputs remain unchanged.

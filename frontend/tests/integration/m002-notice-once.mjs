@@ -1,10 +1,11 @@
 import { chromium, webkit, expect, request } from "@playwright/test";
-import { readFile, writeFile } from "node:fs/promises";
+import { mkdir, readFile, writeFile } from "node:fs/promises";
 const base = "http://127.0.0.1:3311";
 const evidence = new URL(
-  "../../../.planning/milestones/M002/implementation/evidence/notice-once/",
+  "../../../tmp/browser-evidence/M002/notice-once/",
   import.meta.url,
 );
+await mkdir(evidence, { recursive: true });
 const copy = JSON.parse(
   await readFile(
     new URL(
@@ -80,11 +81,9 @@ try {
         () => document.documentElement.scrollWidth <= innerWidth,
       ),
     ).toBe(true);
-    await p
-      .locator("fieldset")
-      .screenshot({
-        path: new URL("admin-" + width + ".png", evidence).pathname,
-      });
+    await p.locator("fieldset").screenshot({
+      path: new URL("admin-" + width + ".png", evidence).pathname,
+    });
     results.push({
       engine,
       id: "ONCE28-ADMIN",

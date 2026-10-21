@@ -124,7 +124,7 @@ test("CR307 traps the top dialog and restores the stable provider opener", async
   ).toBeVisible();
   expect(probes).toBe(0);
   await page.screenshot({
-    path: `../.planning/milestones/M002-legacy-M003/implementation/evidence/cr307-frontend-fix/${info.project.name}-focus-return.png`,
+    path: `../tmp/browser-evidence/M002-legacy-M003/cr307-frontend-fix/${info.project.name}-focus-return.png`,
     fullPage: true,
   });
 });

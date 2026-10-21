@@ -12,6 +12,8 @@
 
 ## 按任务读取原件
 
+Q007（2026-10-21）清理历史测试截图并隔离后续运行产物；[截图恢复入口](verification/screenshot-archive.md)提供逐文件版本/摘要及恢复命令，[前端约定](../../../frontend/README.md#browser-artifacts-q007)说明新的临时输出位置。原报告、失败事实、审批和以下保留项仍有效，本次维护不重新验收产品。
+
 | 交付范围 | 需求与技术原件 | 验证及用户接受 |
 |---|---|---|
 | 学习、成长、运营、服务商管理及精选释义 | [产品](product/overview.md)、[技术](technical/backend.md) | [原交接](handoffs/verification.md)、[123 接受](reviews/verification-acceptance-123.md) |

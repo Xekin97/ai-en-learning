@@ -160,7 +160,7 @@ for (const lang of ["en", "zh"]) {
       ).toBe(false);
       expect(errors).toEqual([]);
       await page.screenshot({
-        path: `../.planning/milestones/M002/implementation/evidence/provider-workspace31/list-${info.project.name}-${lang}.png`,
+        path: `../tmp/browser-evidence/M002/provider-workspace31/list-${info.project.name}-${lang}.png`,
         fullPage: true,
       });
     });
@@ -300,7 +300,7 @@ for (const lang of ["en", "zh"]) {
           .evaluate((e) => parseFloat(getComputedStyle(e).rowGap)),
       ).toBeGreaterThanOrEqual(16);
       await page.screenshot({
-        path: `../.planning/milestones/M002/implementation/evidence/provider-workspace31/editor-${info.project.name}-${lang}.png`,
+        path: `../tmp/browser-evidence/M002/provider-workspace31/editor-${info.project.name}-${lang}.png`,
         fullPage: true,
       });
     });

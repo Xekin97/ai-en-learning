@@ -39,7 +39,7 @@ test("analytics distinguishes zero, missing, observing, and unavailable without 
   await expect(page.locator(".split")).toContainText(t("observing"));
   expect(external).toEqual([]);
   await page.screenshot({
-    path: `../.planning/milestones/M002/implementation/evidence/frontend-admin-analytics-${info.project.name}.png`,
+    path: `../tmp/browser-evidence/M002/frontend-admin-analytics-${info.project.name}.png`,
     fullPage: true,
   });
   expect(
@@ -82,7 +82,7 @@ test("message editor preserves empty translation slots and uses safe server prev
     expected_revision: "notice-1",
   });
   await page.screenshot({
-    path: `../.planning/milestones/M002/implementation/evidence/frontend-ui26/regression-admin-notices-${info.project.name}.png`,
+    path: `../tmp/browser-evidence/M002/frontend-ui26/regression-admin-notices-${info.project.name}.png`,
     fullPage: true,
   });
 });

@@ -67,7 +67,7 @@ test("ordinary workspace defaults, random selection, validated save and editable
   await page.getByRole("button", { name: text("random"), exact: true }).click();
   await expect(page.locator(".workspace .word-token")).toContainText("adapt");
   await page.screenshot({
-    path: `../.planning/milestones/M002/implementation/evidence/frontend-ui26/regression-create-${info.project.name}.png`,
+    path: `../tmp/browser-evidence/M002/frontend-ui26/regression-create-${info.project.name}.png`,
     fullPage: true,
   });
   await page.getByRole("button", { name: text("start"), exact: true }).click();
@@ -97,7 +97,7 @@ test("ordinary workspace defaults, random selection, validated save and editable
     ),
   ).toBe(true);
   await page.screenshot({
-    path: `../.planning/milestones/M002/implementation/evidence/frontend-ui26/regression-batch-${info.project.name}.png`,
+    path: `../tmp/browser-evidence/M002/frontend-ui26/regression-batch-${info.project.name}.png`,
     fullPage: true,
   });
 });
@@ -118,7 +118,7 @@ test("gallery loads all cursors before counts, filters language and enters a loc
     "Teams adapt quickly when the context changes.",
   );
   await page.screenshot({
-    path: `../.planning/milestones/M002/implementation/evidence/frontend-ui26/regression-explore-${info.project.name}.png`,
+    path: `../tmp/browser-evidence/M002/frontend-ui26/regression-explore-${info.project.name}.png`,
     fullPage: true,
   });
   await page.getByRole("link", { name: text("try"), exact: true }).click();

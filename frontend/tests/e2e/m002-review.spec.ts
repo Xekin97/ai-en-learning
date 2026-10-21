@@ -66,7 +66,7 @@ test("partial answers, overview editing, one-time comparison and restart", async
     ),
   ).toBe(true);
   await page.screenshot({
-    path: `../.planning/milestones/M002/implementation/evidence/frontend-review-result-${info.project.name}.png`,
+    path: `../tmp/browser-evidence/M002/frontend-review-result-${info.project.name}.png`,
     fullPage: true,
   });
   await page.getByRole("button", { name: t("restart"), exact: true }).click();

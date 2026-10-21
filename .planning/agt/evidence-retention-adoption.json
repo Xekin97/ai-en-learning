@@ -1,0 +1,48 @@
+{
+  "id": "AGT-EVIDENCE-RETENTION-20261021",
+  "status": "adopted",
+  "user_instruction": "你帮我清理一下，顺便调整一下 agt 规则",
+  "task": "Q007-clean-test-screenshots",
+  "base_revision": "91d98055ec49c877cc03473e479bcc6a9f371af6",
+  "profile": "consumer-ai-web@2.0.0",
+  "prerequisites": [
+    {
+      "patch": ".planning/agt/context-maintenance-v1.patch",
+      "sha256": "f027746fc84e2b20f83f05acd0ca5482851bbf1fa214be92c3eca63d0a0103c4"
+    },
+    {
+      "patch": ".planning/agt/quick-tasks-v1.patch",
+      "sha256": "9023ab21dc53ece7b70da4948b013ce006fc48afca587a1de6d6bff514c4f46c"
+    }
+  ],
+  "patch": ".planning/agt/evidence-retention-v1.patch",
+  "patch_sha256": "0319754b76a5852e35064f42a6444c40eb85f14069155d1c75b059b35aaa2be7",
+  "files": [
+    {
+      "path": "README.md",
+      "base_after_prerequisites_sha256": "d00217748713b47feedf31b4474c490dc453437e56ef2014f133f2bb2553a0b9",
+      "patched_sha256": "7d9a20314bd63a5ec09d02717deb7af6f485f3cc574859b566c1c198f7bee0f6",
+      "framework_worktree_sha256": "328e63795e697e087b6ff6a27b77aa43b5d12bbd6d37892b179781ac5b9488ec"
+    },
+    {
+      "path": "core/document-maintenance.md",
+      "base_after_prerequisites_sha256": "2af839baae08d670742f7874c96a4150812baf60af64f3898ebdf7de909ee0b3",
+      "patched_sha256": "a2dbf767a8d9e2055b597258a3e187b3ec7d1794e36eb201c007ad5527e48e48",
+      "framework_worktree_sha256": "6a4aec9abf74eae43b580af17b1354c36713f9966d8a37bdb303773e62c60cc6"
+    },
+    {
+      "path": "core/role-contract.md",
+      "base_after_prerequisites_sha256": "b997f7fd6e2bcb4bf29694251a4ac944c8bdb058c739062ca2537ddae119347c",
+      "patched_sha256": "2c4feb38a470e46cff99b7aee4a664f6f9d17c17e6b77d00d4d02fc413051d4b",
+      "framework_worktree_sha256": "8fd163b3d502dc3191cae7da73b8e2da519cfd6177eca3b1d701b708c83a830a"
+    },
+    {
+      "path": "core/design-delivery.md",
+      "base_after_prerequisites_sha256": "cc7c2c7cf0d4399b26ed6360abace1f1716d4f60774efd9011125fe880f9ddc2",
+      "patched_sha256": "7b6ce2af8fc27e5995f91ca11f5738e0b2ddd82c527e58bee3adeb51f8669bcb",
+      "framework_worktree_sha256": "c88b375d170516525822b982c3500b852341d7878687eebdb649697642f47f99"
+    }
+  ],
+  "scope": "Temporary browser artifacts are ignored by default; retain necessary current evidence, preserve immutable historical facts, allow user-authorized removal of recoverable historical test images with version/path/hash lookup. No Profile, milestone, model-lock, API or business change.",
+  "source_resolution": ".planning/agt/profile-upgrade-2.0.0.md"
+}

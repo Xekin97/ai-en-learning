@@ -20,8 +20,7 @@ const copySource = JSON.parse(
 const copy = (key: string) =>
   (copySource.static[`en.${key}`] ??
     copySource.templates[`en.${key}`]) as string;
-const evidence =
-  "../.planning/milestones/M002-legacy-M003/implementation/evidence/cr310-frontend";
+const evidence = "../tmp/browser-evidence/M002-legacy-M003/cr310-frontend";
 
 async function ready(page: Page) {
   await page.waitForFunction(

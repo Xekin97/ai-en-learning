@@ -1,11 +1,12 @@
 import { chromium, webkit, expect } from "@playwright/test";
-import { writeFile } from "node:fs/promises";
+import { mkdir, writeFile } from "node:fs/promises";
 
 const origin = process.env.UI26_ORIGIN || "http://127.0.0.1:3311";
 const evidence = new URL(
-  "../../../.planning/milestones/M002/implementation/evidence/frontend-header-locale/",
+  "../../../tmp/browser-evidence/M002/frontend-header-locale/",
   import.meta.url,
 );
+await mkdir(evidence, { recursive: true });
 const results = [],
   errors = [],
   designs = new Map();

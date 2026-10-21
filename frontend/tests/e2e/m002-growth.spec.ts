@@ -49,7 +49,7 @@ test("growth preserves large amounts and literal descriptions, rewards require a
   expect(claims).toHaveLength(1);
   expect(claims[0]).toMatch(/^[a-f0-9-]{36}$/);
   await page.screenshot({
-    path: `../.planning/milestones/M002/implementation/evidence/frontend-growth-${info.project.name}.png`,
+    path: `../tmp/browser-evidence/M002/frontend-growth-${info.project.name}.png`,
     fullPage: true,
   });
   expect(
@@ -108,7 +108,7 @@ test("plan activation requires confirmation and stale retirement price requires 
   await expect(page.locator("dialog[open]")).toHaveCount(0);
   await expect(page.locator(".item-model button")).toBeDisabled();
   await page.screenshot({
-    path: `../.planning/milestones/M002/implementation/evidence/frontend-items-${info.project.name}.png`,
+    path: `../tmp/browser-evidence/M002/frontend-items-${info.project.name}.png`,
     fullPage: true,
   });
 });

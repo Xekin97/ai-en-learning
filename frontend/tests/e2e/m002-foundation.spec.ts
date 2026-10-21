@@ -69,7 +69,7 @@ for (const lang of ["zh", "en"]) {
     const header = await page.locator("header.topbar").boundingBox();
     expect(geometry!.y).toBeCloseTo(header!.height, 0);
     await page.screenshot({
-      path: `../.planning/milestones/M002/implementation/evidence/frontend-home-${lang}-${testInfo.project.name}.png`,
+      path: `../tmp/browser-evidence/M002/frontend-home-${lang}-${testInfo.project.name}.png`,
       fullPage: true,
     });
   });
